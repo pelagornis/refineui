@@ -1,0 +1,9 @@
+{
+    "name": "@refineui/react",
+    "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/pelagornis/refineui.git",
+        "directory": "packages/react"
+    }
+}

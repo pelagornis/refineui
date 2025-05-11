@@ -183,5 +183,119 @@ export type SpacingTokens = {
 };
 
 /**
+ * Design tokens for font
+ */
+
+export type FontSizeTokens = {
+  fontSize100: string;
+  fontSize200: string;
+  fontSize300: string;
+  fontSize400: string;
+  fontSize500: string;
+  fontSize600: string;
+  fontSize700: string;
+  fontSize800: string;
+  fontSize900: string;
+  fontSize1000: string;
+};
+
+export type LineHeightTokens = {
+  lineHeight100: string;
+  lineHeight200: string;
+  lineHeight300: string;
+  lineHeight400: string;
+  lineHeight500: string;
+  lineHeight600: string;
+  lineHeight700: string;
+  lineHeight800: string;
+  lineHeight900: string;
+  lineHeight1000: string;
+};
+
+export type FontWeightTokens = {
+  fontWeightRegular: string;
+  fontWeightMedium: string;
+  fontWeightSemibold: string;
+  fontWeightBold: string;
+  fontWeightHeavy: string;
+};
+
+export type TextAlignment =
+  | 'inherit'
+  | 'initial'
+  | 'revert'
+  | 'unset'
+  | 'center'
+  | 'end'
+  | 'start'
+  | 'justify'
+  | 'left'
+  | 'match-parent'
+  | 'right';
+
+export type TextAlignments = {
+  start: TextAlignment;
+  center: TextAlignment;
+  end: TextAlignment;
+  justify: TextAlignment;
+};
+
+export type FontFamilyTokens = {
+  fontFamily: string;
+};
+
+export type TypographyStyle = {
+  fontFamily: string;
+  fontSize: string;
+  fontWeight: string;
+  lineHeight: string;
+};
+
+/**
  * Design tokens for typography
  */
+
+export type TypographyStyles = {
+  heading1: TypographyStyle;
+  heading2: TypographyStyle;
+  heading3: TypographyStyle;
+  heading4: TypographyStyle;
+  title1: TypographyStyle;
+  title2: TypographyStyle;
+  title3: TypographyStyle;
+  subTitle1: TypographyStyle;
+  subTitle2: TypographyStyle;
+  body1: TypographyStyle;
+  body2: TypographyStyle;
+  body3: TypographyStyle;
+  body4: TypographyStyle;
+  caption1: TypographyStyle;
+  caption2: TypographyStyle;
+  caption3: TypographyStyle;
+};
+
+/**
+ * Design tokens for z-index groups and levels
+ */
+export type ZIndexTokens = {
+  zIndexBackground?: string;
+  zIndexContent?: string;
+  zIndexOverlay?: string;
+  zIndexPopup?: string;
+  zIndexMessages?: string;
+  zIndexFloating?: string;
+  zIndexPriority?: string;
+  zIndexDebug?: string;
+};
+
+export type Theme = FontSizeTokens & 
+FontFamilyTokens &
+FontWeightTokens & 
+LineHeightTokens & 
+PaletteColors & 
+ShadowTokens & 
+StrokeWidthTokens & 
+BorderRadiusTokens & 
+SpacingTokens & 
+TypographyStyles & 
+ZIndexTokens;
