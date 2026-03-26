@@ -1,0 +1,23 @@
+---
+title: Dropdown
+description: 드롭다운 메뉴 컴포넌트
+---
+
+import DropdownDemo from "../../../components/DropdownDemo";
+
+# Dropdown
+
+트리거 클릭 시 메뉴가 표시되는 드롭다운 컴포넌트입니다.
+
+## Preview
+
+<div class="not-content">
+  <DropdownDemo client:load />
+</div>
+
+## Props
+
+- `trigger` — 클릭 시 메뉴를 여는 요소
+- `items` — DropdownItem[] (id, label, onClick?, disabled?)
+- `align` — start | end (기본: end)
+- `showTriggerChevron` — 트리거 옆에 chevron-up/down 표시 (열림 상태에 따라 전환)

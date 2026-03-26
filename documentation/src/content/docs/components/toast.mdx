@@ -1,0 +1,35 @@
+---
+title: Toast
+description: 토스트 알림 컴포넌트
+---
+
+import ToastPreview from "../../../components/ToastPreview";
+
+# Toast
+
+토스트 알림 메시지 컴포넌트입니다.
+
+## Preview
+
+<div class="not-content">
+  <ToastPreview client:load />
+</div>
+
+## Props
+
+- `variant` — `default` | `success` | `error` | `warning`
+- `title` / `message` — 본문 (둘 다 선택)
+- `iconName` — System Icons 슬러그 (variant별 기본 아이콘 대체)
+- `icon` — `ReactNode` (있으면 `iconName`보다 우선)
+- `action` — 버튼 라벨·`onClick` 또는 임의 노드
+
+## Variants
+
+- `default` — 기본
+- `success` — 성공 (녹색)
+- `error` — 에러 (빨간색)
+- `warning` — 경고 (노란색)
+
+## 아이콘
+
+`iconName`으로 RefineUI System Icons 슬러그를 지정할 수 있습니다. Preview에서 `checkmark`, `warning`, `mail`, `calendar`, `settings` 등 예시를 확인할 수 있습니다. `icon` prop으로 React 노드를 넘기면 `iconName`보다 우선합니다.

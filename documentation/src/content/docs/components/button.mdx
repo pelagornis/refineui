@@ -1,0 +1,40 @@
+---
+title: Button
+description: 버튼 컴포넌트
+---
+
+import ButtonPreview from "../../../components/ButtonPreview";
+
+# Button
+
+버튼 컴포넌트입니다. **클릭해보세요** — `@refineui/react/refineui.css`를 불러오면 hover·active·focus-visible 스타일이 적용됩니다.
+
+## Preview
+
+<div class="not-content">
+  <ButtonPreview client:load />
+</div>
+
+## Variants
+
+- `primary` — 기본 (검정 배경)
+- `secondary` — 회색 배경
+- `outline` — 테두리만
+- `ghost` — 투명
+- `danger` — 빨간색 (삭제 등)
+
+## Sizes
+
+- `sm` — 작은 크기
+- `md` — 기본 크기
+- `lg` — 큰 크기
+
+## 예시
+
+```tsx
+import { Button } from "@refineui/react";
+
+<Button variant="primary">Primary</Button>
+<Button variant="secondary" size="sm">Small</Button>
+<Button variant="outline" disabled>Disabled</Button>
+```

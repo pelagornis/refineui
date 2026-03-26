@@ -1,0 +1,42 @@
+---
+title: Accordion
+description: 접이식 패널 컴포넌트
+---
+
+import AccordionPreview from "../../../components/AccordionPreview";
+
+# Accordion
+
+접이식 패널 컴포넌트입니다. **클릭해서 열고 닫아보세요.**
+
+## Preview
+
+<div class="not-content">
+  <AccordionPreview client:load />
+</div>
+
+## 예시 (정적)
+
+```tsx
+<Accordion
+  items={[
+    { id: "1", title: "섹션 1", content: "첫 번째 패널 내용입니다.", icon: "home" },
+    { id: "2", title: "섹션 2", content: "두 번째 패널 내용입니다.", icon: "folder", defaultOpen: true },
+    { id: "3", title: "섹션 3", content: "세 번째 패널 내용입니다.", icon: "settings" },
+  ]}
+/>
+```
+
+### 크기 (Figma Web Kit)
+
+트리거 타이포만 달라집니다: `small` → Caption1, `medium` → Body1(기본), `large` → SubTitle1.
+
+```tsx
+<Accordion size="large" items={[...]} />
+```
+
+## Props
+
+- `items` — AccordionItem 배열 (id, title, content, icon?, defaultOpen?)
+- `allowMultiple` — 여러 패널 동시 열기 허용
+- `size` — `"small"` | `"medium"` | `"large"` (기본: `medium`)

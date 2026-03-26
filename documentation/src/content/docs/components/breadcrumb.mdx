@@ -1,0 +1,37 @@
+---
+title: Breadcrumb
+description: 경로 탐색 컴포넌트
+---
+
+import BreadcrumbPreview from "../../../components/BreadcrumbPreview";
+
+# Breadcrumb
+
+경로 탐색(브레드크럼)입니다. Web Kit Figma **Breadcrumb**(`283:688`) / **BreadcrumbItem**(`289:37`)과 맞춰 두었습니다.
+
+## Preview
+
+<div class="not-content">
+  <BreadcrumbPreview client:load />
+</div>
+
+## 예시
+
+```tsx
+<Breadcrumb
+  items={[
+    { id: "1", label: "홈", href: "#" },
+    { id: "2", label: "문서", href: "#" },
+    { id: "3", label: "컴포넌트" },
+  ]}
+/>
+```
+
+## Props
+
+- `items` — `BreadcrumbItem[]`
+  - `id`, `label?`, `href?`
+  - `ellipsis?: true` — 중간 축약(⋯ / `more-horizontal` 아이콘). `label`에 짧은 설명을 두면 `aria-label`로 읽힙니다.
+- `separator` — 구분자 `ReactNode`. **Figma Web Kit 기본은 `/`** (Caption1 · tertiary). MCP `283:688`에도 슬래시 텍스트만 있음. 다른 문자·노드가 필요할 때만 `separator`로 덮어씁니다.
+
+타이포는 **Caption 1**(12 Medium / 16), 링크 색은 tertiary(`neutral500`), 현재 항목은 `primaryBlack`입니다. `refineui.css`의 `[data-refineui="breadcrumb-link"]`로 hover/active가 Figma 상태에 가깝게 동작합니다.

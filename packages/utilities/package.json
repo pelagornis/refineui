@@ -1,30 +1,16 @@
 {
-    "name": "@refineui/utilities",
-    "version": "0.0.1",
-    "description": "RefineUI React utilites for building components.",
-    "sideEffects": false,
-    "type": "module",
-    "exports": {
-        ".": {
-            "types": "./lib/index.d.ts",
-            "import": "./lib/index.js",
-            "require": "./lib/index.cjs"
-        }
-    },
-    "main": "./lib/index.cjs",
-    "dependencies": {
-        "@refineui/version": "^1.0.0"
-    },
-    "peerDependencies": {
-        "react": ">=18.0.0",
-        "react-dom": ">=18.0.0"
-    },
-    "devDependencies": {
-        "@types/react": "^18.3.20",
-        "react": "^18.3.1",
-        "react-dom": "^18.3.1"
-    },
-    "publishConfig": {
-        "access": "public"
-    }
+  "name": "@refineui/utilities",
+  "version": "0.0.1",
+  "description": "RefineUI React utilities for building components",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {"types": "./lib/index.d.ts", "import": "./lib/index.js", "require": "./lib/index.cjs"},
+    "./color": {"types": "./lib/color.d.ts", "import": "./lib/color.js", "require": "./lib/color.cjs"}
+  },
+  "main": "./lib/index.cjs",
+  "dependencies": {"@refineui/version": "workspace:*"},
+  "peerDependencies": {"react": ">=18.0.0", "react-dom": ">=18.0.0"},
+  "devDependencies": {"@types/react": "^18.3.20", "react": "^18.3.1", "react-dom": "^18.3.1"},
+  "publishConfig": {"access": "public"}
 }

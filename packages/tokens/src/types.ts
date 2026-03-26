@@ -130,16 +130,72 @@ export type PaletteColors = {
 };
 
 /**
- * Design tokens for shadow levels
+ * Shadow color (Figma Variables — Lighter ~ Darker, Key/Ambient별)
+ * Foundation: ambient lighter, ambient light, ambient, ambient dark, ambient darker
+ */
+export type ShadowColorTokens = {
+    shadowColorKeyLighter: string;
+    shadowColorKeyLight: string;
+    shadowColorKey: string;
+    shadowColorKeyDark: string;
+    shadowColorKeyDarker: string;
+    shadowColorAmbientLighter: string;
+    shadowColorAmbientLight: string;
+    shadowColorAmbient: string;
+    shadowColorAmbientDark: string;
+    shadowColorAmbientDarker: string;
+};
+
+/**
+ * Key + Ambient shadow pair (Material Design 3 / Figma Variables 구조)
+ * - key: 방향성 있는 그림자 (y offset, 작은 blur)
+ * - ambient: 부드럽게 퍼지는 그림자 (큰 blur)
+ */
+export type ShadowLevel = {
+    key: string;
+    ambient: string;
+};
+
+/**
+ * Design tokens for shadow levels (Lighter ~ Darker, key + ambient)
+ * 사용: box-shadow: ${key}, ${ambient}
  */
 export type ShadowTokens = {
-    shadow2: string;
-    shadow4: string;
-    shadow8: string;
-    shadow16: string;
-    shadow24: string;
-    shadow32: string;
-    shadow64: string;
+    shadow2Lighter: ShadowLevel;
+    shadow2Light: ShadowLevel;
+    shadow2: ShadowLevel;
+    shadow2Dark: ShadowLevel;
+    shadow2Darker: ShadowLevel;
+    shadow4Lighter: ShadowLevel;
+    shadow4Light: ShadowLevel;
+    shadow4: ShadowLevel;
+    shadow4Dark: ShadowLevel;
+    shadow4Darker: ShadowLevel;
+    shadow8Lighter: ShadowLevel;
+    shadow8Light: ShadowLevel;
+    shadow8: ShadowLevel;
+    shadow8Dark: ShadowLevel;
+    shadow8Darker: ShadowLevel;
+    shadow16Lighter: ShadowLevel;
+    shadow16Light: ShadowLevel;
+    shadow16: ShadowLevel;
+    shadow16Dark: ShadowLevel;
+    shadow16Darker: ShadowLevel;
+    shadow24Lighter: ShadowLevel;
+    shadow24Light: ShadowLevel;
+    shadow24: ShadowLevel;
+    shadow24Dark: ShadowLevel;
+    shadow24Darker: ShadowLevel;
+    shadow32Lighter: ShadowLevel;
+    shadow32Light: ShadowLevel;
+    shadow32: ShadowLevel;
+    shadow32Dark: ShadowLevel;
+    shadow32Darker: ShadowLevel;
+    shadow64Lighter: ShadowLevel;
+    shadow64Light: ShadowLevel;
+    shadow64: ShadowLevel;
+    shadow64Dark: ShadowLevel;
+    shadow64Darker: ShadowLevel;
 };
 
 /**
@@ -147,6 +203,7 @@ export type ShadowTokens = {
  */
 export type StrokeWidthTokens = {
     strokeWidthNone: string;
+    strokeWidthHairline: string;
     strokeWidthThin: string;
     strokeWidthThick: string;
     strokeWidthThicker: string;
@@ -288,14 +345,15 @@ export type ZIndexTokens = {
   zIndexDebug?: string;
 };
 
-export type Theme = FontSizeTokens & 
-FontFamilyTokens &
-FontWeightTokens & 
-LineHeightTokens & 
-PaletteColors & 
-ShadowTokens & 
-StrokeWidthTokens & 
-BorderRadiusTokens & 
-SpacingTokens & 
-TypographyStyles & 
-ZIndexTokens;
+export type Theme = FontSizeTokens &
+    FontFamilyTokens &
+    FontWeightTokens &
+    LineHeightTokens &
+    PaletteColors &
+    ShadowColorTokens &
+    ShadowTokens &
+    StrokeWidthTokens &
+    BorderRadiusTokens &
+    SpacingTokens &
+    TypographyStyles &
+    ZIndexTokens;

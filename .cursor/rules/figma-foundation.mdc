@@ -1,0 +1,34 @@
+---
+description: Pelagornis RefineUI Foundation — Figma 디자인 토큰 단일 소스
+alwaysApply: true
+---
+
+# Figma Foundation (디자인 토큰 단일 소스)
+
+## Foundation URL
+
+**Figma Foundation (Pelagornis RefineUI) — Variables/토큰:**
+https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundation?node-id=1-650
+
+**Pelagornis RefineUI Web Kit (컴포넌트):**
+https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?node-id=7-6
+
+## 규칙
+
+- **MUST**: UI/디자인 관련 작업 시 위 Foundation을 **단일 소스**로 참조. `packages/tokens`의 값은 이 Foundation과 동기화된 상태를 유지.
+- **MUST**: 새 토큰(color, spacing, typography, radius, shadow 등) 추가 시 Foundation에 정의된 값과 일치시킬 것. Foundation에 없는 값은 Foundation 업데이트 후 반영.
+- **MUST**: Figma MCP 사용 시 `get_variable_defs` 또는 `get_design_context`로 위 URL(또는 특정 node-id)을 전달해 Foundation 토큰/스타일을 조회.
+- **MUST**: 컴포넌트 구현 시 `@refineui/tokens`의 colors, spacings, fonts, strokeWidths 등을 사용. 하드코딩된 색상/간격/폰트 금지.
+- **RECOMMENDED**: Foundation 변경 시 `packages/tokens/src/global/*.ts`를 수동 또는 도구로 동기화.
+
+## 토큰 패키지 구조
+
+- `packages/tokens/src/global/colors.ts` — Palette
+- `packages/tokens/src/global/fonts.ts` — fontFamilies, fontSizes, fontWeights, lineHeights
+- `packages/tokens/src/global/spacings.ts` — sizeNone ~ sizeXXXLarge
+- `packages/tokens/src/global/strokeWidths.ts` — strokeWidthNone ~ strokeWidthThickest
+- `packages/tokens/src/global/borderRadii.ts` — roundedNone ~ roundedCircle
+- `packages/tokens/src/global/shadows.ts` — shadow2~64 (Lighter~Darker, key+ambient), shadowColors
+- `packages/tokens/src/global/typographys.ts` — heading1~4, title1~3, body1~4, caption1~3
+- `packages/tokens/src/global/zIndex.ts` — zIndexBackground ~ zIndexDebug
+- `packages/tokens/src/global/textAlignments.ts` — start, center, end, justify

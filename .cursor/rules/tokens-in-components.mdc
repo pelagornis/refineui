@@ -1,0 +1,16 @@
+---
+description: React 컴포넌트는 디자인 값을 @refineui/tokens에서만 가져온다
+---
+
+# Tokens in components (`@refineui/react`)
+
+## MUST
+
+- **색·간격·반경·선 두께·타이포 프리셋·그림자·z-index**는 `@refineui/tokens`의 `colors`, `spacings`, `borderRadii`, `strokeWidths`, `typographys`, `shadows` / `toBoxShadow`, `zIndex`, `fontSizes` 등에서만 참조한다.
+- **컴포넌트 고유 치수**(컨트롤 높이, 토스트 폭, 다이얼로그 최대 폭, 스위치 트랙, 캘린더 셀 등)는 `sizes`, **아이콘 글리프 픽셀 크기(WebIcon `size`)**는 `iconSizes`, **모달 스크rim**은 `overlays`를 사용한다.
+- **하드코딩 금지**: 임의의 `px` 숫자, `#hex`, `rgb()`를 컴포넌트 스타일에 두지 않는다. (레이아웃 상 `0`, `minWidth: 0`, 포지셔닝 트릭 등 의미상 0만 예외로 둘 수 있다.)
+- 새 치수가 필요하면 **Figma Foundation / Web Kit 스펙과 맞는 값**으로 `packages/tokens`에 토큰을 추가한 뒤 컴포넌트에서 참조한다. 스펙에 없는 값은 Foundation 갱신 후 반영한다.
+
+## RECOMMENDED
+
+- 문서용 Preview에서도 가능하면 동일 토큰·시맨틱 색을 쓰고, 데모 전용 임의 hex는 피한다.

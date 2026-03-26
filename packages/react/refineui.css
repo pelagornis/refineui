@@ -1,0 +1,281 @@
+/* RefineUI base styles — hover, focus, active */
+/* Import: import "@refineui/react/refineui.css" */
+/* Foundation: https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundation */
+
+/* RefineUI System Icons font (Accordion chevron 등) */
+@import "@refineui/web-icons/dist/fonts/refineui-system-icons.css";
+
+:root {
+  --refineui-focus-color: #212121;
+  --refineui-focus-offset: 2px;
+  --refineui-bg: #ffffff;
+  --refineui-text: #212121;
+  --refineui-border: #dbdbdb;
+  /* Foundation neutral450 — placeholder */
+  --refineui-placeholder: #bbbbbb;
+  --refineui-btn-primary-hover: #404040;
+  --refineui-btn-primary-pressed: #000000;
+  --refineui-btn-danger-pressed: #d93a3a;
+}
+
+/* Dark mode — set data-theme="dark" on html/body to enable */
+[data-theme="dark"] {
+  --refineui-focus-color: #ffffff;
+  --refineui-bg: #1a1a1a;
+  --refineui-text: #e0e0e0;
+  --refineui-border: #404040;
+  --refineui-placeholder: #888888;
+  --refineui-btn-primary-hover: #333;
+  --refineui-btn-secondary-hover: #404040;
+  --refineui-btn-ghost-hover: rgba(255,255,255,0.08);
+  --refineui-btn-danger-hover: #ff6969;
+}
+
+/* Button & button-like */
+[data-refineui="button"] {
+  transition: opacity 0.15s, background-color 0.15s, border-color 0.15s, transform 0.1s;
+}
+[data-refineui="switch"],
+[data-refineui="spinbutton"],
+[data-refineui="pagination"],
+[data-refineui="accordion-trigger"],
+[data-refineui="dropdown-item"],
+[data-refineui="menu-item"],
+[data-refineui="tab"],
+[data-refineui="calendar-nav"],
+[data-refineui="calendar-day"],
+[data-refineui="chip-remove"] {
+  transition: opacity 0.15s, background-color 0.15s, transform 0.1s;
+}
+[data-refineui="switch"]:not(:disabled):hover,
+[data-refineui="spinbutton"]:not(:disabled):hover,
+[data-refineui="pagination"]:not(:disabled):hover,
+[data-refineui="accordion-trigger"]:hover,
+[data-refineui="dropdown-item"]:not(:disabled):hover,
+[data-refineui="menu-item"]:not(:disabled):hover,
+[data-refineui="tab"]:hover,
+[data-refineui="calendar-nav"]:hover,
+[data-refineui="calendar-day"]:hover,
+[data-refineui="chip-remove"]:hover {
+  opacity: 0.9;
+}
+/* Button — Web Kit `79:3304` (Primary/Secondary/Outline/Ghost 상태) */
+[data-refineui="button"][data-variant="primary"]:not(:disabled):hover {
+  background-color: var(--refineui-btn-primary-hover, #404040) !important;
+}
+[data-refineui="button"][data-variant="primary"]:not(:disabled):active {
+  background-color: var(--refineui-btn-primary-pressed, #000000) !important;
+}
+[data-refineui="button"][data-variant="secondary"]:not(:disabled):hover {
+  background-color: #ebebeb !important;
+  border-color: #bbbbbb !important;
+}
+[data-refineui="button"][data-variant="secondary"]:not(:disabled):active {
+  background-color: #dbdbdb !important;
+  border-color: #bbbbbb !important;
+}
+[data-refineui="button"][data-variant="outline"]:not(:disabled):hover {
+  border-color: #bbbbbb !important;
+}
+[data-refineui="button"][data-variant="outline"]:not(:disabled):active {
+  border-color: #bbbbbb !important;
+}
+[data-refineui="button"][data-variant="ghost"]:not(:disabled):hover {
+  background-color: #ebebeb !important;
+}
+[data-refineui="button"][data-variant="ghost"]:not(:disabled):active {
+  background-color: #dbdbdb !important;
+}
+[data-refineui="button"][data-variant="danger"]:not(:disabled):hover {
+  background-color: var(--refineui-btn-danger-hover, #f94343) !important;
+}
+[data-refineui="button"][data-variant="danger"]:not(:disabled):active {
+  background-color: var(--refineui-btn-danger-pressed, #d93a3a) !important;
+}
+[data-refineui="button"]:not(:disabled):active,
+[data-refineui="switch"]:not(:disabled):active,
+[data-refineui="spinbutton"]:not(:disabled):active,
+[data-refineui="pagination"]:not(:disabled):active,
+[data-refineui="accordion-trigger"]:active,
+[data-refineui="dropdown-item"]:not(:disabled):active,
+[data-refineui="menu-item"]:not(:disabled):active,
+[data-refineui="tab"]:active,
+[data-refineui="calendar-nav"]:active,
+[data-refineui="calendar-day"]:active,
+[data-refineui="chip-remove"]:active {
+  transform: scale(0.98);
+}
+[data-refineui="button"]:focus-visible,
+[data-refineui="switch"]:focus-visible,
+[data-refineui="spinbutton"]:focus-visible,
+[data-refineui="pagination"]:focus-visible,
+[data-refineui="accordion-trigger"]:focus-visible,
+[data-refineui="dropdown-item"]:focus-visible,
+[data-refineui="menu-item"]:focus-visible,
+[data-refineui="tab"]:focus-visible,
+[data-refineui="calendar-nav"]:focus-visible,
+[data-refineui="calendar-day"]:focus-visible,
+[data-refineui="chip-remove"]:focus-visible,
+[data-refineui="dialog-close"]:focus-visible,
+[data-refineui="drawer-close"]:focus-visible {
+  outline: 2px solid var(--refineui-focus-color);
+  outline-offset: var(--refineui-focus-offset);
+}
+
+/* Base typography — Inter (Foundation font) */
+[data-refineui] {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Input, Textarea, Select */
+[data-refineui="input"],
+[data-refineui="textarea"],
+[data-refineui="select"] {
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+[data-refineui="input"]:focus:not(:disabled),
+[data-refineui="textarea"]:focus:not(:disabled),
+[data-refineui="select"]:focus:not(:disabled) {
+  border-color: var(--refineui-focus-color) !important;
+  box-shadow: 0 0 0 1px var(--refineui-focus-color);
+}
+[data-refineui="input"]::placeholder,
+[data-refineui="textarea"]::placeholder,
+[data-refineui="select"]::placeholder {
+  color: var(--refineui-placeholder);
+}
+[data-refineui="input"]:disabled,
+[data-refineui="textarea"]:disabled,
+[data-refineui="select"]:disabled {
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+/* Link */
+[data-refineui="link"] {
+  transition: opacity 0.15s;
+}
+[data-refineui="link"]:hover {
+  opacity: 0.8;
+}
+[data-refineui="link"]:focus-visible {
+  outline: 2px solid var(--refineui-focus-color);
+  outline-offset: var(--refineui-focus-offset);
+}
+
+/* Breadcrumb — Web Kit (Figma Breadcrumb / BreadcrumbItem) */
+[data-refineui="breadcrumb-link"] {
+  transition: color 0.15s, background-color 0.15s;
+}
+[data-refineui="breadcrumb-link"]:hover {
+  color: #6c6c6c !important;
+}
+[data-refineui="breadcrumb-link"][data-current]:hover {
+  color: #000000 !important;
+}
+[data-refineui="breadcrumb-link"]:active {
+  background-color: #e0e0e0 !important;
+  border-radius: 2px;
+}
+[data-refineui="breadcrumb-link"]:focus-visible {
+  outline: 2px solid var(--refineui-focus-color);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Breadcrumb ellipsis — Web Kit pressed (BreadcrumbItem Ellipsis, 링크와 동일 톤) */
+[data-refineui="breadcrumb-ellipsis"] {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  appearance: none;
+  transition: background-color 0.15s;
+}
+[data-refineui="breadcrumb-ellipsis"] > span {
+  transition: color 0.15s;
+}
+/* Hover: Figma BreadcrumbItem Ellipsis Hover — 링크와 동일 foreground secondary (#6c6c6c) */
+[data-refineui="breadcrumb-ellipsis"]:hover > span {
+  color: #6c6c6c !important;
+}
+[data-refineui="breadcrumb-ellipsis"]:active {
+  background-color: #e0e0e0 !important;
+  border-radius: 2px;
+}
+[data-refineui="breadcrumb-ellipsis"]:focus-visible {
+  outline: 2px solid var(--refineui-focus-color);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Badge — Web Kit hover/pressed (Figma Badge; Foundation palette) */
+[data-refineui="badge"] {
+  transition: background-color 0.15s, border-color 0.15s;
+}
+[data-refineui="badge"][data-variant="default"]:hover {
+  background-color: #4d4d4a !important;
+}
+[data-refineui="badge"][data-variant="default"]:active {
+  background-color: #000000 !important;
+}
+[data-refineui="badge"][data-variant="neutral"]:hover {
+  background-color: #d4d4d4 !important;
+}
+[data-refineui="badge"][data-variant="neutral"]:active {
+  background-color: #cecece !important;
+}
+[data-refineui="badge"][data-variant="outline"]:active {
+  border-color: #bbbbbb !important;
+}
+[data-refineui="badge"][data-variant="success"]:hover {
+  background-color: #229d28 !important;
+}
+[data-refineui="badge"][data-variant="success"]:active {
+  background-color: #1d8822 !important;
+}
+[data-refineui="badge"][data-variant="warning"]:hover {
+  background-color: #d6692c !important;
+}
+[data-refineui="badge"][data-variant="warning"]:active {
+  background-color: #ba5b26 !important;
+}
+[data-refineui="badge"][data-variant="danger"]:hover {
+  background-color: #f94343 !important;
+}
+[data-refineui="badge"][data-variant="danger"]:active {
+  background-color: #d93a3a !important;
+}
+
+/* Slider — no focus on bar; thumb gets hover/focus */
+[data-refineui="slider"] {
+  outline: none !important;
+}
+[data-refineui="slider"]:focus {
+  outline: none !important;
+}
+[data-refineui="slider"]::-webkit-slider-thumb {
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+[data-refineui="slider"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 2px var(--refineui-focus-color);
+}
+[data-refineui="slider"]:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 2px var(--refineui-focus-color);
+}
+[data-refineui="slider"]::-moz-range-thumb {
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+[data-refineui="slider"]::-moz-range-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 2px var(--refineui-focus-color);
+}
+[data-refineui="slider"]:focus::-moz-range-thumb {
+  box-shadow: 0 0 0 2px var(--refineui-focus-color);
+}

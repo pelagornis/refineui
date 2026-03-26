@@ -1,0 +1,37 @@
+@import "@pelagornis/page/styles";
+@import "@refineui/react/refineui.css";
+
+/* RefineUI 문서 — Inter 폰트 (Foundation 토큰과 동일) */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+/* Preview 레이아웃 — 컴포넌트 문서 Preview 섹션 */
+.not-content {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+}
+
+[data-refineui-preview] {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  box-sizing: border-box;
+  background: #f5f5f5;
+}
+
+/* 문서 테마에 따라 Preview 배경 자동 전환 (Starlight data-theme 연동) */
+[data-theme="dark"] [data-refineui-preview]:not([data-preview-variant="light"]) {
+  background: #1a1a1a;
+}
+[data-theme="light"] [data-refineui-preview]:not([data-preview-variant="dark"]) {
+  background: #f5f5f5;
+}
+
+/* variant로 강제 지정 시 */
+[data-refineui-preview][data-preview-variant="dark"] {
+  background: #1a1a1a !important;
+}
+[data-refineui-preview][data-preview-variant="light"] {
+  background: #f5f5f5 !important;
+}
+

@@ -1,0 +1,33 @@
+---
+title: Menu
+description: 메뉴 리스트 컴포넌트
+---
+
+import MenuPreview from "../../../components/MenuPreview";
+
+# Menu
+
+메뉴 리스트 컴포넌트입니다. **항목을 클릭해보세요.**
+
+## Preview
+
+<div class="not-content">
+  <MenuPreview client:load />
+</div>
+
+## 예시
+
+```tsx
+<Menu
+    items={[
+      { id: "1", label: "새로 만들기", onClick: () => {} },
+      { id: "2", label: "열기", onClick: () => {} },
+      { id: "3", label: "저장", onClick: () => {} },
+      { id: "4", label: "비활성화", disabled: true },
+    ]}
+  />
+```
+
+## Props
+
+- `items` — MenuItem[] (id, label, onClick?, disabled?)

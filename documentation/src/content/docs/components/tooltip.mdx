@@ -1,0 +1,30 @@
+---
+title: Tooltip
+description: 툴팁 컴포넌트
+---
+
+import TooltipDemo from "../../../components/TooltipDemo";
+
+# Tooltip
+
+호버 시 표시되는 툴팁 컴포넌트입니다.
+
+## 예시 (정적)
+
+```tsx
+<Tooltip trigger={<Button>호버</Button>} content="설명" placement="top" variant="default" />
+<Tooltip trigger={<Button>호버</Button>} content="다크" variant="inverted" />
+```
+
+## Preview
+
+<div class="not-content">
+  <TooltipDemo client:load />
+</div>
+
+## Props
+
+- `trigger` — 호버 대상 요소
+- `content` — 툴팁 내용
+- `placement` — `top` | `bottom` | `left` | `right` (기본: `top`)
+- `variant` — `default`(흰 배경·검정 글자) | `inverted`(다크 배경) (기본: `default`, Figma Web Kit 기본 스타일)

@@ -17,7 +17,8 @@
       "@refineui/figma": ["packages/figma"],
       "@refineui/tokens": ["packages/tokens"],
       "@refineui/version": ["packages/version"],
-      "@refineui/utilies": ["packages/utilies"],
+      "@refineui/utilities": ["packages/utilities"],
+      "@refineui/utilities/color": ["packages/utilities/src/color.ts"],
     }
   },
   "exclude": ["node_modules", "dist"]
