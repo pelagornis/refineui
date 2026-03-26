@@ -232,33 +232,50 @@ export function Calendar({
             </button>
         );
 
-        const endpointBlack = (radius: string, endpoint: "start" | "end") => (
-            <button
+        /** Web Kit `656:2958` — 바깥은 `backgroundprimaryhover`(neutral100) + 한쪽만 radius, 안쪽 검정은 전면 8px */
+        const endpointRange = (endpoint: "start" | "end") => (
+            <div
                 key={key}
-                type="button"
-                data-refineui="calendar-day"
-                data-current-month={isCurrentMonth ? "" : undefined}
-                data-other-month={!isCurrentMonth ? "" : undefined}
-                data-range-endpoint={endpoint}
-                role="gridcell"
-                onClick={() => handleDayClick(day, monthOffset)}
                 style={{
-                    ...baseSize,
-                    border: "none",
-                    cursor: "pointer",
-                    borderRadius: radius,
-                    background: colors.primaryBlack,
-                    color: colors.neutralWhite,
-                    ...caption,
-                    padding: 0,
-                    display: "inline-flex",
+                    width: DAY_PX,
+                    height: DAY_PX,
+                    display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     boxSizing: "border-box",
+                    backgroundColor: colors.neutral100,
+                    borderTopLeftRadius: endpoint === "start" ? r8 : 0,
+                    borderBottomLeftRadius: endpoint === "start" ? r8 : 0,
+                    borderTopRightRadius: endpoint === "end" ? r8 : 0,
+                    borderBottomRightRadius: endpoint === "end" ? r8 : 0,
                 }}
             >
-                {day}
-            </button>
+                <button
+                    type="button"
+                    data-refineui="calendar-day"
+                    data-current-month={isCurrentMonth ? "" : undefined}
+                    data-other-month={!isCurrentMonth ? "" : undefined}
+                    data-range-endpoint={endpoint}
+                    role="gridcell"
+                    onClick={() => handleDayClick(day, monthOffset)}
+                    style={{
+                        ...baseSize,
+                        border: "none",
+                        cursor: "pointer",
+                        borderRadius: r8,
+                        background: colors.primaryBlack,
+                        color: colors.neutralWhite,
+                        ...caption,
+                        padding: 0,
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        boxSizing: "border-box",
+                    }}
+                >
+                    {day}
+                </button>
+            </div>
         );
 
         if (!isCurrentMonth) {
@@ -307,8 +324,8 @@ export function Calendar({
 
         if (isRangeMode && rangeSpan) {
             if (inRangeMiddle) return grayMiddle();
-            if (isStart && !isEnd) return endpointBlack(`${r8} 0 0 ${r8}`, "start");
-            if (!isStart && isEnd) return endpointBlack(`0 ${r8} ${r8} 0`, "end");
+            if (isStart && !isEnd) return endpointRange("start");
+            if (!isStart && isEnd) return endpointRange("end");
         }
 
         const isSelectedSingle = !isRangeMode && !!value && sameDay(currentDate, value);
@@ -436,10 +453,11 @@ export function Calendar({
                         style={{
                             width: DAY_PX,
                             textAlign: "center",
+                            paddingTop: spacings.sizeSmall,
                             paddingBottom: spacings.sizeSmall,
                             boxSizing: "border-box",
                             ...typographys.caption1,
-                            color: colors.neutral600,
+                            color: colors.primaryBlack,
                         }}
                     >
                         {w}

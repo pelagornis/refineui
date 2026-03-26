@@ -8,7 +8,7 @@ function hexToRgba(hex: string, alpha: number): string {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-/** Dialog / Drawer 스크rim — Foundation primaryBlack 계열 알파와 동등한 가독성 */
+/** Dialog / Drawer 스크rim — 요청 스펙 알파 ~0.25 (primaryBlack) */
 export const overlays = {
-    backdrop: hexToRgba(colors.neutralBlack, 0.5),
+    backdrop: hexToRgba(colors.neutralBlack, 0.25),
 } as const;

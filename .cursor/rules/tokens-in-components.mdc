@@ -4,6 +4,8 @@ description: React 컴포넌트는 디자인 값을 @refineui/tokens에서만 �
 
 # Tokens in components (`@refineui/react`)
 
+컴포넌트 **범위·변형**은 **Web Kit Figma와 동일**해야 한다 — `.cursor/rules/figma-foundation.mdc`의「컴포넌트 ↔ Figma Web Kit」.
+
 ## MUST
 
 - **색·간격·반경·선 두께·타이포 프리셋·그림자·z-index**는 `@refineui/tokens`의 `colors`, `spacings`, `borderRadii`, `strokeWidths`, `typographys`, `shadows` / `toBoxShadow`, `zIndex`, `fontSizes` 등에서만 참조한다.

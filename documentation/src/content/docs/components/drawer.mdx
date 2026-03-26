@@ -7,9 +7,11 @@ import DrawerDemo from "../../../components/DrawerDemo";
 
 # Drawer
 
-측면 슬라이드 패널 컴포넌트입니다.
+Figma Web Kit **Drawer**(`635:1756`) **Overlay** 기준: 스크rim `overlays.backdrop`, 패널 **Shadow 16**, 폭 **`size`**(small 320 / medium 575 / large 850px), 헤더는 **닫기(왼쪽)** + 제목(`subTitle1`), **Divider**, 본문은 패딩만 두고 `children`을 그대로 표시합니다. 열림·닫힘 시 스크rim 페이드와 패널 **슬라이드**(약 0.32s, `cubic-bezier(0.32, 0.72, 0, 1)`).
 
 ## Preview
+
+Drawer는 열릴 때 **`document.body`로 포털**되어 스크림·패널이 문서·사이드바 위 전체 화면에 겹칩니다. 아래 회색 영역은 트리거 설명용 무대일 뿐, 오버레이는 그 밖까지 덮습니다.
 
 <div class="not-content">
   <DrawerDemo client:load />
@@ -19,6 +21,7 @@ import DrawerDemo from "../../../components/DrawerDemo";
 
 - `open` — 열림 상태
 - `onClose` — 닫기 콜백
-- `title` — 제목 (있으면 헤더 오른쪽에 **dismiss** 닫기 아이콘 버튼 표시)
-- `placement` — left | right (기본: right)
-- `children` — 내용
+- `title` — 제목 (헤더에 표시)
+- `placement` — `left` | `right` (기본: `right`)
+- `size` — `small` | `medium` | `large` (기본: `small`, Web Kit Overlay 폭)
+- `children` — 본문

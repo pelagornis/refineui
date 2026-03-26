@@ -107,7 +107,25 @@
 
 ---
 
-## 6. Accordion — Web Kit node-id=7-6
+## 6. Divider — Web Kit node `346:722`
+
+| layout | 설명 |
+|--------|------|
+| **default** | 전폭 1px (`strokeWidthThin`), `neutral300` |
+| **content** | Caption 2(12/16 Regular), **글자색 `neutralBlack`** (Figma `global/colors/neutral/black`), 분할 선 + 텍스트, `gap` sizeMedium(10px), `overflow` clip, 행 `justify-center`, 짧은 쪽 선 **`sizes.dividerShortEnd`(8px)**, 긴 쪽 **`flex: 1 0 0`** |
+| **icon** | **`sizes.dividerIconSlot`(20×20)** 프레임, Shape **`sizes.dividerIconCircleDiameter`** + **`sizes.dividerIconCircleInset`**(3px) 오프셋(Figma `346:722`), 동일 gap·선·flex 규칙 |
+
+| align | (content / icon) |
+|-------|------------------|
+| **center** | 양쪽 선 `flex: 1 0 0` |
+| **left** | 왼쪽 `dividerShortEnd` + 오른쪽 늘어남 |
+| **right** | 왼쪽 늘어남 + 오른쪽 `dividerShortEnd` |
+
+(Web Kit `346:722`에는 **세로 Divider** 변형이 없습니다. 구현도 **수평**만 지원합니다.)
+
+---
+
+## 7. Accordion — Web Kit node-id=7-6
 
 (Figma MCP 심볼: `Size=Small` → Caption1, `Medium` → Body1, `Larger` → SubTitle1 20/28 Semi Bold.)
 
@@ -127,7 +145,7 @@
 
 ---
 
-## 7. Switch / Toggle
+## 8. Switch / Toggle
 
 | 속성 | 값 |
 |------|-----|
@@ -160,7 +178,7 @@
 
 ---
 
-## 9. Typography (packages/tokens) — Foundation node-id=1-650
+## 10. Typography (packages/tokens) — Foundation node-id=1-650
 
 | 스타일 | fontSize | lineHeight | fontWeight |
 |--------|----------|------------|------------|
@@ -183,7 +201,7 @@
 
 ---
 
-## 10. Border Radius (packages/tokens)
+## 11. Border Radius (packages/tokens)
 
 | 토큰 | 값 |
 |------|-----|
@@ -198,7 +216,7 @@
 
 ---
 
-## 11. Stroke Width (packages/tokens)
+## 12. Stroke Width (packages/tokens)
 
 | 토큰 | 값 |
 |------|-----|
@@ -210,7 +228,7 @@
 
 ---
 
-## 12. Shadow (packages/tokens)
+## 13. Shadow (packages/tokens)
 
 - **Button**: `shadow2Light` (key + ambient)
 - **Card (elevated)**: `shadow8Light`
@@ -220,7 +238,7 @@ Shadow 레벨: shadow2, shadow4, shadow8, shadow16, shadow24, shadow32, shadow64
 
 ---
 
-## 13. Color (주요 사용)
+## 14. Color (주요 사용)
 
 | 용도 | 토큰 |
 |------|------|
@@ -263,6 +281,21 @@ Shadow 레벨: shadow2, shadow4, shadow8, shadow16, shadow24, shadow32, shadow64
     "borderRadius": "8px",
     "elevated": { "shadow": "shadow8Light" },
     "outlined": { "border": "1px solid neutral300" }
+  },
+  "divider": {
+    "node": "346:722",
+    "default": { "line": "1px neutral300", "margin": "none (consumer spacing)" },
+    "contentIcon": {
+      "gap": "sizeMedium",
+      "shortEnd": "sizes.dividerShortEnd",
+      "longFlex": "1 0 0",
+      "row": "justify-center, overflow hidden",
+      "labelColor": "neutralBlack",
+      "caption": "caption2",
+      "iconSlot": "sizes.dividerIconSlot",
+      "circle": "SVG r=13.33/2, stroke neutralBlack, strokeWidth 1"
+    },
+    "vertical": { "when": "layout default only", "minHeight": "sizeXXLarge" }
   },
   "switch": {
     "width": 44,

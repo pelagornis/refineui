@@ -15,10 +15,16 @@ https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?
 
 ## 규칙
 
+### 컴포넌트 ↔ Figma Web Kit
+
+- **MUST**: `packages/react` 등 UI 컴포넌트는 **Pelagornis RefineUI Web Kit** Figma에 있는 **해당 컴포넌트·변형·프로퍼티 범위와 동일**해야 한다. Figma에 없는 변형, props, 슬롯(`children`) 오버라이드, orientation 등 **추가 API·동작은 넣지 않는다**. 구현 전·리뷰 시 해당 노드의 `get_design_context` 등으로 스펙을 확인한다.
+- **MUST**: 컴포넌트 **내부 스타일·치수**는 **`@refineui/tokens`를 기준**으로만 둔다. 색·간격·타이포·선 두께·반경·그림자·z-index·`sizes`/`iconSizes` 등은 토큰에서 참조하고, 임의 숫자·hex·rgb 하드코딩 금지. (세부: `.cursor/rules/tokens-in-components.mdc`.)
+
+### Foundation · 토큰 동기화
+
 - **MUST**: UI/디자인 관련 작업 시 위 Foundation을 **단일 소스**로 참조. `packages/tokens`의 값은 이 Foundation과 동기화된 상태를 유지.
 - **MUST**: 새 토큰(color, spacing, typography, radius, shadow 등) 추가 시 Foundation에 정의된 값과 일치시킬 것. Foundation에 없는 값은 Foundation 업데이트 후 반영.
 - **MUST**: Figma MCP 사용 시 `get_variable_defs` 또는 `get_design_context`로 위 URL(또는 특정 node-id)을 전달해 Foundation 토큰/스타일을 조회.
-- **MUST**: 컴포넌트 구현 시 `@refineui/tokens`의 colors, spacings, fonts, strokeWidths 등을 사용. 하드코딩된 색상/간격/폰트 금지.
 - **RECOMMENDED**: Foundation 변경 시 `packages/tokens/src/global/*.ts`를 수동 또는 도구로 동기화.
 
 ## 토큰 패키지 구조

@@ -6,7 +6,7 @@ export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement
     label?: string;
 }
 
-export function Checkbox({ label, id, style, ...props }: CheckboxProps) {
+export function Checkbox({ label, id, style, disabled, ...props }: CheckboxProps) {
     const uid = useId();
     const inputId = id ?? uid;
 
@@ -17,7 +17,7 @@ export function Checkbox({ label, id, style, ...props }: CheckboxProps) {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: spacings.sizeSmall,
-                cursor: props.disabled ? "not-allowed" : "pointer",
+                cursor: disabled ? "not-allowed" : "pointer",
                 ...style,
             }}
         >
@@ -25,16 +25,21 @@ export function Checkbox({ label, id, style, ...props }: CheckboxProps) {
                 id={inputId}
                 type="checkbox"
                 data-refineui="checkbox"
+                disabled={disabled}
                 style={{
                     width: sizes.controlCheckboxRadio,
                     height: sizes.controlCheckboxRadio,
-                    accentColor: colors.primaryBlack,
-                    cursor: "pointer",
+                    cursor: disabled ? "not-allowed" : "pointer",
                 }}
                 {...props}
             />
             {label && (
-                <span style={{ ...typographys.body3, color: colors.primaryBlack }}>
+                <span
+                    style={{
+                        ...typographys.body2,
+                        color: disabled ? colors.neutral600 : colors.primaryBlack,
+                    }}
+                >
                     {label}
                 </span>
             )}

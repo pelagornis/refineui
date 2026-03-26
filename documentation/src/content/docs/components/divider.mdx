@@ -1,13 +1,18 @@
 ---
 title: Divider
-description: 구분선 컴포넌트
+description: 구분선 — Web Kit 346:722 (Default / Content / Icon), Figma MCP와 동일 스펙
 ---
 
 import DividerPreview from "../../../components/DividerPreview";
 
 # Divider
 
-구분선 컴포넌트입니다.
+Figma **Pelagornis RefineUI Web Kit** `Divider`(`346:722`)와 **동일**하게 맞춰 두었습니다.
+
+- **선 색**: `neutral300`, 두께 `strokeWidthThin`(1px).
+- **Content** 라벨: **Caption 2**, 글자색 **`neutralBlack`** (Figma `global/colors/neutral/black`).
+- **분할 행**: `gap` **sizeMedium**(10px), 긴 선 **`flex: 1 0 0`**, 짧은 끝 **`sizes.dividerShortEnd`**(8px), 행은 **`justify-content: center`**, **`overflow: hidden`** (Figma `overflow-clip`에 대응).
+- **Icon**: Figma와 동일하게 **고정 Circle 글리프만** — **`sizes.dividerIconSlot`(20×20)** 프레임, Shape **`sizes.dividerIconCircleDiameter`** + **`sizes.dividerIconCircleInset`**(3px), stroke `neutralBlack`.
 
 ## Preview
 
@@ -15,18 +20,40 @@ import DividerPreview from "../../../components/DividerPreview";
   <DividerPreview client:load />
 </div>
 
+## layout
+
+- **`default`** — 전체 너비 1px 선만. 바깥 여백은 넣지 않습니다.
+- **`content`** — 분할 선 + `children` 라벨.
+- **`icon`** — 분할 선 + Circle 글리프(Figma 고정).
+
+`layout=content`인데 `children`이 없으면 `default`처럼 동작합니다.
+
+## align (`content` · `icon`)
+
+- **`center`** — 양쪽 선이 `flex: 1 0 0`으로 균등.
+- **`left`** — 왼쪽 **8px**(`dividerShortEnd`) + 오른쪽 늘어남.
+- **`right`** — 왼쪽 늘어남 + 오른쪽 **8px**.
+
 ## 예시
 
 ```tsx
 import { Divider } from "@refineui/react";
 
-<p>위 내용</p>
 <Divider />
-<p>아래 내용</p>
 
-<Divider orientation="vertical" />
+<Divider layout="content" align="center">
+  Content
+</Divider>
+
+<Divider layout="icon" align="left" />
 ```
 
 ## Props
 
-- `orientation` — horizontal | vertical (기본: horizontal)
+| Prop | 타입 | 기본 | 설명 |
+|------|------|------|------|
+| `layout` | `default` \| `content` \| `icon` | `default` | |
+| `align` | `center` \| `left` \| `right` | `center` | `content`·`icon` 전용 |
+| `children` | `ReactNode` | — | **`layout="content"`일 때만**(라벨). `icon`에서는 사용하지 않음 |
+
+그 외 `HTMLAttributes<HTMLDivElement>`.

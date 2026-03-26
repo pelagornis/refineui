@@ -7,9 +7,11 @@ import DialogDemo from "../../../components/DialogDemo";
 
 # Dialog
 
-모달 다이얼로그 컴포넌트입니다.
+모달 다이얼로그 — 열릴 때 **`document.body`로 포털**되어 스크림·패널이 문서 전체 위에 겹칩니다. 스크림은 **페이드**, 패널은 **살짝 축소·아래에서 들어오는 느낌**(scale + translateY, 약 0.32s, `cubic-bezier(0.32, 0.72, 0, 1)`). 본문은 패딩 + `body2`만 적용합니다.
 
 ## Preview
+
+아래 회색 영역은 버튼·설명용 무대일 뿐, 오버레이는 그 밖까지 덮습니다.
 
 <div class="not-content">
   <DialogDemo client:load />
@@ -19,5 +21,5 @@ import DialogDemo from "../../../components/DialogDemo";
 
 - `open` — 열림 상태
 - `onClose` — 닫기 콜백
-- `title` — 제목 (있으면 헤더 오른쪽에 **dismiss** 닫기 아이콘 버튼 표시)
-- `children` — 내용
+- `title` — 제목 (있으면 헤더 + 오른쪽 **dismiss**)
+- `children` — 본문

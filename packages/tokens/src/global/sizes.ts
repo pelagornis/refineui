@@ -17,7 +17,10 @@ export const sizes = {
     toastMinWidth: "280px",
     toastMaxWidth: "360px",
     dialogMaxWidth: "480px",
-    drawerMaxWidth: "400px",
+    /** Web Kit Drawer `635:1756` — Overlay 폭 (Small / Medium / Large) */
+    drawerWidthSm: "320px",
+    drawerWidthMd: "575px",
+    drawerWidthLg: "850px",
     calendarMinWidth: "256px",
     /** Web Kit Calendar `656:2958` — Day 셀 32×32 */
     calendarDaySize: "32px",
@@ -37,6 +40,13 @@ export const sizes = {
     avatarMd: "36px",
     avatarLg: "56px",
     skeletonDefaultHeight: "20px",
+    /** Web Kit Divider `346:722` — Content/Icon 분할 시 짧은 선 끝 */
+    dividerShortEnd: "8px",
+    /** Web Kit Divider `346:722` — Icon 변형 Circle 슬롯 */
+    dividerIconSlot: "20px",
+    /** Web Kit Divider `346:722` — Circle 내부 Shape (Figma `left`/`top` 3px, `size` 13.33px) */
+    dividerIconCircleDiameter: "13.33px",
+    dividerIconCircleInset: "3px",
     accessibleClip: "1px",
     spinnerRingWidth: "3px",
 } as const;

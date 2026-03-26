@@ -151,6 +151,35 @@
   opacity: 1;
 }
 
+/* Checkbox — Web Kit (18×18, roundedSmall 4px, neutral300 border; checked primaryBlack + check) */
+[data-refineui="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  margin: 0;
+  border: 1px solid var(--refineui-border);
+  border-radius: 4px;
+  background-color: var(--refineui-bg);
+  transition: background-color 0.15s, border-color 0.15s;
+}
+[data-refineui="checkbox"]:checked {
+  background-color: var(--refineui-focus-color);
+  border-color: var(--refineui-focus-color);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10' fill='none'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px 10px;
+}
+[data-refineui="checkbox"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+[data-refineui="checkbox"]:focus-visible {
+  outline: 2px solid var(--refineui-focus-color);
+  outline-offset: var(--refineui-focus-offset);
+}
+
 /* Link */
 [data-refineui="link"] {
   transition: opacity 0.15s;
@@ -248,6 +277,26 @@
 }
 [data-refineui="badge"][data-variant="danger"]:active {
   background-color: #d93a3a !important;
+}
+
+/* Chip / Tag — Web Kit (라벨형 Badge와 동일 호버·pressed 톤) */
+[data-refineui="chip"] {
+  transition: background-color 0.15s, border-color 0.15s;
+}
+[data-refineui="chip"][data-variant="filled"]:hover {
+  background-color: #4d4d4a !important;
+}
+[data-refineui="chip"][data-variant="filled"]:active {
+  background-color: #000000 !important;
+}
+[data-refineui="chip"][data-variant="default"]:hover {
+  background-color: #d4d4d4 !important;
+}
+[data-refineui="chip"][data-variant="default"]:active {
+  background-color: #cecece !important;
+}
+[data-refineui="chip"][data-variant="outline"]:active {
+  border-color: #bbbbbb !important;
 }
 
 /* Slider — no focus on bar; thumb gets hover/focus */

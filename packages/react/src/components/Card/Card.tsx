@@ -11,9 +11,9 @@ export function Card({ variant = "elevated", style, ...props }: CardProps) {
             data-refineui="card"
             style={{
                 backgroundColor: colors.neutralWhite,
-                borderRadius: borderRadii.roundedXXLarge,
+                borderRadius: borderRadii.roundedLarge,
                 padding: spacings.sizeLarge,
-                boxShadow: variant === "elevated" ? toBoxShadow(shadows.shadow4Light) : undefined,
+                boxShadow: variant === "elevated" ? toBoxShadow(shadows.shadow8Light) : undefined,
                 border: variant === "outlined" ? `${strokeWidths.strokeWidthThin} solid ${colors.neutral300}` : undefined,
                 boxSizing: "border-box",
                 ...style,
