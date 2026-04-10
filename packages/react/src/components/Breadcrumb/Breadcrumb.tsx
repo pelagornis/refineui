@@ -1,135 +1,173 @@
-import type { HTMLAttributes, MouseEventHandler, ReactNode } from "react";
-import { Fragment } from "react";
-import { colors, spacings, typographys, iconSizes } from "@refineui/tokens";
+import { clsx } from "clsx";
+import type {
+    AnchorHTMLAttributes,
+    ButtonHTMLAttributes,
+    HTMLAttributes,
+    LiHTMLAttributes,
+    OlHTMLAttributes,
+    ReactElement,
+} from "react";
+import { cloneElement, forwardRef, isValidElement } from "react";
+import { iconSizes } from "@refineui/tokens";
 import { WebIcon } from "../../WebIcon";
 
-export interface BreadcrumbItem {
-    id: string;
-    /** `ellipsis`일 때 스크린리더용 (예: `"중간 경로 생략"`) */
-    label?: ReactNode;
-    href?: string;
-    /** Figma `Ellipsis` — 중간 경로 축약 (⋯ / more-horizontal) */
-    ellipsis?: boolean;
-    /** `ellipsis: true`일 때: 클릭 시(pressed/hover/focus는 `data-refineui="breadcrumb-ellipsis"` + CSS) */
-    onClick?: MouseEventHandler<HTMLButtonElement>;
-}
+/**
+ * Web Kit (MCP `get_design_context`):
+ * - 행 **Breadcrumb** COMPONENT_SET `283:688` — gap sizeMedium, py sizeSmall, flex items-start
+ * - 셀 **Breadcrumb/BreadcrumbItem** — Link `279:2539`, Link Current `289:41`, Ellipsis `289:44` (래퍼: flex items-center justify-center overflow-clip)
+ */
+const textRow = "refineui-typo-caption-1 whitespace-nowrap";
 
-export interface BreadcrumbProps extends HTMLAttributes<HTMLElement> {
-    items: BreadcrumbItem[];
-    /** Figma Web Kit 기본: `/` (Caption1 · tertiary). MCP `283:688`와 동일 */
-    separator?: ReactNode;
-}
+/** Web Kit 루트 — `nav[data-refineui="breadcrumb"]` */
+export type BreadcrumbProps = HTMLAttributes<HTMLElement>;
 
-const textBase = {
-    ...typographys.caption1,
-    whiteSpace: "nowrap" as const,
-};
-
-const sepOuter = {
-    display: "inline-flex" as const,
-    alignItems: "center" as const,
-    flexShrink: 0 as const,
-};
-
-export function Breadcrumb({ items, separator, style, ...props }: BreadcrumbProps) {
-    const resolvedSeparator =
-        separator !== undefined ? (
-            separator
-        ) : (
-            <span style={{ ...textBase, color: colors.neutral500 }} aria-hidden>
-                /
-            </span>
-        );
-
+export function Breadcrumb({ className, ...props }: BreadcrumbProps) {
     return (
         <nav
             data-refineui="breadcrumb"
             aria-label="Breadcrumb"
-            style={{
-                display: "flex",
-                flexWrap: "wrap",
-                alignItems: "center",
-                gap: spacings.sizeMedium,
-                padding: `${spacings.sizeSmall} 0`,
-                ...style,
-            }}
+            className={clsx("py-refineui-size-small", className)}
             {...props}
-        >
-            {items.map((item, i) => {
-                const isLast = i === items.length - 1;
-                const currentColor = isLast ? colors.primaryBlack : colors.neutral500;
-
-                const ellipsisAriaLabel =
-                    typeof item.label === "string" ? item.label : "생략된 경로";
-                const ellipsisBox = {
-                    display: "inline-flex" as const,
-                    width: spacings.sizeXLarge,
-                    height: spacings.sizeXLarge,
-                    alignItems: "center" as const,
-                    justifyContent: "center" as const,
-                    flexShrink: 0 as const,
-                };
-
-                const content =
-                    item.ellipsis === true ? (
-                        item.onClick != null ? (
-                            <button
-                                type="button"
-                                data-refineui="breadcrumb-ellipsis"
-                                aria-label={ellipsisAriaLabel}
-                                onClick={item.onClick}
-                                style={{ ...ellipsisBox, cursor: "pointer" }}
-                            >
-                                <WebIcon
-                                    name="more-horizontal"
-                                    size={iconSizes.sm}
-                                    color={colors.neutral500}
-                                    fallback="⋯"
-                                />
-                            </button>
-                        ) : (
-                            <span
-                                data-refineui="breadcrumb-ellipsis"
-                                role="img"
-                                aria-label={ellipsisAriaLabel}
-                                style={ellipsisBox}
-                            >
-                                <WebIcon
-                                    name="more-horizontal"
-                                    size={iconSizes.sm}
-                                    color={colors.neutral500}
-                                    fallback="⋯"
-                                />
-                            </span>
-                        )
-                    ) : item.href ? (
-                        <a
-                            href={item.href}
-                            data-refineui="breadcrumb-link"
-                            {...(isLast ? { "data-current": "" as const } : {})}
-                            style={{
-                                ...textBase,
-                                color: isLast ? colors.primaryBlack : colors.neutral500,
-                                textDecoration: "none",
-                            }}
-                        >
-                            {item.label}
-                        </a>
-                    ) : (
-                        <span style={{ ...textBase, color: currentColor }}>{item.label}</span>
-                    );
-
-                return (
-                    <Fragment key={item.id}>
-                        {i > 0 ? (
-                            <span style={sepOuter} aria-hidden>
-                                {resolvedSeparator}
-                            </span>
-                        ) : null}
-                        <span style={{ display: "inline-flex", alignItems: "center" }}>{content}</span>
-                    </Fragment>
-                );
-            })}
-        </nav>
+        />
     );
 }
+
+/** 경로 세그먼트 목록 — 시맨틱 `ol` */
+export type BreadcrumbListProps = OlHTMLAttributes<HTMLOListElement>;
+
+export function BreadcrumbList({ className, ...props }: BreadcrumbListProps) {
+    return (
+        <ol
+            className={clsx(
+                "m-0 flex flex-wrap list-none items-start gap-refineui-size-medium p-0",
+                className,
+            )}
+            {...props}
+        />
+    );
+}
+
+export type BreadcrumbItemProps = LiHTMLAttributes<HTMLLIElement>;
+
+export function BreadcrumbItem({ className, ...props }: BreadcrumbItemProps) {
+    return (
+        <li
+            className={clsx("inline-flex items-center justify-center overflow-clip", className)}
+            {...props}
+        />
+    );
+}
+
+export interface BreadcrumbLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+    /** `true`면 자식 단일 엘리먼트(예: Next.js `Link`)에 스타일·`data-refineui`를 합성 */
+    asChild?: boolean;
+}
+
+export function BreadcrumbLink({ asChild, className, children, ...props }: BreadcrumbLinkProps) {
+    const classes = clsx(
+        textRow,
+        "inline-flex items-center justify-center px-refineui-size-medium py-refineui-size-xsmall text-refineui-neutral-500 no-underline",
+        className,
+    );
+
+    if (asChild) {
+        if (!isValidElement(children)) {
+            throw new Error("BreadcrumbLink: asChild일 때 자식은 단일 React 엘리먼트여야 합니다.");
+        }
+        const child = children as ReactElement<{ className?: string }>;
+        return cloneElement(child, {
+            ...(child.props as Record<string, unknown>),
+            ...props,
+            className: clsx(classes, child.props.className),
+            "data-refineui": "breadcrumb-link",
+        } as never);
+    }
+
+    return (
+        <a data-refineui="breadcrumb-link" className={classes} {...props}>
+            {children}
+        </a>
+    );
+}
+
+/** 현재 페이지 — Web Kit `Link Current` (primary foreground) */
+export type BreadcrumbPageProps = HTMLAttributes<HTMLSpanElement>;
+
+export function BreadcrumbPage({ className, ...props }: BreadcrumbPageProps) {
+    return (
+        <span
+            role="link"
+            aria-disabled="true"
+            aria-current="page"
+            className={clsx(
+                textRow,
+                "inline-flex items-center justify-center px-refineui-size-medium py-refineui-size-xsmall text-refineui-primary-black",
+                className,
+            )}
+            {...props}
+        />
+    );
+}
+
+/** 구분자 — 기본 `/` (Caption1 · tertiary) */
+export type BreadcrumbSeparatorProps = LiHTMLAttributes<HTMLLIElement>;
+
+export function BreadcrumbSeparator({ children, className, ...props }: BreadcrumbSeparatorProps) {
+    return (
+        <li
+            role="presentation"
+            aria-hidden
+            className={clsx("inline-flex shrink-0 items-center py-refineui-size-xsmall", className)}
+            {...props}
+        >
+            {children ?? (
+                <span className={clsx(textRow, "inline-flex items-center text-refineui-neutral-500")}>/</span>
+            )}
+        </li>
+    );
+}
+
+/** ⋯ 아이콘만 — 정적 표시·레이아웃용 (인터랙션은 `BreadcrumbEllipsisTrigger`) */
+export type BreadcrumbEllipsisProps = HTMLAttributes<HTMLSpanElement>;
+
+export function BreadcrumbEllipsis({ className, ...props }: BreadcrumbEllipsisProps) {
+    return (
+        <span
+            data-refineui="breadcrumb-ellipsis"
+            className={clsx(
+                "inline-flex size-refineui-size-xlarge shrink-0 items-center justify-center text-refineui-neutral-500",
+                className,
+            )}
+            {...props}
+        >
+            <WebIcon name="more-horizontal" size={iconSizes.sm} color="currentColor" fallback="⋯" />
+        </span>
+    );
+}
+
+export type BreadcrumbEllipsisTriggerProps = ButtonHTMLAttributes<HTMLButtonElement>;
+
+/**
+ * Web Kit BreadcrumbItem `Ellipsis` — `button[data-refineui="breadcrumb-ellipsis"]`, 20×20 슬롯.
+ * `Dropdown` 등에 `trigger`로 넘길 때 `ref` 전달을 위해 `forwardRef`.
+ */
+export const BreadcrumbEllipsisTrigger = forwardRef<HTMLButtonElement, BreadcrumbEllipsisTriggerProps>(
+    function BreadcrumbEllipsisTrigger({ className, type = "button", children, ...props }, ref) {
+        return (
+            <button
+                ref={ref}
+                type={type}
+                data-refineui="breadcrumb-ellipsis"
+                className={clsx(
+                    "box-border inline-flex size-refineui-size-xlarge shrink-0 cursor-pointer items-center justify-center border-none bg-transparent p-0 text-refineui-neutral-500",
+                    className,
+                )}
+                {...props}
+            >
+                {children ?? (
+                    <WebIcon name="more-horizontal" size={iconSizes.sm} color="currentColor" fallback="⋯" />
+                )}
+            </button>
+        );
+    },
+);

@@ -5,9 +5,19 @@
 **Pelagornis RefineUI Foundation (Figma) — Variables:**
 https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundation?node-id=1-650
 
+**Pelagornis RefineUI Web Kit (Figma) — 컴포넌트:**
+https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?node-id=0-1
+
+(`node-id=7-6`은 파일 내 **Accordion 예시 페이지**만 연다. 컴포넌트별 스펙은 MCP `search_design_system`과 해당 노드의 `get_design_context`를 쓴다 — 예: Breadcrumb `283:688`, Breadcrumb/BreadcrumbItem 변형 `279:2539` / `289:41` / `289:44`.)
+
+### Foundation과 Web Kit의 관계
+
+- **Foundation → Web Kit**: Web Kit 컴포넌트는 **Foundation Variables**(색, spacing, padding, radius 등)에 **연결된 값**만 사용한다.
+- **모든 사이즈·padding·간격**은 Foundation을 거친다. Web Kit만의 임의 수치는 두지 않는다.
+
 ## 역할
 
-- **단일 소스**: 색상, 타이포그래피, 간격, radius, shadow 등 모든 디자인 토큰의 기준
+- **Foundation = 단일 소스**: 색상, 타이포그래피, 간격, radius, shadow 등 모든 디자인 토큰의 기준
 - **코드 동기화**: `packages/tokens/src/global/*.ts`는 이 Foundation과 일치하도록 유지
 
 ## 토큰 매핑
@@ -28,8 +38,8 @@ https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundati
 
 1. Cursor에서 Figma MCP 연결 후
 2. `get_variable_defs` — Foundation (node-id=1-650) 변수 조회
-3. `get_design_context` — Web Kit (node-id=7-6) 컴포넌트 디자인 조회
-4. 특정 프레임/레이어만 필요하면 `?node-id=XXX:YYY` 형태로 node-id 지정
+3. `get_design_context` — Web Kit에서 **조회할 컴포넌트 노드** 지정(파일 진입용 기본 링크는 `node-id=0-1`; 예: Breadcrumb `283:688`)
+4. 특정 프레임/레이어만 필요하면 `?node-id=XXX-YYY` / MCP 인자 `nodeId` `XXX:YYY` 형태로 지정
 
 ## 동기화 절차
 
@@ -38,7 +48,7 @@ https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundati
 1. Cursor에서 **Figma MCP 인증** (`mcp_auth` tool 호출 또는 Connect)
 2. 채팅에서 다음을 요청:
    - *"Foundation (node-id=1-650) 변수를 가져와서 packages/tokens에 반영해줘"*
-   - *"Web Kit (node-id=7-6) 컴포넌트 디자인을 design-specs-web-kit.md와 React 컴포넌트에 반영해줘"*
+   - *"Web Kit에서 Breadcrumb(283:688) 등 **해당 컴포넌트 node-id**로 get_design_context 해서 design-specs-web-kit.md와 React에 반영해줘"*
 3. AI가 `get_variable_defs` / `get_design_context`로 Figma에서 직접 값을 가져와 동기화
 
 ### 수동 동기화

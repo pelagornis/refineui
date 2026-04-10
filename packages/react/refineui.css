@@ -2,33 +2,35 @@
 /* Import: import "@refineui/react/refineui.css" */
 /* Foundation: https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundation */
 
+/* @refineui/tokens — 팔레트·간격·반경 등 단일 소스 */
+/* Vite는 `@refineui/tokens/...` 를 index.mjs 기준으로 붙여 깨뜨리므로, sibling 패키지는 상대 경로로 */
+@import "../tokens/dist/css-variables.css";
+
 /* RefineUI System Icons font (Accordion chevron 등) */
 @import "@refineui/web-icons/dist/fonts/refineui-system-icons.css";
 
 :root {
-  --refineui-focus-color: #212121;
-  --refineui-focus-offset: 2px;
-  --refineui-bg: #ffffff;
-  --refineui-text: #212121;
-  --refineui-border: #dbdbdb;
-  /* Foundation neutral450 — placeholder */
-  --refineui-placeholder: #bbbbbb;
-  --refineui-btn-primary-hover: #404040;
-  --refineui-btn-primary-pressed: #000000;
-  --refineui-btn-danger-pressed: #d93a3a;
+  --refineui-focus-color: var(--refineui-color-primary-black);
+  --refineui-focus-offset: var(--refineui-spacing-size-xx-small);
+  --refineui-bg: var(--refineui-color-neutral-white);
+  --refineui-text: var(--refineui-color-primary-black);
+  --refineui-border: var(--refineui-color-neutral-300);
+  --refineui-placeholder: var(--refineui-color-neutral-450);
+  --refineui-btn-primary-hover: var(--refineui-color-neutral-700);
+  --refineui-btn-primary-pressed: var(--refineui-color-neutral-black);
 }
 
 /* Dark mode — set data-theme="dark" on html/body to enable */
 [data-theme="dark"] {
-  --refineui-focus-color: #ffffff;
-  --refineui-bg: #1a1a1a;
-  --refineui-text: #e0e0e0;
-  --refineui-border: #404040;
-  --refineui-placeholder: #888888;
-  --refineui-btn-primary-hover: #333;
-  --refineui-btn-secondary-hover: #404040;
-  --refineui-btn-ghost-hover: rgba(255,255,255,0.08);
-  --refineui-btn-danger-hover: #ff6969;
+  --refineui-focus-color: var(--refineui-color-neutral-white);
+  --refineui-bg: var(--refineui-color-neutral-900);
+  --refineui-text: var(--refineui-color-neutral-250);
+  --refineui-border: var(--refineui-color-neutral-700);
+  --refineui-placeholder: var(--refineui-color-neutral-550);
+  --refineui-btn-primary-hover: var(--refineui-color-neutral-750);
+  --refineui-btn-secondary-hover: var(--refineui-color-neutral-700);
+  --refineui-btn-ghost-hover: var(--refineui-overlay-ghost-button-hover-dark);
+  --refineui-btn-danger-hover: var(--refineui-color-red-500);
 }
 
 /* Button & button-like */
@@ -36,8 +38,9 @@
   transition: opacity 0.15s, background-color 0.15s, border-color 0.15s, transform 0.1s;
 }
 [data-refineui="switch"],
-[data-refineui="spinbutton"],
+[data-refineui="spinbutton-step"],
 [data-refineui="pagination"],
+[data-refineui="pagination-page"],
 [data-refineui="accordion-trigger"],
 [data-refineui="dropdown-item"],
 [data-refineui="menu-item"],
@@ -47,9 +50,7 @@
 [data-refineui="chip-remove"] {
   transition: opacity 0.15s, background-color 0.15s, transform 0.1s;
 }
-[data-refineui="switch"]:not(:disabled):hover,
-[data-refineui="spinbutton"]:not(:disabled):hover,
-[data-refineui="pagination"]:not(:disabled):hover,
+[data-refineui="spinbutton-step"]:not(:disabled):hover,
 [data-refineui="accordion-trigger"]:hover,
 [data-refineui="dropdown-item"]:not(:disabled):hover,
 [data-refineui="menu-item"]:not(:disabled):hover,
@@ -58,6 +59,46 @@
 [data-refineui="calendar-day"]:hover,
 [data-refineui="chip-remove"]:hover {
   opacity: 0.9;
+}
+/* Pagination — Web Kit `558:1989` · `Pagination / Item` `570:2332` */
+[data-refineui="pagination"]:not(:disabled):hover {
+  background-color: #f5f5f5 !important;
+  border-color: #bbbbbb !important;
+}
+[data-refineui="pagination"]:disabled {
+  background-color: #e0e0e0 !important;
+  border-color: #dbdbdb !important;
+}
+[data-refineui="pagination-page"] {
+  box-sizing: border-box;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #dbdbdb;
+  background-color: #ffffff;
+  color: #212121;
+  cursor: pointer;
+  font: inherit;
+  transition: background-color 0.15s, border-color 0.15s, transform 0.1s;
+}
+[data-refineui="pagination-page"][data-selected="true"] {
+  border-width: 2px;
+  border-color: #333333;
+  background-color: #f0f0f0;
+  padding: 7px;
+}
+[data-refineui="pagination-page"]:not([data-selected="true"]):not(:disabled):hover {
+  background-color: #f5f5f5 !important;
+  border-color: #bbbbbb !important;
+}
+[data-refineui="pagination-page"]:disabled {
+  cursor: default;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  color: #212121;
+  transform: none;
+  opacity: 1;
 }
 /* Button — Web Kit `79:3304` (Primary/Secondary/Outline/Ghost 상태) */
 [data-refineui="button"][data-variant="primary"]:not(:disabled):hover {
@@ -86,15 +127,9 @@
 [data-refineui="button"][data-variant="ghost"]:not(:disabled):active {
   background-color: #dbdbdb !important;
 }
-[data-refineui="button"][data-variant="danger"]:not(:disabled):hover {
-  background-color: var(--refineui-btn-danger-hover, #f94343) !important;
-}
-[data-refineui="button"][data-variant="danger"]:not(:disabled):active {
-  background-color: var(--refineui-btn-danger-pressed, #d93a3a) !important;
-}
 [data-refineui="button"]:not(:disabled):active,
-[data-refineui="switch"]:not(:disabled):active,
 [data-refineui="spinbutton"]:not(:disabled):active,
+[data-refineui="pagination-page"]:not(:disabled):active,
 [data-refineui="pagination"]:not(:disabled):active,
 [data-refineui="accordion-trigger"]:active,
 [data-refineui="dropdown-item"]:not(:disabled):active,
@@ -107,7 +142,7 @@
 }
 [data-refineui="button"]:focus-visible,
 [data-refineui="switch"]:focus-visible,
-[data-refineui="spinbutton"]:focus-visible,
+[data-refineui="pagination-page"]:focus-visible,
 [data-refineui="pagination"]:focus-visible,
 [data-refineui="accordion-trigger"]:focus-visible,
 [data-refineui="dropdown-item"]:focus-visible,
@@ -120,6 +155,17 @@
 [data-refineui="drawer-close"]:focus-visible {
   outline: 2px solid var(--refineui-focus-color);
   outline-offset: var(--refineui-focus-offset);
+}
+
+/* Spin Button — Web Kit `561:2067` (포커스 링은 루트 테두리로 통일) */
+[data-refineui="spinbutton"] {
+  transition: border-color 0.15s, background-color 0.15s;
+}
+[data-refineui="spinbutton"]:focus-within:not([data-disabled="true"]) {
+  border-color: #333333 !important;
+}
+[data-refineui="spinbutton-step"]:focus-visible {
+  outline: none;
 }
 
 /* Base typography — Inter (Foundation font) */
@@ -151,41 +197,153 @@
   opacity: 1;
 }
 
-/* Checkbox — Web Kit (18×18, roundedSmall 4px, neutral300 border; checked primaryBlack + check) */
-[data-refineui="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  flex-shrink: 0;
-  box-sizing: border-box;
-  margin: 0;
-  border: 1px solid var(--refineui-border);
-  border-radius: 4px;
-  background-color: var(--refineui-bg);
-  transition: background-color 0.15s, border-color 0.15s;
+/* Skeleton — Web Kit COMPONENT_SET `Skeleton` `570:6175` (펄스; Figma Shimmer 마스크는 단순화) */
+@keyframes refineui-skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
-[data-refineui="checkbox"]:checked {
-  background-color: var(--refineui-focus-color);
-  border-color: var(--refineui-focus-color);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 10' fill='none'%3E%3Cpath d='M1 5l3.5 3.5L11 1' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 12px 10px;
-}
-[data-refineui="checkbox"]:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-[data-refineui="checkbox"]:focus-visible {
-  outline: 2px solid var(--refineui-focus-color);
-  outline-offset: var(--refineui-focus-offset);
+[data-refineui="skeleton"] {
+  animation: refineui-skeleton-pulse 1.5s ease-in-out infinite;
 }
 
-/* Link */
-[data-refineui="link"] {
-  transition: opacity 0.15s;
+/* Spinner — Web Kit COMPONENT_SET `Spinner` `550:3669` */
+@keyframes refineui-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
-[data-refineui="link"]:hover {
-  opacity: 0.8;
+[data-refineui="spinner"] {
+  flex-shrink: 0;
+  animation: refineui-spin 0.8s linear infinite;
+}
+
+/* Checkbox — Web Kit `327:2539`; 체크 마크는 React `WebIcon` checkmark 16px */
+[data-refineui="checkbox"] {
+  box-sizing: border-box;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  background-color: #ffffff;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+[data-refineui="checkbox"][data-variant="circular"] {
+  border-radius: 9999px;
+}
+label:hover [data-refineui="checkbox"][data-checked="false"]:not([data-disabled="true"]) {
+  border-color: #ebebeb;
+}
+label:active [data-refineui="checkbox"][data-checked="false"]:not([data-disabled="true"]) {
+  border-color: #bbbbbb;
+}
+[data-refineui="checkbox"][data-checked="true"]:not([data-disabled="true"]) {
+  background-color: #4d4d4a;
+  border-color: #4d4d4a;
+}
+label:hover [data-refineui="checkbox"][data-checked="true"]:not([data-disabled="true"]) {
+  background-color: #000000;
+  border-color: #000000;
+}
+label:active [data-refineui="checkbox"][data-checked="true"]:not([data-disabled="true"]) {
+  background-color: #6c6c6c;
+  border-color: #6c6c6c;
+}
+input:focus-visible + [data-refineui="checkbox"]:not([data-disabled="true"]) {
+  outline: none;
+  border: 2px solid #bbbbbb;
+}
+input:focus-visible + [data-refineui="checkbox"][data-checked="true"]:not([data-disabled="true"]) {
+  background-color: #212121;
+}
+[data-refineui="checkbox"][data-disabled="true"][data-checked="false"] {
+  background-color: #f5f5f5;
+  border-color: #e0e0e0;
+}
+[data-refineui="checkbox"][data-disabled="true"][data-checked="true"] {
+  background-color: #ebebeb;
+  border-color: #ebebeb;
+}
+
+/* Radio — Web Kit COMPONENT_SET `Radio` `397:1001` (16×16 원; Foundation 팔레트) */
+[data-refineui="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+  margin: 0;
+  flex-shrink: 0;
+  border: 1px solid #dbdbdb;
+  border-radius: 9999px;
+  background-color: #ffffff;
+  background-image: none;
+  transition: border-color 0.15s, background-color 0.15s, box-shadow 0.15s;
+}
+[data-refineui="radio"]:not(:disabled):not(:checked):hover {
+  border-color: #bbbbbb;
+}
+[data-refineui="radio"]:not(:disabled):not(:checked):focus-visible {
+  outline: none;
+  border: 2px solid #bbbbbb;
+}
+[data-refineui="radio"]:not(:disabled):checked {
+  border: 2px solid #212121;
+  background-color: #ffffff;
+  background-image: radial-gradient(circle, #212121 0%, #212121 38%, #ffffff 39%, #ffffff 100%);
+}
+[data-refineui="radio"]:not(:disabled):checked:hover {
+  border-color: #000000;
+  background-image: radial-gradient(circle, #000000 0%, #000000 38%, #ffffff 39%, #ffffff 100%);
+}
+[data-refineui="radio"]:not(:disabled):checked:focus-visible {
+  outline: none;
+  border: 2px solid #bbbbbb;
+  background-image: radial-gradient(circle, #212121 0%, #212121 38%, #ffffff 39%, #ffffff 100%);
+}
+[data-refineui="radio"]:disabled:not(:checked) {
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+  border-color: #e0e0e0;
+}
+[data-refineui="radio"]:disabled:checked {
+  cursor: not-allowed;
+  background-color: #f5f5f5;
+  border-color: #e0e0e0;
+  background-image: radial-gradient(circle, #cecece 0%, #cecece 38%, #f5f5f5 39%, #f5f5f5 100%);
+}
+[data-refineui="radio"]:disabled {
+  cursor: not-allowed;
+}
+
+/* Link — Web Kit `226:158` (Default / Hover / Focus / Pressed / Disabled) */
+[data-refineui="link"] {
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+[data-refineui="link"] {
+  color: #3e68ff; /* colors.blue700 — foregroundlink */
+  text-decoration: none;
+}
+[data-refineui="link"]:hover:not([aria-disabled="true"]) {
+  color: #2351f7 !important; /* blue800 — foregroundlinkhover */
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+[data-refineui="link"]:focus-visible:not([aria-disabled="true"]) {
+  color: #1d44ce !important; /* blue900 — foregroundlinkactive */
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+[data-refineui="link"]:active:not([aria-disabled="true"]) {
+  color: #7694ff !important; /* blue500 — Figma Pressed / foregroundlinkvisited */
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+[data-refineui="link"][aria-disabled="true"] {
+  color: #cecece !important; /* neutral400 */
+  text-decoration: none !important;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 [data-refineui="link"]:focus-visible {
   outline: 2px solid var(--refineui-focus-color);
@@ -202,9 +360,14 @@
 [data-refineui="breadcrumb-link"][data-current]:hover {
   color: #000000 !important;
 }
-[data-refineui="breadcrumb-link"]:active {
+[data-refineui="breadcrumb-link"]:active,
+[data-refineui="breadcrumb-link"][data-state="pressed"] {
   background-color: #e0e0e0 !important;
-  border-radius: 2px;
+  border-radius: 4px;
+}
+[data-refineui="breadcrumb-link"][data-current]:active,
+[data-refineui="breadcrumb-link"][data-current][data-state="pressed"] {
+  color: #000000 !important;
 }
 [data-refineui="breadcrumb-link"]:focus-visible {
   outline: 2px solid var(--refineui-focus-color);
@@ -279,36 +442,80 @@
   background-color: #d93a3a !important;
 }
 
-/* Chip / Tag — Web Kit (라벨형 Badge와 동일 호버·pressed 톤) */
+/* Chip / Tag — Web Kit COMPONENT_SET `Tag` `574:6578` (Default=흰 배경·hover neutral100·pressed neutral150; Outline 테두리; Selected=filled) */
 [data-refineui="chip"] {
   transition: background-color 0.15s, border-color 0.15s;
 }
-[data-refineui="chip"][data-variant="filled"]:hover {
+[data-refineui="chip"][data-disabled="true"] {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+[data-refineui="chip"][data-variant="filled"]:not([data-disabled]):hover {
   background-color: #4d4d4a !important;
 }
-[data-refineui="chip"][data-variant="filled"]:active {
+[data-refineui="chip"][data-variant="filled"]:not([data-disabled]):active {
   background-color: #000000 !important;
 }
-[data-refineui="chip"][data-variant="default"]:hover {
-  background-color: #d4d4d4 !important;
+[data-refineui="chip"][data-variant="default"]:not([data-disabled]):hover {
+  background-color: #f5f5f5 !important;
 }
-[data-refineui="chip"][data-variant="default"]:active {
-  background-color: #cecece !important;
+[data-refineui="chip"][data-variant="default"]:not([data-disabled]):active {
+  background-color: #f0f0f0 !important;
 }
-[data-refineui="chip"][data-variant="outline"]:active {
-  border-color: #bbbbbb !important;
+[data-refineui="chip"][data-variant="outline"]:not([data-disabled]):hover {
+  border-color: #a4a4a4 !important;
+}
+[data-refineui="chip"][data-variant="outline"]:not([data-disabled]):active {
+  border-color: #333333 !important;
 }
 
-/* Slider — no focus on bar; thumb gets hover/focus */
+/* Slider — Web Kit `526:1556` (레일 neutral200, 채움 primaryBlack, 썸 16×16; sm/md) */
 [data-refineui="slider"] {
+  -webkit-appearance: none;
+  appearance: none;
   outline: none !important;
+  background: transparent;
+  box-sizing: border-box;
 }
 [data-refineui="slider"]:focus {
   outline: none !important;
 }
+[data-refineui="slider"][data-size="md"]::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    #212121 0%,
+    #212121 var(--refineui-slider-fill, 0%),
+    #ebebeb var(--refineui-slider-fill, 0%),
+    #ebebeb 100%
+  );
+}
+[data-refineui="slider"][data-size="sm"]::-webkit-slider-runnable-track {
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    #212121 0%,
+    #212121 var(--refineui-slider-fill, 0%),
+    #ebebeb var(--refineui-slider-fill, 0%),
+    #ebebeb 100%
+  );
+}
 [data-refineui="slider"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: #212121;
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s;
+}
+[data-refineui="slider"][data-size="md"]::-webkit-slider-thumb {
+  margin-top: -6px;
+}
+[data-refineui="slider"][data-size="sm"]::-webkit-slider-thumb {
+  margin-top: -7px;
 }
 [data-refineui="slider"]::-webkit-slider-thumb:hover {
   transform: scale(1.15);
@@ -317,7 +524,32 @@
 [data-refineui="slider"]:focus::-webkit-slider-thumb {
   box-shadow: 0 0 0 2px var(--refineui-focus-color);
 }
+[data-refineui="slider"][data-size="md"]::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: #ebebeb;
+}
+[data-refineui="slider"][data-size="md"]::-moz-range-progress {
+  height: 4px;
+  border-radius: 2px;
+  background: #212121;
+}
+[data-refineui="slider"][data-size="sm"]::-moz-range-track {
+  height: 2px;
+  border-radius: 2px;
+  background: #ebebeb;
+}
+[data-refineui="slider"][data-size="sm"]::-moz-range-progress {
+  height: 2px;
+  border-radius: 2px;
+  background: #212121;
+}
 [data-refineui="slider"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 9999px;
+  background: #212121;
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s;
 }

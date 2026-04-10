@@ -5,13 +5,27 @@ alwaysApply: true
 
 # Figma Foundation (디자인 토큰 단일 소스)
 
+## 두 Figma 파일의 관계 (Foundation → Web Kit)
+
+Figma에는 다음 **두 파일**이 있다. 관계를 이렇게 이해한다:
+
+| 파일 | 역할 |
+|------|------|
+| **Pelagornis RefineUI Foundation** | **Variables** 단일 소스 — 색, **spacing**, **padding**, radius, typography, shadow 등 모든 토큰 |
+| **Pelagornis RefineUI Web Kit** | **컴포넌트** — Foundation 변수를 **연결해** 사용해 조립한 UI |
+
+- **비유**: **Foundation → Web Kit** (Web Kit은 Foundation 위에 얹힌 컴포넌트 레이어).
+- **MUST**: Web Kit에 보이는 **모든 사이즈·padding·간격**은 **Foundation Variables와 연결된 값**이어야 한다. 임의 px·Foundation에 없는 간격을 Web Kit만의 규칙으로 두지 않는다. 필요한 값이 없으면 **Foundation을 먼저 갱신**한 뒤 `packages/tokens`에 반영한다.
+
 ## Foundation URL
 
 **Figma Foundation (Pelagornis RefineUI) — Variables/토큰:**
 https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundation?node-id=1-650
 
 **Pelagornis RefineUI Web Kit (컴포넌트):**
-https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?node-id=7-6
+https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?node-id=0-1
+
+(`node-id=7-6` 등은 파일 내 **특정 예시 페이지**(예: Accordion)만 연다. 컴포넌트 스펙은 MCP `search_design_system` + 해당 컴포넌트 `node-id`의 `get_design_context`로 본다 — 예: **Breadcrumb** `283:688`, **Breadcrumb/BreadcrumbItem** 변형 `279:2539` / `289:41` / `289:44`.)
 
 ## 규칙
 
@@ -22,7 +36,7 @@ https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?
 
 ### Foundation · 토큰 동기화
 
-- **MUST**: UI/디자인 관련 작업 시 위 Foundation을 **단일 소스**로 참조. `packages/tokens`의 값은 이 Foundation과 동기화된 상태를 유지.
+- **MUST**: UI/디자인 관련 작업 시 **Foundation Variables**를 **단일 소스**로 참조한다. Web Kit은 **항상 Foundation과 연결된 수치**만 사용한다. `packages/tokens`는 이 Foundation과 동기화된 상태를 유지한다.
 - **MUST**: 새 토큰(color, spacing, typography, radius, shadow 등) 추가 시 Foundation에 정의된 값과 일치시킬 것. Foundation에 없는 값은 Foundation 업데이트 후 반영.
 - **MUST**: Figma MCP 사용 시 `get_variable_defs` 또는 `get_design_context`로 위 URL(또는 특정 node-id)을 전달해 Foundation 토큰/스타일을 조회.
 - **RECOMMENDED**: Foundation 변경 시 `packages/tokens/src/global/*.ts`를 수동 또는 도구로 동기화.
