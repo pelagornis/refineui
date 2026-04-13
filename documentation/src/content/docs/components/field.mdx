@@ -1,13 +1,32 @@
 ---
 title: Field
-description: 폼 필드 (Label + Input + error/hint)
+description: 라벨·컨트롤·힌트·에러 래퍼
 ---
 
 import FieldPreview from "../../../components/FieldPreview";
 
 # Field
 
-Label, Input, error, hint를 묶는 폼 필드 컴포넌트입니다. **입력해보세요.**
+폼 필드를 **라벨 + 자식 컨트롤 + (선택) 힌트/에러**로 묶습니다. Web Kit **Field** `525:1074`의 라벨 타이포·간격에 맞춥니다.
+
+## 설치·임포트
+
+```tsx
+import { Field, Input, Label } from "@refineui/react";
+import "@refineui/react/refineui.css";
+```
+
+## 기본 사용
+
+```tsx
+<Field
+  label="이메일"
+  labelFor="email"
+  hint="로그인에 사용됩니다."
+>
+  <Input id="email" name="email" type="email" fullWidth />
+</Field>
+```
 
 ## Preview
 
@@ -17,9 +36,26 @@ Label, Input, error, hint를 묶는 폼 필드 컴포넌트입니다. **입력�
 
 ## Props
 
-- `label` — 라벨 텍스트
-- `error` — 에러 메시지
-- `hint` — 도움말 (error가 없을 때만 표시)
-- `required` — 필수 표시 (*)
+| Prop | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `label` | `ReactNode` | — | 상단 라벨 |
+| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | 라벨 타이포 (sm→caption1, md→body2, lg→body1) |
+| `required` | `boolean` | `false` | 필수 `*` 표시 |
+| `hint` | `ReactNode` | — | 도움말 (`error`가 없을 때만 표시) |
+| `error` | `ReactNode` | — | 에러 메시지 (`role="alert"`) |
 
-자식으로 `Input` 등을 넣을 때, 입력 컴포넌트의 `error` / `success` / `disabled` 는 각 컴포넌트 prop으로 지정합니다.
+`children`에 [Input](/components/input/), [Select](/components/select/), [Textarea](/components/textarea/) 등을 둡니다.
+
+## 예시
+
+### 에러 상태
+
+```tsx
+<Field label="비밀번호" error="대소문자를 포함하세요." required>
+  <Input id="pw" type="password" error fullWidth />
+</Field>
+```
+
+### 힌트만 (라벨 없음)
+
+`label`을 생략하고 `hint`만 쓸 수 있습니다. 스크린 리더 연결은 자식에 `aria-label` 또는 별도 [Label](/components/label/)을 사용하세요.

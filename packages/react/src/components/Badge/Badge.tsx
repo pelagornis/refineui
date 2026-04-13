@@ -1,5 +1,5 @@
+import { clsx } from "clsx";
 import type { HTMLAttributes } from "react";
-import { colors, spacings, borderRadii, typographys, strokeWidths } from "@refineui/tokens";
 
 /**
  * Web Kit `Badge` (Figma MCP `270:3353`) · `Badge Number` (`276:515`)
@@ -19,38 +19,28 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
     layout?: BadgeLayout;
 }
 
-const variantStyles: Record<BadgeVariant, React.CSSProperties> = {
-    default: { backgroundColor: colors.primaryBlack, color: colors.neutralWhite },
-    /** Figma `Secondary` — primaryLightGray */
-    neutral: { backgroundColor: colors.primaryLightGray, color: colors.neutralBlack },
-    outline: {
-        backgroundColor: "transparent",
-        color: colors.neutralBlack,
-        border: `${strokeWidths.strokeWidthThin} solid ${colors.neutral300}`,
-        boxSizing: "border-box",
-    },
-    success: { backgroundColor: colors.green500, color: colors.neutralWhite },
-    /** Figma `Warning` — orange 스케일 (노랑 아님) */
-    warning: { backgroundColor: colors.orange500, color: colors.neutralWhite },
-    danger: { backgroundColor: colors.red500, color: colors.neutralWhite },
+const variantClass: Record<BadgeVariant, string> = {
+    default: "bg-refineui-alias-background-brand text-refineui-alias-foreground-inversed",
+    neutral: "bg-refineui-alias-background-primary text-refineui-alias-foreground-primary",
+    outline:
+        "border-refineui-thin border-refineui-alias-border-default border bg-transparent text-refineui-alias-foreground-primary box-border",
+    success: "bg-refineui-alias-background-success text-refineui-alias-foreground-inversed",
+    warning: "bg-refineui-alias-background-warning text-refineui-alias-foreground-inversed",
+    danger: "bg-refineui-alias-background-error text-refineui-alias-foreground-inversed",
 };
 
-export function Badge({ variant = "default", layout = "label", style, ...props }: BadgeProps) {
+export function Badge({ variant = "default", layout = "label", className, ...props }: BadgeProps) {
     return (
         <span
             data-refineui="badge"
             data-variant={variant}
             data-layout={layout}
-            style={{
-                ...typographys.caption2,
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: `${spacings.sizeXXSmall} ${spacings.sizeSmall}`,
-                borderRadius: layout === "number" ? borderRadii.roundedCircle : borderRadii.roundedMedium,
-                ...variantStyles[variant],
-                ...style,
-            }}
+            className={clsx(
+                "refineui-typo-caption-2 inline-flex items-center justify-center py-refineui-size-xxsmall px-refineui-size-small",
+                layout === "number" ? "rounded-refineui-circle" : "rounded-refineui-medium",
+                variantClass[variant],
+                className,
+            )}
             {...props}
         />
     );

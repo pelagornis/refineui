@@ -1,9 +1,13 @@
+/**
+ * Web Kit Calendar — MCP `656:2958` 본체, `656:2959` Month Header는 Web Kit `Button`(`79:3304`) Ghost.
+ * `data-refineui`는 `Button`이 `button`으로 두어야 `refineui.css` Ghost hover·pressed가 적용됨(캘린더에서 덮어쓰지 않음).
+ */
+import { clsx } from "clsx";
 import type { HTMLAttributes } from "react";
 import { useState } from "react";
-import { colors, spacings, borderRadii, typographys, sizes, iconSizes } from "@refineui/tokens";
+import { iconSizes } from "@refineui/tokens";
 import { WebIcon } from "../../WebIcon";
-
-export type CalendarLocale = "ko" | "en";
+import { Button } from "../Button";
 
 export type CalendarMode = "single" | "range";
 
@@ -15,19 +19,15 @@ export interface CalendarProps extends Omit<HTMLAttributes<HTMLDivElement>, "onC
     rangeStart?: Date;
     rangeEnd?: Date;
     onRangeChange?: (start: Date | undefined, end: Date | undefined) => void;
-    /** 요일·월 제목 형식. 기본 `en` (Sun–Sat, October 2025) */
-    locale?: CalendarLocale;
     /** 0=일요일 시작(MCP), 1=월요일 시작 */
     weekStartsOn?: 0 | 1;
     /** 최초 표시 월 (`value` / 범위 시작이 없을 때) */
     defaultMonth?: Date;
 }
 
-const WEEKDAYS_EN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const;
-const WEEKDAYS_KO = ["일", "월", "화", "수", "목", "금", "토"] as const;
+const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const;
 
-const DAY_PX = sizes.calendarDaySize;
-const NAV_PX = "28px";
+const grid7 = "[grid-template-columns:repeat(7,var(--refineui-size-calendar-day-size))]";
 
 function startOfDay(d: Date) {
     return new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -46,16 +46,12 @@ function normalizeRange(start?: Date, end?: Date) {
     return t0 <= t1 ? { start, end } : { start: end, end: start };
 }
 
-function getWeekdayLabels(locale: CalendarLocale, weekStartsOn: 0 | 1) {
-    const src = locale === "ko" ? WEEKDAYS_KO : WEEKDAYS_EN;
-    return [...src.slice(weekStartsOn), ...src.slice(0, weekStartsOn)];
+function getWeekdayLabels(weekStartsOn: 0 | 1) {
+    return [...WEEKDAYS.slice(weekStartsOn), ...WEEKDAYS.slice(0, weekStartsOn)];
 }
 
-function formatMonthTitle(year: number, month: number, locale: CalendarLocale) {
-    if (locale === "ko") {
-        return `${year}년 ${month + 1}월`;
-    }
-    return new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" }).format(new Date(year, month, 1));
+function formatMonthName(year: number, month: number) {
+    return new Intl.DateTimeFormat("en-US", { month: "long" }).format(new Date(year, month, 1));
 }
 
 type MonthOffset = -1 | 0 | 1;
@@ -91,7 +87,9 @@ function chunkWeeks(cells: GridCell[]): GridCell[][] {
     return weeks;
 }
 
-const r8 = borderRadii.roundedLarge;
+/** MCP `Calendar / Day` — Web Caption 1 (12px · Medium · 16px lh) */
+const dayBase =
+    "refineui-typo-caption-1 box-border inline-flex size-refineui-calendar-day-size min-h-refineui-calendar-day-size min-w-refineui-calendar-day-size cursor-pointer items-center justify-center border-none p-0";
 
 export function Calendar({
     mode = "single",
@@ -100,10 +98,9 @@ export function Calendar({
     rangeStart,
     rangeEnd,
     onRangeChange,
-    locale = "en",
     weekStartsOn = 0,
     defaultMonth,
-    style,
+    className,
     ...props
 }: CalendarProps) {
     const isRangeMode = mode === "range";
@@ -118,7 +115,8 @@ export function Calendar({
     const month = view.getMonth();
     const cells = getMonthGrid(year, month, weekStartsOn);
     const weeks = chunkWeeks(cells);
-    const weekdayLabels = getWeekdayLabels(locale, weekStartsOn);
+    const weekdayLabels = getWeekdayLabels(weekStartsOn);
+    const monthName = formatMonthName(year, month);
 
     const getDateFromCell = (d: number, monthOffset: MonthOffset) => new Date(year, month + monthOffset, d);
 
@@ -145,14 +143,6 @@ export function Calendar({
             onChange?.(date);
         }
     };
-
-    const caption = typographys.caption1;
-    const baseSize = {
-        width: DAY_PX,
-        height: DAY_PX,
-        minWidth: DAY_PX,
-        minHeight: DAY_PX,
-    } as const;
 
     const renderDayButton = (cell: GridCell, key: string) => {
         const { day, monthOffset } = cell;
@@ -181,24 +171,12 @@ export function Calendar({
                 key={key}
                 type="button"
                 data-refineui="calendar-day"
+                data-selected
                 data-current-month={isCurrentMonth ? "" : undefined}
                 data-other-month={!isCurrentMonth ? "" : undefined}
                 role="gridcell"
                 onClick={() => handleDayClick(day, monthOffset)}
-                style={{
-                    ...baseSize,
-                    border: "none",
-                    cursor: "pointer",
-                    borderRadius: r8,
-                    background: colors.primaryBlack,
-                    color: colors.neutralWhite,
-                    ...caption,
-                    padding: 0,
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    boxSizing: "border-box",
-                }}
+                className={clsx(dayBase, "rounded-refineui-large bg-refineui-primary-black text-refineui-neutral-white")}
             >
                 {day}
             </button>
@@ -209,24 +187,12 @@ export function Calendar({
                 key={key}
                 type="button"
                 data-refineui="calendar-day"
+                data-range-middle
                 data-current-month={isCurrentMonth ? "" : undefined}
                 data-other-month={!isCurrentMonth ? "" : undefined}
                 role="gridcell"
                 onClick={() => handleDayClick(day, monthOffset)}
-                style={{
-                    ...baseSize,
-                    border: "none",
-                    cursor: "pointer",
-                    borderRadius: borderRadii.roundedNone,
-                    background: colors.neutral100,
-                    color: colors.primaryBlack,
-                    ...caption,
-                    padding: 0,
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    boxSizing: "border-box",
-                }}
+                className={clsx(dayBase, "rounded-refineui-none bg-refineui-neutral-100 text-refineui-primary-black")}
             >
                 {day}
             </button>
@@ -236,42 +202,22 @@ export function Calendar({
         const endpointRange = (endpoint: "start" | "end") => (
             <div
                 key={key}
-                style={{
-                    width: DAY_PX,
-                    height: DAY_PX,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    boxSizing: "border-box",
-                    backgroundColor: colors.neutral100,
-                    borderTopLeftRadius: endpoint === "start" ? r8 : 0,
-                    borderBottomLeftRadius: endpoint === "start" ? r8 : 0,
-                    borderTopRightRadius: endpoint === "end" ? r8 : 0,
-                    borderBottomRightRadius: endpoint === "end" ? r8 : 0,
-                }}
+                className={clsx(
+                    "box-border flex size-refineui-calendar-day-size items-center justify-center bg-refineui-neutral-100",
+                    endpoint === "start" && "rounded-l-refineui-large",
+                    endpoint === "end" && "rounded-r-refineui-large",
+                )}
             >
                 <button
                     type="button"
                     data-refineui="calendar-day"
+                    data-selected
                     data-current-month={isCurrentMonth ? "" : undefined}
                     data-other-month={!isCurrentMonth ? "" : undefined}
                     data-range-endpoint={endpoint}
                     role="gridcell"
                     onClick={() => handleDayClick(day, monthOffset)}
-                    style={{
-                        ...baseSize,
-                        border: "none",
-                        cursor: "pointer",
-                        borderRadius: r8,
-                        background: colors.primaryBlack,
-                        color: colors.neutralWhite,
-                        ...caption,
-                        padding: 0,
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        boxSizing: "border-box",
-                    }}
+                    className={clsx(dayBase, "rounded-refineui-large bg-refineui-primary-black text-refineui-neutral-white")}
                 >
                     {day}
                 </button>
@@ -292,22 +238,16 @@ export function Calendar({
                     type="button"
                     data-refineui="calendar-day"
                     data-other-month
+                    {...(showBlackOther ? { "data-selected": "" } : {})}
                     role="gridcell"
                     onClick={() => handleDayClick(day, monthOffset)}
-                    style={{
-                        ...baseSize,
-                        border: "none",
-                        cursor: "pointer",
-                        borderRadius: r8,
-                        background: showBlackOther ? colors.primaryBlack : "transparent",
-                        color: showBlackOther ? colors.neutralWhite : colors.neutral400,
-                        ...caption,
-                        padding: 0,
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        boxSizing: "border-box",
-                    }}
+                    className={clsx(
+                        dayBase,
+                        "rounded-refineui-large",
+                        showBlackOther
+                            ? "bg-refineui-primary-black text-refineui-neutral-white"
+                            : "bg-transparent text-refineui-neutral-400",
+                    )}
                 >
                     {day}
                 </button>
@@ -335,22 +275,16 @@ export function Calendar({
                 type="button"
                 data-refineui="calendar-day"
                 data-current-month
+                {...(isSelectedSingle ? { "data-selected": "" } : {})}
                 role="gridcell"
                 onClick={() => handleDayClick(day, monthOffset)}
-                style={{
-                    ...baseSize,
-                    border: "none",
-                    cursor: "pointer",
-                    borderRadius: r8,
-                    background: isSelectedSingle ? colors.primaryBlack : "transparent",
-                    color: isSelectedSingle ? colors.neutralWhite : colors.primaryBlack,
-                    ...caption,
-                    padding: 0,
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    boxSizing: "border-box",
-                }}
+                className={clsx(
+                    dayBase,
+                    "rounded-refineui-large",
+                    isSelectedSingle
+                        ? "bg-refineui-primary-black text-refineui-neutral-white"
+                        : "bg-transparent text-refineui-primary-black",
+                )}
             >
                 {day}
             </button>
@@ -362,125 +296,74 @@ export function Calendar({
             data-refineui="calendar"
             role="grid"
             aria-label="Calendar"
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                padding: spacings.sizeLarge,
-                gap: spacings.sizeNone,
-                backgroundColor: colors.neutralWhite,
-                borderRadius: borderRadii.roundedLarge,
-                minWidth: sizes.calendarMinWidth,
-                width: "fit-content",
-                boxSizing: "border-box",
-                ...style,
-            }}
+            className={clsx(
+                "box-border flex min-w-refineui-calendar-min-width w-fit flex-col gap-refineui-size-none rounded-refineui-large bg-refineui-neutral-white p-refineui-size-large",
+                className,
+            )}
             {...props}
         >
-            <div
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    paddingLeft: spacings.sizeSmall,
-                    paddingRight: spacings.sizeSmall,
-                    paddingBottom: spacings.sizeMedium,
-                    ...typographys.body1,
-                    color: colors.primaryBlack,
-                }}
-            >
-                <button
+            <div className="flex w-full min-w-0 items-center justify-between px-refineui-size-small pb-refineui-size-medium">
+                <Button
                     type="button"
-                    data-refineui="calendar-nav"
+                    variant="ghost"
+                    size="sm"
+                    layout="icon"
+                    data-calendar-header="nav-prev"
                     aria-label="Previous month"
+                    className="shrink-0 text-refineui-primary-black"
                     onClick={() => setView(new Date(year, month - 1))}
-                    style={{
-                        border: "none",
-                        background: colors.neutralWhite,
-                        cursor: "pointer",
-                        width: NAV_PX,
-                        height: NAV_PX,
-                        minWidth: NAV_PX,
-                        minHeight: NAV_PX,
-                        padding: 0,
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: colors.primaryBlack,
-                        borderRadius: r8,
-                        flexShrink: 0,
-                    }}
                 >
-                    <WebIcon name="chevron-left" size={iconSizes.lg} color="currentColor" fallback="‹" />
-                </button>
-                <span>{formatMonthTitle(year, month, locale)}</span>
-                <button
+                    <WebIcon name="chevron-left" size={iconSizes.small} color="currentColor" fallback="‹" />
+                </Button>
+                <Button
                     type="button"
-                    data-refineui="calendar-nav"
-                    aria-label="Next month"
-                    onClick={() => setView(new Date(year, month + 1))}
-                    style={{
-                        border: "none",
-                        background: colors.neutralWhite,
-                        cursor: "pointer",
-                        width: NAV_PX,
-                        height: NAV_PX,
-                        minWidth: NAV_PX,
-                        minHeight: NAV_PX,
-                        padding: 0,
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: colors.primaryBlack,
-                        borderRadius: r8,
-                        flexShrink: 0,
-                    }}
+                    variant="ghost"
+                    size="sm"
+                    layout="label"
+                    data-calendar-header="caption-month"
+                    aria-label={`Month: ${monthName}`}
+                    className="shrink-0"
                 >
-                    <WebIcon name="chevron-right" size={iconSizes.lg} color="currentColor" fallback="›" />
-                </button>
+                    {monthName}
+                </Button>
+                <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    layout="label"
+                    data-calendar-header="caption-year"
+                    aria-label={`Year: ${year}`}
+                    className="shrink-0"
+                >
+                    {String(year)}
+                </Button>
+                <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    layout="icon"
+                    data-calendar-header="nav-next"
+                    aria-label="Next month"
+                    className="shrink-0 text-refineui-primary-black"
+                    onClick={() => setView(new Date(year, month + 1))}
+                >
+                    <WebIcon name="chevron-right" size={iconSizes.small} color="currentColor" fallback="›" />
+                </Button>
             </div>
 
-            <div
-                style={{
-                    display: "grid",
-                    gridTemplateColumns: `repeat(7, ${DAY_PX})`,
-                    columnGap: spacings.sizeNone,
-                    rowGap: spacings.sizeNone,
-                }}
-            >
-                {weekdayLabels.map((w) => (
-                    <div
-                        key={w}
-                        style={{
-                            width: DAY_PX,
-                            textAlign: "center",
-                            paddingTop: spacings.sizeSmall,
-                            paddingBottom: spacings.sizeSmall,
-                            boxSizing: "border-box",
-                            ...typographys.caption1,
-                            color: colors.primaryBlack,
-                        }}
-                    >
-                        {w}
-                    </div>
-                ))}
-            </div>
-
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: spacings.sizeSmall,
-                }}
-            >
+            <div className="flex flex-col gap-refineui-size-small">
+                <div className={clsx("grid gap-refineui-size-none", grid7)}>
+                    {weekdayLabels.map((w) => (
+                        <div
+                            key={w}
+                            className="refineui-typo-caption-1 box-border w-refineui-calendar-day-size py-refineui-size-small text-center text-refineui-primary-black"
+                        >
+                            {w}
+                        </div>
+                    ))}
+                </div>
                 {weeks.map((row, wi) => (
-                    <div
-                        key={wi}
-                        style={{
-                            display: "grid",
-                            gridTemplateColumns: `repeat(7, ${DAY_PX})`,
-                            columnGap: spacings.sizeNone,
-                        }}
-                    >
+                    <div key={wi} className={clsx("grid gap-refineui-size-none", grid7)}>
                         {row.map((cell, di) => renderDayButton(cell, `d-${wi}-${di}-${cell.monthOffset}-${cell.day}`))}
                     </div>
                 ))}

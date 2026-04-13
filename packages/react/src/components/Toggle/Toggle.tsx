@@ -1,16 +1,18 @@
+import { clsx } from "clsx";
 import type { ButtonHTMLAttributes } from "react";
-import { colors, spacings, borderRadii, sizes } from "@refineui/tokens";
+import { componentSizes } from "../../componentSizes";
 
 export interface ToggleProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
     checked?: boolean;
     onCheckedChange?: (checked: boolean) => void;
 }
 
+/** Web Kit COMPONENT_SET `Switch` `270:3057` — `Switch`는 동일 구현을 재보냅니다. */
 export function Toggle({
     checked = false,
     onCheckedChange,
     onClick,
-    style,
+    className,
     disabled,
     ...props
 }: ToggleProps) {
@@ -18,20 +20,18 @@ export function Toggle({
         <button
             type="button"
             data-refineui="switch"
+            data-checked={checked ? "true" : "false"}
             role="switch"
             aria-checked={checked}
-            style={{
-                width: sizes.switchWidth,
-                height: sizes.switchHeight,
-                padding: sizes.switchPadding,
-                borderRadius: borderRadii.roundedCircle,
-                border: "none",
-                backgroundColor: checked ? colors.primaryBlack : colors.neutral300,
-                cursor: disabled ? "not-allowed" : "pointer",
-                opacity: disabled ? 0.5 : 1,
-                transition: "background-color 0.2s",
-                ...style,
-            }}
+            className={clsx(
+                "box-border flex w-refineui-switch-width items-center rounded-refineui-circle border-none p-refineui-switch-padding transition-colors duration-200",
+                disabled
+                    ? "cursor-not-allowed bg-refineui-neutral-250"
+                    : checked
+                      ? "cursor-pointer bg-refineui-primary-black"
+                      : "cursor-pointer bg-refineui-neutral-300",
+                className,
+            )}
             onClick={(e) => {
                 onCheckedChange?.(!checked);
                 onClick?.(e);
@@ -40,14 +40,12 @@ export function Toggle({
             {...props}
         >
             <span
+                className={clsx(
+                    "block h-refineui-switch-thumb w-refineui-switch-thumb rounded-refineui-circle transition-[transform,background-color] duration-200",
+                    disabled ? "bg-refineui-neutral-500" : "bg-refineui-neutral-white",
+                )}
                 style={{
-                    display: "block",
-                    width: sizes.switchThumb,
-                    height: sizes.switchThumb,
-                    borderRadius: borderRadii.roundedCircle,
-                    backgroundColor: colors.neutralWhite,
-                    transform: checked ? `translateX(${sizes.switchThumb})` : "translateX(0)",
-                    transition: "transform 0.2s",
+                    transform: checked ? `translateX(${componentSizes.switchThumb})` : "translateX(0)",
                 }}
             />
         </button>

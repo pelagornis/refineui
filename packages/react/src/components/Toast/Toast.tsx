@@ -1,5 +1,6 @@
+import { clsx } from "clsx";
 import type { HTMLAttributes, ReactNode } from "react";
-import { colors, spacings, borderRadii, typographys, shadows, toBoxShadow, strokeWidths, sizes, iconSizes } from "@refineui/tokens";
+import { colors, iconSizes } from "@refineui/tokens";
 import { WebIcon } from "../../WebIcon";
 import { Button } from "../Button";
 
@@ -40,7 +41,7 @@ const variantIconNames: Record<ToastVariant, string> = {
 };
 
 export function Toast(props: ToastProps) {
-    const { variant = "default", title, message, iconName, icon, action, style, ...rest } = props;
+    const { variant = "default", title, message, iconName, icon, action, className, ...rest } = props;
     const domProps = { ...rest };
     delete (domProps as Record<string, unknown>).iconName;
     delete (domProps as Record<string, unknown>).icon;
@@ -56,19 +57,14 @@ export function Toast(props: ToastProps) {
         icon != null ? (
             icon
         ) : (
-            <WebIcon name={resolvedIconName} size={iconSizes.md} color={accent} />
+            <WebIcon name={resolvedIconName} size={iconSizes.medium} color={accent} />
         );
 
     const isPrimaryAction =
         !action || typeof action !== "object" || !("variant" in action) || action.variant === "primary";
     const actionEl =
         typeof action === "object" && action !== null && "label" in action ? (
-            <Button
-                variant={isPrimaryAction ? "primary" : "outline"}
-                size="sm"
-                onClick={action.onClick}
-                style={{ flexShrink: 0 }}
-            >
+            <Button variant={isPrimaryAction ? "primary" : "outline"} size="sm" onClick={action.onClick} className="shrink-0">
                 {action.label}
             </Button>
         ) : (
@@ -81,53 +77,25 @@ export function Toast(props: ToastProps) {
             role={liveRole}
             aria-live={ariaLive}
             {...domProps}
-            style={{
-                display: "flex",
-                alignItems: "flex-start",
-                gap: spacings.sizeMedium,
-                padding: spacings.sizeLarge,
-                borderRadius: borderRadii.roundedLarge,
-                boxShadow: toBoxShadow(shadows.shadow4Light),
-                backgroundColor: `var(--refineui-bg, ${colors.neutralWhite})`,
-                border: `${strokeWidths.strokeWidthThin} solid var(--refineui-border, ${colors.neutral300})`,
-                minWidth: sizes.toastMinWidth,
-                maxWidth: sizes.toastMaxWidth,
-                ...style,
-            }}
+            className={clsx(
+                "flex min-w-refineui-toast-min-width max-w-refineui-toast-max-width items-start gap-refineui-size-medium rounded-refineui-large border-refineui-thin p-refineui-size-large shadow-refineui-4light",
+                "border-[var(--refineui-border,var(--refineui-color-neutral-300))] bg-[var(--refineui-bg,var(--refineui-color-neutral-white))]",
+                className,
+            )}
         >
-            <div
-                style={{
-                    flexShrink: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    width: spacings.sizeXXLarge,
-                    height: spacings.sizeXXLarge,
-                }}
-            >
-                {iconContent}
-            </div>
-            <div style={{ flex: 1, minWidth: 0 }}>
+            <div className="flex size-refineui-size-xxlarge shrink-0 items-center">{iconContent}</div>
+            <div className="min-w-0 flex-1">
                 {title && (
                     <div
-                        style={{
-                            ...typographys.body2,
-                            color: `var(--refineui-text, ${colors.primaryBlack})`,
-                            marginBottom: message ? spacings.sizeXSmall : 0,
-                        }}
+                        className={clsx(
+                            "refineui-typo-body-2 text-[var(--refineui-text,var(--refineui-color-primary-black))]",
+                            message && "mb-refineui-size-xsmall",
+                        )}
                     >
                         {title}
                     </div>
                 )}
-                {message && (
-                    <div
-                        style={{
-                            ...typographys.body4,
-                            color: colors.neutral500,
-                        }}
-                    >
-                        {message}
-                    </div>
-                )}
+                {message && <div className="refineui-typo-body-4 text-refineui-neutral-500">{message}</div>}
             </div>
             {action != null && actionEl}
         </div>

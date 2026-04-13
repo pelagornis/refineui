@@ -1,46 +1,122 @@
-import type { InputHTMLAttributes } from "react";
-import { useId } from "react";
-import { colors, spacings, typographys, sizes } from "@refineui/tokens";
+import { clsx } from "clsx";
+import type { ChangeEvent, InputHTMLAttributes } from "react";
+import { useId, useState } from "react";
+import { iconSizes } from "@refineui/tokens";
+import { WebIcon } from "../../WebIcon";
 
+/**
+ * Web Kit COMPONENT_SET `327:2539` — 체크 시 **RefineUI System Icons** `checkmark` **16px** (`iconSizes.medium`).
+ * 라벨·보조 설명, 박스 상태는 `refineui.css` `[data-refineui="checkbox"]`.
+ */
 export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
+    /** 보조 한 줄 (Figma `showDescription`) */
+    description?: string;
     label?: string;
+    /** Figma `style`: Default = 사각, Circular = 원형 */
+    variant?: "default" | "circular";
 }
 
-export function Checkbox({ label, id, style, disabled, ...props }: CheckboxProps) {
+export function Checkbox({
+    label,
+    description,
+    variant = "default",
+    id,
+    className,
+    disabled,
+    checked: checkedProp,
+    defaultChecked,
+    onChange,
+    ...props
+}: CheckboxProps) {
     const uid = useId();
     const inputId = id ?? uid;
+    const showText = Boolean(label || description);
+    const isControlled = checkedProp !== undefined;
+    const [internalChecked, setInternalChecked] = useState(!!defaultChecked);
+    const checked = isControlled ? !!checkedProp : internalChecked;
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (!isControlled) setInternalChecked(e.target.checked);
+        onChange?.(e);
+    };
+
+    const checkColor = disabled
+        ? "var(--refineui-color-alias-foreground-disabled)"
+        : "var(--refineui-color-alias-foreground-inversed)";
 
     return (
         <label
             htmlFor={inputId}
-            style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: spacings.sizeSmall,
-                cursor: disabled ? "not-allowed" : "pointer",
-                ...style,
-            }}
+            className={clsx(
+                "inline-flex gap-refineui-size-small",
+                description ? "items-start" : "items-center",
+                disabled ? "cursor-not-allowed" : "cursor-pointer",
+                className,
+            )}
         >
-            <input
-                id={inputId}
-                type="checkbox"
-                data-refineui="checkbox"
-                disabled={disabled}
-                style={{
-                    width: sizes.controlCheckboxRadio,
-                    height: sizes.controlCheckboxRadio,
-                    cursor: disabled ? "not-allowed" : "pointer",
-                }}
-                {...props}
-            />
-            {label && (
+            <span
+                className={clsx(
+                    "relative size-refineui-control-checkbox shrink-0",
+                    description && "mt-refineui-size-xxsmall",
+                )}
+            >
+                <input
+                    id={inputId}
+                    type="checkbox"
+                    checked={isControlled ? checkedProp : undefined}
+                    defaultChecked={!isControlled ? defaultChecked : undefined}
+                    disabled={disabled}
+                    onChange={handleChange}
+                    className={clsx(
+                        "absolute inset-0 z-1 m-0 h-full w-full cursor-pointer opacity-0 outline-none",
+                        disabled && "cursor-not-allowed",
+                    )}
+                    {...props}
+                />
                 <span
-                    style={{
-                        ...typographys.body2,
-                        color: disabled ? colors.neutral600 : colors.primaryBlack,
-                    }}
+                    data-refineui="checkbox"
+                    data-variant={variant}
+                    data-checked={checked ? "true" : "false"}
+                    data-disabled={disabled ? "true" : undefined}
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 box-border flex items-center justify-center"
                 >
-                    {label}
+                    {checked && (
+                        <WebIcon
+                            name="checkmark"
+                            size={iconSizes.xxsmall}
+                            color={checkColor}
+                            iconStyle="filled"
+                        />
+                    )}
+                </span>
+            </span>
+            {showText && (
+                <span className="flex min-w-0 flex-col gap-refineui-size-small">
+                    {label && (
+                        <span
+                            className={clsx(
+                                "refineui-typo-body-2",
+                                disabled
+                                    ? "text-refineui-alias-foreground-disabled"
+                                    : "text-refineui-alias-foreground-primary",
+                            )}
+                        >
+                            {label}
+                        </span>
+                    )}
+                    {description && (
+                        <span
+                            className={clsx(
+                                "refineui-typo-caption-2",
+                                disabled
+                                    ? "text-refineui-alias-foreground-disabled"
+                                    : "text-refineui-alias-foreground-secondary",
+                            )}
+                        >
+                            {description}
+                        </span>
+                    )}
                 </span>
             )}
         </label>

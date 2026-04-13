@@ -1,1 +1,49 @@
-{"name":"@refineui/tokens","version":"1.0.0","description":"RefineUI Theme Tokens","main":"dist/index.js","module":"dist/index.mjs","typings":"./dist/index.d.ts","repository":{"type":"git","url":"https://github.com/pelagornis/refineui"},"license":"MIT","scripts":{"build":"tsup"},"dependencies":{"@swc/helpers":"^0.5.1"},"devDependencies":{"tsup":"^8.0.0","typescript":"^5.0.0"},"beachball":{"disallowedChangeTypes":["major","minor","patch"]},"exports":{".":{"types":"./dist/index.d.ts","node":"./dist/index.js","import":"./dist/index.mjs","require":"./dist/index.js"},"./package.json":"./package.json"},"files":["*.md","dist"]}
+{
+  "name": "@refineui/tokens",
+  "version": "1.0.0",
+  "description": "RefineUI Theme Tokens",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "typings": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pelagornis/refineui"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@swc/helpers": "^0.5.1"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "tailwindcss": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "tailwindcss": {
+      "optional": true
+    }
+  },
+  "beachball": {
+    "disallowedChangeTypes": ["major", "minor", "patch"]
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "default": "./dist/index.mjs"
+    },
+    "./css-variables.css": "./dist/css-variables.css",
+    "./dist/css-variables.css": "./dist/css-variables.css",
+    "./tailwind-theme.css": "./dist/tailwind-theme.css",
+    "./refineui-typography.css": "./dist/refineui-typography.css",
+    "./tailwind.css": "./tailwind.css",
+    "./package.json": "./package.json"
+  },
+  "files": ["*.md", "dist", "tailwind.css"]
+}

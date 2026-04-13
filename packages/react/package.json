@@ -20,13 +20,14 @@
     "refineui.css"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && node scripts/generate-refineui-css.mjs",
     "dev": "tsup --watch"
   },
   "dependencies": {
     "@refineui/tokens": "workspace:*",
     "@refineui/utilities": "workspace:*",
-    "@refineui/web-icons": "^0.3.33"
+    "@refineui/web-icons": "^0.3.32",
+    "clsx": "2.1.1"
   },
   "peerDependencies": {
     "react": ">=18.0.0",

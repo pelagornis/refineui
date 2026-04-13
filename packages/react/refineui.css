@@ -16,8 +16,8 @@
   --refineui-text: var(--refineui-color-primary-black);
   --refineui-border: var(--refineui-color-neutral-300);
   --refineui-placeholder: var(--refineui-color-neutral-450);
-  --refineui-btn-primary-hover: var(--refineui-color-neutral-700);
-  --refineui-btn-primary-pressed: var(--refineui-color-neutral-black);
+  --refineui-btn-primary-hover: var(--refineui-color-alias-background-brand-hover);
+  --refineui-btn-primary-pressed: var(--refineui-color-alias-background-brand-active);
 }
 
 /* Dark mode — set data-theme="dark" on html/body to enable */
@@ -27,10 +27,17 @@
   --refineui-text: var(--refineui-color-neutral-250);
   --refineui-border: var(--refineui-color-neutral-700);
   --refineui-placeholder: var(--refineui-color-neutral-550);
-  --refineui-btn-primary-hover: var(--refineui-color-neutral-750);
-  --refineui-btn-secondary-hover: var(--refineui-color-neutral-700);
-  --refineui-btn-ghost-hover: var(--refineui-overlay-ghost-button-hover-dark);
+  --refineui-btn-primary-hover: var(--refineui-color-alias-background-brand-hover);
+  --refineui-btn-primary-pressed: var(--refineui-color-alias-background-brand-active);
   --refineui-btn-danger-hover: var(--refineui-color-red-500);
+}
+
+/* Avatars stack — Web Kit Avater Stack `69:3008` (`--avatar-stack-overlap` = foundation step vars) */
+[data-refineui="avatars"][data-layout="stack"] {
+  padding-right: var(--avatar-stack-overlap, var(--refineui-size-foundation-size-60));
+}
+[data-refineui="avatars"][data-layout="stack"] > *:not(:first-child) {
+  margin-left: calc(-1 * var(--avatar-stack-overlap, var(--refineui-size-foundation-size-60)));
 }
 
 /* Button & button-like */
@@ -46,9 +53,11 @@
 [data-refineui="menu-item"],
 [data-refineui="tab"],
 [data-refineui="calendar-nav"],
-[data-refineui="calendar-day"],
 [data-refineui="chip-remove"] {
   transition: opacity 0.15s, background-color 0.15s, transform 0.1s;
+}
+[data-refineui="calendar-day"] {
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
 }
 [data-refineui="spinbutton-step"]:not(:disabled):hover,
 [data-refineui="accordion-trigger"]:hover,
@@ -56,10 +65,23 @@
 [data-refineui="menu-item"]:not(:disabled):hover,
 [data-refineui="tab"]:hover,
 [data-refineui="calendar-nav"]:hover,
-[data-refineui="calendar-day"]:hover,
 [data-refineui="chip-remove"]:hover {
   opacity: 0.9;
 }
+/* Calendar / Day — Web Kit `Calendar / Day` (Caption 1). Ghost 버튼과 동일 톤의 hover·pressed (`656:2958`) */
+[data-refineui="calendar-day"]:not([disabled]):not([data-inactive="true"]):not([data-selected]):not([data-range-middle]):hover:not(:active) {
+  background-color: var(--refineui-color-neutral-200) !important;
+}
+[data-refineui="calendar-day"]:not([disabled]):not([data-inactive="true"]):not([data-selected]):not([data-range-middle]):active {
+  background-color: var(--refineui-color-neutral-300) !important;
+}
+[data-refineui="calendar-day"][data-range-middle]:not([disabled]):not([data-inactive="true"]):hover:not(:active) {
+  background-color: var(--refineui-color-neutral-200) !important;
+}
+[data-refineui="calendar-day"][data-range-middle]:not([disabled]):not([data-inactive="true"]):active {
+  background-color: var(--refineui-color-neutral-300) !important;
+}
+/* Selected / Day — 선택은 고정(rest)만; hover·pressed로 배경을 바꾸지 않음(Web Kit) */
 /* Pagination — Web Kit `558:1989` · `Pagination / Item` `570:2332` */
 [data-refineui="pagination"]:not(:disabled):hover {
   background-color: #f5f5f5 !important;
@@ -100,34 +122,66 @@
   transform: none;
   opacity: 1;
 }
-/* Button — Web Kit `79:3304` (Primary/Secondary/Outline/Ghost 상태) */
-[data-refineui="button"][data-variant="primary"]:not(:disabled):hover {
-  background-color: var(--refineui-btn-primary-hover, #404040) !important;
+/* Button — Web Kit `79:3304` — Hover는 `:hover:not(:active)`, Pressed는 `:active`만 (겹침 방지) */
+[data-refineui="button"][data-variant="primary"]:not([data-inactive="true"]):hover:not(:active) {
+  background-color: var(--refineui-btn-primary-hover) !important;
 }
-[data-refineui="button"][data-variant="primary"]:not(:disabled):active {
-  background-color: var(--refineui-btn-primary-pressed, #000000) !important;
+[data-refineui="button"][data-variant="primary"]:not([data-inactive="true"]):active {
+  background-color: var(--refineui-btn-primary-pressed) !important;
 }
-[data-refineui="button"][data-variant="secondary"]:not(:disabled):hover {
-  background-color: #ebebeb !important;
-  border-color: #bbbbbb !important;
+[data-refineui="button"][data-variant="secondary"]:not([data-inactive="true"]):hover:not(:active) {
+  background-color: var(--refineui-color-alias-background-surface-hover) !important;
+  border-color: var(--refineui-color-alias-border-strong) !important;
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
 }
-[data-refineui="button"][data-variant="secondary"]:not(:disabled):active {
-  background-color: #dbdbdb !important;
-  border-color: #bbbbbb !important;
+[data-refineui="button"][data-variant="secondary"]:not([data-inactive="true"]):active {
+  background-color: var(--refineui-color-alias-background-surface-active) !important;
+  border-color: var(--refineui-color-alias-border-strong) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
 }
-[data-refineui="button"][data-variant="outline"]:not(:disabled):hover {
-  border-color: #bbbbbb !important;
+[data-refineui="button"][data-variant="outline"]:not([data-inactive="true"]):hover:not(:active) {
+  border-color: var(--refineui-color-alias-border-strong) !important;
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
 }
-[data-refineui="button"][data-variant="outline"]:not(:disabled):active {
-  border-color: #bbbbbb !important;
+[data-refineui="button"][data-variant="outline"]:not([data-inactive="true"]):active {
+  border-color: var(--refineui-color-alias-border-strong) !important;
 }
-[data-refineui="button"][data-variant="ghost"]:not(:disabled):hover {
-  background-color: #ebebeb !important;
+[data-refineui="button"][data-variant="ghost"]:not([data-inactive="true"]):hover:not(:active) {
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
 }
-[data-refineui="button"][data-variant="ghost"]:not(:disabled):active {
-  background-color: #dbdbdb !important;
+[data-refineui="button"][data-variant="ghost"]:not([data-inactive="true"]):active {
+  background-color: var(--refineui-color-alias-background-primary-active) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
 }
-[data-refineui="button"]:not(:disabled):active,
+
+/* Button — inactive / disabled (`data-inactive` — native disabled 또는 aria-disabled) */
+[data-refineui="button"][data-inactive="true"] {
+  opacity: 1;
+  transform: none !important;
+}
+[data-refineui="button"][data-variant="primary"][data-inactive="true"] {
+  background-color: var(--refineui-color-alias-background-brand-disabled) !important;
+  border-color: transparent !important;
+  color: var(--refineui-color-alias-foreground-disabled) !important;
+}
+[data-refineui="button"][data-variant="secondary"][data-inactive="true"] {
+  background-color: var(--refineui-color-alias-background-surface-disabled) !important;
+  border-color: var(--refineui-color-alias-border-disabled) !important;
+  color: var(--refineui-color-alias-foreground-disabled) !important;
+}
+[data-refineui="button"][data-variant="outline"][data-inactive="true"] {
+  background-color: transparent !important;
+  border-color: var(--refineui-color-alias-border-disabled) !important;
+  color: var(--refineui-color-alias-foreground-disabled) !important;
+}
+[data-refineui="button"][data-variant="ghost"][data-inactive="true"] {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  color: var(--refineui-color-alias-foreground-disabled) !important;
+}
+
+[data-refineui="button"]:not([data-inactive="true"]):active,
 [data-refineui="spinbutton"]:not(:disabled):active,
 [data-refineui="pagination-page"]:not(:disabled):active,
 [data-refineui="pagination"]:not(:disabled):active,
@@ -151,7 +205,6 @@
 [data-refineui="calendar-nav"]:focus-visible,
 [data-refineui="calendar-day"]:focus-visible,
 [data-refineui="chip-remove"]:focus-visible,
-[data-refineui="dialog-close"]:focus-visible,
 [data-refineui="drawer-close"]:focus-visible {
   outline: 2px solid var(--refineui-focus-color);
   outline-offset: var(--refineui-focus-offset);
@@ -222,49 +275,56 @@
   animation: refineui-spin 0.8s linear infinite;
 }
 
-/* Checkbox — Web Kit `327:2539`; 체크 마크는 React `WebIcon` checkmark 16px */
+/* Checkbox — Web Kit `327:2539` (MCP: Default/Hover/Pressed/Focused/Disabled × checked/unchecked) */
 [data-refineui="checkbox"] {
   box-sizing: border-box;
-  border: 1px solid #dbdbdb;
+  border: 1px solid var(--refineui-color-alias-border-default);
   border-radius: 4px;
-  background-color: #ffffff;
-  transition: background-color 0.15s, border-color 0.15s;
+  background-color: var(--refineui-color-alias-background-primary);
+  transition: background-color 0.15s, border-color 0.15s, border-width 0.15s;
 }
 [data-refineui="checkbox"][data-variant="circular"] {
   border-radius: 9999px;
 }
-label:hover [data-refineui="checkbox"][data-checked="false"]:not([data-disabled="true"]) {
-  border-color: #ebebeb;
+/* 미선택 — Hover: border subtle; Pressed: border strong (호버와 눌림 분리) */
+label:hover:not(:active) [data-refineui="checkbox"][data-checked="false"]:not([data-disabled="true"]) {
+  border-color: var(--refineui-color-alias-border-subtle);
 }
 label:active [data-refineui="checkbox"][data-checked="false"]:not([data-disabled="true"]) {
-  border-color: #bbbbbb;
+  border-color: var(--refineui-color-alias-border-strong);
 }
+/* 선택 — Default brand; Hover brandHover; Pressed brandActive */
 [data-refineui="checkbox"][data-checked="true"]:not([data-disabled="true"]) {
-  background-color: #4d4d4a;
-  border-color: #4d4d4a;
+  background-color: var(--refineui-color-alias-background-brand);
+  border-color: var(--refineui-color-alias-background-brand);
 }
-label:hover [data-refineui="checkbox"][data-checked="true"]:not([data-disabled="true"]) {
-  background-color: #000000;
-  border-color: #000000;
+label:hover:not(:active) [data-refineui="checkbox"][data-checked="true"]:not([data-disabled="true"]) {
+  background-color: var(--refineui-color-alias-background-brand-hover);
+  border-color: var(--refineui-color-alias-background-brand-hover);
 }
 label:active [data-refineui="checkbox"][data-checked="true"]:not([data-disabled="true"]) {
-  background-color: #6c6c6c;
-  border-color: #6c6c6c;
+  background-color: var(--refineui-color-alias-background-brand-active);
+  border-color: var(--refineui-color-alias-background-brand-active);
 }
-input:focus-visible + [data-refineui="checkbox"]:not([data-disabled="true"]) {
+/* Focused (Figma `state: Focused`) — `focus-within`: 숨김 input + `:focus-visible` 조합이 환경별로 빠지는 경우 보완 */
+label:focus-within:not(:active) [data-refineui="checkbox"]:not([data-disabled="true"]) {
   outline: none;
-  border: 2px solid #bbbbbb;
+  border-width: 2px;
+  border-color: var(--refineui-color-alias-border-strong);
+  border-style: solid;
+  background-color: var(--refineui-color-alias-background-primary);
 }
-input:focus-visible + [data-refineui="checkbox"][data-checked="true"]:not([data-disabled="true"]) {
-  background-color: #212121;
+label:focus-within:not(:active) [data-refineui="checkbox"][data-checked="true"]:not([data-disabled="true"]) {
+  background-color: var(--refineui-color-alias-background-brand-active);
+  border-color: var(--refineui-color-alias-border-focus);
 }
 [data-refineui="checkbox"][data-disabled="true"][data-checked="false"] {
-  background-color: #f5f5f5;
-  border-color: #e0e0e0;
+  background-color: var(--refineui-color-alias-background-brand-disabled);
+  border-color: var(--refineui-color-alias-border-disabled);
 }
 [data-refineui="checkbox"][data-disabled="true"][data-checked="true"] {
-  background-color: #ebebeb;
-  border-color: #ebebeb;
+  background-color: var(--refineui-color-alias-background-brand-disabled);
+  border-color: var(--refineui-color-alias-background-brand-disabled);
 }
 
 /* Radio — Web Kit COMPONENT_SET `Radio` `397:1001` (16×16 원; Foundation 팔레트) */
@@ -355,19 +415,19 @@ input:focus-visible + [data-refineui="checkbox"][data-checked="true"]:not([data-
   transition: color 0.15s, background-color 0.15s;
 }
 [data-refineui="breadcrumb-link"]:hover {
-  color: #6c6c6c !important;
+  color: var(--refineui-color-alias-foreground-secondary) !important;
 }
 [data-refineui="breadcrumb-link"][data-current]:hover {
-  color: #000000 !important;
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
 }
 [data-refineui="breadcrumb-link"]:active,
 [data-refineui="breadcrumb-link"][data-state="pressed"] {
-  background-color: #e0e0e0 !important;
+  background-color: var(--refineui-color-alias-background-primary-active) !important;
   border-radius: 4px;
 }
 [data-refineui="breadcrumb-link"][data-current]:active,
 [data-refineui="breadcrumb-link"][data-current][data-state="pressed"] {
-  color: #000000 !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
 }
 [data-refineui="breadcrumb-link"]:focus-visible {
   outline: 2px solid var(--refineui-focus-color);
@@ -392,10 +452,10 @@ input:focus-visible + [data-refineui="checkbox"][data-checked="true"]:not([data-
 }
 /* Hover: Figma BreadcrumbItem Ellipsis Hover — 링크와 동일 foreground secondary (#6c6c6c) */
 [data-refineui="breadcrumb-ellipsis"]:hover > span {
-  color: #6c6c6c !important;
+  color: var(--refineui-color-alias-foreground-secondary) !important;
 }
 [data-refineui="breadcrumb-ellipsis"]:active {
-  background-color: #e0e0e0 !important;
+  background-color: var(--refineui-color-alias-background-primary-active) !important;
   border-radius: 2px;
 }
 [data-refineui="breadcrumb-ellipsis"]:focus-visible {
@@ -404,42 +464,68 @@ input:focus-visible + [data-refineui="checkbox"][data-checked="true"]:not([data-
   border-radius: 2px;
 }
 
+/* Card — Web Kit `Card` `394:865` (State: Default / Hover / Pressed / Disabled) */
+[data-refineui="card"] {
+  transition: background-color 0.15s, border-color 0.15s;
+}
+[data-refineui="card"][data-interactive="true"]:not([data-disabled="true"]):not([aria-disabled="true"]):hover:not(:active) {
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
+  border-color: var(--refineui-color-alias-border-default) !important;
+}
+[data-refineui="card"][data-interactive="true"]:not([data-disabled="true"]):not([aria-disabled="true"]):active {
+  background-color: var(--refineui-color-alias-background-surface-selected) !important;
+  border-color: var(--refineui-color-alias-border-strong) !important;
+}
+[data-refineui="card"][data-disabled="true"],
+[data-refineui="card"][aria-disabled="true"] {
+  background-color: var(--refineui-color-alias-background-surface-disabled) !important;
+  border-color: var(--refineui-color-alias-border-disabled) !important;
+}
+[data-refineui="card"][data-disabled="true"] [data-refineui="card-title"],
+[data-refineui="card"][aria-disabled="true"] [data-refineui="card-title"],
+[data-refineui="card"][data-disabled="true"] [data-refineui="card-description"],
+[data-refineui="card"][aria-disabled="true"] [data-refineui="card-description"],
+[data-refineui="card"][data-disabled="true"] [data-refineui="card-content"],
+[data-refineui="card"][aria-disabled="true"] [data-refineui="card-content"] {
+  color: var(--refineui-color-alias-foreground-disabled) !important;
+}
+
 /* Badge — Web Kit hover/pressed (Figma Badge; Foundation palette) */
 [data-refineui="badge"] {
   transition: background-color 0.15s, border-color 0.15s;
 }
 [data-refineui="badge"][data-variant="default"]:hover {
-  background-color: #4d4d4a !important;
+  background-color: var(--refineui-color-alias-background-brand-hover) !important;
 }
 [data-refineui="badge"][data-variant="default"]:active {
-  background-color: #000000 !important;
+  background-color: var(--refineui-color-alias-background-brand-active) !important;
 }
 [data-refineui="badge"][data-variant="neutral"]:hover {
-  background-color: #d4d4d4 !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
 [data-refineui="badge"][data-variant="neutral"]:active {
-  background-color: #cecece !important;
+  background-color: var(--refineui-color-alias-background-primary-active) !important;
 }
 [data-refineui="badge"][data-variant="outline"]:active {
-  border-color: #bbbbbb !important;
+  border-color: var(--refineui-color-alias-border-strong) !important;
 }
 [data-refineui="badge"][data-variant="success"]:hover {
-  background-color: #229d28 !important;
+  background-color: var(--refineui-color-alias-background-success-hover) !important;
 }
 [data-refineui="badge"][data-variant="success"]:active {
-  background-color: #1d8822 !important;
+  background-color: var(--refineui-color-alias-background-success-subtle) !important;
 }
 [data-refineui="badge"][data-variant="warning"]:hover {
-  background-color: #d6692c !important;
+  background-color: var(--refineui-color-alias-background-warning-hover) !important;
 }
 [data-refineui="badge"][data-variant="warning"]:active {
-  background-color: #ba5b26 !important;
+  background-color: var(--refineui-color-alias-background-warning-subtle) !important;
 }
 [data-refineui="badge"][data-variant="danger"]:hover {
-  background-color: #f94343 !important;
+  background-color: var(--refineui-color-alias-background-error-hover) !important;
 }
 [data-refineui="badge"][data-variant="danger"]:active {
-  background-color: #d93a3a !important;
+  background-color: var(--refineui-color-alias-background-error-subtle) !important;
 }
 
 /* Chip / Tag — Web Kit COMPONENT_SET `Tag` `574:6578` (Default=흰 배경·hover neutral100·pressed neutral150; Outline 테두리; Selected=filled) */

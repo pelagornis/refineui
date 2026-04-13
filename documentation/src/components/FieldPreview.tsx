@@ -18,6 +18,9 @@ export default function FieldPreview() {
         <Field label="설명" hint="8자 이상 입력해주세요">
           <Input placeholder="입력" />
         </Field>
+        <Field label="Large 라벨" size="lg" hint="size=lg → body1">
+          <Input placeholder="입력" />
+        </Field>
       </div>
     </PreviewFrame>
   );

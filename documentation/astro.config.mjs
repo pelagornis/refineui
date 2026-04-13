@@ -1,21 +1,14 @@
 import { defineConfig } from 'astro/config';
-import { fileURLToPath } from 'node:url';
-import { join } from 'node:path';
 import react from '@astrojs/react';
 import starlight from '@astrojs/starlight';
-import pagePlugin from '@pelagornis/page';
-
-const __dirname = fileURLToPath(new URL('.', import.meta.url));
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   vite: {
-    resolve: {
-      alias: {
-        '@refineui/tokens': join(__dirname, '../packages/tokens/dist/index.mjs'),
-      },
-    },
+    plugins: [tailwindcss()],
     ssr: {
-      noExternal: ['@refineui/react'],
+      /** CJS 엔트리만 잡히는 이슈 방지 — 번들 시 ESM로 통일 */
+      noExternal: ['@refineui/react', '@refineui/tokens'],
     },
     optimizeDeps: {
       include: ['@refineui/react'],
@@ -25,6 +18,30 @@ export default defineConfig({
     react(),
     starlight({
       plugins: [],
+      head: [
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'preconnect',
+            href: 'https://fonts.googleapis.com',
+          },
+        },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'preconnect',
+            href: 'https://fonts.gstatic.com',
+            crossorigin: 'anonymous',
+          },
+        },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'stylesheet',
+            href: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap',
+          },
+        },
+      ],
       title: 'RefineUI',
       description: 'Pelagornis RefineUI Web Kit — 디자인 시스템 컴포넌트 라이브러리',
       customCss: ['./src/styles/global.css'],

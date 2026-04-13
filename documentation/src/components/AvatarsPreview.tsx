@@ -1,6 +1,12 @@
 import type { CSSProperties } from "react";
 import { colors, fontSizes, fontWeights, spacings } from "@refineui/tokens";
-import { Avatars } from "@refineui/react";
+import {
+  Avatar,
+  AvatarGroup,
+  AvatarImage,
+  AvatarOverflow,
+} from "@refineui/react";
+import type { AvatarSize } from "@refineui/react";
 import PreviewFrame from "./PreviewFrame";
 
 const sectionLabel: CSSProperties = {
@@ -13,54 +19,54 @@ const sectionLabel: CSSProperties = {
   letterSpacing: "0.04em",
 };
 
-const sectionGap: CSSProperties = { marginTop: spacings.sizeXLarge };
+const rowLabel: CSSProperties = {
+  flexShrink: 0,
+  width: 88,
+  fontSize: fontSizes.fontSize200,
+  fontWeight: fontWeights.fontWeightMedium,
+  color: colors.neutral600,
+};
 
-const sample = [
-  { alt: "Kim Minsoo" },
-  { alt: "Lee Jiwon" },
-  { alt: "Park Seoyeon" },
-  { alt: "Choi Junho" },
-  { alt: "Jung Hayoung" },
-];
+/** Web Kit `Avatar` Stack `69:3008` — 행 `76:1427` / `76:1435` / `76:1451` */
+function AvatarStackRow({ size, label }: { size: AvatarSize; label: string }) {
+  return (
+    <div className="flex flex-wrap items-center gap-refineui-size-medium rounded-refineui-large bg-refineui-neutral-150 px-refineui-size-large py-refineui-size-medium">
+      <span style={rowLabel}>{label}</span>
+      <AvatarGroup size={size} layout="stack">
+        <Avatar size={size} layout="image" color="neutral">
+          <AvatarImage src="https://avatars.githubusercontent.com/u/108743931?s=200&v=4" alt="User" />
+        </Avatar>
+        <Avatar size={size} layout="icon" color="neutral" />
+        <Avatar size={size} layout="initials" color="orange" alt="Park Lee" />
+        <Avatar size={size} layout="icon" color="red" />
+        <AvatarOverflow size={size} />
+      </AvatarGroup>
+    </div>
+  );
+}
 
 export default function AvatarsPreview() {
   return (
     <PreviewFrame>
       <div style={{ display: "flex", flexDirection: "column", gap: spacings.sizeLarge }}>
-        <p style={sectionLabel}>layout=&quot;stack&quot; (겹침, 기본)</p>
-        <div style={{ display: "flex", alignItems: "center", gap: spacings.sizeXLarge, flexWrap: "wrap" }}>
-          <Avatars avatars={sample.slice(0, 3)} size="sm" layout="stack" />
-          <Avatars avatars={sample.slice(0, 3)} size="md" layout="stack" />
-          <Avatars avatars={sample} size="lg" max={4} layout="stack" />
-        </div>
-
-        <p style={{ ...sectionLabel, ...sectionGap }}>layout=&quot;spread&quot; (간격, Web Kit Avater Spread)</p>
-        <div style={{ display: "flex", alignItems: "center", gap: spacings.sizeXLarge, flexWrap: "wrap" }}>
-          <Avatars avatars={sample.slice(0, 3)} size="sm" layout="spread" />
-          <Avatars avatars={sample.slice(0, 3)} size="md" layout="spread" />
-          <Avatars avatars={sample} size="lg" max={4} layout="spread" />
-        </div>
-
-        <p style={{ ...sectionLabel, ...sectionGap }}>이미지 + 이니셜</p>
-        <div style={{ display: "flex", alignItems: "center", gap: spacings.sizeXLarge, flexWrap: "wrap" }}>
-          <Avatars
-            layout="stack"
-            avatars={[
-              { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=1", alt: "User A" },
-              { alt: "B" },
-              { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=3", alt: "User C" },
-            ]}
-            size="md"
-          />
-          <Avatars
-            layout="spread"
-            avatars={[
-              { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=4", alt: "User D" },
-              { alt: "E" },
-              { src: "https://api.dicebear.com/7.x/avataaars/svg?seed=6", alt: "User F" },
-            ]}
-            size="md"
-          />
+        <p style={sectionLabel}>Example</p>
+        <p
+          style={{
+            fontSize: fontSizes.fontSize200,
+            color: colors.neutral550,
+            margin: 0,
+            marginTop: `calc(-1 * ${spacings.sizeSmall})`,
+            marginBottom: spacings.sizeLarge,
+            lineHeight: 1.5,
+          }}
+        >
+          Web Kit <strong>Avatar Stack</strong> (<code style={{ fontFamily: "monospace", fontSize: "0.95em" }}>69:3008</code>)과
+          동일한 순서: Image(녹색 <strong>Status</strong>) → Neutral Icon → Initials(Orange) → Icon(Red) → More.
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: spacings.sizeLarge }}>
+          <AvatarStackRow size="medium" label="Medium (32px)" />
+          <AvatarStackRow size="large" label="Large (36px)" />
+          <AvatarStackRow size="xxlarge" label="XXLarge (56px)" />
         </div>
       </div>
     </PreviewFrame>

@@ -32,7 +32,7 @@ https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?
 ### 컴포넌트 ↔ Figma Web Kit
 
 - **MUST**: `packages/react` 등 UI 컴포넌트는 **Pelagornis RefineUI Web Kit** Figma에 있는 **해당 컴포넌트·변형·프로퍼티 범위와 동일**해야 한다. Figma에 없는 변형, props, 슬롯(`children`) 오버라이드, orientation 등 **추가 API·동작은 넣지 않는다**. 구현 전·리뷰 시 해당 노드의 `get_design_context` 등으로 스펙을 확인한다.
-- **MUST**: 컴포넌트 **내부 스타일·치수**는 **`@refineui/tokens`를 기준**으로만 둔다. 색·간격·타이포·선 두께·반경·그림자·z-index·`sizes`/`iconSizes` 등은 토큰에서 참조하고, 임의 숫자·hex·rgb 하드코딩 금지. (세부: `.cursor/rules/tokens-in-components.mdc`.)
+- **MUST**: 컴포넌트 **내부 스타일·치수**는 디자인 토큰만 쓴다. 색·간격·타이포·선·반경·그림자·z-index·`iconSizes`는 **`@refineui/tokens`**, Foundation `Global/Size`·Web Kit 컴포넌트 치수는 **`@refineui/react`의 `foundationSizes` / `componentSizes`**에서 참조하고, 임의 숫자·hex·rgb 하드코딩 금지. (세부: `.cursor/rules/tokens-in-components.mdc`.)
 
 ### Foundation · 토큰 동기화
 

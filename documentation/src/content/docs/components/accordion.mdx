@@ -1,13 +1,49 @@
 ---
 title: Accordion
-description: 접이식 패널 컴포넌트
+description: 접이식 섹션 — 여러 개 동시 펼침 가능
 ---
 
 import AccordionPreview from "../../../components/AccordionPreview";
 
 # Accordion
 
-접이식 패널 컴포넌트입니다. **클릭해서 열고 닫아보세요.**
+여러 패널을 접었다 펼 수 있습니다. Web Kit **Accordion** `54:146`의 **Small / Medium / Large**에 맞춰 `size`로 트리거 타이포가 바뀝니다.
+
+## 설치·임포트
+
+```tsx
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@refineui/react";
+import "@refineui/react/refineui.css";
+```
+
+## 기본 사용
+
+```tsx
+<Accordion
+  type="single"
+  collapsible
+  defaultValue="shipping"
+  className="max-w-lg"
+>
+  <AccordionItem value="shipping">
+    <AccordionTrigger>What are your shipping options?</AccordionTrigger>
+    <AccordionContent>
+      We offer standard (5-7 days), express (2-3 days), and overnight shipping.
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="returns">
+    <AccordionTrigger>What is your return policy?</AccordionTrigger>
+    <AccordionContent>
+      Returns accepted within 30 days. Items must be unused and in original packaging.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
 
 ## Preview
 
@@ -15,28 +51,29 @@ import AccordionPreview from "../../../components/AccordionPreview";
   <AccordionPreview client:load />
 </div>
 
-## 예시 (정적)
-
-```tsx
-<Accordion
-  items={[
-    { id: "1", title: "섹션 1", content: "첫 번째 패널 내용입니다.", icon: "home" },
-    { id: "2", title: "섹션 2", content: "두 번째 패널 내용입니다.", icon: "folder", defaultOpen: true },
-    { id: "3", title: "섹션 3", content: "세 번째 패널 내용입니다.", icon: "settings" },
-  ]}
-/>
-```
-
-### 크기 (Figma Web Kit)
-
-트리거 타이포만 달라집니다: `small` → Caption1, `medium` → Body1(기본), `large` → SubTitle1.
-
-```tsx
-<Accordion size="large" items={[...]} />
-```
-
 ## Props
 
-- `items` — AccordionItem 배열 (id, title, content, icon?, defaultOpen?)
-- `allowMultiple` — 여러 패널 동시 열기 허용
-- `size` — `"small"` | `"medium"` | `"large"` (기본: `medium`)
+| Prop | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `type` | `"single"` \| `"multiple"` | `"single"` | 단일/다중 열림 모드 |
+| `collapsible` | `boolean` | `false` | `single` 모드에서 열린 항목 다시 닫기 허용 |
+| `defaultValue` | `string` \| `string[]` | — | 초기 열림 항목 |
+| `value` | `string` \| `string[]` | — | 제어 컴포넌트 값 |
+| `onValueChange` | `(value) => void` | — | 열림 값 변경 콜백 |
+| `size` | `"small"` \| `"medium"` \| `"large"` | — | 트리거 타이포 |
+| `items` | `AccordionItemProps[]` | — | 레거시 배열 API(하위호환) |
+
+## 예시
+
+### 아이콘
+
+`AccordionItem`에 `icon`을 주면 아이콘이 제목 앞에 표시됩니다.
+
+```tsx
+<Accordion type="single" defaultValue="help">
+  <AccordionItem value="help" icon="info">
+    <AccordionTrigger>도움말</AccordionTrigger>
+    <AccordionContent>아이콘이 포함된 항목입니다.</AccordionContent>
+  </AccordionItem>
+</Accordion>
+```

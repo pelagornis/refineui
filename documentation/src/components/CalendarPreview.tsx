@@ -12,7 +12,7 @@ export default function CalendarPreview() {
   return (
     <PreviewFrame>
       <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-        <Calendar value={value} onChange={(d) => setValue(d)} locale="en" />
+        <Calendar value={value} onChange={(d) => setValue(d)} />
         <Calendar
           mode="range"
           defaultMonth={new Date(2025, 9, 1)}
@@ -22,7 +22,6 @@ export default function CalendarPreview() {
             setRangeStart(s);
             setRangeEnd(e);
           }}
-          locale="en"
         />
       </div>
     </PreviewFrame>

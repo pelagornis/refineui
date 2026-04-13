@@ -1,5 +1,5 @@
+import { clsx } from "clsx";
 import type { TextareaHTMLAttributes } from "react";
-import { colors, spacings, borderRadii, typographys, strokeWidths, sizes } from "@refineui/tokens";
 
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     error?: boolean;
@@ -12,32 +12,29 @@ export function Textarea({
     success = false,
     fullWidth = false,
     disabled,
-    style,
+    className,
     ...props
 }: TextareaProps) {
-    const borderColor = error ? colors.red500 : success ? colors.green500 : colors.neutral300;
-    const bg = disabled ? colors.neutral150 : colors.neutralWhite;
-    const border = disabled ? colors.neutral250 : borderColor;
+    const borderClass = disabled
+        ? "border-refineui-thin border-refineui-neutral-250"
+        : error
+          ? "border-refineui-thin border-refineui-red-500"
+          : success
+            ? "border-refineui-thin border-refineui-green-500"
+            : "border-refineui-thin border-refineui-neutral-300";
 
     return (
         <textarea
             data-refineui="textarea"
+            data-size="md"
             disabled={disabled}
-            style={{
-                ...typographys.body2,
-                padding: `${spacings.sizeMedium} ${spacings.sizeLarge}`,
-                borderRadius: borderRadii.roundedLarge,
-                border: `${strokeWidths.strokeWidthThin} solid ${border}`,
-                backgroundColor: bg,
-                color: colors.primaryBlack,
-                width: fullWidth ? "100%" : undefined,
-                outline: "none",
-                resize: "vertical",
-                minHeight: sizes.controlTextareaMin,
-                boxSizing: "border-box",
-                transition: "border-color 0.15s, box-shadow 0.15s, background-color 0.15s",
-                ...style,
-            }}
+            className={clsx(
+                "refineui-typo-body-2 min-h-refineui-control-textarea-min resize-y rounded-refineui-large px-refineui-size-small py-refineui-size-medium text-refineui-primary-black outline-none transition-[border-color,box-shadow,background-color] duration-150",
+                borderClass,
+                disabled ? "bg-refineui-neutral-150" : "bg-refineui-neutral-white",
+                fullWidth && "w-full",
+                className,
+            )}
             {...props}
         />
     );

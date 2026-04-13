@@ -1,59 +1,66 @@
-import type { CSSProperties } from "react";
-import { colors, fontSizes, fontWeights, spacings, iconSizes } from "@refineui/tokens";
-import { Alert, WebIcon } from "@refineui/react";
+import { spacings, iconSizes, colors } from "@refineui/tokens";
+import { Alert, AlertDescription, AlertTitle, WebIcon } from "@refineui/react";
 
 import PreviewFrame from "./PreviewFrame";
-
-const sectionLabel: CSSProperties = {
-  fontSize: fontSizes.fontSize200,
-  fontWeight: fontWeights.fontWeightSemibold,
-  color: colors.neutral600,
-  margin: 0,
-  marginBottom: spacings.sizeMedium,
-  textTransform: "uppercase" as const,
-  letterSpacing: "0.04em",
-};
-
-const sectionGap: CSSProperties = { marginTop: spacings.sizeXLarge };
 
 export default function AlertPreview() {
   return (
     <PreviewFrame>
-      <div style={{ display: "flex", flexDirection: "column", gap: spacings.sizeLarge }}>
-        <p style={sectionLabel}>Variant 기본 아이콘</p>
-        <Alert variant="default" title="Alert Title" description="Alert Description" />
-        <Alert
-          variant="success"
-          title="Alert Title"
-          description="Alert Description"
-          onClose={() => {}}
-          actions={[{ label: "Action", onClick: () => {} }, { label: "Action", onClick: () => {} }]}
-        />
-        <Alert variant="danger" title="Alert Title" description="Alert Description" onClose={() => {}} />
-        <Alert variant="warning" title="Alert Title" description="Alert Description" />
-        <Alert variant="info" title="Alert Title" description="Alert Description" />
-        <Alert variant="custom" title="Alert Title" description="Alert Description" />
-        <Alert variant="info">정보 메시지입니다.</Alert>
+      <div style={{ display: "grid", width: "100%", maxWidth: 720, alignItems: "start", gap: spacings.sizeXLarge }}>
+        <section style={{ display: "grid", gap: spacings.sizeMedium }}>
+          <p className="refineui-typo-caption-1 m-0 text-refineui-neutral-600">Composed API</p>
+          <Alert variant="default">
+            <WebIcon name="circle" size={iconSizes.medium} color={colors.primaryBlack} aria-hidden />
+            <AlertTitle>Alert Title</AlertTitle>
+            <AlertDescription>Alert Description — 기본(neutral) 톤, 제목 검정·본문 보조색.</AlertDescription>
+          </Alert>
+          <Alert variant="success">
+            <WebIcon name="checkmark" size={iconSizes.medium} color={colors.green700} aria-hidden />
+            <AlertTitle>Payment successful</AlertTitle>
+            <AlertDescription>
+              Your payment of $29.99 has been processed. A receipt has been sent to your email address.
+            </AlertDescription>
+          </Alert>
+          <Alert variant="info">
+            <WebIcon name="info" size={iconSizes.medium} color={colors.blue700} aria-hidden />
+            <AlertTitle>New feature available</AlertTitle>
+            <AlertDescription>
+              We&apos;ve added dark mode support. You can enable it in your account settings.
+            </AlertDescription>
+          </Alert>
+        </section>
 
-        <p style={{ ...sectionLabel, ...sectionGap }}>icon prop — 문자열 (System Icons 슬러그)</p>
-        <Alert variant="info" icon="settings" title='icon="settings"' description="RefineUI System Icons 이름을 넘기면 슬롯 안에 렌더됩니다." />
-        <Alert variant="info" icon="mail" title='icon="mail"' description="메일 알림 등 용도에 맞게 바꿀 수 있습니다." />
-        <Alert variant="info" icon="calendar" title='icon="calendar"' description="일정·예약 관련 메시지에 사용할 수 있습니다." />
-        <Alert variant="success" icon="checkmark" title='icon="checkmark"' description="성공 톤과 다른 글리프를 조합할 수 있습니다." />
-        <Alert variant="warning" icon="shield" title='icon="shield"' description="보안·권한 안내에 어울리는 아이콘 예시입니다." />
-        <Alert variant="info" icon="person" title='icon="person"' description="계정·프로필 관련 알림." />
-        <Alert variant="info" icon="home" title='icon="home"' description="홈·대시보드 맥락." />
-        <Alert variant="info" icon="link" title='icon="link"' description="링크·연결 관련 안내." />
-        <Alert variant="info" icon="image" title='icon="image"' description="미디어·첨부파일 안내." />
-        <Alert variant="info" icon="folder" title='icon="folder"' description="파일·폴더 작업 안내." />
+        <section style={{ display: "grid", gap: spacings.sizeMedium }}>
+          <p className="refineui-typo-caption-1 m-0 text-refineui-neutral-600">Variant API</p>
+          <Alert variant="default" title="Alert Title" description="Alert Description" />
+          <Alert variant="success" title="Deploy completed" description="Your production deployment finished successfully." />
+          <Alert variant="warning" title="High memory usage" description="The current process is using more memory than usual." />
+          <Alert variant="danger" title="Payment failed" description="Please update your card details and try again." />
+        </section>
 
-        <p style={{ ...sectionLabel, ...sectionGap }}>icon prop — ReactNode (WebIcon 직접 지정)</p>
-        <Alert
-          variant="custom"
-          title="커스텀 WebIcon"
-          description="크기·색을 직접 지정한 글리프를 슬롯 안에 넣은 예시입니다."
-          icon={<WebIcon name="star" size={iconSizes.xs} color={colors.purple1000} fallback="★" aria-hidden />}
-        />
+        <section style={{ display: "grid", gap: spacings.sizeMedium }}>
+          <p className="refineui-typo-caption-1 m-0 text-refineui-neutral-600">Close + Actions</p>
+          <Alert
+            variant="info"
+            title="Changes available"
+            description="A new version is ready. Review the release notes before updating."
+            onClose={() => {}}
+            actions={[
+              { label: "Later", onClick: () => {} },
+              { label: "Update", onClick: () => {} },
+            ]}
+          />
+        </section>
+
+        <section style={{ display: "grid", gap: spacings.sizeMedium }}>
+          <p className="refineui-typo-caption-1 m-0 text-refineui-neutral-600">Custom icon node</p>
+          <Alert
+            variant="custom"
+            title="Custom integration"
+            description="You can provide any ReactNode as the leading icon."
+            icon={<WebIcon name="star" size={iconSizes.medium} color={colors.purple1000} aria-hidden />}
+          />
+        </section>
       </div>
     </PreviewFrame>
   );

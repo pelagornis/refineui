@@ -1,13 +1,26 @@
 ---
 title: Pagination
-description: 페이지 네비게이션 컴포넌트
+description: 페이지 이전/다음·현재 페이지
 ---
 
 import PaginationDemo from "../../../components/PaginationDemo";
 
 # Pagination
 
-페이지 네비게이션 컴포넌트입니다.
+목록의 페이지를 바꿀 때 씁니다. Web Kit **Pagination** `558:1989` · **Pagination / Item** `570:2332`를 참고합니다.
+
+## 설치·임포트
+
+```tsx
+import { Pagination } from "@refineui/react";
+import "@refineui/react/refineui.css";
+```
+
+## 기본 사용
+
+```tsx
+<Pagination page={current} totalPages={10} onPageChange={setPage} />
+```
 
 ## Preview
 
@@ -17,6 +30,22 @@ import PaginationDemo from "../../../components/PaginationDemo";
 
 ## Props
 
-- `page` — 현재 페이지
-- `totalPages` — 전체 페이지 수
-- `onPageChange` — 페이지 변경 콜백
+| Prop | 타입 | 설명 |
+|------|------|------|
+| `page` | `number` | 현재 페이지 (1 기반) |
+| `totalPages` | `number` | 전체 페이지 수 |
+| `onPageChange` | `(page: number) => void` | 페이지 변경 |
+
+`aria-label="Pagination"`이 `<nav>`에 설정됩니다.
+
+## 예시
+
+### URL과 동기화
+
+```tsx
+const [page, setPage] = useState(1);
+useEffect(() => {
+  const p = new URLSearchParams(window.location.search).get("p");
+  if (p) setPage(Number(p));
+}, []);
+```

@@ -1,41 +1,58 @@
+import { clsx } from "clsx";
 import type { InputHTMLAttributes } from "react";
 import { useId } from "react";
-import { colors, spacings, typographys, sizes } from "@refineui/tokens";
 
+/**
+ * Web Kit COMPONENT_SET `Radio` `397:1001` — 라벨·보조 설명, 인터랙션은 `refineui.css` `[data-refineui="radio"]`.
+ */
 export interface RadioProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
     label?: string;
+    /** 보조 한 줄 (Figma `description` / `caption3`) */
+    description?: string;
 }
 
-export function Radio({ label, id, style, ...props }: RadioProps) {
+export function Radio({ label, description, id, className, disabled, ...props }: RadioProps) {
     const uid = useId();
     const inputId = id ?? uid;
+    const showText = Boolean(label || description);
 
     return (
         <label
             htmlFor={inputId}
-            style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: spacings.sizeSmall,
-                cursor: props.disabled ? "not-allowed" : "pointer",
-                ...style,
-            }}
+            className={clsx(
+                "inline-flex gap-refineui-size-medium p-refineui-size-xxsmall",
+                description ? "items-start" : "items-center",
+                disabled ? "cursor-not-allowed" : "cursor-pointer",
+                className,
+            )}
         >
             <input
                 id={inputId}
                 type="radio"
                 data-refineui="radio"
-                style={{
-                    width: sizes.controlCheckboxRadio,
-                    height: sizes.controlCheckboxRadio,
-                    accentColor: colors.primaryBlack,
-                    cursor: "pointer",
-                }}
+                disabled={disabled}
+                className={clsx(
+                    "size-refineui-control-checkbox-radio shrink-0 cursor-pointer",
+                    description && "mt-refineui-size-xxsmall",
+                    disabled && "cursor-not-allowed",
+                )}
                 {...props}
             />
-            {label && (
-                <span style={{ ...typographys.body3, color: colors.primaryBlack }}>
-                    {label}
+            {showText && (
+                <span className="flex min-w-0 flex-col gap-refineui-size-small">
+                    {label && (
+                        <span
+                            className={clsx(
+                                "refineui-typo-caption-1",
+                                disabled ? "text-refineui-neutral-600" : "text-refineui-primary-black",
+                            )}
+                        >
+                            {label}
+                        </span>
+                    )}
+                    {description && (
+                        <span className="refineui-typo-caption-3 text-refineui-neutral-600">{description}</span>
+                    )}
                 </span>
             )}
         </label>

@@ -1,13 +1,26 @@
 ---
 title: Slider
-description: 슬라이더 컴포넌트
+description: 범위 슬라이더 — sm / md 레일 두께
 ---
 
 import SliderDemo from "../../../components/SliderDemo";
 
 # Slider
 
-범위 슬라이더 컴포넌트입니다.
+`type="range"` 입력을 스타일한 슬라이더입니다. Web Kit **Slider** `526:1556`에 맞춰 **`size`**로 레일 두께(sm/md)를 바꿉니다.
+
+## 설치·임포트
+
+```tsx
+import { Slider } from "@refineui/react";
+import "@refineui/react/refineui.css";
+```
+
+## 기본 사용
+
+```tsx
+<Slider min={0} max={100} defaultValue={50} onChange={(v) => console.log(v)} aria-label="볼륨" />
+```
 
 ## Preview
 
@@ -17,8 +30,21 @@ import SliderDemo from "../../../components/SliderDemo";
 
 ## Props
 
-- `value` — 현재 값
-- `onChange` — 값 변경 콜백
-- `min` — 최소값 (기본: 0)
-- `max` — 최대값 (기본: 100)
-- `step` — 단계 (기본: 1)
+| Prop | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `min` | `number` | `0` | 최소 |
+| `max` | `number` | `100` | 최대 |
+| `step` | `number` | `1` | 단계 |
+| `value` | `number` | — | 제어 값 |
+| `defaultValue` | `number` | — | 비제어 값 |
+| `onChange` | `(value: number) => void` | — | 값 변경 |
+| `size` | `"sm"` \| `"md"` | `"md"` | 레일 두께 |
+
+## 예시
+
+### 제어 컴포넌트
+
+```tsx
+const [pct, setPct] = useState(30);
+<Slider value={pct} onChange={setPct} min={0} max={100} />;
+```

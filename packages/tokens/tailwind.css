@@ -1,0 +1,4 @@
+@import "tailwindcss";
+@import "./dist/css-variables.css";
+@import "./dist/tailwind-theme.css";
+@import "./dist/refineui-typography.css";

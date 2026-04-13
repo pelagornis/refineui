@@ -1,18 +1,35 @@
 ---
 title: Divider
-description: 구분선 — Web Kit 346:722 (Default / Content / Icon), Figma MCP와 동일 스펙
+description: 수평 구분선 — default · content · icon
 ---
 
 import DividerPreview from "../../../components/DividerPreview";
 
 # Divider
 
-Figma **Pelagornis RefineUI Web Kit** `Divider`(`346:722`)와 **동일**하게 맞춰 두었습니다.
+콘텐츠를 나누는 **수평** 구분선입니다. Web Kit **Divider** `346:722`를 따릅니다. **세로 Divider는 지원하지 않습니다.**
 
-- **선 색**: `neutral300`, 두께 `strokeWidthThin`(1px).
-- **Content** 라벨: **Caption 2**, 글자색 **`neutralBlack`** (Figma `global/colors/neutral/black`).
-- **분할 행**: `gap` **sizeMedium**(10px), 긴 선 **`flex: 1 0 0`**, 짧은 끝 **`sizes.dividerShortEnd`**(8px), 행은 **`justify-content: center`**, **`overflow: hidden`** (Figma `overflow-clip`에 대응).
-- **Icon**: Figma와 동일하게 **고정 Circle 글리프만** — **`sizes.dividerIconSlot`(20×20)** 프레임, Shape **`sizes.dividerIconCircleDiameter`** + **`sizes.dividerIconCircleInset`**(3px), stroke `neutralBlack`.
+## 설치·임포트
+
+```tsx
+import { Divider } from "@refineui/react";
+```
+
+## 레이아웃
+
+| `layout` | 설명 |
+|----------|------|
+| `default` (기본) | 전폭 1px 선 |
+| `content` | 가운데(또는 `align`에 따라) 텍스트 + 양쪽 선 |
+| `icon` | 가운데 아이콘 슬롯 + 양쪽 선 (`children`에 아이콘 등) |
+
+`content`·`icon`에서 `align`은 `"center"` \| `"left"` \| `"right"` (수평 정렬).
+
+## 기본 사용
+
+```tsx
+<Divider />
+```
 
 ## Preview
 
@@ -20,40 +37,20 @@ Figma **Pelagornis RefineUI Web Kit** `Divider`(`346:722`)와 **동일**하게 �
   <DividerPreview client:load />
 </div>
 
-## layout
-
-- **`default`** — 전체 너비 1px 선만. 바깥 여백은 넣지 않습니다.
-- **`content`** — 분할 선 + `children` 라벨.
-- **`icon`** — 분할 선 + Circle 글리프(Figma 고정).
-
-`layout=content`인데 `children`이 없으면 `default`처럼 동작합니다.
-
-## align (`content` · `icon`)
-
-- **`center`** — 양쪽 선이 `flex: 1 0 0`으로 균등.
-- **`left`** — 왼쪽 **8px**(`dividerShortEnd`) + 오른쪽 늘어남.
-- **`right`** — 왼쪽 늘어남 + 오른쪽 **8px**.
-
 ## 예시
 
+### 텍스트 구분
+
 ```tsx
-import { Divider } from "@refineui/react";
-
-<Divider />
-
 <Divider layout="content" align="center">
-  Content
+  또는
 </Divider>
-
-<Divider layout="icon" align="left" />
 ```
 
-## Props
+### 아이콘
 
-| Prop | 타입 | 기본 | 설명 |
-|------|------|------|------|
-| `layout` | `default` \| `content` \| `icon` | `default` | |
-| `align` | `center` \| `left` \| `right` | `center` | `content`·`icon` 전용 |
-| `children` | `ReactNode` | — | **`layout="content"`일 때만**(라벨). `icon`에서는 사용하지 않음 |
-
-그 외 `HTMLAttributes<HTMLDivElement>`.
+```tsx
+<Divider layout="icon" align="center">
+  <span aria-hidden>◎</span>
+</Divider>
+```

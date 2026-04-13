@@ -14,7 +14,11 @@ export default function SwitchDemo() {
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: spacings.sizeMedium }}>
           <Switch disabled />
-          <span>Disabled</span>
+          <span>Disabled (off)</span>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: spacings.sizeMedium }}>
+          <Switch checked disabled />
+          <span>Disabled (on)</span>
         </div>
       </div>
     </PreviewFrame>

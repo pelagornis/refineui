@@ -66,7 +66,7 @@ export interface BreadcrumbLinkProps extends AnchorHTMLAttributes<HTMLAnchorElem
 export function BreadcrumbLink({ asChild, className, children, ...props }: BreadcrumbLinkProps) {
     const classes = clsx(
         textRow,
-        "inline-flex items-center justify-center px-refineui-size-medium py-refineui-size-xsmall text-refineui-neutral-500 no-underline",
+        "inline-flex items-center justify-center px-refineui-size-medium py-refineui-size-xsmall text-refineui-alias-foreground-tertiary no-underline",
         className,
     );
 
@@ -101,7 +101,7 @@ export function BreadcrumbPage({ className, ...props }: BreadcrumbPageProps) {
             aria-current="page"
             className={clsx(
                 textRow,
-                "inline-flex items-center justify-center px-refineui-size-medium py-refineui-size-xsmall text-refineui-primary-black",
+                "inline-flex items-center justify-center px-refineui-size-medium py-refineui-size-xsmall text-refineui-alias-foreground-primary",
                 className,
             )}
             {...props}
@@ -121,7 +121,7 @@ export function BreadcrumbSeparator({ children, className, ...props }: Breadcrum
             {...props}
         >
             {children ?? (
-                <span className={clsx(textRow, "inline-flex items-center text-refineui-neutral-500")}>/</span>
+                <span className={clsx(textRow, "inline-flex items-center text-refineui-alias-foreground-tertiary")}>/</span>
             )}
         </li>
     );
@@ -135,12 +135,12 @@ export function BreadcrumbEllipsis({ className, ...props }: BreadcrumbEllipsisPr
         <span
             data-refineui="breadcrumb-ellipsis"
             className={clsx(
-                "inline-flex size-refineui-size-xlarge shrink-0 items-center justify-center text-refineui-neutral-500",
+                "inline-flex size-refineui-size-xlarge shrink-0 items-center justify-center text-refineui-alias-foreground-tertiary",
                 className,
             )}
             {...props}
         >
-            <WebIcon name="more-horizontal" size={iconSizes.sm} color="currentColor" fallback="⋯" />
+            <WebIcon name="more-horizontal" size={iconSizes.small} color="currentColor" fallback="⋯" />
         </span>
     );
 }
@@ -159,13 +159,13 @@ export const BreadcrumbEllipsisTrigger = forwardRef<HTMLButtonElement, Breadcrum
                 type={type}
                 data-refineui="breadcrumb-ellipsis"
                 className={clsx(
-                    "box-border inline-flex size-refineui-size-xlarge shrink-0 cursor-pointer items-center justify-center border-none bg-transparent p-0 text-refineui-neutral-500",
+                    "box-border inline-flex size-refineui-size-xlarge shrink-0 cursor-pointer items-center justify-center border-none bg-transparent p-0 text-refineui-alias-foreground-tertiary",
                     className,
                 )}
                 {...props}
             >
                 {children ?? (
-                    <WebIcon name="more-horizontal" size={iconSizes.sm} color="currentColor" fallback="⋯" />
+                    <WebIcon name="more-horizontal" size={iconSizes.small} color="currentColor" fallback="⋯" />
                 )}
             </button>
         );

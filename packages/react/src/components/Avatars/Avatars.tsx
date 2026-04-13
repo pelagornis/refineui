@@ -1,8 +1,15 @@
+import { clsx } from "clsx";
 import type { HTMLAttributes } from "react";
-import { colors, fontWeights, spacings, borderRadii, strokeWidths, sizes, typographys } from "@refineui/tokens";
 import { Avatar } from "../Avatar";
+import {
+    avatarGroupCountTypo,
+    avatarSizeDim,
+    avatarSpreadGap,
+    avatarStackOverlapCssVar,
+    type AvatarSize,
+} from "../Avatar/avatarStyles";
 
-export type AvatarsSize = "sm" | "md" | "lg";
+export type AvatarsSize = AvatarSize;
 
 /** Web Kit `Avater Stack`(`69:3008`) · `Avater Spread`(`69:3007`) — Figma 이름 그대로 */
 export type AvatarsLayout = "stack" | "spread";
@@ -20,89 +27,44 @@ export interface AvatarsProps extends HTMLAttributes<HTMLDivElement> {
     layout?: AvatarsLayout;
 }
 
-const avatarDim: Record<AvatarsSize, string> = {
-    sm: sizes.avatarSm,
-    md: sizes.avatarMd,
-    lg: sizes.avatarLg,
-};
-
-/** Figma Stack: `mr-[-n]` = 겹침량; `pr-[n]`과 동일 값 */
-const stackOverlapPx: Record<AvatarsSize, number> = {
-    sm: 6,
-    md: 8,
-    lg: 10,
-};
-
-/**
- * Figma Spread: Small·Medium 행은 `gap-[sizemedium]`, XXXLarge 행은 `gap-[sizexlarge]`.
- * sm/md → 10px, lg(56px 티어) → 20px.
- */
-const spreadGap: Record<AvatarsSize, string> = {
-    sm: spacings.sizeMedium,
-    md: spacings.sizeMedium,
-    lg: spacings.sizeXLarge,
-};
-
-const overflowLabelTypography: Record<AvatarsSize, (typeof typographys)["caption1"]> = {
-    sm: typographys.caption2,
-    md: typographys.caption1,
-    lg: typographys.body2,
-};
-
-export function Avatars({ avatars, size = "md", max = 4, layout = "stack", style, ...props }: AvatarsProps) {
-    const dimStr = avatarDim[size];
+export function Avatars({
+    avatars,
+    size = "medium",
+    max = 4,
+    layout = "stack",
+    className,
+    style,
+    ...props
+}: AvatarsProps) {
     const display = avatars.slice(0, max);
     const remainder = avatars.length > max ? avatars.length - max : 0;
-    const overlap = stackOverlapPx[size];
     const isStack = layout === "stack";
 
     return (
         <div
+            {...props}
             data-refineui="avatars"
             data-layout={layout}
+            data-avatar-stack-size={size}
+            className={clsx("flex items-center", isStack ? "gap-0" : avatarSpreadGap[size], className)}
             style={{
-                display: "flex",
-                alignItems: "center",
-                gap: isStack ? 0 : spreadGap[size],
-                paddingRight: isStack ? overlap : undefined,
+                ...(isStack ? { ["--avatar-stack-overlap" as string]: avatarStackOverlapCssVar[size] } : {}),
                 ...style,
             }}
-            {...props}
         >
             {display.map((a, i) => (
-                <div
-                    key={i}
-                    style={{
-                        position: "relative",
-                        marginLeft: isStack && i > 0 ? -overlap : 0,
-                        border: `${strokeWidths.strokeWidthThick} solid ${colors.neutralWhite}`,
-                        borderRadius: borderRadii.roundedCircle,
-                        overflow: "hidden",
-                        zIndex: isStack ? i : undefined,
-                    }}
-                >
+                <div key={i} className="relative shrink-0" style={isStack ? { zIndex: i } : undefined}>
                     <Avatar src={a.src} alt={a.alt} size={size} />
                 </div>
             ))}
             {remainder > 0 && (
                 <div
-                    style={{
-                        position: "relative",
-                        marginLeft: isStack ? -overlap : 0,
-                        width: dimStr,
-                        height: dimStr,
-                        borderRadius: borderRadii.roundedCircle,
-                        backgroundColor: colors.neutralWhite,
-                        border: `${strokeWidths.strokeWidthThin} solid ${colors.neutral300}`,
-                        boxSizing: "border-box",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        ...overflowLabelTypography[size],
-                        fontWeight: fontWeights.fontWeightMedium,
-                        color: colors.neutral600,
-                        zIndex: isStack ? display.length : undefined,
-                    }}
+                    className={clsx(
+                        "relative box-border flex shrink-0 items-center justify-center rounded-refineui-circle border-refineui-thin border-refineui-alias-border-default bg-refineui-alias-background-primary font-medium text-refineui-alias-foreground-secondary",
+                        avatarSizeDim[size],
+                        avatarGroupCountTypo[size],
+                    )}
+                    style={isStack ? { zIndex: display.length } : undefined}
                 >
                     +{remainder}
                 </div>

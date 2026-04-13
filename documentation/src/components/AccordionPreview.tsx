@@ -1,37 +1,54 @@
-import { colors, fontSizes, fontWeights, spacings } from "@refineui/tokens";
-import { Accordion } from "@refineui/react";
+import { spacings } from "@refineui/tokens";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@refineui/react";
 import PreviewFrame from "./PreviewFrame";
-
-const sampleItems = [
-  { id: "1", title: "섹션 1", content: "첫 번째 패널 내용입니다.", icon: "home" as const },
-  { id: "2", title: "섹션 2", content: "두 번째 패널 내용입니다.", icon: "folder" as const, defaultOpen: true },
-  { id: "3", title: "섹션 3", content: "세 번째 패널 내용입니다.", icon: "settings" as const },
-];
-
-const sectionCaption = {
-  margin: 0,
-  marginBottom: spacings.sizeSmall,
-  fontSize: fontSizes.fontSize200,
-  fontWeight: fontWeights.fontWeightSemibold,
-  color: colors.neutral600,
-} as const;
 
 export default function AccordionPreview() {
   return (
     <PreviewFrame>
-      <div style={{ display: "flex", flexDirection: "column", gap: spacings.sizeXLarge, width: "100%", maxWidth: 1102 }}>
-        {(
-          [
-            { size: "small" as const, label: 'size="small" (Caption1)' },
-            { size: "medium" as const, label: 'size="medium" (Body1) — 기본' },
-            { size: "large" as const, label: 'size="large" (SubTitle1)' },
-          ] as const
-        ).map(({ size, label }) => (
-          <div key={size}>
-            <p style={sectionCaption}>{label}</p>
-            <Accordion items={sampleItems.map((i) => ({ ...i, id: `${size}-${i.id}` }))} size={size} />
-          </div>
-        ))}
+      <div style={{ width: "100%", maxWidth: 760 }}>
+        <Accordion type="single" collapsible defaultValue="shipping">
+          <AccordionItem value="shipping">
+            <AccordionTrigger>What are your shipping options?</AccordionTrigger>
+            <AccordionContent>
+              We offer standard (5-7 days), express (2-3 days), and overnight shipping.
+              Free shipping on international orders.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="returns">
+            <AccordionTrigger>What is your return policy?</AccordionTrigger>
+            <AccordionContent>
+              Returns accepted within 30 days. Items must be unused and in original
+              packaging. Refunds processed within 5-7 business days.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="support">
+            <AccordionTrigger>How can I contact customer support?</AccordionTrigger>
+            <AccordionContent>
+              Reach us via email, live chat, or phone. We respond within 24 hours
+              during business days.
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
+        <div style={{ height: spacings.sizeLarge }} />
+
+        <Accordion type="multiple" defaultValue={["faq"]} size="small">
+          <AccordionItem value="faq" icon="info">
+            <AccordionTrigger>FAQ (multiple + icon)</AccordionTrigger>
+            <AccordionContent>
+              `type="multiple"` 모드에서는 여러 항목을 동시에 열 수 있습니다.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="tips" icon="settings">
+            <AccordionTrigger>Tips</AccordionTrigger>
+            <AccordionContent>필요하면 size도 small/medium/large로 조절할 수 있습니다.</AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
     </PreviewFrame>
   );

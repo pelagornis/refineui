@@ -1,25 +1,99 @@
 ---
 title: Dialog
-description: 모달 다이얼로그 컴포넌트
+description: 모달 다이얼로그 — 합성 API·포커스 트랩·스크림
 ---
 
 import DialogDemo from "../../../components/DialogDemo";
 
 # Dialog
 
-모달 다이얼로그 — 열릴 때 **`document.body`로 포털**되어 스크림·패널이 문서 전체 위에 겹칩니다. 스크림은 **페이드**, 패널은 **살짝 축소·아래에서 들어오는 느낌**(scale + translateY, 약 0.32s, `cubic-bezier(0.32, 0.72, 0, 1)`). 본문은 패딩 + `body2`만 적용합니다.
+`Dialog` + `DialogTrigger` + `DialogContent` 등 **합성 컴포넌트**로 씁니다. Web Kit **Dialog** `393:1181`과 `docs/design-specs-web-kit.md` Dialog 절을 따릅니다. **`createPortal`**로 `document.body`(또는 `DialogContent`의 `container`)에 렌더되며 포커스 트랩이 적용됩니다.
+
+## 설치·임포트
+
+```tsx
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@refineui/react";
+import "@refineui/react/refineui.css";
+```
+
+## 기본 사용
+
+```tsx
+<Dialog>
+    <DialogTrigger type="button">열기</DialogTrigger>
+    <DialogContent>
+        <DialogHeader>
+            <DialogTitle>제목</DialogTitle>
+            <DialogDescription>설명 문단입니다.</DialogDescription>
+        </DialogHeader>
+        <p>추가 본문</p>
+    </DialogContent>
+</Dialog>
+```
+
+## 제어 모드
+
+`open`과 `onOpenChange`로 열림을 제어합니다.
+
+```tsx
+const [open, setOpen] = useState(false);
+
+<Dialog open={open} onOpenChange={setOpen}>
+    <DialogTrigger type="button">열기</DialogTrigger>
+    <DialogContent>...</DialogContent>
+</Dialog>;
+```
+
+비제어로 쓰려면 `defaultOpen`만 넘기면 됩니다.
 
 ## Preview
-
-아래 회색 영역은 버튼·설명용 무대일 뿐, 오버레이는 그 밖까지 덮습니다.
 
 <div class="not-content">
   <DialogDemo client:load />
 </div>
 
-## Props
+## 하위 컴포넌트
 
-- `open` — 열림 상태
-- `onClose` — 닫기 콜백
-- `title` — 제목 (있으면 헤더 + 오른쪽 **dismiss**)
-- `children` — 본문
+| 컴포넌트 | 설명 |
+|----------|------|
+| `Dialog` | 컨텍스트 루트. `size`, `open` / `onOpenChange`, `defaultOpen` |
+| `DialogTrigger` | 열기 — 내부적으로 Web Kit `Button`과 동일한 props(`variant`, `size` 등) |
+| `DialogContent` | 스크림·패널 포털. `container`로 포털 루트 지정 가능 |
+| `DialogHeader` | 제목 영역 + 닫기 버튼(`showClose`, 기본 `true`) |
+| `DialogTitle` | `h2`, `aria-labelledby` 연동 |
+| `DialogDescription` | `p`, `aria-describedby` 연동 |
+| `DialogClose` | 닫기(헤더에 기본 포함, 단독 사용 가능) |
+
+## Props (`Dialog`)
+
+| Prop | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `open` | `boolean` | — | 제어 모드 표시 여부 |
+| `onOpenChange` | `(open: boolean) => void` | — | 열림 변경 |
+| `defaultOpen` | `boolean` | — | 비제어 초기 열림 |
+| `size` | `"lg"` \| `"sm"` | `"lg"` | 패널 폭 (Large 600px / Small 300px 토큰) |
+
+`DialogContent`는 표준 div 속성과 `container` 등을 받고, `DialogTrigger`는 `Button`과 동일한 API를 받습니다.
+
+## 예시
+
+### 작은 확인창
+
+```tsx
+<Dialog size="sm">
+    <DialogTrigger type="button">삭제</DialogTrigger>
+    <DialogContent>
+        <DialogHeader>
+            <DialogTitle>삭제할까요?</DialogTitle>
+            <DialogDescription>이 작업은 되돌릴 수 없습니다.</DialogDescription>
+        </DialogHeader>
+    </DialogContent>
+</Dialog>
+```

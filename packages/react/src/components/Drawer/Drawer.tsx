@@ -1,18 +1,9 @@
-import type { HTMLAttributes, ReactNode } from "react";
+import { clsx } from "clsx";
+import type { CSSProperties, HTMLAttributes, ReactNode } from "react";
 import { useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import {
-    colors,
-    spacings,
-    typographys,
-    shadows,
-    toBoxShadow,
-    zIndex,
-    strokeWidths,
-    overlays,
-    sizes,
-    iconSizes,
-} from "@refineui/tokens";
+import { overlays, iconSizes } from "@refineui/tokens";
+import { componentSizes } from "../../componentSizes";
 import { WebIcon } from "../../WebIcon";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
 
@@ -25,7 +16,7 @@ export interface DrawerProps extends Omit<HTMLAttributes<HTMLDivElement>, "title
     onClose: () => void;
     title?: ReactNode;
     placement?: "left" | "right";
-    /** Web Kit `635:1756` — Overlay panel width */
+    /** Web Kit Overlay `635:1756` — `componentSizes.drawerWidthSm` / `Md` / `Lg` */
     size?: "small" | "medium" | "large";
     children: ReactNode;
 }
@@ -33,14 +24,15 @@ export interface DrawerProps extends Omit<HTMLAttributes<HTMLDivElement>, "title
 function widthToken(s: "small" | "medium" | "large"): string {
     switch (s) {
         case "medium":
-            return sizes.drawerWidthMd;
+            return componentSizes.drawerWidthMd;
         case "large":
-            return sizes.drawerWidthLg;
+            return componentSizes.drawerWidthLg;
         default:
-            return sizes.drawerWidthSm;
+            return componentSizes.drawerWidthSm;
     }
 }
 
+/** Web Kit COMPONENT_SET `Drawer` `635:1756` — Overlay만; 폭·헤더·Divider·본문은 `docs/design-specs-web-kit.md` Drawer 절. */
 export function Drawer({
     open,
     onClose,
@@ -48,6 +40,7 @@ export function Drawer({
     placement = "right",
     size = "small",
     children,
+    className,
     style,
     ...props
 }: DrawerProps) {
@@ -91,28 +84,32 @@ export function Drawer({
     const w = widthToken(size);
     const offX = isLeft ? "-100%" : "100%";
 
+    const panelMotion: CSSProperties = {
+        width: `min(${w}, 100vw)`,
+        maxWidth: w,
+        transform: entered ? "translateX(0)" : `translateX(${offX})`,
+        transition: `transform ${PANEL_MS}ms ${EASING}`,
+        willChange: "transform",
+    };
+
     const root = (
         <div
             data-refineui="drawer"
             role="dialog"
             aria-modal="true"
             aria-labelledby={title ? titleId : undefined}
-            style={{
-                position: "fixed",
-                inset: 0,
-                zIndex: zIndex.zIndexMessages,
-                display: "flex",
-                justifyContent: isLeft ? "flex-start" : "flex-end",
-            }}
+            className={clsx(
+                "fixed inset-0 z-refineui-messages flex",
+                isLeft ? "justify-start" : "justify-end",
+                className,
+            )}
             {...props}
         >
             <div
                 role="presentation"
+                className="absolute inset-0 cursor-pointer transition-opacity"
                 style={{
-                    position: "absolute",
-                    inset: 0,
                     backgroundColor: overlays.backdrop,
-                    cursor: "pointer",
                     opacity: entered ? 1 : 0,
                     transition: `opacity ${SCRIM_MS}ms ${EASING}`,
                     pointerEvents: entered ? "auto" : "none",
@@ -123,38 +120,13 @@ export function Drawer({
             <div
                 ref={panelRef}
                 tabIndex={-1}
-                style={{
-                    position: "relative",
-                    width: `min(${w}, 100vw)`,
-                    maxWidth: w,
-                    height: "100%",
-                    backgroundColor: colors.neutralWhite,
-                    boxShadow: toBoxShadow(shadows.shadow16Light),
-                    display: "flex",
-                    flexDirection: "column",
-                    overflow: "hidden",
-                    outline: "none",
-                    boxSizing: "border-box",
-                    transform: entered ? "translateX(0)" : `translateX(${offX})`,
-                    transition: `transform ${PANEL_MS}ms ${EASING}`,
-                    willChange: "transform",
-                    ...style,
-                }}
+                className="relative box-border flex h-full flex-col overflow-hidden bg-refineui-neutral-white shadow-refineui-16light outline-none"
+                style={{ ...panelMotion, ...style }}
                 onClick={(e) => e.stopPropagation()}
             >
                 <div
                     data-name="Drawer / Header"
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: spacings.sizeSmall,
-                        paddingTop: spacings.sizeXXLarge,
-                        paddingLeft: spacings.sizeXXLarge,
-                        paddingRight: spacings.sizeXXLarge,
-                        paddingBottom: spacings.sizeMedium,
-                        flexShrink: 0,
-                    }}
+                    className="flex shrink-0 flex-row items-center gap-refineui-size-small px-refineui-size-xxlarge pb-refineui-size-medium pt-refineui-size-xxlarge"
                 >
                     <button
                         type="button"
@@ -162,55 +134,23 @@ export function Drawer({
                         data-name="Dismiss"
                         aria-label="닫기"
                         onClick={onClose}
-                        style={{
-                            flexShrink: 0,
-                            background: "none",
-                            border: "none",
-                            padding: spacings.sizeXXSmall,
-                            cursor: "pointer",
-                            color: colors.neutral600,
-                            display: "inline-flex",
-                            alignItems: "center",
-                            lineHeight: 1,
-                        }}
+                        className="inline-flex shrink-0 cursor-pointer items-center border-none bg-transparent p-refineui-size-xxsmall leading-none text-refineui-neutral-600"
                     >
-                        <WebIcon name="dismiss" size={iconSizes.xl} color="currentColor" />
+                        <WebIcon name="dismiss" size={iconSizes.xlarge} color="currentColor" />
                     </button>
                     {title != null && (
-                        <div
-                            id={titleId}
-                            style={{
-                                flex: 1,
-                                minWidth: 0,
-                                ...typographys.subTitle1,
-                                color: colors.primaryBlack,
-                            }}
-                        >
+                        <div id={titleId} className="refineui-typo-sub-title-1 min-w-0 flex-1 text-refineui-primary-black">
                             {title}
                         </div>
                     )}
                 </div>
                 <div
                     data-name="Divider"
-                    style={{
-                        height: strokeWidths.strokeWidthThin,
-                        minHeight: strokeWidths.strokeWidthThin,
-                        backgroundColor: colors.neutral300,
-                        flexShrink: 0,
-                        width: "100%",
-                    }}
+                    className="h-[length:var(--refineui-stroke-width-thin)] min-h-[length:var(--refineui-stroke-width-thin)] w-full shrink-0 bg-refineui-neutral-300"
                 />
                 <div
                     data-name="Body"
-                    style={{
-                        flex: 1,
-                        minHeight: 0,
-                        overflow: "auto",
-                        padding: spacings.sizeXXLarge,
-                        boxSizing: "border-box",
-                        ...typographys.body2,
-                        color: colors.primaryBlack,
-                    }}
+                    className="refineui-typo-body-2 box-border min-h-0 flex-1 overflow-auto p-refineui-size-xxlarge text-refineui-primary-black"
                 >
                     {children}
                 </div>

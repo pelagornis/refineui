@@ -1,3 +1,6 @@
+/** Foundation Alias/Color — Light·Dark별 CSS 값 (`var(--refineui-color-*)` 등) */
+export type SemanticColorModePair = { light: string; dark: string };
+
 /**
  * Design tokens for Palettet Color
  */
@@ -130,6 +133,23 @@ export type PaletteColors = {
 };
 
 /**
+ * Foundation Alias/Color — Light·Dark가 각각 가리키는 팔레트 토큰 이름.
+ * @typeParam P — 팔레트 맵 타입(기본 구현은 `PaletteColors` / `global/colors`와 동기)
+ */
+export type SemanticPalettePairFor<P extends Record<string, string>> = {
+    light: keyof P;
+    dark: keyof P;
+};
+
+/** Alias 이름 → Light/Dark 페어 전체 맵 */
+export type SemanticPalettePairsOf<P extends Record<string, string>> = Readonly<
+    Record<string, SemanticPalettePairFor<P>>
+>;
+
+/** `PaletteColors` 전용 단일 Alias 페어 (구현에서 가장 많이 씀) */
+export type SemanticPalettePair = SemanticPalettePairFor<PaletteColors>;
+
+/**
  * Shadow color (Figma Variables — Lighter ~ Darker, Key/Ambient별)
  * Foundation: ambient lighter, ambient light, ambient, ambient dark, ambient darker
  */
@@ -237,6 +257,13 @@ export type SpacingTokens = {
     sizeXLarge: string;
     sizeXXLarge: string;
     sizeXXXLarge: string;
+};
+
+/** 모션·스케일 문자열 — CSS `transform` 등과 공유 */
+export type MotionTokens = {
+    dialogEnterScale: string;
+    buttonActiveScale: string;
+    sliderThumbHoverScale: string;
 };
 
 /**

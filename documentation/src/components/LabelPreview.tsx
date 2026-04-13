@@ -1,20 +1,20 @@
 import { spacings } from "@refineui/tokens";
-import { Label, Input } from "@refineui/react";
+import { Label } from "@refineui/react";
 import PreviewFrame from "./PreviewFrame";
 
+/** Web Kit Label만 표시(Input·Field 조합은 Input/Field 문서 참고). */
 export default function LabelPreview() {
   return (
     <PreviewFrame>
-      <div style={{ maxWidth: "320px", display: "flex", flexDirection: "column", gap: spacings.sizeLarge }}>
-        <div>
-          <Label htmlFor="label-demo">일반 라벨</Label>
-          <Input id="label-demo" placeholder="입력" />
+      <div style={{ display: "flex", flexDirection: "column", gap: spacings.sizeLarge }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeSmall, alignItems: "center" }}>
+          <Label size="sm">sm</Label>
+          <Label size="md">md</Label>
+          <Label size="lg">lg</Label>
+          <Label disabled>disabled</Label>
         </div>
-        <div>
-          <Label htmlFor="label-required" required>
-            필수 라벨
-          </Label>
-          <Input id="label-required" placeholder="입력" />
+        <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeSmall, alignItems: "center" }}>
+          <Label required>필수 표시(별)</Label>
         </div>
       </div>
     </PreviewFrame>

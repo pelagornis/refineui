@@ -1,1 +1,1 @@
-export { Calendar, type CalendarProps, type CalendarLocale, type CalendarMode } from "./Calendar";
+export { Calendar, type CalendarProps, type CalendarMode } from "./Calendar";

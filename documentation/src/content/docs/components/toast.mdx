@@ -1,13 +1,30 @@
 ---
 title: Toast
-description: 토스트 알림 컴포넌트
+description: 토스트 메시지 카드
 ---
 
 import ToastPreview from "../../../components/ToastPreview";
 
 # Toast
 
-토스트 알림 메시지 컴포넌트입니다.
+짧은 피드백 메시지를 카드 형태로 보여 줍니다. Web Kit **Toast** `548:655`와 같이 폭 325px·패딩·**shadow4** 등을 따릅니다. **위치 고정·자동 사라짐**은 앱에서 래퍼로 구현합니다.
+
+## 설치·임포트
+
+```tsx
+import { Toast, Button } from "@refineui/react";
+```
+
+## 기본 사용
+
+```tsx
+<Toast
+  title="완료"
+  message="복사되었습니다."
+  variant="success"
+  action={{ label: "실행 취소", onClick: () => {} }}
+/>
+```
 
 ## Preview
 
@@ -17,19 +34,28 @@ import ToastPreview from "../../../components/ToastPreview";
 
 ## Props
 
-- `variant` — `default` | `success` | `error` | `warning`
-- `title` / `message` — 본문 (둘 다 선택)
-- `iconName` — System Icons 슬러그 (variant별 기본 아이콘 대체)
-- `icon` — `ReactNode` (있으면 `iconName`보다 우선)
-- `action` — 버튼 라벨·`onClick` 또는 임의 노드
+| Prop | 타입 | 설명 |
+|------|------|------|
+| `variant` | `"default"` \| `"success"` \| `"error"` \| `"warning"` | 아이콘 액센트 |
+| `title` | `ReactNode` | 제목 |
+| `message` | `ReactNode` | 부가 설명 |
+| `icon` / `iconName` | `ReactNode` / `string` | 왼쪽 아이콘 (우선순위: `icon` > `iconName`) |
+| `action` | `ReactNode` 또는 `{ label, onClick, variant? }` | 우측 버튼 |
 
-## Variants
+## 예시
 
-- `default` — 기본
-- `success` — 성공 (녹색)
-- `error` — 에러 (빨간색)
-- `warning` — 경고 (노란색)
+### 보조 버튼
 
-## 아이콘
+```tsx
+<Toast
+  title="라벨"
+  message="설명"
+  action={{ label: "보조", variant: "secondary", onClick: () => {} }}
+/>
+```
 
-`iconName`으로 RefineUI System Icons 슬러그를 지정할 수 있습니다. Preview에서 `checkmark`, `warning`, `mail`, `calendar`, `settings` 등 예시를 확인할 수 있습니다. `icon` prop으로 React 노드를 넘기면 `iconName`보다 우선합니다.
+### 커스텀 아이콘
+
+```tsx
+<Toast title="메일" message="새 메시지" iconName="mail" />
+```

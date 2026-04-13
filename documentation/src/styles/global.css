@@ -1,8 +1,16 @@
-@import "@pelagornis/page/styles";
+/* Inter: `astro.config.mjs` Starlight `head` — `@pelagornis/page` base.css 의 중간 @import 는 PostCSS 경고 유발 → `pelagornis-base.css` */
+/* monorepo: 패키지 alias 없이 tokens 진입만 상대 경로 (외부 앱은 `@import "@refineui/tokens/tailwind.css"`) */
+@import "../../../packages/tokens/tailwind.css";
+@source "../../../packages/react/src/**/*.{tsx,ts}";
+@import "@pelagornis/page/styles/refineui-fonts-override.css";
+@import "@refineui/web-icons/dist/fonts/refineui-system-icons.css";
+@import "./pelagornis-base.css";
+@import "@pelagornis/page/styles/theme.css";
+@import "@pelagornis/page/styles/components.css";
+@import "@pelagornis/page/styles/layout.css";
+@import "@pelagornis/page/styles/utilities.css";
+@import "@pelagornis/page/styles/header-icons.css";
 @import "@refineui/react/refineui.css";
-
-/* RefineUI 문서 — Inter 폰트 (Foundation 토큰과 동일) */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 /* Preview 레이아웃 — 컴포넌트 문서 Preview 섹션 */
 .not-content {
@@ -16,7 +24,7 @@
   min-width: 0;
   overflow-x: auto;
   box-sizing: border-box;
-  background: #f5f5f5;
+  background: var(--refineui-color-neutral-100);
 }
 
 /* 문서 테마에 따라 Preview 배경 자동 전환 (Starlight data-theme 연동) */
@@ -24,7 +32,7 @@
   background: #1a1a1a;
 }
 [data-theme="light"] [data-refineui-preview]:not([data-preview-variant="dark"]) {
-  background: #f5f5f5;
+  background: var(--refineui-color-neutral-100);
 }
 
 /* variant로 강제 지정 시 */
@@ -32,6 +40,6 @@
   background: #1a1a1a !important;
 }
 [data-refineui-preview][data-preview-variant="light"] {
-  background: #f5f5f5 !important;
+  background: var(--refineui-color-neutral-100) !important;
 }
 

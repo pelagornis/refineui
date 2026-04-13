@@ -1,18 +1,31 @@
-import type { CSSProperties, HTMLAttributes } from "react";
-import { colors, spacings, borderRadii, typographys, strokeWidths, sizes, iconSizes } from "@refineui/tokens";
+import { clsx } from "clsx";
+import type { HTMLAttributes } from "react";
+import { iconSizes } from "@refineui/tokens";
 import { WebIcon } from "../../WebIcon";
 
-const visuallyHidden: CSSProperties = {
-    position: "absolute",
-    width: sizes.accessibleClip,
-    height: sizes.accessibleClip,
-    padding: 0,
-    margin: -1,
-    overflow: "hidden",
-    clip: "rect(0, 0, 0, 0)",
-    whiteSpace: "nowrap",
-    border: 0,
-};
+/** Web Kit `Pagination / Item` `570:2332` — 생략(ellipsis) 포함 페이지 나열 */
+export function getPaginationItems(current: number, total: number): (number | "ellipsis")[] {
+    if (total <= 0) return [];
+    if (total <= 7) {
+        return Array.from({ length: total }, (_, i) => i + 1);
+    }
+    const set = new Set<number>();
+    set.add(1);
+    set.add(total);
+    set.add(current);
+    if (current > 1) set.add(current - 1);
+    if (current < total) set.add(current + 1);
+    const sorted = [...set].filter((p) => p >= 1 && p <= total).sort((a, b) => a - b);
+    const items: (number | "ellipsis")[] = [];
+    for (let i = 0; i < sorted.length; i++) {
+        const p = sorted[i]!;
+        if (i > 0 && p - sorted[i - 1]! > 1) {
+            items.push("ellipsis");
+        }
+        items.push(p);
+    }
+    return items;
+}
 
 export interface PaginationProps extends HTMLAttributes<HTMLElement> {
     page: number;
@@ -20,58 +33,81 @@ export interface PaginationProps extends HTMLAttributes<HTMLElement> {
     onPageChange: (page: number) => void;
 }
 
-export function Pagination({ page, totalPages, onPageChange, style, ...props }: PaginationProps) {
+const navBtnClass =
+    "box-border inline-flex min-h-refineui-pagination-button-min-width min-w-refineui-pagination-button-min-width cursor-pointer items-center justify-center rounded-refineui-large border-refineui-thin border-refineui-neutral-300 bg-refineui-neutral-white p-refineui-size-small";
+
+/** Web Kit `Pagination` `558:1989` · `Pagination / Item` `570:2332` — 이전/다음 + 페이지 번호(ellipsis). */
+export function Pagination({ page, totalPages, onPageChange, className, ...props }: PaginationProps) {
     const prevDisabled = page <= 1;
     const nextDisabled = page >= totalPages;
-
-    const btnStyle: CSSProperties = {
-        padding: `${spacings.sizeXSmall} ${spacings.sizeSmall}`,
-        minWidth: sizes.paginationButtonMinWidth,
-        border: `${strokeWidths.strokeWidthThin} solid ${colors.neutral300}`,
-        borderRadius: borderRadii.roundedSmall,
-        background: colors.neutralWhite,
-        cursor: "pointer",
-        ...typographys.body3,
-        color: colors.primaryBlack,
-    };
+    const items = getPaginationItems(page, totalPages);
 
     return (
-        <nav aria-label="Pagination" style={{ display: "flex", alignItems: "center", gap: spacings.sizeXSmall, ...style }} {...props}>
+        <nav
+            aria-label="Pagination"
+            className={clsx("flex flex-wrap items-center gap-refineui-size-medium", className)}
+            {...props}
+        >
             <button
                 type="button"
                 data-refineui="pagination"
                 aria-label="Previous page"
                 disabled={prevDisabled}
+                className={clsx(navBtnClass, prevDisabled && "cursor-not-allowed")}
                 onClick={() => onPageChange(page - 1)}
-                style={{
-                    ...btnStyle,
-                    opacity: prevDisabled ? 0.5 : 1,
-                    cursor: prevDisabled ? "not-allowed" : "pointer",
-                }}
             >
-                <WebIcon name="chevron-left" size={iconSizes.md} color={colors.primaryBlack} fallback="‹" />
+                <WebIcon
+                    name="chevron-left"
+                    size={iconSizes.xlarge}
+                    color={prevDisabled ? "var(--refineui-color-neutral-400)" : "var(--refineui-color-primary-black)"}
+                    fallback="‹"
+                />
             </button>
-            <span style={{ ...typographys.body3, color: colors.primaryBlack, position: "relative" }}>
-                <span style={visuallyHidden}>
+
+            <div className="relative flex items-center gap-refineui-size-small">
+                <span className="sr-only">
                     Page {page} of {totalPages}
                 </span>
-                <span aria-hidden="true">
-                    {page} / {totalPages}
-                </span>
-            </span>
+                {items.map((item, idx) =>
+                    item === "ellipsis" ? (
+                        <span
+                            key={`e-${idx}`}
+                            aria-hidden
+                            className="refineui-typo-body-1 inline-flex min-h-refineui-pagination-button-min-width min-w-refineui-pagination-button-min-width items-center justify-center text-refineui-primary-black"
+                        >
+                            …
+                        </span>
+                    ) : (
+                        <button
+                            key={item}
+                            type="button"
+                            data-refineui="pagination-page"
+                            data-selected={item === page ? "true" : "false"}
+                            aria-label={`Page ${item}`}
+                            aria-current={item === page ? "page" : undefined}
+                            className="refineui-typo-body-1"
+                            onClick={() => onPageChange(item)}
+                        >
+                            {item}
+                        </button>
+                    ),
+                )}
+            </div>
+
             <button
                 type="button"
                 data-refineui="pagination"
                 aria-label="Next page"
                 disabled={nextDisabled}
+                className={clsx(navBtnClass, nextDisabled && "cursor-not-allowed")}
                 onClick={() => onPageChange(page + 1)}
-                style={{
-                    ...btnStyle,
-                    opacity: nextDisabled ? 0.5 : 1,
-                    cursor: nextDisabled ? "not-allowed" : "pointer",
-                }}
             >
-                <WebIcon name="chevron-right" size={iconSizes.md} color={colors.primaryBlack} fallback="›" />
+                <WebIcon
+                    name="chevron-right"
+                    size={iconSizes.xlarge}
+                    color={nextDisabled ? "var(--refineui-color-neutral-400)" : "var(--refineui-color-primary-black)"}
+                    fallback="›"
+                />
             </button>
         </nav>
     );

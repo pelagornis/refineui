@@ -1,40 +1,70 @@
+import { clsx } from "clsx";
 import type { HTMLAttributes, KeyboardEvent } from "react";
 import { useCallback, useId, useRef, useState } from "react";
-import { colors, spacings, borderRadii, typographys, shadows, toBoxShadow, strokeWidths } from "@refineui/tokens";
 
 export interface TabItem {
     id: string;
     label: string;
     content: React.ReactNode;
+    /** Web Kit `Tabs / Item` `636:5372` — Disabled 행 */
+    disabled?: boolean;
 }
-
-export type TabsVariant = "underline" | "pill";
 
 export interface TabsProps extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
     items: TabItem[];
     defaultTab?: string;
-    variant?: TabsVariant;
     onChange?: (id: string) => void;
 }
 
-export function Tabs({ items, defaultTab, variant = "pill", onChange, style, ...props }: TabsProps) {
-    const [active, setActive] = useState(defaultTab ?? items[0]?.id ?? "");
+function pickInitialTab(items: TabItem[], defaultTab?: string): string {
+    if (defaultTab !== undefined && items.some((t) => t.id === defaultTab && !t.disabled)) {
+        return defaultTab;
+    }
+    const first = items.find((t) => !t.disabled);
+    return first?.id ?? items[0]?.id ?? "";
+}
+
+/** Web Kit `Tabs` `636:5371` · `Tabs / Item` `636:5372` — Pill 세그먼트만. */
+export function Tabs({ items, defaultTab, onChange, className, ...props }: TabsProps) {
+    const [active, setActive] = useState(() => pickInitialTab(items, defaultTab));
     const tabsRef = useRef<(HTMLButtonElement | null)[]>([]);
     const panelId = useId();
     const current = items.find((t) => t.id === active) ?? items[0];
-    const isPill = variant === "pill";
 
     const setTabRef = useCallback((index: number, el: HTMLButtonElement | null) => {
         tabsRef.current[index] = el;
     }, []);
 
-    const focusTab = (index: number) => {
+    const focusTabFrom = (fromIndex: number, delta: number) => {
         const n = items.length;
         if (n === 0) return;
-        tabsRef.current[((index % n) + n) % n]?.focus();
+        let i = fromIndex;
+        for (let s = 0; s < n; s++) {
+            i = (i + delta + n) % n;
+            if (!items[i]?.disabled) {
+                tabsRef.current[i]?.focus();
+                return;
+            }
+        }
+    };
+
+    const focusFirstEnabled = () => {
+        const ix = items.findIndex((t) => !t.disabled);
+        if (ix >= 0) tabsRef.current[ix]?.focus();
+    };
+
+    const focusLastEnabled = () => {
+        for (let i = items.length - 1; i >= 0; i--) {
+            if (!items[i]?.disabled) {
+                tabsRef.current[i]?.focus();
+                return;
+            }
+        }
     };
 
     const select = (id: string) => {
+        const item = items.find((t) => t.id === id);
+        if (item?.disabled) return;
         setActive(id);
         onChange?.(id);
     };
@@ -44,20 +74,20 @@ export function Tabs({ items, defaultTab, variant = "pill", onChange, style, ...
             case "ArrowRight":
             case "ArrowDown":
                 e.preventDefault();
-                focusTab(index + 1);
+                focusTabFrom(index, 1);
                 break;
             case "ArrowLeft":
             case "ArrowUp":
                 e.preventDefault();
-                focusTab(index - 1);
+                focusTabFrom(index, -1);
                 break;
             case "Home":
                 e.preventDefault();
-                focusTab(0);
+                focusFirstEnabled();
                 break;
             case "End":
                 e.preventDefault();
-                focusTab(items.length - 1);
+                focusLastEnabled();
                 break;
             default:
                 break;
@@ -65,53 +95,42 @@ export function Tabs({ items, defaultTab, variant = "pill", onChange, style, ...
     };
 
     return (
-        <div data-refineui="tabs" style={{ ...style }} {...props}>
+        <div data-refineui="tabs" data-variant="pill" className={className} {...props}>
             <div
                 role="tablist"
                 aria-orientation="horizontal"
-                style={{
-                    display: "flex",
-                    gap: isPill ? spacings.sizeXSmall : spacings.sizeNone,
-                    padding: isPill ? spacings.sizeXSmall : 0,
-                    backgroundColor: isPill ? colors.neutral200 : "transparent",
-                    borderRadius: isPill ? borderRadii.roundedMedium : undefined,
-                    borderBottom: isPill ? undefined : `${strokeWidths.strokeWidthThick} solid ${colors.neutral200}`,
-                    marginBottom: spacings.sizeMedium,
-                }}
+                className="mb-refineui-size-medium box-border inline-flex max-w-full w-fit flex-wrap items-stretch gap-refineui-size-medium rounded-refineui-large border-refineui-thin border-refineui-neutral-300 bg-refineui-neutral-100 p-refineui-size-small"
             >
                 {items.map((item, index) => {
                     const selected = active === item.id;
                     const tabId = `refineui-tab-${item.id}`;
+                    const disabled = item.disabled === true;
+
                     return (
                         <button
                             key={item.id}
                             ref={(el) => setTabRef(index, el)}
                             id={tabId}
                             data-refineui="tab"
+                            data-selected={selected ? "true" : "false"}
                             role="tab"
                             type="button"
                             aria-selected={selected}
                             aria-controls={panelId}
-                            tabIndex={selected ? 0 : -1}
+                            aria-disabled={disabled || undefined}
+                            disabled={disabled}
+                            tabIndex={selected && !disabled ? 0 : -1}
                             onClick={() => select(item.id)}
                             onKeyDown={(e) => onTabKeyDown(e, index)}
-                            style={{
-                                ...typographys.body2,
-                                padding: `${spacings.sizeSmall} ${spacings.sizeMedium}`,
-                                border: "none",
-                                borderRadius: isPill ? borderRadii.roundedSmall : undefined,
-                                borderBottom:
-                                    !isPill && selected
-                                        ? `${strokeWidths.strokeWidthThick} solid ${colors.primaryBlack}`
-                                        : !isPill
-                                          ? `${strokeWidths.strokeWidthThick} solid transparent`
-                                          : undefined,
-                                marginBottom: !isPill ? -2 : undefined,
-                                backgroundColor: isPill && selected ? colors.neutralWhite : "transparent",
-                                color: selected ? colors.primaryBlack : colors.neutral600,
-                                cursor: "pointer",
-                                boxShadow: isPill && selected ? toBoxShadow(shadows.shadow2Light) : undefined,
-                            }}
+                            className={clsx(
+                                "refineui-typo-body-1 min-w-0 flex-[0_1_auto] rounded-refineui-large border-none px-refineui-size-medium py-refineui-size-small",
+                                disabled
+                                    ? "cursor-not-allowed text-refineui-neutral-400"
+                                    : "cursor-pointer text-refineui-primary-black",
+                                selected && !disabled && "bg-refineui-neutral-white shadow-refineui-2light",
+                                selected && disabled && "bg-refineui-neutral-150",
+                                !selected && "bg-transparent",
+                            )}
                         >
                             {item.label}
                         </button>

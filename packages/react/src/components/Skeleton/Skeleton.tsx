@@ -1,36 +1,60 @@
-import type { HTMLAttributes } from "react";
-import { useEffect } from "react";
-import { colors, borderRadii, sizes } from "@refineui/tokens";
-
-const STYLE_ID = "refineui-skeleton-styles";
-
-function injectSkeletonStyles() {
-    if (typeof document === "undefined" || document.getElementById(STYLE_ID)) return;
-    const style = document.createElement("style");
-    style.id = STYLE_ID;
-    style.textContent = `@keyframes refineui-skeleton-pulse{0%,100%{opacity:1}50%{opacity:.5}}`;
-    document.head.appendChild(style);
-}
+import { clsx } from "clsx";
+import type { CSSProperties, HTMLAttributes } from "react";
 
 export interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
     width?: number | string;
     height?: number | string;
+    /** Web Kit COMPONENT_SET `Skeleton` `570:6175` — Rectangle / Circle */
+    shape?: "rectangle" | "circle";
 }
 
-export function Skeleton({ width, height = sizes.skeletonDefaultHeight, style, ...props }: SkeletonProps) {
-    useEffect(injectSkeletonStyles, []);
+/** Web Kit COMPONENT_SET `Skeleton` `570:6175` — 배경 `neutral200`; Figma Shimmer는 **펄스**(`refineui.css`)로 단순화. */
+export function Skeleton({
+    width,
+    height,
+    shape = "rectangle",
+    className,
+    style,
+    ...props
+}: SkeletonProps) {
+    const defaultLine = "var(--refineui-size-skeleton-default-height)";
+    const isCircle = shape === "circle";
+
+    let w: number | string | undefined;
+    let h: number | string | undefined;
+
+    if (isCircle) {
+        if (width != null && height == null) {
+            w = width;
+            h = width;
+        } else if (height != null && width == null) {
+            w = height;
+            h = height;
+        } else if (width == null && height == null) {
+            w = defaultLine;
+            h = defaultLine;
+        } else {
+            w = width ?? defaultLine;
+            h = height ?? defaultLine;
+        }
+    } else {
+        h = height ?? defaultLine;
+        w = width ?? "100%";
+    }
+
+    const dimStyle: CSSProperties = { width: w, height: h };
+
     return (
         <div
             data-refineui="skeleton"
+            data-shape={shape}
             aria-hidden
-            style={{
-                width: width ?? "100%",
-                height,
-                borderRadius: borderRadii.roundedSmall,
-                backgroundColor: colors.neutral200,
-                animation: "refineui-skeleton-pulse 1.5s ease-in-out infinite",
-                ...style,
-            }}
+            className={clsx(
+                "bg-refineui-neutral-200",
+                isCircle ? "rounded-refineui-circle" : "rounded-refineui-large",
+                className,
+            )}
+            style={{ ...dimStyle, ...style }}
             {...props}
         />
     );

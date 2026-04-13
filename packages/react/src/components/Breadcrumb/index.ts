@@ -1,1 +1,18 @@
-export { Breadcrumb, type BreadcrumbProps, type BreadcrumbItem } from "./Breadcrumb";
+export {
+    Breadcrumb,
+    BreadcrumbEllipsis,
+    BreadcrumbEllipsisTrigger,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+    type BreadcrumbEllipsisProps,
+    type BreadcrumbEllipsisTriggerProps,
+    type BreadcrumbItemProps,
+    type BreadcrumbLinkProps,
+    type BreadcrumbListProps,
+    type BreadcrumbPageProps,
+    type BreadcrumbProps,
+    type BreadcrumbSeparatorProps,
+} from "./Breadcrumb";

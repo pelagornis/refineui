@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+  <g clip-path="url(#clip-away)">
+    <path
+      d="M8.92116 0C11.8596 0.889805 14 3.61568 14 6.84512C14 10.7966 10.7972 14 6.84631 14C3.61717 14 0.889453 11.8596 0 8.92031C0.657662 9.11969 1.35442 9.23008 2.07718 9.23008C6.02805 9.23008 9.23087 6.02673 9.23087 2.0752C9.23087 1.3531 9.12008 0.657147 8.92116 0Z"
+      fill="var(--refineui-color-yellow-300)"
+    />
+  </g>
+  <defs>
+    <clipPath id="clip-away">
+      <rect width="14" height="14" fill="white" />
+    </clipPath>
+  </defs>
+</svg>

@@ -1,6 +1,16 @@
-import type { HTMLAttributes, KeyboardEvent, ReactNode } from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { colors, spacings, typographys, sizes, iconSizes } from "@refineui/tokens";
+import { clsx } from "clsx";
+import type { CSSProperties, HTMLAttributes, KeyboardEvent, ReactNode } from "react";
+import {
+    createContext,
+    useCallback,
+    useContext,
+    useEffect,
+    useId,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
+import { iconSizes } from "@refineui/tokens";
 import { WebIcon } from "../../WebIcon";
 
 export interface AccordionItemProps {
@@ -12,18 +22,33 @@ export interface AccordionItemProps {
 }
 
 export type AccordionSize = "small" | "medium" | "large";
+export type AccordionType = "single" | "multiple";
 
 export interface AccordionProps extends HTMLAttributes<HTMLDivElement> {
-    items: AccordionItemProps[];
+    items?: AccordionItemProps[];
+    /**
+     * shadcn 스타일 API:
+     * - `single`: 하나만 열림
+     * - `multiple`: 여러 개 열림
+     */
+    type?: AccordionType;
+    /**
+     * `type="single"`에서 이미 열린 항목을 다시 닫을 수 있게 함
+     */
+    collapsible?: boolean;
+    defaultValue?: string | string[];
+    value?: string | string[];
+    onValueChange?: (value: string | string[] | undefined) => void;
+    /** legacy API 호환 */
     allowMultiple?: boolean;
     /** Figma Web Kit: Small → Caption1, Medium → Body1, Large → SubTitle1 */
     size?: AccordionSize;
 }
 
-const triggerTypographyBySize: Record<AccordionSize, (typeof typographys)["body1"]> = {
-    small: typographys.caption1,
-    medium: typographys.body1,
-    large: typographys.subTitle1,
+const triggerTypo: Record<AccordionSize, string> = {
+    small: "refineui-typo-caption-1",
+    medium: "refineui-typo-body-1",
+    large: "refineui-typo-sub-title-1",
 };
 
 /** 높이는 조금 여유 있게, 본문은 살짝 빠르게 페이드해 닫힐 때 덜 뚝 끊기게 */
@@ -31,6 +56,31 @@ const PANEL_HEIGHT_MS = 0.38;
 const PANEL_CONTENT_MS = 0.26;
 const PANEL_HEIGHT_EASE = "cubic-bezier(0.32, 0.72, 0, 1)";
 const PANEL_CONTENT_EASE = "cubic-bezier(0.4, 0, 0.2, 1)";
+
+type OpenState = Set<string>;
+
+interface AccordionContextValue {
+    size: AccordionSize;
+    isOpen: (value: string) => boolean;
+    toggle: (value: string) => void;
+    registerTrigger: (value: string, el: HTMLButtonElement | null) => void;
+    focusByDelta: (currentValue: string, delta: number) => void;
+    focusFirst: () => void;
+    focusLast: () => void;
+    reduceMotion: boolean;
+}
+
+const AccordionContext = createContext<AccordionContextValue | null>(null);
+
+interface ItemContextValue {
+    value: string;
+    triggerId: string;
+    panelId: string;
+    open: boolean;
+    icon?: string;
+}
+
+const AccordionItemContext = createContext<ItemContextValue | null>(null);
 
 function usePrefersReducedMotion(): boolean {
     const [reduce, setReduce] = useState(false);
@@ -44,55 +94,167 @@ function usePrefersReducedMotion(): boolean {
     return reduce;
 }
 
-export function Accordion({ items, allowMultiple = false, size = "medium", style, ...props }: AccordionProps) {
-    const reduceMotion = usePrefersReducedMotion();
-    const triggerTypography = triggerTypographyBySize[size];
-    const [openIds, setOpenIds] = useState<Set<string>>(
-        () => new Set(items.filter((i) => i.defaultOpen).map((i) => i.id))
-    );
-    const triggersRef = useRef<(HTMLButtonElement | null)[]>([]);
+function toSet(value: string | string[] | undefined, type: AccordionType): OpenState {
+    if (value == null) return new Set();
+    if (Array.isArray(value)) return new Set(value);
+    return type === "multiple" ? new Set([value]) : new Set([value]);
+}
 
-    const setTriggerRef = useCallback((index: number, el: HTMLButtonElement | null) => {
-        triggersRef.current[index] = el;
+/** Web Kit Accordion `54:146` — MCP: 트리거 `foregroundPrimary`. 패널 본문은 스타일 없음(`className`으로만). */
+export function Accordion({
+    items,
+    type,
+    collapsible = false,
+    defaultValue,
+    value,
+    onValueChange,
+    allowMultiple = false,
+    size = "medium",
+    className,
+    children,
+    ...props
+}: AccordionProps) {
+    const reduceMotion = usePrefersReducedMotion();
+    const resolvedType: AccordionType = type ?? (allowMultiple ? "multiple" : "single");
+    const legacyDefault = useMemo(() => {
+        if (!items) return undefined;
+        const opened = items.filter((i) => i.defaultOpen).map((i) => i.id);
+        if (opened.length === 0) return undefined;
+        return resolvedType === "multiple" ? opened : opened[0];
+    }, [items, resolvedType]);
+
+    const initial = toSet(defaultValue ?? legacyDefault, resolvedType);
+    const [uncontrolledOpen, setUncontrolledOpen] = useState<OpenState>(initial);
+    const open = value === undefined ? uncontrolledOpen : toSet(value, resolvedType);
+
+    const triggerOrderRef = useRef<string[]>([]);
+    const triggerMapRef = useRef<Map<string, HTMLButtonElement>>(new Map());
+
+    const registerTrigger = useCallback((itemValue: string, el: HTMLButtonElement | null) => {
+        if (!triggerOrderRef.current.includes(itemValue)) {
+            triggerOrderRef.current.push(itemValue);
+        }
+        if (el) triggerMapRef.current.set(itemValue, el);
+        else triggerMapRef.current.delete(itemValue);
     }, []);
 
-    const toggle = (id: string) => {
-        setOpenIds((prev) => {
-            const next = new Set(prev);
-            if (next.has(id)) next.delete(id);
-            else {
-                if (!allowMultiple) next.clear();
-                next.add(id);
+    const emit = useCallback(
+        (next: OpenState) => {
+            if (value === undefined) setUncontrolledOpen(next);
+            if (!onValueChange) return;
+            if (resolvedType === "multiple") onValueChange(Array.from(next));
+            else onValueChange(Array.from(next)[0]);
+        },
+        [onValueChange, resolvedType, value],
+    );
+
+    const toggle = useCallback(
+        (itemValue: string) => {
+            const next = new Set(open);
+            const opened = next.has(itemValue);
+            if (opened) {
+                if (resolvedType === "multiple" || collapsible) next.delete(itemValue);
+            } else {
+                if (resolvedType === "single") next.clear();
+                next.add(itemValue);
             }
-            return next;
-        });
-    };
+            emit(next);
+        },
+        [collapsible, emit, open, resolvedType],
+    );
 
     const focusTrigger = (index: number) => {
-        const list = triggersRef.current.filter(Boolean) as HTMLButtonElement[];
+        const list = triggerOrderRef.current
+            .map((v) => triggerMapRef.current.get(v))
+            .filter(Boolean) as HTMLButtonElement[];
         const n = list.length;
         if (n === 0) return;
         list[((index % n) + n) % n]?.focus();
     };
 
-    const onTriggerKeyDown = (e: KeyboardEvent<HTMLButtonElement>, index: number) => {
-        const n = items.length;
+    const focusByDelta = useCallback((currentValue: string, delta: number) => {
+        const idx = triggerOrderRef.current.indexOf(currentValue);
+        focusTrigger(idx < 0 ? 0 : idx + delta);
+    }, []);
+
+    const contextValue = useMemo<AccordionContextValue>(
+        () => ({
+            size,
+            isOpen: (itemValue: string) => open.has(itemValue),
+            toggle,
+            registerTrigger,
+            focusByDelta,
+            focusFirst: () => focusTrigger(0),
+            focusLast: () => focusTrigger(triggerOrderRef.current.length - 1),
+            reduceMotion,
+        }),
+        [focusByDelta, open, reduceMotion, registerTrigger, size, toggle],
+    );
+
+    const legacyChildren =
+        items?.map((item) => (
+            <AccordionItem key={item.id} value={item.id} icon={item.icon}>
+                <AccordionTrigger>{item.title}</AccordionTrigger>
+                <AccordionContent>{item.content}</AccordionContent>
+            </AccordionItem>
+        )) ?? null;
+
+    return (
+        <AccordionContext.Provider value={contextValue}>
+            <div data-refineui="accordion" className={className} {...props}>
+                {children ?? legacyChildren}
+            </div>
+        </AccordionContext.Provider>
+    );
+}
+
+export interface AccordionItemSlotProps extends HTMLAttributes<HTMLDivElement> {
+    value: string;
+    icon?: string;
+}
+
+export function AccordionItem({ value, icon, className, children, ...props }: AccordionItemSlotProps) {
+    const accordion = useContext(AccordionContext);
+    if (!accordion) throw new Error("AccordionItem must be used within Accordion.");
+    const uid = useId().replace(/:/g, "");
+    const triggerId = `accordion-trigger-${uid}-${value}`;
+    const panelId = `accordion-panel-${uid}-${value}`;
+
+    return (
+        <AccordionItemContext.Provider
+            value={{ value, open: accordion.isOpen(value), triggerId, panelId, icon }}
+        >
+            <div className={className} {...props}>
+                {children}
+            </div>
+        </AccordionItemContext.Provider>
+    );
+}
+
+export interface AccordionTriggerProps extends HTMLAttributes<HTMLButtonElement> {}
+
+export function AccordionTrigger({ className, children, ...props }: AccordionTriggerProps) {
+    const accordion = useContext(AccordionContext);
+    const item = useContext(AccordionItemContext);
+    if (!accordion || !item) throw new Error("AccordionTrigger must be used within AccordionItem.");
+
+    const onTriggerKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
         switch (e.key) {
             case "ArrowDown":
                 e.preventDefault();
-                focusTrigger(index + 1);
+                accordion.focusByDelta(item.value, 1);
                 break;
             case "ArrowUp":
                 e.preventDefault();
-                focusTrigger(index - 1);
+                accordion.focusByDelta(item.value, -1);
                 break;
             case "Home":
                 e.preventDefault();
-                focusTrigger(0);
+                accordion.focusFirst();
                 break;
             case "End":
                 e.preventDefault();
-                focusTrigger(n - 1);
+                accordion.focusLast();
                 break;
             default:
                 break;
@@ -100,82 +262,78 @@ export function Accordion({ items, allowMultiple = false, size = "medium", style
     };
 
     return (
-        <div data-refineui="accordion" style={{ ...style }} {...props}>
-            {items.map((item, index) => {
-                const isOpen = openIds.has(item.id);
-                return (
-                    <div key={item.id}>
-                        <button
-                            ref={(el) => setTriggerRef(index, el)}
-                            type="button"
-                            data-refineui="accordion-trigger"
-                            aria-expanded={isOpen}
-                            aria-controls={`accordion-panel-${item.id}`}
-                            id={`accordion-trigger-${item.id}`}
-                            onClick={() => toggle(item.id)}
-                            onKeyDown={(e) => onTriggerKeyDown(e, index)}
-                            style={{
-                                width: "100%",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                gap: spacings.sizeMedium,
-                                padding: `${spacings.sizeSmall} ${spacings.sizeMedium}`,
-                                minHeight: sizes.controlTouchMin,
-                                background: "transparent",
-                                border: "none",
-                                cursor: "pointer",
-                                textAlign: "left",
-                                ...triggerTypography,
-                                color: colors.primaryBlack,
-                            }}
-                        >
-                            <span style={{ display: "flex", alignItems: "center", gap: spacings.sizeMedium, flex: 1, minWidth: 0 }}>
-                                <WebIcon name={item.icon ?? "circle"} size={iconSizes.lg} color={colors.primaryBlack} />
-                                {item.title}
-                            </span>
-                            <WebIcon
-                                name={isOpen ? "chevron-up" : "chevron-down"}
-                                size={iconSizes.lg}
-                                color={colors.primaryBlack}
-                                fallback="▼"
-                            />
-                        </button>
-                        <div
-                            id={`accordion-panel-${item.id}`}
-                            role="region"
-                            aria-labelledby={`accordion-trigger-${item.id}`}
-                            aria-hidden={!isOpen}
-                            data-refineui="accordion-panel"
-                            style={{
-                                display: "grid",
-                                gridTemplateRows: isOpen ? "1fr" : "0fr",
-                                transition: reduceMotion
-                                    ? undefined
-                                    : `grid-template-rows ${PANEL_HEIGHT_MS}s ${PANEL_HEIGHT_EASE}`,
-                            }}
-                        >
-                            <div style={{ minHeight: 0, overflow: "hidden" }}>
-                                <div
-                                    style={{
-                                        padding: `0 ${spacings.sizeMedium} ${spacings.sizeMedium}`,
-                                        ...typographys.body4,
-                                        color: colors.primaryBlack,
-                                        opacity: isOpen ? 1 : 0,
-                                        transform: isOpen ? "translate3d(0, 0, 0)" : "translate3d(0, -6px, 0)",
-                                        transition: reduceMotion
-                                            ? undefined
-                                            : `opacity ${PANEL_CONTENT_MS}s ${PANEL_CONTENT_EASE}, transform ${PANEL_CONTENT_MS}s ${PANEL_CONTENT_EASE}`,
-                                        pointerEvents: isOpen ? undefined : "none",
-                                    }}
-                                >
-                                    {item.content}
-                                </div>
-                            </div>
-                        </div>
+        <button
+            ref={(el) => accordion.registerTrigger(item.value, el)}
+            type="button"
+            data-refineui="accordion-trigger"
+            aria-expanded={item.open}
+            aria-controls={item.panelId}
+            id={item.triggerId}
+            onClick={() => accordion.toggle(item.value)}
+            onKeyDown={onTriggerKeyDown}
+            className={clsx(
+                triggerTypo[accordion.size],
+                "flex min-h-refineui-control-touch-min w-full cursor-pointer items-center justify-between gap-refineui-size-medium border-none bg-transparent px-refineui-size-medium py-refineui-size-small text-left text-refineui-alias-foreground-primary",
+                className,
+            )}
+            {...props}
+        >
+            <span className="flex min-w-0 flex-1 items-center gap-refineui-size-medium">
+                {item.icon ? <WebIcon name={item.icon} size={iconSizes.small} color="currentColor" /> : null}
+                {children}
+            </span>
+            <WebIcon
+                name={item.open ? "chevron-up" : "chevron-down"}
+                size={iconSizes.small}
+                color="currentColor"
+                fallback="▼"
+            />
+        </button>
+    );
+}
+
+export interface AccordionContentProps extends HTMLAttributes<HTMLDivElement> {}
+
+export function AccordionContent({ className, children, ...props }: AccordionContentProps) {
+    const accordion = useContext(AccordionContext);
+    const item = useContext(AccordionItemContext);
+    if (!accordion || !item) throw new Error("AccordionContent must be used within AccordionItem.");
+
+    const gridStyle: CSSProperties = {
+        display: "grid",
+        gridTemplateRows: item.open ? "1fr" : "0fr",
+        transition: accordion.reduceMotion
+            ? undefined
+            : `grid-template-rows ${PANEL_HEIGHT_MS}s ${PANEL_HEIGHT_EASE}`,
+    };
+    const innerMotionStyle: CSSProperties = {
+        padding: "0 var(--refineui-spacing-size-medium) var(--refineui-spacing-size-medium)",
+        opacity: item.open ? 1 : 0,
+        transform: item.open
+            ? "translate3d(0, 0, 0)"
+            : "translate3d(0, calc(-1 * var(--refineui-spacing-size-small)), 0)",
+        transition: accordion.reduceMotion
+            ? undefined
+            : `opacity ${PANEL_CONTENT_MS}s ${PANEL_CONTENT_EASE}, transform ${PANEL_CONTENT_MS}s ${PANEL_CONTENT_EASE}`,
+        pointerEvents: item.open ? undefined : "none",
+    };
+
+    return (
+        <div
+            id={item.panelId}
+            role="region"
+            aria-labelledby={item.triggerId}
+            aria-hidden={!item.open}
+            data-refineui="accordion-panel"
+            style={gridStyle}
+        >
+            <div className="min-h-0 overflow-hidden">
+                <div style={innerMotionStyle}>
+                    <div className={clsx(className)} {...props}>
+                        {children}
                     </div>
-                );
-            })}
+                </div>
+            </div>
         </div>
     );
 }

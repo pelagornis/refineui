@@ -1,13 +1,31 @@
 ---
 title: PopOver
-description: 팝오버 컴포넌트
+description: 클릭으로 열리는 팝오버 패널
 ---
 
 import PopOverDemo from "../../../components/PopOverDemo";
 
 # PopOver
 
-트리거 클릭 시 표시되는 팝오버 컴포넌트입니다.
+트리거를 클릭해 패널을 엽니다. Web Kit **PopOver** `553:5669` — **`default`** / **`inverted`** 배경. Figma의 **beak(화살표)·세부 정렬**은 미구현이며, 패널 토큰만 스펙에 맞춥니다.
+
+## 설치·임포트
+
+```tsx
+import { PopOver, Button } from "@refineui/react";
+import "@refineui/react/refineui.css";
+```
+
+## 기본 사용
+
+```tsx
+<PopOver
+  trigger={<Button variant="secondary">정보</Button>}
+  content={<p>추가 설명</p>}
+  placement="bottom"
+  variant="default"
+/>
+```
 
 ## Preview
 
@@ -17,6 +35,17 @@ import PopOverDemo from "../../../components/PopOverDemo";
 
 ## Props
 
-- `trigger` — 클릭 시 팝오버를 여는 요소
-- `content` — 팝오버 내용
-- `placement` — top | bottom | left | right (기본: bottom)
+| Prop | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `trigger` | `ReactNode` | (필수) | 클릭 요소 |
+| `content` | `ReactNode` | (필수) | 패널 내용 |
+| `placement` | `"top"` \| `"bottom"` \| `"left"` \| `"right"` | `"bottom"` | 기준 위치 |
+| `variant` | `"default"` \| `"inverted"` | `"default"` | 밝은 / 어두운 패널 |
+
+## 예시
+
+### 다크 패널
+
+```tsx
+<PopOver trigger={<Button variant="ghost">?</Button>} content="도움말" variant="inverted" />
+```

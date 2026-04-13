@@ -1,13 +1,31 @@
 ---
 title: Menu
-description: 메뉴 리스트 컴포넌트
+description: 메뉴 패널 — 키보드 탐색
 ---
 
 import MenuPreview from "../../../components/MenuPreview";
 
 # Menu
 
-메뉴 리스트 컴포넌트입니다. **항목을 클릭해보세요.**
+항목 목록만 있는 메뉴 패널입니다. Web Kit **Menu** `633:4268` (단순 텍스트 리스트)에 맞춥니다. **Dropdown**은 트리거+열기까지 포함하고, **Menu**는 패널만 둘 때 쓸 수 있습니다.
+
+## 설치·임포트
+
+```tsx
+import { Menu } from "@refineui/react";
+import "@refineui/react/refineui.css";
+```
+
+## 기본 사용
+
+```tsx
+<Menu
+  items={[
+    { id: "a", label: "복사", onClick: () => {} },
+    { id: "b", label: "붙여넣기", onClick: () => {} },
+  ]}
+/>
+```
 
 ## Preview
 
@@ -15,19 +33,18 @@ import MenuPreview from "../../../components/MenuPreview";
   <MenuPreview client:load />
 </div>
 
-## 예시
-
-```tsx
-<Menu
-    items={[
-      { id: "1", label: "새로 만들기", onClick: () => {} },
-      { id: "2", label: "열기", onClick: () => {} },
-      { id: "3", label: "저장", onClick: () => {} },
-      { id: "4", label: "비활성화", disabled: true },
-    ]}
-  />
-```
-
 ## Props
 
-- `items` — MenuItem[] (id, label, onClick?, disabled?)
+| Prop | 타입 | 설명 |
+|------|------|------|
+| `items` | `MenuItem[]` | `id`, `label`, 선택 `onClick`, `disabled` |
+
+## 예시
+
+### 팝오버 안에
+
+```tsx
+<div style={{ width: 320 }}>
+  <Menu items={[{ id: "1", label: "설정" }]} />
+</div>
+```

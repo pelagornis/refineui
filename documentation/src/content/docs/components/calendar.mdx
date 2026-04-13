@@ -1,13 +1,27 @@
 ---
 title: Calendar
-description: 캘린더 컴포넌트
+description: 날짜 선택 — 단일 · 범위
 ---
 
 import CalendarPreview from "../../../components/CalendarPreview";
 
 # Calendar
 
-날짜 선택 캘린더 컴포넌트입니다. **날짜와 화살표를 클릭해보세요.**
+월 그리드에서 날짜를 고릅니다. Web Kit **Calendar** `656:2958`와 `docs/design-specs-web-kit.md` Calendar 절을 따릅니다.
+
+## 설치·임포트
+
+```tsx
+import { Calendar } from "@refineui/react";
+import "@refineui/react/refineui.css";
+```
+
+## 기본 사용 (단일)
+
+```tsx
+const [d, setD] = useState(new Date());
+<Calendar mode="single" value={d} onChange={setD} />;
+```
 
 ## Preview
 
@@ -17,5 +31,28 @@ import CalendarPreview from "../../../components/CalendarPreview";
 
 ## Props
 
-- `value` — 선택된 날짜 (Date)
-- `onChange` — 날짜 변경 시 콜백
+| Prop | 타입 | 설명 |
+|------|------|------|
+| `mode` | `"single"` \| `"range"` | 기본 `single` |
+| `value` | `Date` | 단일 선택 값 |
+| `onChange` | `(date: Date) => void` | 단일 모드 변경 |
+| `rangeStart` / `rangeEnd` | `Date` | 범위 모드 |
+| `onRangeChange` | `(start, end) => void` | 범위 변경 |
+| `weekStartsOn` | `0` \| `1` | 0=일요일 시작 |
+| `defaultMonth` | `Date` | 초기 표시 월 |
+
+## 예시
+
+### 범위 선택
+
+```tsx
+<Calendar
+  mode="range"
+  rangeStart={start}
+  rangeEnd={end}
+  onRangeChange={(s, e) => {
+    setStart(s);
+    setEnd(e);
+  }}
+/>
+```

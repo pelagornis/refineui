@@ -1,9 +1,13 @@
+import { clsx } from "clsx";
+import { Children, createContext, isValidElement, useContext } from "react";
 import type { HTMLAttributes, ReactNode } from "react";
-import { colors, spacings, borderRadii, typographys, strokeWidths, iconSizes } from "@refineui/tokens";
+import { iconSizes } from "@refineui/tokens";
 import { WebIcon } from "../../WebIcon";
 import { Button } from "../Button";
 
 export type AlertVariant = "default" | "info" | "success" | "warning" | "danger" | "custom";
+
+const AlertContext = createContext<AlertVariant | null>(null);
 
 export interface AlertAction {
     label: string;
@@ -12,45 +16,40 @@ export interface AlertAction {
 
 export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
     variant?: AlertVariant;
-    /**
-     * 왼쪽 아이콘 영역.
-     * - `string`: RefineUI System Icons 글리프 이름 (`WebIcon`으로 렌더)
-     * - `ReactNode`: 임의 노드 (예: `<WebIcon name="..." />`)
-     * - 생략 시 variant별 기본 아이콘
-     */
     icon?: string | ReactNode;
-    /** Alert 제목 */
     title?: ReactNode;
-    /** Alert 설명 (title 아래) */
     description?: ReactNode;
-    /** 닫기 버튼 클릭 시 */
     onClose?: () => void;
-    /** 액션 버튼들 (최대 2개 권장) */
     actions?: AlertAction[];
-    /** children이 있으면 title/description 대신 렌더 */
     children?: ReactNode;
 }
 
+export type AlertTitleProps = HTMLAttributes<HTMLHeadingElement>;
+export type AlertDescriptionProps = HTMLAttributes<HTMLDivElement>;
+
 /**
- * Web Kit Alert — Figma MCP `Alert` (Pelagornis RefineUI Web Kit)
- * 레이아웃: 1행 = 아이콘(24) + 텍스트 + 닫기, 2행 = 액션(우측 정렬, gap medium)
+ * Web Kit Alert — MCP `384:885` (Foundation Alias)
+ * - 컨테이너: backgroundPrimary, borderDefault, px sizeLarge, py sizeMedium, roundedLarge
+ * - 타이포: 제목·설명 Caption1 Medium
+ * - 색: Default → foregroundPrimary / foregroundSecondary; state → foreground* / background* (MCP와 동일)
+ * - 아이콘: MCP Default Shape는 제목과 동일하게 foregroundPrimary 바인딩 — 슬롯에 variantTitleClass + currentColor로 제목과 동일 톤 유지
  */
-const variantTitleColor: Record<AlertVariant, string> = {
-    default: colors.primaryBlack,
-    info: colors.blue700,
-    success: colors.green700,
-    warning: colors.yellow700,
-    danger: colors.red700,
-    custom: colors.purple700,
+const variantTitleClass: Record<AlertVariant, string> = {
+    default: "text-refineui-alias-foreground-primary",
+    info: "text-refineui-alias-foreground-info",
+    success: "text-refineui-alias-foreground-success",
+    warning: "text-refineui-alias-foreground-warning",
+    danger: "text-refineui-alias-foreground-error",
+    custom: "text-refineui-alias-foreground-discovery",
 };
 
-const variantDescriptionColor: Record<AlertVariant, string> = {
-    default: colors.neutral600,
-    info: colors.blue500,
-    success: colors.green500,
-    warning: colors.yellow300,
-    danger: colors.red500,
-    custom: colors.purple500,
+const variantDescriptionClass: Record<AlertVariant, string> = {
+    default: "text-refineui-alias-foreground-secondary",
+    info: "text-refineui-alias-background-info",
+    success: "text-refineui-alias-background-success",
+    warning: "text-refineui-alias-background-warning",
+    danger: "text-refineui-alias-background-error",
+    custom: "text-refineui-alias-background-discovery",
 };
 
 const variantIconNames: Record<AlertVariant, string> = {
@@ -62,30 +61,25 @@ const variantIconNames: Record<AlertVariant, string> = {
     custom: "star",
 };
 
-/** 24×24 슬롯 — MCP: 내부 16×16 글리프(에셋과 동일 인셋), CSS 링 없음 */
-function AlertIconSlot({ children }: { children: ReactNode }) {
+/** 24×24 — Web Kit: 아이콘 색은 제목과 동일 Alias(`toneClass` + currentColor). */
+function AlertIconSlot({ toneClass, children }: { toneClass: string; children: ReactNode }) {
     return (
         <div
             data-refineui="alert-icon-slot"
-            style={{
-                width: spacings.sizeXXLarge,
-                height: spacings.sizeXXLarge,
-                minWidth: spacings.sizeXXLarge,
-                flexShrink: 0,
-                overflow: "hidden",
-                position: "relative",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-            }}
+            className={clsx(
+                "relative box-border flex size-refineui-size-xxlarge min-w-refineui-size-xxlarge shrink-0 items-center justify-center overflow-hidden rounded-refineui-circle",
+                toneClass,
+            )}
         >
             {children}
         </div>
     );
 }
 
-function AlertSystemGlyph({ name, color }: { name: string; color: string }) {
-    return <WebIcon name={name} size={iconSizes.md} color={color} fallback="●" aria-hidden />;
+function AlertSystemGlyph({ name }: { name: string }) {
+    return (
+        <WebIcon name={name} size={iconSizes.medium} color="currentColor" fallback="●" aria-hidden />
+    );
 }
 
 export function Alert({
@@ -96,129 +90,123 @@ export function Alert({
     onClose,
     actions,
     children,
-    style,
+    className,
     ...props
 }: AlertProps) {
-    const titleColor = variantTitleColor[variant];
-    const descriptionColor = variantDescriptionColor[variant];
     const defaultIconName = variantIconNames[variant];
+    const iconToneClass = variantTitleClass[variant];
 
     const leading =
         icon === undefined || icon === null ? (
-            <AlertIconSlot>
-                <AlertSystemGlyph name={defaultIconName} color={titleColor} />
+            <AlertIconSlot toneClass={iconToneClass}>
+                <AlertSystemGlyph name={defaultIconName} />
             </AlertIconSlot>
         ) : typeof icon === "string" ? (
-            <AlertIconSlot>
-                <AlertSystemGlyph name={icon.length > 0 ? icon : defaultIconName} color={titleColor} />
+            <AlertIconSlot toneClass={iconToneClass}>
+                <AlertSystemGlyph name={icon.length > 0 ? icon : defaultIconName} />
             </AlertIconSlot>
         ) : (
-            <AlertIconSlot>{icon}</AlertIconSlot>
+            <AlertIconSlot toneClass={iconToneClass}>{icon}</AlertIconSlot>
         );
+
+    const composedChildren = Children.toArray(children);
+    let composedLeading: ReactNode | null = null;
+    const composedBody: ReactNode[] = [];
+    if (title == null && description == null && composedChildren.length > 0) {
+        for (const child of composedChildren) {
+            if (
+                composedLeading == null &&
+                (!isValidElement(child) ||
+                    (child.type !== AlertTitle && child.type !== AlertDescription))
+            ) {
+                composedLeading = child;
+                continue;
+            }
+            composedBody.push(child);
+        }
+    }
 
     const body =
         title != null || description != null ? (
-            <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: spacings.sizeXSmall }}>
-                {title && (
-                    <div style={{ ...typographys.caption1, color: titleColor }}>{title}</div>
-                )}
-                {description && (
-                    <div style={{ ...typographys.caption2, color: descriptionColor }}>{description}</div>
-                )}
+            <div className="flex min-w-0 flex-1 flex-col gap-refineui-size-xsmall">
+                {title && <AlertTitle>{title}</AlertTitle>}
+                {description && <AlertDescription>{description}</AlertDescription>}
             </div>
         ) : (
-            <div style={{ flex: 1, minWidth: 0, ...typographys.body2, color: colors.primaryBlack }}>{children}</div>
+            <div className="flex min-w-0 flex-1 flex-col gap-refineui-size-xsmall">
+                {composedBody.length > 0 ? composedBody : composedChildren}
+            </div>
         );
 
     const closeBtn =
         onClose != null ? (
-            <button
-                type="button"
-                data-refineui="alert-close"
-                aria-label="닫기"
-                onClick={onClose}
-                style={{
-                    background: "none",
-                    border: "none",
-                    padding: 0,
-                    margin: 0,
-                    cursor: "pointer",
-                    color: colors.neutral600,
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: spacings.sizeLarge,
-                    height: spacings.sizeLarge,
-                    minWidth: spacings.sizeLarge,
-                    flexShrink: 0,
-                    lineHeight: 1,
-                }}
-            >
-                <WebIcon name="dismiss" size={iconSizes.sm} color="currentColor" fallback="×" />
-            </button>
+            <Button type="button" variant="ghost" size="sm" layout="icon" aria-label="닫기" onClick={onClose}>
+                <WebIcon
+                    name="dismiss"
+                    size={iconSizes.small}
+                    color="currentColor"
+                    iconStyle="regular"
+                    fallback="×"
+                    aria-hidden
+                />
+            </Button>
         ) : null;
 
     const actionRow =
         actions && actions.length > 0 ? (
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "flex-end",
-                    alignItems: "center",
-                    gap: spacings.sizeMedium,
-                    flexWrap: "wrap",
-                    width: "100%",
-                }}
-            >
-                {actions.slice(0, 2).map((action, i) => (
-                    <Button key={i} variant="primary" size="sm" onClick={action.onClick}>
-                        {action.label}
+            <div className="flex w-full flex-row flex-wrap items-center justify-end gap-refineui-size-medium">
+                {actions.slice(0, 2).map((actionItem, i) => (
+                    <Button key={i} variant="primary" size="sm" onClick={actionItem.onClick}>
+                        {actionItem.label}
                     </Button>
                 ))}
             </div>
         ) : null;
 
     return (
-        <div
-            data-refineui="alert"
-            role="alert"
-            style={{
-                display: "flex",
-                alignItems: "flex-start",
-                padding: `${spacings.sizeMedium} ${spacings.sizeLarge}`,
-                borderRadius: borderRadii.roundedLarge,
-                backgroundColor: colors.neutralWhite,
-                border: `${strokeWidths.strokeWidthHairline} solid ${colors.neutral300}`,
-                boxSizing: "border-box",
-                ...style,
-            }}
-            {...props}
-        >
+        <AlertContext.Provider value={variant}>
             <div
-                style={{
-                    flex: 1,
-                    minWidth: 0,
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: spacings.sizeMedium,
-                }}
+                data-refineui="alert"
+                role="alert"
+                className={clsx(
+                    "box-border flex items-start rounded-refineui-large border-refineui-thin border-refineui-alias-border-default bg-refineui-alias-background-primary px-refineui-size-large py-refineui-size-medium",
+                    className,
+                )}
+                {...props}
             >
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "flex-start",
-                        gap: spacings.sizeMedium,
-                        width: "100%",
-                    }}
-                >
-                    {leading}
-                    {body}
-                    {closeBtn}
+                <div className="flex min-w-0 flex-1 flex-col gap-refineui-size-medium">
+                    <div className="flex w-full flex-row items-start gap-refineui-size-medium">
+                        {title != null || description != null ? leading : composedLeading ?? leading}
+                        {body}
+                        {closeBtn}
+                    </div>
+                    {actionRow}
                 </div>
-                {actionRow}
             </div>
-        </div>
+        </AlertContext.Provider>
+    );
+}
+
+function useAlertVariant(): AlertVariant {
+    return useContext(AlertContext) ?? "info";
+}
+
+export function AlertTitle({ className, ...props }: AlertTitleProps) {
+    const v = useAlertVariant();
+    return (
+        <h5
+            className={clsx("m-0 w-full min-w-0 refineui-typo-caption-1 font-medium", variantTitleClass[v], className)}
+            {...props}
+        />
+    );
+}
+
+export function AlertDescription({ className, ...props }: AlertDescriptionProps) {
+    const v = useAlertVariant();
+    return (
+        <div
+            className={clsx("w-full min-w-0 refineui-typo-caption-1 font-medium", variantDescriptionClass[v], className)}
+            {...props}
+        />
     );
 }

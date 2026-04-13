@@ -1,6 +1,7 @@
-import type { FocusEvent, HTMLAttributes, KeyboardEvent, MouseEvent, ReactElement, ReactNode } from "react";
+import { clsx } from "clsx";
+import type { CSSProperties, FocusEvent, HTMLAttributes, KeyboardEvent, MouseEvent, ReactElement, ReactNode } from "react";
 import { cloneElement, isValidElement, useId, useRef, useState } from "react";
-import { colors, spacings, borderRadii, typographys, shadows, toBoxShadow, zIndex, sizes } from "@refineui/tokens";
+import { colors, spacings } from "@refineui/tokens";
 
 export type TooltipVariant = "default" | "inverted";
 
@@ -28,7 +29,7 @@ export function Tooltip({
     placement = "top",
     variant = "default",
     delayMs = 120,
-    style,
+    className,
     ...props
 }: TooltipProps) {
     const [open, setOpen] = useState(false);
@@ -37,8 +38,6 @@ export function Tooltip({
 
     const isInverted = variant === "inverted";
     const bg = isInverted ? colors.primaryBlack : colors.neutralWhite;
-    const fg = isInverted ? colors.neutralWhite : colors.primaryBlack;
-    const boxShadow = toBoxShadow(isInverted ? shadows.shadow8Dark : shadows.shadow8Light);
 
     const clearTimer = () => {
         if (showTimer.current != null) {
@@ -57,17 +56,18 @@ export function Tooltip({
         setOpen(false);
     };
 
-    const placementStyles: Record<string, React.CSSProperties> = {
+    const placementStyles: Record<string, CSSProperties> = {
         top: { bottom: "100%", left: "50%", transform: "translateX(-50%)", marginBottom: spacings.sizeXSmall },
         bottom: { top: "100%", left: "50%", transform: "translateX(-50%)", marginTop: spacings.sizeXSmall },
         left: { right: "100%", top: "50%", transform: "translateY(-50%)", marginRight: spacings.sizeXSmall },
         right: { left: "100%", top: "50%", transform: "translateY(-50%)", marginLeft: spacings.sizeXSmall },
     };
 
-    const b = 6;
-    const arrowStyle: React.CSSProperties = (() => {
+    const arrowHalf = Number.parseInt(spacings.sizeSmall, 10) || 6;
+    const arrowStyle: CSSProperties = (() => {
         const c = bg;
-        const z: React.CSSProperties = { position: "absolute", width: 0, height: 0 };
+        const b = arrowHalf;
+        const z: CSSProperties = { position: "absolute", width: 0, height: 0 };
         if (placement === "top") {
             return {
                 ...z,
@@ -152,7 +152,7 @@ export function Tooltip({
                     if (!e.currentTarget.contains(e.relatedTarget as Node)) hide();
                 }}
                 onKeyDown={(e) => e.key === "Escape" && hide()}
-                style={{ display: "inline-flex", outline: "none" }}
+                className="inline-flex outline-none"
             >
                 {trigger}
             </span>
@@ -160,32 +160,20 @@ export function Tooltip({
     };
 
     return (
-        <div
-            data-refineui="tooltip"
-            data-tooltip-variant={variant}
-            style={{ position: "relative", display: "inline-block", ...style }}
-            {...props}
-        >
+        <div data-refineui="tooltip" data-tooltip-variant={variant} className={clsx("relative inline-block", className)} {...props}>
             {mergeTrigger()}
             {open && (
                 <div
                     id={tooltipId}
                     role="tooltip"
                     data-placement={placement}
-                    style={{
-                        position: "absolute",
-                        ...placementStyles[placement],
-                        padding: `${spacings.sizeSmall} ${spacings.sizeMedium}`,
-                        backgroundColor: bg,
-                        color: fg,
-                        borderRadius: borderRadii.roundedMedium,
-                        ...typographys.body4,
-                        boxShadow,
-                        whiteSpace: "nowrap",
-                        zIndex: zIndex.zIndexPopup,
-                        maxWidth: sizes.tooltipMaxWidth,
-                        pointerEvents: "none",
-                    }}
+                    className={clsx(
+                        "refineui-typo-body-4 pointer-events-none absolute z-refineui-popup max-w-refineui-tooltip-max-width whitespace-nowrap px-refineui-size-medium py-refineui-size-small rounded-refineui-medium",
+                        isInverted
+                            ? "bg-refineui-primary-black text-refineui-neutral-white shadow-refineui-8dark"
+                            : "bg-refineui-neutral-white text-refineui-primary-black shadow-refineui-8light",
+                    )}
+                    style={placementStyles[placement]}
                 >
                     {content}
                     <span aria-hidden style={arrowStyle} />

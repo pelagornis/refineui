@@ -1,6 +1,6 @@
+import { clsx } from "clsx";
 import type { HTMLAttributes, KeyboardEvent, MouseEvent, ReactElement, ReactNode, Ref } from "react";
-import { cloneElement, isValidElement, useCallback, useEffect, useId, useRef, useState } from "react";
-import { colors, spacings, borderRadii, shadows, toBoxShadow, zIndex, strokeWidths } from "@refineui/tokens";
+import { cloneElement, isValidElement, useEffect, useId, useRef, useState } from "react";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
 import { composeRef } from "../../utils/composeRef";
 
@@ -8,6 +8,8 @@ export interface PopOverProps extends Omit<HTMLAttributes<HTMLDivElement>, "chil
     trigger: ReactNode;
     content: ReactNode;
     placement?: "top" | "bottom" | "left" | "right";
+    /** Web Kit COMPONENT_SET `PopOver` `553:5669` — `style` Default / Inverted */
+    variant?: "default" | "inverted";
 }
 
 type TriggerProps = {
@@ -17,7 +19,29 @@ type TriggerProps = {
 
 type TriggerElement = ReactElement<TriggerProps> & { ref?: Ref<HTMLElement | null> };
 
-export function PopOver({ trigger, content, placement = "bottom", style, ...props }: PopOverProps) {
+const placementMargin: Record<NonNullable<PopOverProps["placement"]>, string> = {
+    top: "mb-refineui-size-xsmall",
+    bottom: "mt-refineui-size-xsmall",
+    left: "mr-refineui-size-xsmall",
+    right: "ml-refineui-size-xsmall",
+};
+
+const placementPosition: Record<NonNullable<PopOverProps["placement"]>, string> = {
+    top: "bottom-full left-1/2 -translate-x-1/2",
+    bottom: "top-full left-1/2 -translate-x-1/2",
+    left: "right-full top-1/2 -translate-y-1/2",
+    right: "left-full top-1/2 -translate-y-1/2",
+};
+
+/** Web Kit COMPONENT_SET `PopOver` `553:5669` — 화살표(beak)·정렬 서브변형은 미구현, 패널 토큰만 스펙에 맞춤. */
+export function PopOver({
+    trigger,
+    content,
+    placement = "bottom",
+    variant = "default",
+    className,
+    ...props
+}: PopOverProps) {
     const [open, setOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
@@ -76,36 +100,17 @@ export function PopOver({ trigger, content, placement = "bottom", style, ...prop
                 aria-expanded={open}
                 aria-haspopup="dialog"
                 aria-controls={contentId}
+                className="cursor-pointer border-none bg-transparent p-0 font-inherit text-inherit"
                 onClick={toggle}
                 onKeyDown={(e) => onTriggerKeyDown(e)}
-                style={{
-                    border: "none",
-                    background: "none",
-                    cursor: "pointer",
-                    padding: 0,
-                    font: "inherit",
-                    color: "inherit",
-                }}
             >
                 {trigger}
             </button>
         );
     };
 
-    const placementStyles: Record<string, React.CSSProperties> = {
-        top: { bottom: "100%", left: "50%", transform: "translateX(-50%)", marginBottom: spacings.sizeXSmall },
-        bottom: { top: "100%", left: "50%", transform: "translateX(-50%)", marginTop: spacings.sizeXSmall },
-        left: { right: "100%", top: "50%", transform: "translateY(-50%)", marginRight: spacings.sizeXSmall },
-        right: { left: "100%", top: "50%", transform: "translateY(-50%)", marginLeft: spacings.sizeXSmall },
-    };
-
     return (
-        <div
-            ref={containerRef}
-            data-refineui="popover"
-            style={{ position: "relative", display: "inline-block", ...style }}
-            {...props}
-        >
+        <div ref={containerRef} data-refineui="popover" className={clsx("relative inline-block", className)} {...props}>
             {renderTrigger()}
             {open && (
                 <div
@@ -114,17 +119,15 @@ export function PopOver({ trigger, content, placement = "bottom", style, ...prop
                     role="dialog"
                     aria-modal="false"
                     tabIndex={-1}
-                    style={{
-                        position: "absolute",
-                        ...placementStyles[placement],
-                        padding: spacings.sizeMedium,
-                        backgroundColor: colors.neutralWhite,
-                        borderRadius: borderRadii.roundedMedium,
-                        boxShadow: toBoxShadow(shadows.shadow4Light),
-                        border: `${strokeWidths.strokeWidthThin} solid ${colors.neutral300}`,
-                        zIndex: zIndex.zIndexPopup,
-                        outline: "none",
-                    }}
+                    data-variant={variant}
+                    className={clsx(
+                        "absolute z-refineui-popup box-border min-w-refineui-popover-panel-width outline-none p-refineui-size-large rounded-refineui-large",
+                        placementPosition[placement],
+                        placementMargin[placement],
+                        variant === "inverted"
+                            ? "border-refineui-thin border-refineui-neutral-800 bg-refineui-primary-black text-refineui-neutral-white shadow-refineui-8dark"
+                            : "border-refineui-thin border-refineui-neutral-300 bg-refineui-neutral-white text-refineui-primary-black shadow-refineui-8light",
+                    )}
                 >
                     {content}
                 </div>

@@ -1,51 +1,32 @@
-import type { CSSProperties, HTMLAttributes, ReactNode } from "react";
-import { colors, spacings, strokeWidths, typographys, sizes } from "@refineui/tokens";
+import { clsx } from "clsx";
+import type { HTMLAttributes, ReactNode } from "react";
+import { componentSizes } from "../../componentSizes";
 
 type DividerHTML = Omit<HTMLAttributes<HTMLDivElement>, "children">;
 type Align = "center" | "left" | "right";
-
-function px(value: string) {
-    const n = Number.parseFloat(value);
-    return Number.isFinite(n) ? n : 0;
-}
 
 function LineSegment({ grow }: { grow: boolean }) {
     return (
         <div
             data-name="Vector"
-            style={{
-                height: strokeWidths.strokeWidthThin,
-                minHeight: strokeWidths.strokeWidthThin,
-                backgroundColor: colors.neutral300,
-                flexShrink: 0,
-                width: grow ? undefined : sizes.dividerShortEnd,
-                flex: grow ? "1 0 0" : undefined,
-                minWidth: grow ? 0 : sizes.dividerShortEnd,
-            }}
+            className={clsx(
+                "h-(--refineui-stroke-width-thin) min-h-(--refineui-stroke-width-thin) shrink-0 bg-refineui-alias-border-default",
+                grow ? "min-w-0 flex-1" : "min-w-refineui-divider-short-end w-refineui-divider-short-end",
+            )}
         />
     );
 }
 
-function DividerCircleGlyph({ stroke }: { stroke: string }) {
-    const dPx = px(sizes.dividerIconCircleDiameter);
-    const strokePx = px(strokeWidths.strokeWidthThin);
-    const r = dPx / 2;
+function DividerCircleGlyph() {
     return (
-        <svg
-            width={sizes.dividerIconCircleDiameter}
-            height={sizes.dividerIconCircleDiameter}
-            viewBox={`0 0 ${dPx} ${dPx}`}
-            fill="none"
+        <span
             aria-hidden
+            className="absolute left-refineui-divider-icon-circle-inset top-refineui-divider-icon-circle-inset box-border rounded-refineui-circle border-refineui-thin border-refineui-alias-foreground-brand"
             style={{
-                position: "absolute",
-                left: sizes.dividerIconCircleInset,
-                top: sizes.dividerIconCircleInset,
-                display: "block",
+                width: componentSizes.dividerIconCircleDiameter,
+                height: componentSizes.dividerIconCircleDiameter,
             }}
-        >
-            <circle cx={dPx / 2} cy={dPx / 2} r={r} stroke={stroke} strokeWidth={strokePx} />
-        </svg>
+        />
     );
 }
 
@@ -54,13 +35,14 @@ export type DividerProps =
     | (DividerHTML & { layout: "content"; children: ReactNode; align?: Align })
     | (DividerHTML & { layout: "icon"; align?: Align });
 
+/** Web Kit COMPONENT_SET `Divider` `346:722` — `layout` default · content · icon, `align` center · left · right(수평만). §8 `design-specs-web-kit.md`. */
 export function Divider(props: DividerProps) {
     const p = props as DividerHTML & {
         layout?: "default" | "content" | "icon";
         align?: Align;
         children?: ReactNode;
     };
-    const { layout = "default", align = "center", children, style, ...htmlProps } = p;
+    const { layout = "default", align = "center", children, className, ...htmlProps } = p;
 
     const effectiveLayout =
         layout === "icon" ? "icon" : layout === "content" && children != null ? "content" : "default";
@@ -72,15 +54,10 @@ export function Divider(props: DividerProps) {
                 data-layout="default"
                 role="separator"
                 aria-orientation="horizontal"
-                style={{
-                    boxSizing: "border-box",
-                    width: "100%",
-                    height: strokeWidths.strokeWidthThin,
-                    minHeight: strokeWidths.strokeWidthThin,
-                    backgroundColor: colors.neutral300,
-                    border: "none",
-                    ...style,
-                }}
+                className={clsx(
+                    "box-border h-(--refineui-stroke-width-thin) min-h-(--refineui-stroke-width-thin) w-full border-none bg-refineui-alias-border-default",
+                    className,
+                )}
                 {...htmlProps}
             />
         );
@@ -89,15 +66,8 @@ export function Divider(props: DividerProps) {
     const isLeft = align === "left";
     const isRight = align === "right";
 
-    const rowStyle: CSSProperties = {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: spacings.sizeMedium,
-        width: "100%",
-        boxSizing: "border-box",
-        overflow: "hidden",
-    };
+    const rowClass =
+        "box-border flex w-full items-center justify-center gap-refineui-size-medium overflow-hidden";
 
     if (effectiveLayout === "content") {
         return (
@@ -108,17 +78,11 @@ export function Divider(props: DividerProps) {
                 data-name="Divider"
                 role="separator"
                 aria-orientation="horizontal"
-                style={{ ...rowStyle, ...style }}
+                className={clsx(rowClass, className)}
                 {...htmlProps}
             >
                 <LineSegment grow={!isLeft} />
-                <span
-                    style={{
-                        ...typographys.caption2,
-                        color: colors.neutralBlack,
-                        whiteSpace: "nowrap",
-                    }}
-                >
+                <span className="refineui-typo-caption-2 whitespace-nowrap text-refineui-alias-foreground-brand">
                     {children}
                 </span>
                 <LineSegment grow={!isRight} />
@@ -134,22 +98,15 @@ export function Divider(props: DividerProps) {
             data-name="Divider"
             role="separator"
             aria-orientation="horizontal"
-            style={{ ...rowStyle, ...style }}
+            className={clsx(rowClass, className)}
             {...htmlProps}
         >
             <LineSegment grow={!isLeft} />
             <div
                 data-name="Circle"
-                style={{
-                    position: "relative",
-                    width: sizes.dividerIconSlot,
-                    height: sizes.dividerIconSlot,
-                    minWidth: sizes.dividerIconSlot,
-                    flexShrink: 0,
-                    overflow: "hidden",
-                }}
+                className="relative min-w-refineui-divider-icon-slot size-refineui-divider-icon-slot shrink-0 overflow-visible"
             >
-                <DividerCircleGlyph stroke={colors.neutralBlack} />
+                <DividerCircleGlyph />
             </div>
             <LineSegment grow={!isRight} />
         </div>

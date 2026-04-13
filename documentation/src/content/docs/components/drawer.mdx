@@ -1,17 +1,36 @@
 ---
 title: Drawer
-description: 측면 슬라이드 패널 컴포넌트
+description: 측면 오버레이 패널
 ---
 
 import DrawerDemo from "../../../components/DrawerDemo";
 
 # Drawer
 
-Figma Web Kit **Drawer**(`635:1756`) **Overlay** 기준: 스크rim `overlays.backdrop`, 패널 **Shadow 16**, 폭 **`size`**(small 320 / medium 575 / large 850px), 헤더는 **닫기(왼쪽)** + 제목(`subTitle1`), **Divider**, 본문은 패딩만 두고 `children`을 그대로 표시합니다. 열림·닫힘 시 스크rim 페이드와 패널 **슬라이드**(약 0.32s, `cubic-bezier(0.32, 0.72, 0, 1)`).
+화면 좌·우에서 슬라이드되는 패널입니다. Web Kit **Drawer** `635:1756` (Overlay)를 따릅니다.
+
+## 설치·임포트
+
+```tsx
+import { Drawer } from "@refineui/react";
+import "@refineui/react/refineui.css";
+```
+
+## 기본 사용
+
+```tsx
+<Drawer
+  open={open}
+  onClose={() => setOpen(false)}
+  title="필터"
+  placement="right"
+  size="medium"
+>
+  <p>내용</p>
+</Drawer>
+```
 
 ## Preview
-
-Drawer는 열릴 때 **`document.body`로 포털**되어 스크림·패널이 문서·사이드바 위 전체 화면에 겹칩니다. 아래 회색 영역은 트리거 설명용 무대일 뿐, 오버레이는 그 밖까지 덮습니다.
 
 <div class="not-content">
   <DrawerDemo client:load />
@@ -19,9 +38,20 @@ Drawer는 열릴 때 **`document.body`로 포털**되어 스크림·패널이 �
 
 ## Props
 
-- `open` — 열림 상태
-- `onClose` — 닫기 콜백
-- `title` — 제목 (헤더에 표시)
-- `placement` — `left` | `right` (기본: `right`)
-- `size` — `small` | `medium` | `large` (기본: `small`, Web Kit Overlay 폭)
-- `children` — 본문
+| Prop | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `open` | `boolean` | (필수) | 표시 여부 |
+| `onClose` | `() => void` | (필수) | 닫기 |
+| `title` | `ReactNode` | — | 헤더 제목 |
+| `placement` | `"left"` \| `"right"` | — | 어느 쪽에서 등장 |
+| `size` | `"small"` \| `"medium"` \| `"large"` | — | 패널 폭 토큰 |
+
+## 예시
+
+### 좌측 네비게이션
+
+```tsx
+<Drawer open={navOpen} onClose={() => setNavOpen(false)} placement="left" size="small" title="메뉴">
+  …
+</Drawer>
+```

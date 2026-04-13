@@ -1,13 +1,32 @@
 ---
 title: Alert
-description: 알림 컴포넌트
+description: 인라인 알림 — variant·아이콘·액션
 ---
 
 import AlertPreview from "../../../components/AlertPreview";
 
 # Alert
 
-알림/경고 메시지 컴포넌트입니다. Web Kit Figma와 같이 **첫 줄**에 아이콘·제목/설명·닫기를 두고, **액션 버튼**은 그 아래 줄에서 우측 정렬됩니다.
+페이지·섹션 상단 등에 쓰는 인라인 알림입니다. Web Kit **Alert** `384:885` 및 `docs/design-specs-web-kit.md` §5를 따릅니다.
+
+## 설치·임포트
+
+```tsx
+import { Alert, AlertDescription, AlertTitle, WebIcon } from "@refineui/react";
+import "@refineui/react/refineui.css";
+```
+
+## 기본 사용
+
+```tsx
+<Alert className="max-w-md">
+  <WebIcon name="checkmark" aria-hidden />
+  <AlertTitle>Payment successful</AlertTitle>
+  <AlertDescription>
+    Your payment of $29.99 has been processed.
+  </AlertDescription>
+</Alert>
+```
 
 ## Preview
 
@@ -15,15 +34,51 @@ import AlertPreview from "../../../components/AlertPreview";
   <AlertPreview client:load />
 </div>
 
-## Variants
+## Props
 
-- `default` / `info` / `success` / `warning` / `danger` / `custom` — variant마다 **RefineUI System Icons** 기본 글리프가 다릅니다 (`circle`, `info`, `checkmark`, `warning`, `error-circle`, `star`).
-- `icon` prop으로 아이콘 이름을 바꿀 수 있습니다 (`@refineui/web-icons` 슬러그).
+| Prop | 타입 | 설명 |
+|------|------|------|
+| `variant` | `"default"` \| `"info"` \| `"success"` \| `"warning"` \| `"danger"` \| `"custom"` | 강조 색·기본 아이콘 |
+| `icon` | `string` \| `ReactNode` | System Icons 이름 또는 커스텀 노드 |
+| `title` | `ReactNode` | 제목 |
+| `description` | `ReactNode` | 본문 |
+| `onClose` | `() => void` | 닫기 버튼 |
+| `actions` | `{ label, onClick }[]` | 우측 액션(최대 2개 권장) |
 
-## 아이콘
+`children`으로 합성형(`AlertTitle`, `AlertDescription`)도 지원합니다.
 
-Preview 아래쪽에서 **`icon` 문자열**(`settings`, `mail`, `calendar` 등)과 **`icon`에 `<WebIcon />` 노드**를 넘기는 예시를 함께 볼 수 있습니다. 전체 아이콘 목록은 `@refineui/web-icons` 메타데이터를 참고하세요.
+## 예시
 
-## 닫기
+### 합성형 (shadcn-style)
 
-닫기 버튼은 `dismiss` 아이콘을 사용합니다.
+```tsx
+<Alert>
+  <WebIcon name="info" aria-hidden />
+  <AlertTitle>New feature available</AlertTitle>
+  <AlertDescription>
+    We&apos;ve added dark mode support. You can enable it in account settings.
+  </AlertDescription>
+</Alert>
+```
+
+### Variant API
+
+```tsx
+<Alert
+  variant="warning"
+  title="High memory usage"
+  description="The current process is using more memory than usual."
+/>
+```
+
+### 닫기 + 액션
+
+```tsx
+<Alert
+  variant="success"
+  title="저장됨"
+  description="변경 사항이 반영되었습니다."
+  onClose={() => {}}
+  actions={[{ label: "실행 취소", onClick: () => {} }]}
+/>
+```

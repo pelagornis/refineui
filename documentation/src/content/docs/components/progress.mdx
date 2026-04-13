@@ -1,13 +1,25 @@
 ---
 title: Progress
-description: 프로그레스 바 컴포넌트
+description: 진행률 바 — sm / lg
 ---
 
 import ProgressPreview from "../../../components/ProgressPreview";
 
 # Progress
 
-진행률 표시 컴포넌트입니다.
+작업 진행 비율을 표시합니다. Web Kit **Progress bar** `452:3994`를 따릅니다.
+
+## 설치·임포트
+
+```tsx
+import { Progress } from "@refineui/react";
+```
+
+## 기본 사용
+
+```tsx
+<Progress value={45} max={100} />
+```
 
 ## Preview
 
@@ -17,5 +29,23 @@ import ProgressPreview from "../../../components/ProgressPreview";
 
 ## Props
 
-- `value` — 0~100 진행률
-- `variant` — default | success | danger
+| Prop | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `value` | `number` | (필수) | 현재 값 |
+| `max` | `number` | `100` | 최대값 |
+| `size` | `"sm"` \| `"lg"` | `"sm"` | 트랙 높이 (2px / 4px) |
+
+채움 색은 Web Kit과 동일하게 `primaryBlack` 한 가지입니다.
+
+## 예시
+
+### 퍼센트 표시와 함께
+
+진행률 숫자는 컴포넌트 밖에서 레이아웃합니다.
+
+```tsx
+<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+  <Progress value={72} style={{ flex: 1 }} />
+  <span>72%</span>
+</div>
+```
