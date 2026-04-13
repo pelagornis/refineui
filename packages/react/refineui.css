@@ -20,8 +20,8 @@
   --refineui-btn-primary-pressed: var(--refineui-color-alias-background-brand-active);
 }
 
-/* Dark mode — set data-theme="dark" on html/body to enable */
-[data-theme="dark"] {
+/* Dark mode — supports data-theme or .dark on ancestor */
+[data-theme="dark"], .dark {
   --refineui-focus-color: var(--refineui-color-neutral-white);
   --refineui-bg: var(--refineui-color-neutral-900);
   --refineui-text: var(--refineui-color-neutral-250);
@@ -377,35 +377,38 @@ label:focus-within:not(:active) [data-refineui="checkbox"][data-checked="true"]:
 }
 
 /* Link — Web Kit `226:158` (Default / Hover / Focus / Pressed / Disabled) */
-[data-refineui="link"] {
+a[data-refineui="link"] {
   transition: color 0.15s ease, text-decoration-color 0.15s ease;
 }
-[data-refineui="link"] {
-  color: #3e68ff; /* colors.blue700 — foregroundlink */
+a[data-refineui="link"]:not(.page-btn):not(.page-btn-primary):not(.page-github-btn) {
+  color: var(--refineui-color-alias-foreground-link) !important;
   text-decoration: none;
 }
-[data-refineui="link"]:hover:not([aria-disabled="true"]) {
-  color: #2351f7 !important; /* blue800 — foregroundlinkhover */
+a[data-refineui="link"]:visited:not([aria-disabled="true"]):not(.page-btn):not(.page-btn-primary):not(.page-github-btn) {
+  color: var(--refineui-color-alias-foreground-link-visited) !important;
+}
+a[data-refineui="link"]:hover:not([aria-disabled="true"]):not(.page-btn):not(.page-btn-primary):not(.page-github-btn) {
+  color: var(--refineui-color-alias-foreground-link-hover) !important;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-[data-refineui="link"]:focus-visible:not([aria-disabled="true"]) {
-  color: #1d44ce !important; /* blue900 — foregroundlinkactive */
+a[data-refineui="link"]:focus-visible:not([aria-disabled="true"]):not(.page-btn):not(.page-btn-primary):not(.page-github-btn) {
+  color: var(--refineui-color-alias-foreground-link-active) !important;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-[data-refineui="link"]:active:not([aria-disabled="true"]) {
-  color: #7694ff !important; /* blue500 — Figma Pressed / foregroundlinkvisited */
+a[data-refineui="link"]:active:not([aria-disabled="true"]):not(.page-btn):not(.page-btn-primary):not(.page-github-btn) {
+  color: var(--refineui-color-alias-foreground-link-visited) !important;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-[data-refineui="link"][aria-disabled="true"] {
-  color: #cecece !important; /* neutral400 */
+a[data-refineui="link"][aria-disabled="true"] {
+  color: var(--refineui-color-alias-foreground-disabled) !important;
   text-decoration: none !important;
   pointer-events: none;
   cursor: not-allowed;
 }
-[data-refineui="link"]:focus-visible {
+a[data-refineui="link"]:focus-visible {
   outline: 2px solid var(--refineui-focus-color);
   outline-offset: var(--refineui-focus-offset);
 }

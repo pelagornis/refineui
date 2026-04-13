@@ -1,11 +1,20 @@
-import { useState } from "react";
-import { Drawer, Button } from "@refineui/react";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+  Button,
+} from "@refineui/react";
 import { borderRadii, colors, spacings, strokeWidths, typographys } from "@refineui/tokens";
 import PreviewFrame from "./PreviewFrame";
 
 /** Preview 안에서 본문과 구분되는 데모 무대 — Drawer 본체는 body 포털로만 렌더됨 */
 export default function DrawerDemo() {
-  const [open, setOpen] = useState(false);
   return (
     <PreviewFrame>
       <div
@@ -20,7 +29,23 @@ export default function DrawerDemo() {
           backgroundColor: colors.neutralWhite,
         }}
       >
-        <Button onClick={() => setOpen(true)}>Drawer 열기</Button>
+        <Drawer>
+          <DrawerTrigger>Drawer 열기</DrawerTrigger>
+          <DrawerContent size="small" placement="right">
+            <DrawerHeader>
+              <DrawerTitle>Drawer 제목</DrawerTitle>
+            </DrawerHeader>
+            <DrawerBody>
+              <p style={{ margin: 0 }}>Drawer Content</p>
+            </DrawerBody>
+            <DrawerFooter>
+              <DrawerClose>
+                <Button variant="outline">Cancel</Button>
+              </DrawerClose>
+              <Button>Submit</Button>
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
         <p
           style={{
             marginTop: spacings.sizeMedium,
@@ -34,9 +59,6 @@ export default function DrawerDemo() {
           또는 배경을 누르면 닫힙니다.
         </p>
       </div>
-      <Drawer open={open} onClose={() => setOpen(false)} title="Drawer 제목">
-        Drawer Content
-      </Drawer>
     </PreviewFrame>
   );
 }

@@ -121,7 +121,26 @@ export {
     type DialogTriggerProps,
 } from "./components/Dialog";
 export { Divider, type DividerProps } from "./components/Divider";
-export { Drawer, type DrawerProps } from "./components/Drawer";
+export {
+    Drawer,
+    DrawerTrigger,
+    DrawerContent,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerDescription,
+    DrawerBody,
+    DrawerFooter,
+    DrawerClose,
+    type DrawerProps,
+    type DrawerTriggerProps,
+    type DrawerContentProps,
+    type DrawerHeaderProps,
+    type DrawerTitleProps,
+    type DrawerDescriptionProps,
+    type DrawerBodyProps,
+    type DrawerFooterProps,
+    type DrawerCloseProps,
+} from "./components/Drawer";
 export { Dropdown, type DropdownProps, type DropdownItem } from "./components/Dropdown";
 export { Field, type FieldProps } from "./components/Field";
 export { Label, type LabelProps } from "./components/Label";

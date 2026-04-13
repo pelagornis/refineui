@@ -189,7 +189,7 @@ const semanticDarkLines = Object.entries(semanticColors).map(
 const cssDest = join(tokensDistDir, "css-variables.css");
 writeFileSync(
     cssDest,
-    `:root {\n${rootInner.join("\n")}\n}\n\n[data-theme="dark"] {\n${semanticDarkLines.join("\n")}\n}\n`,
+    `:root {\n${rootInner.join("\n")}\n}\n\n[data-theme="dark"], .dark {\n${semanticDarkLines.join("\n")}\n}\n`,
     "utf8",
 );
 console.log("Wrote", cssDest);
