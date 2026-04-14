@@ -5,8 +5,6 @@
 /* @refineui/tokens — 팔레트·간격·반경 등 단일 소스 */
 /* Vite는 `@refineui/tokens/...` 를 index.mjs 기준으로 붙여 깨뜨리므로, sibling 패키지는 상대 경로로 */
 @import "../tokens/dist/css-variables.css";
-
-/* RefineUI System Icons font (Accordion chevron 등) */
 @import "@refineui/web-icons/dist/fonts/refineui-system-icons.css";
 
 :root {
@@ -63,10 +61,28 @@
 [data-refineui="accordion-trigger"]:hover,
 [data-refineui="dropdown-item"]:not(:disabled):hover,
 [data-refineui="menu-item"]:not(:disabled):hover,
-[data-refineui="tab"]:hover,
 [data-refineui="calendar-nav"]:hover,
 [data-refineui="chip-remove"]:hover {
   opacity: 0.9;
+}
+
+/* Switch — MCP `270:3057` state color variables */
+[data-refineui="switch"][data-checked="false"]:not(:disabled):hover:not(:active) {
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
+}
+[data-refineui="switch"][data-checked="false"]:not(:disabled):active {
+  background-color: var(--refineui-color-alias-background-primary-active) !important;
+}
+[data-refineui="switch"][data-checked="true"]:not(:disabled):hover:not(:active) {
+  background-color: var(--refineui-color-alias-background-brand-hover) !important;
+}
+[data-refineui="switch"][data-checked="true"]:not(:disabled):active {
+  background-color: var(--refineui-color-alias-background-brand-strong) !important;
+}
+
+/* Tabs Pill — Web Kit `636:5371` · 항목은 Figma 토큰 톤 유지(전역 tab hover opacity 미적용) */
+[data-refineui="tabs"][data-variant="pill"] [data-refineui="tab"]:hover:not(:disabled) {
+  opacity: 1;
 }
 /* Calendar / Day — Web Kit `Calendar / Day` (Caption 1). Ghost 버튼과 동일 톤의 hover·pressed (`656:2958`) */
 [data-refineui="calendar-day"]:not([disabled]):not([data-inactive="true"]):not([data-selected]):not([data-range-middle]):hover:not(:active) {
@@ -215,7 +231,7 @@
   transition: border-color 0.15s, background-color 0.15s;
 }
 [data-refineui="spinbutton"]:focus-within:not([data-disabled="true"]) {
-  border-color: #333333 !important;
+  border-color: var(--refineui-color-alias-border-focus) !important;
 }
 [data-refineui="spinbutton-step"]:focus-visible {
   outline: none;
@@ -226,17 +242,29 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
-/* Input, Textarea, Select */
-[data-refineui="input"],
+/* Textarea, Select */
 [data-refineui="textarea"],
 [data-refineui="select"] {
   transition: border-color 0.15s, box-shadow 0.15s;
 }
-[data-refineui="input"]:focus:not(:disabled),
 [data-refineui="textarea"]:focus:not(:disabled),
 [data-refineui="select"]:focus:not(:disabled) {
   border-color: var(--refineui-focus-color) !important;
   box-shadow: 0 0 0 1px var(--refineui-focus-color);
+}
+
+/* Input — MCP `518:7373` Focus state */
+[data-refineui="input"] {
+  transition: border-color 0.15s;
+}
+[data-refineui="input"]:focus:not(:disabled):not([data-error="true"]):not([data-success="true"]) {
+  border-color: var(--refineui-color-alias-border-focus) !important;
+}
+[data-refineui="input"][data-error="true"]:focus:not(:disabled) {
+  border-color: var(--refineui-color-alias-background-error-hover) !important;
+}
+[data-refineui="input"][data-success="true"]:focus:not(:disabled) {
+  border-color: var(--refineui-color-alias-background-success-hover) !important;
 }
 [data-refineui="input"]::placeholder,
 [data-refineui="textarea"]::placeholder,
@@ -250,18 +278,251 @@
   opacity: 1;
 }
 
-/* Skeleton — Web Kit COMPONENT_SET `Skeleton` `570:6175` (펄스; Figma Shimmer 마스크는 단순화) */
-@keyframes refineui-skeleton-pulse {
-  0%,
-  100% {
+/* Toast — Sonner-like `<ol>/<li>` 스택 + `ol` 호버 시 전체 세로 펼침 (카드 스펙은 Web Kit `548:655`) */
+[data-refineui="toaster"] {
+  --refineui-toaster-inset: var(--refineui-spacing-size-large);
+  --refineui-toaster-safe-top: env(safe-area-inset-top, 0px);
+  --refineui-toaster-safe-right: env(safe-area-inset-right, 0px);
+  --refineui-toaster-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --refineui-toaster-safe-left: env(safe-area-inset-left, 0px);
+  position: fixed;
+  /* fixed 가로 기준은 뷰포트; 노치 좌우는 env + 인셋 반영 */
+  width: min(
+    calc(
+      100% - var(--refineui-toaster-safe-left) - var(--refineui-toaster-safe-right) - 2 * var(--refineui-toaster-inset)
+    ),
+    var(--refineui-size-toast-max-width)
+  );
+  max-width: var(--refineui-size-toast-max-width);
+  z-index: var(--refineui-z-messages);
+  box-sizing: border-box;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+  /* 자식이 `position:absolute`라 높이 0이 되지 않게 — 접힌/펼침 스택 높이로 호버 영역 확보 */
+  min-height: var(--refineui-toast-collapsed-stack-height, var(--refineui-toast-front-height, 0px));
+  transition: min-height 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 480px) {
+  [data-refineui="toaster"] {
+    --refineui-toaster-inset: var(--refineui-spacing-size-medium);
+  }
+}
+
+[data-refineui="toaster"][data-position="top-left"] {
+  left: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-left));
+  right: auto;
+  top: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-top));
+  bottom: auto;
+  transform: none;
+}
+
+[data-refineui="toaster"][data-position="top-center"] {
+  left: 50%;
+  right: auto;
+  top: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-top));
+  bottom: auto;
+  transform: translateX(-50%);
+}
+
+[data-refineui="toaster"][data-position="top-right"] {
+  left: auto;
+  right: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-right));
+  top: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-top));
+  bottom: auto;
+  transform: none;
+}
+
+[data-refineui="toaster"][data-position="bottom-left"] {
+  left: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-left));
+  right: auto;
+  top: auto;
+  bottom: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-bottom));
+  transform: none;
+}
+
+[data-refineui="toaster"][data-position="bottom-center"] {
+  left: 50%;
+  right: auto;
+  top: auto;
+  bottom: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-bottom));
+  transform: translateX(-50%);
+}
+
+[data-refineui="toaster"][data-position="bottom-right"] {
+  left: auto;
+  right: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-right));
+  top: auto;
+  bottom: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-bottom));
+  transform: none;
+}
+
+/*
+ * `ol`에 `pointer-events: none`이면 포인터는 li 밖(카드·카드 사이)으로 통과해 페이지로 가고,
+ * `ol:hover`가 풀려 접힘처럼 보임. 투명 히트층은 `pointer-events: auto`로 빈 구간도 호버 유지(z-index는 li보다 아래).
+ */
+[data-refineui="toaster"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-refineui="toaster"]:hover {
+    min-height: var(--refineui-toast-expanded-stack-height, var(--refineui-toast-collapsed-stack-height, 0px));
+  }
+}
+
+[data-refineui="toast-item"] {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: auto;
+  overflow: visible;
+  pointer-events: auto;
+  transform: translateY(var(--refineui-toast-offset-collapsed, 0px));
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1), height 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: var(--refineui-toast-z-index, 100);
+}
+
+/*
+ * 하단 앵커: `li` 높이는 접힘 시 뒤 카드가 앞 카드 높이만큼만 받지만, 블록 흐름은 위→아래라
+ * 긴 본문이 아래로 넘쳐 앞(뷰포트 쪽) 토스트와 겹친다. flex-end로 카드를 슬롯 **아래**에 붙여 넘침을 위로 보냄.
+ */
+[data-refineui="toaster"][data-position^="bottom"] [data-refineui="toast-item"] {
+  top: auto;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transform: translateY(calc(-1 * var(--refineui-toast-offset-collapsed, 0px)));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-refineui="toaster"]:hover [data-refineui="toast-item"] {
+    transform: translateY(var(--refineui-toast-offset-expanded, 0px));
+  }
+
+  [data-refineui="toaster"][data-position^="bottom"]:hover [data-refineui="toast-item"] {
+    transform: translateY(calc(-1 * var(--refineui-toast-offset-expanded, 0px)));
+  }
+}
+
+/*
+ * 스택용 scale/opacity는 카드 밖 래퍼에만 둠.
+ * 카드에 `position:absolute; inset:0`을 주면 `li`도 absolute라 자식이 플로우에서 빠져 높이 0 → 측정·레이아웃 붕괴.
+ */
+[data-refineui="toast-scale-layer"] {
+  --refineui-toast-stack-opacity-step: 0.12;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  transform: scale(calc(1 - (var(--refineui-toast-stack-index, 0) * 0.018)));
+  transform-origin: top center;
+  opacity: calc(1 - (var(--refineui-toast-stack-index, 0) * var(--refineui-toast-stack-opacity-step)));
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1), opacity 240ms ease;
+}
+
+[data-refineui="toaster"][data-position^="bottom"] [data-refineui="toast-scale-layer"] {
+  transform-origin: bottom center;
+  flex-shrink: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-refineui="toaster"]:hover [data-refineui="toast-scale-layer"] {
+    transform: scale(1);
     opacity: 1;
   }
-  50% {
-    opacity: 0.5;
+}
+
+/* 모바일·터치: 호버 펼침 불가 → 항상 펼친 세로 간격·풀 스케일(기본 규칙보다 뒤 + 구체적 선택자) */
+@media (hover: none), (pointer: coarse) {
+  [data-refineui="toaster"] {
+    min-height: var(--refineui-toast-expanded-stack-height, var(--refineui-toast-collapsed-stack-height, 0px));
+  }
+
+  [data-refineui="toaster"] [data-refineui="toast-item"] {
+    transform: translateY(var(--refineui-toast-offset-expanded, 0px));
+  }
+
+  [data-refineui="toaster"][data-position^="bottom"] [data-refineui="toast-item"] {
+    transform: translateY(calc(-1 * var(--refineui-toast-offset-expanded, 0px)));
+  }
+
+  [data-refineui="toaster"] [data-refineui="toast-scale-layer"] {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+[data-refineui="toast"] {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  touch-action: manipulation;
+}
+
+@media (max-width: 480px) {
+  [data-refineui="toast"][data-variant] {
+    padding: var(--refineui-spacing-size-medium);
+    gap: var(--refineui-spacing-size-small);
+  }
+}
+
+[data-refineui="toast"][data-stack-state="entering"],
+[data-refineui="toast"][data-stack-state="leaving"] {
+  opacity: 0;
+}
+
+/* Toast — Web Kit `548:655` Focused: border strong + 2px stroke (유틸 `border-refineui-thin`보다 우선) */
+[data-refineui="toast"]:focus-within {
+  border-color: var(--refineui-color-alias-border-strong) !important;
+  border-width: var(--refineui-stroke-width-thick) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-refineui="toaster"],
+  [data-refineui="toast-item"],
+  [data-refineui="toast-scale-layer"] {
+    transition-duration: 0.01ms;
+  }
+}
+
+/* Skeleton — Web Kit `570:6175` (MCP Mask: 90deg, 0%→22.5%→32.5%→50% 투명; 하이라이트 alias.backgroundPrimary; 베이스 alias.backgroundBrandSubtle) */
+@keyframes refineui-skeleton-shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
   }
 }
 [data-refineui="skeleton"] {
-  animation: refineui-skeleton-pulse 1.5s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--refineui-color-alias-background-brand-subtle);
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--refineui-color-alias-background-primary) 22.5%,
+    var(--refineui-color-alias-background-primary) 32.5%,
+    transparent 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: refineui-skeleton-shimmer 1.5s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-refineui="skeleton"] {
+    animation: none;
+    background-image: none;
+  }
 }
 
 /* Spinner — Web Kit COMPONENT_SET `Spinner` `550:3669` */
@@ -558,13 +819,19 @@ a[data-refineui="link"]:focus-visible {
   border-color: #333333 !important;
 }
 
-/* Slider — Web Kit `526:1556` (레일 neutral200, 채움 primaryBlack, 썸 16×16; sm/md) */
+/* Slider — Web Kit `526:1556` + Slider/Item (alias 색만; sm/md) */
 [data-refineui="slider"] {
   -webkit-appearance: none;
   appearance: none;
   outline: none !important;
   background: transparent;
   box-sizing: border-box;
+  --refineui-slider-rail: var(--refineui-color-alias-background-brand-subtle);
+  --refineui-slider-fill-color: var(--refineui-color-alias-background-brand);
+}
+[data-refineui="slider"]:disabled {
+  --refineui-slider-fill-color: var(--refineui-color-alias-foreground-disabled);
+  cursor: not-allowed;
 }
 [data-refineui="slider"]:focus {
   outline: none !important;
@@ -574,10 +841,10 @@ a[data-refineui="link"]:focus-visible {
   border-radius: 2px;
   background: linear-gradient(
     to right,
-    #212121 0%,
-    #212121 var(--refineui-slider-fill, 0%),
-    #ebebeb var(--refineui-slider-fill, 0%),
-    #ebebeb 100%
+    var(--refineui-slider-fill-color) 0%,
+    var(--refineui-slider-fill-color) var(--refineui-slider-fill, 0%),
+    var(--refineui-slider-rail) var(--refineui-slider-fill, 0%),
+    var(--refineui-slider-rail) 100%
   );
 }
 [data-refineui="slider"][data-size="sm"]::-webkit-slider-runnable-track {
@@ -585,20 +852,28 @@ a[data-refineui="link"]:focus-visible {
   border-radius: 2px;
   background: linear-gradient(
     to right,
-    #212121 0%,
-    #212121 var(--refineui-slider-fill, 0%),
-    #ebebeb var(--refineui-slider-fill, 0%),
-    #ebebeb 100%
+    var(--refineui-slider-fill-color) 0%,
+    var(--refineui-slider-fill-color) var(--refineui-slider-fill, 0%),
+    var(--refineui-slider-rail) var(--refineui-slider-fill, 0%),
+    var(--refineui-slider-rail) 100%
   );
 }
+/* Slider / Item — MCP Thumb `526:1740` 등: 흰 링=border(backgroundPrimary), 얇은 외곽+소프트 섀도우(Foundation elevation) */
 [data-refineui="slider"]::-webkit-slider-thumb {
   -webkit-appearance: none;
+  box-sizing: border-box;
   width: 16px;
   height: 16px;
   border-radius: 9999px;
-  background: #212121;
+  border: 2px solid var(--refineui-color-alias-background-primary);
+  background-color: var(--refineui-color-alias-background-brand);
+  background-clip: padding-box;
+  /* strokeWidthThin: 바깥 1px borderDefault + 에셋과 유사한 소프트 헤일(--refineui-elevation-2lighter, var 값에 콤마 포함) */
+  box-shadow:
+    0 0 0 1px var(--refineui-color-alias-border-default),
+    var(--refineui-elevation-2lighter);
   cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
+  transition: box-shadow 0.15s, background-color 0.15s, border-color 0.15s;
 }
 [data-refineui="slider"][data-size="md"]::-webkit-slider-thumb {
   margin-top: -6px;
@@ -606,46 +881,79 @@ a[data-refineui="link"]:focus-visible {
 [data-refineui="slider"][data-size="sm"]::-webkit-slider-thumb {
   margin-top: -7px;
 }
-[data-refineui="slider"]::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
-  box-shadow: 0 0 0 2px var(--refineui-focus-color);
+[data-refineui="slider"]:not(:disabled)::-webkit-slider-thumb:hover {
+  background-color: var(--refineui-color-alias-background-brand-hover);
+  border-color: var(--refineui-color-alias-background-primary);
+  box-shadow:
+    0 0 0 2px var(--refineui-color-alias-border-strong),
+    var(--refineui-elevation-2);
 }
-[data-refineui="slider"]:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 2px var(--refineui-focus-color);
+[data-refineui="slider"]:focus:not(:disabled)::-webkit-slider-thumb {
+  background-color: var(--refineui-color-alias-background-brand-active);
+  border-color: var(--refineui-color-alias-background-primary);
+  box-shadow:
+    0 0 0 2px var(--refineui-color-alias-border-default),
+    var(--refineui-elevation-2light);
+}
+[data-refineui="slider"]:disabled::-webkit-slider-thumb {
+  background-color: var(--refineui-color-alias-background-brand-disabled);
+  border-color: var(--refineui-color-alias-background-primary);
+  box-shadow:
+    0 0 0 2px var(--refineui-color-alias-border-disabled),
+    var(--refineui-elevation-2lighter);
 }
 [data-refineui="slider"][data-size="md"]::-moz-range-track {
   height: 4px;
   border-radius: 2px;
-  background: #ebebeb;
+  background: var(--refineui-slider-rail);
 }
 [data-refineui="slider"][data-size="md"]::-moz-range-progress {
   height: 4px;
   border-radius: 2px;
-  background: #212121;
+  background: var(--refineui-slider-fill-color);
 }
 [data-refineui="slider"][data-size="sm"]::-moz-range-track {
   height: 2px;
   border-radius: 2px;
-  background: #ebebeb;
+  background: var(--refineui-slider-rail);
 }
 [data-refineui="slider"][data-size="sm"]::-moz-range-progress {
   height: 2px;
   border-radius: 2px;
-  background: #212121;
+  background: var(--refineui-slider-fill-color);
 }
 [data-refineui="slider"]::-moz-range-thumb {
+  box-sizing: border-box;
   width: 16px;
   height: 16px;
-  border: none;
+  border: 2px solid var(--refineui-color-alias-background-primary);
   border-radius: 9999px;
-  background: #212121;
+  background-color: var(--refineui-color-alias-background-brand);
+  background-clip: padding-box;
+  box-shadow:
+    0 0 0 1px var(--refineui-color-alias-border-default),
+    var(--refineui-elevation-2lighter);
   cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
+  transition: box-shadow 0.15s, background-color 0.15s, border-color 0.15s;
 }
-[data-refineui="slider"]::-moz-range-thumb:hover {
-  transform: scale(1.15);
-  box-shadow: 0 0 0 2px var(--refineui-focus-color);
+[data-refineui="slider"]:not(:disabled)::-moz-range-thumb:hover {
+  background-color: var(--refineui-color-alias-background-brand-hover);
+  border-color: var(--refineui-color-alias-background-primary);
+  box-shadow:
+    0 0 0 2px var(--refineui-color-alias-border-strong),
+    var(--refineui-elevation-2);
 }
-[data-refineui="slider"]:focus::-moz-range-thumb {
-  box-shadow: 0 0 0 2px var(--refineui-focus-color);
+[data-refineui="slider"]:focus:not(:disabled)::-moz-range-thumb {
+  background-color: var(--refineui-color-alias-background-brand-active);
+  border-color: var(--refineui-color-alias-background-primary);
+  box-shadow:
+    0 0 0 2px var(--refineui-color-alias-border-default),
+    var(--refineui-elevation-2light);
+}
+[data-refineui="slider"]:disabled::-moz-range-thumb {
+  background-color: var(--refineui-color-alias-background-brand-disabled);
+  border-color: var(--refineui-color-alias-background-primary);
+  box-shadow:
+    0 0 0 2px var(--refineui-color-alias-border-disabled),
+    var(--refineui-elevation-2lighter);
 }

@@ -99,7 +99,7 @@ export function Tabs({ items, defaultTab, onChange, className, ...props }: TabsP
             <div
                 role="tablist"
                 aria-orientation="horizontal"
-                className="mb-refineui-size-medium box-border inline-flex max-w-full w-fit flex-wrap items-stretch gap-refineui-size-medium rounded-refineui-large border-refineui-thin border-refineui-neutral-300 bg-refineui-neutral-100 p-refineui-size-small"
+                className="mb-refineui-size-medium box-border inline-flex max-w-full w-fit flex-wrap items-stretch gap-refineui-size-medium rounded-refineui-large border-refineui-thin border-refineui-alias-border-default bg-refineui-alias-background-primary-active p-refineui-size-small"
             >
                 {items.map((item, index) => {
                     const selected = active === item.id;
@@ -125,10 +125,10 @@ export function Tabs({ items, defaultTab, onChange, className, ...props }: TabsP
                             className={clsx(
                                 "refineui-typo-body-1 min-w-0 flex-[0_1_auto] rounded-refineui-large border-none px-refineui-size-medium py-refineui-size-small",
                                 disabled
-                                    ? "cursor-not-allowed text-refineui-neutral-400"
-                                    : "cursor-pointer text-refineui-primary-black",
-                                selected && !disabled && "bg-refineui-neutral-white shadow-refineui-2light",
-                                selected && disabled && "bg-refineui-neutral-150",
+                                    ? "cursor-not-allowed text-refineui-alias-foreground-disabled"
+                                    : "cursor-pointer text-refineui-alias-foreground-primary",
+                                selected && !disabled && "bg-refineui-alias-background-primary shadow-refineui-2light",
+                                selected && disabled && "bg-refineui-alias-background-surface-disabled",
                                 !selected && "bg-transparent",
                             )}
                         >

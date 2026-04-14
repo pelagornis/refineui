@@ -151,5 +151,15 @@ export { PopOver, type PopOverProps } from "./components/PopOver";
 export { Skeleton, type SkeletonProps } from "./components/Skeleton";
 export { Slider, type SliderProps } from "./components/Slider";
 export { SpinButton, type SpinButtonProps } from "./components/SpinButton";
-export { Toast, type ToastProps, type ToastVariant } from "./components/Toast";
+export {
+    Toast,
+    Toaster,
+    toast,
+    dismissToast,
+    type ToastProps,
+    type ToastVariant,
+    type ToastPosition,
+    type ToastOptions,
+    type ToasterProps,
+} from "./components/Toast";
 export { Tooltip, type TooltipProps, type TooltipVariant } from "./components/Tooltip";

@@ -110,8 +110,8 @@ export function SpinButton({
     const atMin = min !== undefined && value <= min;
 
     const borderClass = disabled
-        ? "border-refineui-thin border-refineui-neutral-250"
-        : "border-refineui-thin border-refineui-neutral-300";
+        ? "border-refineui-thin border-refineui-alias-border-disabled"
+        : "border-refineui-thin border-refineui-alias-border-default";
 
     return (
         <div
@@ -124,7 +124,7 @@ export function SpinButton({
             className={clsx(
                 "box-border inline-flex items-stretch overflow-hidden outline-none",
                 borderClass,
-                disabled ? "bg-refineui-neutral-150" : "bg-refineui-neutral-white",
+                disabled ? "bg-refineui-alias-background-surface-disabled" : "bg-refineui-alias-background-primary",
                 shellClass[size],
                 className,
             )}
@@ -137,8 +137,8 @@ export function SpinButton({
                 className={clsx(
                     "flex min-w-refineui-spin-value-min-width flex-[1_1_auto] items-center pl-refineui-spin-field-padding-inline-start pr-refineui-size-small",
                     valueTypo[size],
-                    disabled ? "text-refineui-neutral-400" : "text-refineui-primary-black",
-                    disabled ? "bg-refineui-neutral-150" : "bg-refineui-neutral-white",
+                    disabled ? "text-refineui-alias-foreground-disabled" : "text-refineui-alias-foreground-primary",
+                    disabled ? "bg-refineui-alias-background-surface-disabled" : "bg-refineui-alias-background-primary",
                 )}
             >
                 {value}
@@ -146,7 +146,9 @@ export function SpinButton({
             <div
                 className={clsx(
                     "flex w-refineui-spin-stepper-width shrink-0 flex-col border-l border-refineui-thin",
-                    disabled ? "border-refineui-neutral-250 bg-refineui-neutral-150" : "border-refineui-neutral-300 bg-refineui-neutral-white",
+                    disabled
+                        ? "border-refineui-alias-border-disabled bg-refineui-alias-background-surface-disabled"
+                        : "border-refineui-alias-border-default bg-refineui-alias-background-primary",
                 )}
             >
                 <button
@@ -156,11 +158,11 @@ export function SpinButton({
                     onClick={inc}
                     disabled={disabled || atMax}
                     className={clsx(
-                        "flex w-refineui-spin-stepper-width items-center justify-center border-none p-0 text-refineui-primary-black",
+                        "flex w-refineui-spin-stepper-width items-center justify-center border-none p-0 text-refineui-alias-foreground-placeholder",
                         stepHeight[size],
                         disabled || atMax
-                            ? "cursor-not-allowed bg-refineui-neutral-150 opacity-50"
-                            : "cursor-pointer bg-refineui-neutral-white opacity-100",
+                            ? "cursor-not-allowed bg-refineui-alias-background-surface-disabled opacity-50"
+                            : "cursor-pointer bg-refineui-alias-background-primary opacity-100",
                     )}
                 >
                     <WebIcon name="chevron-up" size={iconSizes.xxsmall} color="currentColor" fallback="▲" />
@@ -172,12 +174,12 @@ export function SpinButton({
                     onClick={dec}
                     disabled={disabled || atMin}
                     className={clsx(
-                        "flex w-refineui-spin-stepper-width items-center justify-center border-none border-t border-refineui-thin p-0 text-refineui-primary-black",
-                        disabled ? "border-refineui-neutral-250" : "border-refineui-neutral-300",
+                        "flex w-refineui-spin-stepper-width items-center justify-center border-none border-t border-refineui-thin p-0 text-refineui-alias-foreground-placeholder",
+                        disabled ? "border-refineui-alias-border-disabled" : "border-refineui-alias-border-default",
                         stepHeight[size],
                         disabled || atMin
-                            ? "cursor-not-allowed bg-refineui-neutral-150 opacity-50"
-                            : "cursor-pointer bg-refineui-neutral-white opacity-100",
+                            ? "cursor-not-allowed bg-refineui-alias-background-surface-disabled opacity-50"
+                            : "cursor-pointer bg-refineui-alias-background-primary opacity-100",
                     )}
                 >
                     <WebIcon name="chevron-down" size={iconSizes.xxsmall} color="currentColor" fallback="▼" />

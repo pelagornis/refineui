@@ -20,6 +20,13 @@ export default defineConfig({
       plugins: [],
       head: [
         {
+          tag: 'meta',
+          attrs: {
+            name: 'viewport',
+            content: 'width=device-width, initial-scale=1, viewport-fit=cover',
+          },
+        },
+        {
           tag: 'link',
           attrs: {
             rel: 'preconnect',

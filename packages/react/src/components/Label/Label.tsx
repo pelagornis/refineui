@@ -33,14 +33,19 @@ export function Label({
             className={clsx(
                 "mb-refineui-size-xsmall block",
                 sizeTypo[size],
-                disabled ? "text-refineui-neutral-400" : "text-refineui-primary-black",
+                disabled
+                    ? "text-refineui-alias-foreground-disabled"
+                    : "text-refineui-alias-foreground-primary",
                 className,
             )}
             {...props}
         >
             {children}
             {required && (
-                <span className="ml-refineui-size-xxsmall text-refineui-red-700" aria-hidden>
+                <span
+                    className="ml-refineui-size-xxsmall text-refineui-alias-foreground-error"
+                    aria-hidden
+                >
                     *
                 </span>
             )}

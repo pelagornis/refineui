@@ -24,12 +24,12 @@ export function Toggle({
             role="switch"
             aria-checked={checked}
             className={clsx(
-                "box-border flex w-refineui-switch-width items-center rounded-refineui-circle border-none p-refineui-switch-padding transition-colors duration-200",
+                "box-border flex w-refineui-switch-width items-center rounded-refineui-xlarge border-none p-refineui-switch-padding transition-colors duration-200",
                 disabled
-                    ? "cursor-not-allowed bg-refineui-neutral-250"
+                    ? "cursor-not-allowed bg-refineui-alias-background-brand-disabled"
                     : checked
-                      ? "cursor-pointer bg-refineui-primary-black"
-                      : "cursor-pointer bg-refineui-neutral-300",
+                      ? "cursor-pointer bg-refineui-alias-background-brand"
+                      : "cursor-pointer bg-refineui-alias-background-primary-active",
                 className,
             )}
             onClick={(e) => {
@@ -41,8 +41,8 @@ export function Toggle({
         >
             <span
                 className={clsx(
-                    "block h-refineui-switch-thumb w-refineui-switch-thumb rounded-refineui-circle transition-[transform,background-color] duration-200",
-                    disabled ? "bg-refineui-neutral-500" : "bg-refineui-neutral-white",
+                    "block h-refineui-switch-thumb w-refineui-switch-thumb rounded-refineui-xlarge transition-[transform,background-color] duration-200",
+                    disabled ? "bg-refineui-alias-background-brand-subtle" : "bg-refineui-alias-background-primary",
                 )}
                 style={{
                     transform: checked ? `translateX(${componentSizes.switchThumb})` : "translateX(0)",

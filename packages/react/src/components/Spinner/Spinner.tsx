@@ -52,14 +52,14 @@ export function Spinner({
             data-refineui="spinner"
             data-size={size}
             className={clsx(
-                "box-border rounded-refineui-circle border-solid border-refineui-neutral-200 border-t-refineui-primary-black",
+                "box-border rounded-refineui-circle border-solid border-refineui-alias-background-brand-subtle border-t-refineui-alias-background-brand",
                 spinnerRingClass[size],
             )}
             aria-hidden={hasLabel ? true : undefined}
         />
     );
 
-    const labelEl = <span className={clsx(labelTypo[size], "text-refineui-primary-black")}>{label}</span>;
+    const labelEl = <span className={clsx(labelTypo[size], "text-refineui-alias-foreground-primary")}>{label}</span>;
 
     if (!hasLabel) {
         return (

@@ -291,10 +291,10 @@ Figma에는 **Section Header**, **Divider**, **아이콘·단축키** 열이 있
 
 | 속성 | 값 |
 |------|-----|
-| **배경** | `neutral200` |
+| **배경** | `alias.backgroundBrandSubtle` (Shimmer Color) |
 | **모양** | `shape` `rectangle` → `roundedLarge`; `circle` → `roundedCircle` |
 | **기본 높이** | `componentSizes.skeletonDefaultHeight` (20px) — 사각은 너비 기본 `100%`, 원은 한 변만 주면 정사각 |
-| **애니메이션** | 펄스 — **`refineui.css`** `[data-refineui="skeleton"]` (Figma Shimmer 그라데이션은 미구현) |
+| **쉬머** | MCP Mask(`570:6320`): `90deg` — `transparent 0%` → `alias.backgroundPrimary` `22.5%`–`32.5%` → `transparent 50%` — **`refineui.css`** `refineui-skeleton-shimmer`; `prefers-reduced-motion` 시 정지 |
 
 ---
 
@@ -303,9 +303,9 @@ Figma에는 **Section Header**, **Divider**, **아이콘·단축키** 열이 있
 | 속성 | 값 |
 |------|-----|
 | **size** | `sm` — 레일 높이 `componentSizes.sliderTrackHeightSm` (2px); `md`(기본) — `componentSizes.sliderTrackHeightMd` (4px) |
-| **레일(비채움)** | `neutral200` — `borderRadii.roundedXSmall` (2px) |
-| **채움** | `primaryBlack` |
-| **썸** | 16×16, `roundedCircle` — **`refineui.css`** `[data-refineui="slider"]` |
+| **레일(비채움)** | `alias.backgroundBrandSubtle` — `borderRadii.roundedXSmall` (2px) |
+| **채움** | `alias.backgroundBrand` — **disabled** 시 `alias.foregroundDisabled` (Track-fill) |
+| **썸 (Slider / Item)** | COMPONENT_SET 노드별 MCP 변수 — 16×16 `roundedCircle` (**`refineui.css`**): 공통 흰 링 `alias.backgroundPrimary` + 바깥 링 — **Default** `526:1739` 중심 `alias.backgroundBrand`, 링 `alias.borderDefault`(얇음); **Hover** `526:1714` 중심 `alias.backgroundBrandHover`, 링 `alias.borderStrong`; **Focus** `526:1718` 중심 `alias.backgroundBrandActive`, 링 `alias.borderDefault`; **Disabled** `526:1840` 중심 `alias.backgroundBrandDisabled`, 링 `alias.borderDisabled` |
 | **터치 영역** | 입력 높이 `componentSizes.sliderInteractionHeight` (24px) |
 
 WebKit 계열은 `--refineui-slider-fill`(0–100%)로 레일 그라데이션을 맞추고, Firefox는 `::-moz-range-progress`로 채움을 처리한다.
@@ -325,9 +325,9 @@ WebKit 계열은 `--refineui-slider-fill`(0–100%)로 레일 그라데이션을
 
 | 상태 | 스타일 |
 |------|--------|
-| **기본** | 배경 `neutralWhite`, 테두리 `strokeWidthThin` `neutral300`, 글자 `primaryBlack` |
-| **포커스(포함 영역)** | 테두리 `neutral750` — **`refineui.css`** `[data-refineui="spinbutton"]:focus-within` |
-| **disabled** | 배경 `neutral150`, 테두리 `neutral250`, 글자 `neutral400`; Stepper는 `opacity` 0.5 |
+| **기본** | 배경 `alias.backgroundPrimary`, 테두리 `strokeWidthThin` `alias.borderDefault`, 글자 `alias.foregroundPrimary` |
+| **포커스(포함 영역)** | 테두리 `alias.borderFocus` — **`refineui.css`** `[data-refineui="spinbutton"]:focus-within` |
+| **disabled** | 배경 `alias.backgroundSurfaceDisabled`, 테두리 `alias.borderDisabled`, 글자 `alias.foregroundDisabled`; Stepper는 `opacity` 0.5 |
 
 ---
 
@@ -344,8 +344,8 @@ WebKit 계열은 `--refineui-slider-fill`(0–100%)로 레일 그라데이션을
 
 | 속성 | 값 |
 |------|-----|
-| **트랙** | `neutral200` |
-| **강조(회전 구간)** | `primaryBlack` — CSS `border-top-color` + 회전 |
+| **트랙** | `alias.backgroundBrandSubtle` (`#e6e6e6`) |
+| **강조(회전 구간)** | `alias.backgroundBrand` (`#212121`) — CSS `border-top-color` + 회전 |
 | **라벨·아이콘 간격** | `sizeSmall` (6px) |
 | **`labelPosition`** | `left` \| `right`(Figma 기본) \| `top` \| `bottom` |
 | **애니메이션** | **`refineui.css`** `[data-refineui="spinner"]` `refineui-spin` 0.8s linear infinite |
@@ -454,13 +454,13 @@ Figma에는 라벨 옆 **Info** 아이콘·슬롯별 검증 아이콘이 있으�
 |------|-----|
 | **트랙(전체)** | `componentSizes.switchWidth` (44px) × `componentSizes.switchHeight` (24px); 내부 트랙 영역 40×20 |
 | **패딩** | `componentSizes.switchPadding` (2px) |
-| **모서리** | `roundedCircle` |
-| **썸** | `componentSizes.switchThumb` (20×20), `roundedCircle`, 기본 `neutralWhite` |
-| **트랙 배경(켜짐)** | `primaryBlack` |
-| **트랙 배경(꺼짐)** | `neutral300` |
-| **disabled 트랙** | `neutral250` |
-| **disabled 썸** | `neutral500` |
-| **hover / pressed** | **`refineui.css`** `[data-refineui="switch"]` — `data-checked`에 따라 `neutral350`·`neutral700`(hover), `neutral400`·`neutral750`(active) |
+| **모서리** | `roundedXLarge` (12px) |
+| **썸** | `componentSizes.switchThumb` (20×20), `roundedXLarge` (12px), 기본 `alias.backgroundPrimary` (`#ffffff`) |
+| **트랙 배경(켜짐)** | `alias.backgroundBrand` (`#212121`) |
+| **트랙 배경(꺼짐)** | `alias.backgroundPrimaryActive` (`#f0f0f0`) |
+| **disabled 트랙** | `alias.backgroundBrandDisabled` (`#f0f0f0`) |
+| **disabled 썸** | `alias.backgroundBrandSubtle` (`#e6e6e6`) |
+| **hover / pressed** | **`refineui.css`** `[data-refineui="switch"]` — OFF: `alias.backgroundPrimaryHover` / `alias.backgroundPrimaryActive`; ON: `alias.backgroundBrandHover` / `alias.backgroundBrandStrong` |
 
 `packages/react`의 `Switch`는 `Toggle`과 동일 구현이다.
 
@@ -470,12 +470,12 @@ Figma에는 라벨 옆 **Info** 아이콘·슬롯별 검증 아이콘이 있으�
 
 | 속성 | `variant="pill"` | `variant="underline"` |
 |------|------------------|------------------------|
-| **탭 바(래퍼)** | 배경 `neutral100`, 테두리 `strokeWidthThin` `neutral300`, 패딩 `sizeSmall`, 항목 간격 `sizeMedium`, 모서리 `roundedLarge` | 배경 투명, 하단 구분선 `strokeWidthThick` `neutral200` |
+| **탭 바(래퍼)** | 배경 **`alias.backgroundPrimaryActive`** (Figma `Background/Primary/Active` · MCP `#f0f0f0`), 테두리 `strokeWidthThin` **`alias.borderDefault`**, 패딩 `sizeSmall`, 항목 간격 `sizeMedium`, 모서리 `roundedLarge` | 배경 투명, 하단 구분선 `strokeWidthThick` `neutral200` |
 | **항목 패딩** | `sizeSmall` `sizeMedium` (6px 10px) | 동일 |
 | **타이포** | `body1` | 동일 |
-| **선택됨** | 배경 `neutralWhite`, `shadows.shadow2Light`, 모서리 `roundedLarge` | 하단 `strokeWidthThick` `primaryBlack` |
-| **비선택(활성)** | 글자 `primaryBlack`, 배경 투명 | 글자 `primaryBlack`, 하단 투명 2px (레이아웃 정렬) |
-| **disabled** | 글자 `neutral400`; 선택+disabled 시 배경 `neutral150` | 글자 `neutral400` |
+| **선택됨** | 배경 **`alias.backgroundPrimary`**(light=white, dark=neutral900), `shadows.shadow2Light`, 모서리 `roundedLarge` | 하단 `strokeWidthThick` `primaryBlack` |
+| **비선택(활성)** | 글자 **`alias.foregroundPrimary`**, 배경 투명 | 글자 `primaryBlack`, 하단 투명 2px (레이아웃 정렬) |
+| **disabled** | 글자 **`alias.foregroundDisabled`**; 선택+disabled 시 배경 **`alias.backgroundSurfaceDisabled`** | 글자 `neutral400` |
 
 `underline` 변형은 Web Kit 세그먼트(`636:5371`)와 동일 토큰으로 정렬한 **선형 탭** 패턴이다.
 
@@ -581,15 +581,17 @@ Shadow 레벨: shadow2, shadow4, shadow8, shadow16, shadow24, shadow32, shadow64
 | **폭** | 325px — `componentSizes.toastMinWidth` · `componentSizes.toastMaxWidth` (기본 카드 `548:654`·`552:2029`) |
 | **padding** | `sizeLarge` (16px) |
 | **행 gap** (아이콘·본문·액션) | `sizeMedium` (10px) |
-| **borderRadius** | `roundedLarge` (8px) |
+| **borderRadius** | `roundedXLarge` (12px) — MCP/Web Kit Toast 카드 갱신 |
 | **border** | `strokeWidthThin` `neutral300`; **Focus** (`552:2029`)는 `strokeWidthThick` + `neutral450` 테두리 — 키보드 포커스는 **`refineui.css`** `focus-visible` 링 패턴으로 정렬 |
 | **shadow** | `shadows.shadow4Light` (Elevation Shadow 4) |
-| **아이콘 영역** | 24×24 (`spacings.sizeXXLarge`); `WebIcon` `iconSizes.md` |
+| **Toast / Icon** (왼쪽) | 24×24 (`spacings.sizeXXLarge`); `WebIcon` `iconSizes.md`; 행 `items-center`로 **카드 세로 중앙**; DOM `data-refineui="toast-icon"`, Type은 루트 `data-variant` (`default` \| `success` \| `error` \| `warning`) + 기본 아이콘 매핑 |
 | **title** | `body2` |
 | **message** | `body4`, `neutral500` |
 | **액션** | `Toast / Action` — 내부 **Button** Small (Web Kit 버튼 sm) |
 
-**`variant`** (`success` / `error` / `warning` / `default`)는 React에서 **아이콘 액센트 색**만 바꾼 확장이다. Web Kit **Toast** 그리드는 **`State=Default`**·**`Focus`**만 있다.
+**`variant`** (`default` \| `success` \| `error` \| `warning`)는 Figma **Type**에 대응하며 **기본 아이콘 이름·액센트 색**을 바꾼다. Web Kit **Toast** 그리드는 **`State=Default`**·**`Focus`**만 있고, Type 변형은 React·`data-variant`로만 구분한다.
+
+**`<Toaster />` 뷰포트 위치:** Figma 컴포넌트 세트에는 없고, 앱 UX를 위한 React 확장이다. `data-refineui="toaster"`에 `data-position`(`top-left` \| `top-center` \| `top-right` \| `bottom-left` \| `bottom-center` \| `bottom-right`)을 붙이며, `refineui.css`에서 앵커·하단 스택 `translateY` 부호를 분기한다.
 
 ---
 
@@ -776,20 +778,24 @@ Shadow 레벨: shadow2, shadow4, shadow8, shadow16, shadow24, shadow32, shadow64
   },
   "skeleton": {
     "node": "570:6175",
-    "fill": "neutral200",
+    "maskNode": "570:6320",
+    "fill": "alias.backgroundBrandSubtle",
+    "shimmerHighlight": "alias.backgroundPrimary",
+    "maskGradient": "90deg transparent 0%, backgroundPrimary 22.5%, backgroundPrimary 32.5%, transparent 50%",
     "rectangleRadius": "roundedLarge",
     "circleRadius": "roundedCircle",
     "defaultHeight": "componentSizes.skeletonDefaultHeight",
-    "animation": "refineui-skeleton-pulse (refineui.css)"
+    "animation": "refineui-skeleton-shimmer (refineui.css), reduced-motion: static fill only"
   },
   "slider": {
     "node": "526:1556",
     "size": { "sm": "sliderTrackHeightSm", "md": "sliderTrackHeightMd" },
-    "rail": "neutral200 roundedXSmall",
-    "fill": "primaryBlack",
-    "thumb": "16x16 roundedCircle",
+    "rail": "alias.backgroundBrandSubtle roundedXSmall",
+    "fill": "alias.backgroundBrand",
+    "fillDisabled": "alias.foregroundDisabled",
+    "thumb": "Slider/Item COMPONENT_SET: default 526:1739, hover 526:1714, focus 526:1718, disabled 526:1840 — 16x16 roundedCircle + ring backgroundPrimary + state border (default borderDefault thin, hover borderStrong thick, focus borderDefault+backgroundBrandActive, disabled borderDisabled+backgroundBrandDisabled)",
     "interactionHeight": "componentSizes.sliderInteractionHeight",
-    "fillVar": "--refineui-slider-fill (WebKit)"
+    "fillVar": "--refineui-slider-fill (WebKit); --refineui-slider-rail / --refineui-slider-fill-color (alias)"
   },
   "spinButton": {
     "node": "561:2067",
@@ -802,8 +808,8 @@ Shadow 레벨: shadow2, shadow4, shadow8, shadow16, shadow24, shadow32, shadow64
     "fieldPaddingStart": "componentSizes.spinFieldPaddingInlineStart",
     "stepperWidth": "componentSizes.spinStepperWidth",
     "chevron": "iconSizes.sm",
-    "focusBorder": "neutral750",
-    "disabled": "neutral150 neutral250 neutral400"
+    "focusBorder": "alias.borderFocus",
+    "disabled": "alias.backgroundSurfaceDisabled alias.borderDisabled alias.foregroundDisabled"
   },
   "spinner": {
     "node": "550:3669",
@@ -823,8 +829,8 @@ Shadow 레벨: shadow2, shadow4, shadow8, shadow16, shadow24, shadow32, shadow64
       "spinnerRingWidthXLarge",
       "spinnerRingWidthXXLarge"
     ],
-    "track": "neutral200",
-    "accent": "primaryBlack",
+    "track": "alias.backgroundBrandSubtle",
+    "accent": "alias.backgroundBrand",
     "labelGap": "sizeSmall",
     "labelPosition": ["left", "right", "top", "bottom"],
     "animation": "refineui-spin (refineui.css)"
@@ -885,8 +891,8 @@ Shadow 레벨: shadow2, shadow4, shadow8, shadow16, shadow24, shadow32, shadow64
       "padding": "componentSizes.switchPadding",
       "thumb": "componentSizes.switchThumb"
     },
-    "track": { "on": "primaryBlack", "off": "neutral300", "disabled": "neutral250" },
-    "thumb": { "on": "neutralWhite", "off": "neutralWhite", "disabled": "neutral500" },
+    "track": { "on": "alias.backgroundBrand", "off": "alias.backgroundPrimaryActive", "disabled": "alias.backgroundBrandDisabled" },
+    "thumb": { "on": "alias.backgroundPrimary", "off": "alias.backgroundPrimary", "disabled": "alias.backgroundBrandSubtle" },
     "interaction": "refineui.css [data-refineui=switch] hover/active"
   },
   "toggle": {
@@ -898,9 +904,9 @@ Shadow 레벨: shadow2, shadow4, shadow8, shadow16, shadow24, shadow32, shadow64
     "container": "636:5371",
     "item": "636:5372",
     "pill": {
-      "bar": "neutral100 strokeWidthThin neutral300 padding sizeSmall gap sizeMedium roundedLarge",
-      "selected": "neutralWhite shadow2Light roundedLarge body1",
-      "disabled": "neutral400 selectedBg neutral150"
+      "bar": "alias.backgroundPrimaryActive strokeWidthThin alias.borderDefault padding sizeSmall gap sizeMedium roundedLarge",
+      "selected": "alias.backgroundPrimary shadow2Light roundedLarge body1 (dark contrast)",
+      "disabled": "alias.foregroundDisabled; selected+disabled alias.backgroundSurfaceDisabled"
     },
     "underline": "borderBottom thick neutral200; selected thick primaryBlack (React 확장)"
   },
@@ -909,11 +915,11 @@ Shadow 레벨: shadow2, shadow4, shadow8, shadow16, shadow24, shadow32, shadow64
     "width": "componentSizes.toastMinWidth (325px)",
     "padding": "sizeLarge",
     "gap": "sizeMedium",
-    "borderRadius": "roundedLarge",
+    "borderRadius": "roundedXLarge",
     "border": "strokeWidthThin neutral300",
     "focus": "strokeWidthThick neutral450 (552:2029)",
     "shadow": "shadow4Light",
-    "iconSlot": "sizeXXLarge (24px), iconSizes.md",
+    "iconSlot": "data-refineui toast-icon; sizeXXLarge (24px); iconSizes.md; items-center row; data-variant Type",
     "title": "body2",
     "message": "body4 neutral500",
     "variantNote": "React only — accent icons; Figma State Default|Focus only"

@@ -26,22 +26,27 @@ export function Input({
     ...props
 }: InputProps) {
     const borderClass = disabled
-        ? "border-refineui-thin border-refineui-neutral-250"
+        ? "border-refineui-thin border-refineui-alias-border-disabled"
         : error
-          ? "border-refineui-thin border-refineui-red-500"
+          ? "border-refineui-thin border-refineui-alias-border-error"
           : success
-            ? "border-refineui-thin border-refineui-green-500"
-            : "border-refineui-thin border-refineui-neutral-300";
+            ? "border-refineui-thin border-refineui-alias-border-success"
+            : "border-refineui-thin border-refineui-alias-border-default";
 
     return (
         <input
             data-refineui="input"
             data-size={size}
+            data-error={error || undefined}
+            data-success={success || undefined}
             disabled={disabled}
             className={clsx(
-                "box-border text-refineui-primary-black outline-none transition-[border-color,box-shadow,background-color] duration-150",
+                "box-border outline-none transition-[border-color,box-shadow,background-color] duration-150",
+                "text-refineui-alias-foreground-primary",
                 borderClass,
-                disabled ? "bg-refineui-neutral-150" : "bg-refineui-neutral-white",
+                disabled
+                    ? "bg-refineui-alias-background-surface-disabled"
+                    : "bg-refineui-alias-background-primary",
                 fullWidth && "w-full",
                 sizeClass[size],
                 className,

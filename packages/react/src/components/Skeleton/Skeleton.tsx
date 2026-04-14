@@ -8,7 +8,7 @@ export interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
     shape?: "rectangle" | "circle";
 }
 
-/** Web Kit COMPONENT_SET `Skeleton` `570:6175` — 배경 `neutral200`; Figma Shimmer는 **펄스**(`refineui.css`)로 단순화. */
+/** Web Kit COMPONENT_SET `Skeleton` `570:6175` — 배경·쉬머 색은 MCP Alias, 애니메이션은 **`refineui.css`**. */
 export function Skeleton({
     width,
     height,
@@ -50,7 +50,6 @@ export function Skeleton({
             data-shape={shape}
             aria-hidden
             className={clsx(
-                "bg-refineui-neutral-200",
                 isCircle ? "rounded-refineui-circle" : "rounded-refineui-large",
                 className,
             )}
