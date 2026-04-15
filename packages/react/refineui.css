@@ -588,50 +588,63 @@ label:focus-within:not(:active) [data-refineui="checkbox"][data-checked="true"]:
   border-color: var(--refineui-color-alias-background-brand-disabled);
 }
 
-/* Radio — Web Kit COMPONENT_SET `Radio` `397:1001` (16×16 원; Foundation 팔레트) */
+/* Radio — Web Kit `397:1001` (`Radio` 행) + `Radio / Input` 16px 원 — MCP Alias만 */
 [data-refineui="radio"] {
   appearance: none;
   -webkit-appearance: none;
   box-sizing: border-box;
+  position: relative;
+  display: inline-grid;
+  place-content: center;
   margin: 0;
   flex-shrink: 0;
-  border: 1px solid #dbdbdb;
+  border: 1px solid var(--refineui-color-alias-border-default);
   border-radius: 9999px;
-  background-color: #ffffff;
-  background-image: none;
-  transition: border-color 0.15s, background-color 0.15s, box-shadow 0.15s;
+  background-color: var(--refineui-color-alias-background-primary);
+  box-shadow: none;
+  transition: border-color 0.15s, background-color 0.15s, box-shadow 0.15s, opacity 0.15s;
 }
-[data-refineui="radio"]:not(:disabled):not(:checked):hover {
-  border-color: #bbbbbb;
+[data-refineui="radio"]::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background-color: var(--refineui-color-alias-background-primary);
+  transform: scale(0);
+  transition: transform 0.15s ease-out;
 }
+[data-refineui="radio"]:not(:disabled):not(:checked):focus,
 [data-refineui="radio"]:not(:disabled):not(:checked):focus-visible {
   outline: none;
-  border: 2px solid #bbbbbb;
+  border-color: var(--refineui-color-alias-border-default);
+  box-shadow: 0 0 0 2px var(--refineui-color-alias-border-strong);
 }
 [data-refineui="radio"]:not(:disabled):checked {
-  border: 2px solid #212121;
-  background-color: #ffffff;
-  background-image: radial-gradient(circle, #212121 0%, #212121 38%, #ffffff 39%, #ffffff 100%);
+  border-color: var(--refineui-color-alias-foreground-primary);
+  background-color: var(--refineui-color-alias-foreground-primary);
 }
-[data-refineui="radio"]:not(:disabled):checked:hover {
-  border-color: #000000;
-  background-image: radial-gradient(circle, #000000 0%, #000000 38%, #ffffff 39%, #ffffff 100%);
+[data-refineui="radio"]:not(:disabled):checked::after {
+  transform: scale(1);
 }
+[data-refineui="radio"]:not(:disabled):checked:focus,
 [data-refineui="radio"]:not(:disabled):checked:focus-visible {
   outline: none;
-  border: 2px solid #bbbbbb;
-  background-image: radial-gradient(circle, #212121 0%, #212121 38%, #ffffff 39%, #ffffff 100%);
+  border-color: var(--refineui-color-alias-foreground-primary);
+  box-shadow: 0 0 0 2px var(--refineui-color-alias-border-strong);
 }
 [data-refineui="radio"]:disabled:not(:checked) {
   cursor: not-allowed;
-  background-color: #f5f5f5;
-  border-color: #e0e0e0;
+  background-color: var(--refineui-color-alias-background-primary);
+  border-color: var(--refineui-color-alias-border-disabled);
+  opacity: 1;
 }
 [data-refineui="radio"]:disabled:checked {
   cursor: not-allowed;
-  background-color: #f5f5f5;
-  border-color: #e0e0e0;
-  background-image: radial-gradient(circle, #cecece 0%, #cecece 38%, #f5f5f5 39%, #f5f5f5 100%);
+  background-color: var(--refineui-color-alias-foreground-disabled);
+  border-color: var(--refineui-color-alias-foreground-disabled);
+}
+[data-refineui="radio"]:disabled:checked::after {
+  transform: scale(1);
 }
 [data-refineui="radio"]:disabled {
   cursor: not-allowed;

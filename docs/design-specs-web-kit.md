@@ -276,14 +276,17 @@ Figma에는 **Section Header**, **Divider**, **아이콘·단축키** 열이 있
 
 ---
 
-## Radio — Web Kit COMPONENT_SET `Radio` `397:1001`
+## Radio — Web Kit COMPONENT_SET `Radio` `397:1001` · `Radio / Input`
 
 | 속성 | 값 |
 |------|-----|
-| **컨트롤** | `componentSizes.controlCheckboxRadio` (16×16), `roundedCircle` — **`refineui.css`** `[data-refineui="radio"]` |
+| **`Radio / Input`** | 16×16 원 — 미선택: `strokeWidthThin` `alias.borderDefault`, `alias.backgroundPrimary`; 포커스(미선택/선택): `strokeWidthThick` 외곽 `alias.borderStrong` (MCP `397:1147` 등) |
+| **컨트롤** | `componentSizes.controlCheckboxRadio` (16×16), `roundedCircle` — **`refineui.css`** `[data-refineui="radio"]` (별칭 색·`label:hover` / `label:focus-within`) |
+| **선택 시** | 링 `alias.backgroundBrand`, 내부 점 동일; 호버 링·점 `alias.backgroundBrandActive`; 포커스 링 `alias.borderStrong` + 점 `alias.backgroundBrand` |
+| **disabled** | 배경 `alias.backgroundPrimary`, 테두리 `alias.borderDisabled`; 선택 시 점 `alias.foregroundDisabled` |
 | **행** | 컨트롤·텍스트 `gap` `sizeMedium` (10px); 라벨 래퍼 `padding` `sizeXXSmall` |
-| **라벨** | `caption1` |
-| **설명** | `caption3`, `neutral600` |
+| **라벨** | `caption1`, `alias.foregroundPrimary` — disabled 시 `alias.foregroundDisabled` |
+| **설명** | `caption3`, `alias.foregroundSecondary` — disabled 시 `alias.foregroundDisabled` |
 
 ---
 
@@ -771,10 +774,12 @@ Shadow 레벨: shadow2, shadow4, shadow8, shadow16, shadow24, shadow32, shadow64
   },
   "radio": {
     "node": "397:1001",
+    "radioInput": "COMPONENT_SET Radio / Input (16px circle; MCP states Default|Focused|Disabled × checked)",
     "control": "componentSizes.controlCheckboxRadio",
     "gap": "sizeMedium",
-    "title": "caption1",
-    "description": "caption3 neutral600"
+    "title": "caption1 alias.foregroundPrimary",
+    "description": "caption3 alias.foregroundSecondary",
+    "css": "refineui.css [data-refineui=radio]: alias borders, backgroundPrimary, brand dot, borderStrong focus-visible"
   },
   "skeleton": {
     "node": "570:6175",
