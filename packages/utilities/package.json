@@ -4,6 +4,10 @@
   "description": "RefineUI React utilities for building components",
   "sideEffects": false,
   "type": "module",
+  "scripts": {
+    "build": "pnpm run build:color",
+    "build:color": "pnpm exec tsup src/color.ts --format cjs,esm --dts --clean --out-dir lib --external react --external react-dom"
+  },
   "exports": {
     ".": {"types": "./lib/index.d.ts", "import": "./lib/index.js", "require": "./lib/index.cjs"},
     "./color": {"types": "./lib/color.d.ts", "import": "./lib/color.js", "require": "./lib/color.cjs"}
@@ -11,6 +15,6 @@
   "main": "./lib/index.cjs",
   "dependencies": {"@refineui/version": "workspace:*"},
   "peerDependencies": {"react": ">=18.0.0", "react-dom": ">=18.0.0"},
-  "devDependencies": {"@types/react": "^18.3.20", "react": "^18.3.1", "react-dom": "^18.3.1"},
+  "devDependencies": {"@types/react": "^18.3.20", "react": "^18.3.1", "react-dom": "^18.3.1", "tsup": "^8.0.0", "typescript": "^5.0.0"},
   "publishConfig": {"access": "public"}
 }

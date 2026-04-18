@@ -99,7 +99,7 @@ export function Tabs({ items, defaultTab, onChange, className, ...props }: TabsP
             <div
                 role="tablist"
                 aria-orientation="horizontal"
-                className="mb-refineui-size-medium box-border inline-flex max-w-full w-fit flex-wrap items-stretch gap-refineui-size-medium rounded-refineui-large border-refineui-thin border-refineui-alias-border-default bg-refineui-alias-background-primary-active p-refineui-size-small"
+                className="mb-refineui-size-medium box-border inline-flex max-w-full w-fit flex-wrap items-stretch gap-refineui-size-medium rounded-refineui-large border-refineui-thin border-refineui-alias-border-default bg-refineui-alias-background-surface-active p-refineui-size-small"
             >
                 {items.map((item, index) => {
                     const selected = active === item.id;
@@ -127,7 +127,8 @@ export function Tabs({ items, defaultTab, onChange, className, ...props }: TabsP
                                 disabled
                                     ? "cursor-not-allowed text-refineui-alias-foreground-disabled"
                                     : "cursor-pointer text-refineui-alias-foreground-primary",
-                                selected && !disabled && "bg-refineui-alias-background-primary shadow-refineui-2light",
+                                selected && "shadow-refineui-2light",
+                                selected && !disabled && "bg-refineui-alias-background-surface",
                                 selected && disabled && "bg-refineui-alias-background-surface-disabled",
                                 !selected && "bg-transparent",
                             )}

@@ -52,8 +52,6 @@ export default function AvatarStatusPreview() {
                             >
                                 <Avatar
                                     size="xlarge"
-                                    layout="image"
-                                    color="neutral"
                                     showStatus
                                     status={status}
                                 >

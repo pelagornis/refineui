@@ -4,20 +4,12 @@
 @source "../../../packages/react/src/**/*.{tsx,ts}";
 @import "@pelagornis/page/styles/refineui-fonts-override.css";
 @import "@refineui/web-icons/dist/fonts/refineui-system-icons.css";
-@import "./pelagornis-base.css";
 @import "@pelagornis/page/styles/theme.css";
 @import "@pelagornis/page/styles/components.css";
 @import "@pelagornis/page/styles/layout.css";
 @import "@pelagornis/page/styles/utilities.css";
 @import "@pelagornis/page/styles/header-icons.css";
 @import "@refineui/react/refineui.css";
-
-/* Preview 레이아웃 — 컴포넌트 문서 Preview 섹션 */
-.not-content {
-  width: 100%;
-  overflow-x: auto;
-  margin-bottom: 1.5rem;
-}
 
 [data-refineui-preview] {
   width: 100%;
@@ -42,4 +34,3 @@
 [data-refineui-preview][data-preview-variant="light"] {
   background: var(--refineui-color-neutral-100) !important;
 }
-

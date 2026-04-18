@@ -1,5 +1,7 @@
 import { clsx } from "clsx";
 import type { SelectHTMLAttributes } from "react";
+import { resolveColorTokenValue } from "@refineui/utilities/color";
+import { componentColorTokens } from "../../tokens/componentColorTokens";
 
 export interface SelectOption {
     value: string;
@@ -35,13 +37,13 @@ export function Select({
     className,
     ...props
 }: SelectProps) {
-    const borderClass = disabled
-        ? "border-refineui-thin border-refineui-neutral-250"
+    const borderColor = disabled
+        ? resolveColorTokenValue(componentColorTokens.select.border.disabled)
         : error
-          ? "border-refineui-thin border-refineui-red-500"
+          ? resolveColorTokenValue(componentColorTokens.select.border.error)
           : success
-            ? "border-refineui-thin border-refineui-green-500"
-            : "border-refineui-thin border-refineui-neutral-300";
+            ? resolveColorTokenValue(componentColorTokens.select.border.success)
+            : resolveColorTokenValue(componentColorTokens.select.border.default);
 
     return (
         <select
@@ -51,13 +53,19 @@ export function Select({
             aria-invalid={error || undefined}
             disabled={disabled}
             className={clsx(
-                "box-border text-refineui-primary-black outline-none transition-[border-color,box-shadow,background-color] duration-150",
-                borderClass,
-                disabled ? "cursor-not-allowed bg-refineui-neutral-150" : "cursor-pointer bg-refineui-neutral-white",
+                "box-border border-refineui-thin outline-none transition-[border-color,box-shadow,background-color] duration-150",
+                disabled ? "cursor-not-allowed" : "cursor-pointer",
                 fullWidth && "w-full",
                 sizeClass[size],
                 className,
             )}
+            style={{
+                borderColor,
+                color: resolveColorTokenValue(componentColorTokens.select.text),
+                backgroundColor: disabled
+                    ? resolveColorTokenValue(componentColorTokens.select.disabledBackground)
+                    : resolveColorTokenValue(componentColorTokens.select.background),
+            }}
             {...props}
         >
             {placeholder && (

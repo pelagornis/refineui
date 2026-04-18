@@ -1,5 +1,7 @@
 import { clsx } from "clsx";
 import type { HTMLAttributes, ReactNode } from "react";
+import { resolveColorTokenValue } from "@refineui/utilities/color";
+import { componentColorTokens } from "../../tokens/componentColorTokens";
 
 export interface FieldProps extends HTMLAttributes<HTMLDivElement> {
     label?: ReactNode;
@@ -31,19 +33,35 @@ export function Field({
     return (
         <div data-refineui="field" data-size={size} className={clsx("mb-refineui-size-medium", className)} {...props}>
             {label && (
-                <label className={clsx("mb-refineui-size-xsmall block text-refineui-primary-black", labelTypo[size])}>
+                <label
+                    className={clsx("mb-refineui-size-xsmall block", labelTypo[size])}
+                    style={{ color: resolveColorTokenValue(componentColorTokens.field.label) }}
+                >
                     {label}
-                    {required && <span className="ml-refineui-size-xxsmall text-refineui-red-700">*</span>}
+                    {required && (
+                        <span className="ml-refineui-size-xxsmall" style={{ color: resolveColorTokenValue(componentColorTokens.field.required) }}>
+                            *
+                        </span>
+                    )}
                 </label>
             )}
             {children}
             {error && (
-                <div role="alert" className="refineui-typo-caption-3 mt-refineui-size-xsmall text-refineui-red-700">
+                <div
+                    role="alert"
+                    className="refineui-typo-caption-3 mt-refineui-size-xsmall"
+                    style={{ color: resolveColorTokenValue(componentColorTokens.field.error) }}
+                >
                     {error}
                 </div>
             )}
             {hint && !error && (
-                <div className="refineui-typo-caption-3 mt-refineui-size-xsmall text-refineui-neutral-500">{hint}</div>
+                <div
+                    className="refineui-typo-caption-3 mt-refineui-size-xsmall"
+                    style={{ color: resolveColorTokenValue(componentColorTokens.field.hint) }}
+                >
+                    {hint}
+                </div>
             )}
         </div>
     );

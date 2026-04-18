@@ -1,5 +1,8 @@
 import { clsx } from "clsx";
 import { iconSizes } from "@refineui/tokens";
+import { resolveColorTokenValue } from "@refineui/utilities/color";
+import { componentColorTokens } from "../../tokens/componentColorTokens";
+import type { CSSProperties } from "react";
 
 /**
  * 단일 **`Avatar`** 토큰·맵 — Web Kit `Avatar` MCP `size`(XXXSmall→XXXLarge) 9단계.
@@ -114,7 +117,7 @@ export const avatarIconSlotSize: Record<AvatarSize, number> = {
 };
 
 export const AVATAR_INNER_MASK =
-    "absolute inset-0 flex min-h-0 min-w-0 items-center justify-center overflow-hidden rounded-refineui-circle bg-refineui-neutral-300";
+    "absolute inset-0 flex min-h-0 min-w-0 items-center justify-center overflow-hidden rounded-refineui-circle";
 
 function initialsAccentTypo(size: AvatarSize): string {
     return clsx(
@@ -125,74 +128,74 @@ function initialsAccentTypo(size: AvatarSize): string {
     );
 }
 
-/** Figma `Avatar` 룩 — Icon 행은 연한 배경 + 글리프는 `defaultPersonIconColor`, Initials 행은 배경·글자 톤 맞춤 */
-export function resolveAvatarShellColorLayer(
+const avatarShellBackgroundColor: Record<AvatarColor, string> = {
+    neutral: resolveColorTokenValue(componentColorTokens.avatar.shell.neutralBackground),
+    blue: resolveColorTokenValue(componentColorTokens.avatar.shell.iconBackground.blue),
+    green: resolveColorTokenValue(componentColorTokens.avatar.shell.iconBackground.green),
+    lime: resolveColorTokenValue(componentColorTokens.avatar.shell.iconBackground.lime),
+    magenta: resolveColorTokenValue(componentColorTokens.avatar.shell.iconBackground.magenta),
+    orange: resolveColorTokenValue(componentColorTokens.avatar.shell.iconBackground.orange),
+    purple: resolveColorTokenValue(componentColorTokens.avatar.shell.iconBackground.purple),
+    red: resolveColorTokenValue(componentColorTokens.avatar.shell.iconBackground.red),
+    teal: resolveColorTokenValue(componentColorTokens.avatar.shell.iconBackground.teal),
+    yellow: resolveColorTokenValue(componentColorTokens.avatar.shell.iconBackground.yellow),
+};
+
+const avatarShellInitialsForegroundColor: Record<AvatarColor, string> = {
+    neutral: resolveColorTokenValue(componentColorTokens.avatar.shell.neutralForeground),
+    blue: resolveColorTokenValue(componentColorTokens.avatar.icon.blue),
+    green: resolveColorTokenValue(componentColorTokens.avatar.icon.green),
+    lime: resolveColorTokenValue(componentColorTokens.avatar.icon.lime),
+    magenta: resolveColorTokenValue(componentColorTokens.avatar.icon.magenta),
+    orange: resolveColorTokenValue(componentColorTokens.avatar.icon.orange),
+    purple: resolveColorTokenValue(componentColorTokens.avatar.icon.purple),
+    red: resolveColorTokenValue(componentColorTokens.avatar.icon.red),
+    teal: resolveColorTokenValue(componentColorTokens.avatar.icon.teal),
+    yellow: resolveColorTokenValue(componentColorTokens.avatar.icon.yellow),
+};
+
+export const avatarNeutralForegroundColor = resolveColorTokenValue(
+    componentColorTokens.avatar.shell.neutralForeground,
+);
+
+export function resolveAvatarShellStyle(
     color: AvatarColor,
+    layout: AvatarLayout | undefined,
+): CSSProperties {
+    if (layout === "initials") {
+        return {
+            backgroundColor: avatarShellBackgroundColor[color],
+            color: avatarShellInitialsForegroundColor[color],
+        };
+    }
+
+    return {
+        backgroundColor: avatarShellBackgroundColor[color],
+    };
+}
+
+export function resolveAvatarShellColorLayer(
+    _color: AvatarColor,
     size: AvatarSize,
     layout: AvatarLayout | undefined,
 ): string {
-    if (color === "neutral") {
-        return "text-refineui-alias-foreground-secondary";
-    }
     if (layout === "initials") {
-        switch (color) {
-            case "blue":
-                return clsx("bg-refineui-blue-100 text-refineui-blue-1000", initialsAccentTypo(size));
-            case "green":
-                return clsx("bg-refineui-green-100 text-refineui-green-1000", initialsAccentTypo(size));
-            case "lime":
-                return clsx("bg-refineui-lime-100 text-refineui-lime-1000", initialsAccentTypo(size));
-            case "magenta":
-                return clsx("bg-refineui-magenta-100 text-refineui-magenta-1000", initialsAccentTypo(size));
-            case "orange":
-                return clsx("bg-refineui-orange-100 text-refineui-orange-1000", initialsAccentTypo(size));
-            case "purple":
-                return clsx("bg-refineui-purple-100 text-refineui-purple-1000", initialsAccentTypo(size));
-            case "red":
-                return clsx("bg-refineui-red-100 text-refineui-red-1000", initialsAccentTypo(size));
-            case "teal":
-                return clsx("bg-refineui-teal-100 text-refineui-teal-1000", initialsAccentTypo(size));
-            case "yellow":
-                return clsx("bg-refineui-yellow-100 text-refineui-yellow-1000", initialsAccentTypo(size));
-            default:
-                return "text-refineui-alias-foreground-secondary";
-        }
+        return initialsAccentTypo(size);
     }
-    switch (color) {
-        case "blue":
-            return "bg-refineui-blue-100 text-refineui-primary-black";
-        case "green":
-            return "bg-refineui-green-100 text-refineui-primary-black";
-        case "lime":
-            return "bg-refineui-lime-100 text-refineui-primary-black";
-        case "magenta":
-            return "bg-refineui-magenta-100 text-refineui-primary-black";
-        case "orange":
-            return "bg-refineui-orange-100 text-refineui-primary-black";
-        case "purple":
-            return "bg-refineui-purple-100 text-refineui-primary-black";
-        case "red":
-            return "bg-refineui-red-100 text-refineui-primary-black";
-        case "teal":
-            return "bg-refineui-teal-100 text-refineui-primary-black";
-        case "yellow":
-            return "bg-refineui-yellow-100 text-refineui-primary-black";
-        default:
-            return "text-refineui-alias-foreground-secondary";
-    }
+    return "";
 }
 
 export const defaultPersonIconColor: Record<AvatarColorIcon, string> = {
-    neutral: "var(--refineui-color-alias-foreground-secondary)",
-    blue: "var(--refineui-color-blue-1000)",
-    green: "var(--refineui-color-green-1000)",
-    lime: "var(--refineui-color-lime-1000)",
-    magenta: "var(--refineui-color-magenta-1000)",
-    orange: "var(--refineui-color-orange-1000)",
-    purple: "var(--refineui-color-purple-1000)",
-    red: "var(--refineui-color-red-1000)",
-    teal: "var(--refineui-color-teal-1000)",
-    yellow: "var(--refineui-color-yellow-1000)",
+    neutral: resolveColorTokenValue(componentColorTokens.avatar.icon.neutral),
+    blue: resolveColorTokenValue(componentColorTokens.avatar.icon.blue),
+    green: resolveColorTokenValue(componentColorTokens.avatar.icon.green),
+    lime: resolveColorTokenValue(componentColorTokens.avatar.icon.lime),
+    magenta: resolveColorTokenValue(componentColorTokens.avatar.icon.magenta),
+    orange: resolveColorTokenValue(componentColorTokens.avatar.icon.orange),
+    purple: resolveColorTokenValue(componentColorTokens.avatar.icon.purple),
+    red: resolveColorTokenValue(componentColorTokens.avatar.icon.red),
+    teal: resolveColorTokenValue(componentColorTokens.avatar.icon.teal),
+    yellow: resolveColorTokenValue(componentColorTokens.avatar.icon.yellow),
 };
 
 /** `AvatarOverflow` more-horizontal */

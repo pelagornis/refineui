@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
+import pageplugin from '@pelagornis/page';
 
 export default defineConfig({
   vite: {
@@ -17,7 +18,7 @@ export default defineConfig({
   integrations: [
     react(),
     starlight({
-      plugins: [],
+      plugins: [pageplugin()],
       head: [
         {
           tag: 'meta',

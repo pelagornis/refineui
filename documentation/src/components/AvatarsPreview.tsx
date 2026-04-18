@@ -3,8 +3,9 @@ import { colors, fontSizes, fontWeights, spacings } from "@refineui/tokens";
 import {
   Avatar,
   AvatarGroup,
+  AvatarIcon,
   AvatarImage,
-  AvatarOverflow,
+  AvatarText,
 } from "@refineui/react";
 import type { AvatarSize } from "@refineui/react";
 import PreviewFrame from "./PreviewFrame";
@@ -33,13 +34,21 @@ function AvatarStackRow({ size, label }: { size: AvatarSize; label: string }) {
     <div className="flex flex-wrap items-center gap-refineui-size-medium rounded-refineui-large bg-refineui-neutral-150 px-refineui-size-large py-refineui-size-medium">
       <span style={rowLabel}>{label}</span>
       <AvatarGroup size={size} layout="stack">
-        <Avatar size={size} layout="image" color="neutral">
+        <Avatar size={size}>
           <AvatarImage src="https://avatars.githubusercontent.com/u/108743931?s=200&v=4" alt="User" />
         </Avatar>
-        <Avatar size={size} layout="icon" color="neutral" />
-        <Avatar size={size} layout="initials" color="orange" alt="Park Lee" />
-        <Avatar size={size} layout="icon" color="red" />
-        <AvatarOverflow size={size} />
+        <Avatar size={size} color="neutral">
+          <AvatarIcon name="person" />
+        </Avatar>
+        <Avatar size={size} color="orange">
+          <AvatarText>PL</AvatarText>
+        </Avatar>
+        <Avatar size={size} color="red">
+          <AvatarIcon name="person" />
+        </Avatar>
+        <Avatar size={size}>
+          <AvatarIcon name="more-horizontal" />
+        </Avatar>
       </AvatarGroup>
     </div>
   );

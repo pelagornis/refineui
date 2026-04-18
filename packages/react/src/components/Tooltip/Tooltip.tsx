@@ -1,7 +1,9 @@
 import { clsx } from "clsx";
 import type { CSSProperties, FocusEvent, HTMLAttributes, KeyboardEvent, MouseEvent, ReactElement, ReactNode } from "react";
 import { cloneElement, isValidElement, useId, useRef, useState } from "react";
-import { colors, spacings } from "@refineui/tokens";
+import { spacings } from "@refineui/tokens";
+import { resolveColorTokenValue } from "@refineui/utilities/color";
+import { componentColorTokens } from "../../tokens/componentColorTokens";
 
 export type TooltipVariant = "default" | "inverted";
 
@@ -37,7 +39,12 @@ export function Tooltip({
     const showTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const isInverted = variant === "inverted";
-    const bg = isInverted ? colors.primaryBlack : colors.neutralWhite;
+    const bg = isInverted
+        ? resolveColorTokenValue(componentColorTokens.tooltip.inverted.background)
+        : resolveColorTokenValue(componentColorTokens.tooltip.default.background);
+    const fg = isInverted
+        ? resolveColorTokenValue(componentColorTokens.tooltip.inverted.foreground)
+        : resolveColorTokenValue(componentColorTokens.tooltip.default.foreground);
 
     const clearTimer = () => {
         if (showTimer.current != null) {
@@ -169,11 +176,13 @@ export function Tooltip({
                     data-placement={placement}
                     className={clsx(
                         "refineui-typo-body-4 pointer-events-none absolute z-refineui-popup max-w-refineui-tooltip-max-width whitespace-nowrap px-refineui-size-medium py-refineui-size-small rounded-refineui-medium",
-                        isInverted
-                            ? "bg-refineui-primary-black text-refineui-neutral-white shadow-refineui-8dark"
-                            : "bg-refineui-neutral-white text-refineui-primary-black shadow-refineui-8light",
+                        isInverted ? "shadow-refineui-8dark" : "shadow-refineui-8light",
                     )}
-                    style={placementStyles[placement]}
+                    style={{
+                        ...placementStyles[placement],
+                        backgroundColor: bg,
+                        color: fg,
+                    }}
                 >
                     {content}
                     <span aria-hidden style={arrowStyle} />

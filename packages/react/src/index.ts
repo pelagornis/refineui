@@ -1,3 +1,4 @@
+export { componentColorTokens } from "./tokens/componentColorTokens";
 export { componentSizes, foundationSizes } from "./componentSizes";
 export { WebIcon, type WebIconProps } from "./WebIcon";
 export {
@@ -32,9 +33,9 @@ export {
     Avatar,
     AvatarImage,
     AvatarFallback,
+    AvatarText,
     AvatarBadge,
     AvatarIcon,
-    AvatarOverflow,
     AvatarGroup,
     AvatarGroupCount,
     type AvatarProps,
@@ -46,9 +47,9 @@ export {
     type AvatarLayout,
     type AvatarImageProps,
     type AvatarFallbackProps,
+    type AvatarTextProps,
     type AvatarBadgeProps,
     type AvatarIconProps,
-    type AvatarOverflowProps,
     type AvatarGroupProps,
     type AvatarGroupCountProps,
     type AvatarPresenceStatus,
@@ -145,7 +146,17 @@ export { Dropdown, type DropdownProps, type DropdownItem } from "./components/Dr
 export { Field, type FieldProps } from "./components/Field";
 export { Label, type LabelProps } from "./components/Label";
 export { Link, type LinkProps } from "./components/Link";
-export { Menu, type MenuProps, type MenuItem } from "./components/Menu";
+export {
+    Menu,
+    MenuTrigger,
+    MenuPopover,
+    MenuList,
+    MenuSection,
+    MenuDivider,
+    MenuItem,
+    type MenuProps,
+    type MenuItemData,
+} from "./components/Menu";
 export { Pagination, getPaginationItems, type PaginationProps } from "./components/Pagination";
 export { PopOver, type PopOverProps } from "./components/PopOver";
 export { Skeleton, type SkeletonProps } from "./components/Skeleton";

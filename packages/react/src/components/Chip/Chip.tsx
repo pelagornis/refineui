@@ -17,17 +17,17 @@ export interface ChipProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 const variantClass: Record<ChipVariant, string> = {
-    default: "border-none bg-refineui-neutral-white text-refineui-primary-black",
+    default: "border-none bg-refineui-alias-background-surface text-refineui-alias-foreground-brand",
     outline:
-        "border-refineui-thin border-refineui-neutral-300 box-border bg-refineui-neutral-white text-refineui-primary-black",
-    filled: "border-none bg-refineui-primary-black text-refineui-neutral-white",
+        "border-refineui-thin border-refineui-alias-border-default box-border bg-transparent text-refineui-alias-foreground-brand",
+    filled: "border-none bg-refineui-alias-background-brand text-refineui-alias-foreground-inversed",
 };
 
 const disabledVariantClass: Record<ChipVariant, string> = {
-    default: "border-none bg-refineui-neutral-150 text-refineui-neutral-400",
+    default: "border-none bg-refineui-alias-background-surface-disabled text-refineui-alias-foreground-disabled",
     outline:
-        "border-refineui-thin border-refineui-neutral-250 box-border bg-refineui-neutral-150 text-refineui-neutral-400",
-    filled: "border-none bg-refineui-neutral-200 text-refineui-neutral-400",
+        "border-refineui-thin border-refineui-alias-border-disabled box-border bg-transparent text-refineui-alias-foreground-disabled",
+    filled: "border-none bg-refineui-alias-background-surface-disabled text-refineui-alias-foreground-disabled",
 };
 
 const sizeTypo: Record<ChipSize, string> = {

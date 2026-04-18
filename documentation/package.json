@@ -11,7 +11,7 @@
   "dependencies": {
     "@astrojs/react": "^4.0.0",
     "@astrojs/starlight": "^0.35.2",
-    "@pelagornis/page": "^1.2.2",
+    "@pelagornis/page": "^1.2.5",
     "@refineui/react": "workspace:*",
     "@refineui/react-icons": "0.3.32",
     "@refineui/tokens": "workspace:*",

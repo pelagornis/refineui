@@ -176,7 +176,10 @@ export function Calendar({
                 data-other-month={!isCurrentMonth ? "" : undefined}
                 role="gridcell"
                 onClick={() => handleDayClick(day, monthOffset)}
-                className={clsx(dayBase, "rounded-refineui-large bg-refineui-primary-black text-refineui-neutral-white")}
+                className={clsx(
+                    dayBase,
+                    "rounded-refineui-large bg-refineui-alias-background-brand text-refineui-alias-foreground-inversed",
+                )}
             >
                 {day}
             </button>
@@ -192,7 +195,10 @@ export function Calendar({
                 data-other-month={!isCurrentMonth ? "" : undefined}
                 role="gridcell"
                 onClick={() => handleDayClick(day, monthOffset)}
-                className={clsx(dayBase, "rounded-refineui-none bg-refineui-neutral-100 text-refineui-primary-black")}
+                className={clsx(
+                    dayBase,
+                    "rounded-refineui-none bg-refineui-alias-background-primary-hover text-refineui-alias-foreground-primary",
+                )}
             >
                 {day}
             </button>
@@ -203,7 +209,7 @@ export function Calendar({
             <div
                 key={key}
                 className={clsx(
-                    "box-border flex size-refineui-calendar-day-size items-center justify-center bg-refineui-neutral-100",
+                    "box-border flex size-refineui-calendar-day-size items-center justify-center bg-refineui-alias-background-primary-hover",
                     endpoint === "start" && "rounded-l-refineui-large",
                     endpoint === "end" && "rounded-r-refineui-large",
                 )}
@@ -217,7 +223,10 @@ export function Calendar({
                     data-range-endpoint={endpoint}
                     role="gridcell"
                     onClick={() => handleDayClick(day, monthOffset)}
-                    className={clsx(dayBase, "rounded-refineui-large bg-refineui-primary-black text-refineui-neutral-white")}
+                    className={clsx(
+                        dayBase,
+                        "rounded-refineui-large bg-refineui-alias-background-brand text-refineui-alias-foreground-inversed",
+                    )}
                 >
                     {day}
                 </button>
@@ -245,8 +254,8 @@ export function Calendar({
                         dayBase,
                         "rounded-refineui-large",
                         showBlackOther
-                            ? "bg-refineui-primary-black text-refineui-neutral-white"
-                            : "bg-transparent text-refineui-neutral-400",
+                            ? "bg-refineui-alias-background-brand text-refineui-alias-foreground-inversed"
+                            : "bg-transparent text-refineui-alias-foreground-disabled",
                     )}
                 >
                     {day}
@@ -282,8 +291,8 @@ export function Calendar({
                     dayBase,
                     "rounded-refineui-large",
                     isSelectedSingle
-                        ? "bg-refineui-primary-black text-refineui-neutral-white"
-                        : "bg-transparent text-refineui-primary-black",
+                        ? "bg-refineui-alias-background-brand text-refineui-alias-foreground-inversed"
+                        : "bg-transparent text-refineui-alias-foreground-primary",
                 )}
             >
                 {day}
@@ -297,7 +306,7 @@ export function Calendar({
             role="grid"
             aria-label="Calendar"
             className={clsx(
-                "box-border flex min-w-refineui-calendar-min-width w-fit flex-col gap-refineui-size-none rounded-refineui-large bg-refineui-neutral-white p-refineui-size-large",
+                "box-border flex min-w-refineui-calendar-min-width w-fit flex-col gap-refineui-size-none rounded-refineui-large bg-refineui-alias-background-primary p-refineui-size-large",
                 className,
             )}
             {...props}
@@ -310,7 +319,7 @@ export function Calendar({
                     layout="icon"
                     data-calendar-header="nav-prev"
                     aria-label="Previous month"
-                    className="shrink-0 text-refineui-primary-black"
+                    className="shrink-0 text-refineui-alias-foreground-primary"
                     onClick={() => setView(new Date(year, month - 1))}
                 >
                     <WebIcon name="chevron-left" size={iconSizes.small} color="currentColor" fallback="‹" />
@@ -344,7 +353,7 @@ export function Calendar({
                     layout="icon"
                     data-calendar-header="nav-next"
                     aria-label="Next month"
-                    className="shrink-0 text-refineui-primary-black"
+                    className="shrink-0 text-refineui-alias-foreground-primary"
                     onClick={() => setView(new Date(year, month + 1))}
                 >
                     <WebIcon name="chevron-right" size={iconSizes.small} color="currentColor" fallback="›" />
@@ -356,7 +365,7 @@ export function Calendar({
                     {weekdayLabels.map((w) => (
                         <div
                             key={w}
-                            className="refineui-typo-caption-1 box-border w-refineui-calendar-day-size py-refineui-size-small text-center text-refineui-primary-black"
+                            className="refineui-typo-caption-1 box-border w-refineui-calendar-day-size py-refineui-size-small text-center text-refineui-alias-foreground-primary"
                         >
                             {w}
                         </div>

@@ -1,6 +1,8 @@
 import { clsx } from "clsx";
 import type { HTMLAttributes, KeyboardEvent, MouseEvent, ReactElement, ReactNode, Ref } from "react";
 import { cloneElement, isValidElement, useEffect, useId, useRef, useState } from "react";
+import { resolveColorTokenValue } from "@refineui/utilities/color";
+import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
 import { composeRef } from "../../utils/composeRef";
 
@@ -75,6 +77,9 @@ export function PopOver({
         }
     };
 
+    const palette =
+        variant === "inverted" ? componentColorTokens.popover.inverted : componentColorTokens.popover.default;
+
     const renderTrigger = () => {
         if (isValidElement(trigger)) {
             const el = trigger as TriggerElement;
@@ -124,10 +129,14 @@ export function PopOver({
                         "absolute z-refineui-popup box-border min-w-refineui-popover-panel-width outline-none p-refineui-size-large rounded-refineui-large",
                         placementPosition[placement],
                         placementMargin[placement],
-                        variant === "inverted"
-                            ? "border-refineui-thin border-refineui-neutral-800 bg-refineui-primary-black text-refineui-neutral-white shadow-refineui-8dark"
-                            : "border-refineui-thin border-refineui-neutral-300 bg-refineui-neutral-white text-refineui-primary-black shadow-refineui-8light",
+                        "border-refineui-thin",
+                        variant === "inverted" ? "shadow-refineui-8dark" : "shadow-refineui-8light",
                     )}
+                    style={{
+                        backgroundColor: resolveColorTokenValue(palette.background),
+                        color: resolveColorTokenValue(palette.foreground),
+                        borderColor: resolveColorTokenValue(palette.border),
+                    }}
                 >
                     {content}
                 </div>

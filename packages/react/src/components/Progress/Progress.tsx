@@ -8,7 +8,7 @@ export interface ProgressProps extends HTMLAttributes<HTMLDivElement> {
     size?: "sm" | "lg";
 }
 
-/** Web Kit COMPONENT_SET `Progress bar` `452:3994` — 트랙 채움색은 `colors.primaryBlack`. */
+/** Web Kit COMPONENT_SET `Progress bar` `452:3994` — 트랙 `alias.backgroundBrandSubtle`, 채움 `alias.backgroundBrand`. */
 export function Progress({
     value,
     max = 100,
@@ -26,14 +26,14 @@ export function Progress({
             aria-valuemin={0}
             aria-valuemax={max}
             className={clsx(
-                "overflow-hidden rounded-refineui-circle bg-refineui-neutral-400",
+                "overflow-hidden rounded-refineui-circle bg-refineui-alias-background-brand-subtle",
                 size === "lg" ? "h-refineui-progress-track-height-lg" : "h-refineui-progress-track-height-sm",
                 className,
             )}
             {...props}
         >
             <div
-                className="h-full rounded-refineui-circle bg-refineui-primary-black transition-[width] duration-300 ease-out"
+                className="h-full rounded-refineui-circle bg-refineui-alias-background-brand transition-[width] duration-300 ease-out"
                 style={{ width: `${pct}%` }}
             />
         </div>

@@ -10,6 +10,8 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { iconSizes, spacings } from "@refineui/tokens";
+import { resolveColorTokenValue } from "@refineui/utilities/color";
+import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
 import { Button } from "../Button";
 
@@ -221,10 +223,10 @@ function subscribeToasts(listener: (records: ToastRecord[]) => void) {
 }
 
 const variantAccents: Record<ToastVariant, string> = {
-    default: "var(--refineui-color-alias-foreground-primary)",
-    success: "var(--refineui-color-alias-foreground-success)",
-    error: "var(--refineui-color-alias-foreground-error)",
-    warning: "var(--refineui-color-alias-foreground-warning)",
+    default: resolveColorTokenValue(componentColorTokens.toast.accent.default),
+    success: resolveColorTokenValue(componentColorTokens.toast.accent.success),
+    error: resolveColorTokenValue(componentColorTokens.toast.accent.error),
+    warning: resolveColorTokenValue(componentColorTokens.toast.accent.warning),
 };
 
 const variantIconNames: Record<ToastVariant, string> = {

@@ -1,23 +1,23 @@
 {
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
-      "target": "es5",
+      "target": "ESNext",
       "outDir": "lib",
-      "module": "commonjs",
-      "lib": ["es5", "es2015.promise", "dom"],
-      "jsx": "react",
+      "module": "ESNext",
+      "lib": ["DOM", "ESNext"],
+      "jsx": "react-jsx",
       "declaration": true,
       "sourceMap": true,
       "strict": true,
       "isolatedModules": true,
       "strictFunctionTypes": false,
       "experimentalDecorators": true,
-      "importHelpers": true,
+      "importHelpers": false,
       "noUnusedLocals": true,
       "moduleResolution": "node",
       "preserveConstEnums": true,
       "skipLibCheck": true,
-      "typeRoots": ["../../node_modules/@types", "../../typings"],
+      "typeRoots": ["../../node_modules/@types", "../../typings"]
     },
     "include": ["src"]
 }

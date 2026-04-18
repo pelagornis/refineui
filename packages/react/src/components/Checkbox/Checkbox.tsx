@@ -2,7 +2,9 @@ import { clsx } from "clsx";
 import type { ChangeEvent, InputHTMLAttributes } from "react";
 import { useId, useState } from "react";
 import { iconSizes } from "@refineui/tokens";
+import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { WebIcon } from "../../WebIcon";
+import { componentColorTokens } from "../../tokens/componentColorTokens";
 
 /**
  * Web Kit COMPONENT_SET `327:2539` — 체크 시 **RefineUI System Icons** `checkmark` **16px** (`iconSizes.medium`).
@@ -41,8 +43,8 @@ export function Checkbox({
     };
 
     const checkColor = disabled
-        ? "var(--refineui-color-alias-foreground-disabled)"
-        : "var(--refineui-color-alias-foreground-inversed)";
+        ? resolveColorTokenValue(componentColorTokens.checkbox.checkIcon.disabled)
+        : resolveColorTokenValue(componentColorTokens.checkbox.checkIcon.default);
 
     return (
         <label

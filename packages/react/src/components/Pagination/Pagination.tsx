@@ -1,6 +1,8 @@
 import { clsx } from "clsx";
 import type { HTMLAttributes } from "react";
 import { iconSizes } from "@refineui/tokens";
+import { resolveColorTokenValue } from "@refineui/utilities/color";
+import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
 
 /** Web Kit `Pagination / Item` `570:2332` — 생략(ellipsis) 포함 페이지 나열 */
@@ -59,7 +61,11 @@ export function Pagination({ page, totalPages, onPageChange, className, ...props
                 <WebIcon
                     name="chevron-left"
                     size={iconSizes.xlarge}
-                    color={prevDisabled ? "var(--refineui-color-neutral-400)" : "var(--refineui-color-primary-black)"}
+                    color={
+                        prevDisabled
+                            ? resolveColorTokenValue(componentColorTokens.pagination.navIcon.disabled)
+                            : resolveColorTokenValue(componentColorTokens.pagination.navIcon.default)
+                    }
                     fallback="‹"
                 />
             </button>
@@ -105,7 +111,11 @@ export function Pagination({ page, totalPages, onPageChange, className, ...props
                 <WebIcon
                     name="chevron-right"
                     size={iconSizes.xlarge}
-                    color={nextDisabled ? "var(--refineui-color-neutral-400)" : "var(--refineui-color-primary-black)"}
+                    color={
+                        nextDisabled
+                            ? resolveColorTokenValue(componentColorTokens.pagination.navIcon.disabled)
+                            : resolveColorTokenValue(componentColorTokens.pagination.navIcon.default)
+                    }
                     fallback="›"
                 />
             </button>

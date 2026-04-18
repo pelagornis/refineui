@@ -2,6 +2,8 @@ import { clsx } from "clsx";
 import type { HTMLAttributes, KeyboardEvent, MouseEvent, ReactElement, ReactNode, Ref } from "react";
 import { cloneElement, isValidElement, useCallback, useEffect, useId, useRef, useState } from "react";
 import { iconSizes } from "@refineui/tokens";
+import { resolveColorTokenValue } from "@refineui/utilities/color";
+import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
 import { composeRef } from "../../utils/composeRef";
 
@@ -173,7 +175,8 @@ export function Dropdown({
     const chevronControl = showTriggerChevron ? (
         <span
             role="presentation"
-            className="inline-flex shrink-0 cursor-pointer items-center justify-center bg-refineui-neutral-white px-refineui-size-small"
+            className="inline-flex shrink-0 cursor-pointer items-center justify-center px-refineui-size-small"
+            style={{ backgroundColor: resolveColorTokenValue(componentColorTokens.dropdown.trigger.background) }}
             onClick={toggle}
             onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
@@ -183,7 +186,11 @@ export function Dropdown({
             }}
             tabIndex={-1}
         >
-            <WebIcon name={open ? "chevron-up" : "chevron-down"} size={iconSizes.large} color="var(--refineui-color-primary-black)" />
+            <WebIcon
+                name={open ? "chevron-up" : "chevron-down"}
+                size={iconSizes.large}
+                color={resolveColorTokenValue(componentColorTokens.dropdown.trigger.icon)}
+            />
         </span>
     ) : null;
 
@@ -193,6 +200,10 @@ export function Dropdown({
                 <div
                     data-refineui="dropdown-trigger"
                     className="box-border inline-flex items-stretch overflow-hidden rounded-refineui-small border-refineui-thin border-refineui-neutral-300 bg-refineui-neutral-white"
+                    style={{
+                        borderColor: resolveColorTokenValue(componentColorTokens.dropdown.trigger.border),
+                        backgroundColor: resolveColorTokenValue(componentColorTokens.dropdown.trigger.background),
+                    }}
                 >
                     {renderTrigger()}
                     {chevronControl}
@@ -215,7 +226,8 @@ export function Dropdown({
                     {menuTitle != null && (
                         <div
                             role="presentation"
-                            className="refineui-typo-body-2 shrink-0 px-refineui-size-medium py-refineui-size-small text-refineui-primary-black"
+                            className="refineui-typo-body-2 shrink-0 px-refineui-size-medium py-refineui-size-small"
+                            style={{ color: resolveColorTokenValue(componentColorTokens.dropdown.menu.title) }}
                         >
                             {menuTitle}
                         </div>
@@ -236,15 +248,28 @@ export function Dropdown({
                             }}
                             className={clsx(
                                 "refineui-typo-body-4 flex w-full items-center justify-between gap-refineui-size-medium rounded-refineui-large border-none px-refineui-size-medium py-refineui-size-small text-left",
-                                rowActive(itemIndex) ? "bg-refineui-neutral-150" : "bg-transparent",
+                                rowActive(itemIndex) ? "" : "bg-transparent",
                                 item.disabled
-                                    ? "cursor-not-allowed text-refineui-neutral-500 opacity-60"
-                                    : "cursor-pointer text-refineui-neutral-850 opacity-100",
+                                    ? "cursor-not-allowed opacity-60"
+                                    : "cursor-pointer opacity-100",
                             )}
+                            style={{
+                                backgroundColor: rowActive(itemIndex)
+                                    ? resolveColorTokenValue(componentColorTokens.dropdown.menu.itemHoverBackground)
+                                    : undefined,
+                                color: item.disabled
+                                    ? resolveColorTokenValue(componentColorTokens.dropdown.menu.itemDisabledText)
+                                    : resolveColorTokenValue(componentColorTokens.dropdown.menu.itemText),
+                            }}
                         >
                             <span className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap">{item.label}</span>
                             {item.shortcut != null && (
-                                <span className="refineui-typo-body-4 shrink-0 text-refineui-neutral-850">{item.shortcut}</span>
+                                <span
+                                    className="refineui-typo-body-4 shrink-0"
+                                    style={{ color: resolveColorTokenValue(componentColorTokens.dropdown.menu.itemTextSubtle) }}
+                                >
+                                    {item.shortcut}
+                                </span>
                             )}
                         </button>
                     ))}

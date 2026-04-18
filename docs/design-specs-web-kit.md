@@ -244,10 +244,11 @@ React 구현은 **Default** 트리거·메뉴 중심이며, Figma의 Checkbox/Ra
 | 속성 | 값 |
 |------|-----|
 | **패널 폭** | `componentSizes.menuPanelWidth` (244px) |
-| **패널** | `padding` `sizeXSmall`; `gap` `sizeMinimal` (항목 간); `borderRadius` `roundedLarge`; `strokeWidthHairline` `neutral300`; `shadows.shadow2Light` |
-| **항목** | `padding` `sizeSmall` (6px); `borderRadius` `roundedLarge`; `body2`; 기본 `primaryBlack` |
+| **패널** | `padding` `sizeXSmall`; `gap` `sizeMinimal` (항목 간); `borderRadius` `roundedLarge`; `strokeWidthHairline` `alias.borderDefault`; 배경 `alias.backgroundSurface`; `shadows.shadow2Light` |
+| **항목** | `padding` `sizeSmall` (6px); `borderRadius` `roundedLarge`; `body2`; 기본 `alias.foregroundPrimary`; disabled `alias.foregroundDisabled` |
+| **구성** | `Menu / Item` Content `633:4270` 기준 — `startIcon`(20px 슬롯), `label`(body2), 선택 `description`(body4), 선택 `shortcut`, 선택 `endIcon`(chevron 등) |
 
-Figma에는 **Section Header**, **Divider**, **아이콘·단축키** 열이 있으나, `packages/react` `Menu`는 **`items` 텍스트 행**만 제공합니다. **Dropdown**의 좁은 메뉴(180px, `body4`/`neutral850` 행)와는 별도 컴포넌트입니다.
+Figma에는 **Section Header**, **Divider**, **아이콘·단축키** 열이 있으며, React `Menu`는 `items` 기반으로 `startIcon`/`description`/`shortcut`/`endIcon` 슬롯을 제공한다. **Dropdown**의 좁은 메뉴(180px, `body4`/`neutral850` 행)와는 별도 컴포넌트다.
 
 ---
 
@@ -269,8 +270,8 @@ Figma에는 **Section Header**, **Divider**, **아이콘·단축키** 열이 있
 | 속성 | 값 |
 |------|-----|
 | **size** | `sm` — 트랙 높이 `componentSizes.progressTrackHeightSm` (2px); `lg` — `componentSizes.progressTrackHeightLg` (4px) |
-| **트랙 배경** | `neutral400` (Figma `foregrounddisabled` / 비진행) |
-| **채움(기본)** | `primaryBlack` |
+| **트랙 배경** | `alias.backgroundBrandSubtle` |
+| **채움(기본)** | `alias.backgroundBrand` |
 
 `variant` `success` / `warning` / `danger` 는 Web Kit **Progress bar** 그리드에 없으면 프로덕트 확장으로 둔다.
 
@@ -749,11 +750,14 @@ Shadow 레벨: shadow2, shadow4, shadow8, shadow16, shadow24, shadow32, shadow64
     "panelWidth": "componentSizes.menuPanelWidth",
     "padding": "sizeXSmall",
     "itemGap": "sizeMinimal",
-    "border": "strokeWidthHairline neutral300",
+    "border": "strokeWidthHairline alias.borderDefault",
+    "panelBackground": "alias.backgroundSurface",
     "shadow": "shadow2Light",
     "itemPadding": "sizeSmall",
     "itemRadius": "roundedLarge",
-    "itemType": "body2 primaryBlack"
+    "itemType": "body2 alias.foregroundPrimary",
+    "itemDisabled": "alias.foregroundDisabled",
+    "itemSlots": "startIcon(20), description(body4), shortcut(body4), endIcon(chevron)"
   },
   "pagination": {
     "pagination": "558:1989",
@@ -769,8 +773,8 @@ Shadow 레벨: shadow2, shadow4, shadow8, shadow16, shadow24, shadow32, shadow64
     "node": "452:3994",
     "name": "Progress bar",
     "size": { "sm": "progressTrackHeightSm", "lg": "progressTrackHeightLg" },
-    "track": "neutral400",
-    "fillDefault": "primaryBlack"
+    "track": "alias.backgroundBrandSubtle",
+    "fillDefault": "alias.backgroundBrand"
   },
   "radio": {
     "node": "397:1001",

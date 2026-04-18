@@ -21,7 +21,9 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { iconSizes } from "@refineui/tokens";
+import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentSizes } from "../../componentSizes";
+import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
 import { Button, type ButtonProps } from "../Button";
@@ -253,7 +255,7 @@ export function DrawerContent({
                 role="presentation"
                 className="absolute inset-0 cursor-pointer transition-opacity"
                 style={{
-                    backgroundColor: "var(--refineui-color-alias-surface-overlay)",
+                    backgroundColor: resolveColorTokenValue(componentColorTokens.drawer.overlay),
                     opacity: entered ? 1 : 0,
                     transition: `opacity ${SCRIM_MS}ms ${EASING}`,
                     pointerEvents: entered ? "auto" : "none",

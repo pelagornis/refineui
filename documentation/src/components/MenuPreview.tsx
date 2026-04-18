@@ -1,17 +1,44 @@
-import { Menu } from "@refineui/react";
+import { Button, Menu, MenuDivider, MenuItem, MenuList, MenuPopover, MenuSection, MenuTrigger } from "@refineui/react";
 import PreviewFrame from "./PreviewFrame";
 
 export default function MenuPreview() {
   return (
-    <PreviewFrame>
-      <Menu
-        items={[
-          { id: "1", label: "새로 만들기", onClick: () => alert("새로 만들기") },
-          { id: "2", label: "열기", onClick: () => alert("열기") },
-          { id: "3", label: "저장", onClick: () => alert("저장") },
-          { id: "4", label: "비활성화", disabled: true },
-        ]}
-      />
-    </PreviewFrame>
+    <>
+      <PreviewFrame title="Trigger + Popover">
+        <Menu positioning={{ autoSize: true }}>
+          <MenuTrigger>
+            <Button>Toggle menu</Button>
+          </MenuTrigger>
+          <MenuPopover>
+            <MenuList>
+              <MenuSection>Section Header</MenuSection>
+              <MenuItem onClick={() => alert("새로 만들기")}>New</MenuItem>
+              <MenuItem>New Window</MenuItem>
+              <MenuItem disabled>Open File</MenuItem>
+              <MenuItem>Open Folder</MenuItem>
+              <MenuDivider />
+              <MenuSection>Section Header</MenuSection>
+              <MenuItem>Save</MenuItem>
+            </MenuList>
+          </MenuPopover>
+        </Menu>
+      </PreviewFrame>
+
+      <PreviewFrame title="Menu Only (고정 프리뷰)">
+        <div style={{ width: "244px", maxWidth: "100%" }}>
+          <MenuList>
+            <MenuSection>Section Header</MenuSection>
+            <MenuItem>New</MenuItem>
+            <MenuItem>New Window</MenuItem>
+            <MenuItem disabled>Open File</MenuItem>
+            <MenuItem>Open Folder</MenuItem>
+            <MenuDivider />
+            <MenuSection>Section Header</MenuSection>
+            <MenuItem>Save</MenuItem>
+            <MenuItem>Save As...</MenuItem>
+          </MenuList>
+        </div>
+      </PreviewFrame>
+    </>
   );
 }

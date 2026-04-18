@@ -60,7 +60,6 @@
 [data-refineui="spinbutton-step"]:not(:disabled):hover,
 [data-refineui="accordion-trigger"]:hover,
 [data-refineui="dropdown-item"]:not(:disabled):hover,
-[data-refineui="menu-item"]:not(:disabled):hover,
 [data-refineui="calendar-nav"]:hover,
 [data-refineui="chip-remove"]:hover {
   opacity: 0.9;
@@ -84,28 +83,32 @@
 [data-refineui="tabs"][data-variant="pill"] [data-refineui="tab"]:hover:not(:disabled) {
   opacity: 1;
 }
-/* Calendar / Day — Web Kit `Calendar / Day` (Caption 1). Ghost 버튼과 동일 톤의 hover·pressed (`656:2958`) */
+/* Calendar / Day — Web Kit `Calendar / Day` (`639:7052`) */
 [data-refineui="calendar-day"]:not([disabled]):not([data-inactive="true"]):not([data-selected]):not([data-range-middle]):hover:not(:active) {
-  background-color: var(--refineui-color-neutral-200) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
 }
 [data-refineui="calendar-day"]:not([disabled]):not([data-inactive="true"]):not([data-selected]):not([data-range-middle]):active {
-  background-color: var(--refineui-color-neutral-300) !important;
+  background-color: var(--refineui-color-alias-background-primary-active) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
 }
 [data-refineui="calendar-day"][data-range-middle]:not([disabled]):not([data-inactive="true"]):hover:not(:active) {
-  background-color: var(--refineui-color-neutral-200) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
 }
 [data-refineui="calendar-day"][data-range-middle]:not([disabled]):not([data-inactive="true"]):active {
-  background-color: var(--refineui-color-neutral-300) !important;
+  background-color: var(--refineui-color-alias-background-primary-active) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
 }
 /* Selected / Day — 선택은 고정(rest)만; hover·pressed로 배경을 바꾸지 않음(Web Kit) */
 /* Pagination — Web Kit `558:1989` · `Pagination / Item` `570:2332` */
 [data-refineui="pagination"]:not(:disabled):hover {
-  background-color: #f5f5f5 !important;
-  border-color: #bbbbbb !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
+  border-color: var(--refineui-color-alias-border-hover) !important;
 }
 [data-refineui="pagination"]:disabled {
-  background-color: #e0e0e0 !important;
-  border-color: #dbdbdb !important;
+  background-color: var(--refineui-color-alias-background-surface-disabled) !important;
+  border-color: var(--refineui-color-alias-border-disabled) !important;
 }
 [data-refineui="pagination-page"] {
   box-sizing: border-box;
@@ -113,28 +116,28 @@
   min-height: 36px;
   padding: 8px;
   border-radius: 8px;
-  border: 1px solid #dbdbdb;
-  background-color: #ffffff;
-  color: #212121;
+  border: 1px solid var(--refineui-color-alias-border-default);
+  background-color: var(--refineui-color-alias-background-primary);
+  color: var(--refineui-color-alias-foreground-primary);
   cursor: pointer;
   font: inherit;
   transition: background-color 0.15s, border-color 0.15s, transform 0.1s;
 }
 [data-refineui="pagination-page"][data-selected="true"] {
   border-width: 2px;
-  border-color: #333333;
-  background-color: #f0f0f0;
+  border-color: var(--refineui-color-alias-border-focus);
+  background-color: var(--refineui-color-alias-background-primary-active);
   padding: 7px;
 }
 [data-refineui="pagination-page"]:not([data-selected="true"]):not(:disabled):hover {
-  background-color: #f5f5f5 !important;
-  border-color: #bbbbbb !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
+  border-color: var(--refineui-color-alias-border-hover) !important;
 }
 [data-refineui="pagination-page"]:disabled {
   cursor: default;
-  background-color: transparent !important;
-  border-color: transparent !important;
-  color: #212121;
+  background-color: var(--refineui-color-alias-background-surface-disabled) !important;
+  border-color: var(--refineui-color-alias-border-disabled) !important;
+  color: var(--refineui-color-alias-foreground-disabled);
   transform: none;
   opacity: 1;
 }
@@ -203,7 +206,6 @@
 [data-refineui="pagination"]:not(:disabled):active,
 [data-refineui="accordion-trigger"]:active,
 [data-refineui="dropdown-item"]:not(:disabled):active,
-[data-refineui="menu-item"]:not(:disabled):active,
 [data-refineui="tab"]:active,
 [data-refineui="calendar-nav"]:active,
 [data-refineui="calendar-day"]:active,
@@ -224,6 +226,70 @@
 [data-refineui="drawer-close"]:focus-visible {
   outline: 2px solid var(--refineui-focus-color);
   outline-offset: var(--refineui-focus-offset);
+}
+
+/* Menu / Item — MCP 상태 토큰 기반 (hover / pressed / active / disabled) */
+[data-refineui="menu-item"][data-state="hover"] {
+  background-color: var(--refineui-color-alias-background-surface-hover) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
+}
+[data-refineui="menu-item"][data-state="pressed"] {
+  background-color: var(--refineui-color-alias-background-surface-active) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
+}
+[data-refineui="menu-item"][data-state="active"] {
+  background-color: var(--refineui-color-alias-background-surface-selected) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
+}
+[data-refineui="menu-item"][data-state="disabled"] {
+  background-color: var(--refineui-color-alias-background-surface-disabled) !important;
+  color: var(--refineui-color-alias-foreground-disabled) !important;
+}
+[data-refineui="menu-item"][data-state="default"]:not(:disabled):hover {
+  background-color: var(--refineui-color-alias-background-surface-hover) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
+}
+[data-refineui="menu-item"][data-state="default"]:not(:disabled):active {
+  background-color: var(--refineui-color-alias-background-surface-active) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
+}
+
+@keyframes refineui-menu-popover-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes refineui-menu-popover-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+}
+
+[data-refineui="menu-popover"][data-state="open"] {
+  transform-origin: top left;
+  animation: refineui-menu-popover-enter 180ms cubic-bezier(0.2, 0, 0, 1);
+}
+[data-refineui="menu-popover"][data-state="closed"] {
+  transform-origin: top left;
+  pointer-events: none;
+  animation: refineui-menu-popover-exit 180ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-refineui="menu-popover"] {
+    animation: none;
+  }
 }
 
 /* Spin Button — Web Kit `561:2067` (포커스 링은 루트 테두리로 통일) */
@@ -247,10 +313,18 @@
 [data-refineui="select"] {
   transition: border-color 0.15s, box-shadow 0.15s;
 }
-[data-refineui="textarea"]:focus:not(:disabled),
+[data-refineui="textarea"]:focus:not(:disabled):not([data-error="true"]):not([data-success="true"]),
 [data-refineui="select"]:focus:not(:disabled) {
-  border-color: var(--refineui-focus-color) !important;
-  box-shadow: 0 0 0 1px var(--refineui-focus-color);
+  border-color: var(--refineui-color-alias-border-focus) !important;
+  box-shadow: 0 0 0 0.5px var(--refineui-color-alias-border-focus);
+}
+[data-refineui="textarea"][data-error="true"]:focus:not(:disabled) {
+  border-color: var(--refineui-color-alias-background-error-hover) !important;
+  box-shadow: 0 0 0 0.5px var(--refineui-color-alias-background-error-hover);
+}
+[data-refineui="textarea"][data-success="true"]:focus:not(:disabled) {
+  border-color: var(--refineui-color-alias-background-success-hover) !important;
+  box-shadow: 0 0 0 0.5px var(--refineui-color-alias-background-success-hover);
 }
 
 /* Input — MCP `518:7373` Focus state */
@@ -805,7 +879,7 @@ a[data-refineui="link"]:focus-visible {
   background-color: var(--refineui-color-alias-background-error-subtle) !important;
 }
 
-/* Chip / Tag — Web Kit COMPONENT_SET `Tag` `574:6578` (Default=흰 배경·hover neutral100·pressed neutral150; Outline 테두리; Selected=filled) */
+/* Chip / Tag — Web Kit COMPONENT_SET `Tag` `574:6578` */
 [data-refineui="chip"] {
   transition: background-color 0.15s, border-color 0.15s;
 }
@@ -814,22 +888,22 @@ a[data-refineui="link"]:focus-visible {
   cursor: not-allowed;
 }
 [data-refineui="chip"][data-variant="filled"]:not([data-disabled]):hover {
-  background-color: #4d4d4a !important;
+  background-color: var(--refineui-color-alias-background-brand-hover) !important;
 }
 [data-refineui="chip"][data-variant="filled"]:not([data-disabled]):active {
-  background-color: #000000 !important;
+  background-color: var(--refineui-color-alias-background-brand-active) !important;
 }
 [data-refineui="chip"][data-variant="default"]:not([data-disabled]):hover {
-  background-color: #f5f5f5 !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
 [data-refineui="chip"][data-variant="default"]:not([data-disabled]):active {
-  background-color: #f0f0f0 !important;
+  background-color: var(--refineui-color-alias-background-primary-active) !important;
 }
 [data-refineui="chip"][data-variant="outline"]:not([data-disabled]):hover {
-  border-color: #a4a4a4 !important;
+  border-color: var(--refineui-color-alias-border-hover) !important;
 }
 [data-refineui="chip"][data-variant="outline"]:not([data-disabled]):active {
-  border-color: #333333 !important;
+  border-color: var(--refineui-color-alias-border-focus) !important;
 }
 
 /* Slider — Web Kit `526:1556` + Slider/Item (alias 색만; sm/md) */

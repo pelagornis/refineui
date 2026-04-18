@@ -42,7 +42,7 @@ export const componentSizes = {
     /** Web Kit PopOver `553:5669` — Default 패널 최소 폭 */
     popoverPanelWidth: "325px",
     /** Web Kit Menu `633:4268` — Default 패널 최소 폭 */
-    menuPanelWidth: "244px",
+    menuPanelWidth: "180px",
     /** Web Kit Dropdown `503:2985` — `Dropdown / Menu` 폭 */
     dropdownMenuWidth: "180px",
     /** Web Kit Toast `548:654` (`548:655` COMPONENT_SET) — 카드 폭 325px */

@@ -115,9 +115,13 @@ export function SpinButton({
 
     return (
         <div
-            role="group"
-            aria-label="Spin button"
+            role="spinbutton"
+            aria-label={props["aria-label"] ?? "Spin button"}
             aria-disabled={disabled || undefined}
+            aria-valuenow={value}
+            aria-valuemin={min}
+            aria-valuemax={max}
+            tabIndex={disabled ? -1 : 0}
             data-refineui="spinbutton"
             data-size={size}
             data-disabled={disabled ? "true" : undefined}
@@ -145,10 +149,10 @@ export function SpinButton({
             </div>
             <div
                 className={clsx(
-                    "flex w-refineui-spin-stepper-width shrink-0 flex-col border-l border-refineui-thin",
+                    "flex w-refineui-spin-stepper-width shrink-0 flex-col",
                     disabled
-                        ? "border-refineui-alias-border-disabled bg-refineui-alias-background-surface-disabled"
-                        : "border-refineui-alias-border-default bg-refineui-alias-background-primary",
+                        ? "bg-refineui-alias-background-surface-disabled"
+                        : "bg-refineui-alias-background-primary",
                 )}
             >
                 <button
@@ -158,7 +162,7 @@ export function SpinButton({
                     onClick={inc}
                     disabled={disabled || atMax}
                     className={clsx(
-                        "flex w-refineui-spin-stepper-width items-center justify-center border-none p-0 text-refineui-alias-foreground-placeholder",
+                        "flex w-refineui-spin-stepper-width items-center justify-center border-none p-0 pt-refineui-size-xsmall text-refineui-alias-foreground-placeholder",
                         stepHeight[size],
                         disabled || atMax
                             ? "cursor-not-allowed bg-refineui-alias-background-surface-disabled opacity-50"
@@ -174,8 +178,7 @@ export function SpinButton({
                     onClick={dec}
                     disabled={disabled || atMin}
                     className={clsx(
-                        "flex w-refineui-spin-stepper-width items-center justify-center border-none border-t border-refineui-thin p-0 text-refineui-alias-foreground-placeholder",
-                        disabled ? "border-refineui-alias-border-disabled" : "border-refineui-alias-border-default",
+                        "flex w-refineui-spin-stepper-width items-center justify-center border-none p-0 pb-refineui-size-xsmall text-refineui-alias-foreground-placeholder",
                         stepHeight[size],
                         disabled || atMin
                             ? "cursor-not-allowed bg-refineui-alias-background-surface-disabled opacity-50"

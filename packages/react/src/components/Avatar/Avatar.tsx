@@ -1,12 +1,13 @@
 import { clsx } from "clsx";
-import { Children, createContext, isValidElement, useContext, useState } from "react";
+import { Children, cloneElement, createContext, isValidElement, useContext, useState } from "react";
 import type { HTMLAttributes, ImgHTMLAttributes, ReactElement, ReactNode } from "react";
+import { resolveColorTokenValue } from "@refineui/utilities/color";
+import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon, type WebIconProps } from "../../WebIcon";
 import {
     AVATAR_INNER_MASK,
     avatarGroupCountTypo,
     avatarIconSlotSize,
-    avatarOverflowIconSize,
     avatarSizeDim,
     avatarSpreadGap,
     avatarStackOverlapCssVar,
@@ -14,8 +15,10 @@ import {
     avatarStatusPosition,
     avatarTypoNeutral,
     defaultPersonIconColor,
+    avatarNeutralForegroundColor,
     normalizeAvatarColor,
     resolveAvatarShellColorLayer,
+    resolveAvatarShellStyle,
     type AvatarColor,
     type AvatarColorIcon,
     type AvatarColorImage,
@@ -40,24 +43,23 @@ export type AvatarPresenceStatus = "online" | "away" | "unavailable" | "offline"
 export type AvatarProps = Omit<HTMLAttributes<HTMLDivElement>, "color"> & {
     src?: string | null;
     alt?: string;
+    /** Deprecated: use AvatarImage/AvatarIcon/AvatarText slots instead. */
+    layout?: AvatarLayout;
     size?: AvatarSize;
     showStatus?: boolean;
     /** `showStatus`일 때만 적용 — 기본 `online` */
     status?: AvatarPresenceStatus;
     innerClassName?: string;
     children?: ReactNode;
-} & (
-    | { layout: "image"; color?: AvatarColorImage }
-    | { layout: "icon"; color?: AvatarColorIcon }
-    | { layout: "initials"; color?: AvatarColorInitials }
-    | { layout?: undefined; color?: AvatarColorImage }
-);
+    color?: AvatarColor;
+};
 
 export type AvatarImageProps = ImgHTMLAttributes<HTMLImageElement>;
 export type AvatarFallbackProps = HTMLAttributes<HTMLSpanElement>;
 export type AvatarBadgeProps = HTMLAttributes<HTMLSpanElement> & {
     status?: AvatarPresenceStatus;
 };
+export type AvatarTextProps = HTMLAttributes<HTMLSpanElement>;
 export interface AvatarGroupProps extends HTMLAttributes<HTMLDivElement> {
     size?: AvatarSize;
     layout?: "stack" | "spread";
@@ -78,6 +80,8 @@ type ParsedSlots = {
     image?: ReactElement<AvatarImageProps>;
     fallback?: ReactNode;
     badge?: ReactNode;
+    icon?: ReactElement<AvatarIconProps>;
+    text?: ReactElement<AvatarTextProps>;
     leading: ReactNode[];
 };
 
@@ -86,6 +90,8 @@ function parseAvatarSlots(nodes: readonly ReactNode[]): ParsedSlots {
     let image: ParsedSlots["image"];
     let fallback: ReactNode;
     let badge: ReactNode;
+    let icon: ParsedSlots["icon"];
+    let text: ParsedSlots["text"];
     for (const c of nodes) {
         if (!isValidElement(c)) {
             leading.push(c);
@@ -94,9 +100,11 @@ function parseAvatarSlots(nodes: readonly ReactNode[]): ParsedSlots {
         if (c.type === AvatarImage) image = c as ReactElement<AvatarImageProps>;
         else if (c.type === AvatarFallback) fallback = c;
         else if (c.type === AvatarBadge) badge = c;
+        else if (c.type === AvatarIcon) icon = c as ReactElement<AvatarIconProps>;
+        else if (c.type === AvatarText) text = c as ReactElement<AvatarTextProps>;
         else leading.push(c);
     }
-    return { image, fallback, badge, leading };
+    return { image, fallback, badge, icon, text, leading };
 }
 
 function initialsFromAlt(alt: string, layout: AvatarLayout | undefined, size: AvatarSize): string {
@@ -107,7 +115,7 @@ function initialsFromAlt(alt: string, layout: AvatarLayout | undefined, size: Av
     return letters.slice(0, max);
 }
 
-function builtInFallback(initials: string, color: AvatarColor, layout: AvatarLayout | undefined): ReactNode {
+function builtInFallback(initials: string, color: AvatarColor, layout: AvatarLayout): ReactNode {
     if (layout === "icon") return <AvatarIcon name="person" color={defaultPersonIconColor[color]} />;
     if (layout === "initials") return initials || null;
     if (initials) return initials;
@@ -118,8 +126,8 @@ export function Avatar({
     src,
     alt = "",
     size = "medium",
-    color = "neutral",
     layout,
+    color,
     showStatus = false,
     status = "online",
     className,
@@ -128,17 +136,25 @@ export function Avatar({
     ...props
 }: AvatarProps) {
     const [imageError, setImageError] = useState(false);
-    const { image, fallback, badge, leading } = parseAvatarSlots(Children.toArray(children));
-    const initials = initialsFromAlt(alt, layout, size);
+    const { image, fallback, badge, icon, text, leading } = parseAvatarSlots(Children.toArray(children));
+    const slotPreferredLayout: AvatarLayout = icon ? "icon" : text ? "initials" : "image";
+    const initials = initialsFromAlt(alt, layout ?? slotPreferredLayout, size);
     const effectiveSrc = image?.props.src ?? src;
     const effectiveAlt = image?.props.alt ?? alt;
     const showingImage = Boolean(effectiveSrc && !imageError);
-    const effectiveColor = normalizeAvatarColor(layout, color);
+    const resolvedLayout: AvatarLayout = showingImage
+        ? "image"
+        : icon
+          ? "icon"
+          : text
+            ? "initials"
+            : layout ?? (initials.length > 0 ? "initials" : "icon");
+    const effectiveColor = normalizeAvatarColor(resolvedLayout, color);
     const useNeutralShellTypo =
         effectiveColor === "neutral" &&
-        layout !== "icon" &&
+        resolvedLayout !== "icon" &&
         !showingImage &&
-        (layout === "image" || layout === undefined) &&
+        (resolvedLayout === "image" || resolvedLayout === "initials") &&
         !fallback &&
         initials.length > 0;
     const statusSlot = badge ?? (showStatus ? <AvatarBadge status={status} /> : null);
@@ -149,7 +165,7 @@ export function Avatar({
             <div
                 data-refineui="avatar"
                 data-avatar-color={effectiveColor}
-                data-avatar-layout={layout}
+                data-avatar-layout={resolvedLayout}
                 data-show-status={hasStatus ? "true" : undefined}
                 className={clsx("relative shrink-0", avatarSizeDim[size], className)}
                 {...props}
@@ -157,10 +173,14 @@ export function Avatar({
                 <div
                     className={clsx(
                         AVATAR_INNER_MASK,
-                        resolveAvatarShellColorLayer(effectiveColor, size, layout),
+                        resolveAvatarShellColorLayer(effectiveColor, size, resolvedLayout),
                         useNeutralShellTypo && avatarTypoNeutral[size],
                         innerClassName,
                     )}
+                    style={{
+                        ...resolveAvatarShellStyle(effectiveColor, resolvedLayout),
+                        ...(useNeutralShellTypo ? { color: avatarNeutralForegroundColor } : {}),
+                    }}
                 >
                     {leading}
                     {showingImage ? (
@@ -172,8 +192,16 @@ export function Avatar({
                         />
                     ) : fallback ? (
                         fallback
+                    ) : icon ? (
+                        cloneElement(icon, {
+                            color: icon.props.color ?? defaultPersonIconColor[effectiveColor as AvatarColorIcon],
+                        })
+                    ) : text ? (
+                        cloneElement(text, {
+                            children: text.props.children ?? initials,
+                        })
                     ) : (
-                        builtInFallback(initials, effectiveColor, layout)
+                        builtInFallback(initials, effectiveColor, resolvedLayout)
                     )}
                 </div>
                 {statusSlot}
@@ -195,6 +223,12 @@ export function AvatarFallback({ className, ...props }: AvatarFallbackProps) {
     );
 }
 
+export function AvatarText({ className, ...props }: AvatarTextProps) {
+    return (
+        <span className={clsx("inline-flex size-full items-center justify-center", className)} {...props} />
+    );
+}
+
 export function AvatarBadge({ className, status = "online", ...props }: AvatarBadgeProps) {
     const shell = useContext(AvatarShellSizeContext) ?? "medium";
     return (
@@ -210,34 +244,6 @@ export function AvatarBadge({ className, status = "online", ...props }: AvatarBa
         >
             <AvatarStatusGraphic status={status} />
         </span>
-    );
-}
-
-export type AvatarOverflowProps = Omit<
-    AvatarProps,
-    "children" | "src" | "alt" | "layout" | "color" | "showStatus" | "status" | "innerClassName"
-> & { innerClassName?: string };
-
-export function AvatarOverflow({ size = "medium", className, innerClassName, ...props }: AvatarOverflowProps) {
-    return (
-        <Avatar
-            size={size}
-            color="neutral"
-            innerClassName={clsx(
-                "box-border border-refineui-thin border-refineui-alias-border-default bg-refineui-alias-background-primary text-refineui-alias-foreground-secondary",
-                innerClassName,
-            )}
-            className={className}
-            {...props}
-        >
-            <AvatarFallback>
-                <AvatarIcon
-                    name="more-horizontal"
-                    color="var(--refineui-color-alias-foreground-secondary)"
-                    size={avatarOverflowIconSize[size]}
-                />
-            </AvatarFallback>
-        </Avatar>
     );
 }
 
@@ -291,14 +297,22 @@ export function AvatarGroup({
 export function AvatarGroupCount({ className, ...props }: AvatarGroupCountProps) {
     const ctx = useContext(AvatarGroupContext);
     const size = ctx?.size ?? "medium";
+    const groupCountBg = resolveColorTokenValue(componentColorTokens.avatar.groupCount.background);
+    const groupCountBorder = resolveColorTokenValue(componentColorTokens.avatar.groupCount.border);
+    const groupCountFg = resolveColorTokenValue(componentColorTokens.avatar.groupCount.foreground);
     return (
         <span
             className={clsx(
-                "relative box-border inline-flex items-center justify-center rounded-refineui-circle border-refineui-thin border-refineui-alias-border-default bg-refineui-alias-background-primary font-medium text-refineui-alias-foreground-secondary",
+                "relative box-border inline-flex items-center justify-center rounded-refineui-circle border-refineui-thin font-medium",
                 avatarSizeDim[size],
                 avatarGroupCountTypo[size],
                 className,
             )}
+            style={{
+                backgroundColor: groupCountBg,
+                borderColor: groupCountBorder,
+                color: groupCountFg,
+            }}
             {...props}
         />
     );

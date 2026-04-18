@@ -20,7 +20,7 @@
     "refineui.css"
   ],
   "scripts": {
-    "build": "tsup && node scripts/generate-refineui-css.mjs",
+    "build": "pnpm --filter @refineui/utilities build && tsup && node scripts/generate-refineui-css.mjs",
     "dev": "tsup --watch"
   },
   "dependencies": {
