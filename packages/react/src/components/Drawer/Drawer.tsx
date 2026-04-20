@@ -10,8 +10,6 @@ import {
     useRef,
     useState,
     type CSSProperties,
-    type HTMLAttributes,
-    type ReactNode,
     type RefObject,
 } from "react";
 import { createPortal } from "react-dom";
@@ -21,14 +19,25 @@ import { componentSizes } from "../../componentSizes";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
-import { Button, type ButtonProps } from "../Button";
+import { Button } from "../Button";
+import { drawerStyles } from "./style";
+import type {
+    DrawerBodyProps,
+    DrawerCloseProps,
+    DrawerContentProps,
+    DrawerDescriptionProps,
+    DrawerFooterProps,
+    DrawerHeaderProps,
+    DrawerPlacement,
+    DrawerProps,
+    DrawerSize,
+    DrawerTitleProps,
+    DrawerTriggerProps,
+} from "./types";
 
 const PANEL_MS = 320;
 const SCRIM_MS = 280;
 const EASING = "cubic-bezier(0.32, 0.72, 0, 1)";
-
-type DrawerPlacement = "left" | "right";
-type DrawerSize = "small" | "medium" | "large";
 
 type DrawerContextValue = {
     open: boolean;
@@ -68,16 +77,6 @@ function useDrawerOpenState(
         [isControlled, onOpenChange],
     );
     return [open, setOpen];
-}
-
-export interface DrawerProps {
-    open?: boolean;
-    defaultOpen?: boolean;
-    onOpenChange?: (open: boolean) => void;
-    placement?: DrawerPlacement;
-    /** Web Kit Overlay `635:1756` — `componentSizes.drawerWidthSm` / `Md` / `Lg` */
-    size?: DrawerSize;
-    children: ReactNode;
 }
 
 function widthToken(s: DrawerSize): string {
@@ -135,8 +134,6 @@ export function Drawer({
     return <DrawerContext.Provider value={value}>{children}</DrawerContext.Provider>;
 }
 
-export type DrawerTriggerProps = ButtonProps;
-
 export const DrawerTrigger = forwardRef<HTMLButtonElement, DrawerTriggerProps>(function DrawerTrigger(
     { onClick, ...props },
     ref,
@@ -153,13 +150,6 @@ export const DrawerTrigger = forwardRef<HTMLButtonElement, DrawerTriggerProps>(f
         />
     );
 });
-
-export interface DrawerContentProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
-    container?: Element | DocumentFragment | null;
-    style?: CSSProperties;
-    placement?: DrawerPlacement;
-    size?: DrawerSize;
-}
 
 export function DrawerContent({
     className,
@@ -239,15 +229,15 @@ export function DrawerContent({
             aria-labelledby={hasTitle ? titleId : undefined}
             aria-describedby={hasDescription ? descriptionId : undefined}
             className={clsx(
-                "fixed inset-0 z-refineui-messages flex",
-                isLeft ? "justify-start" : "justify-end",
+                drawerStyles.root,
+                isLeft ? drawerStyles.rootLeft : drawerStyles.rootRight,
                 className,
             )}
             {...props}
         >
             <div
                 role="presentation"
-                className="absolute inset-0 cursor-pointer transition-opacity"
+                className={drawerStyles.scrim}
                 style={{
                     backgroundColor: resolveColorTokenValue(componentColorTokens.drawer.overlay),
                     opacity: entered ? 1 : 0,
@@ -260,7 +250,7 @@ export function DrawerContent({
             <div
                 ref={panelRef}
                 tabIndex={-1}
-                className="relative box-border flex h-full flex-col overflow-hidden bg-refineui-alias-background-primary shadow-refineui-16light outline-none"
+                className={drawerStyles.panel}
                 style={{ ...panelMotion, ...style }}
                 onClick={(e) => e.stopPropagation()}
             >
@@ -270,11 +260,6 @@ export function DrawerContent({
     );
 
     return createPortal(root, target);
-}
-
-export interface DrawerHeaderProps extends HTMLAttributes<HTMLDivElement> {
-    showClose?: boolean;
-    actions?: ReactNode;
 }
 
 export function DrawerHeader({
@@ -288,23 +273,21 @@ export function DrawerHeader({
         <div
             data-name="Drawer / Header"
             className={clsx(
-                "flex shrink-0 items-start gap-refineui-size-small px-refineui-size-xxlarge pb-refineui-size-medium pt-refineui-size-xxlarge",
+                drawerStyles.header,
                 className,
             )}
             {...props}
         >
-            <div className="flex min-h-0 min-w-0 flex-1 items-center gap-refineui-size-small">
+            <div className={drawerStyles.headerMain}>
                 {showClose ? <DrawerClose /> : null}
-                <div className="flex min-w-0 flex-1 flex-col gap-refineui-size-xxsmall">{children}</div>
+                <div className={drawerStyles.headerMainText}>{children}</div>
             </div>
             {actions ? (
-                <div className="flex shrink-0 items-center gap-refineui-size-small">{actions}</div>
+                <div className={drawerStyles.headerActions}>{actions}</div>
             ) : null}
         </div>
     );
 }
-
-export type DrawerTitleProps = HTMLAttributes<HTMLHeadingElement>;
 
 export function DrawerTitle({ className, id, children, ...props }: DrawerTitleProps) {
     const { titleId, setHasTitle } = useDrawerContext("DrawerTitle");
@@ -315,15 +298,13 @@ export function DrawerTitle({ className, id, children, ...props }: DrawerTitlePr
     return (
         <h2
             id={id ?? titleId}
-            className={clsx("refineui-typo-sub-title-1 m-0 min-w-0 text-refineui-alias-foreground-primary", className)}
+            className={clsx(drawerStyles.title, className)}
             {...props}
         >
             {children}
         </h2>
     );
 }
-
-export type DrawerDescriptionProps = HTMLAttributes<HTMLParagraphElement>;
 
 export function DrawerDescription({ className, id, children, ...props }: DrawerDescriptionProps) {
     const { descriptionId, setHasDescription } = useDrawerContext("DrawerDescription");
@@ -334,7 +315,7 @@ export function DrawerDescription({ className, id, children, ...props }: DrawerD
     return (
         <p
             id={id ?? descriptionId}
-            className={clsx("refineui-typo-body-4 m-0 min-w-0 text-refineui-alias-foreground-secondary", className)}
+            className={clsx(drawerStyles.description, className)}
             {...props}
         >
             {children}
@@ -342,38 +323,30 @@ export function DrawerDescription({ className, id, children, ...props }: DrawerD
     );
 }
 
-export type DrawerBodyProps = HTMLAttributes<HTMLDivElement>;
-
 export function DrawerBody({ className, ...props }: DrawerBodyProps) {
     return (
         <div
             data-name="Body"
             className={clsx(
-                "refineui-typo-body-2 box-border min-h-0 flex-1 overflow-auto border-t-refineui-thin border-t-refineui-alias-border-default p-refineui-size-xxlarge text-refineui-alias-foreground-primary",
+                drawerStyles.body,
                 className,
             )}
             {...props}
         />
     );
 }
-
-export type DrawerFooterProps = HTMLAttributes<HTMLDivElement>;
 
 export function DrawerFooter({ className, ...props }: DrawerFooterProps) {
     return (
         <div
             data-name="Drawer / Footer"
             className={clsx(
-                "mt-auto flex shrink-0 items-center justify-end gap-refineui-size-small border-t-refineui-thin border-t-refineui-alias-border-default px-refineui-size-xxlarge py-refineui-size-medium",
+                drawerStyles.footer,
                 className,
             )}
             {...props}
         />
     );
-}
-
-export interface DrawerCloseProps extends Omit<ButtonProps, "children"> {
-    children?: ReactNode;
 }
 
 export function DrawerClose({

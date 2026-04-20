@@ -1,13 +1,8 @@
 import { clsx } from "clsx";
-import type { InputHTMLAttributes } from "react";
 import { useId, useRef } from "react";
 import { RadioInput } from "./RadioInput";
-
-export interface RadioProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
-    label?: string;
-    description?: string;
-    allowUncheck?: boolean;
-}
+import { radioStyles } from "./style";
+import type { RadioProps } from "./types";
 
 export function Radio({
     label,
@@ -28,9 +23,9 @@ export function Radio({
         <label
             htmlFor={inputId}
             className={clsx(
-                "inline-flex gap-refineui-size-medium p-refineui-size-xxsmall",
-                description ? "items-start" : "items-center",
-                disabled ? "cursor-not-allowed" : "cursor-pointer",
+                radioStyles.root,
+                description ? radioStyles.rootWithDescription : radioStyles.rootWithoutDescription,
+                disabled ? radioStyles.rootDisabled : radioStyles.rootEnabled,
                 className,
             )}
         >
@@ -39,8 +34,8 @@ export function Radio({
                 disabled={disabled}
                 {...props}
                 className={clsx(
-                    description && "mt-refineui-size-xxsmall",
-                    disabled && "cursor-not-allowed",
+                    description && radioStyles.inputWithDescriptionOffset,
+                    disabled && radioStyles.rootDisabled,
                 )}
                 onMouseDown={(e) => {
                     props.onMouseDown?.(e);
@@ -63,14 +58,12 @@ export function Radio({
                 }}
             />
             {showText && (
-                <span className="flex min-w-0 flex-col gap-refineui-size-small">
+                <span className={radioStyles.textWrap}>
                     {label && (
                         <span
                             className={clsx(
-                                "refineui-typo-caption-1",
-                                disabled
-                                    ? "text-refineui-alias-foreground-disabled"
-                                    : "text-refineui-alias-foreground-primary",
+                                radioStyles.label,
+                                disabled ? radioStyles.textDisabled : radioStyles.labelEnabled,
                             )}
                         >
                             {label}
@@ -79,10 +72,8 @@ export function Radio({
                     {description && (
                         <span
                             className={clsx(
-                                "refineui-typo-caption-3",
-                                disabled
-                                    ? "text-refineui-alias-foreground-disabled"
-                                    : "text-refineui-alias-foreground-secondary",
+                                radioStyles.description,
+                                disabled ? radioStyles.textDisabled : radioStyles.descriptionEnabled,
                             )}
                         >
                             {description}

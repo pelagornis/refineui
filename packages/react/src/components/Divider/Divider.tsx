@@ -1,17 +1,16 @@
 import { clsx } from "clsx";
 import type { HTMLAttributes, ReactNode } from "react";
 import { componentSizes } from "../../componentSizes";
-
-type DividerHTML = Omit<HTMLAttributes<HTMLDivElement>, "children">;
-type Align = "center" | "left" | "right";
+import { dividerStyles } from "./style";
+import type { DividerAlign, DividerProps } from "./types";
 
 function LineSegment({ grow }: { grow: boolean }) {
     return (
         <div
             data-name="Vector"
             className={clsx(
-                "h-(--refineui-stroke-width-thin) min-h-(--refineui-stroke-width-thin) shrink-0 bg-refineui-alias-border-default",
-                grow ? "min-w-0 flex-1" : "min-w-refineui-divider-short-end w-refineui-divider-short-end",
+                dividerStyles.line,
+                grow ? dividerStyles.lineGrow : dividerStyles.lineShort,
             )}
         />
     );
@@ -21,7 +20,7 @@ function DividerCircleGlyph() {
     return (
         <span
             aria-hidden
-            className="absolute left-refineui-divider-icon-circle-inset top-refineui-divider-icon-circle-inset box-border rounded-refineui-circle border-refineui-thin border-refineui-alias-foreground-brand"
+            className={dividerStyles.iconCircle}
             style={{
                 width: componentSizes.dividerIconCircleDiameter,
                 height: componentSizes.dividerIconCircleDiameter,
@@ -30,16 +29,11 @@ function DividerCircleGlyph() {
     );
 }
 
-export type DividerProps =
-    | (DividerHTML & { layout?: "default" })
-    | (DividerHTML & { layout: "content"; children: ReactNode; align?: Align })
-    | (DividerHTML & { layout: "icon"; align?: Align });
-
 /** Web Kit `Divider` `346:722` — layout default · content · icon; align center · left · right (horizontal). See design-specs-web-kit.md §8. */
 export function Divider(props: DividerProps) {
-    const p = props as DividerHTML & {
+    const p = props as Omit<HTMLAttributes<HTMLDivElement>, "children"> & {
         layout?: "default" | "content" | "icon";
-        align?: Align;
+        align?: DividerAlign;
         children?: ReactNode;
     };
     const { layout = "default", align = "center", children, className, ...htmlProps } = p;
@@ -55,7 +49,7 @@ export function Divider(props: DividerProps) {
                 role="separator"
                 aria-orientation="horizontal"
                 className={clsx(
-                    "box-border h-(--refineui-stroke-width-thin) min-h-(--refineui-stroke-width-thin) w-full border-none bg-refineui-alias-border-default",
+                    dividerStyles.default,
                     className,
                 )}
                 {...htmlProps}
@@ -66,8 +60,7 @@ export function Divider(props: DividerProps) {
     const isLeft = align === "left";
     const isRight = align === "right";
 
-    const rowClass =
-        "box-border flex w-full items-center justify-center gap-refineui-size-medium overflow-hidden";
+    const rowClass = dividerStyles.row;
 
     if (effectiveLayout === "content") {
         return (
@@ -82,7 +75,7 @@ export function Divider(props: DividerProps) {
                 {...htmlProps}
             >
                 <LineSegment grow={!isLeft} />
-                <span className="refineui-typo-caption-2 whitespace-nowrap text-refineui-alias-foreground-brand">
+                <span className={dividerStyles.contentLabel}>
                     {children}
                 </span>
                 <LineSegment grow={!isRight} />
@@ -104,7 +97,7 @@ export function Divider(props: DividerProps) {
             <LineSegment grow={!isLeft} />
             <div
                 data-name="Circle"
-                className="relative min-w-refineui-divider-icon-slot size-refineui-divider-icon-slot shrink-0 overflow-visible"
+                className={dividerStyles.iconSlot}
             >
                 <DividerCircleGlyph />
             </div>

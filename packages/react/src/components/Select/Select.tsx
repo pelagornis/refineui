@@ -1,27 +1,8 @@
 import { clsx } from "clsx";
-import type { SelectHTMLAttributes } from "react";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
-
-export interface SelectOption {
-    value: string;
-    label: string;
-}
-
-export interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "size"> {
-    options: SelectOption[];
-    placeholder?: string;
-    fullWidth?: boolean;
-    error?: boolean;
-    success?: boolean;
-    size?: "sm" | "md" | "lg";
-}
-
-const sizeClass: Record<NonNullable<SelectProps["size"]>, string> = {
-    sm: "min-h-refineui-control-height-sm rounded-refineui-medium px-refineui-size-medium py-refineui-size-small refineui-typo-caption-1",
-    md: "min-h-refineui-control-height-md rounded-refineui-large px-refineui-size-large py-refineui-size-medium refineui-typo-body-2",
-    lg: "min-h-refineui-control-height-lg rounded-refineui-xlarge px-refineui-size-large py-refineui-size-large refineui-typo-body-1",
-};
+import { selectSizeClass, selectStyles } from "./style";
+import type { SelectProps } from "./types";
 
 export function Select({
     options,
@@ -50,10 +31,10 @@ export function Select({
             aria-invalid={error || undefined}
             disabled={disabled}
             className={clsx(
-                "box-border border-refineui-thin outline-none transition-[border-color,box-shadow,background-color] duration-150",
-                disabled ? "cursor-not-allowed" : "cursor-pointer",
+                selectStyles.base,
+                disabled ? selectStyles.disabledCursor : selectStyles.enabledCursor,
                 fullWidth && "w-full",
-                sizeClass[size],
+                selectSizeClass[size],
                 className,
             )}
             style={{

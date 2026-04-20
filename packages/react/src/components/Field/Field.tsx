@@ -1,22 +1,8 @@
 import { clsx } from "clsx";
-import type { HTMLAttributes, ReactNode } from "react";
+import type { FieldProps } from "./types";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
-
-export interface FieldProps extends HTMLAttributes<HTMLDivElement> {
-    label?: ReactNode;
-    error?: ReactNode;
-    hint?: ReactNode;
-    required?: boolean;
-    size?: "sm" | "md" | "lg";
-    children: ReactNode;
-}
-
-const labelTypo: Record<NonNullable<FieldProps["size"]>, string> = {
-    sm: "refineui-typo-caption-1",
-    md: "refineui-typo-body-2",
-    lg: "refineui-typo-body-1",
-};
+import { fieldLabelTypo, fieldStyles } from "./style";
 
 export function Field({
     label,
@@ -29,15 +15,15 @@ export function Field({
     ...props
 }: FieldProps) {
     return (
-        <div data-refineui="field" data-size={size} className={clsx("mb-refineui-size-medium", className)} {...props}>
+        <div data-refineui="field" data-size={size} className={clsx(fieldStyles.root, className)} {...props}>
             {label && (
                 <label
-                    className={clsx("mb-refineui-size-xsmall block", labelTypo[size])}
+                    className={clsx(fieldStyles.label, fieldLabelTypo[size])}
                     style={{ color: resolveColorTokenValue(componentColorTokens.field.label) }}
                 >
                     {label}
                     {required && (
-                        <span className="ml-refineui-size-xxsmall" style={{ color: resolveColorTokenValue(componentColorTokens.field.required) }}>
+                        <span className={fieldStyles.required} style={{ color: resolveColorTokenValue(componentColorTokens.field.required) }}>
                             *
                         </span>
                     )}
@@ -47,7 +33,7 @@ export function Field({
             {error && (
                 <div
                     role="alert"
-                    className="refineui-typo-caption-3 mt-refineui-size-xsmall"
+                    className={fieldStyles.feedback}
                     style={{ color: resolveColorTokenValue(componentColorTokens.field.error) }}
                 >
                     {error}
@@ -55,7 +41,7 @@ export function Field({
             )}
             {hint && !error && (
                 <div
-                    className="refineui-typo-caption-3 mt-refineui-size-xsmall"
+                    className={fieldStyles.feedback}
                     style={{ color: resolveColorTokenValue(componentColorTokens.field.hint) }}
                 >
                     {hint}

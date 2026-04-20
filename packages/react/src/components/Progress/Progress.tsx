@@ -1,12 +1,6 @@
 import { clsx } from "clsx";
-import type { HTMLAttributes } from "react";
-
-export interface ProgressProps extends HTMLAttributes<HTMLDivElement> {
-    value: number;
-    max?: number;
-    /** Web Kit `Progress bar` `452:3994` — Small(2px) / Large(4px) */
-    size?: "sm" | "lg";
-}
+import { progressStyles } from "./style";
+import type { ProgressProps } from "./types";
 
 export function Progress({
     value,
@@ -25,14 +19,14 @@ export function Progress({
             aria-valuemin={0}
             aria-valuemax={max}
             className={clsx(
-                "overflow-hidden rounded-refineui-circle bg-refineui-alias-background-brand-subtle",
-                size === "lg" ? "h-refineui-progress-track-height-lg" : "h-refineui-progress-track-height-sm",
+                progressStyles.root,
+                size === "lg" ? progressStyles.sizeLg : progressStyles.sizeSm,
                 className,
             )}
             {...props}
         >
             <div
-                className="h-full rounded-refineui-circle bg-refineui-alias-background-brand transition-[width] duration-300 ease-out"
+                className={progressStyles.bar}
                 style={{ width: `${pct}%` }}
             />
         </div>

@@ -1,26 +1,12 @@
 import { clsx } from "clsx";
-import type { HTMLAttributes } from "react";
 import { useState } from "react";
 import { iconSizes } from "@refineui/tokens";
 import { WebIcon } from "../../WebIcon";
 import { Button } from "../Button";
-
-export type CalendarMode = "single" | "range";
-
-export interface CalendarProps extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
-    mode?: CalendarMode;
-    value?: Date;
-    onChange?: (date: Date) => void;
-    rangeStart?: Date;
-    rangeEnd?: Date;
-    onRangeChange?: (start: Date | undefined, end: Date | undefined) => void;
-    weekStartsOn?: 0 | 1;
-    defaultMonth?: Date;
-}
+import { calendarStyles } from "./style";
+import type { CalendarProps } from "./types";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const;
-
-const grid7 = "[grid-template-columns:repeat(7,var(--refineui-size-calendar-day-size))]";
 
 function startOfDay(d: Date) {
     return new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -79,10 +65,6 @@ function chunkWeeks(cells: GridCell[]): GridCell[][] {
     }
     return weeks;
 }
-
-/** MCP `Calendar / Day` — Web Caption 1 (12px · Medium · 16px lh) */
-const dayBase =
-    "refineui-typo-caption-1 box-border inline-flex size-refineui-calendar-day-size min-h-refineui-calendar-day-size min-w-refineui-calendar-day-size cursor-pointer items-center justify-center border-none p-0";
 
 export function Calendar({
     mode = "single",
@@ -170,8 +152,8 @@ export function Calendar({
                 role="gridcell"
                 onClick={() => handleDayClick(day, monthOffset)}
                 className={clsx(
-                    dayBase,
-                    "rounded-refineui-large bg-refineui-alias-background-brand text-refineui-alias-foreground-inversed",
+                    calendarStyles.dayBase,
+                    calendarStyles.daySelected,
                 )}
             >
                 {day}
@@ -189,8 +171,8 @@ export function Calendar({
                 role="gridcell"
                 onClick={() => handleDayClick(day, monthOffset)}
                 className={clsx(
-                    dayBase,
-                    "rounded-refineui-none bg-refineui-alias-background-primary-hover text-refineui-alias-foreground-primary",
+                    calendarStyles.dayBase,
+                    calendarStyles.dayRangeMiddle,
                 )}
             >
                 {day}
@@ -201,9 +183,9 @@ export function Calendar({
             <div
                 key={key}
                 className={clsx(
-                    "box-border flex size-refineui-calendar-day-size items-center justify-center bg-refineui-alias-background-primary-hover",
-                    endpoint === "start" && "rounded-l-refineui-large",
-                    endpoint === "end" && "rounded-r-refineui-large",
+                    calendarStyles.dayWrapEndpoint,
+                    endpoint === "start" && calendarStyles.dayWrapEndpointStart,
+                    endpoint === "end" && calendarStyles.dayWrapEndpointEnd,
                 )}
             >
                 <button
@@ -216,8 +198,8 @@ export function Calendar({
                     role="gridcell"
                     onClick={() => handleDayClick(day, monthOffset)}
                     className={clsx(
-                        dayBase,
-                        "rounded-refineui-large bg-refineui-alias-background-brand text-refineui-alias-foreground-inversed",
+                        calendarStyles.dayBase,
+                        calendarStyles.daySelected,
                     )}
                 >
                     {day}
@@ -243,11 +225,10 @@ export function Calendar({
                     role="gridcell"
                     onClick={() => handleDayClick(day, monthOffset)}
                     className={clsx(
-                        dayBase,
-                        "rounded-refineui-large",
+                        calendarStyles.dayBase,
                         showBlackOther
-                            ? "bg-refineui-alias-background-brand text-refineui-alias-foreground-inversed"
-                            : "bg-transparent text-refineui-alias-foreground-disabled",
+                            ? calendarStyles.daySelected
+                            : calendarStyles.dayOtherMonthDefault,
                     )}
                 >
                     {day}
@@ -280,11 +261,10 @@ export function Calendar({
                 role="gridcell"
                 onClick={() => handleDayClick(day, monthOffset)}
                 className={clsx(
-                    dayBase,
-                    "rounded-refineui-large",
+                    calendarStyles.dayBase,
                     isSelectedSingle
-                        ? "bg-refineui-alias-background-brand text-refineui-alias-foreground-inversed"
-                        : "bg-transparent text-refineui-alias-foreground-primary",
+                        ? calendarStyles.daySelected
+                        : calendarStyles.dayDefault,
                 )}
             >
                 {day}
@@ -298,12 +278,12 @@ export function Calendar({
             role="grid"
             aria-label="Calendar"
             className={clsx(
-                "box-border flex min-w-refineui-calendar-min-width w-fit flex-col gap-refineui-size-none rounded-refineui-large bg-refineui-alias-background-primary p-refineui-size-large",
+                calendarStyles.root,
                 className,
             )}
             {...props}
         >
-            <div className="flex w-full min-w-0 items-start justify-between px-refineui-size-small pb-refineui-size-medium">
+            <div className={calendarStyles.header}>
                 <Button
                     type="button"
                     variant="ghost"
@@ -311,7 +291,7 @@ export function Calendar({
                     layout="icon"
                     data-calendar-header="nav-prev"
                     aria-label="Previous month"
-                    className="shrink-0 text-refineui-alias-foreground-primary"
+                    className={calendarStyles.navButton}
                     onClick={() => setView(new Date(year, month - 1))}
                 >
                     <WebIcon name="chevron-left" size={iconSizes.small} color="currentColor" fallback="‹" />
@@ -323,7 +303,7 @@ export function Calendar({
                     layout="label"
                     data-calendar-header="caption-month"
                     aria-label={`Month: ${monthName}`}
-                    className="shrink-0"
+                    className={calendarStyles.captionButton}
                 >
                     {monthName}
                 </Button>
@@ -334,7 +314,7 @@ export function Calendar({
                     layout="label"
                     data-calendar-header="caption-year"
                     aria-label={`Year: ${year}`}
-                    className="shrink-0"
+                    className={calendarStyles.captionButton}
                 >
                     {String(year)}
                 </Button>
@@ -345,26 +325,26 @@ export function Calendar({
                     layout="icon"
                     data-calendar-header="nav-next"
                     aria-label="Next month"
-                    className="shrink-0 text-refineui-alias-foreground-primary"
+                    className={calendarStyles.navButton}
                     onClick={() => setView(new Date(year, month + 1))}
                 >
                     <WebIcon name="chevron-right" size={iconSizes.small} color="currentColor" fallback="›" />
                 </Button>
             </div>
 
-            <div className="flex flex-col gap-refineui-size-small">
-                <div className={clsx("grid gap-refineui-size-none", grid7)}>
+            <div className={calendarStyles.body}>
+                <div className={clsx("grid gap-refineui-size-none", calendarStyles.grid7)}>
                     {weekdayLabels.map((w) => (
                         <div
                             key={w}
-                            className="refineui-typo-caption-1 box-border w-refineui-calendar-day-size py-refineui-size-small text-center text-refineui-alias-foreground-primary"
+                            className={calendarStyles.weekday}
                         >
                             {w}
                         </div>
                     ))}
                 </div>
                 {weeks.map((row, wi) => (
-                    <div key={wi} className={clsx("grid gap-refineui-size-none", grid7)}>
+                    <div key={wi} className={clsx("grid gap-refineui-size-none", calendarStyles.grid7)}>
                         {row.map((cell, di) => renderDayButton(cell, `d-${wi}-${di}-${cell.monthOffset}-${cell.day}`))}
                     </div>
                 ))}

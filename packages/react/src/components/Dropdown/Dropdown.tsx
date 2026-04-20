@@ -1,6 +1,5 @@
 import { clsx } from "clsx";
 import type {
-    ButtonHTMLAttributes,
     CSSProperties,
     Dispatch,
     HTMLAttributes,
@@ -19,7 +18,6 @@ import {
     useContext,
     useEffect,
     useId,
-    useLayoutEffect,
     useMemo,
     useRef,
     useState,
@@ -34,133 +32,24 @@ import { composeRef } from "../../utils/composeRef";
 import { getMergeableTriggerChild } from "../../utils/mergeTriggerChild";
 import { acquireBodyScrollLock } from "../../utils/bodyScrollLock";
 import { RadioInput } from "../Radio/RadioInput";
-
-const useIsomorphicLayoutEffect = typeof document !== "undefined" ? useLayoutEffect : useEffect;
-
-function parseCssPxLen(value: string, fallback: number): number {
-    const n = Number.parseFloat(value);
-    return Number.isFinite(n) ? n : fallback;
-}
-
-/** 스크롤 가능한 조상 + window — `getBoundingClientRect` 기준 갱신용 */
-function subscribeScrollAndScrollableAncestors(target: HTMLElement | null, fn: () => void): () => void {
-    if (typeof window === "undefined") return () => {};
-    const list: (Element | Window)[] = [window];
-    let el: HTMLElement | null = target?.parentElement ?? null;
-    while (el) {
-        const { overflow, overflowX, overflowY } = getComputedStyle(el);
-        if (
-            [overflow, overflowX, overflowY].some((o) => o === "auto" || o === "scroll" || o === "overlay") ||
-            el.scrollHeight > el.clientHeight + 1
-        ) {
-            list.push(el);
-        }
-        el = el.parentElement;
-    }
-    for (const t of list) {
-        t.addEventListener("scroll", fn, true);
-    }
-    return () => {
-        for (const t of list) {
-            t.removeEventListener("scroll", fn, true);
-        }
-    };
-}
-
-/** shadcn `align` + RefineUI `side` 와 동일한 고정 메뉴 배치 (뷰포트 클램프). */
-
-export type MenuAlign = "start" | "end" | "center";
-
-function computeAnchoredMenuPosition(params: {
-    anchor: DOMRect;
-    menuWidth: number;
-    menuHeight: number;
-    align: MenuAlign;
-    side: "auto" | "top" | "bottom";
-    gap: number;
-    edge?: number;
-}): { top: number; left: number; side: "top" | "bottom" } {
-    const edge = params.edge ?? 8;
-    const { anchor, menuWidth: menuW, menuHeight: menuH, align, side, gap } = params;
-    const vw = typeof window !== "undefined" ? window.innerWidth : 800;
-    const vh = typeof window !== "undefined" ? window.innerHeight : 600;
-
-    let left =
-        align === "start"
-            ? anchor.left
-            : align === "end"
-              ? anchor.right - menuW
-              : anchor.left + anchor.width / 2 - menuW / 2;
-    left = Math.max(edge, Math.min(left, vw - menuW - edge));
-
-    const spaceBelow = vh - edge - (anchor.bottom + gap);
-    const spaceAbove = anchor.top - gap - edge;
-    const fitsBelow = menuH <= spaceBelow;
-    const fitsAbove = menuH <= spaceAbove;
-
-    let top: number;
-    let resolvedSide: "top" | "bottom" = "bottom";
-
-    if (side === "bottom") {
-        resolvedSide = "bottom";
-        top = anchor.bottom + gap;
-        if (!fitsBelow && fitsAbove) {
-            top = anchor.top - gap - menuH;
-            resolvedSide = "top";
-        } else if (!fitsBelow && !fitsAbove) {
-            top = Math.max(edge, Math.min(anchor.bottom + gap, vh - edge - menuH));
-        }
-    } else if (side === "top") {
-        resolvedSide = "top";
-        top = anchor.top - gap - menuH;
-        if (!fitsAbove && fitsBelow) {
-            top = anchor.bottom + gap;
-            resolvedSide = "bottom";
-        } else if (!fitsBelow && !fitsAbove) {
-            top = Math.max(edge, Math.min(anchor.top - gap - menuH, vh - edge - menuH));
-        }
-    } else {
-        if (!fitsBelow && fitsAbove) {
-            top = anchor.top - gap - menuH;
-            resolvedSide = "top";
-        } else {
-            top = anchor.bottom + gap;
-            resolvedSide = "bottom";
-        }
-        if (!fitsBelow && !fitsAbove) {
-            top = Math.max(edge, Math.min(anchor.bottom + gap, vh - edge - menuH));
-            resolvedSide = "bottom";
-        }
-    }
-
-    return { top, left, side: resolvedSide };
-}
-
-function computeSubmenuPanelPosition(params: {
-    trigger: DOMRect;
-    panelWidth: number;
-    panelHeight: number;
-    gap: number;
-    edge?: number;
-    /** 기본 트리거 오른쪽; 공간 부족 시 왼쪽 */
-    preferredSide?: "right" | "left";
-}): { top: number; left: number } {
-    const edge = params.edge ?? 8;
-    const { trigger: tr, panelWidth: pw, panelHeight: ph, gap } = params;
-    const vw = typeof window !== "undefined" ? window.innerWidth : 800;
-    const vh = typeof window !== "undefined" ? window.innerHeight : 600;
-
-    let left = tr.right + gap;
-    if (left + pw > vw - edge) {
-        left = tr.left - gap - pw;
-    }
-    left = Math.max(edge, Math.min(left, vw - pw - edge));
-
-    let top = tr.top;
-    top = Math.max(edge, Math.min(top, vh - ph - edge));
-
-    return { top, left };
-}
+import type {
+    DropdownContentProps,
+    DropdownItemProps,
+    DropdownListItem,
+    DropdownListProps,
+    DropdownSelectionVariant,
+    DropdownSubContentProps,
+    DropdownSubTriggerProps,
+    DropdownTriggerProps,
+    MenuAlign,
+} from "./types";
+import {
+    computeAnchoredMenuPosition,
+    computeSubmenuPanelPosition,
+    parseCssPxLen,
+    subscribeScrollAndScrollableAncestors,
+    useIsomorphicLayoutEffect,
+} from "./positioning";
 
 type TriggerProps = {
     onClick?: (e: MouseEvent<HTMLElement>) => void;
@@ -168,33 +57,6 @@ type TriggerProps = {
     className?: string;
 };
 type TriggerElement = ReactElement<TriggerProps> & { ref?: Ref<HTMLElement | null> };
-
-
-/** Row selection UI + ARIA. `none` = 일반 행(`menuitem`). */
-export type DropdownSelectionVariant = "none" | "checkbox" | "radio";
-
-export interface DropdownListItem {
-    id: string;
-    label: ReactNode;
-    startIcon?: ReactNode;
-    shortcut?: ReactNode;
-    onClick?: () => void;
-    disabled?: boolean;
-    /** 고정 선택 표시(배경 `surfaceSelected`). `selection`이 none일 때만 시각만 쓰면 됩니다. */
-    selected?: boolean;
-    /** 체크·라디오 행 — 좌측 컨트롤 + `menuitemcheckbox` / `menuitemradio`. */
-    selection?: DropdownSelectionVariant;
-}
-
-export interface DropdownListProps extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
-    trigger: ReactNode;
-    items: DropdownListItem[];
-    align?: "start" | "end";
-    /** 메뉴를 트리거 위·아래 어디에 붙일지. `auto`는 공간에 따라 뒤집습니다. */
-    side?: "auto" | "top" | "bottom";
-    showTriggerChevron?: boolean;
-    menuTitle?: ReactNode;
-}
 
 
 function DropdownCheckboxGlyph({ selected, disabled }: { selected: boolean; disabled?: boolean }) {
@@ -749,10 +611,6 @@ export function Dropdown({ className, children, ...props }: HTMLAttributes<HTMLD
     );
 }
 
-export interface DropdownTriggerProps extends Omit<HTMLAttributes<HTMLElement>, "children"> {
-    children: ReactNode;
-}
-
 /** `PopoverTrigger` · `MenuTrigger` 와 같이 단일 병합 가능 자식이면 ref·이벤트를 합성하고, 아니면 래퍼 `button`을 둡니다. */
 export function DropdownTrigger({ children, className, ...props }: DropdownTriggerProps) {
     const { open, setOpen, triggerRef, menuId } = useDropdownRoot("DropdownTrigger");
@@ -822,13 +680,6 @@ export function DropdownTrigger({ children, className, ...props }: DropdownTrigg
             {children}
         </button>
     );
-}
-
-export interface DropdownContentProps extends HTMLAttributes<HTMLDivElement> {
-    align?: MenuAlign;
-    side?: "auto" | "top" | "bottom";
-    /** 트리거와 패널 사이 간격 — 기본 `sizeXSmall`(4px). */
-    sideOffset?: number;
 }
 
 export function DropdownContent({
@@ -985,10 +836,6 @@ export function DropdownLabel({ className, ...props }: HTMLAttributes<HTMLDivEle
     );
 }
 
-export interface DropdownItemProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
-    children: ReactNode;
-}
-
 export function DropdownItem({
     className,
     disabled,
@@ -1076,10 +923,6 @@ function useSub(component: string): SubCtx {
     return v;
 }
 
-export interface DropdownSubTriggerProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    children: ReactNode;
-}
-
 export function DropdownSubTrigger({ className, children, onClick, ...props }: DropdownSubTriggerProps) {
     const { open, setOpen, triggerRef } = useSub("DropdownSubTrigger");
 
@@ -1109,8 +952,6 @@ export function DropdownSubTrigger({ className, children, onClick, ...props }: D
         </button>
     );
 }
-
-export interface DropdownSubContentProps extends HTMLAttributes<HTMLDivElement> {}
 
 export function DropdownSubContent({ className, children, ...props }: DropdownSubContentProps) {
     const root = useDropdownRoot("DropdownSubContent");

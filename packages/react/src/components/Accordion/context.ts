@@ -1,0 +1,51 @@
+import { createContext, useEffect, useState } from "react";
+
+export type AccordionSize = "small" | "medium" | "large";
+export type AccordionType = "single" | "multiple";
+export type OpenState = Set<string>;
+
+export interface AccordionContextValue {
+    size: AccordionSize;
+    isOpen: (value: string) => boolean;
+    toggle: (value: string) => void;
+    registerTrigger: (value: string, el: HTMLButtonElement | null) => void;
+    focusByDelta: (currentValue: string, delta: number) => void;
+    focusFirst: () => void;
+    focusLast: () => void;
+    reduceMotion: boolean;
+}
+
+export interface ItemContextValue {
+    value: string;
+    triggerId: string;
+    panelId: string;
+    open: boolean;
+    icon?: string;
+}
+
+export const AccordionContext = createContext<AccordionContextValue | null>(null);
+export const AccordionItemContext = createContext<ItemContextValue | null>(null);
+
+export const PANEL_HEIGHT_MS = 0.38;
+export const PANEL_CONTENT_MS = 0.26;
+export const PANEL_HEIGHT_EASE = "cubic-bezier(0.32, 0.72, 0, 1)";
+export const PANEL_CONTENT_EASE = "cubic-bezier(0.4, 0, 0.2, 1)";
+
+export function usePrefersReducedMotion(): boolean {
+    const [reduce, setReduce] = useState(false);
+    useEffect(() => {
+        const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const sync = () => setReduce(mql.matches);
+        sync();
+        mql.addEventListener("change", sync);
+        return () => mql.removeEventListener("change", sync);
+    }, []);
+    return reduce;
+}
+
+export function toSet(value: string | string[] | undefined, type: AccordionType): OpenState {
+    if (value == null) return new Set();
+    if (Array.isArray(value)) return new Set(value);
+    return type === "multiple" ? new Set([value]) : new Set([value]);
+}
+

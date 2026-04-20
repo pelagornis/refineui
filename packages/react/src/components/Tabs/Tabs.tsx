@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import type { ButtonHTMLAttributes, HTMLAttributes, KeyboardEvent, ReactNode } from "react";
+import type { KeyboardEvent } from "react";
 import {
     createContext,
     forwardRef,
@@ -10,6 +10,8 @@ import {
     useRef,
     useState,
 } from "react";
+import { tabsStyles } from "./style";
+import type { TabsContentProps, TabsListProps, TabsProps, TabsTriggerProps } from "./types";
 
 function slugTabValue(value: string): string {
     return value.replace(/[^a-zA-Z0-9_-]/g, "_");
@@ -28,12 +30,6 @@ function useTabsContext(component: string): TabsContextValue {
     const v = useContext(TabsContext);
     if (!v) throw new Error(`${component} must be used within Tabs.`);
     return v;
-}
-
-export interface TabsProps extends HTMLAttributes<HTMLDivElement> {
-    defaultValue?: string;
-    value?: string;
-    onValueChange?: (value: string) => void;
 }
 
 export function Tabs({
@@ -78,8 +74,6 @@ export function Tabs({
     );
 }
 
-export interface TabsListProps extends HTMLAttributes<HTMLDivElement> {}
-
 export function TabsList({ className, ...props }: TabsListProps) {
     const { tabListRef } = useTabsContext("TabsList");
 
@@ -89,17 +83,12 @@ export function TabsList({ className, ...props }: TabsListProps) {
             role="tablist"
             aria-orientation="horizontal"
             className={clsx(
-                "box-border inline-flex max-w-full w-fit flex-wrap items-start gap-refineui-size-medium rounded-refineui-xlarge border-refineui-thin border-refineui-alias-border-default bg-refineui-alias-background-surface-active p-refineui-size-small",
+                tabsStyles.list,
                 className,
             )}
             {...props}
         />
     );
-}
-
-export interface TabsTriggerProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type"> {
-    value: string;
-    children: ReactNode;
 }
 
 export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(function TabsTrigger(
@@ -177,14 +166,14 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(funct
             disabled={disabled}
             tabIndex={selected && !disabled ? 0 : -1}
             className={clsx(
-                "refineui-typo-caption-1 box-border inline-flex min-h-0 min-w-0 flex-[0_1_auto] items-center rounded-refineui-large border-none px-refineui-size-small py-refineui-size-xsmall outline-none",
+                tabsStyles.trigger,
                 disabled
-                    ? "cursor-not-allowed text-refineui-alias-foreground-disabled"
-                    : "cursor-pointer text-refineui-alias-foreground-primary",
-                selected && "shadow-refineui-2light",
-                selected && !disabled && "bg-refineui-alias-background-surface",
-                selected && disabled && "bg-refineui-alias-background-surface-disabled",
-                !selected && "bg-transparent",
+                    ? tabsStyles.triggerDisabled
+                    : tabsStyles.triggerEnabled,
+                selected && tabsStyles.triggerSelectedShadow,
+                selected && !disabled && tabsStyles.triggerSelectedEnabled,
+                selected && disabled && tabsStyles.triggerSelectedDisabled,
+                !selected && tabsStyles.triggerUnselected,
                 className,
             )}
             onClick={(e) => {
@@ -198,10 +187,6 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(funct
         </button>
     );
 });
-
-export interface TabsContentProps extends HTMLAttributes<HTMLDivElement> {
-    value: string;
-}
 
 export function TabsContent({ value, className, children, hidden: hiddenProp, ...props }: TabsContentProps) {
     const ctx = useTabsContext("TabsContent");

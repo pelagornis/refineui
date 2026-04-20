@@ -1,20 +1,11 @@
 import { clsx } from "clsx";
-import type { InputHTMLAttributes } from "react";
 import { useState } from "react";
+import { sliderStyles } from "./style";
+import type { SliderProps } from "./types";
 
 function clampPct(n: number) {
     if (Number.isNaN(n)) return 0;
     return Math.min(100, Math.max(0, n));
-}
-
-export interface SliderProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "type" | "onChange" | "size"> {
-    min?: number;
-    max?: number;
-    step?: number;
-    value?: number;
-    onChange?: (value: number) => void;
-    /** Web Kit Slider `526:1556` — sm/md rail thickness. */
-    size?: "sm" | "md";
 }
 
 export function Slider({
@@ -62,7 +53,7 @@ export function Slider({
                 onInput?.(e);
             }}
             className={clsx(
-                "h-refineui-slider-interaction-height w-full cursor-pointer",
+                sliderStyles.root,
                 className,
             )}
             style={{

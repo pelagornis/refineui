@@ -3,8 +3,5 @@ export {
     TabsList,
     TabsTrigger,
     TabsContent,
-    type TabsProps,
-    type TabsListProps,
-    type TabsTriggerProps,
-    type TabsContentProps,
 } from "./Tabs";
+export type { TabsProps, TabsListProps, TabsTriggerProps, TabsContentProps } from "./types";

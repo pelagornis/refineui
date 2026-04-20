@@ -1,16 +1,12 @@
 import { clsx } from "clsx";
-import type { ChangeEvent, InputHTMLAttributes } from "react";
+import type { ChangeEvent } from "react";
 import { useId, useState } from "react";
 import { iconSizes } from "@refineui/tokens";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { WebIcon } from "../../WebIcon";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
-
-export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
-    description?: string;
-    label?: string;
-    variant?: "default" | "circular";
-}
+import { checkboxStyles } from "./style";
+import type { CheckboxProps } from "./types";
 
 export function Checkbox({
     label,
@@ -44,16 +40,16 @@ export function Checkbox({
         <label
             htmlFor={inputId}
             className={clsx(
-                "inline-flex gap-refineui-size-small",
-                description ? "items-start" : "items-center",
-                disabled ? "cursor-not-allowed" : "cursor-pointer",
+                checkboxStyles.root,
+                description ? checkboxStyles.textTop : checkboxStyles.textCenter,
+                disabled ? checkboxStyles.disabledCursor : checkboxStyles.enabledCursor,
                 className,
             )}
         >
             <span
                 className={clsx(
-                    "relative size-refineui-control-checkbox shrink-0",
-                    description && "mt-refineui-size-xxsmall",
+                    checkboxStyles.controlWrap,
+                    description && checkboxStyles.controlWrapDesc,
                 )}
             >
                 <input
@@ -64,8 +60,8 @@ export function Checkbox({
                     disabled={disabled}
                     onChange={handleChange}
                     className={clsx(
-                        "absolute inset-0 z-1 m-0 h-full w-full cursor-pointer opacity-0 outline-none",
-                        disabled && "cursor-not-allowed",
+                        checkboxStyles.input,
+                        disabled && checkboxStyles.inputDisabled,
                     )}
                     {...props}
                 />
@@ -75,7 +71,7 @@ export function Checkbox({
                     data-checked={checked ? "true" : "false"}
                     data-disabled={disabled ? "true" : undefined}
                     aria-hidden
-                    className="pointer-events-none absolute inset-0 box-border flex items-center justify-center"
+                    className={checkboxStyles.visual}
                 >
                     {checked && (
                         <WebIcon
@@ -88,14 +84,14 @@ export function Checkbox({
                 </span>
             </span>
             {showText && (
-                <span className="flex min-w-0 flex-col gap-refineui-size-small">
+                <span className={checkboxStyles.textCol}>
                     {label && (
                         <span
                             className={clsx(
-                                "refineui-typo-body-2",
+                                checkboxStyles.label,
                                 disabled
-                                    ? "text-refineui-alias-foreground-disabled"
-                                    : "text-refineui-alias-foreground-primary",
+                                    ? checkboxStyles.textDisabled
+                                    : checkboxStyles.textEnabled,
                             )}
                         >
                             {label}
@@ -104,10 +100,10 @@ export function Checkbox({
                     {description && (
                         <span
                             className={clsx(
-                                "refineui-typo-caption-2",
+                                checkboxStyles.desc,
                                 disabled
-                                    ? "text-refineui-alias-foreground-disabled"
-                                    : "text-refineui-alias-foreground-secondary",
+                                    ? checkboxStyles.textDisabled
+                                    : checkboxStyles.descEnabled,
                             )}
                         >
                             {description}

@@ -1,9 +1,10 @@
 import { clsx } from "clsx";
-import type { HTMLAttributes } from "react";
 import { iconSizes } from "@refineui/tokens";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
+import { paginationStyles } from "./style";
+import type { PaginationProps } from "./types";
 
 export function getPaginationItems(current: number, total: number): (number | "ellipsis")[] {
     if (total <= 0) return [];
@@ -28,15 +29,6 @@ export function getPaginationItems(current: number, total: number): (number | "e
     return items;
 }
 
-export interface PaginationProps extends HTMLAttributes<HTMLElement> {
-    page: number;
-    totalPages: number;
-    onPageChange: (page: number) => void;
-}
-
-const navBtnClass =
-    "box-border inline-flex min-h-refineui-pagination-button-min-width min-w-refineui-pagination-button-min-width cursor-pointer items-center justify-center rounded-refineui-large border-refineui-thin border-refineui-neutral-300 bg-refineui-neutral-white p-refineui-size-small";
-
 export function Pagination({ page, totalPages, onPageChange, className, ...props }: PaginationProps) {
     const prevDisabled = page <= 1;
     const nextDisabled = page >= totalPages;
@@ -45,7 +37,7 @@ export function Pagination({ page, totalPages, onPageChange, className, ...props
     return (
         <nav
             aria-label="Pagination"
-            className={clsx("flex flex-wrap items-center gap-refineui-size-medium", className)}
+            className={clsx(paginationStyles.root, className)}
             {...props}
         >
             <button
@@ -53,7 +45,7 @@ export function Pagination({ page, totalPages, onPageChange, className, ...props
                 data-refineui="pagination"
                 aria-label="Previous page"
                 disabled={prevDisabled}
-                className={clsx(navBtnClass, prevDisabled && "cursor-not-allowed")}
+                className={clsx(paginationStyles.navBtn, prevDisabled && paginationStyles.navBtnDisabled)}
                 onClick={() => onPageChange(page - 1)}
             >
                 <WebIcon
@@ -68,7 +60,7 @@ export function Pagination({ page, totalPages, onPageChange, className, ...props
                 />
             </button>
 
-            <div className="relative flex items-center gap-refineui-size-small">
+            <div className={paginationStyles.listWrap}>
                 <span className="sr-only">
                     Page {page} of {totalPages}
                 </span>
@@ -77,7 +69,7 @@ export function Pagination({ page, totalPages, onPageChange, className, ...props
                         <span
                             key={`e-${idx}`}
                             aria-hidden
-                            className="refineui-typo-body-1 inline-flex min-h-refineui-pagination-button-min-width min-w-refineui-pagination-button-min-width items-center justify-center text-refineui-primary-black"
+                            className={paginationStyles.ellipsis}
                         >
                             …
                         </span>
@@ -89,7 +81,7 @@ export function Pagination({ page, totalPages, onPageChange, className, ...props
                             data-selected={item === page ? "true" : "false"}
                             aria-label={`Page ${item}`}
                             aria-current={item === page ? "page" : undefined}
-                            className="refineui-typo-body-1"
+                            className={paginationStyles.page}
                             onClick={() => onPageChange(item)}
                         >
                             {item}
@@ -103,7 +95,7 @@ export function Pagination({ page, totalPages, onPageChange, className, ...props
                 data-refineui="pagination"
                 aria-label="Next page"
                 disabled={nextDisabled}
-                className={clsx(navBtnClass, nextDisabled && "cursor-not-allowed")}
+                className={clsx(paginationStyles.navBtn, nextDisabled && paginationStyles.navBtnDisabled)}
                 onClick={() => onPageChange(page + 1)}
             >
                 <WebIcon

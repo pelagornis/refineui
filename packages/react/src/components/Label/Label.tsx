@@ -1,17 +1,6 @@
 import { clsx } from "clsx";
-import type { LabelHTMLAttributes } from "react";
-
-export interface LabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
-    required?: boolean;
-    size?: "sm" | "md" | "lg";
-    disabled?: boolean;
-}
-
-const sizeTypo: Record<NonNullable<LabelProps["size"]>, string> = {
-    sm: "refineui-typo-caption-1",
-    md: "refineui-typo-body-2",
-    lg: "refineui-typo-body-1",
-};
+import { labelSizeTypo, labelStyles } from "./style";
+import type { LabelProps } from "./types";
 
 export function Label({
     required,
@@ -28,11 +17,11 @@ export function Label({
             data-disabled={disabled || undefined}
             aria-disabled={disabled || undefined}
             className={clsx(
-                "mb-refineui-size-xsmall block",
-                sizeTypo[size],
+                labelStyles.base,
+                labelSizeTypo[size],
                 disabled
-                    ? "text-refineui-alias-foreground-disabled"
-                    : "text-refineui-alias-foreground-primary",
+                    ? labelStyles.disabled
+                    : labelStyles.enabled,
                 className,
             )}
             {...props}
@@ -40,7 +29,7 @@ export function Label({
             {children}
             {required && (
                 <span
-                    className="ml-refineui-size-xxsmall text-refineui-alias-foreground-error"
+                    className={labelStyles.required}
                     aria-hidden
                 >
                     *

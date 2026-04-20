@@ -1,18 +1,6 @@
 import { clsx } from "clsx";
-import type { InputHTMLAttributes } from "react";
-
-export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {
-    error?: boolean;
-    success?: boolean;
-    fullWidth?: boolean;
-    size?: "sm" | "md" | "lg";
-}
-
-const sizeClass: Record<NonNullable<InputProps["size"]>, string> = {
-    sm: "min-h-refineui-control-height-sm rounded-refineui-medium px-refineui-size-medium py-refineui-size-small refineui-typo-caption-1",
-    md: "min-h-refineui-control-height-md rounded-refineui-large px-refineui-size-large py-refineui-size-medium refineui-typo-body-2",
-    lg: "min-h-refineui-control-height-lg rounded-refineui-xlarge px-refineui-size-large py-refineui-size-large refineui-typo-body-1",
-};
+import { inputBorderClass, inputSizeClass, inputStyles } from "./style";
+import type { InputProps } from "./types";
 
 export function Input({
     error = false,
@@ -24,12 +12,12 @@ export function Input({
     ...props
 }: InputProps) {
     const borderClass = disabled
-        ? "border-refineui-thin border-refineui-alias-border-disabled"
+        ? inputBorderClass.disabled
         : error
-          ? "border-refineui-thin border-refineui-alias-border-error"
+          ? inputBorderClass.error
           : success
-            ? "border-refineui-thin border-refineui-alias-border-success"
-            : "border-refineui-thin border-refineui-alias-border-default";
+            ? inputBorderClass.success
+            : inputBorderClass.default;
 
     return (
         <input
@@ -39,14 +27,14 @@ export function Input({
             data-success={success || undefined}
             disabled={disabled}
             className={clsx(
-                "box-border outline-none transition-[border-color,box-shadow,background-color] duration-150",
-                "text-refineui-alias-foreground-primary",
+                inputStyles.base,
+                inputStyles.text,
                 borderClass,
                 disabled
-                    ? "bg-refineui-alias-background-surface-disabled"
-                    : "bg-refineui-alias-background-primary",
+                    ? inputStyles.disabledBg
+                    : inputStyles.defaultBg,
                 fullWidth && "w-full",
-                sizeClass[size],
+                inputSizeClass[size],
                 className,
             )}
             {...props}

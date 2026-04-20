@@ -1,1 +1,2 @@
-export { SpinButton, type SpinButtonProps } from "./SpinButton";
+export { SpinButton } from "./SpinButton";
+export type { SpinButtonProps } from "./types";

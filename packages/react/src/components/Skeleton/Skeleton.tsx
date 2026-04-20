@@ -1,12 +1,7 @@
 import { clsx } from "clsx";
-import type { CSSProperties, HTMLAttributes } from "react";
-
-export interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
-    width?: number | string;
-    height?: number | string;
-    /** Web Kit COMPONENT_SET `Skeleton` `570:6175` — Rectangle / Circle */
-    shape?: "rectangle" | "circle";
-}
+import type { CSSProperties } from "react";
+import { skeletonStyles } from "./style";
+import type { SkeletonProps } from "./types";
 
 export function Skeleton({
     width,
@@ -49,7 +44,7 @@ export function Skeleton({
             data-shape={shape}
             aria-hidden
             className={clsx(
-                isCircle ? "rounded-refineui-circle" : "rounded-refineui-large",
+                isCircle ? skeletonStyles.circle : skeletonStyles.rectangle,
                 className,
             )}
             style={{ ...dimStyle, ...style }}

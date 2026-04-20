@@ -1,0 +1,40 @@
+import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from "react";
+
+export interface MenuItemData {
+    id: string;
+    label: ReactNode;
+    description?: ReactNode;
+    shortcut?: ReactNode;
+    startIcon?: ReactNode;
+    endIcon?: ReactNode;
+    onClick?: () => void;
+    disabled?: boolean;
+}
+
+export type MenuPositioning = {
+    autoSize?: boolean;
+};
+
+export interface MenuProps extends HTMLAttributes<HTMLDivElement> {
+    items?: MenuItemData[];
+    positioning?: MenuPositioning;
+}
+
+export interface MenuPopoverProps extends HTMLAttributes<HTMLDivElement> {}
+export interface MenuListProps extends HTMLAttributes<HTMLDivElement> {}
+
+export interface MenuSectionProps extends HTMLAttributes<HTMLDivElement> {
+    children: ReactNode;
+}
+
+export interface MenuDividerProps extends HTMLAttributes<HTMLDivElement> {}
+
+export interface MenuItemProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
+    children: ReactNode;
+    description?: ReactNode;
+    shortcut?: ReactNode;
+    startIcon?: ReactNode;
+    endIcon?: ReactNode;
+    state?: "default" | "hover" | "pressed" | "active" | "disabled";
+}
+

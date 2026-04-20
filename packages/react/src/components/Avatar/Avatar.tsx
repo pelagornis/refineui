@@ -1,9 +1,9 @@
 import { clsx } from "clsx";
 import { Children, cloneElement, createContext, isValidElement, useContext, useState } from "react";
-import type { HTMLAttributes, ImgHTMLAttributes, ReactElement, ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
-import { WebIcon, type WebIconProps } from "../../WebIcon";
+import { WebIcon } from "../../WebIcon";
 import {
     AVATAR_INNER_MASK,
     avatarGroupCountTypo,
@@ -27,48 +27,21 @@ import {
     type AvatarSize,
 } from "./avatarStyles";
 import { AvatarStatusGraphic } from "./avatarStatusGraphics";
-
-export type {
-    AvatarColor,
-    AvatarColorIcon,
-    AvatarColorImage,
-    AvatarColorInitials,
-    AvatarLayout,
-    AvatarSize,
-} from "./avatarStyles";
-
-/** Web Kit `Avatar/Status` `65:65` — `Online` \| `Away` \| `Unavailable` \| `Offline` */
-export type AvatarPresenceStatus = "online" | "away" | "unavailable" | "offline";
-
-export type AvatarProps = Omit<HTMLAttributes<HTMLDivElement>, "color"> & {
-    src?: string | null;
-    alt?: string;
-    /** Deprecated: use AvatarImage/AvatarIcon/AvatarText slots instead. */
-    layout?: AvatarLayout;
-    size?: AvatarSize;
-    showStatus?: boolean;
-    status?: AvatarPresenceStatus;
-    innerClassName?: string;
-    children?: ReactNode;
-    color?: AvatarColor;
-};
-
-export type AvatarImageProps = ImgHTMLAttributes<HTMLImageElement>;
-export type AvatarFallbackProps = HTMLAttributes<HTMLSpanElement>;
-export type AvatarBadgeProps = HTMLAttributes<HTMLSpanElement> & {
-    status?: AvatarPresenceStatus;
-};
-export type AvatarTextProps = HTMLAttributes<HTMLSpanElement>;
-export interface AvatarGroupProps extends HTMLAttributes<HTMLDivElement> {
-    size?: AvatarSize;
-    layout?: "stack" | "spread";
-}
-export type AvatarGroupCountProps = HTMLAttributes<HTMLSpanElement>;
+import { avatarStyles } from "./style";
+import type {
+    AvatarBadgeProps,
+    AvatarFallbackProps,
+    AvatarGroupCountProps,
+    AvatarGroupProps,
+    AvatarIconProps,
+    AvatarImageProps,
+    AvatarPresenceStatus,
+    AvatarProps,
+    AvatarTextProps,
+} from "./types";
 
 const AvatarGroupContext = createContext<{ size: AvatarSize; layout: "stack" | "spread" } | null>(null);
 const AvatarShellSizeContext = createContext<AvatarSize | null>(null);
-
-export type AvatarIconProps = Omit<WebIconProps, "size"> & { size?: number };
 
 export function AvatarIcon({ size: sizeProp, ...props }: AvatarIconProps) {
     const shell = useContext(AvatarShellSizeContext) ?? "medium";
@@ -166,7 +139,7 @@ export function Avatar({
                 data-avatar-color={effectiveColor}
                 data-avatar-layout={resolvedLayout}
                 data-show-status={hasStatus ? "true" : undefined}
-                className={clsx("relative shrink-0", avatarSizeDim[size], className)}
+                className={clsx(avatarStyles.root, avatarSizeDim[size], className)}
                 {...props}
             >
                 <div
@@ -187,7 +160,7 @@ export function Avatar({
                             src={effectiveSrc!}
                             alt={effectiveAlt}
                             onError={() => setImageError(true)}
-                            className={clsx("size-full object-cover", image?.props.className)}
+                            className={clsx(avatarStyles.image, image?.props.className)}
                         />
                     ) : fallback ? (
                         fallback
@@ -216,16 +189,14 @@ export function AvatarImage(_props: AvatarImageProps) {
 export function AvatarFallback({ className, ...props }: AvatarFallbackProps) {
     return (
         <span
-            className={clsx("inline-flex size-full items-center justify-center", className)}
+            className={clsx(avatarStyles.fallback, className)}
             {...props}
         />
     );
 }
 
 export function AvatarText({ className, ...props }: AvatarTextProps) {
-    return (
-        <span className={clsx("inline-flex size-full items-center justify-center", className)} {...props} />
-    );
+    return <span className={clsx(avatarStyles.text, className)} {...props} />;
 }
 
 export function AvatarBadge({ className, status = "online", ...props }: AvatarBadgeProps) {
@@ -233,7 +204,7 @@ export function AvatarBadge({ className, status = "online", ...props }: AvatarBa
     return (
         <span
             className={clsx(
-                "pointer-events-none absolute z-refineui-content inline-flex items-center justify-center overflow-hidden rounded-refineui-circle bg-transparent",
+                avatarStyles.badge,
                 avatarStatusPosition[shell],
                 avatarStatusDim[shell],
                 className,
@@ -263,7 +234,7 @@ export function AvatarGroup({
                 data-layout={layout}
                 data-avatar-stack-size={size}
                 className={clsx(
-                    "flex items-center",
+                    avatarStyles.groupRoot,
                     layout === "stack" ? "gap-0" : avatarSpreadGap[size],
                     className,
                 )}
@@ -277,13 +248,13 @@ export function AvatarGroup({
                     const z = layout === "stack" ? index : undefined;
                     if (isCount) {
                         return (
-                            <div key={`count-${index}`} className="shrink-0" style={{ zIndex: z }}>
+                            <div key={`count-${index}`} className={avatarStyles.groupCountWrap} style={{ zIndex: z }}>
                                 {child}
                             </div>
                         );
                     }
                     return (
-                        <div key={`avatar-${index}`} className="relative shrink-0" style={{ zIndex: z }}>
+                        <div key={`avatar-${index}`} className={avatarStyles.groupAvatarWrap} style={{ zIndex: z }}>
                             {child}
                         </div>
                     );
@@ -302,7 +273,7 @@ export function AvatarGroupCount({ className, ...props }: AvatarGroupCountProps)
     return (
         <span
             className={clsx(
-                "relative box-border inline-flex items-center justify-center rounded-refineui-circle border-refineui-thin font-medium",
+                avatarStyles.groupCount,
                 avatarSizeDim[size],
                 avatarGroupCountTypo[size],
                 className,

@@ -1,11 +1,7 @@
 import { clsx } from "clsx";
-import type { ButtonHTMLAttributes } from "react";
 import { componentSizes } from "../../componentSizes";
-
-export interface ToggleProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
-    checked?: boolean;
-    onCheckedChange?: (checked: boolean) => void;
-}
+import { toggleStyles } from "./style";
+import type { ToggleProps } from "./types";
 
 export function Toggle({
     checked = false,
@@ -23,12 +19,12 @@ export function Toggle({
             role="switch"
             aria-checked={checked}
             className={clsx(
-                "box-border flex w-refineui-switch-width items-center rounded-refineui-xlarge border-none p-refineui-switch-padding transition-colors duration-200",
+                toggleStyles.root,
                 disabled
-                    ? "cursor-not-allowed bg-refineui-alias-background-brand-disabled"
+                    ? toggleStyles.disabled
                     : checked
-                      ? "cursor-pointer bg-refineui-alias-background-brand"
-                      : "cursor-pointer bg-refineui-alias-background-primary-active",
+                      ? toggleStyles.checked
+                      : toggleStyles.unchecked,
                 className,
             )}
             onClick={(e) => {
@@ -40,8 +36,8 @@ export function Toggle({
         >
             <span
                 className={clsx(
-                    "block h-refineui-switch-thumb w-refineui-switch-thumb rounded-refineui-xlarge transition-[transform,background-color] duration-200",
-                    disabled ? "bg-refineui-alias-background-brand-subtle" : "bg-refineui-alias-background-primary",
+                    toggleStyles.thumb,
+                    disabled ? toggleStyles.thumbDisabled : toggleStyles.thumbDefault,
                 )}
                 style={{
                     transform: checked ? `translateX(${componentSizes.switchThumb})` : "translateX(0)",

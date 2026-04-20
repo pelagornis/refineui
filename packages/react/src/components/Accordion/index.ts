@@ -1,13 +1,9 @@
 export {
     Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
     type AccordionProps,
     type AccordionItemProps,
-    type AccordionItemSlotProps,
-    type AccordionContentProps,
-    type AccordionTriggerProps,
-    type AccordionSize,
-    type AccordionType,
 } from "./Accordion";
+export { AccordionItem, type AccordionItemSlotProps } from "./AccordionItem";
+export { AccordionTrigger, type AccordionTriggerProps } from "./AccordionTrigger";
+export { AccordionContent, type AccordionContentProps } from "./AccordionContent";
+export type { AccordionSize, AccordionType } from "./context";

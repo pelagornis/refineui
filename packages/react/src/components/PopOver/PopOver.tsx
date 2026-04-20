@@ -24,27 +24,15 @@ import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
 import { composeRef } from "../../utils/composeRef";
 import { getMergeableTriggerChild } from "../../utils/mergeTriggerChild";
-
-export type PopoverPlacement = "top" | "bottom" | "left" | "right";
-export type PopoverAlign = "start" | "center" | "end";
-
-export interface PopoverProps extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
-    children?: ReactNode;
-    open?: boolean;
-    defaultOpen?: boolean;
-    onOpenChange?: (open: boolean) => void;
-}
-
-export interface PopoverTriggerProps extends Omit<HTMLAttributes<HTMLElement>, "children"> {
-    children: ReactNode;
-}
-
-export interface PopoverContentProps extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
-    children: ReactNode;
-    placement?: PopoverPlacement;
-    align?: PopoverAlign;
-    variant?: "default" | "inverted";
-}
+import { popoverFloatingClasses, popoverPlacementMargin, popoverStyles } from "./style";
+import type {
+    PopOverProps,
+    PopoverAlign,
+    PopoverContentProps,
+    PopoverPlacement,
+    PopoverProps,
+    PopoverTriggerProps,
+} from "./types";
 
 type TriggerProps = {
     onClick?: (e: MouseEvent<HTMLElement>) => void;
@@ -70,34 +58,6 @@ function usePopoverContext(component: string): PopoverContextValue {
     const ctx = useContext(PopoverContext);
     if (!ctx) throw new Error(`${component} must be used within <Popover>`);
     return ctx;
-}
-
-const placementMargin: Record<PopoverPlacement, string> = {
-    top: "mb-refineui-size-xsmall",
-    bottom: "mt-refineui-size-xsmall",
-    left: "mr-refineui-size-xsmall",
-    right: "ml-refineui-size-xsmall",
-};
-
-function popoverFloatingClasses(placement: PopoverPlacement, align: PopoverAlign): string {
-    if (placement === "bottom") {
-        if (align === "center") return "top-full left-1/2 -translate-x-1/2";
-        if (align === "start") return "top-full left-0";
-        return "top-full right-0";
-    }
-    if (placement === "top") {
-        if (align === "center") return "bottom-full left-1/2 -translate-x-1/2";
-        if (align === "start") return "bottom-full left-0";
-        return "bottom-full right-0";
-    }
-    if (placement === "left") {
-        if (align === "center") return "right-full top-1/2 -translate-y-1/2";
-        if (align === "start") return "right-full top-0";
-        return "right-full bottom-0";
-    }
-    if (align === "center") return "left-full top-1/2 -translate-y-1/2";
-    if (align === "start") return "left-full top-0";
-    return "left-full bottom-0";
 }
 
 const BEAK_W = foundationSizes.foundationSize160;
@@ -208,7 +168,7 @@ export function Popover({ children, className, open: openProp, defaultOpen = fal
             <div
                 ref={containerRef}
                 data-refineui="popover-root"
-                className={clsx("relative inline-block", className)}
+                className={clsx(popoverStyles.root, className)}
                 {...props}
             >
                 {children}
@@ -255,7 +215,7 @@ export function PopoverTrigger({ children, className, ...props }: PopoverTrigger
             aria-haspopup="dialog"
             aria-controls={contentId}
             className={clsx(
-                "cursor-pointer border-none bg-transparent p-0 font-inherit text-inherit",
+                popoverStyles.fallbackTrigger,
                 className,
                 passthroughBtn.className,
             )}
@@ -301,13 +261,13 @@ export function PopoverContent({
     return (
         <div
             className={clsx(
-                "absolute z-refineui-popup",
+                popoverStyles.floatingRoot,
                 popoverFloatingClasses(placement, align),
-                placementMargin[placement],
+                popoverPlacementMargin[placement],
             )}
         >
-            <div className="relative inline-block min-w-refineui-popover-panel-width">
-                <div className="pointer-events-none absolute" style={{ ...bw, width: BEAK_W, height: BEAK_H }} aria-hidden>
+            <div className={popoverStyles.panelWrap}>
+                <div className={popoverStyles.beakWrap} style={{ ...bw, width: BEAK_W, height: BEAK_H }} aria-hidden>
                     <div
                         style={{
                             width: BEAK_W,
@@ -345,9 +305,8 @@ export function PopoverContent({
                     data-align={align}
                     data-variant={variant}
                     className={clsx(
-                        "relative box-border min-w-refineui-popover-panel-width outline-none p-refineui-size-large rounded-refineui-large",
-                        "border-refineui-thin",
-                        variant === "inverted" ? "shadow-refineui-8dark" : "shadow-refineui-8light",
+                        popoverStyles.panel,
+                        variant === "inverted" ? popoverStyles.panelShadowInverted : popoverStyles.panelShadowDefault,
                         className,
                     )}
                     style={{
@@ -364,16 +323,6 @@ export function PopoverContent({
         </div>
     );
 }
-
-export interface PopOverProps extends Omit<HTMLAttributes<HTMLDivElement>, "children" | "content"> {
-    trigger: ReactNode;
-    content: ReactNode;
-    placement?: PopoverPlacement;
-    align?: PopoverAlign;
-    variant?: "default" | "inverted";
-}
-
-export type PopOverAlign = PopoverAlign;
 
 export function PopOver({ trigger, content, placement, align, variant, className, ...props }: PopOverProps) {
     return (

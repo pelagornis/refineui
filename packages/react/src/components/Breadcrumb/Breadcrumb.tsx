@@ -1,37 +1,35 @@
 import { clsx } from "clsx";
-import type {
-    AnchorHTMLAttributes,
-    ButtonHTMLAttributes,
-    HTMLAttributes,
-    LiHTMLAttributes,
-    OlHTMLAttributes,
-} from "react";
 import { forwardRef } from "react";
 import { iconSizes } from "@refineui/tokens";
 import { WebIcon } from "../../WebIcon";
-
-const textRow = "refineui-typo-caption-1 whitespace-nowrap";
-
-export type BreadcrumbProps = HTMLAttributes<HTMLElement>;
+import { breadcrumbStyles } from "./style";
+import type {
+    BreadcrumbEllipsisProps,
+    BreadcrumbEllipsisTriggerProps,
+    BreadcrumbItemProps,
+    BreadcrumbLinkProps,
+    BreadcrumbListProps,
+    BreadcrumbPageProps,
+    BreadcrumbProps,
+    BreadcrumbSeparatorProps,
+} from "./types";
 
 export function Breadcrumb({ className, ...props }: BreadcrumbProps) {
     return (
         <nav
             data-refineui="breadcrumb"
             aria-label="Breadcrumb"
-            className={clsx("py-refineui-size-small", className)}
+            className={clsx(breadcrumbStyles.root, className)}
             {...props}
         />
     );
 }
 
-export type BreadcrumbListProps = OlHTMLAttributes<HTMLOListElement>;
-
 export function BreadcrumbList({ className, ...props }: BreadcrumbListProps) {
     return (
         <ol
             className={clsx(
-                "m-0 flex flex-wrap list-none items-start gap-refineui-size-medium p-0",
+                breadcrumbStyles.list,
                 className,
             )}
             {...props}
@@ -39,22 +37,18 @@ export function BreadcrumbList({ className, ...props }: BreadcrumbListProps) {
     );
 }
 
-export type BreadcrumbItemProps = LiHTMLAttributes<HTMLLIElement>;
-
 export function BreadcrumbItem({ className, ...props }: BreadcrumbItemProps) {
     return (
         <li
-            className={clsx("inline-flex items-center justify-center overflow-clip", className)}
+            className={clsx(breadcrumbStyles.item, className)}
             {...props}
         />
     );
 }
 
-export interface BreadcrumbLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {}
-
 export const breadcrumbLinkClassName = clsx(
-    textRow,
-    "inline-flex items-center justify-center px-refineui-size-medium py-refineui-size-xsmall text-refineui-alias-foreground-tertiary no-underline",
+    breadcrumbStyles.textRow,
+    breadcrumbStyles.link,
 );
 
 export function BreadcrumbLink({ className, children, ...props }: BreadcrumbLinkProps) {
@@ -65,8 +59,6 @@ export function BreadcrumbLink({ className, children, ...props }: BreadcrumbLink
     );
 }
 
-export type BreadcrumbPageProps = HTMLAttributes<HTMLSpanElement>;
-
 export function BreadcrumbPage({ className, ...props }: BreadcrumbPageProps) {
     return (
         <span
@@ -74,8 +66,8 @@ export function BreadcrumbPage({ className, ...props }: BreadcrumbPageProps) {
             aria-disabled="true"
             aria-current="page"
             className={clsx(
-                textRow,
-                "inline-flex items-center justify-center px-refineui-size-medium py-refineui-size-xsmall text-refineui-alias-foreground-primary",
+                breadcrumbStyles.textRow,
+                breadcrumbStyles.page,
                 className,
             )}
             {...props}
@@ -83,31 +75,27 @@ export function BreadcrumbPage({ className, ...props }: BreadcrumbPageProps) {
     );
 }
 
-export type BreadcrumbSeparatorProps = LiHTMLAttributes<HTMLLIElement>;
-
 export function BreadcrumbSeparator({ children, className, ...props }: BreadcrumbSeparatorProps) {
     return (
         <li
             role="presentation"
             aria-hidden
-            className={clsx("inline-flex shrink-0 items-center py-refineui-size-xsmall", className)}
+            className={clsx(breadcrumbStyles.separator, className)}
             {...props}
         >
             {children ?? (
-                <span className={clsx(textRow, "inline-flex items-center text-refineui-alias-foreground-tertiary")}>/</span>
+                <span className={clsx(breadcrumbStyles.textRow, breadcrumbStyles.separatorText)}>/</span>
             )}
         </li>
     );
 }
-
-export type BreadcrumbEllipsisProps = HTMLAttributes<HTMLSpanElement>;
 
 export function BreadcrumbEllipsis({ className, ...props }: BreadcrumbEllipsisProps) {
     return (
         <span
             data-refineui="breadcrumb-ellipsis"
             className={clsx(
-                "inline-flex size-refineui-size-xlarge shrink-0 items-center justify-center text-refineui-alias-foreground-tertiary",
+                breadcrumbStyles.ellipsis,
                 className,
             )}
             {...props}
@@ -117,8 +105,6 @@ export function BreadcrumbEllipsis({ className, ...props }: BreadcrumbEllipsisPr
     );
 }
 
-export type BreadcrumbEllipsisTriggerProps = ButtonHTMLAttributes<HTMLButtonElement>;
-
 export const BreadcrumbEllipsisTrigger = forwardRef<HTMLButtonElement, BreadcrumbEllipsisTriggerProps>(
     function BreadcrumbEllipsisTrigger({ className, type = "button", children, ...props }, ref) {
         return (
@@ -127,7 +113,7 @@ export const BreadcrumbEllipsisTrigger = forwardRef<HTMLButtonElement, Breadcrum
                 type={type}
                 data-refineui="breadcrumb-ellipsis"
                 className={clsx(
-                    "box-border inline-flex size-refineui-size-xlarge shrink-0 cursor-pointer items-center justify-center border-none bg-transparent p-0 text-refineui-alias-foreground-tertiary",
+                    breadcrumbStyles.ellipsisTrigger,
                     className,
                 )}
                 {...props}

@@ -1,20 +1,12 @@
 import { clsx } from "clsx";
-import type { CSSProperties, FocusEvent, HTMLAttributes, KeyboardEvent, MouseEvent, ReactElement, ReactNode } from "react";
+import type { CSSProperties, FocusEvent, KeyboardEvent, MouseEvent, ReactElement } from "react";
 import { cloneElement, useId, useRef, useState } from "react";
 import { spacings } from "@refineui/tokens";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { getMergeableTriggerChild } from "../../utils/mergeTriggerChild";
-
-export type TooltipVariant = "default" | "inverted";
-
-export interface TooltipProps extends Omit<HTMLAttributes<HTMLDivElement>, "title" | "content"> {
-    trigger: ReactNode;
-    content: ReactNode;
-    placement?: "top" | "bottom" | "left" | "right";
-    variant?: TooltipVariant;
-    delayMs?: number;
-}
+import { tooltipStyles } from "./style";
+import type { TooltipProps, TooltipVariant } from "./types";
 
 type TriggerMerge = {
     onMouseEnter?: (e: MouseEvent<HTMLElement>) => void;
@@ -160,7 +152,7 @@ export function Tooltip({
                     if (!e.currentTarget.contains(e.relatedTarget as Node)) hide();
                 }}
                 onKeyDown={(e) => e.key === "Escape" && hide()}
-                className="inline-flex outline-none"
+                className={tooltipStyles.fallbackTrigger}
             >
                 {trigger}
             </span>
@@ -168,7 +160,12 @@ export function Tooltip({
     };
 
     return (
-        <div data-refineui="tooltip" data-tooltip-variant={variant} className={clsx("relative inline-block", className)} {...props}>
+        <div
+            data-refineui="tooltip"
+            data-tooltip-variant={variant}
+            className={clsx(tooltipStyles.root, className)}
+            {...props}
+        >
             {mergeTrigger()}
             {open && (
                 <div
@@ -176,8 +173,8 @@ export function Tooltip({
                     role="tooltip"
                     data-placement={placement}
                     className={clsx(
-                        "refineui-typo-body-4 pointer-events-none absolute z-refineui-popup max-w-refineui-tooltip-max-width whitespace-nowrap px-refineui-size-medium py-refineui-size-small rounded-refineui-medium",
-                        isInverted ? "shadow-refineui-8dark" : "shadow-refineui-8light",
+                        tooltipStyles.panel,
+                        isInverted ? tooltipStyles.panelInvertedShadow : tooltipStyles.panelDefaultShadow,
                     )}
                     style={{
                         ...placementStyles[placement],

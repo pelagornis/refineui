@@ -1,6 +1,4 @@
 export {
     Spinner,
-    type SpinnerProps,
-    type SpinnerSize,
-    type SpinnerLabelPosition,
 } from "./Spinner";
+export type { SpinnerProps, SpinnerSize, SpinnerLabelPosition } from "./types";

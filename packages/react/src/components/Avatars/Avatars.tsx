@@ -1,29 +1,10 @@
 import { clsx } from "clsx";
-import type { HTMLAttributes } from "react";
 import { Avatar } from "../Avatar";
 import {
-    avatarGroupCountTypo,
-    avatarSizeDim,
-    avatarSpreadGap,
     avatarStackOverlapCssVar,
-    type AvatarSize,
 } from "../Avatar/avatarStyles";
-
-export type AvatarsSize = AvatarSize;
-
-export type AvatarsLayout = "stack" | "spread";
-
-export interface AvatarItem {
-    src?: string | null;
-    alt: string;
-}
-
-export interface AvatarsProps extends HTMLAttributes<HTMLDivElement> {
-    avatars: AvatarItem[];
-    size?: AvatarsSize;
-    max?: number;
-    layout?: AvatarsLayout;
-}
+import { avatarsCountSizeBySize, avatarsCountTypoBySize, avatarsSpreadGapBySize, avatarsStyles } from "./style";
+import type { AvatarsProps } from "./types";
 
 export function Avatars({
     avatars,
@@ -44,23 +25,23 @@ export function Avatars({
             data-refineui="avatars"
             data-layout={layout}
             data-avatar-stack-size={size}
-            className={clsx("flex items-center", isStack ? "gap-0" : avatarSpreadGap[size], className)}
+            className={clsx(avatarsStyles.root, isStack ? "gap-0" : avatarsSpreadGapBySize[size], className)}
             style={{
                 ...(isStack ? { ["--avatar-stack-overlap" as string]: avatarStackOverlapCssVar[size] } : {}),
                 ...style,
             }}
         >
             {display.map((a, i) => (
-                <div key={i} className="relative shrink-0" style={isStack ? { zIndex: i } : undefined}>
+                <div key={i} className={avatarsStyles.avatarWrap} style={isStack ? { zIndex: i } : undefined}>
                     <Avatar src={a.src} alt={a.alt} size={size} />
                 </div>
             ))}
             {remainder > 0 && (
                 <div
                     className={clsx(
-                        "relative box-border flex shrink-0 items-center justify-center rounded-refineui-circle border-refineui-thin border-refineui-alias-border-default bg-refineui-alias-background-primary font-medium text-refineui-alias-foreground-secondary",
-                        avatarSizeDim[size],
-                        avatarGroupCountTypo[size],
+                        avatarsStyles.overflowCount,
+                        avatarsCountSizeBySize[size],
+                        avatarsCountTypoBySize[size],
                     )}
                     style={isStack ? { zIndex: display.length } : undefined}
                 >

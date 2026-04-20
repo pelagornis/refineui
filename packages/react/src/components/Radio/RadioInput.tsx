@@ -1,9 +1,7 @@
 import { clsx } from "clsx";
 import { forwardRef } from "react";
-import type { InputHTMLAttributes } from "react";
-
-/** `Radio` 행과 동일한 MCP(`Radio / Input`) 스타일 — `data-refineui="radio"` */
-export interface RadioInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {}
+import { radioStyles } from "./style";
+import type { RadioInputProps } from "./types";
 
 export const RadioInput = forwardRef<HTMLInputElement, RadioInputProps>(function RadioInput(
     { className, ...props },
@@ -14,7 +12,7 @@ export const RadioInput = forwardRef<HTMLInputElement, RadioInputProps>(function
             ref={ref}
             type="radio"
             data-refineui="radio"
-            className={clsx("size-refineui-control-checkbox-radio shrink-0 cursor-pointer", className)}
+            className={clsx(radioStyles.input, className)}
             {...props}
         />
     );

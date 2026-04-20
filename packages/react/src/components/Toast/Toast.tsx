@@ -1,7 +1,5 @@
 import { clsx } from "clsx";
 import {
-    type HTMLAttributes,
-    type ReactNode,
     useEffect,
     useLayoutEffect,
     useRef,
@@ -14,63 +12,10 @@ import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
 import { Button } from "../Button";
+import { toastStyles } from "./style";
+import type { ToastAction, ToastOptions, ToastPosition, ToastProps, ToastRecord, ToastVariant, ToasterProps } from "./types";
 
 const useIsomorphicLayoutEffect = typeof document !== "undefined" ? useLayoutEffect : useEffect;
-
-export type ToastVariant = "default" | "success" | "error" | "warning";
-
-export type ToastPosition =
-    | "top-left"
-    | "top-center"
-    | "top-right"
-    | "bottom-left"
-    | "bottom-center"
-    | "bottom-right";
-
-export type ToastAction =
-    | ReactNode
-    | {
-          label: string;
-          onClick?: () => void;
-          variant?: "primary" | "secondary";
-      };
-
-export interface ToastProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
-    variant?: ToastVariant;
-    title?: ReactNode;
-    message?: ReactNode;
-    iconName?: string;
-    icon?: ReactNode;
-    action?: ToastAction;
-    stackState?: "entering" | "idle" | "leaving";
-}
-
-export interface ToastOptions {
-    description?: ReactNode;
-    variant?: ToastVariant;
-    iconName?: string;
-    icon?: ReactNode;
-    action?: ToastAction;
-    duration?: number;
-}
-
-interface ToastRecord {
-    id: string;
-    title?: ReactNode;
-    message?: ReactNode;
-    variant: ToastVariant;
-    iconName?: string;
-    icon?: ReactNode;
-    action?: ToastAction;
-    duration: number;
-    phase: "entering" | "idle" | "leaving";
-}
-
-export interface ToasterProps {
-    maxToasts?: number;
-    position?: ToastPosition;
-    className?: string;
-}
 
 const ENTER_MS = 20;
 const LEAVE_MS = 260;
@@ -79,9 +24,6 @@ const DEFAULT_MAX_TOASTS = 5;
 const STACK_Z_BASE = 100;
 const COLLAPSED_STEP_GAP = 0.85;
 const COLLAPSED_STEP_FRONT = 0.035;
-
-const TOAST_CARD_CLASS =
-    "box-border flex w-refineui-toast-max-width min-w-refineui-toast-min-width max-w-refineui-toast-max-width items-center gap-refineui-size-medium rounded-refineui-xlarge border-refineui-thin border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-large shadow-refineui-4light transition-[border-color,border-width,opacity] duration-200 ease-out";
 
 function gapPxFromSpacingToken(token: string): number {
     const n = Number.parseFloat(String(token).replace("px", ""));
@@ -181,7 +123,7 @@ export function dismissToast(id?: string) {
     }, LEAVE_MS);
 }
 
-export function toast(title: ReactNode, options: ToastOptions = {}): string {
+export function toast(title: ToastRecord["title"], options: ToastOptions = {}): string {
     const id = `${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
     const record: ToastRecord = {
         id,
@@ -248,7 +190,7 @@ export function Toast(props: ToastProps) {
                 variant={isPrimaryAction ? "primary" : "outline"}
                 size="sm"
                 onClick={action.onClick}
-                className="shrink-0 whitespace-nowrap"
+                className={toastStyles.actionButton}
             >
                 {action.label}
             </Button>
@@ -265,17 +207,17 @@ export function Toast(props: ToastProps) {
             aria-live={ariaLive}
             {...domProps}
             style={style}
-            className={clsx(TOAST_CARD_CLASS, className)}
+            className={clsx(toastStyles.card, className)}
         >
             <div
                 data-refineui="toast-icon"
-                className="flex size-refineui-size-xxlarge shrink-0 items-center justify-center self-center"
+                className={toastStyles.iconWrap}
             >
                 {iconContent}
             </div>
-            <div className="flex min-h-px min-w-0 flex-1 flex-col gap-refineui-size-xsmall">
-                {title && <div className="refineui-typo-body-2 text-refineui-alias-foreground-primary">{title}</div>}
-                {message && <div className="refineui-typo-body-3 text-refineui-alias-foreground-tertiary">{message}</div>}
+            <div className={toastStyles.contentWrap}>
+                {title && <div className={toastStyles.title}>{title}</div>}
+                {message && <div className={toastStyles.message}>{message}</div>}
             </div>
             {action != null && actionEl}
         </div>
@@ -377,7 +319,7 @@ export function Toaster({ maxToasts = DEFAULT_MAX_TOASTS, position = "top-center
             tabIndex={-1}
             data-refineui="toaster"
             data-position={position}
-            className={clsx("refineui-toaster group", className)}
+            className={clsx(toastStyles.toasterRoot, className)}
             style={{
                 ["--refineui-toast-gap" as string]: `${stackGapPx}px`,
             }}

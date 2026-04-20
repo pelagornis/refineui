@@ -9,9 +9,7 @@ import {
     useMemo,
     useRef,
     useState,
-    type ButtonHTMLAttributes,
     type CSSProperties,
-    type HTMLAttributes,
     type ReactNode,
     type RefObject,
 } from "react";
@@ -22,14 +20,23 @@ import { componentSizes } from "../../componentSizes";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
-import { Button, type ButtonProps } from "../Button";
+import { Button } from "../Button";
+import { dialogStyles } from "./style";
+import type {
+    DialogCloseProps,
+    DialogContentProps,
+    DialogDescriptionProps,
+    DialogHeaderProps,
+    DialogProps,
+    DialogSize,
+    DialogTitleProps,
+    DialogTriggerProps,
+} from "./types";
 
 /** Web Kit COMPONENT_SET `Dialog` `393:1181` */
 const PANEL_MS = 320;
 const SCRIM_MS = 280;
 const EASING = "cubic-bezier(0.32, 0.72, 0, 1)";
-
-type DialogSize = "lg" | "sm";
 
 type DialogContextValue = {
     open: boolean;
@@ -70,15 +77,6 @@ function useDialogOpenState(
     return [open, setOpen];
 }
 
-export interface DialogProps {
-    open?: boolean;
-    defaultOpen?: boolean;
-    onOpenChange?: (open: boolean) => void;
-    /** Web Kit `size`: Large(600px) / Small(300px) */
-    size?: DialogSize;
-    children: ReactNode;
-}
-
 export function Dialog({ open: openProp, defaultOpen, onOpenChange, size = "lg", children }: DialogProps) {
     const [open, setOpen] = useDialogOpenState(openProp, defaultOpen, onOpenChange);
     const titleId = useId();
@@ -106,8 +104,6 @@ export function Dialog({ open: openProp, defaultOpen, onOpenChange, size = "lg",
     return <DialogContext.Provider value={value}>{children}</DialogContext.Provider>;
 }
 
-export type DialogTriggerProps = ButtonProps;
-
 export const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(function DialogTrigger(
     { onClick, ...props },
     ref,
@@ -124,11 +120,6 @@ export const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(f
         />
     );
 });
-
-export interface DialogContentProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
-    container?: Element | DocumentFragment | null;
-    style?: CSSProperties;
-}
 
 export function DialogContent({ className, style, container, children, ...props }: DialogContentProps) {
     const { open, setOpen, size, titleId, descriptionId, panelRef, hasTitle, hasDescription } =
@@ -186,14 +177,14 @@ export function DialogContent({ className, style, container, children, ...props 
             aria-labelledby={hasTitle ? titleId : undefined}
             aria-describedby={hasDescription ? descriptionId : undefined}
             className={clsx(
-                "fixed inset-0 z-refineui-messages flex items-center justify-center p-refineui-size-large",
+                dialogStyles.root,
                 className,
             )}
             {...props}
         >
             <div
                 role="presentation"
-                className="absolute inset-0 cursor-pointer transition-opacity"
+                className={dialogStyles.scrim}
                 style={{
                     backgroundColor: resolveColorTokenValue(componentColorTokens.dialog.overlay),
                     opacity: entered ? 1 : 0,
@@ -206,11 +197,11 @@ export function DialogContent({ className, style, container, children, ...props 
             <div
                 ref={panelRef}
                 tabIndex={-1}
-                className="relative box-border flex max-h-refineui-dialog-max-height-viewport w-full flex-col overflow-hidden rounded-refineui-large bg-refineui-alias-background-primary p-refineui-size-xxlarge shadow-refineui-8light outline-none"
+                className={dialogStyles.panel}
                 style={{ ...panelMotion, ...style }}
                 onClick={(e) => e.stopPropagation()}
             >
-                <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-refineui-size-large overflow-y-auto">
+                <div className={dialogStyles.panelScrollWrap}>
                     {children}
                 </div>
             </div>
@@ -220,23 +211,17 @@ export function DialogContent({ className, style, container, children, ...props 
     return createPortal(root, target);
 }
 
-export interface DialogHeaderProps extends HTMLAttributes<HTMLDivElement> {
-    showClose?: boolean;
-}
-
 export function DialogHeader({ className, children, showClose = true, ...props }: DialogHeaderProps) {
     return (
         <div
-            className={clsx("flex shrink-0 items-start justify-between gap-refineui-size-small", className)}
+            className={clsx(dialogStyles.header, className)}
             {...props}
         >
-            <div className="flex min-w-0 flex-1 flex-col gap-refineui-size-small">{children}</div>
+            <div className={dialogStyles.headerMain}>{children}</div>
             {showClose ? <DialogClose /> : null}
         </div>
     );
 }
-
-export type DialogTitleProps = HTMLAttributes<HTMLHeadingElement>;
 
 export function DialogTitle({ className, id, children, ...props }: DialogTitleProps) {
     const { titleId, setHasTitle } = useDialogContext("DialogTitle");
@@ -247,15 +232,13 @@ export function DialogTitle({ className, id, children, ...props }: DialogTitlePr
     return (
         <h2
             id={id ?? titleId}
-            className={clsx("refineui-typo-sub-title-2 m-0 min-w-0 text-refineui-alias-foreground-primary", className)}
+            className={clsx(dialogStyles.title, className)}
             {...props}
         >
             {children}
         </h2>
     );
 }
-
-export type DialogDescriptionProps = HTMLAttributes<HTMLParagraphElement>;
 
 export function DialogDescription({ className, id, children, ...props }: DialogDescriptionProps) {
     const { descriptionId, setHasDescription } = useDialogContext("DialogDescription");
@@ -266,15 +249,13 @@ export function DialogDescription({ className, id, children, ...props }: DialogD
     return (
         <p
             id={id ?? descriptionId}
-            className={clsx("refineui-typo-body-4 m-0 min-w-0 text-refineui-alias-foreground-secondary", className)}
+            className={clsx(dialogStyles.description, className)}
             {...props}
         >
             {children}
         </p>
     );
 }
-
-export type DialogCloseProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
 export function DialogClose({ className, onClick, type = "button", ...props }: DialogCloseProps) {
     const { setOpen } = useDialogContext("DialogClose");
