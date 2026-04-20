@@ -41,8 +41,14 @@ export const componentSizes = {
     controlTextareaMin: "80px",
     /** Web Kit PopOver `553:5669` — Default 패널 최소 폭 */
     popoverPanelWidth: "325px",
+    /**
+     * Web Kit PopOver `553:5669` — Beak 가로 패널 가장자리까지 inset (325px 패널·Bottom/Top 변형 MCP 기준).
+     * Top/Bottom 에서 Start / End 비크 위치에 사용 (Center 는 50% − 비크 반폭).
+     */
+    popoverBeakInsetFromStartEdge: "34px",
+    popoverBeakInsetFromEndEdge: "30px",
     /** Web Kit Menu `633:4268` — Default 패널 최소 폭 */
-    menuPanelWidth: "180px",
+    menuPanelWidth: "244px",
     /** Web Kit Dropdown `503:2985` — `Dropdown / Menu` 폭 */
     dropdownMenuWidth: "180px",
     /** Web Kit Toast `548:654` (`548:655` COMPONENT_SET) — 카드 폭 325px */

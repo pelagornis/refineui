@@ -3,12 +3,10 @@ import type { HTMLAttributes, ReactNode } from "react";
 import { iconSizes } from "@refineui/tokens";
 import { WebIcon } from "../../WebIcon";
 
-/** Web Kit COMPONENT_SET `Tag` `574:6578` — 코드 export 이름은 `Chip`, 문서·`Tag`는 동일 컴포넌트 */
 export type ChipVariant = "default" | "outline" | "filled";
 export type ChipSize = "sm" | "md" | "lg";
 
 export interface ChipProps extends HTMLAttributes<HTMLSpanElement> {
-    /** Figma `showAvater` — 앞쪽 슬롯(아바타 등) */
     avatar?: ReactNode;
     disabled?: boolean;
     onRemove?: () => void;

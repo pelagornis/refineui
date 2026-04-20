@@ -6,15 +6,9 @@ import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { WebIcon } from "../../WebIcon";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 
-/**
- * Web Kit COMPONENT_SET `327:2539` — 체크 시 **RefineUI System Icons** `checkmark` **16px** (`iconSizes.medium`).
- * 라벨·보조 설명, 박스 상태는 `refineui.css` `[data-refineui="checkbox"]`.
- */
 export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
-    /** 보조 한 줄 (Figma `showDescription`) */
     description?: string;
     label?: string;
-    /** Figma `style`: Default = 사각, Circular = 원형 */
     variant?: "default" | "circular";
 }
 

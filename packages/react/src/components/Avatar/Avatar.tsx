@@ -47,7 +47,6 @@ export type AvatarProps = Omit<HTMLAttributes<HTMLDivElement>, "color"> & {
     layout?: AvatarLayout;
     size?: AvatarSize;
     showStatus?: boolean;
-    /** `showStatus`일 때만 적용 — 기본 `online` */
     status?: AvatarPresenceStatus;
     innerClassName?: string;
     children?: ReactNode;

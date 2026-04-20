@@ -1,49 +1,122 @@
 ---
 title: Tabs
-description: 탭 — Web Kit Pill
+description: 탭 — Web Kit Pill (shadcn 스타일 합성 API)
 ---
 
-import TabsDemo from "../../../components/TabsDemo";
+import TabsDemo from '../../../components/TabsDemo';
 
 # Tabs
 
-한 화면에서 섹션을 전환할 때 쓰는 탭입니다. Web Kit **Tabs** `636:5371` · **Tabs / Item** `636:5372` — **Pill** 세그먼트만 지원합니다. Pill 바는 **`alias.backgroundPrimaryActive`**·**`alias.borderDefault`**, 선택 칩은 **`alias.backgroundSurface`** + **Shadow 2**, 비활성·선택+비활성은 **`alias.foregroundDisabled`** / **`alias.backgroundSurfaceDisabled`**(MCP Web Kit 변수와 동일)입니다.
+한 화면에서 섹션을 전환할 때 쓰는 탭입니다. Web Kit **Tabs** `636:5371` · **Tabs / Item** `636:5372`. **Card** 등과 같이 **`Tabs` → `TabsList` → `TabsTrigger`** · **`TabsContent`** 로 조합합니다 (Radix/shadcn과 같은 패턴).
 
 ## 설치·임포트
 
 ```tsx
-import { Tabs } from "@refineui/react";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
-## 기본 사용
+`Card` 등 다른 RefineUI 컴포넌트와 **같은 패키지**에서 함께 가져옵니다 (`@/components/ui/*` 같은 별칭이 아닙니다).
+
+## 기본 사용 (합성 API)
+
+shadcn의 `Tabs` · `TabsList` · `TabsTrigger` · `TabsContent` 조합과 동일합니다. 초기 탭은 **`defaultValue`**, 제어 모드는 **`value`** + **`onValueChange`** 입니다.
 
 ```tsx
-<Tabs
-  defaultTab="a"
-  items={[
-    { id: "a", label: "첫 번째", content: <p>내용 A</p> },
-    { id: "b", label: "두 번째", content: <p>내용 B</p>, disabled: true },
-  ]}
-  onChange={(id) => console.log(id)}
-/>
+<Tabs defaultValue="a" className="max-w-md">
+  <TabsList>
+    <TabsTrigger value="a">첫 번째</TabsTrigger>
+    <TabsTrigger value="b">두 번째</TabsTrigger>
+  </TabsList>
+  <TabsContent value="a">
+    <p>내용 A</p>
+  </TabsContent>
+  <TabsContent value="b">
+    <p>내용 B</p>
+  </TabsContent>
+</Tabs>
+```
+
+## Card와 함께 (탭마다 패널)
+
+각 `TabsContent` 안에 RefineUI **`Card`** 를 넣는 패턴입니다. 아래는 문서 사이트 Preview(`TabsDemo`)와 같은 구조입니다.
+
+```tsx
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@refineui/react";
+
+export function TabsDemo() {
+  return (
+    <Tabs defaultValue="overview" className="w-full max-w-[400px]">
+      <TabsList>
+        <TabsTrigger value="overview">Overview</TabsTrigger>
+        <TabsTrigger value="analytics">Analytics</TabsTrigger>
+        <TabsTrigger value="reports">Reports</TabsTrigger>
+        <TabsTrigger value="settings">Settings</TabsTrigger>
+      </TabsList>
+      <TabsContent value="overview">
+        <Card>
+          <CardHeader>
+            <CardTitle>Overview</CardTitle>
+            <CardDescription>
+              View your key metrics and recent project activity.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="refineui-typo-body-4 text-refineui-alias-foreground-secondary">
+            You have 12 active projects and 3 pending tasks.
+          </CardContent>
+        </Card>
+      </TabsContent>
+      {/* 나머지 탭도 동일 패턴으로 TabsContent + Card */}
+    </Tabs>
+  );
+}
 ```
 
 ## Preview
 
-<div class="not-content">
+<div class='not-content'>
   <TabsDemo client:load />
 </div>
 
 ## Props
 
-| Prop | 타입 | 기본값 | 설명 |
-|------|------|--------|------|
-| `items` | `TabItem[]` | (필수) | `id`, `label`, `content`, 선택 `disabled` |
-| `defaultTab` | `string` | 첫 비활성 아님 탭 | 초기 선택 id |
-| `onChange` | `(id: string) => void` | — | 탭 변경 시 |
+### `Tabs`
+
+| Prop | 타입 | 설명 |
+| --- | --- | --- |
+| `defaultValue` | `string` | 비제어 모드 초기 선택 값 |
+| `value` | `string` | 제어 모드 선택 값 |
+| `onValueChange` | `(value: string) => void` | 선택 변경 시 |
+
+### `TabsTrigger`
+
+| Prop | 타입 | 설명 |
+| --- | --- | --- |
+| `value` | `string` | (필수) 패널·트리거와 매칭되는 id |
+| `disabled` | `boolean` | 비활성 |
+
+### `TabsContent`
+
+| Prop | 타입 | 설명 |
+| --- | --- | --- |
+| `value` | `string` | (필수) 열릴 때 표시할 패널 |
 
 ## 접근성
 
-- 탭 목록은 키보드(화살표)로 이동하도록 구현되어 있습니다.
-- 패널과의 연결은 내부 `aria-*`로 맞춥니다.
+- `role="tablist"` / `tab` / `tabpanel`, `aria-controls` · `aria-labelledby` 연결.
+- 화살표 / Home / End 로 포커스 이동.

@@ -5,7 +5,6 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
     error?: boolean;
     success?: boolean;
     fullWidth?: boolean;
-    /** Web Kit COMPONENT_SET `Input` `518:7373` — Small / Medium / Large (HTML `size` 속성과 구분) */
     size?: "sm" | "md" | "lg";
 }
 
@@ -15,7 +14,6 @@ const sizeClass: Record<NonNullable<InputProps["size"]>, string> = {
     lg: "min-h-refineui-control-height-lg rounded-refineui-xlarge px-refineui-size-large py-refineui-size-large refineui-typo-body-1",
 };
 
-/** Web Kit COMPONENT_SET `Input` `518:7373` — `docs/design-specs-web-kit.md` §2. */
 export function Input({
     error = false,
     success = false,

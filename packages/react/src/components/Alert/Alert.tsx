@@ -27,13 +27,6 @@ export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"
 export type AlertTitleProps = HTMLAttributes<HTMLHeadingElement>;
 export type AlertDescriptionProps = HTMLAttributes<HTMLDivElement>;
 
-/**
- * Web Kit Alert — MCP `384:885` (Foundation Alias)
- * - 컨테이너: backgroundPrimary, borderDefault, px sizeLarge, py sizeMedium, roundedLarge
- * - 타이포: 제목·설명 Caption1 Medium
- * - 색: Default → foregroundPrimary / foregroundSecondary; state → foreground* / background* (MCP와 동일)
- * - 아이콘: MCP Default Shape는 제목과 동일하게 foregroundPrimary 바인딩 — 슬롯에 variantTitleClass + currentColor로 제목과 동일 톤 유지
- */
 const variantTitleClass: Record<AlertVariant, string> = {
     default: "text-refineui-alias-foreground-primary",
     info: "text-refineui-alias-foreground-info",
@@ -61,7 +54,6 @@ const variantIconNames: Record<AlertVariant, string> = {
     custom: "star",
 };
 
-/** 24×24 — Web Kit: 아이콘 색은 제목과 동일 Alias(`toneClass` + currentColor). */
 function AlertIconSlot({ toneClass, children }: { toneClass: string; children: ReactNode }) {
     return (
         <div

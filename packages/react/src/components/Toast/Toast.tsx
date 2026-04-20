@@ -15,12 +15,10 @@ import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
 import { Button } from "../Button";
 
-/** SSR에서 `useLayoutEffect` 경고 방지 */
 const useIsomorphicLayoutEffect = typeof document !== "undefined" ? useLayoutEffect : useEffect;
 
 export type ToastVariant = "default" | "success" | "error" | "warning";
 
-/** `Toaster` 고정 위치 — Web Kit 뷰포트 앵커 */
 export type ToastPosition =
     | "top-left"
     | "top-center"
@@ -37,10 +35,6 @@ export type ToastAction =
           variant?: "primary" | "secondary";
       };
 
-/**
- * Web Kit **Toast** `548:655` 카드 스펙.
- * `Toaster`는 Sonner처럼 **접힌 스택** + **`ol` 호버 시 전체 세로 펼침**을 제공합니다.
- */
 export interface ToastProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
     variant?: ToastVariant;
     title?: ReactNode;
@@ -48,7 +42,6 @@ export interface ToastProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"
     iconName?: string;
     icon?: ReactNode;
     action?: ToastAction;
-    /** `Toaster` 전용 — 입장·유지·퇴장 */
     stackState?: "entering" | "idle" | "leaving";
 }
 
@@ -56,7 +49,6 @@ export interface ToastOptions {
     description?: ReactNode;
     variant?: ToastVariant;
     iconName?: string;
-    /** `WebIcon` 대신 임의 ReactNode(Spinner, Avatar 등) — `toast()`에서도 사용 */
     icon?: ReactNode;
     action?: ToastAction;
     duration?: number;
@@ -76,7 +68,6 @@ interface ToastRecord {
 
 export interface ToasterProps {
     maxToasts?: number;
-    /** 기본 `top-center` */
     position?: ToastPosition;
     className?: string;
 }
@@ -85,7 +76,6 @@ const ENTER_MS = 20;
 const LEAVE_MS = 260;
 const DEFAULT_DURATION = 4200;
 const DEFAULT_MAX_TOASTS = 5;
-/** 스택 앞쪽이 더 높은 z-index */
 const STACK_Z_BASE = 100;
 const COLLAPSED_STEP_GAP = 0.85;
 const COLLAPSED_STEP_FRONT = 0.035;
@@ -98,7 +88,6 @@ function gapPxFromSpacingToken(token: string): number {
     return Number.isFinite(n) && n > 0 ? n : 16;
 }
 
-/** 좁은 뷰포트·터치 환경에서 스택 세로 간격을 `sizeMedium`으로 줄임 */
 const TOAST_NARROW_STACK_MQ = "(max-width: 480px), (hover: none)";
 
 function readToastStackGapPx(): number {
@@ -122,7 +111,6 @@ function useToastStackGapPx(): number {
     );
 }
 
-/** 조상 `scale()` 때문에 `getBoundingClientRect().height`가 과소일 수 있어 `offsetHeight` 우선 */
 function readToastNaturalHeight(li: HTMLLIElement | null): number {
     if (!li) return 0;
     const toastEl = li.querySelector<HTMLElement>('[data-refineui="toast"]');
@@ -279,7 +267,6 @@ export function Toast(props: ToastProps) {
             style={style}
             className={clsx(TOAST_CARD_CLASS, className)}
         >
-            {/* Web Kit `Toast / Icon` — Type은 `data-variant`·기본 글리프로 구분, 슬롯은 카드 세로 중앙 */}
             <div
                 data-refineui="toast-icon"
                 className="flex size-refineui-size-xxlarge shrink-0 items-center justify-center self-center"

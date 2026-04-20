@@ -7,7 +7,11 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
-    Dropdown,
+    Menu,
+    MenuItem,
+    MenuList,
+    MenuPopover,
+    MenuTrigger,
 } from "@refineui/react";
 import PreviewFrame from "./PreviewFrame";
 
@@ -20,7 +24,7 @@ const caption = {
 
 /**
  * Web Kit Breadcrumb `283:688` (Figma Short / Long) — Long: 링크 / ⋯ / 링크 / 링크 / 현재
- * Dropdown 프리뷰는 메뉴가 잘리지 않도록 `minHeight` 사용 (DropdownDemo 와 동일)
+ * ⋯ 메뉴는 **Menu** 컴파운드 API. `BreadcrumbItem`은 기본 `overflow-clip`이라 `Menu` 패널(absolute)이 잘리므로, ⋯ 셀에 `overflow-visible` 필요. `minHeight`는 패널이 뷰에 들어가게.
  */
 export default function BreadcrumbPreview() {
     return (
@@ -52,15 +56,18 @@ export default function BreadcrumbPreview() {
                                 <BreadcrumbLink href="#">홈</BreadcrumbLink>
                             </BreadcrumbItem>
                             <BreadcrumbSeparator />
-                            <BreadcrumbItem>
-                                <Dropdown
-                                    align="start"
-                                    trigger={<BreadcrumbEllipsisTrigger aria-label="중간 경로 메뉴" />}
-                                    items={[
-                                        { id: "a", label: "문서", onClick: () => {} },
-                                        { id: "b", label: "가이드", onClick: () => {} },
-                                    ]}
-                                />
+                            <BreadcrumbItem className="overflow-visible">
+                                <Menu positioning={{ autoSize: true }}>
+                                    <MenuTrigger>
+                                        <BreadcrumbEllipsisTrigger aria-label="중간 경로 메뉴" />
+                                    </MenuTrigger>
+                                    <MenuPopover>
+                                        <MenuList className="w-refineui-menu-panel-width">
+                                            <MenuItem onClick={() => {}}>문서</MenuItem>
+                                            <MenuItem onClick={() => {}}>가이드</MenuItem>
+                                        </MenuList>
+                                    </MenuPopover>
+                                </Menu>
                             </BreadcrumbItem>
                             <BreadcrumbSeparator />
                             <BreadcrumbItem>

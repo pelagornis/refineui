@@ -7,7 +7,7 @@ export type ButtonVariant = "primary" | "secondary" | "outline" | "ghost";
 /** Web Kit Size — Small / Medium / Large */
 export type ButtonSize = "sm" | "md" | "lg";
 
-/** Web Kit Layout — Label(텍스트·좌우 아이콘) / Icon(아이콘만, MCP `Layout=Icon`) */
+/** Web Kit Layout — Label / Icon-only (MCP `Layout=Icon`). */
 export type ButtonLayout = "label" | "icon";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -27,14 +27,14 @@ const variantClass: Record<ButtonVariant, string> = {
     ghost: "border-refineui-none border border-transparent bg-transparent text-refineui-alias-foreground-primary",
 };
 
-/** Figma `Layout=Label` — gap sizeXSmall, padding MCP 표 */
+/** Figma `Layout=Label` — gap sizeXSmall, padding per MCP. */
 const labelSizeClass: Record<ButtonSize, string> = {
     sm: "min-h-refineui-button-min-height-sm gap-refineui-size-x-small rounded-refineui-small px-refineui-size-medium py-refineui-size-xsmall refineui-typo-body-3",
     md: "min-h-refineui-button-min-height-md gap-refineui-size-x-small rounded-refineui-medium px-refineui-size-medium py-refineui-size-small refineui-typo-body-1",
     lg: "min-h-refineui-button-min-height-lg gap-refineui-size-x-small rounded-refineui-large px-refineui-size-large py-refineui-size-medium refineui-typo-sub-title-1",
 };
 
-/** Figma `Layout=Icon` — 정사각(min·w = Size별 높이), gap 0, padding·radius는 MCP */
+/** Figma `Layout=Icon` — square min width/height per size, gap 0, padding and radius per MCP. */
 const iconSizeClass: Record<ButtonSize, string> = {
     sm: "min-h-refineui-button-min-height-sm min-w-refineui-button-min-height-sm shrink-0 gap-0 rounded-refineui-small p-refineui-size-xsmall leading-none",
     md: "min-h-refineui-button-min-height-md min-w-refineui-button-min-height-md shrink-0 gap-0 rounded-refineui-medium p-refineui-size-small leading-none",
@@ -65,7 +65,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
 
     const sizeStyles = layout === "icon" ? iconSizeClass[size] : labelSizeClass[size];
 
-    /** MCP `Layout=Icon`: Primary·Ghost는 테두리 없음 — `border`(1px)가 min 크기 안을 잡아먹지 않게 제거 */
+    /** Icon layout: Primary/Ghost omit border so a 1px stroke does not shrink the box. */
     const iconNoStroke =
         layout === "icon" && (variant === "primary" || variant === "ghost") ? "border-0" : null;
 

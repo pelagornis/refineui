@@ -35,7 +35,7 @@ export type DividerProps =
     | (DividerHTML & { layout: "content"; children: ReactNode; align?: Align })
     | (DividerHTML & { layout: "icon"; align?: Align });
 
-/** Web Kit COMPONENT_SET `Divider` `346:722` — `layout` default · content · icon, `align` center · left · right(수평만). §8 `design-specs-web-kit.md`. */
+/** Web Kit `Divider` `346:722` — layout default · content · icon; align center · left · right (horizontal). See design-specs-web-kit.md §8. */
 export function Divider(props: DividerProps) {
     const p = props as DividerHTML & {
         layout?: "default" | "content" | "icon";

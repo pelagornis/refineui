@@ -1,13 +1,11 @@
 /**
- * Web Kit `Card` — `docs/design-specs-web-kit.md` §7 (`elevated` | `outlined`).
- * 헤더·본문·푸터 슬롯은 합성 컴포넌트로 구성 (shadcn Card와 유사한 사용).
+ * Web Kit Card — design-specs-web-kit.md §7 (`elevated` | `outlined`).
  */
 import { clsx } from "clsx";
 import type { HTMLAttributes } from "react";
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
     variant?: "elevated" | "outlined";
-    /** `true`일 때만 카드 자체 Hover/Pressed 배경 상태를 활성화 */
     interactive?: boolean;
 }
 
@@ -26,7 +24,6 @@ export function Card({ variant = "elevated", interactive = false, className, ...
     );
 }
 
-/** 제목·설명 묶음 — `CardHeader` 안에서 `CardAction`과 나란히 쓸 때 사용 */
 export function CardHeaderMain({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
     return (
         <div
@@ -82,7 +79,11 @@ export function CardAction({ className, ...props }: HTMLAttributes<HTMLDivElemen
 
 export function CardContent({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
     return (
-        <div data-refineui="card-content" className={clsx("px-refineui-size-large", className)} {...props} />
+        <div
+            data-refineui="card-content"
+            className={clsx("px-refineui-size-large pb-refineui-size-medium", className)}
+            {...props}
+        />
     );
 }
 

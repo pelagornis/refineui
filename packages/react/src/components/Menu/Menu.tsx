@@ -7,7 +7,10 @@ import type {
     ReactElement,
     ReactNode,
 } from "react";
-import { cloneElement, createContext, isValidElement, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { cloneElement, createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { iconSizes } from "@refineui/tokens";
+import { componentSizes } from "../../componentSizes";
+import { getMergeableTriggerChild } from "../../utils/mergeTriggerChild";
 
 export interface MenuItemData {
     id: string;
@@ -25,9 +28,7 @@ type MenuPositioning = {
 };
 
 export interface MenuProps extends HTMLAttributes<HTMLDivElement> {
-    /** 레거시 단축 API (기존 호환) */
     items?: MenuItemData[];
-    /** Fluent UI 유사 API */
     positioning?: MenuPositioning;
 }
 
@@ -113,7 +114,7 @@ function LegacyMenuPanel({ items, className, ...props }: { items: MenuItemData[]
             role="menu"
             onKeyDown={onMenuKeyDown}
             className={clsx(
-                "box-border flex w-refineui-menu-panel-width flex-col gap-refineui-size-minimal rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-surface p-refineui-size-xsmall shadow-refineui-2light",
+                "box-border flex w-refineui-menu-panel-width flex-col gap-refineui-size-xxsmall rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-surface p-refineui-size-xsmall shadow-refineui-2light",
                 className,
             )}
             {...props}
@@ -135,7 +136,6 @@ function LegacyMenuPanel({ items, className, ...props }: { items: MenuItemData[]
     );
 }
 
-/** Web Kit `Menu` `633:4268` — 레거시 `items` + Fluent UI 유사 컴파운드 API 동시 지원 */
 export function Menu({ items, children, className, positioning, ...props }: MenuProps) {
     if (items && items.length > 0) {
         return (
@@ -158,29 +158,36 @@ export function Menu({ items, children, className, positioning, ...props }: Menu
 }
 
 type MenuTriggerProps = {
-    children: ReactElement;
-    disableButtonEnhancement?: boolean;
+    children: ReactNode;
 };
 
 export function MenuTrigger({ children }: MenuTriggerProps) {
     const { open, setOpen } = useMenuContext("MenuTrigger");
 
-    if (!isValidElement(children)) return null;
+    const mergeEl = getMergeableTriggerChild(children);
+    if (mergeEl) {
+        const el = mergeEl as ReactElement<{ onClick?: (e: MouseEvent<HTMLElement>) => void }>;
+        return cloneElement(el, {
+            "aria-expanded": open,
+            "aria-haspopup": "menu" as const,
+            onClick: (e: MouseEvent<HTMLElement>) => {
+                el.props.onClick?.(e);
+                setOpen(!open);
+            },
+        } as never);
+    }
 
-    const el = children as ReactElement<{
-        onClick?: (e: MouseEvent<HTMLElement>) => void;
-        "aria-expanded"?: boolean;
-        "aria-haspopup"?: string;
-    }>;
-
-    return cloneElement(el, {
-        "aria-expanded": open,
-        "aria-haspopup": "menu",
-        onClick: (e: MouseEvent<HTMLElement>) => {
-            el.props.onClick?.(e);
-            setOpen(!open);
-        },
-    });
+    return (
+        <button
+            type="button"
+            aria-expanded={open}
+            aria-haspopup="menu"
+            className="cursor-pointer border-none bg-transparent p-0 font-inherit text-inherit"
+            onClick={() => setOpen(!open)}
+        >
+            {children}
+        </button>
+    );
 }
 
 export interface MenuPopoverProps extends HTMLAttributes<HTMLDivElement> {}
@@ -222,7 +229,7 @@ export function MenuPopover({ className, children, style, ...props }: MenuPopove
             )}
             style={{
                 width: "max-content",
-                minWidth: "180px",
+                minWidth: componentSizes.menuPanelWidth,
                 maxWidth: "100%",
                 ...style,
             }}
@@ -241,7 +248,7 @@ export function MenuList({ className, ...props }: MenuListProps) {
             data-refineui="menu"
             role="menu"
             className={clsx(
-                "box-border flex w-full flex-col gap-refineui-size-minimal rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-surface p-refineui-size-xsmall shadow-refineui-2light",
+                "box-border flex w-full flex-col gap-refineui-size-xxsmall rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-surface p-refineui-size-xsmall shadow-refineui-2light",
                 className,
             )}
             {...props}
@@ -291,7 +298,6 @@ export interface MenuItemProps extends Omit<ButtonHTMLAttributes<HTMLButtonEleme
     shortcut?: ReactNode;
     startIcon?: ReactNode;
     endIcon?: ReactNode;
-    /** MCP `Menu / Item` 상태 프리뷰/강제 지정용 */
     state?: "default" | "hover" | "pressed" | "active" | "disabled";
 }
 
@@ -324,7 +330,18 @@ export function MenuItem({
             {...props}
         >
             <span className="flex items-center gap-refineui-size-small">
-                {startIcon ? <span className="flex shrink-0 items-center justify-center">{startIcon}</span> : null}
+                {startIcon ? (
+                    <span
+                        className="inline-flex shrink-0 items-center justify-center [&>span]:leading-none"
+                        style={{
+                            width: iconSizes.small,
+                            minWidth: iconSizes.small,
+                            height: iconSizes.small,
+                        }}
+                    >
+                        {startIcon}
+                    </span>
+                ) : null}
                 <span className="flex min-w-0 flex-1 flex-col px-refineui-size-xxsmall">
                     <span className="refineui-typo-body-2 truncate">{children}</span>
                     {description ? (
@@ -333,7 +350,7 @@ export function MenuItem({
                                 "refineui-typo-body-4 truncate",
                                 isDisabled
                                     ? "text-refineui-alias-foreground-disabled"
-                                    : "text-refineui-alias-foreground-primary",
+                                    : "text-refineui-alias-foreground-secondary",
                             )}
                         >
                             {description}
@@ -342,8 +359,21 @@ export function MenuItem({
                 </span>
                 {(shortcut || endIcon) && (
                     <span className="flex shrink-0 items-center gap-refineui-size-small">
-                        {shortcut ? <span className="refineui-typo-body-4">{shortcut}</span> : null}
-                        {endIcon ? <span className="flex items-center justify-center">{endIcon}</span> : null}
+                        {shortcut ? (
+                            <span className="refineui-typo-body-4 text-refineui-alias-foreground-secondary">{shortcut}</span>
+                        ) : null}
+                        {endIcon ? (
+                            <span
+                                className="inline-flex shrink-0 items-center justify-center [&>span]:leading-none"
+                                style={{
+                                    width: iconSizes.small,
+                                    minWidth: iconSizes.small,
+                                    height: iconSizes.small,
+                                }}
+                            >
+                                {endIcon}
+                            </span>
+                        ) : null}
                     </span>
                 )}
             </span>

@@ -29,7 +29,7 @@
 | 5 | Badge | `Badge` `270:3353`, `Badge Number` `276:515` | ✅ |
 | 6 | Breadcrumb | `283:688` (COMPONENT_SET) | ✅ |
 | 7 | Button | `79:3304` (COMPONENT_SET) | ✅ |
-| 8 | Calendar | `656:2958` (COMPONENT_SET) | ✅ |
+| 8 | Calendar | Day `639:7052` · Month container `639:6845` | ✅ |
 | 9 | Card | COMPONENT_SET `Card` (§7, node-id MCP로 확인) | ✅ |
 | 10 | Checkbox | `327:2539` (COMPONENT_SET) | ✅ |
 | 11 | Chip | Web Kit 이름 `Tag` `574:6578` (`Chip`/`Tag` 동일) | ✅ |

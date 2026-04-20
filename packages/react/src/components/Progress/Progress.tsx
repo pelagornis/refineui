@@ -8,7 +8,6 @@ export interface ProgressProps extends HTMLAttributes<HTMLDivElement> {
     size?: "sm" | "lg";
 }
 
-/** Web Kit COMPONENT_SET `Progress bar` `452:3994` — 트랙 `alias.backgroundBrandSubtle`, 채움 `alias.backgroundBrand`. */
 export function Progress({
     value,
     max = 100,

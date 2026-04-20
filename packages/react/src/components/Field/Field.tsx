@@ -8,7 +8,6 @@ export interface FieldProps extends HTMLAttributes<HTMLDivElement> {
     error?: ReactNode;
     hint?: ReactNode;
     required?: boolean;
-    /** Figma `Field` `size` — 라벨 타이포: sm → caption1, md → body2, lg → body1 */
     size?: "sm" | "md" | "lg";
     children: ReactNode;
 }
@@ -19,7 +18,6 @@ const labelTypo: Record<NonNullable<FieldProps["size"]>, string> = {
     lg: "refineui-typo-body-1",
 };
 
-/** Web Kit COMPONENT_SET `Field` `525:1074` — `docs/design-specs-web-kit.md` Field 절. */
 export function Field({
     label,
     error,

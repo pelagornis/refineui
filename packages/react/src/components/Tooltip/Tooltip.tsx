@@ -1,9 +1,10 @@
 import { clsx } from "clsx";
 import type { CSSProperties, FocusEvent, HTMLAttributes, KeyboardEvent, MouseEvent, ReactElement, ReactNode } from "react";
-import { cloneElement, isValidElement, useId, useRef, useState } from "react";
+import { cloneElement, useId, useRef, useState } from "react";
 import { spacings } from "@refineui/tokens";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
+import { getMergeableTriggerChild } from "../../utils/mergeTriggerChild";
 
 export type TooltipVariant = "default" | "inverted";
 
@@ -12,7 +13,6 @@ export interface TooltipProps extends Omit<HTMLAttributes<HTMLDivElement>, "titl
     content: ReactNode;
     placement?: "top" | "bottom" | "left" | "right";
     variant?: TooltipVariant;
-    /** 표시 전 지연 (ms) — Web Kit 툴팁 동작에 가깝게 */
     delayMs?: number;
 }
 
@@ -121,8 +121,9 @@ export function Tooltip({
 
     const mergeTrigger = () => {
         const describedBy = open ? tooltipId : undefined;
-        if (isValidElement(trigger)) {
-            const el = trigger as ReactElement<TriggerMerge>;
+        const mergeEl = getMergeableTriggerChild(trigger);
+        if (mergeEl) {
+            const el = mergeEl as ReactElement<TriggerMerge>;
             const prev = el.props["aria-describedby"];
             return cloneElement(el, {
                 "aria-describedby": prev && describedBy ? `${prev} ${describedBy}` : describedBy ?? prev,

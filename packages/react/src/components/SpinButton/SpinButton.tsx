@@ -32,7 +32,6 @@ const stepHeight: Record<NonNullable<SpinButtonProps["size"]>, string> = {
     lg: "h-refineui-spin-stepper-step-height-lg",
 };
 
-/** Web Kit COMPONENT_SET `Spin Button` `561:2067` — `docs/design-specs-web-kit.md` Spin Button 절. */
 export function SpinButton({
     value,
     onChange,

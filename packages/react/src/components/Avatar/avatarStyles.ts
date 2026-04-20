@@ -4,15 +4,6 @@ import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import type { CSSProperties } from "react";
 
-/**
- * 단일 **`Avatar`** 토큰·맵 — Web Kit `Avatar` MCP `size`(XXXSmall→XXXLarge) 9단계.
- *
- * **컴포넌트 세트**는 Figma **「Avatars」** 페이지 `Avatar`(`56:254`) 기준 — `Layout`×`Color`×`Size` variant.
- * **그룹**: **`Avatar Stack` `69:3008`**, **`Avatar Spread` `69:3007`**는 각각 겹침·간격 **그룹** 컴포넌트이며, 단일 `Avatar`의 전체 색 목록과 혼동하지 않는다.
- *
- * **Stack `69:3008`**: 지름·겹침은 **`foundationSizes`**; Status XXXLarge만 `componentSizes.avatarStatusXxxlarge`.
- * **Spread `69:3007`**: 행 간격은 `spacings` (`avatarSpreadGap`).
- */
 export type AvatarSize =
     | "xxxsmall"
     | "xxsmall"
@@ -27,11 +18,6 @@ export type AvatarSize =
 /** MCP / Figma `Avatar` `layout` */
 export type AvatarLayout = "image" | "icon" | "initials";
 
-/**
- * Figma `Avatar` COMPONENT_SET `56:254` variant `Color` (플러그인 API로 열거):
- * - **Image** → `Neutral`만
- * - **Icon** / **Initials** → 동일 10색 (`Blue` … `Yellow`)
- */
 export type AvatarColorImage = "neutral";
 
 export type AvatarColorIcon =
@@ -67,7 +53,6 @@ function isAvatarColorIcon(c: string): c is AvatarColorIcon {
     return (ICON_INITIALS_PALETTE as readonly string[]).includes(c);
 }
 
-/** layout·Figma에 맞게 색 정규화 — layout 생략 시 Image+Neutral */
 export function normalizeAvatarColor(layout: AvatarLayout | undefined, color: AvatarColor | undefined): AvatarColor {
     if (layout === "image" || layout === undefined) return "neutral";
     const c = color ?? "neutral";
@@ -90,7 +75,6 @@ export const avatarSizeDim: Record<AvatarSize, string> = {
     xxxlarge: "size-refineui-foundation-size-600",
 };
 
-/** Neutral 이니셜 타이포 — MCP `Avatar` 행 */
 export const avatarTypoNeutral: Record<AvatarSize, string> = {
     xxxsmall: "refineui-typo-body-4",
     xxsmall: "refineui-typo-body-2",
@@ -103,7 +87,6 @@ export const avatarTypoNeutral: Record<AvatarSize, string> = {
     xxxlarge: "refineui-typo-title-2",
 };
 
-/** Person 슬롯 — Web Kit `Avatar` + `iconSizes`(`packages/tokens` dist) */
 export const avatarIconSlotSize: Record<AvatarSize, number> = {
     xxxsmall: iconSizes.xxsmall,
     xxsmall: iconSizes.xsmall,
@@ -129,20 +112,20 @@ function initialsAccentTypo(size: AvatarSize): string {
 }
 
 const avatarShellBackgroundColor: Record<AvatarColor, string> = {
-    neutral: resolveColorTokenValue(componentColorTokens.avatar.shell.neutralBackground),
-    blue: resolveColorTokenValue(componentColorTokens.avatar.shell.iconBackground.blue),
-    green: resolveColorTokenValue(componentColorTokens.avatar.shell.iconBackground.green),
-    lime: resolveColorTokenValue(componentColorTokens.avatar.shell.iconBackground.lime),
-    magenta: resolveColorTokenValue(componentColorTokens.avatar.shell.iconBackground.magenta),
-    orange: resolveColorTokenValue(componentColorTokens.avatar.shell.iconBackground.orange),
-    purple: resolveColorTokenValue(componentColorTokens.avatar.shell.iconBackground.purple),
-    red: resolveColorTokenValue(componentColorTokens.avatar.shell.iconBackground.red),
-    teal: resolveColorTokenValue(componentColorTokens.avatar.shell.iconBackground.teal),
-    yellow: resolveColorTokenValue(componentColorTokens.avatar.shell.iconBackground.yellow),
+    neutral: resolveColorTokenValue(componentColorTokens.avatar.shell.background.neutral),
+    blue: resolveColorTokenValue(componentColorTokens.avatar.shell.background.blue),
+    green: resolveColorTokenValue(componentColorTokens.avatar.shell.background.green),
+    lime: resolveColorTokenValue(componentColorTokens.avatar.shell.background.lime),
+    magenta: resolveColorTokenValue(componentColorTokens.avatar.shell.background.magenta),
+    orange: resolveColorTokenValue(componentColorTokens.avatar.shell.background.orange),
+    purple: resolveColorTokenValue(componentColorTokens.avatar.shell.background.purple),
+    red: resolveColorTokenValue(componentColorTokens.avatar.shell.background.red),
+    teal: resolveColorTokenValue(componentColorTokens.avatar.shell.background.teal),
+    yellow: resolveColorTokenValue(componentColorTokens.avatar.shell.background.yellow),
 };
 
 const avatarShellInitialsForegroundColor: Record<AvatarColor, string> = {
-    neutral: resolveColorTokenValue(componentColorTokens.avatar.shell.neutralForeground),
+    neutral: resolveColorTokenValue(componentColorTokens.avatar.icon.neutral),
     blue: resolveColorTokenValue(componentColorTokens.avatar.icon.blue),
     green: resolveColorTokenValue(componentColorTokens.avatar.icon.green),
     lime: resolveColorTokenValue(componentColorTokens.avatar.icon.lime),
@@ -154,9 +137,7 @@ const avatarShellInitialsForegroundColor: Record<AvatarColor, string> = {
     yellow: resolveColorTokenValue(componentColorTokens.avatar.icon.yellow),
 };
 
-export const avatarNeutralForegroundColor = resolveColorTokenValue(
-    componentColorTokens.avatar.shell.neutralForeground,
-);
+export const avatarNeutralForegroundColor = resolveColorTokenValue(componentColorTokens.avatar.icon.neutral);
 
 export function resolveAvatarShellStyle(
     color: AvatarColor,
@@ -236,10 +217,6 @@ export const avatarGroupCountTypo: Record<AvatarSize, string> = {
     xxxlarge: "refineui-typo-body-2",
 };
 
-/**
- * `Avatar/Status` 오버레이 위치 — 아바타 **우하단**에 붙이되, 지름·아바타 크기에 맞춰
- * `left`/`top`으로 두었을 때와 동일한 픽셀 기하(`bottom` = D − top − d, `right` = D − left − d).
- */
 export const avatarStatusPosition: Record<AvatarSize, string> = {
     xxxsmall: "bottom-0 right-0",
     xxsmall: "bottom-0 right-0",
@@ -252,7 +229,6 @@ export const avatarStatusPosition: Record<AvatarSize, string> = {
     xxxlarge: "bottom-[-2px] right-[-2px]",
 };
 
-/** `Avatar/Status` 지름 — MCP `size-[*px]` / Foundation·`componentSizes`와 대응 */
 export const avatarStatusDim: Record<AvatarSize, string> = {
     xxxsmall: "size-refineui-foundation-size-40",
     xxsmall: "size-refineui-foundation-size-60",
@@ -265,7 +241,6 @@ export const avatarStatusDim: Record<AvatarSize, string> = {
     xxxlarge: "size-refineui-avatar-status-xxxlarge",
 };
 
-/** Stack 겹침 — `refineui.css`의 `--avatar-stack-overlap` */
 export const avatarStackOverlapCssVar: Record<AvatarSize, string> = {
     xxxsmall: "var(--refineui-size-foundation-size-40)",
     xxsmall: "var(--refineui-size-foundation-size-40)",

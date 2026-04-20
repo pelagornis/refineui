@@ -7,7 +7,7 @@ import PopOverDemo from "../../../components/PopOverDemo";
 
 # PopOver
 
-트리거를 클릭해 패널을 엽니다. Web Kit **PopOver** `553:5669` — **`default`** / **`inverted`** 배경. Figma의 **beak(화살표)·세부 정렬**은 미구현이며, 패널 토큰만 스펙에 맞춥니다.
+트리거를 클릭해 패널을 엽니다. Web Kit **PopOver** `553:5669` — **`variant`** (`default` / **`inverted`**), **`placement`** (= Figma `position`), **`align`** (= Figma `Start` \| `Center` \| `End`), 패널·테두리·비크(beak)는 MCP 기준 치수·색 토큰과 맞춥니다.
 
 ## 설치·임포트
 
@@ -16,7 +16,36 @@ import { PopOver, Button } from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
-## 기본 사용
+## 기본 사용 (합성 API)
+
+```tsx
+import {
+  Button,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@refineui/react";
+import "@refineui/react/refineui.css";
+
+export function Example() {
+  return (
+    <Popover>
+      <PopoverTrigger>
+        <Button variant="secondary">열기</Button>
+      </PopoverTrigger>
+      <PopoverContent placement="bottom" align="center">
+        <p>추가 설명</p>
+      </PopoverContent>
+    </Popover>
+  );
+}
+```
+
+패널 폭은 기본적으로 Web Kit **`componentSizes.popoverPanelWidth`(325px)** 최소폭입니다. 필요하면 **`PopoverContent`**에 `className` 또는 `style`로 덮습니다 (예: Preview에서 `width: componentSizes.popoverPanelWidth`).
+
+**`PopoverTrigger`**에 자식으로 **단일 엘리먼트**(예: `Button`)를 두면 트리거 역할·접근성 속성이 그 엘리먼트에 합성됩니다. 텍스트만 두면 내부적으로 `button`으로 감쌉니다.
+
+### 단일 컴포넌트 API (선택)
 
 ```tsx
 <PopOver
@@ -35,12 +64,31 @@ import "@refineui/react/refineui.css";
 
 ## Props
 
+### `Popover` (루트)
+
+| Prop | 타입 | 설명 |
+|------|------|------|
+| `open` | `boolean` | 제어 모드 열림 여부 |
+| `defaultOpen` | `boolean` | 비제어 모드 초기값 |
+| `onOpenChange` | `(open: boolean) => void` | 열림 상태 변경 |
+
+### `PopoverContent`
+
+| Prop | 타입 | 기본값 | 설명 |
+|------|------|--------|------|
+| `placement` | `"top"` \| `"bottom"` \| `"left"` \| `"right"` | `"bottom"` | Figma `position` |
+| `align` | `"start"` \| `"center"` \| `"end"` | `"center"` | Figma `align` |
+| `variant` | `"default"` \| `"inverted"` | `"default"` | 패널 배경 |
+
+### `PopOver` (단일 컴포넌트 · 선택)
+
 | Prop | 타입 | 기본값 | 설명 |
 |------|------|--------|------|
 | `trigger` | `ReactNode` | (필수) | 클릭 요소 |
 | `content` | `ReactNode` | (필수) | 패널 내용 |
-| `placement` | `"top"` \| `"bottom"` \| `"left"` \| `"right"` | `"bottom"` | 기준 위치 |
-| `variant` | `"default"` \| `"inverted"` | `"default"` | 밝은 / 어두운 패널 |
+| `placement` | `"top"` \| `"bottom"` \| `"left"` \| `"right"` | `"bottom"` | |
+| `align` | `"start"` \| `"center"` \| `"end"` | `"center"` | |
+| `variant` | `"default"` \| `"inverted"` | `"default"` | |
 
 ## 예시
 

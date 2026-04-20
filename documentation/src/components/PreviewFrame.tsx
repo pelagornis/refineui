@@ -12,11 +12,13 @@ interface PreviewFrameProps {
   title?: string;
   /** 배경색 — light(기본) | dark */
   variant?: "light" | "dark";
-  /** 미리보기 영역 최소 높이 — 드롭다운·오버레이 등 데모가 답답하지 않게 (예: `min(60vh, 560px)`) */
+  /** 미리보기 영역 최소 높이 — 드롭다운·Popover 등 오버레이 데모 */
   minHeight?: string;
+  /** 가로 최소 폭 — 폼·패널 데모 등 */
+  minWidth?: string;
 }
 
-export default function PreviewFrame({ children, title, variant, minHeight }: PreviewFrameProps) {
+export default function PreviewFrame({ children, title, variant, minHeight, minWidth }: PreviewFrameProps) {
   return (
     <div
       id="refineui-preview"
@@ -30,7 +32,7 @@ export default function PreviewFrame({ children, title, variant, minHeight }: Pr
         borderRadius: previewRadius,
         marginBottom: previewMarginBottom,
         width: "100%",
-        minWidth: 0,
+        minWidth: minWidth ?? 0,
         minHeight: minHeight,
         boxSizing: "border-box",
       }}

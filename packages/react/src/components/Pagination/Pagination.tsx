@@ -5,7 +5,6 @@ import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
 
-/** Web Kit `Pagination / Item` `570:2332` — 생략(ellipsis) 포함 페이지 나열 */
 export function getPaginationItems(current: number, total: number): (number | "ellipsis")[] {
     if (total <= 0) return [];
     if (total <= 7) {
@@ -38,7 +37,6 @@ export interface PaginationProps extends HTMLAttributes<HTMLElement> {
 const navBtnClass =
     "box-border inline-flex min-h-refineui-pagination-button-min-width min-w-refineui-pagination-button-min-width cursor-pointer items-center justify-center rounded-refineui-large border-refineui-thin border-refineui-neutral-300 bg-refineui-neutral-white p-refineui-size-small";
 
-/** Web Kit `Pagination` `558:1989` · `Pagination / Item` `570:2332` — 이전/다음 + 페이지 번호(ellipsis). */
 export function Pagination({ page, totalPages, onPageChange, className, ...props }: PaginationProps) {
     const prevDisabled = page <= 1;
     const nextDisabled = page >= totalPages;

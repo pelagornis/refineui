@@ -71,9 +71,7 @@ function useDialogOpenState(
 }
 
 export interface DialogProps {
-    /** 제어 모드 — `onOpenChange`와 함께 사용 */
     open?: boolean;
-    /** 비제어 모드 초기값 */
     defaultOpen?: boolean;
     onOpenChange?: (open: boolean) => void;
     /** Web Kit `size`: Large(600px) / Small(300px) */
@@ -81,10 +79,6 @@ export interface DialogProps {
     children: ReactNode;
 }
 
-/**
- * 루트 — `DialogTrigger`(내부 `Button`) + `DialogContent` 조합.
- * 제어: `open` + `onOpenChange`, 비제어: `defaultOpen` + Trigger.
- */
 export function Dialog({ open: openProp, defaultOpen, onOpenChange, size = "lg", children }: DialogProps) {
     const [open, setOpen] = useDialogOpenState(openProp, defaultOpen, onOpenChange);
     const titleId = useId();
@@ -114,7 +108,6 @@ export function Dialog({ open: openProp, defaultOpen, onOpenChange, size = "lg",
 
 export type DialogTriggerProps = ButtonProps;
 
-/** 모달을 연다. Web Kit `Button`과 동일한 `variant`·`size` 등을 받는다. */
 export const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(function DialogTrigger(
     { onClick, ...props },
     ref,
@@ -133,15 +126,10 @@ export const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(f
 });
 
 export interface DialogContentProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
-    /** 포털 루트 (기본 `document.body`) */
     container?: Element | DocumentFragment | null;
     style?: CSSProperties;
 }
 
-/**
- * 스크rim + 패널 포털. `open`이 false면 언마운트 전환 후 제거.
- * 자식으로 `DialogHeader` / 본문 등을 둔다.
- */
 export function DialogContent({ className, style, container, children, ...props }: DialogContentProps) {
     const { open, setOpen, size, titleId, descriptionId, panelRef, hasTitle, hasDescription } =
         useDialogContext("DialogContent");
@@ -233,11 +221,9 @@ export function DialogContent({ className, style, container, children, ...props 
 }
 
 export interface DialogHeaderProps extends HTMLAttributes<HTMLDivElement> {
-    /** 기본 `true` — Web Kit 헤더 닫기 */
     showClose?: boolean;
 }
 
-/** 제목·설명 열 + 닫기(`DialogClose`) */
 export function DialogHeader({ className, children, showClose = true, ...props }: DialogHeaderProps) {
     return (
         <div
@@ -290,7 +276,6 @@ export function DialogDescription({ className, id, children, ...props }: DialogD
 
 export type DialogCloseProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-/** 닫기 — Web Kit Ghost · Small · Icon + dismiss */
 export function DialogClose({ className, onClick, type = "button", ...props }: DialogCloseProps) {
     const { setOpen } = useDialogContext("DialogClose");
     return (

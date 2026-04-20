@@ -7,7 +7,6 @@ export interface ToggleProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
     onCheckedChange?: (checked: boolean) => void;
 }
 
-/** Web Kit COMPONENT_SET `Switch` `270:3057` — `Switch`는 동일 구현을 재보냅니다. */
 export function Toggle({
     checked = false,
     onCheckedChange,

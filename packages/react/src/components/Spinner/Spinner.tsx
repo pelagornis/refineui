@@ -1,10 +1,8 @@
 import { clsx } from "clsx";
 import type { HTMLAttributes, ReactNode } from "react";
 
-/** Web Kit COMPONENT_SET `Spinner` `550:3669` — Figma `XSmall` … `XXLarge` */
 export type SpinnerSize = "xSmall" | "small" | "medium" | "large" | "xLarge" | "xxLarge";
 
-/** 라벨 대비 스피너 위치 — Figma `position` Left / Right / Top / Bottom */
 export type SpinnerLabelPosition = "left" | "right" | "top" | "bottom";
 
 const spinnerRingClass: Record<SpinnerSize, string> = {
@@ -31,13 +29,10 @@ const labelTypo: Record<SpinnerSize, string> = {
 
 export interface SpinnerProps extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
     size?: SpinnerSize;
-    /** 라벨이 있을 때만 표시 — Figma `showLabel` */
     label?: ReactNode;
-    /** Figma 기본 `Right` — 라벨 왼쪽·스피너 오른쪽 */
     labelPosition?: SpinnerLabelPosition;
 }
 
-/** Web Kit COMPONENT_SET `Spinner` `550:3669` — `docs/design-specs-web-kit.md` Spinner 절. */
 export function Spinner({
     size = "medium",
     label,

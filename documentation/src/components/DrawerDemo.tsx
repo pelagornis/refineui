@@ -39,9 +39,7 @@ export default function DrawerDemo() {
               <p style={{ margin: 0 }}>Drawer Content</p>
             </DrawerBody>
             <DrawerFooter>
-              <DrawerClose>
-                <Button variant="outline">Cancel</Button>
-              </DrawerClose>
+              <DrawerClose variant="outline">Cancel</DrawerClose>
               <Button>Submit</Button>
             </DrawerFooter>
           </DrawerContent>

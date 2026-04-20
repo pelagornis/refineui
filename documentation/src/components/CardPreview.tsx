@@ -38,10 +38,10 @@ export default function CardPreview() {
                 </p>
             </CardContent>
             <CardFooter className="flex-row justify-end gap-refineui-size-small">
-                <Button type="button" variant="primary">
+                <Button type="button" size="sm" variant="primary">
                     Confirm
                 </Button>
-                <Button type="button" variant="outline">
+                <Button type="button" size="sm" variant="outline">
                     Cancel
                 </Button>
             </CardFooter>

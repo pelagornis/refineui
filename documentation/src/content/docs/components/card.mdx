@@ -3,7 +3,7 @@ title: Card
 description: 카드 컨테이너 — elevated / outlined
 ---
 
-import CardPreview from "../../../components/CardPreview";
+import CardPreview from '../../../components/CardPreview';
 
 # Card
 
@@ -21,36 +21,43 @@ import {
   CardHeader,
   CardHeaderMain,
   CardTitle,
-} from "@refineui/react";
+} from '@refineui/react';
 ```
 
 ## 기본 사용
 
-`Card`는 **루트 컨테이너**만 담당하고, 안쪽은 **`CardHeader` · `CardContent` · `CardFooter`** 등으로 나눕니다. Web Kit §7과 동일하게 루트는 `gap`으로 구역을 띄우고, 패딩은 각 슬롯에 분배합니다.
+`Card`는 **루트 컨테이너**만 담당하고, 안쪽은 **`CardHeader` · `CardContent` · `CardFooter`** 등으로
+나눕니다. Web Kit §7과 동일하게 루트는 `gap`으로 구역을 띄우고, 패딩은 각 슬롯에 분배합니다.
 
-헤더에 제목·설명과 우측 액션(예: Sign up)을 두려면 **`CardHeaderMain`**으로 제목 블록을 감싼 뒤 **`CardAction`**을 나란히 두면 됩니다.
+헤더에 제목·설명과 우측 액션(예: Sign up)을 두려면 **`CardHeaderMain`**으로 제목 블록을 감싼 뒤
+**`CardAction`**을 나란히 두면 됩니다.
 
 ```tsx
-import { Button } from "@refineui/react";
+import { Button } from '@refineui/react';
 
-<Card className="w-full max-w-sm">
+<Card className='w-full max-w-sm'>
   <CardHeader>
     <CardHeaderMain>
       <CardTitle>Login to your account</CardTitle>
       <CardDescription>Enter your email below to login to your account</CardDescription>
     </CardHeaderMain>
     <CardAction>
-      <Button variant="ghost" type="button">Sign Up</Button>
+      <Button variant='ghost' type='button'>
+        Sign Up
+      </Button>
     </CardAction>
   </CardHeader>
   <CardContent>{/* 폼 필드 */}</CardContent>
-  <CardFooter className="flex-col gap-refineui-size-small">
-    <Button type="button" className="w-full">Login</Button>
+  <CardFooter className='flex-col gap-refineui-size-small'>
+    <Button type='button' className='w-full'>
+      Login
+    </Button>
   </CardFooter>
-</Card>
+</Card>;
 ```
 
-`Button variant="link"`는 Web Kit에 없으므로, 링크처럼 보이게 하려면 **`Link`** 컴포넌트 또는 **`Button variant="ghost"`** + 필요 시 `className`으로 밑줄 등을 주면 됩니다.
+`Button variant="link"`는 Web Kit에 없으므로, 링크처럼 보이게 하려면 **`Link`** 컴포넌트 또는
+**`Button variant="ghost"`** + 필요 시 `className`으로 밑줄 등을 주면 됩니다.
 
 ### 단순 블록
 
@@ -58,45 +65,46 @@ import { Button } from "@refineui/react";
 
 ```tsx
 <Card>
-  <CardContent className="py-refineui-size-large">
-    <p className="refineui-typo-body-2 text-refineui-neutral-600">내용만</p>
+  <CardContent className='py-refineui-size-large'>
+    <p className='refineui-typo-body-2 text-refineui-neutral-600'>내용만</p>
   </CardContent>
 </Card>
 ```
 
 ## Preview
 
-<div class="not-content">
+<div class='not-content'>
   <CardPreview client:load />
 </div>
 
 ## Props
 
-| Prop | 타입 | 기본값 | 설명 |
-|------|------|--------|------|
+| Prop      | 타입                         | 기본값       | 설명               |
+| --------- | ---------------------------- | ------------ | ------------------ |
 | `variant` | `"elevated"` \| `"outlined"` | `"elevated"` | 그림자 또는 테두리 |
 
 나머지는 **`HTMLAttributes<HTMLDivElement>`** (`className`, `style`, `onClick` 등).  
-`CardHeader` · `CardContent` · `CardFooter` 등도 동일하게 `className`으로 레이아웃을 덮어쓸 수 있습니다.
+`CardHeader` · `CardContent` · `CardFooter` 등도 동일하게 `className`으로 레이아웃을 덮어쓸 수
+있습니다.
 
 ## 예시
 
 ### 윤곽만
 
 ```tsx
-import { Card, CardContent } from "@refineui/react";
+import { Card, CardContent } from '@refineui/react';
 
-<Card variant="outlined">
-  <CardContent className="py-refineui-size-large">설정 패널</CardContent>
-</Card>
+<Card variant='outlined'>
+  <CardContent className='py-refineui-size-large'>설정 패널</CardContent>
+</Card>;
 ```
 
 ### 그림자(기본)
 
 ```tsx
-import { Card, CardContent } from "@refineui/react";
+import { Card, CardContent } from '@refineui/react';
 
-<Card variant="elevated">
-  <CardContent className="py-refineui-size-large">대시보드 위젯</CardContent>
-</Card>
+<Card variant='elevated'>
+  <CardContent className='py-refineui-size-large'>대시보드 위젯</CardContent>
+</Card>;
 ```

@@ -1,9 +1,7 @@
 import { clsx } from "clsx";
 import {
-    cloneElement,
     createContext,
     forwardRef,
-    isValidElement,
     useCallback,
     useContext,
     useEffect,
@@ -11,11 +9,8 @@ import {
     useMemo,
     useRef,
     useState,
-    type ButtonHTMLAttributes,
     type CSSProperties,
     type HTMLAttributes,
-    type MouseEvent,
-    type ReactElement,
     type ReactNode,
     type RefObject,
 } from "react";
@@ -166,7 +161,6 @@ export interface DrawerContentProps extends Omit<HTMLAttributes<HTMLDivElement>,
     size?: DrawerSize;
 }
 
-/** Web Kit COMPONENT_SET `Drawer` `635:1756` — Overlay; 색·폭·그림자 토큰 기준. */
 export function DrawerContent({
     className,
     style,
@@ -378,43 +372,42 @@ export function DrawerFooter({ className, ...props }: DrawerFooterProps) {
     );
 }
 
-export interface DrawerCloseProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface DrawerCloseProps extends Omit<ButtonProps, "children"> {
     children?: ReactNode;
 }
 
-export function DrawerClose({ children, onClick, className, type = "button", ...props }: DrawerCloseProps) {
+export function DrawerClose({
+    children,
+    onClick,
+    className,
+    type = "button",
+    variant,
+    size,
+    layout,
+    ...props
+}: DrawerCloseProps) {
     const { setOpen } = useDrawerContext("DrawerClose");
-    const handleClick = (e: MouseEvent<HTMLElement>) => {
-        onClick?.(e as unknown as MouseEvent<HTMLButtonElement>);
-        if (!e.defaultPrevented) setOpen(false);
-    };
-
-    if (isValidElement(children)) {
-        const child = children as ReactElement<{ onClick?: (e: MouseEvent<HTMLElement>) => void }>;
-        return cloneElement(child, {
-            ...child.props,
-            onClick: (e: MouseEvent<HTMLElement>) => {
-                child.props.onClick?.(e);
-                handleClick(e);
-            },
-        });
-    }
+    const iconOnly = children == null;
 
     return (
         <Button
             {...props}
             type={type}
-            variant="ghost"
-            size="sm"
-            layout="icon"
-            aria-label="닫기"
+            variant={variant ?? (iconOnly ? "ghost" : "outline")}
+            size={size ?? (iconOnly ? "sm" : "md")}
+            layout={layout ?? (iconOnly ? "icon" : "label")}
+            aria-label={iconOnly ? "닫기" : undefined}
             className={className}
             onClick={(e) => {
                 onClick?.(e);
                 if (!e.defaultPrevented) setOpen(false);
             }}
         >
-            <WebIcon name="dismiss" size={iconSizes.xlarge} color="currentColor" iconStyle="regular" aria-hidden />
+            {iconOnly ? (
+                <WebIcon name="dismiss" size={iconSizes.xlarge} color="currentColor" iconStyle="regular" aria-hidden />
+            ) : (
+                children
+            )}
         </Button>
     );
 }

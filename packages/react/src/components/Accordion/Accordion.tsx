@@ -26,20 +26,12 @@ export type AccordionType = "single" | "multiple";
 
 export interface AccordionProps extends HTMLAttributes<HTMLDivElement> {
     items?: AccordionItemProps[];
-    /**
-     * shadcn 스타일 API:
-     * - `single`: 하나만 열림
-     * - `multiple`: 여러 개 열림
-     */
     type?: AccordionType;
-    /**
-     * `type="single"`에서 이미 열린 항목을 다시 닫을 수 있게 함
-     */
     collapsible?: boolean;
     defaultValue?: string | string[];
     value?: string | string[];
     onValueChange?: (value: string | string[] | undefined) => void;
-    /** legacy API 호환 */
+    /** Legacy `allowMultiple` alias. */
     allowMultiple?: boolean;
     /** Figma Web Kit: Small → Caption1, Medium → Body1, Large → SubTitle1 */
     size?: AccordionSize;
@@ -51,7 +43,6 @@ const triggerTypo: Record<AccordionSize, string> = {
     large: "refineui-typo-sub-title-1",
 };
 
-/** 높이는 조금 여유 있게, 본문은 살짝 빠르게 페이드해 닫힐 때 덜 뚝 끊기게 */
 const PANEL_HEIGHT_MS = 0.38;
 const PANEL_CONTENT_MS = 0.26;
 const PANEL_HEIGHT_EASE = "cubic-bezier(0.32, 0.72, 0, 1)";
@@ -100,7 +91,6 @@ function toSet(value: string | string[] | undefined, type: AccordionType): OpenS
     return type === "multiple" ? new Set([value]) : new Set([value]);
 }
 
-/** Web Kit Accordion `54:146` — MCP: 트리거 `foregroundPrimary`. 패널 본문은 스타일 없음(`className`으로만). */
 export function Accordion({
     items,
     type,

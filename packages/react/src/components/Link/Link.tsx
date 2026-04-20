@@ -5,15 +5,15 @@ import { WebIcon } from "../../WebIcon";
 
 export interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
     /**
-     * `true`면 `open` 아이콘 표시. 미지정 시 `target="_blank"`이면 자동 표시.
-     * `false`로 명시하면 새 창이어도 아이콘 숨김.
+     * When true, show the external-link icon. When omitted, shown automatically for `target="_blank"`.
+     * Set false to hide the icon even for new windows.
      */
     showExternalIcon?: boolean;
-    /** 비활성 — `aria-disabled`·포인터 차단 (`<a>`는 네이티브 `disabled` 없음) */
+    /** Disabled — sets `aria-disabled` and blocks pointer events (anchors have no native `disabled`). */
     disabled?: boolean;
 }
 
-/** Web Kit COMPONENT_SET `Link` `226:158` — 색·밑줄은 `refineui.css` `[data-refineui="link"]`. */
+/** Web Kit `Link` `226:158` — colors and underline via `refineui.css` `[data-refineui="link"]`. */
 export function Link({
     showExternalIcon,
     target,

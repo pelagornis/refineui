@@ -1,7 +1,3 @@
-/**
- * Web Kit Calendar — MCP `656:2958` 본체, `656:2959` Month Header는 Web Kit `Button`(`79:3304`) Ghost.
- * `data-refineui`는 `Button`이 `button`으로 두어야 `refineui.css` Ghost hover·pressed가 적용됨(캘린더에서 덮어쓰지 않음).
- */
 import { clsx } from "clsx";
 import type { HTMLAttributes } from "react";
 import { useState } from "react";
@@ -12,16 +8,13 @@ import { Button } from "../Button";
 export type CalendarMode = "single" | "range";
 
 export interface CalendarProps extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
-    /** 기본 `single`. `range`일 때 `rangeStart` / `rangeEnd` / `onRangeChange` 사용 */
     mode?: CalendarMode;
     value?: Date;
     onChange?: (date: Date) => void;
     rangeStart?: Date;
     rangeEnd?: Date;
     onRangeChange?: (start: Date | undefined, end: Date | undefined) => void;
-    /** 0=일요일 시작(MCP), 1=월요일 시작 */
     weekStartsOn?: 0 | 1;
-    /** 최초 표시 월 (`value` / 범위 시작이 없을 때) */
     defaultMonth?: Date;
 }
 
@@ -204,7 +197,6 @@ export function Calendar({
             </button>
         );
 
-        /** Web Kit `656:2958` — 바깥은 `backgroundprimaryhover`(neutral100) + 한쪽만 radius, 안쪽 검정은 전면 8px */
         const endpointRange = (endpoint: "start" | "end") => (
             <div
                 key={key}
@@ -311,7 +303,7 @@ export function Calendar({
             )}
             {...props}
         >
-            <div className="flex w-full min-w-0 items-center justify-between px-refineui-size-small pb-refineui-size-medium">
+            <div className="flex w-full min-w-0 items-start justify-between px-refineui-size-small pb-refineui-size-medium">
                 <Button
                     type="button"
                     variant="ghost"

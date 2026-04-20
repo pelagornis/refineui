@@ -4,10 +4,6 @@ import { clsx } from "clsx";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 
-/**
- * Web Kit `Avatar/Status` `65:65` — Figma SVG 내보내기 (14×14)와 동일 실루엣.
- * 색은 Foundation 토큰 CSS 변수 (`colors.ts`와 동일 hex).
- */
 export type AvatarStatusGraphicStatus = "online" | "away" | "unavailable" | "offline";
 
 type Props = {

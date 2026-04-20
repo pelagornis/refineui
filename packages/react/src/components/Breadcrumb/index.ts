@@ -1,4 +1,5 @@
 export {
+    breadcrumbLinkClassName,
     Breadcrumb,
     BreadcrumbEllipsis,
     BreadcrumbEllipsisTrigger,

@@ -47,19 +47,66 @@
 [data-refineui="pagination"],
 [data-refineui="pagination-page"],
 [data-refineui="accordion-trigger"],
-[data-refineui="dropdown-item"],
 [data-refineui="menu-item"],
 [data-refineui="tab"],
 [data-refineui="calendar-nav"],
 [data-refineui="chip-remove"] {
   transition: opacity 0.15s, background-color 0.15s, transform 0.1s;
 }
+[data-refineui="dropdown-item"] {
+  transition: background-color 0.15s, transform 0.1s;
+}
+/* 선택된 행(안정 상태) — MCP: rest는 `surfaceSelected`; pressed는 아래 `:active` */
+[data-refineui="dropdown-item"][data-selected="true"]:not(:disabled) {
+  background-color: var(--refineui-color-alias-background-surface-selected) !important;
+}
+/* Dropdown / Menu / Item — Web Kit `503:2985`: hover `surfaceHover`, pressed `surfaceActive` */
+[data-refineui="dropdown-item"]:not(:disabled):hover,
+[data-refineui="dropdown-menu"] [data-refineui="dropdown-item"]:not(:disabled):focus {
+  background-color: var(--refineui-color-alias-background-surface-hover) !important;
+}
+[data-refineui="dropdown-item"]:not(:disabled):active {
+  background-color: var(--refineui-color-alias-background-surface-active) !important;
+}
+
+[data-refineui="dropdown-menu"][data-side="bottom"] {
+  transform-origin: top center;
+  animation: refineui-dropdown-menu-enter-bottom 180ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+[data-refineui="dropdown-menu"][data-side="top"] {
+  transform-origin: bottom center;
+  animation: refineui-dropdown-menu-enter-top 180ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+@keyframes refineui-dropdown-menu-enter-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes refineui-dropdown-menu-enter-top {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-refineui="dropdown-menu"] {
+    animation: none !important;
+  }
+}
 [data-refineui="calendar-day"] {
   transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
 }
 [data-refineui="spinbutton-step"]:not(:disabled):hover,
 [data-refineui="accordion-trigger"]:hover,
-[data-refineui="dropdown-item"]:not(:disabled):hover,
 [data-refineui="calendar-nav"]:hover,
 [data-refineui="chip-remove"]:hover {
   opacity: 0.9;
@@ -79,9 +126,25 @@
   background-color: var(--refineui-color-alias-background-brand-strong) !important;
 }
 
-/* Tabs Pill — Web Kit `636:5371` · 항목은 Figma 토큰 톤 유지(전역 tab hover opacity 미적용) */
-[data-refineui="tabs"][data-variant="pill"] [data-refineui="tab"]:hover:not(:disabled) {
+/* Tabs — 트랙과 패널 사이 `spacings.sizeMedium`; `hidden` 패널은 레이아웃 미참여 */
+[data-refineui="tabs"][data-variant="pill"] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--refineui-spacing-size-medium);
+}
+
+/* Tabs / Item — Web Kit `636:5372`: State=Hover(MCP 최신).
+   Active=True+Hover: `backgroundSurfaceHover` + Shadow 2.
+   Active=False+Hover: 배경 없음(투명), 글자만 `foregroundPrimaryHover`. */
+[data-refineui="tabs"][data-variant="pill"] [data-refineui="tab"]:hover:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
   opacity: 1;
+}
+[data-refineui="tabs"][data-variant="pill"] [data-refineui="tab"]:hover:not(:disabled):not([data-selected="true"]) {
+  background-color: transparent !important;
+}
+[data-refineui="tabs"][data-variant="pill"] [data-refineui="tab"]:hover:not(:disabled)[data-selected="true"] {
+  background-color: var(--refineui-color-alias-background-surface-hover) !important;
 }
 /* Calendar / Day — Web Kit `Calendar / Day` (`639:7052`) */
 [data-refineui="calendar-day"]:not([disabled]):not([data-inactive="true"]):not([data-selected]):not([data-range-middle]):hover:not(:active) {

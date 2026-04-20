@@ -8,7 +8,6 @@ export interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
     shape?: "rectangle" | "circle";
 }
 
-/** Web Kit COMPONENT_SET `Skeleton` `570:6175` — 배경·쉬머 색은 MCP Alias, 애니메이션은 **`refineui.css`**. */
 export function Skeleton({
     width,
     height,

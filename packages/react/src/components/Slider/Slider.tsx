@@ -13,7 +13,7 @@ export interface SliderProps extends Omit<InputHTMLAttributes<HTMLInputElement>,
     step?: number;
     value?: number;
     onChange?: (value: number) => void;
-    /** Web Kit Slider `526:1556` — Small: 레일 2px, Medium: 레일 4px */
+    /** Web Kit Slider `526:1556` — sm/md rail thickness. */
     size?: "sm" | "md";
 }
 

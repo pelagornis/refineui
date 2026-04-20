@@ -579,10 +579,10 @@ export const componentColorTokens = {
             border: semanticToken("borderDefault"),
             foreground: semanticToken("foregroundSecondary"),
         },
+        /** 셀 채우기만 — MCP `Color`별 Global tint. 글리프·이니셜 잉크는 `avatar.icon`. */
         shell: {
-            neutralForeground: semanticToken("foregroundSecondary"),
-            neutralBackground: paletteToken("neutral300"),
-            iconBackground: {
+            background: {
+                neutral: paletteToken("neutral300"),
                 blue: paletteToken("blue100"),
                 green: paletteToken("green100"),
                 lime: paletteToken("lime100"),
@@ -593,10 +593,9 @@ export const componentColorTokens = {
                 teal: paletteToken("teal100"),
                 yellow: paletteToken("yellow100"),
             },
-            iconForeground: paletteToken("primaryBlack"),
         },
         icon: {
-            neutral: semanticToken("foregroundSecondary"),
+            neutral: paletteToken("neutral850"),
             blue: paletteToken("blue1000"),
             green: paletteToken("green1000"),
             lime: paletteToken("lime1000"),

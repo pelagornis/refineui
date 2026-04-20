@@ -12,10 +12,8 @@ export interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement
     options: SelectOption[];
     placeholder?: string;
     fullWidth?: boolean;
-    /** Web Kit: Input과 동일하게 오류 시 red500 테두리 */
     error?: boolean;
     success?: boolean;
-    /** Web Kit `Input` `518:7373`와 동일 필드 크기 — HTML `size`(표시 행 수)와 구분 */
     size?: "sm" | "md" | "lg";
 }
 
@@ -25,7 +23,6 @@ const sizeClass: Record<NonNullable<SelectProps["size"]>, string> = {
     lg: "min-h-refineui-control-height-lg rounded-refineui-xlarge px-refineui-size-large py-refineui-size-large refineui-typo-body-1",
 };
 
-/** 네이티브 `<select>` — Web Kit 단독 `Select` 세트 없음; 필드 스타일은 **Input** `518:7373`과 동일(`size`). */
 export function Select({
     options,
     placeholder,

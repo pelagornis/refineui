@@ -11,7 +11,6 @@ import {
 
 export type AvatarsSize = AvatarSize;
 
-/** Web Kit `Avater Stack`(`69:3008`) · `Avater Spread`(`69:3007`) — Figma 이름 그대로 */
 export type AvatarsLayout = "stack" | "spread";
 
 export interface AvatarItem {
@@ -23,7 +22,6 @@ export interface AvatarsProps extends HTMLAttributes<HTMLDivElement> {
     avatars: AvatarItem[];
     size?: AvatarsSize;
     max?: number;
-    /** 기본 `stack`(겹침). `spread`는 아바타 사이 gap */
     layout?: AvatarsLayout;
 }
 
