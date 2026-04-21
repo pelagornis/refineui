@@ -604,13 +604,6 @@
   touch-action: manipulation;
 }
 
-@media (max-width: 480px) {
-  [data-refineui="toast"][data-variant] {
-    padding: var(--refineui-spacing-size-medium);
-    gap: var(--refineui-spacing-size-small);
-  }
-}
-
 [data-refineui="toast"][data-stack-state="entering"],
 [data-refineui="toast"][data-stack-state="leaving"] {
   opacity: 0;
