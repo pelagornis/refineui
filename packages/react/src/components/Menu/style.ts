@@ -21,6 +21,6 @@ export const menuStyles = {
     descriptionEnabled: "text-refineui-alias-foreground-secondary",
     descriptionDisabled: "text-refineui-alias-foreground-disabled",
     rightWrap: "flex shrink-0 items-center gap-refineui-size-small",
-    shortcut: "refineui-typo-body-4 text-refineui-alias-foreground-secondary",
+    shortcut: "refineui-typo-body-4 text-refineui-alias-foreground-primary",
 } as const;
 

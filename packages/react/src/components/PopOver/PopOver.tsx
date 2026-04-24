@@ -17,14 +17,14 @@ import {
     type ReactNode,
     type Ref,
 } from "react";
-import { spacings } from "@refineui/tokens";
+import { spacings, strokeWidths } from "@refineui/tokens";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentSizes, foundationSizes } from "../../componentSizes";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
 import { composeRef } from "../../utils/composeRef";
 import { getMergeableTriggerChild } from "../../utils/mergeTriggerChild";
-import { popoverFloatingClasses, popoverPlacementMargin, popoverStyles } from "./style";
+import { popoverFloatingClasses, popoverStyles } from "./style";
 import type {
     PopOverProps,
     PopoverAlign,
@@ -63,29 +63,33 @@ function usePopoverContext(component: string): PopoverContextValue {
 const BEAK_W = foundationSizes.foundationSize160;
 const BEAK_H = foundationSizes.foundationSize80;
 const BEAK_OFFSET = foundationSizes.foundationSize80;
+const BEAK_BORDER_OVERLAP = strokeWidths.strokeWidthThin;
+const POPOVER_GAP = spacings.sizeMedium;
 
 function beakWrapperStyle(placement: PopoverPlacement, align: PopoverAlign): CSSProperties {
     const insetStart = componentSizes.popoverBeakInsetFromStartEdge;
     const insetEnd = componentSizes.popoverBeakInsetFromEndEdge;
     const edge = spacings.sizeMedium;
 
+    const overlapOffset = `calc(-1 * ${BEAK_OFFSET} + ${BEAK_BORDER_OVERLAP})`;
+
     switch (placement) {
         case "bottom":
-            if (align === "center") return { top: `calc(-1 * ${BEAK_OFFSET})`, left: `calc(50% - ${BEAK_W} / 2)` };
-            if (align === "start") return { top: `calc(-1 * ${BEAK_OFFSET})`, left: insetStart };
-            return { top: `calc(-1 * ${BEAK_OFFSET})`, right: insetEnd };
+            if (align === "center") return { top: overlapOffset, left: `calc(50% - ${BEAK_W} / 2)` };
+            if (align === "start") return { top: overlapOffset, left: insetStart };
+            return { top: overlapOffset, right: insetEnd };
         case "top":
-            if (align === "center") return { bottom: `calc(-1 * ${BEAK_OFFSET})`, left: `calc(50% - ${BEAK_W} / 2)` };
-            if (align === "start") return { bottom: `calc(-1 * ${BEAK_OFFSET})`, left: insetStart };
-            return { bottom: `calc(-1 * ${BEAK_OFFSET})`, right: insetEnd };
+            if (align === "center") return { bottom: overlapOffset, left: `calc(50% - ${BEAK_W} / 2)` };
+            if (align === "start") return { bottom: overlapOffset, left: insetStart };
+            return { bottom: overlapOffset, right: insetEnd };
         case "left":
-            if (align === "center") return { right: `calc(-1 * ${BEAK_OFFSET})`, top: `calc(50% - ${BEAK_W} / 2)` };
-            if (align === "start") return { right: `calc(-1 * ${BEAK_OFFSET})`, top: edge };
-            return { right: `calc(-1 * ${BEAK_OFFSET})`, bottom: edge };
+            if (align === "center") return { right: overlapOffset, top: `calc(50% - ${BEAK_W} / 2)` };
+            if (align === "start") return { right: overlapOffset, top: edge };
+            return { right: overlapOffset, bottom: edge };
         case "right":
-            if (align === "center") return { left: `calc(-1 * ${BEAK_OFFSET})`, top: `calc(50% - ${BEAK_W} / 2)` };
-            if (align === "start") return { left: `calc(-1 * ${BEAK_OFFSET})`, top: edge };
-            return { left: `calc(-1 * ${BEAK_OFFSET})`, bottom: edge };
+            if (align === "center") return { left: overlapOffset, top: `calc(50% - ${BEAK_W} / 2)` };
+            if (align === "start") return { left: overlapOffset, top: edge };
+            return { left: overlapOffset, bottom: edge };
         default:
             return {};
     }
@@ -104,6 +108,13 @@ function beakRotateDeg(placement: PopoverPlacement): number {
         default:
             return 0;
     }
+}
+
+function floatingGapStyle(placement: PopoverPlacement): CSSProperties {
+    if (placement === "top") return { marginBottom: POPOVER_GAP };
+    if (placement === "bottom") return { marginTop: POPOVER_GAP };
+    if (placement === "left") return { marginRight: POPOVER_GAP };
+    return { marginLeft: POPOVER_GAP };
 }
 
 export function Popover({ children, className, open: openProp, defaultOpen = false, onOpenChange, ...props }: PopoverProps) {
@@ -238,7 +249,6 @@ export function PopoverContent({
     children,
     placement = "bottom",
     align = "center",
-    variant = "default",
     className,
     style: styleProp,
     ...props
@@ -247,14 +257,14 @@ export function PopoverContent({
 
     useFocusTrap(open, contentRef);
 
-    const palette =
-        variant === "inverted" ? componentColorTokens.popover.inverted : componentColorTokens.popover.default;
+    const palette = componentColorTokens.popover.default;
 
     const bg = resolveColorTokenValue(palette.background);
     const borderCol = resolveColorTokenValue(palette.border);
 
     const bw = beakWrapperStyle(placement, align);
     const rot = beakRotateDeg(placement);
+    const gapStyle = floatingGapStyle(placement);
 
     if (!open) return null;
 
@@ -263,8 +273,8 @@ export function PopoverContent({
             className={clsx(
                 popoverStyles.floatingRoot,
                 popoverFloatingClasses(placement, align),
-                popoverPlacementMargin[placement],
             )}
+            style={gapStyle}
         >
             <div className={popoverStyles.panelWrap}>
                 <div className={popoverStyles.beakWrap} style={{ ...bw, width: BEAK_W, height: BEAK_H }} aria-hidden>
@@ -284,13 +294,8 @@ export function PopoverContent({
                             xmlns="http://www.w3.org/2000/svg"
                             style={{ display: "block" }}
                         >
-                            <polygon
-                                points="8,0 0,8 16,8"
-                                fill={bg}
-                                stroke={borderCol}
-                                strokeWidth={1}
-                                vectorEffect="nonScalingStroke"
-                            />
+                            <polygon points="8,0 0,8 16,8" fill={borderCol} />
+                            <polygon points="8,2 2,8 14,8" fill={bg} />
                         </svg>
                     </div>
                 </div>
@@ -303,14 +308,15 @@ export function PopoverContent({
                     data-refineui="popover"
                     data-placement={placement}
                     data-align={align}
-                    data-variant={variant}
                     className={clsx(
                         popoverStyles.panel,
-                        variant === "inverted" ? popoverStyles.panelShadowInverted : popoverStyles.panelShadowDefault,
+                        popoverStyles.panelShadowDefault,
                         className,
                     )}
                     style={{
                         ...(styleProp && typeof styleProp === "object" ? styleProp : {}),
+                        minWidth: componentSizes.popoverPanelWidth,
+                        padding: spacings.sizeLarge,
                         backgroundColor: bg,
                         color: resolveColorTokenValue(palette.foreground),
                         borderColor: borderCol,
@@ -324,11 +330,18 @@ export function PopoverContent({
     );
 }
 
-export function PopOver({ trigger, content, placement, align, variant, className, ...props }: PopOverProps) {
+export function PopOver({
+    trigger,
+    content,
+    placement,
+    align,
+    className,
+    ...props
+}: PopOverProps) {
     return (
         <Popover className={className} {...props}>
             <PopoverTrigger>{trigger}</PopoverTrigger>
-            <PopoverContent placement={placement} align={align} variant={variant}>
+            <PopoverContent placement={placement} align={align}>
                 {content}
             </PopoverContent>
         </Popover>

@@ -1,7 +1,7 @@
 import type { SelectProps } from "./types";
 
 export const selectStyles = {
-    base: "box-border border-refineui-thin outline-none transition-[border-color,box-shadow,background-color] duration-150",
+    base: "box-border border-refineui-thin outline-none transition-[border-color,box-shadow,background-color] duration-[var(--refineui-motion-duration-fast)]",
     disabledCursor: "cursor-not-allowed",
     enabledCursor: "cursor-pointer",
 } as const;

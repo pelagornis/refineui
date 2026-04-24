@@ -12,19 +12,20 @@ import FieldPreview from "../../../components/FieldPreview";
 ## 설치·임포트
 
 ```tsx
-import { Field, Input, Label } from "@refineui/react";
+import { Field, FieldError, FieldHint, FieldLabel, FieldRequired, Input } from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
 ## 기본 사용
 
 ```tsx
-<Field
-  label="이메일"
-  labelFor="email"
-  hint="로그인에 사용됩니다."
->
+<Field>
+  <FieldLabel>
+    이메일
+    <FieldRequired />
+  </FieldLabel>
   <Input id="email" name="email" type="email" fullWidth />
+  <FieldHint>로그인에 사용됩니다.</FieldHint>
 </Field>
 ```
 
@@ -38,11 +39,8 @@ import "@refineui/react/refineui.css";
 
 | Prop | 타입 | 기본값 | 설명 |
 |------|------|--------|------|
-| `label` | `ReactNode` | — | 상단 라벨 |
 | `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | 라벨 타이포 (sm→caption1, md→body2, lg→body1) |
-| `required` | `boolean` | `false` | 필수 `*` 표시 |
-| `hint` | `ReactNode` | — | 도움말 (`error`가 없을 때만 표시) |
-| `error` | `ReactNode` | — | 에러 메시지 (`role="alert"`) |
+| `children` | `ReactNode` | — | 합성형 슬롯 (`FieldLabel`, `FieldHint`, `FieldError` 등) |
 
 `children`에 [Input](/components/input/), [Select](/components/select/), [Textarea](/components/textarea/) 등을 둡니다.
 
@@ -51,11 +49,16 @@ import "@refineui/react/refineui.css";
 ### 에러 상태
 
 ```tsx
-<Field label="비밀번호" error="대소문자를 포함하세요." required>
+<Field>
+  <FieldLabel>
+    비밀번호
+    <FieldRequired />
+  </FieldLabel>
   <Input id="pw" type="password" error fullWidth />
+  <FieldError>대소문자를 포함하세요.</FieldError>
 </Field>
 ```
 
 ### 힌트만 (라벨 없음)
 
-`label`을 생략하고 `hint`만 쓸 수 있습니다. 스크린 리더 연결은 자식에 `aria-label` 또는 별도 [Label](/components/label/)을 사용하세요.
+`FieldLabel` 없이 `FieldHint`만 둘 수 있습니다. 스크린 리더 연결은 자식에 `aria-label` 또는 별도 [Label](/components/label/)을 사용하세요.

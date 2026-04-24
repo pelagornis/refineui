@@ -7,7 +7,7 @@ import PopOverDemo from "../../../components/PopOverDemo";
 
 # PopOver
 
-트리거를 클릭해 패널을 엽니다. Web Kit **PopOver** `553:5669` — **`variant`** (`default` / **`inverted`**), **`placement`** (= Figma `position`), **`align`** (= Figma `Start` \| `Center` \| `End`), 패널·테두리·비크(beak)는 MCP 기준 치수·색 토큰과 맞춥니다.
+트리거를 클릭해 패널을 엽니다. Web Kit **PopOver** `553:5669` — **`placement`** (= Figma `position`), **`align`** (= Figma `Start` \| `Center` \| `End`), 패널·테두리·비크(beak)는 MCP 기준 치수·색 토큰과 맞춥니다.
 
 ## 설치·임포트
 
@@ -52,7 +52,6 @@ export function Example() {
   trigger={<Button variant="secondary">정보</Button>}
   content={<p>추가 설명</p>}
   placement="bottom"
-  variant="default"
 />
 ```
 
@@ -78,7 +77,6 @@ export function Example() {
 |------|------|--------|------|
 | `placement` | `"top"` \| `"bottom"` \| `"left"` \| `"right"` | `"bottom"` | Figma `position` |
 | `align` | `"start"` \| `"center"` \| `"end"` | `"center"` | Figma `align` |
-| `variant` | `"default"` \| `"inverted"` | `"default"` | 패널 배경 |
 
 ### `PopOver` (단일 컴포넌트 · 선택)
 
@@ -88,12 +86,11 @@ export function Example() {
 | `content` | `ReactNode` | (필수) | 패널 내용 |
 | `placement` | `"top"` \| `"bottom"` \| `"left"` \| `"right"` | `"bottom"` | |
 | `align` | `"start"` \| `"center"` \| `"end"` | `"center"` | |
-| `variant` | `"default"` \| `"inverted"` | `"default"` | |
 
 ## 예시
 
-### 다크 패널
+### Start 정렬 패널
 
 ```tsx
-<PopOver trigger={<Button variant="ghost">?</Button>} content="도움말" variant="inverted" />
+<PopOver trigger={<Button variant="ghost">?</Button>} content="도움말" align="start" />
 ```

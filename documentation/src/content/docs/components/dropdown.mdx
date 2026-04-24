@@ -1,6 +1,6 @@
 ---
 title: Dropdown
-description: Web Kit Dropdown 503:2985 — 합성 API · 열림 시 문서 스크롤 잠금 · 선택 시 DropdownList(items)
+description: Web Kit Dropdown 503:2985 — 합성 API 기본 사용
 ---
 
 import DropdownDemo from '../../../components/DropdownDemo';
@@ -12,7 +12,6 @@ Figma Web Kit **Dropdown** `503:2985`와 동일 토큰·시각입니다.
 | 방식 | 컴포넌트 | 설명 |
 |------|----------|------|
 | **합성(기본)** | `Dropdown`, `DropdownTrigger`, `DropdownContent`, `DropdownItem`, … | 라벨·단축키·서브메뉴를 JSX로 조합 |
-| **목록만** | `DropdownList` + `items` | 데이터 배열로 빠르게 그릴 때 |
 
 열리면 **`body` / `html`에 `overflow: hidden`** 이 걸려 페이지 배경 스크롤이 멈춥니다.
 
@@ -105,26 +104,6 @@ import '@refineui/react/refineui.css';
 
 ---
 
-## `DropdownList` (`items`)
-
-목록 데이터만 넘길 때는 **`DropdownList`** 와 **`DropdownListItem`** 타입을 씁니다.
-
-```tsx
-import { DropdownList, Button, WebIcon } from '@refineui/react';
-import { iconSizes } from '@refineui/tokens';
-import '@refineui/react/refineui.css';
-```
-
-| Prop | 설명 |
-|------|------|
-| `trigger` | 메뉴를 여는 UI(주로 [Button](/components/button/)) |
-| `items` | `DropdownListItem[]` — `id`, `label`, `shortcut`, `selected`, `selection`, … |
-| `align` / `side` / `showTriggerChevron` / `menuTitle` | 배치·표현 옵션 |
-
-(`Checkbox` / `Radio` 행 등 세부 필드는 Preview 아래 코드 블록 예시를 참고하세요.)
-
----
-
 ## Preview
 
 <div class='not-content'>
@@ -132,27 +111,3 @@ import '@refineui/react/refineui.css';
 </div>
 
 ---
-
-## 예시 (`DropdownList`)
-
-### 셰브론 분리 트리거
-
-```tsx
-<DropdownList
-  showTriggerChevron
-  menuTitle='Dropdown'
-  trigger={
-    <Button variant='secondary' size='sm' type='button'>
-      Dropdown
-    </Button>
-  }
-  items={[
-    { id: '1', label: 'Profile', shortcut: '⌘P' },
-    { id: '2', label: 'Dashboard', shortcut: '⌘D' },
-  ]}
-/>
-```
-
-### Checkbox / Radio
-
-`items`에 `selection: 'checkbox' | 'radio'`, `selected`, `onClick` 으로 상태를 넘깁니다.

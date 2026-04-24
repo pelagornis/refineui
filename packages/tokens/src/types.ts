@@ -266,6 +266,39 @@ export type MotionTokens = {
     sliderThumbHoverScale: string;
 };
 
+export type SemanticInteractionTokens = {
+    duration: {
+        instant: string;
+        fast: string;
+        normal: string;
+        medium: string;
+        slow: string;
+        overlay: string;
+        panel: string;
+        accordionPanel: string;
+        accordionContent: string;
+        skeleton: string;
+        spinner: string;
+    };
+    easing: {
+        standard: string;
+        emphasized: string;
+        panel: string;
+        content: string;
+        linear: string;
+        easeOut: string;
+        easeInOut: string;
+    };
+    scale: {
+        dialogEnter: string;
+        buttonActive: string;
+        sliderThumbHover: string;
+    };
+    distance: {
+        float: string;
+    };
+};
+
 /**
  * Design tokens for font
  */

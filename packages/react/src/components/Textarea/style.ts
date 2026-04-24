@@ -1,5 +1,5 @@
 export const textareaStyles = {
-    base: "refineui-typo-body-2 min-h-refineui-control-textarea-min resize-y rounded-refineui-large px-refineui-size-small py-refineui-size-medium text-refineui-alias-foreground-primary placeholder:text-refineui-alias-foreground-placeholder outline-none transition-[border-color,box-shadow,background-color] duration-150",
+    base: "refineui-typo-body-2 min-h-refineui-control-textarea-min resize-y rounded-refineui-large px-refineui-size-small py-refineui-size-medium text-refineui-alias-foreground-primary placeholder:text-refineui-alias-foreground-placeholder outline-none transition-[border-color,box-shadow,background-color] duration-[var(--refineui-motion-duration-fast)]",
     bgDisabled: "bg-refineui-alias-background-surface-disabled",
     bgDefault: "bg-refineui-alias-background-primary",
 } as const;

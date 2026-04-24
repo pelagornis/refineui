@@ -1,94 +1,65 @@
 import { clsx } from "clsx";
-import { Children, isValidElement } from "react";
-import type { ReactNode } from "react";
 import { iconSizes } from "@refineui/tokens";
 import { WebIcon } from "../../WebIcon";
 import { Button } from "../Button";
-import { AlertContext } from "./context";
-import { AlertDescription } from "./AlertDescription";
-import { AlertTitle } from "./AlertTitle";
+import { AlertContext, useAlertVariant } from "./context";
 import { alertStyles, variantIconNames, variantTitleClass } from "./style";
-import type { AlertProps } from "./types";
+import type {
+    AlertActionProps,
+    AlertActionsProps,
+    AlertBodyProps,
+    AlertCloseProps,
+    AlertContentProps,
+    AlertIconProps,
+    AlertProps,
+    AlertRowProps,
+} from "./types";
 
-function AlertIconSlot({ toneClass, children }: { toneClass: string; children: ReactNode }) {
+export function AlertIcon({ className, name, children, ...props }: AlertIconProps) {
+    const variant = useAlertVariant();
+    const iconToneClass = variantTitleClass[variant];
+    const iconName = name ?? variantIconNames[variant];
     return (
         <div
             data-refineui="alert-icon-slot"
             className={clsx(
                 alertStyles.iconSlot,
-                toneClass,
+                iconToneClass,
+                className,
             )}
+            {...props}
         >
-            {children}
+            {children ?? (
+                <WebIcon name={iconName} size={iconSizes.medium} color="currentColor" fallback="●" aria-hidden />
+            )}
         </div>
     );
 }
 
-function AlertSystemGlyph({ name }: { name: string }) {
-    return (
-        <WebIcon name={name} size={iconSizes.medium} color="currentColor" fallback="●" aria-hidden />
-    );
+export function AlertContent({ className, ...props }: AlertContentProps) {
+    return <div className={clsx(alertStyles.contentCol, className)} {...props} />;
 }
 
-export function Alert({
-    variant = "info",
-    icon,
-    title,
-    description,
-    onClose,
-    actions,
-    children,
-    className,
-    ...props
-}: AlertProps) {
-    const defaultIconName = variantIconNames[variant];
-    const iconToneClass = variantTitleClass[variant];
+export function AlertRow({ className, ...props }: AlertRowProps) {
+    return <div className={clsx(alertStyles.row, className)} {...props} />;
+}
 
-    const leading =
-        icon === undefined || icon === null ? (
-            <AlertIconSlot toneClass={iconToneClass}>
-                <AlertSystemGlyph name={defaultIconName} />
-            </AlertIconSlot>
-        ) : typeof icon === "string" ? (
-            <AlertIconSlot toneClass={iconToneClass}>
-                <AlertSystemGlyph name={icon.length > 0 ? icon : defaultIconName} />
-            </AlertIconSlot>
-        ) : (
-            <AlertIconSlot toneClass={iconToneClass}>{icon}</AlertIconSlot>
-        );
+export function AlertBody({ className, ...props }: AlertBodyProps) {
+    return <div className={clsx(alertStyles.bodyCol, className)} {...props} />;
+}
 
-    const composedChildren = Children.toArray(children);
-    let composedLeading: ReactNode | null = null;
-    const composedBody: ReactNode[] = [];
-    if (title == null && description == null && composedChildren.length > 0) {
-        for (const child of composedChildren) {
-            if (
-                composedLeading == null &&
-                (!isValidElement(child) ||
-                    (child.type !== AlertTitle && child.type !== AlertDescription))
-            ) {
-                composedLeading = child;
-                continue;
-            }
-            composedBody.push(child);
-        }
-    }
+export function AlertActions({ className, ...props }: AlertActionsProps) {
+    return <div className={clsx(alertStyles.actionRow, className)} {...props} />;
+}
 
-    const body =
-        title != null || description != null ? (
-            <div className={alertStyles.bodyCol}>
-                {title && <AlertTitle>{title}</AlertTitle>}
-                {description && <AlertDescription>{description}</AlertDescription>}
-            </div>
-        ) : (
-            <div className={alertStyles.bodyCol}>
-                {composedBody.length > 0 ? composedBody : composedChildren}
-            </div>
-        );
+export function AlertAction({ className, type = "button", ...props }: AlertActionProps) {
+    return <Button variant="primary" size="sm" type={type} className={className} {...props} />;
+}
 
-    const closeBtn =
-        onClose != null ? (
-            <Button type="button" variant="ghost" size="sm" layout="icon" aria-label="닫기" onClick={onClose}>
+export function AlertClose({ className, type = "button", children, ...props }: AlertCloseProps) {
+    return (
+        <Button type={type} variant="ghost" size="sm" layout="icon" aria-label="닫기" className={className} {...props}>
+            {children ?? (
                 <WebIcon
                     name="dismiss"
                     size={iconSizes.small}
@@ -97,20 +68,12 @@ export function Alert({
                     fallback="×"
                     aria-hidden
                 />
-            </Button>
-        ) : null;
+            )}
+        </Button>
+    );
+}
 
-    const actionRow =
-        actions && actions.length > 0 ? (
-            <div className={alertStyles.actionRow}>
-                {actions.slice(0, 2).map((actionItem, i) => (
-                    <Button key={i} variant="primary" size="sm" onClick={actionItem.onClick}>
-                        {actionItem.label}
-                    </Button>
-                ))}
-            </div>
-        ) : null;
-
+export function Alert({ variant = "info", className, ...props }: AlertProps) {
     return (
         <AlertContext.Provider value={variant}>
             <div
@@ -122,14 +85,7 @@ export function Alert({
                 )}
                 {...props}
             >
-                <div className={alertStyles.contentCol}>
-                    <div className={alertStyles.row}>
-                        {title != null || description != null ? leading : composedLeading ?? leading}
-                        {body}
-                        {closeBtn}
-                    </div>
-                    {actionRow}
-                </div>
+                <AlertContent>{props.children}</AlertContent>
             </div>
         </AlertContext.Provider>
     );

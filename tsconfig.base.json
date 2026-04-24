@@ -18,6 +18,7 @@
       "@refineui/tokens": ["packages/tokens"],
       "@refineui/version": ["packages/version"],
       "@refineui/utilities": ["packages/utilities"],
+      "@refineui/utilities/animation": ["packages/utilities/src/animation.ts"],
       "@refineui/utilities/color": ["packages/utilities/src/color.ts"],
     }
   },

@@ -9,7 +9,6 @@ export {
 } from "./Menu";
 export type {
     MenuProps,
-    MenuItemData,
     MenuPopoverProps,
     MenuListProps,
     MenuSectionProps,

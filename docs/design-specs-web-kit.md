@@ -389,7 +389,7 @@ Figma 기본 `size`는 `XSmall`이나, 앱에서 가독성을 위해 React 기�
 
 | 속성     | `variant="default"`                                                                                                                                         | `variant="inverted"`                                                                           |
 | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| **패널** | `minWidth` `componentSizes.popoverPanelWidth` (325px); `padding` `sizeLarge` (16px); `roundedLarge`; `strokeWidthThin` `neutral300`; `shadows.shadow8Light` | 배경 `surfaceInverse`, 글자 `foregroundInversed`, 테두리 `borderStrong`, `shadows.shadow8Dark` |
+| **패널** | `minWidth` `componentSizes.popoverPanelWidth` (325px); `padding` `sizeLarge` (16px); `roundedXXLarge`; `strokeWidthThin` `neutral300`; `shadows.shadow8Light` | 배경 `surfaceInverse`, 글자 `foregroundInversed`, 테두리 `borderStrong`, `shadows.shadow8Dark` |
 
 | API                                                       | Figma 대응                                                                                                                                                                                                         |
 | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -593,7 +593,7 @@ Figma에는 라벨 옆 **Info** 아이콘·슬롯별 검증 아이콘이 있으�
 
 - **Button**: `shadow2Light` (key + ambient)
 - **Toast**: `shadow4Light` (key + ambient)
-- **Tooltip**: `shadow8Light` / `shadow8Dark` (`variant`)
+- **Tooltip**: `shadow8Light`
 - **Card (elevated)**: `shadow8Light`
 
 Shadow 레벨: shadow2, shadow4, shadow8, shadow16, shadow24, shadow32, shadow64  
@@ -649,13 +649,11 @@ Type 변형은 React·`data-variant`로만 구분한다.
 | **padding**      | `sizeSmall` `sizeMedium` (6px 10px)                                                 |
 | **borderRadius** | `roundedMedium` (6px)                                                               |
 | **typography**   | `body4`                                                                             |
-| **shadow**       | `shadows.shadow8Light` (Default) · `shadows.shadow8Dark` (Inverted)                 |
+| **shadow**       | `shadows.shadow8Light`                                                              |
 | **maxWidth**     | `componentSizes.tooltipMaxWidth` (200px)                                            |
 | **화살표**       | 반변 `sizeSmall`(6px) CSS 삼각형(너비 12px) — Figma는 `position`×`align`별 SVG 비크 |
 
-**`placement`:** Figma는 **`position`**(Top/Bottom/Left/Right) × **`align`**(Start/Center/End)
-**12조합**이다. `packages/react` `Tooltip`은 **`placement`** `top` \| `bottom` \| `left` \|
-`right`만 지원하며, **트리거 대비 화살표·본문은 중앙 정렬**이다.
+**`position` × `align`:** MCP와 동일한 **PascalCase** — `position` `Top` \| `Bottom` \| `Left` \| `Right`, `align` `Start` \| `Center` \| `End` (**12조합**). `packages/react` `Tooltip`은 prop 이름·값이 위와 같고, **기본값** `position="Bottom"`, `align="Start"`. Figma 비크는 SVG, React는 토큰 기반 CSS 삼각형으로 근사.
 
 ---
 
@@ -1056,10 +1054,12 @@ Type 변형은 React·`data-variant`로만 구분한다.
     "padding": "sizeSmall sizeMedium",
     "borderRadius": "roundedMedium",
     "type": "body4",
-    "shadow": { "default": "shadow8Light", "inverted": "shadow8Dark" },
+    "shadow": "shadow8Light",
     "maxWidth": "componentSizes.tooltipMaxWidth",
     "arrow": "half sizeSmall (6px), CSS triangle",
-    "placementNote": "Figma position×align 12-way; React placement top|bottom|left|right only, centered"
+    "position": "Top | Bottom | Left | Right",
+    "align": "Start | Center | End",
+    "defaults": "position Bottom, align Start — MCP와 동일"
   }
 }
 ```

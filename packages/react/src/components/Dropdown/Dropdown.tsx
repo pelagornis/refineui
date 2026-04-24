@@ -23,7 +23,7 @@ import {
     useState,
 } from "react";
 import { createPortal } from "react-dom";
-import { iconSizes, spacings, strokeWidths, zIndex } from "@refineui/tokens";
+import { iconSizes, spacings, strokeWidths, typographys, zIndex } from "@refineui/tokens";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentSizes } from "../../componentSizes";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
@@ -35,9 +35,6 @@ import { RadioInput } from "../Radio/RadioInput";
 import type {
     DropdownContentProps,
     DropdownItemProps,
-    DropdownListItem,
-    DropdownListProps,
-    DropdownSelectionVariant,
     DropdownSubContentProps,
     DropdownSubTriggerProps,
     DropdownTriggerProps,
@@ -70,457 +67,6 @@ function DropdownCheckboxGlyph({ selected, disabled }: { selected: boolean; disa
         >
             {selected ? <WebIcon name="checkmark" size={iconSizes.xsmall} color="currentColor" /> : null}
         </span>
-    );
-}
-
-export function DropdownList({
-    trigger,
-    items,
-    align = "end",
-    side = "auto",
-    showTriggerChevron = false,
-    menuTitle,
-    className,
-    ...props
-}: DropdownListProps) {
-    const [open, setOpen] = useState(false);
-    const [highlighted, setHighlighted] = useState(0);
-    const containerRef = useRef<HTMLDivElement>(null);
-    const menuRef = useRef<HTMLDivElement>(null);
-    const triggerRef = useRef<HTMLElement | null>(null);
-    const menuId = useId();
-    const [menuFixedStyle, setMenuFixedStyle] = useState<CSSProperties | null>(null);
-    const [menuSide, setMenuSide] = useState<"top" | "bottom">("bottom");
-
-    const enabledIndices = items.map((it, i) => (it.disabled ? -1 : i)).filter((i): i is number => i >= 0);
-
-    const focusItemIndex = useCallback((itemIndex: number) => {
-        const el = menuRef.current?.querySelector<HTMLButtonElement>(
-            `[data-refineui="dropdown-item"][data-item-index="${itemIndex}"]`,
-        );
-        el?.focus();
-        setHighlighted(itemIndex);
-    }, []);
-
-    const moveHighlight = useCallback(
-        (delta: number) => {
-            if (enabledIndices.length === 0) return;
-            let pos = enabledIndices.indexOf(highlighted);
-            if (pos < 0) pos = 0;
-            pos = (pos + delta + enabledIndices.length) % enabledIndices.length;
-            focusItemIndex(enabledIndices[pos]);
-        },
-        [enabledIndices, highlighted, focusItemIndex],
-    );
-
-    useEffect(() => {
-        const handler = (e: globalThis.MouseEvent) => {
-            const t = e.target as Node;
-            if (containerRef.current?.contains(t) || menuRef.current?.contains(t)) return;
-            setOpen(false);
-        };
-        if (open) document.addEventListener("mousedown", handler);
-        return () => document.removeEventListener("mousedown", handler);
-    }, [open]);
-
-    useEffect(() => {
-        if (!open) return;
-        return acquireBodyScrollLock();
-    }, [open]);
-
-    useIsomorphicLayoutEffect(() => {
-        if (!open) {
-            setMenuFixedStyle(null);
-            setMenuSide("bottom");
-            return;
-        }
-        const menuW = parseCssPxLen(componentSizes.dropdownMenuWidth, 180);
-        const gap = parseCssPxLen(spacings.sizeXSmall, 4);
-        const edge = 8;
-        const z = Number.parseInt(String(zIndex.zIndexMessages), 10) || 10000;
-        const estimatedMenuHeight =
-            (menuTitle != null ? 40 : 0) + items.length * 40 + gap * 4;
-
-        const apply = () => {
-            const root = containerRef.current;
-            if (!root) return;
-            const r = root.getBoundingClientRect();
-            let left = align === "start" ? r.left : r.right - menuW;
-            left = Math.max(edge, Math.min(left, window.innerWidth - menuW - edge));
-
-            const mhRaw = menuRef.current?.offsetHeight ?? 0;
-            const menuH = mhRaw > 0 ? mhRaw : estimatedMenuHeight;
-
-            const spaceBelow = window.innerHeight - edge - (r.bottom + gap);
-            const spaceAbove = r.top - gap - edge;
-            const fitsBelow = menuH <= spaceBelow;
-            const fitsAbove = menuH <= spaceAbove;
-
-            let top: number;
-            let resolvedSide: "top" | "bottom" = "bottom";
-
-            if (side === "bottom") {
-                resolvedSide = "bottom";
-                top = r.bottom + gap;
-                if (!fitsBelow && fitsAbove) {
-                    top = r.top - gap - menuH;
-                    resolvedSide = "top";
-                } else if (!fitsBelow && !fitsAbove) {
-                    top = Math.max(edge, Math.min(r.bottom + gap, window.innerHeight - edge - menuH));
-                }
-            } else if (side === "top") {
-                resolvedSide = "top";
-                top = r.top - gap - menuH;
-                if (!fitsAbove && fitsBelow) {
-                    top = r.bottom + gap;
-                    resolvedSide = "bottom";
-                } else if (!fitsBelow && !fitsAbove) {
-                    top = Math.max(edge, Math.min(r.top - gap - menuH, window.innerHeight - edge - menuH));
-                }
-            } else {
-                if (!fitsBelow && fitsAbove) {
-                    top = r.top - gap - menuH;
-                    resolvedSide = "top";
-                } else {
-                    top = r.bottom + gap;
-                    resolvedSide = "bottom";
-                }
-                if (!fitsBelow && !fitsAbove) {
-                    top = Math.max(edge, Math.min(r.bottom + gap, window.innerHeight - edge - menuH));
-                    resolvedSide = "bottom";
-                }
-            }
-
-            setMenuSide(resolvedSide);
-
-            setMenuFixedStyle((prev) => {
-                const next: CSSProperties = {
-                    position: "fixed",
-                    top,
-                    left,
-                    width: componentSizes.dropdownMenuWidth,
-                    minWidth: componentSizes.dropdownMenuWidth,
-                    zIndex: z,
-                    maxHeight: "min(60vh, 20rem)",
-                };
-                if (
-                    prev &&
-                    prev.top === next.top &&
-                    prev.left === next.left &&
-                    prev.zIndex === next.zIndex &&
-                    prev.width === next.width &&
-                    prev.maxHeight === next.maxHeight
-                ) {
-                    return prev;
-                }
-                return next;
-            });
-        };
-
-        apply();
-        const raf = requestAnimationFrame(() => apply());
-
-        window.addEventListener("resize", apply);
-        const unsubScroll = subscribeScrollAndScrollableAncestors(containerRef.current, apply);
-
-        return () => {
-            cancelAnimationFrame(raf);
-            window.removeEventListener("resize", apply);
-            unsubScroll();
-        };
-    }, [open, align, items.length, menuTitle, side]);
-
-    useEffect(() => {
-        if (!open || !menuFixedStyle) return;
-        const first = enabledIndices[0] ?? 0;
-        setHighlighted(first);
-        const raf = requestAnimationFrame(() => focusItemIndex(first));
-        return () => cancelAnimationFrame(raf);
-    }, [open, menuFixedStyle, enabledIndices, focusItemIndex]);
-
-    const close = useCallback(() => {
-        setOpen(false);
-        triggerRef.current?.focus({ preventScroll: true });
-    }, []);
-
-    const onMenuKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-        switch (e.key) {
-            case "Escape":
-                e.preventDefault();
-                close();
-                break;
-            case "ArrowDown":
-                e.preventDefault();
-                moveHighlight(1);
-                break;
-            case "ArrowUp":
-                e.preventDefault();
-                moveHighlight(-1);
-                break;
-            case "Home":
-                e.preventDefault();
-                if (enabledIndices[0] !== undefined) focusItemIndex(enabledIndices[0]);
-                break;
-            case "End":
-                e.preventDefault();
-                if (enabledIndices.length > 0) focusItemIndex(enabledIndices[enabledIndices.length - 1]);
-                break;
-            default:
-                break;
-        }
-    };
-
-    const onTriggerKeyDown = (e: KeyboardEvent<HTMLElement>) => {
-        if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            setOpen((o) => !o);
-        }
-        if (e.key === "ArrowDown" && !open) {
-            e.preventDefault();
-            setOpen(true);
-        }
-    };
-
-    const toggle = () => setOpen((o) => !o);
-
-    const renderTrigger = () => {
-        const mergeEl = getMergeableTriggerChild(trigger);
-        if (mergeEl) {
-            const el = mergeEl as TriggerElement;
-            const prevClass = el.props.className;
-            const unifyClass = showTriggerChevron ? "rounded-none border-none shadow-none outline-none" : "";
-            return cloneElement(el, {
-                ref: composeRef(triggerRef, el.ref),
-                "aria-expanded": open,
-                "aria-haspopup": "menu" as const,
-                "aria-controls": menuId,
-                className: clsx(prevClass, unifyClass),
-                onClick: (e: MouseEvent<HTMLElement>) => {
-                    el.props.onClick?.(e);
-                    toggle();
-                },
-                onKeyDown: (e: KeyboardEvent<HTMLElement>) => {
-                    el.props.onKeyDown?.(e);
-                    onTriggerKeyDown(e);
-                },
-            } as Partial<TriggerProps>);
-        }
-        return (
-            <button
-                type="button"
-                ref={triggerRef as React.RefObject<HTMLButtonElement>}
-                aria-expanded={open}
-                aria-haspopup="menu"
-                aria-controls={menuId}
-                className="cursor-pointer border-none bg-transparent p-0 font-inherit text-inherit"
-                onClick={toggle}
-                onKeyDown={(e) => onTriggerKeyDown(e)}
-            >
-                {trigger}
-            </button>
-        );
-    };
-
-    const chevronControl = showTriggerChevron ? (
-        <span
-            role="presentation"
-            aria-hidden
-            className="box-border inline-flex shrink-0 cursor-pointer items-center justify-center bg-refineui-alias-background-primary px-refineui-size-xsmall"
-            style={{
-                borderLeftWidth: strokeWidths.strokeWidthHairline,
-                borderLeftStyle: "solid",
-                borderLeftColor: resolveColorTokenValue(componentColorTokens.dropdown.trigger.border),
-                backgroundColor: resolveColorTokenValue(componentColorTokens.dropdown.trigger.background),
-            }}
-            onClick={toggle}
-            onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    toggle();
-                }
-            }}
-            tabIndex={-1}
-        >
-            <WebIcon
-                name={open ? "chevron-up" : "chevron-down"}
-                size={iconSizes.small}
-                color={resolveColorTokenValue(componentColorTokens.dropdown.trigger.icon)}
-            />
-        </span>
-    ) : null;
-
-    return (
-        <div ref={containerRef} data-refineui="dropdown" className={clsx("relative inline-block", className)} {...props}>
-            {showTriggerChevron ? (
-                <div
-                    data-refineui="dropdown-trigger"
-                    className="box-border inline-flex items-stretch overflow-hidden rounded-refineui-small border-refineui-thin border-refineui-alias-border-default bg-refineui-alias-background-primary"
-                    style={{
-                        borderColor: resolveColorTokenValue(componentColorTokens.dropdown.trigger.border),
-                        backgroundColor: resolveColorTokenValue(componentColorTokens.dropdown.trigger.background),
-                    }}
-                >
-                    {renderTrigger()}
-                    {chevronControl}
-                </div>
-            ) : (
-                renderTrigger()
-            )}
-            {open &&
-                menuFixedStyle &&
-                typeof document !== "undefined" &&
-                createPortal(
-                    <div
-                        ref={menuRef}
-                        id={menuId}
-                        role="menu"
-                        tabIndex={-1}
-                        data-refineui="dropdown-menu"
-                        data-side={menuSide}
-                        onKeyDown={onMenuKeyDown}
-                        className="box-border flex flex-col gap-px overflow-x-hidden overflow-y-auto overscroll-contain rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xsmall shadow-refineui-2light outline-none"
-                        style={{
-                            ...menuFixedStyle,
-                            borderColor: resolveColorTokenValue(componentColorTokens.dropdown.menu.border),
-                            backgroundColor: resolveColorTokenValue(componentColorTokens.dropdown.menu.background),
-                        }}
-                    >
-                        {menuTitle != null && (
-                            <div
-                                role="presentation"
-                                className="refineui-typo-body-2 flex shrink-0 items-center gap-refineui-size-medium px-refineui-size-medium py-refineui-size-small font-medium text-refineui-alias-foreground-primary"
-                            >
-                                {menuTitle}
-                            </div>
-                        )}
-                        {items.map((item, itemIndex) => {
-                            const sel = item.selection ?? "none";
-                            const rowRole =
-                                sel === "checkbox"
-                                    ? "menuitemcheckbox"
-                                    : sel === "radio"
-                                      ? "menuitemradio"
-                                      : "menuitem";
-                            const ariaChecked =
-                                sel === "checkbox" || sel === "radio"
-                                    ? Boolean(item.selected)
-                                    : undefined;
-                            const ariaSelected =
-                                sel === "none" && item.selected ? true : undefined;
-
-                            const rowClass = clsx(
-                                "refineui-typo-body-4 flex w-full items-center justify-between gap-refineui-size-medium rounded-refineui-large border-none bg-transparent px-refineui-size-medium py-refineui-size-small text-left font-normal outline-none",
-                                item.disabled
-                                    ? "cursor-not-allowed text-refineui-alias-foreground-disabled"
-                                    : "cursor-pointer text-refineui-alias-foreground-primary",
-                            );
-
-                            const onRowClick = () => {
-                                if (item.disabled) return;
-                                item.onClick?.();
-                                close();
-                            };
-
-                            const onRowKeyDown = (e: KeyboardEvent<HTMLDivElement | HTMLButtonElement>) => {
-                                if (item.disabled) return;
-                                if (e.key === "Enter" || e.key === " ") {
-                                    e.preventDefault();
-                                    onRowClick();
-                                }
-                            };
-
-                            const startIconRow = (
-                                <span className="flex min-w-0 flex-1 items-center gap-refineui-size-medium">
-                                    {sel === "checkbox" ? (
-                                        <DropdownCheckboxGlyph selected={Boolean(item.selected)} disabled={item.disabled} />
-                                    ) : null}
-                                    {sel === "radio" ? (
-                                        <RadioInput
-                                            checked={Boolean(item.selected)}
-                                            readOnly
-                                            disabled={item.disabled}
-                                            tabIndex={-1}
-                                            aria-hidden="true"
-                                            className="pointer-events-none shrink-0 cursor-default select-none"
-                                        />
-                                    ) : null}
-                                    {item.startIcon != null ? (
-                                        <span
-                                            className="inline-flex shrink-0 items-center justify-center [&>span]:leading-none"
-                                            style={{
-                                                width: iconSizes.xsmall,
-                                                minWidth: iconSizes.xsmall,
-                                                height: iconSizes.xsmall,
-                                            }}
-                                        >
-                                            {item.startIcon}
-                                        </span>
-                                    ) : null}
-                                    <span className="min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap">{item.label}</span>
-                                </span>
-                            );
-
-                            const shortcutRow =
-                                item.shortcut != null ? (
-                                    <span className="refineui-typo-body-4 shrink-0 text-refineui-alias-foreground-secondary">
-                                        {item.shortcut}
-                                    </span>
-                                ) : null;
-
-                            if (sel === "radio") {
-                                return (
-                                    <div
-                                        key={item.id}
-                                        data-refineui="dropdown-item"
-                                        data-item-index={itemIndex}
-                                        role={rowRole}
-                                        aria-checked={ariaChecked}
-                                        aria-selected={ariaSelected}
-                                        aria-disabled={item.disabled ? true : undefined}
-                                        data-selected={item.selected ? "" : undefined}
-                                        tabIndex={-1}
-                                        onFocus={() => setHighlighted(itemIndex)}
-                                        onMouseEnter={() => {
-                                            if (!item.disabled) focusItemIndex(itemIndex);
-                                        }}
-                                        onClick={onRowClick}
-                                        onKeyDown={onRowKeyDown}
-                                        className={rowClass}
-                                    >
-                                        {startIconRow}
-                                        {shortcutRow}
-                                    </div>
-                                );
-                            }
-
-                            return (
-                                <button
-                                    key={item.id}
-                                    type="button"
-                                    data-refineui="dropdown-item"
-                                    data-item-index={itemIndex}
-                                    role={rowRole}
-                                    aria-checked={ariaChecked}
-                                    aria-selected={ariaSelected}
-                                    data-selected={item.selected ? "" : undefined}
-                                    disabled={item.disabled}
-                                    tabIndex={-1}
-                                    onFocus={() => setHighlighted(itemIndex)}
-                                    onMouseEnter={() => {
-                                        if (!item.disabled) focusItemIndex(itemIndex);
-                                    }}
-                                    onClick={onRowClick}
-                                    className={rowClass}
-                                >
-                                    {startIconRow}
-                                    {shortcutRow}
-                                </button>
-                            );
-                        })}
-                    </div>,
-                    document.body,
-                )}
-        </div>
     );
 }
 
@@ -828,9 +374,10 @@ export function DropdownLabel({ className, ...props }: HTMLAttributes<HTMLDivEle
             role="presentation"
             data-refineui="dropdown-menu-label"
             className={clsx(
-                "refineui-typo-body-2 shrink-0 px-refineui-size-medium py-refineui-size-small font-medium text-refineui-alias-foreground-primary",
+                "refineui-typo-body-1 shrink-0 px-refineui-size-medium py-refineui-size-small font-medium text-refineui-alias-foreground-primary",
                 className,
             )}
+            style={typographys.body1}
             {...props}
         />
     );
@@ -841,6 +388,7 @@ export function DropdownItem({
     disabled,
     children,
     onClick,
+    style,
     ...props
 }: DropdownItemProps) {
     const { close } = useDropdownRoot("DropdownItem");
@@ -852,9 +400,10 @@ export function DropdownItem({
             disabled={disabled}
             tabIndex={-1}
             className={clsx(
-                "refineui-typo-body-4 flex w-full cursor-pointer items-center justify-between gap-refineui-size-medium rounded-refineui-large border-none bg-transparent px-refineui-size-medium py-refineui-size-small text-left font-normal text-refineui-alias-foreground-primary outline-none disabled:cursor-not-allowed disabled:text-refineui-alias-foreground-disabled",
+                "refineui-typo-body-2 flex w-full cursor-pointer items-center justify-between gap-refineui-size-medium rounded-refineui-large border-none bg-transparent px-refineui-size-medium py-refineui-size-small text-left font-medium text-refineui-alias-foreground-primary outline-none disabled:cursor-not-allowed disabled:text-refineui-alias-foreground-disabled",
                 className,
             )}
+            style={{ ...typographys.body2, ...style }}
             onClick={(e) => {
                 onClick?.(e);
                 if (!e.defaultPrevented) close();
@@ -883,9 +432,10 @@ export function DropdownShortcut({ className, ...props }: HTMLAttributes<HTMLSpa
         <span
             data-refineui="dropdown-menu-shortcut"
             className={clsx(
-                "refineui-typo-body-4 ml-auto shrink-0 tracking-wide text-refineui-alias-foreground-secondary",
+                "refineui-typo-body-4 ml-auto shrink-0 tracking-wide text-refineui-alias-foreground-primary",
                 className,
             )}
+            style={typographys.body4}
             {...props}
         />
     );
@@ -937,17 +487,23 @@ export function DropdownSubTrigger({ className, children, onClick, ...props }: D
             data-slot="dropdown-menu-sub-trigger"
             tabIndex={-1}
             className={clsx(
-                "refineui-typo-body-4 flex w-full cursor-pointer items-center gap-refineui-size-medium rounded-refineui-large border-none bg-transparent px-refineui-size-medium py-refineui-size-small text-left font-normal text-refineui-alias-foreground-primary outline-none",
+                "refineui-typo-body-2 flex w-full cursor-pointer items-center gap-refineui-size-medium rounded-refineui-large border-none bg-transparent px-refineui-size-medium py-refineui-size-small text-left font-medium text-refineui-alias-foreground-primary outline-none",
                 open && "bg-refineui-alias-background-surface-hover",
                 className,
             )}
+            style={typographys.body2}
             onClick={(e) => {
                 onClick?.(e);
                 setOpen((o) => !o);
             }}
             {...props}
         >
-            <span className="min-w-0 flex-1">{children}</span>
+            <span
+                className="refineui-typo-body-2 min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap font-medium"
+                style={typographys.body2}
+            >
+                {children}
+            </span>
             <WebIcon name="chevron-right" size={iconSizes.small} color="currentColor" aria-hidden className="ml-auto shrink-0" />
         </button>
     );

@@ -134,13 +134,9 @@ export const componentColorTokens = {
     },
     tooltip: {
         default: {
-            background: semanticToken("surfacePopover"),
-            foreground: semanticToken("foregroundPrimary"),
-        },
-        inverted: {
             background: semanticToken("surfaceTooltip"),
             foreground: semanticToken("foregroundInversed"),
-        },
+        }
     },
     popover: {
         default: {
@@ -501,6 +497,7 @@ export const componentColorTokens = {
     },
     calendar: {
         background: semanticToken("backgroundPrimary"),
+        border: semanticToken("borderDefault"),
         weekday: semanticToken("foregroundPrimary"),
         day: {
             default: semanticToken("foregroundPrimary"),

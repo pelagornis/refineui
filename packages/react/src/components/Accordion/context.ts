@@ -1,4 +1,6 @@
 import { createContext, useEffect, useState } from "react";
+import { semanticInteraction } from "@refineui/tokens";
+import { getReducedMotionQuery } from "@refineui/utilities/animation";
 
 export type AccordionSize = "small" | "medium" | "large";
 export type AccordionType = "single" | "multiple";
@@ -26,15 +28,15 @@ export interface ItemContextValue {
 export const AccordionContext = createContext<AccordionContextValue | null>(null);
 export const AccordionItemContext = createContext<ItemContextValue | null>(null);
 
-export const PANEL_HEIGHT_MS = 0.38;
-export const PANEL_CONTENT_MS = 0.26;
-export const PANEL_HEIGHT_EASE = "cubic-bezier(0.32, 0.72, 0, 1)";
-export const PANEL_CONTENT_EASE = "cubic-bezier(0.4, 0, 0.2, 1)";
+export const PANEL_HEIGHT_MS = Number.parseFloat(semanticInteraction.duration.accordionPanel) / 1000;
+export const PANEL_CONTENT_MS = Number.parseFloat(semanticInteraction.duration.accordionContent) / 1000;
+export const PANEL_HEIGHT_EASE = semanticInteraction.easing.panel;
+export const PANEL_CONTENT_EASE = semanticInteraction.easing.content;
 
 export function usePrefersReducedMotion(): boolean {
     const [reduce, setReduce] = useState(false);
     useEffect(() => {
-        const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const mql = window.matchMedia(getReducedMotionQuery().replace("@media ", ""));
         const sync = () => setReduce(mql.matches);
         sync();
         mql.addEventListener("change", sync);

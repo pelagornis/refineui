@@ -1,8 +1,5 @@
 export type {
     MenuAlign,
-    DropdownListItem,
-    DropdownListProps,
-    DropdownSelectionVariant,
     DropdownContentProps,
     DropdownItemProps,
     DropdownSubContentProps,
@@ -10,7 +7,6 @@ export type {
     DropdownTriggerProps,
 } from "./types";
 export {
-    DropdownList,
     Dropdown,
     DropdownContent,
     DropdownGroup,

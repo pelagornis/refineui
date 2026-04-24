@@ -12,7 +12,17 @@ import AlertPreview from "../../../components/AlertPreview";
 ## 설치·임포트
 
 ```tsx
-import { Alert, AlertDescription, AlertTitle, WebIcon } from "@refineui/react";
+import {
+  Alert,
+  AlertAction,
+  AlertActions,
+  AlertBody,
+  AlertClose,
+  AlertDescription,
+  AlertIcon,
+  AlertRow,
+  AlertTitle,
+} from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
@@ -20,11 +30,15 @@ import "@refineui/react/refineui.css";
 
 ```tsx
 <Alert className="max-w-md">
-  <WebIcon name="checkmark" aria-hidden />
-  <AlertTitle>Payment successful</AlertTitle>
-  <AlertDescription>
-    Your payment of $29.99 has been processed.
-  </AlertDescription>
+  <AlertRow>
+    <AlertIcon name="checkmark" />
+    <AlertBody>
+      <AlertTitle>Payment successful</AlertTitle>
+      <AlertDescription>
+        Your payment of $29.99 has been processed.
+      </AlertDescription>
+    </AlertBody>
+  </AlertRow>
 </Alert>
 ```
 
@@ -38,14 +52,9 @@ import "@refineui/react/refineui.css";
 
 | Prop | 타입 | 설명 |
 |------|------|------|
-| `variant` | `"default"` \| `"info"` \| `"success"` \| `"warning"` \| `"danger"` \| `"custom"` | 강조 색·기본 아이콘 |
-| `icon` | `string` \| `ReactNode` | System Icons 이름 또는 커스텀 노드 |
-| `title` | `ReactNode` | 제목 |
-| `description` | `ReactNode` | 본문 |
-| `onClose` | `() => void` | 닫기 버튼 |
-| `actions` | `{ label, onClick }[]` | 우측 액션(최대 2개 권장) |
-
-`children`으로 합성형(`AlertTitle`, `AlertDescription`)도 지원합니다.
+| `variant` | `"default"` \| `"info"` \| `"success"` \| `"warning"` \| `"danger"` \| `"custom"` | 색상 컨텍스트 |
+| `className` | `string` | 루트 스타일 확장 |
+| `...props` | `HTMLAttributes<HTMLDivElement>` | 루트 `<div>` 속성 |
 
 ## 예시
 
@@ -53,32 +62,32 @@ import "@refineui/react/refineui.css";
 
 ```tsx
 <Alert>
-  <WebIcon name="info" aria-hidden />
-  <AlertTitle>New feature available</AlertTitle>
-  <AlertDescription>
-    We&apos;ve added dark mode support. You can enable it in account settings.
-  </AlertDescription>
+  <AlertRow>
+    <AlertIcon name="info" />
+    <AlertBody>
+      <AlertTitle>New feature available</AlertTitle>
+      <AlertDescription>
+        We&apos;ve added dark mode support. You can enable it in account settings.
+      </AlertDescription>
+    </AlertBody>
+  </AlertRow>
 </Alert>
-```
-
-### Variant API
-
-```tsx
-<Alert
-  variant="warning"
-  title="High memory usage"
-  description="The current process is using more memory than usual."
-/>
 ```
 
 ### 닫기 + 액션
 
 ```tsx
-<Alert
-  variant="success"
-  title="저장됨"
-  description="변경 사항이 반영되었습니다."
-  onClose={() => {}}
-  actions={[{ label: "실행 취소", onClick: () => {} }]}
-/>
+<Alert variant="success">
+  <AlertRow>
+    <AlertIcon name="checkmark" />
+    <AlertBody>
+      <AlertTitle>저장됨</AlertTitle>
+      <AlertDescription>변경 사항이 반영되었습니다.</AlertDescription>
+    </AlertBody>
+    <AlertClose onClick={() => {}} />
+  </AlertRow>
+  <AlertActions>
+    <AlertAction onClick={() => {}}>실행 취소</AlertAction>
+  </AlertActions>
+</Alert>
 ```

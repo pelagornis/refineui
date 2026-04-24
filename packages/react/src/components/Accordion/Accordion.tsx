@@ -1,8 +1,5 @@
-import type { HTMLAttributes, ReactNode } from "react";
+import type { HTMLAttributes } from "react";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { AccordionContent } from "./AccordionContent";
-import { AccordionItem } from "./AccordionItem";
-import { AccordionTrigger } from "./AccordionTrigger";
 import {
     AccordionContext,
     type AccordionSize,
@@ -12,50 +9,30 @@ import {
     usePrefersReducedMotion,
 } from "./context";
 
-export interface AccordionItemProps {
-    id: string;
-    title: ReactNode;
-    content: ReactNode;
-    icon?: string;
-    defaultOpen?: boolean;
-}
-
 export interface AccordionProps extends HTMLAttributes<HTMLDivElement> {
-    items?: AccordionItemProps[];
     type?: AccordionType;
     collapsible?: boolean;
     defaultValue?: string | string[];
     value?: string | string[];
     onValueChange?: (value: string | string[] | undefined) => void;
-    /** Legacy `allowMultiple` alias. */
-    allowMultiple?: boolean;
     /** Figma Web Kit: Small → Caption1, Medium → Body1, Large → SubTitle1 */
     size?: AccordionSize;
 }
 
 export function Accordion({
-    items,
     type,
     collapsible = false,
     defaultValue,
     value,
     onValueChange,
-    allowMultiple = false,
     size = "medium",
     className,
     children,
     ...props
 }: AccordionProps) {
     const reduceMotion = usePrefersReducedMotion();
-    const resolvedType: AccordionType = type ?? (allowMultiple ? "multiple" : "single");
-    const legacyDefault = useMemo(() => {
-        if (!items) return undefined;
-        const opened = items.filter((i) => i.defaultOpen).map((i) => i.id);
-        if (opened.length === 0) return undefined;
-        return resolvedType === "multiple" ? opened : opened[0];
-    }, [items, resolvedType]);
-
-    const initial = toSet(defaultValue ?? legacyDefault, resolvedType);
+    const resolvedType: AccordionType = type ?? "single";
+    const initial = toSet(defaultValue, resolvedType);
     const [uncontrolledOpen, setUncontrolledOpen] = useState<OpenState>(initial);
     const open = value === undefined ? uncontrolledOpen : toSet(value, resolvedType);
 
@@ -123,18 +100,10 @@ export function Accordion({
         [focusByDelta, open, reduceMotion, registerTrigger, size, toggle],
     );
 
-    const legacyChildren =
-        items?.map((item) => (
-            <AccordionItem key={item.id} value={item.id} icon={item.icon}>
-                <AccordionTrigger>{item.title}</AccordionTrigger>
-                <AccordionContent>{item.content}</AccordionContent>
-            </AccordionItem>
-        )) ?? null;
-
     return (
         <AccordionContext.Provider value={contextValue}>
             <div data-refineui="accordion" className={className} {...props}>
-                {children ?? legacyChildren}
+                {children}
             </div>
         </AccordionContext.Provider>
     );

@@ -1,25 +1,37 @@
 import { spacings } from "@refineui/tokens";
-import { Field, Input } from "@refineui/react";
+import { Field, FieldError, FieldHint, FieldLabel, FieldRequired, Input } from "@refineui/react";
 import PreviewFrame from "./PreviewFrame";
 
 export default function FieldPreview() {
   return (
     <PreviewFrame>
       <div style={{ display: "flex", flexDirection: "column", gap: spacings.sizeLarge, maxWidth: "320px" }}>
-        <Field label="이메일" required>
+        <Field>
+          <FieldLabel>
+            이메일
+            <FieldRequired />
+          </FieldLabel>
           <Input type="email" placeholder="email@example.com" />
         </Field>
-        <Field label="비밀번호" error="비밀번호를 입력해주세요">
+        <Field>
+          <FieldLabel>비밀번호</FieldLabel>
           <Input type="password" placeholder="••••••••" />
+          <FieldError>비밀번호를 입력해주세요</FieldError>
         </Field>
-        <Field label="닉네임" hint="2~12자">
+        <Field>
+          <FieldLabel>닉네임</FieldLabel>
           <Input placeholder="입력" success />
+          <FieldHint>2~12자</FieldHint>
         </Field>
-        <Field label="설명" hint="8자 이상 입력해주세요">
+        <Field>
+          <FieldLabel>설명</FieldLabel>
           <Input placeholder="입력" />
+          <FieldHint>8자 이상 입력해주세요</FieldHint>
         </Field>
-        <Field label="Large 라벨" size="lg" hint="size=lg → body1">
+        <Field size="lg">
+          <FieldLabel>Large 라벨</FieldLabel>
           <Input placeholder="입력" />
+          <FieldHint>size=lg → body1</FieldHint>
         </Field>
       </div>
     </PreviewFrame>

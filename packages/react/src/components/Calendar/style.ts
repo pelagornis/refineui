@@ -11,7 +11,7 @@ export const calendarStyles = {
     dayWrapEndpointStart: "rounded-l-refineui-large",
     dayWrapEndpointEnd: "rounded-r-refineui-large",
     root:
-        "box-border flex w-fit min-w-refineui-calendar-min-width flex-col gap-refineui-size-none rounded-refineui-large bg-refineui-alias-background-primary p-refineui-size-large",
+        "box-border flex w-fit min-w-refineui-calendar-min-width flex-col gap-refineui-size-none rounded-refineui-large border-refineui-thin border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-large",
     header: "flex w-full min-w-0 items-start justify-between px-refineui-size-small pb-refineui-size-medium",
     navButton: "shrink-0 text-refineui-alias-foreground-primary",
     captionButton: "shrink-0",

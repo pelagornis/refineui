@@ -6,19 +6,11 @@ export const popoverStyles = {
         "cursor-pointer border-none bg-transparent p-0 font-inherit text-inherit",
     floatingRoot: "absolute z-refineui-popup",
     panelWrap: "relative inline-block min-w-refineui-popover-panel-width",
-    beakWrap: "pointer-events-none absolute",
+    beakWrap: "pointer-events-none absolute z-[1]",
     panel:
-        "relative box-border min-w-refineui-popover-panel-width rounded-refineui-large border-refineui-thin p-refineui-size-large outline-none",
+        "relative z-0 box-border min-w-refineui-popover-panel-width rounded-refineui-xxlarge border-refineui-thin outline-none",
     panelShadowDefault: "shadow-refineui-8light",
-    panelShadowInverted: "shadow-refineui-8dark",
 } as const;
-
-export const popoverPlacementMargin: Record<PopoverPlacement, string> = {
-    top: "mb-refineui-size-xsmall",
-    bottom: "mt-refineui-size-xsmall",
-    left: "mr-refineui-size-xsmall",
-    right: "ml-refineui-size-xsmall",
-};
 
 export function popoverFloatingClasses(placement: PopoverPlacement, align: PopoverAlign): string {
     if (placement === "bottom") {

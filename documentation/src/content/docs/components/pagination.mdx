@@ -12,14 +12,45 @@ import PaginationDemo from "../../../components/PaginationDemo";
 ## 설치·임포트
 
 ```tsx
-import { Pagination } from "@refineui/react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
 ## 기본 사용
 
 ```tsx
-<Pagination page={current} totalPages={10} onPageChange={setPage} />
+<Pagination>
+  <PaginationContent>
+    <PaginationItem>
+      <PaginationPrevious type="button" />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">1</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#" isActive>
+        2
+      </PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">3</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationEllipsis />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationNext type="button" />
+    </PaginationItem>
+  </PaginationContent>
+</Pagination>
 ```
 
 ## Preview
@@ -32,20 +63,26 @@ import "@refineui/react/refineui.css";
 
 | Prop | 타입 | 설명 |
 |------|------|------|
-| `page` | `number` | 현재 페이지 (1 기반) |
-| `totalPages` | `number` | 전체 페이지 수 |
-| `onPageChange` | `(page: number) => void` | 페이지 변경 |
+| `className` | `string` | 루트 컨테이너 스타일 확장 |
+| `...props` | `HTMLAttributes<HTMLElement>` | 루트 `<nav>` 속성 |
 
 `aria-label="Pagination"`이 `<nav>`에 설정됩니다.
 
+### 합성형 컴포넌트
+
+| 컴포넌트 | 설명 |
+|------|------|
+| `PaginationContent` | 페이지 아이템을 담는 리스트 래퍼 |
+| `PaginationItem` | 각 아이템 래퍼 (`li`) |
+| `PaginationLink` | 페이지 링크 (`isActive` 지원) |
+| `PaginationPrevious` | 이전 페이지 버튼 |
+| `PaginationNext` | 다음 페이지 버튼 |
+| `PaginationEllipsis` | 생략 표시 아이템 |
+
 ## 예시
 
-### URL과 동기화
+### 라우터 링크와 함께 사용
 
 ```tsx
-const [page, setPage] = useState(1);
-useEffect(() => {
-  const p = new URLSearchParams(window.location.search).get("p");
-  if (p) setPage(Number(p));
-}, []);
+<PaginationLink href="/products?page=3">3</PaginationLink>
 ```

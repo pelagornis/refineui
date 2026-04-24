@@ -1,7 +1,7 @@
 import type { InputProps } from "./types";
 
 export const inputStyles = {
-    base: "box-border outline-none transition-[border-color,box-shadow,background-color] duration-150",
+    base: "box-border outline-none transition-[border-color,box-shadow,background-color] duration-[var(--refineui-motion-duration-fast)]",
     text: "text-refineui-alias-foreground-primary",
     disabledBg: "bg-refineui-alias-background-surface-disabled",
     defaultBg: "bg-refineui-alias-background-primary",

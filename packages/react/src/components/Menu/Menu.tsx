@@ -1,19 +1,18 @@
 import { clsx } from "clsx";
 import type {
-    HTMLAttributes,
     KeyboardEvent,
     MouseEvent,
     ReactElement,
     ReactNode,
 } from "react";
 import { cloneElement, createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { iconSizes } from "@refineui/tokens";
+import { iconSizes, semanticInteraction } from "@refineui/tokens";
+import { motionMsToNumber } from "@refineui/utilities/animation";
 import { componentSizes } from "../../componentSizes";
 import { getMergeableTriggerChild } from "../../utils/mergeTriggerChild";
 import { menuStyles } from "./style";
 import type {
     MenuDividerProps,
-    MenuItemData,
     MenuItemProps,
     MenuListProps,
     MenuPopoverProps,
@@ -37,104 +36,7 @@ function useMenuContext(componentName: string): MenuContextValue {
     }
     return ctx;
 }
-
-function LegacyMenuPanel({ items, className, ...props }: { items: MenuItemData[] } & HTMLAttributes<HTMLDivElement>) {
-    const menuRef = useRef<HTMLDivElement>(null);
-
-    const itemButtons = useCallback((): HTMLButtonElement[] => {
-        const nodelist = menuRef.current?.querySelectorAll<HTMLButtonElement>('[data-refineui="menu-item"]');
-        return nodelist ? Array.from(nodelist) : [];
-    }, []);
-
-    const focusAdjacent = useCallback(
-        (fromIndex: number, delta: number) => {
-            const arr = itemButtons();
-            const enabledIdx = arr.map((b, i) => (b.disabled ? -1 : i)).filter((i): i is number => i >= 0);
-            if (enabledIdx.length === 0) return;
-            const pos = enabledIdx.indexOf(fromIndex);
-            if (pos < 0) return;
-            const next = (pos + delta + enabledIdx.length) % enabledIdx.length;
-            arr[enabledIdx[next]!]!.focus();
-        },
-        [itemButtons],
-    );
-
-    const onMenuKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-        const arr = itemButtons();
-        const active = document.activeElement;
-        const idx = active instanceof HTMLButtonElement ? arr.indexOf(active) : -1;
-        if (idx < 0) return;
-
-        switch (e.key) {
-            case "ArrowDown":
-                e.preventDefault();
-                focusAdjacent(idx, 1);
-                break;
-            case "ArrowUp":
-                e.preventDefault();
-                focusAdjacent(idx, -1);
-                break;
-            case "Home":
-                e.preventDefault();
-                for (let i = 0; i < arr.length; i++) {
-                    if (!arr[i]!.disabled) {
-                        arr[i]!.focus();
-                        break;
-                    }
-                }
-                break;
-            case "End":
-                e.preventDefault();
-                for (let i = arr.length - 1; i >= 0; i--) {
-                    if (!arr[i]!.disabled) {
-                        arr[i]!.focus();
-                        break;
-                    }
-                }
-                break;
-            default:
-                break;
-        }
-    };
-
-    return (
-        <div
-            ref={menuRef}
-            data-refineui="menu"
-            role="menu"
-            onKeyDown={onMenuKeyDown}
-            className={clsx(
-                menuStyles.panel,
-                className,
-            )}
-            {...props}
-        >
-            {items.map((item) => (
-                <MenuItem
-                    key={item.id}
-                    disabled={item.disabled}
-                    onClick={item.onClick}
-                    description={item.description}
-                    shortcut={item.shortcut}
-                    startIcon={item.startIcon}
-                    endIcon={item.endIcon}
-                >
-                    {item.label}
-                </MenuItem>
-            ))}
-        </div>
-    );
-}
-
-export function Menu({ items, children, className, positioning, ...props }: MenuProps) {
-    if (items && items.length > 0) {
-        return (
-            <LegacyMenuPanel className={className} items={items} {...props}>
-                {children}
-            </LegacyMenuPanel>
-        );
-    }
-
+export function Menu({ children, className, positioning, ...props }: MenuProps) {
     const [open, setOpen] = useState(false);
     const value = useMemo(() => ({ open, setOpen, positioning }), [open, positioning]);
 
@@ -200,7 +102,7 @@ export function MenuPopover({ className, children, style, ...props }: MenuPopove
         const timeout = window.setTimeout(() => {
             setShouldRender(false);
             setIsClosing(false);
-        }, 180);
+        }, motionMsToNumber(semanticInteraction.duration.normal));
 
         return () => window.clearTimeout(timeout);
     }, [open, shouldRender]);

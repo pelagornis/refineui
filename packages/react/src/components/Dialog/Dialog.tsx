@@ -14,7 +14,8 @@ import {
     type RefObject,
 } from "react";
 import { createPortal } from "react-dom";
-import { iconSizes } from "@refineui/tokens";
+import { iconSizes, semanticInteraction } from "@refineui/tokens";
+import { motionMsToNumber } from "@refineui/utilities/animation";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentSizes } from "../../componentSizes";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
@@ -34,9 +35,9 @@ import type {
 } from "./types";
 
 /** Web Kit COMPONENT_SET `Dialog` `393:1181` */
-const PANEL_MS = 320;
-const SCRIM_MS = 280;
-const EASING = "cubic-bezier(0.32, 0.72, 0, 1)";
+const PANEL_MS = motionMsToNumber(semanticInteraction.duration.panel);
+const SCRIM_MS = motionMsToNumber(semanticInteraction.duration.overlay);
+const EASING = semanticInteraction.easing.panel;
 
 type DialogContextValue = {
     open: boolean;

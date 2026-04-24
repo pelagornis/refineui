@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import {
+    Children,
     createContext,
     forwardRef,
     useCallback,
@@ -13,9 +14,11 @@ import {
     type RefObject,
 } from "react";
 import { createPortal } from "react-dom";
-import { iconSizes } from "@refineui/tokens";
+import { iconSizes, semanticInteraction } from "@refineui/tokens";
+import { motionMsToNumber } from "@refineui/utilities/animation";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentSizes } from "../../componentSizes";
+import { acquireBodyScrollLock } from "../../utils/bodyScrollLock";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
@@ -27,23 +30,27 @@ import type {
     DrawerContentProps,
     DrawerDescriptionProps,
     DrawerFooterProps,
+    DrawerFooterState,
     DrawerHeaderProps,
     DrawerPlacement,
     DrawerProps,
     DrawerSize,
+    DrawerType,
     DrawerTitleProps,
     DrawerTriggerProps,
 } from "./types";
 
-const PANEL_MS = 320;
-const SCRIM_MS = 280;
-const EASING = "cubic-bezier(0.32, 0.72, 0, 1)";
+const PANEL_MS = motionMsToNumber(semanticInteraction.duration.panel);
+const SCRIM_MS = motionMsToNumber(semanticInteraction.duration.overlay);
+const EASING = semanticInteraction.easing.panel;
 
 type DrawerContextValue = {
     open: boolean;
     setOpen: (next: boolean) => void;
     placement: DrawerPlacement;
     size: DrawerSize;
+    type: DrawerType;
+    showFooter: boolean;
     titleId: string;
     descriptionId: string;
     panelRef: RefObject<HTMLDivElement>;
@@ -94,11 +101,14 @@ export function Drawer({
     open: openProp,
     defaultOpen,
     onOpenChange,
+    type = "overlay",
+    showFooter = true,
     placement = "right",
     size = "small",
     children,
 }: DrawerProps) {
-    const [open, setOpen] = useDrawerOpenState(openProp, defaultOpen, onOpenChange);
+    const defaultByType = type === "inline" ? true : defaultOpen;
+    const [open, setOpen] = useDrawerOpenState(openProp, defaultByType, onOpenChange);
     const titleId = useId();
     const descriptionId = useId();
     const panelRef = useRef<HTMLDivElement>(null);
@@ -111,6 +121,8 @@ export function Drawer({
             setOpen,
             placement,
             size,
+            type,
+            showFooter,
             titleId,
             descriptionId,
             panelRef,
@@ -124,6 +136,8 @@ export function Drawer({
             setOpen,
             placement,
             size,
+            type,
+            showFooter,
             titleId,
             descriptionId,
             hasTitle,
@@ -156,6 +170,8 @@ export function DrawerContent({
     style,
     container,
     children,
+    type: typeProp,
+    showFooter: showFooterProp,
     placement: placementProp,
     size: sizeProp,
     ...props
@@ -163,6 +179,8 @@ export function DrawerContent({
     const {
         open,
         setOpen,
+        type: ctxType,
+        showFooter: ctxShowFooter,
         placement: ctxPlacement,
         size: ctxSize,
         titleId,
@@ -174,7 +192,11 @@ export function DrawerContent({
     const [rendering, setRendering] = useState(open);
     const [entered, setEntered] = useState(false);
 
-    useFocusTrap(open && entered, panelRef);
+    const drawerType = typeProp ?? ctxType;
+    const showFooter = showFooterProp ?? ctxShowFooter;
+    const isOverlay = drawerType === "overlay";
+
+    useFocusTrap(isOverlay && open && entered, panelRef);
 
     useEffect(() => {
         if (open) {
@@ -188,22 +210,19 @@ export function DrawerContent({
     }, [open]);
 
     useEffect(() => {
-        if (!rendering) return;
-        document.body.style.overflow = "hidden";
-        return () => {
-            document.body.style.overflow = "";
-        };
-    }, [rendering]);
+        if (!isOverlay || !rendering) return;
+        return acquireBodyScrollLock();
+    }, [isOverlay, rendering]);
 
     useEffect(() => {
-        if (!rendering || !entered) return;
+        if (!isOverlay || !rendering || !entered) return;
         const handler = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
         document.addEventListener("keydown", handler);
         return () => document.removeEventListener("keydown", handler);
-    }, [rendering, entered, setOpen]);
+    }, [isOverlay, rendering, entered, setOpen]);
 
     if (!rendering) return null;
-    if (typeof document === "undefined") return null;
+    if (isOverlay && typeof document === "undefined") return null;
 
     const placement = placementProp ?? ctxPlacement;
     const size = sizeProp ?? ctxSize;
@@ -214,52 +233,62 @@ export function DrawerContent({
     const panelMotion: CSSProperties = {
         width: `min(${w}, 100vw)`,
         maxWidth: w,
-        transform: entered ? "translateX(0)" : `translateX(${offX})`,
-        transition: `transform ${PANEL_MS}ms ${EASING}`,
-        willChange: "transform",
+        transform: isOverlay ? (entered ? "translateX(0)" : `translateX(${offX})`) : undefined,
+        transition: isOverlay ? `transform ${PANEL_MS}ms ${EASING}` : undefined,
+        willChange: isOverlay ? "transform" : undefined,
     };
 
-    const target = container ?? document.body;
+    const target = isOverlay ? (container ?? document.body) : null;
+
+    const panel = (
+        <div
+            ref={panelRef}
+            tabIndex={isOverlay ? -1 : undefined}
+            className={clsx(
+                drawerStyles.panel,
+                isOverlay ? drawerStyles.panelOverlay : drawerStyles.panelInline,
+            )}
+            style={{ ...panelMotion, ...style }}
+            onClick={(e) => e.stopPropagation()}
+        >
+            {children}
+        </div>
+    );
 
     const root = (
         <div
             data-refineui="drawer"
-            role="dialog"
-            aria-modal="true"
+            data-state={entered ? "open" : "closed"}
+            role={isOverlay ? "dialog" : undefined}
+            aria-modal={isOverlay ? "true" : undefined}
             aria-labelledby={hasTitle ? titleId : undefined}
             aria-describedby={hasDescription ? descriptionId : undefined}
             className={clsx(
-                drawerStyles.root,
+                isOverlay ? drawerStyles.root : drawerStyles.inlineRoot,
                 isLeft ? drawerStyles.rootLeft : drawerStyles.rootRight,
                 className,
             )}
             {...props}
         >
-            <div
-                role="presentation"
-                className={drawerStyles.scrim}
-                style={{
-                    backgroundColor: resolveColorTokenValue(componentColorTokens.drawer.overlay),
-                    opacity: entered ? 1 : 0,
-                    transition: `opacity ${SCRIM_MS}ms ${EASING}`,
-                    pointerEvents: entered ? "auto" : "none",
-                }}
-                onClick={() => setOpen(false)}
-                aria-hidden
-            />
-            <div
-                ref={panelRef}
-                tabIndex={-1}
-                className={drawerStyles.panel}
-                style={{ ...panelMotion, ...style }}
-                onClick={(e) => e.stopPropagation()}
-            >
-                {children}
-            </div>
+            {isOverlay ? (
+                <div
+                    role="presentation"
+                    className={drawerStyles.scrim}
+                    style={{
+                        backgroundColor: resolveColorTokenValue(componentColorTokens.drawer.overlay),
+                        opacity: entered ? 1 : 0,
+                        transition: `opacity ${SCRIM_MS}ms ${EASING}`,
+                        pointerEvents: entered ? "auto" : "none",
+                    }}
+                    onClick={() => setOpen(false)}
+                    aria-hidden
+                />
+            ) : null}
+            {panel}
         </div>
     );
 
-    return createPortal(root, target);
+    return isOverlay && target ? createPortal(root, target) : root;
 }
 
 export function DrawerHeader({
@@ -269,6 +298,7 @@ export function DrawerHeader({
     actions,
     ...props
 }: DrawerHeaderProps) {
+    const hasActions = actions != null;
     return (
         <div
             data-name="Drawer / Header"
@@ -279,12 +309,12 @@ export function DrawerHeader({
             {...props}
         >
             <div className={drawerStyles.headerMain}>
-                {showClose ? <DrawerClose /> : null}
                 <div className={drawerStyles.headerMainText}>{children}</div>
+                {hasActions ? (
+                    <div className={drawerStyles.headerActions}>{actions}</div>
+                ) : null}
+                {showClose ? <DrawerClose /> : null}
             </div>
-            {actions ? (
-                <div className={drawerStyles.headerActions}>{actions}</div>
-            ) : null}
         </div>
     );
 }
@@ -337,15 +367,31 @@ export function DrawerBody({ className, ...props }: DrawerBodyProps) {
 }
 
 export function DrawerFooter({ className, ...props }: DrawerFooterProps) {
+    const { showFooter } = useDrawerContext("DrawerFooter");
+    if (!showFooter) return null;
+    const { children, state, ...rest } = props;
+    const count = Children.count(children);
+    const resolvedState: DrawerFooterState = state ?? (count <= 1 ? "single" : count === 2 ? "split" : "icons");
     return (
         <div
             data-name="Drawer / Footer"
             className={clsx(
-                drawerStyles.footer,
+                drawerStyles.footerRoot,
                 className,
             )}
-            {...props}
-        />
+            {...rest}
+        >
+            <div
+                data-state={resolvedState}
+                className={clsx(
+                    drawerStyles.footer,
+                    resolvedState === "single" && drawerStyles.footerSingle,
+                    resolvedState === "split" && drawerStyles.footerSplit,
+                )}
+            >
+                {children}
+            </div>
+        </div>
     );
 }
 
@@ -367,7 +413,7 @@ export function DrawerClose({
             {...props}
             type={type}
             variant={variant ?? (iconOnly ? "ghost" : "outline")}
-            size={size ?? (iconOnly ? "sm" : "md")}
+            size={size ?? "md"}
             layout={layout ?? (iconOnly ? "icon" : "label")}
             aria-label={iconOnly ? "닫기" : undefined}
             className={className}

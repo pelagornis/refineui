@@ -16,6 +16,28 @@
   --refineui-placeholder: var(--refineui-color-neutral-450);
   --refineui-btn-primary-hover: var(--refineui-color-alias-background-brand-hover);
   --refineui-btn-primary-pressed: var(--refineui-color-alias-background-brand-active);
+  --refineui-motion-duration-instant: 0ms;
+  --refineui-motion-duration-fast: 150ms;
+  --refineui-motion-duration-normal: 180ms;
+  --refineui-motion-duration-medium: 200ms;
+  --refineui-motion-duration-slow: 240ms;
+  --refineui-motion-duration-overlay: 280ms;
+  --refineui-motion-duration-panel: 320ms;
+  --refineui-motion-duration-accordion-panel: 380ms;
+  --refineui-motion-duration-accordion-content: 260ms;
+  --refineui-motion-duration-skeleton: 1500ms;
+  --refineui-motion-duration-spinner: 800ms;
+  --refineui-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --refineui-motion-easing-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+  --refineui-motion-easing-panel: cubic-bezier(0.32, 0.72, 0, 1);
+  --refineui-motion-easing-content: cubic-bezier(0.4, 0, 0.2, 1);
+  --refineui-motion-easing-linear: linear;
+  --refineui-motion-easing-ease-out: ease-out;
+  --refineui-motion-easing-ease-in-out: ease-in-out;
+  --refineui-motion-dialog-enter-scale: 0.96;
+  --refineui-motion-button-active-scale: 0.98;
+  --refineui-motion-slider-thumb-hover-scale: 1.15;
+  --refineui-motion-distance-float: 4px;
 }
 
 /* Dark mode — supports data-theme or .dark on ancestor */
@@ -40,21 +62,20 @@
 
 /* Button & button-like */
 [data-refineui="button"] {
-  transition: opacity 0.15s, background-color 0.15s, border-color 0.15s, transform 0.1s;
+  transition: opacity var(--refineui-motion-duration-fast), background-color var(--refineui-motion-duration-fast), border-color var(--refineui-motion-duration-fast), transform 0.1s;
 }
 [data-refineui="switch"],
 [data-refineui="spinbutton-step"],
 [data-refineui="pagination"],
-[data-refineui="pagination-page"],
 [data-refineui="accordion-trigger"],
 [data-refineui="menu-item"],
 [data-refineui="tab"],
 [data-refineui="calendar-nav"],
 [data-refineui="chip-remove"] {
-  transition: opacity 0.15s, background-color 0.15s, transform 0.1s;
+  transition: opacity var(--refineui-motion-duration-fast), background-color var(--refineui-motion-duration-fast), transform 0.1s;
 }
 [data-refineui="dropdown-item"] {
-  transition: background-color 0.15s, transform 0.1s;
+  transition: background-color var(--refineui-motion-duration-fast), transform 0.1s;
 }
 /* 선택된 행(안정 상태) — MCP: rest는 `surfaceSelected`; pressed는 아래 `:active` */
 [data-refineui="dropdown-item"][data-selected="true"]:not(:disabled) {
@@ -71,11 +92,11 @@
 
 [data-refineui="dropdown-menu"][data-side="bottom"] {
   transform-origin: top center;
-  animation: refineui-dropdown-menu-enter-bottom 180ms cubic-bezier(0.2, 0, 0, 1) both;
+  animation: refineui-dropdown-menu-enter-bottom var(--refineui-motion-duration-normal) var(--refineui-motion-easing-standard) both;
 }
 [data-refineui="dropdown-menu"][data-side="top"] {
   transform-origin: bottom center;
-  animation: refineui-dropdown-menu-enter-top 180ms cubic-bezier(0.2, 0, 0, 1) both;
+  animation: refineui-dropdown-menu-enter-top var(--refineui-motion-duration-normal) var(--refineui-motion-easing-standard) both;
 }
 @keyframes refineui-dropdown-menu-enter-bottom {
   from {
@@ -103,7 +124,7 @@
   }
 }
 [data-refineui="calendar-day"] {
-  transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+  transition: background-color var(--refineui-motion-duration-fast), border-color var(--refineui-motion-duration-fast), color var(--refineui-motion-duration-fast), transform 0.1s;
 }
 [data-refineui="spinbutton-step"]:not(:disabled):hover,
 [data-refineui="accordion-trigger"]:hover,
@@ -166,37 +187,40 @@
 /* Selected / Day — 선택은 고정(rest)만; hover·pressed로 배경을 바꾸지 않음(Web Kit) */
 /* Pagination — Web Kit `558:1989` · `Pagination / Item` `570:2332` */
 [data-refineui="pagination"]:not(:disabled):hover {
-  background-color: var(--refineui-color-alias-background-primary-hover) !important;
+  background-color: var(--refineui-color-alias-background-surface-hover) !important;
   border-color: var(--refineui-color-alias-border-hover) !important;
 }
 [data-refineui="pagination"]:disabled {
   background-color: var(--refineui-color-alias-background-surface-disabled) !important;
   border-color: var(--refineui-color-alias-border-disabled) !important;
+  color: var(--refineui-color-alias-foreground-disabled) !important;
 }
-[data-refineui="pagination-page"] {
+[data-refineui="pagination"][data-page="true"] {
   box-sizing: border-box;
   min-width: 36px;
   min-height: 36px;
-  padding: 8px;
-  border-radius: 8px;
+  padding: 6px;
+  border-radius: 12px;
   border: 1px solid var(--refineui-color-alias-border-default);
-  background-color: var(--refineui-color-alias-background-primary);
+  background-color: var(--refineui-color-alias-background-surface);
   color: var(--refineui-color-alias-foreground-primary);
   cursor: pointer;
   font: inherit;
-  transition: background-color 0.15s, border-color 0.15s, transform 0.1s;
+  transition: background-color var(--refineui-motion-duration-fast), border-color var(--refineui-motion-duration-fast), transform 0.1s;
 }
-[data-refineui="pagination-page"][data-selected="true"] {
+[data-refineui="pagination"][data-page="true"][data-selected="true"] {
   border-width: 2px;
   border-color: var(--refineui-color-alias-border-focus);
-  background-color: var(--refineui-color-alias-background-primary-active);
-  padding: 7px;
+  background-color: var(--refineui-color-alias-background-surface-active);
+  color: var(--refineui-color-alias-foreground-secondary);
+  padding: 6px;
 }
-[data-refineui="pagination-page"]:not([data-selected="true"]):not(:disabled):hover {
-  background-color: var(--refineui-color-alias-background-primary-hover) !important;
+[data-refineui="pagination"][data-page="true"]:not([data-selected="true"]):not(:disabled):hover {
+  background-color: var(--refineui-color-alias-background-surface-hover) !important;
   border-color: var(--refineui-color-alias-border-hover) !important;
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
 }
-[data-refineui="pagination-page"]:disabled {
+[data-refineui="pagination"][data-page="true"]:disabled {
   cursor: default;
   background-color: var(--refineui-color-alias-background-surface-disabled) !important;
   border-color: var(--refineui-color-alias-border-disabled) !important;
@@ -265,7 +289,7 @@
 
 [data-refineui="button"]:not([data-inactive="true"]):active,
 [data-refineui="spinbutton"]:not(:disabled):active,
-[data-refineui="pagination-page"]:not(:disabled):active,
+[data-refineui="pagination"][data-page="true"]:not(:disabled):active,
 [data-refineui="pagination"]:not(:disabled):active,
 [data-refineui="accordion-trigger"]:active,
 [data-refineui="dropdown-item"]:not(:disabled):active,
@@ -273,11 +297,11 @@
 [data-refineui="calendar-nav"]:active,
 [data-refineui="calendar-day"]:active,
 [data-refineui="chip-remove"]:active {
-  transform: scale(0.98);
+  transform: scale(var(--refineui-motion-button-active-scale));
 }
 [data-refineui="button"]:focus-visible,
 [data-refineui="switch"]:focus-visible,
-[data-refineui="pagination-page"]:focus-visible,
+[data-refineui="pagination"][data-page="true"]:focus-visible,
 [data-refineui="pagination"]:focus-visible,
 [data-refineui="accordion-trigger"]:focus-visible,
 [data-refineui="dropdown-item"]:focus-visible,
@@ -320,7 +344,7 @@
 @keyframes refineui-menu-popover-enter {
   from {
     opacity: 0;
-    transform: translateY(-4px) scale(0.98);
+    transform: translateY(calc(-1 * var(--refineui-motion-distance-float))) scale(var(--refineui-motion-button-active-scale));
   }
   to {
     opacity: 1;
@@ -335,18 +359,18 @@
   }
   to {
     opacity: 0;
-    transform: translateY(-4px) scale(0.98);
+    transform: translateY(calc(-1 * var(--refineui-motion-distance-float))) scale(var(--refineui-motion-button-active-scale));
   }
 }
 
 [data-refineui="menu-popover"][data-state="open"] {
   transform-origin: top left;
-  animation: refineui-menu-popover-enter 180ms cubic-bezier(0.2, 0, 0, 1);
+  animation: refineui-menu-popover-enter var(--refineui-motion-duration-normal) var(--refineui-motion-easing-standard);
 }
 [data-refineui="menu-popover"][data-state="closed"] {
   transform-origin: top left;
   pointer-events: none;
-  animation: refineui-menu-popover-exit 180ms cubic-bezier(0.2, 0, 0, 1);
+  animation: refineui-menu-popover-exit var(--refineui-motion-duration-normal) var(--refineui-motion-easing-standard);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -357,7 +381,7 @@
 
 /* Spin Button — Web Kit `561:2067` (포커스 링은 루트 테두리로 통일) */
 [data-refineui="spinbutton"] {
-  transition: border-color 0.15s, background-color 0.15s;
+  transition: border-color var(--refineui-motion-duration-fast), background-color var(--refineui-motion-duration-fast);
 }
 [data-refineui="spinbutton"]:focus-within:not([data-disabled="true"]) {
   border-color: var(--refineui-color-alias-border-focus) !important;
@@ -374,7 +398,7 @@
 /* Textarea, Select */
 [data-refineui="textarea"],
 [data-refineui="select"] {
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color var(--refineui-motion-duration-fast), box-shadow var(--refineui-motion-duration-fast);
 }
 [data-refineui="textarea"]:focus:not(:disabled):not([data-error="true"]):not([data-success="true"]),
 [data-refineui="select"]:focus:not(:disabled) {
@@ -392,7 +416,7 @@
 
 /* Input — MCP `518:7373` Focus state */
 [data-refineui="input"] {
-  transition: border-color 0.15s;
+  transition: border-color var(--refineui-motion-duration-fast);
 }
 [data-refineui="input"]:focus:not(:disabled):not([data-error="true"]):not([data-success="true"]) {
   border-color: var(--refineui-color-alias-border-focus) !important;
@@ -439,7 +463,7 @@
   pointer-events: none;
   /* 자식이 `position:absolute`라 높이 0이 되지 않게 — 접힌/펼침 스택 높이로 호버 영역 확보 */
   min-height: var(--refineui-toast-collapsed-stack-height, var(--refineui-toast-front-height, 0px));
-  transition: min-height 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: min-height var(--refineui-motion-duration-panel) var(--refineui-motion-easing-emphasized);
 }
 
 @media (max-width: 480px) {
@@ -523,7 +547,7 @@
   overflow: visible;
   pointer-events: auto;
   transform: translateY(var(--refineui-toast-offset-collapsed, 0px));
-  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1), height 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform var(--refineui-motion-duration-panel) var(--refineui-motion-easing-emphasized), height var(--refineui-motion-duration-panel) var(--refineui-motion-easing-emphasized);
   z-index: var(--refineui-toast-z-index, 100);
 }
 
@@ -562,7 +586,7 @@
   transform: scale(calc(1 - (var(--refineui-toast-stack-index, 0) * 0.018)));
   transform-origin: top center;
   opacity: calc(1 - (var(--refineui-toast-stack-index, 0) * var(--refineui-toast-stack-opacity-step)));
-  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1), opacity 240ms ease;
+  transition: transform var(--refineui-motion-duration-panel) var(--refineui-motion-easing-emphasized), opacity var(--refineui-motion-duration-slow) var(--refineui-motion-easing-ease-in-out);
 }
 
 [data-refineui="toaster"][data-position^="bottom"] [data-refineui="toast-scale-layer"] {
@@ -619,7 +643,7 @@
   [data-refineui="toaster"],
   [data-refineui="toast-item"],
   [data-refineui="toast-scale-layer"] {
-    transition-duration: 0.01ms;
+    transition-duration: var(--refineui-motion-duration-instant);
   }
 }
 
@@ -646,7 +670,7 @@
   );
   background-size: 200% 100%;
   background-repeat: no-repeat;
-  animation: refineui-skeleton-shimmer 1.5s ease-in-out infinite;
+  animation: refineui-skeleton-shimmer var(--refineui-motion-duration-skeleton) var(--refineui-motion-easing-ease-in-out) infinite;
 }
 @media (prefers-reduced-motion: reduce) {
   [data-refineui="skeleton"] {
@@ -663,7 +687,7 @@
 }
 [data-refineui="spinner"] {
   flex-shrink: 0;
-  animation: refineui-spin 0.8s linear infinite;
+  animation: refineui-spin var(--refineui-motion-duration-spinner) var(--refineui-motion-easing-linear) infinite;
 }
 
 /* Checkbox — Web Kit `327:2539` (MCP: Default/Hover/Pressed/Focused/Disabled × checked/unchecked) */
@@ -672,7 +696,7 @@
   border: 1px solid var(--refineui-color-alias-border-default);
   border-radius: 4px;
   background-color: var(--refineui-color-alias-background-primary);
-  transition: background-color 0.15s, border-color 0.15s, border-width 0.15s;
+  transition: background-color var(--refineui-motion-duration-fast), border-color var(--refineui-motion-duration-fast), border-width var(--refineui-motion-duration-fast);
 }
 [data-refineui="checkbox"][data-variant="circular"] {
   border-radius: 9999px;
@@ -732,7 +756,7 @@ label:focus-within:not(:active) [data-refineui="checkbox"][data-checked="true"]:
   border-radius: 9999px;
   background-color: var(--refineui-color-alias-background-primary);
   box-shadow: none;
-  transition: border-color 0.15s, background-color 0.15s, box-shadow 0.15s, opacity 0.15s;
+  transition: border-color var(--refineui-motion-duration-fast), background-color var(--refineui-motion-duration-fast), box-shadow var(--refineui-motion-duration-fast), opacity var(--refineui-motion-duration-fast);
 }
 [data-refineui="radio"]::after {
   content: "";
@@ -741,7 +765,7 @@ label:focus-within:not(:active) [data-refineui="checkbox"][data-checked="true"]:
   border-radius: 9999px;
   background-color: var(--refineui-color-alias-background-primary);
   transform: scale(0);
-  transition: transform 0.15s ease-out;
+  transition: transform var(--refineui-motion-duration-fast) var(--refineui-motion-easing-ease-out);
 }
 [data-refineui="radio"]:not(:disabled):not(:checked):focus,
 [data-refineui="radio"]:not(:disabled):not(:checked):focus-visible {
@@ -782,7 +806,7 @@ label:focus-within:not(:active) [data-refineui="checkbox"][data-checked="true"]:
 
 /* Link — Web Kit `226:158` (Default / Hover / Focus / Pressed / Disabled) */
 a[data-refineui="link"] {
-  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+  transition: color var(--refineui-motion-duration-fast) ease, text-decoration-color var(--refineui-motion-duration-fast) ease;
 }
 a[data-refineui="link"]:not(.page-btn):not(.page-btn-primary):not(.page-github-btn) {
   color: var(--refineui-color-alias-foreground-link) !important;
@@ -819,7 +843,7 @@ a[data-refineui="link"]:focus-visible {
 
 /* Breadcrumb — Web Kit (Figma Breadcrumb / BreadcrumbItem) */
 [data-refineui="breadcrumb-link"] {
-  transition: color 0.15s, background-color 0.15s;
+  transition: color var(--refineui-motion-duration-fast), background-color var(--refineui-motion-duration-fast);
 }
 [data-refineui="breadcrumb-link"]:hover {
   color: var(--refineui-color-alias-foreground-secondary) !important;
@@ -852,10 +876,10 @@ a[data-refineui="link"]:focus-visible {
   font: inherit;
   color: inherit;
   appearance: none;
-  transition: background-color 0.15s;
+  transition: background-color var(--refineui-motion-duration-fast);
 }
 [data-refineui="breadcrumb-ellipsis"] > span {
-  transition: color 0.15s;
+  transition: color var(--refineui-motion-duration-fast);
 }
 /* Hover: Figma BreadcrumbItem Ellipsis Hover — 링크와 동일 foreground secondary (#6c6c6c) */
 [data-refineui="breadcrumb-ellipsis"]:hover > span {
@@ -873,7 +897,7 @@ a[data-refineui="link"]:focus-visible {
 
 /* Card — Web Kit `Card` `394:865` (State: Default / Hover / Pressed / Disabled) */
 [data-refineui="card"] {
-  transition: background-color 0.15s, border-color 0.15s;
+  transition: background-color var(--refineui-motion-duration-fast), border-color var(--refineui-motion-duration-fast);
 }
 [data-refineui="card"][data-interactive="true"]:not([data-disabled="true"]):not([aria-disabled="true"]):hover:not(:active) {
   background-color: var(--refineui-color-alias-background-primary-hover) !important;
@@ -899,7 +923,7 @@ a[data-refineui="link"]:focus-visible {
 
 /* Badge — Web Kit hover/pressed (Figma Badge; Foundation palette) */
 [data-refineui="badge"] {
-  transition: background-color 0.15s, border-color 0.15s;
+  transition: background-color var(--refineui-motion-duration-fast), border-color var(--refineui-motion-duration-fast);
 }
 [data-refineui="badge"][data-variant="default"]:hover {
   background-color: var(--refineui-color-alias-background-brand-hover) !important;
@@ -937,7 +961,7 @@ a[data-refineui="link"]:focus-visible {
 
 /* Chip / Tag — Web Kit COMPONENT_SET `Tag` `574:6578` */
 [data-refineui="chip"] {
-  transition: background-color 0.15s, border-color 0.15s;
+  transition: background-color var(--refineui-motion-duration-fast), border-color var(--refineui-motion-duration-fast);
 }
 [data-refineui="chip"][data-disabled="true"] {
   pointer-events: none;
@@ -1016,7 +1040,7 @@ a[data-refineui="link"]:focus-visible {
     0 0 0 1px var(--refineui-color-alias-border-default),
     var(--refineui-elevation-2lighter);
   cursor: pointer;
-  transition: box-shadow 0.15s, background-color 0.15s, border-color 0.15s;
+  transition: box-shadow var(--refineui-motion-duration-fast), background-color var(--refineui-motion-duration-fast), border-color var(--refineui-motion-duration-fast);
 }
 [data-refineui="slider"][data-size="md"]::-webkit-slider-thumb {
   margin-top: -6px;
@@ -1077,7 +1101,7 @@ a[data-refineui="link"]:focus-visible {
     0 0 0 1px var(--refineui-color-alias-border-default),
     var(--refineui-elevation-2lighter);
   cursor: pointer;
-  transition: box-shadow 0.15s, background-color 0.15s, border-color 0.15s;
+  transition: box-shadow var(--refineui-motion-duration-fast), background-color var(--refineui-motion-duration-fast), border-color var(--refineui-motion-duration-fast);
 }
 [data-refineui="slider"]:not(:disabled)::-moz-range-thumb:hover {
   background-color: var(--refineui-color-alias-background-brand-hover);

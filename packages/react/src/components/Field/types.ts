@@ -1,11 +1,15 @@
 import type { HTMLAttributes, ReactNode } from "react";
 
 export interface FieldProps extends HTMLAttributes<HTMLDivElement> {
-    label?: ReactNode;
-    error?: ReactNode;
-    hint?: ReactNode;
-    required?: boolean;
     size?: "sm" | "md" | "lg";
+}
+
+export type FieldLabelProps = HTMLAttributes<HTMLLabelElement>;
+export type FieldRequiredProps = HTMLAttributes<HTMLSpanElement>;
+export interface FieldHintProps extends HTMLAttributes<HTMLDivElement> {
+    children: ReactNode;
+}
+export interface FieldErrorProps extends HTMLAttributes<HTMLDivElement> {
     children: ReactNode;
 }
 

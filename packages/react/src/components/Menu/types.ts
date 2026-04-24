@@ -1,22 +1,10 @@
 import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from "react";
 
-export interface MenuItemData {
-    id: string;
-    label: ReactNode;
-    description?: ReactNode;
-    shortcut?: ReactNode;
-    startIcon?: ReactNode;
-    endIcon?: ReactNode;
-    onClick?: () => void;
-    disabled?: boolean;
-}
-
 export type MenuPositioning = {
     autoSize?: boolean;
 };
 
 export interface MenuProps extends HTMLAttributes<HTMLDivElement> {
-    items?: MenuItemData[];
     positioning?: MenuPositioning;
 }
 

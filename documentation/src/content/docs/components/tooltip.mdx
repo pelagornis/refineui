@@ -1,13 +1,18 @@
 ---
 title: Tooltip
-description: 호버·포커스 툴팁 — default / inverted
+description: MCP와 동일 — position(Top/Bottom/Left/Right) × align(Start/Center/End)
 ---
 
 import TooltipDemo from "../../../components/TooltipDemo";
 
 # Tooltip
 
-트리거에 마우스를 올리거나 포커스하면 설명을 띄웁니다. Web Kit **Tooltip** `90:1686`과 같이 패딩·`roundedMedium`·**body4**·**shadow8**을 따릅니다. Figma에는 **`position`×`align`** 12가지 조합이 있으나, React는 **`placement`** 네 방향만 지원합니다.
+트리거에 마우스를 올리거나 포커스하면 설명을 띄웁니다. Web Kit **Tooltip** COMPONENT_SET `90:1686`와 같이 MCP의 **`position`** · **`align`** 속성 이름·값(**PascalCase**)을 따릅니다.
+
+- **top/bottom** × **Start/Center/End**: 가로 정렬(Start=왼쪽, End=오른쪽) → 예: Top-Start, Bottom-End  
+- **left/right** × **Start/Center/End**: 세로 정렬(Start=위, End=아래) → 예: Left-Top(`Left`+`Start`), Right-Bottom(`Right`+`End`)
+
+패딩·`roundedMedium`·**body4**·**shadow8Light** 등은 디자인 스펙과 동일한 토큰을 사용합니다.
 
 ## 설치·임포트
 
@@ -18,9 +23,13 @@ import "@refineui/react/refineui.css";
 
 ## 기본 사용
 
+기본값은 MCP 생성 컴포넌트와 동일하게 **`position="Bottom"`**, **`align="Start"`** 입니다.
+
 ```tsx
-<Tooltip trigger={<Button variant="secondary">저장</Button>} content="⌘S로 저장" placement="top" />
+<Tooltip trigger={<Button variant="secondary">저장</Button>} content="⌘S로 저장" />
 ```
+
+위 예시 한 줄만 쓰면 Bottom-Start 툴팁입니다.
 
 ## Preview
 
@@ -34,20 +43,31 @@ import "@refineui/react/refineui.css";
 |------|------|--------|------|
 | `trigger` | `ReactNode` | (필수) | 대상 요소 |
 | `content` | `ReactNode` | (필수) | 툴팁 내용 |
-| `placement` | `"top"` \| `"bottom"` \| `"left"` \| `"right"` | `"top"` | 방향 |
-| `variant` | `"default"` \| `"inverted"` | `"default"` | 밝은 / 어두운 |
+| `position` | `"Top"` \| `"Bottom"` \| `"Left"` \| `"Right"` | `"Bottom"` | MCP `position` |
+| `align` | `"Start"` \| `"Center"` \| `"End"` | `"Start"` | MCP `align` |
 | `delayMs` | `number` | `120` | 표시 전 지연(ms) |
 
 ## 예시
+
+### Top · Center
+
+```tsx
+<Tooltip
+  trigger={<Button variant="secondary">도움말</Button>}
+  content="설명"
+  position="Top"
+  align="Center"
+/>
+```
+
+### Bottom · End
+
+```tsx
+<Tooltip trigger={<span>링크</span>} content="설명" position="Bottom" align="End" />
+```
 
 ### 키보드 포커스
 
 ```tsx
 <Tooltip trigger={<Button variant="secondary">포커스</Button>} content="Tab으로 포커스 시에도 표시" />
-```
-
-### 아래쪽
-
-```tsx
-<Tooltip trigger={<span>링크</span>} content="설명" placement="bottom" />
 ```

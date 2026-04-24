@@ -18,7 +18,6 @@ export interface PopoverContentProps extends Omit<HTMLAttributes<HTMLDivElement>
     children: ReactNode;
     placement?: PopoverPlacement;
     align?: PopoverAlign;
-    variant?: "default" | "inverted";
 }
 
 export interface PopOverProps extends Omit<HTMLAttributes<HTMLDivElement>, "children" | "content"> {
@@ -26,7 +25,6 @@ export interface PopOverProps extends Omit<HTMLAttributes<HTMLDivElement>, "chil
     content: ReactNode;
     placement?: PopoverPlacement;
     align?: PopoverAlign;
-    variant?: "default" | "inverted";
 }
 
 export type PopOverAlign = PopoverAlign;

@@ -45,7 +45,7 @@ description: RefineUI 컴포넌트 색인 — 용도별 분류
 |----------|------|
 | [Dialog](/components/dialog/) | 모달 다이얼로그 |
 | [Drawer](/components/drawer/) | 측면 패널 |
-| [Dropdown](/components/dropdown/) | `Dropdown` (합성) · `DropdownList` (`items`) — Web Kit Dropdown |
+| [Dropdown](/components/dropdown/) | 합성형 Dropdown API — Web Kit Dropdown |
 | [Menu](/components/menu/) | 컨텍스트/패널 메뉴 |
 | [PopOver](/components/popover/) | 팝오버 패널 |
 | [Tooltip](/components/tooltip/) | 호버·포커스 툴팁 |
