@@ -1,39 +1,38 @@
 ---
 title: Select
-description: 네이티브 선택 필드 — Input과 동일 필드 크기
+description: 커스텀 선택 필드 — Input과 동일 필드 크기
 ---
 
 import SelectPreview from "../../../components/SelectPreview";
 
 # Select
 
-네이티브 `<select>` 요소를 래핑한 컴포넌트입니다. Figma Web Kit에는 **단독 Select COMPONENT_SET**이 없고, 필드 스타일은 **[Input](/components/input/)** `518:7373`과 동일한 `size`(sm / md / lg) 규칙을 따릅니다.
+Figma Web Kit **Select** 스펙(`Default / Focus / Filled / Disabled`)에 맞춘 커스텀 Select 컴포넌트입니다. 필드 크기 규칙은 `sm / md / lg`를 사용합니다.
 
 ## 설치·임포트
 
 ```tsx
-import { Select } from "@refineui/react";
-import type { SelectOption } from "@refineui/react";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
 ## 기본 사용
 
-`options`에 `{ value, label }` 배열을 넘깁니다. 플레이스홀더는 빈 값 `<option>`으로 렌더됩니다.
+합성형 API로 `SelectTrigger`와 `SelectContent`/`SelectItem`을 조합합니다.
 
 ```tsx
-const options: SelectOption[] = [
-  { value: "kr", label: "한국" },
-  { value: "us", label: "미국" },
-];
-
 <Select
-  options={options}
   placeholder="국가 선택"
   defaultValue=""
-  onChange={(e) => console.log(e.target.value)}
+  onValueChange={(next) => console.log(next)}
   aria-label="국가"
-/>;
+>
+  <SelectTrigger />
+  <SelectContent>
+    <SelectItem value="kr">한국</SelectItem>
+    <SelectItem value="us">미국</SelectItem>
+  </SelectContent>
+</Select>;
 ```
 
 ## Preview
@@ -46,15 +45,23 @@ const options: SelectOption[] = [
 
 | Prop | 타입 | 기본값 | 설명 |
 |------|------|--------|------|
-| `options` | `SelectOption[]` | (필수) | `{ value, label }` 목록 |
-| `placeholder` | `string` | — | 첫 옵션에 빈 값으로 표시 |
+| `placeholder` | `string` | — | 미선택 상태 라벨 |
 | `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | 필드 높이·패딩·타이포 (Input과 동일) |
-| `error` | `boolean` | `false` | 에러 시 테두리 `red500` |
-| `success` | `boolean` | `false` | 성공 시 테두리 `green500` |
 | `fullWidth` | `boolean` | `false` | 너비 100% |
 | `disabled` | `boolean` | — | 비활성 스타일 |
+| `value` | `string` | — | 현재 선택 값(제어) |
+| `defaultValue` | `string` | — | 초기 선택 값(비제어) |
+| `onValueChange` | `(value: string) => void` | — | 값 변경 콜백 |
 
-그 외 **`SelectHTMLAttributes`** (`name`, `value`, `defaultValue`, `onChange`, `required` 등)를 그대로 전달할 수 있습니다. HTML 속성 `size`(표시 행 수)는 `SelectProps`에서 제외되어 있으며, **`size` prop은 Web Kit 필드 크기**만 의미합니다.
+폼 연동을 위해 `name`, `required`를 지원하며, 호환용 `onChange`는 `event.target.value` 형태를 제공합니다.
+
+## Composition
+
+- `SelectTrigger` — 필드 트리거
+- `SelectContent` — 메뉴 패널
+- `SelectItem` — 옵션 아이템 (`value` 필수)
+- `SelectSection` — 메뉴 섹션 헤더
+- `SelectSeparator` — 메뉴 구분선
 
 ## 예시: 제어 컴포넌트
 
@@ -62,14 +69,19 @@ const options: SelectOption[] = [
 const [v, setV] = useState("a");
 
 <Select
-  options={options}
   value={v}
-  onChange={(e) => setV(e.target.value)}
+  onValueChange={setV}
   aria-label="제어 예시"
-/>
+>
+  <SelectTrigger />
+  <SelectContent>
+    <SelectItem value="a">옵션 A</SelectItem>
+    <SelectItem value="b">옵션 B</SelectItem>
+  </SelectContent>
+</Select>
 ```
 
 ## 디자인 참고
 
 - `docs/design-specs-web-kit.md` §2 Input / Select
-- `data-refineui="select"` — `refineui.css`에서 입력 필드와 유사한 포커스 처리
+- [Pelagornis RefineUI Web Kit](https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?node-id=1059-17524&t=pm5qP4FuH7CAitRc-1)

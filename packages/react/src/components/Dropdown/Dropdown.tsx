@@ -344,7 +344,7 @@ export function DropdownContent({
             data-side={menuSide}
             onKeyDown={onMenuKeyDown}
             className={clsx(
-                "box-border flex max-w-[min(100vw-16px,calc(100vw-2rem))] flex-col gap-px overflow-x-hidden overflow-y-auto overscroll-contain rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xsmall shadow-refineui-2light outline-none",
+                "box-border flex max-w-[min(100vw-16px,calc(100vw-2rem))] flex-col gap-px overflow-x-hidden overflow-y-auto overscroll-contain rounded-refineui-xxlarge border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xsmall shadow-refineui-2light outline-none",
                 className,
             )}
             {...props}
@@ -386,27 +386,67 @@ export function DropdownLabel({ className, ...props }: HTMLAttributes<HTMLDivEle
 export function DropdownItem({
     className,
     disabled,
+    selected = false,
     children,
     onClick,
     style,
+    onPointerDown,
+    onPointerUp,
+    onPointerLeave,
+    onPointerCancel,
+    onMouseDown,
+    onMouseUp,
+    onMouseLeave,
     ...props
 }: DropdownItemProps) {
     const { close } = useDropdownRoot("DropdownItem");
+    const [pressed, setPressed] = useState(false);
+
     return (
         <button
             type="button"
             role="menuitem"
             data-refineui="dropdown-item"
+            data-selected={selected || undefined}
+            data-state={pressed ? "pressed" : selected ? "selected" : undefined}
             disabled={disabled}
             tabIndex={-1}
             className={clsx(
-                "refineui-typo-body-2 flex w-full cursor-pointer items-center justify-between gap-refineui-size-medium rounded-refineui-large border-none bg-transparent px-refineui-size-medium py-refineui-size-small text-left font-medium text-refineui-alias-foreground-primary outline-none disabled:cursor-not-allowed disabled:text-refineui-alias-foreground-disabled",
+                "refineui-typo-body-2 flex w-full cursor-pointer items-center justify-between gap-refineui-size-medium rounded-refineui-xlarge border-none bg-transparent px-refineui-size-medium py-refineui-size-small text-left font-medium text-refineui-alias-foreground-primary outline-none disabled:cursor-not-allowed disabled:text-refineui-alias-foreground-disabled",
                 className,
             )}
             style={{ ...typographys.body2, ...style }}
             onClick={(e) => {
                 onClick?.(e);
                 if (!e.defaultPrevented) close();
+            }}
+            onPointerDown={(e) => {
+                onPointerDown?.(e);
+                if (!disabled) setPressed(true);
+            }}
+            onPointerUp={(e) => {
+                onPointerUp?.(e);
+                setPressed(false);
+            }}
+            onPointerLeave={(e) => {
+                onPointerLeave?.(e);
+                setPressed(false);
+            }}
+            onPointerCancel={(e) => {
+                onPointerCancel?.(e);
+                setPressed(false);
+            }}
+            onMouseDown={(e) => {
+                onMouseDown?.(e);
+                if (!disabled) setPressed(true);
+            }}
+            onMouseUp={(e) => {
+                onMouseUp?.(e);
+                setPressed(false);
+            }}
+            onMouseLeave={(e) => {
+                onMouseLeave?.(e);
+                setPressed(false);
             }}
             {...props}
         >
@@ -487,7 +527,7 @@ export function DropdownSubTrigger({ className, children, onClick, ...props }: D
             data-slot="dropdown-menu-sub-trigger"
             tabIndex={-1}
             className={clsx(
-                "refineui-typo-body-2 flex w-full cursor-pointer items-center gap-refineui-size-medium rounded-refineui-large border-none bg-transparent px-refineui-size-medium py-refineui-size-small text-left font-medium text-refineui-alias-foreground-primary outline-none",
+                "refineui-typo-body-2 flex w-full cursor-pointer items-center gap-refineui-size-medium rounded-refineui-xlarge border-none bg-transparent px-refineui-size-medium py-refineui-size-small text-left font-medium text-refineui-alias-foreground-primary outline-none",
                 open && "bg-refineui-alias-background-surface-hover",
                 className,
             )}
@@ -578,7 +618,7 @@ export function DropdownSubContent({ className, children, ...props }: DropdownSu
             data-submenu="true"
             tabIndex={-1}
             className={clsx(
-                "box-border flex flex-col gap-px overflow-x-hidden overflow-y-auto overscroll-contain rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xsmall shadow-refineui-2light outline-none",
+                "box-border flex flex-col gap-px overflow-x-hidden overflow-y-auto overscroll-contain rounded-refineui-xxlarge border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xsmall shadow-refineui-2light outline-none",
                 className,
             )}
             style={{

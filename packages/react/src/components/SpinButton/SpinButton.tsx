@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
-import type { KeyboardEvent } from "react";
+import { useEffect, useState } from "react";
+import type { ChangeEvent, KeyboardEvent } from "react";
 import { iconSizes } from "@refineui/tokens";
 import { WebIcon } from "../../WebIcon";
 import { spinButtonShellClass, spinButtonStepHeight, spinButtonStyles, spinButtonValueTypo } from "./style";
@@ -8,6 +9,7 @@ import type { SpinButtonProps } from "./types";
 export function SpinButton({
     value,
     onChange,
+    placeholder,
     min,
     max,
     step = 1,
@@ -17,16 +19,46 @@ export function SpinButton({
     onKeyDown,
     ...props
 }: SpinButtonProps) {
+    const [draftValue, setDraftValue] = useState(String(value));
+
+    useEffect(() => {
+        setDraftValue(String(value));
+    }, [value]);
+
+    const clampValue = (next: number) => {
+        if (min !== undefined && next < min) return min;
+        if (max !== undefined && next > max) return max;
+        return next;
+    };
+
+    const commitInputValue = () => {
+        const trimmed = draftValue.trim();
+        if (trimmed.length === 0) {
+            setDraftValue(String(value));
+            return;
+        }
+        const parsed = Number(trimmed);
+        if (Number.isNaN(parsed)) {
+            setDraftValue(String(value));
+            return;
+        }
+        const normalized = clampValue(parsed);
+        setDraftValue(String(normalized));
+        if (normalized !== value) {
+            onChange(normalized);
+        }
+    };
+
     const inc = () => {
         if (disabled) return;
-        const next = value + step;
-        if (max !== undefined && next > max) return;
+        const next = clampValue(value + step);
+        if (next === value) return;
         onChange(next);
     };
     const dec = () => {
         if (disabled) return;
-        const next = value - step;
-        if (min !== undefined && next < min) return;
+        const next = clampValue(value - step);
+        if (next === value) return;
         onChange(next);
     };
 
@@ -48,15 +80,13 @@ export function SpinButton({
                 case "PageUp": {
                     e.preventDefault();
                     const up = value + bigStep;
-                    const capped = max !== undefined ? Math.min(up, max) : up;
-                    onChange(capped);
+                    onChange(clampValue(up));
                     break;
                 }
                 case "PageDown": {
                     e.preventDefault();
                     const down = value - bigStep;
-                    const capped = min !== undefined ? Math.max(down, min) : down;
-                    onChange(capped);
+                    onChange(clampValue(down));
                     break;
                 }
                 case "Home":
@@ -70,6 +100,10 @@ export function SpinButton({
                         e.preventDefault();
                         onChange(max);
                     }
+                    break;
+                case "Enter":
+                    e.preventDefault();
+                    commitInputValue();
                     break;
                 default:
                     break;
@@ -91,7 +125,7 @@ export function SpinButton({
             aria-valuenow={value}
             aria-valuemin={min}
             aria-valuemax={max}
-            tabIndex={disabled ? -1 : 0}
+            tabIndex={-1}
             data-refineui="spinbutton"
             data-size={size}
             data-disabled={disabled ? "true" : undefined}
@@ -115,7 +149,26 @@ export function SpinButton({
                     disabled ? spinButtonStyles.bgDisabled : spinButtonStyles.bgDefault,
                 )}
             >
-                {value}
+                <input
+                    type="text"
+                    inputMode="decimal"
+                    value={draftValue}
+                    placeholder={placeholder}
+                    disabled={disabled}
+                    className={clsx(
+                        spinButtonStyles.valueInput,
+                        disabled ? spinButtonStyles.valueTextDisabled : spinButtonStyles.valueTextDefault,
+                    )}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setDraftValue(e.target.value)}
+                    onBlur={commitInputValue}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            e.preventDefault();
+                            commitInputValue();
+                            e.currentTarget.blur();
+                        }
+                    }}
+                />
             </div>
             <div
                 className={clsx(

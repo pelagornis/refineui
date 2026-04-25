@@ -24,7 +24,24 @@ export {
 } from "./components/Card";
 export { Checkbox, type CheckboxProps } from "./components/Checkbox";
 export { Radio, type RadioProps, RadioInput, type RadioInputProps } from "./components/Radio";
-export { Select, type SelectProps, type SelectOption } from "./components/Select";
+export {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectSection,
+    SelectSeparator,
+    SelectTrigger,
+    SelectValue,
+    type SelectContentProps,
+    type SelectGroupProps,
+    type SelectItemProps,
+    type SelectProps,
+    type SelectSectionProps,
+    type SelectSeparatorProps,
+    type SelectTriggerProps,
+    type SelectValueProps,
+} from "./components/Select";
 export { Toggle, type ToggleProps } from "./components/Toggle";
 export { Switch, type SwitchProps } from "./components/Switch";
 export { Chip, type ChipProps, type ChipVariant, type ChipSize } from "./components/Chip";

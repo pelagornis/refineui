@@ -27,6 +27,8 @@ const [n, setN] = useState(0);
 
 ## Preview
 
+문서 미리보기(`PreviewFrame` + `[data-refineui-preview]`)는 본문 컬럼 **전폭**이라, 루트 기본값인 `w-full`만 쓰면 회색 박스 안에서 스핀 버튼이 가로로 꽉 차 보일 수 있습니다. 아래 데모는 **컨트롤 본래 폭**만 보이도록 `className="w-auto"`를 붙였습니다. 앱에서는 폼 행·그리드 셀 등 **폭이 정해진 부모** 안에 두면 기본 `w-full`이 그 슬롯에 맞게 늘어납니다.
+
 <div class="not-content">
   <SpinButtonDemo client:load />
 </div>

@@ -68,7 +68,6 @@ export const componentSizes = {
     /** Web Kit Calendar `656:2958` — Day 셀 32×32 */
     calendarDaySize: "32px",
     tooltipMaxWidth: "200px",
-    spinValueMinWidth: "48px",
     /** Web Kit Spin Button `561:2067` — Stepper 열 폭 */
     spinStepperWidth: "32px",
     /** Web Kit Spin Button `561:2067` — Stepper 반칸 높이 (Small 행) */

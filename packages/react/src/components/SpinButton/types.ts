@@ -3,6 +3,7 @@ import type { HTMLAttributes } from "react";
 export interface SpinButtonProps extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
     value: number;
     onChange: (value: number) => void;
+    placeholder?: string;
     min?: number;
     max?: number;
     step?: number;
