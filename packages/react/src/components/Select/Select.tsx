@@ -5,6 +5,7 @@ import type {
     HTMLAttributes,
     KeyboardEvent,
     MouseEvent,
+    PointerEvent as ReactPointerEvent,
     ReactNode,
     Ref,
 } from "react";
@@ -16,6 +17,7 @@ import {
     useContext,
     useEffect,
     useId,
+    useLayoutEffect,
     useMemo,
     useRef,
     useState,
@@ -23,16 +25,10 @@ import {
 import { createPortal } from "react-dom";
 import { iconSizes, spacings, zIndex } from "@refineui/tokens";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
-import { componentSizes } from "../../componentSizes";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
 import { acquireBodyScrollLock } from "../../utils/bodyScrollLock";
-import {
-    computeAnchoredMenuPosition,
-    parseCssPxLen,
-    subscribeScrollAndScrollableAncestors,
-    useIsomorphicLayoutEffect,
-} from "../Dropdown/positioning";
+import { parseCssPxLen, subscribeScrollAndScrollableAncestors } from "../Dropdown/positioning";
 import { inputBorderClass, inputStyles } from "../Input/style";
 import { selectSizeClass, selectStyles } from "./style";
 import type {
@@ -46,9 +42,17 @@ import type {
     SelectValueProps,
 } from "./types";
 
+/** Radix `@radix-ui/number` clamp — 로컬 구현 (외부 의존 없음). */
+function clampNumber(value: number, [min, max]: [number, number]): number {
+    return Math.min(max, Math.max(min, value));
+}
+
+/** Radix Select `CONTENT_MARGIN` — Foundation spacing 토큰과 동기화 */
+const CONTENT_MARGIN = parseCssPxLen(spacings.sizeMedium, 10);
+
 type OptionNode = { value: string; label: string; disabled: boolean };
 
-type SelectCtx = {
+type SelectRootCtx = {
     open: boolean;
     setOpen: (next: boolean) => void;
     close: () => void;
@@ -60,15 +64,31 @@ type SelectCtx = {
     fullWidth: boolean;
     size: NonNullable<SelectProps["size"]>;
     triggerRef: React.RefObject<HTMLElement | null>;
-    menuRef: React.RefObject<HTMLDivElement | null>;
+    menuRef: React.MutableRefObject<HTMLDivElement | null>;
     listboxId: string;
+    valueNode: HTMLElement | null;
+    setValueNode: (node: HTMLElement | null) => void;
+    triggerPointerDownPosRef: React.MutableRefObject<{ x: number; y: number } | null>;
 };
 
-const SelectContext = createContext<SelectCtx | null>(null);
+const SelectContext = createContext<SelectRootCtx | null>(null);
 
-function useSelectCtx(component: string): SelectCtx {
+function useSelectRoot(component: string): SelectRootCtx {
     const ctx = useContext(SelectContext);
     if (!ctx) throw new Error(`${component} must be used within Select.`);
+    return ctx;
+}
+
+/** SelectContent 전용 — 아이템 등록 (Radix Collection item 슬롯과 동일한 역할). */
+type SelectContentCtx = {
+    itemRefCallback: (node: HTMLElement | null, value: string, disabled: boolean) => void;
+};
+
+const SelectContentContext = createContext<SelectContentCtx | null>(null);
+
+function useSelectContent(component: string): SelectContentCtx {
+    const ctx = useContext(SelectContentContext);
+    if (!ctx) throw new Error(`${component} must be used within SelectContent.`);
     return ctx;
 }
 
@@ -129,11 +149,13 @@ export function Select({
     const triggerRef = useRef<HTMLElement | null>(null);
     const menuRef = useRef<HTMLDivElement | null>(null);
     const hiddenSelectRef = useRef<HTMLSelectElement | null>(null);
+    const triggerPointerDownPosRef = useRef<{ x: number; y: number } | null>(null);
 
     const listboxId = useId();
     const [open, setOpen] = useState(false);
     const [internalValue, setInternalValue] = useState(defaultValue);
     const value = valueProp ?? internalValue;
+    const [valueNode, setValueNode] = useState<HTMLElement | null>(null);
 
     const options = useMemo(() => collectOptions(children), [children]);
     const selectedLabel = useMemo(() => options.find((o) => o.value === value)?.label ?? "", [options, value]);
@@ -162,7 +184,7 @@ export function Select({
         [onChange, onValueChange, valueProp],
     );
 
-    const ctx = useMemo<SelectCtx>(
+    const ctx = useMemo<SelectRootCtx>(
         () => ({
             open,
             setOpen,
@@ -177,8 +199,11 @@ export function Select({
             triggerRef,
             menuRef,
             listboxId,
+            valueNode,
+            setValueNode,
+            triggerPointerDownPosRef,
         }),
-        [open, close, value, setValue, selectedLabel, disabled, placeholder, fullWidth, size, listboxId],
+        [open, close, value, setValue, selectedLabel, disabled, placeholder, fullWidth, size, listboxId, valueNode],
     );
 
     return (
@@ -221,16 +246,17 @@ export function SelectTrigger({ children, className, ...props }: SelectTriggerPr
         open,
         setOpen,
         value,
-        selectedLabel,
         disabled,
         placeholder,
         fullWidth,
         size,
         triggerRef,
         listboxId,
-    } = useSelectCtx("SelectTrigger");
+        triggerPointerDownPosRef,
+    } = useSelectRoot("SelectTrigger");
 
     const borderClass = disabled ? inputBorderClass.disabled : inputBorderClass.default;
+    const pointerTypeRef = useRef<ReactPointerEvent["pointerType"]>("touch");
 
     const onTriggerKeyDown = (event: KeyboardEvent<HTMLElement>) => {
         if (disabled) return;
@@ -247,15 +273,21 @@ export function SelectTrigger({ children, className, ...props }: SelectTriggerPr
     };
 
     const pass = props as HTMLAttributes<HTMLButtonElement>;
+    const showPlaceholder = !value && placeholder !== undefined;
+
     return (
         <button
             type="button"
             ref={triggerRef as React.RefObject<HTMLButtonElement>}
             disabled={disabled}
+            role="combobox"
             data-refineui="select"
             aria-haspopup="listbox"
             aria-expanded={open}
             aria-controls={listboxId}
+            aria-autocomplete="none"
+            data-placeholder={showPlaceholder ? "" : undefined}
+            data-state={open ? "open" : "closed"}
             className={clsx(
                 selectStyles.trigger,
                 borderClass,
@@ -272,6 +304,20 @@ export function SelectTrigger({ children, className, ...props }: SelectTriggerPr
                 pass.onClick?.(event);
                 if (!disabled) setOpen(!open);
             }}
+            onPointerDown={(event) => {
+                pass.onPointerDown?.(event);
+                pointerTypeRef.current = event.pointerType;
+                const target = event.target as HTMLElement;
+                if (target.hasPointerCapture(event.pointerId)) {
+                    target.releasePointerCapture(event.pointerId);
+                }
+                if (!disabled && event.button === 0 && event.pointerType === "mouse") {
+                    triggerPointerDownPosRef.current = {
+                        x: Math.round(event.pageX),
+                        y: Math.round(event.pageY),
+                    };
+                }
+            }}
             onKeyDown={(event) => {
                 pass.onKeyDown?.(event);
                 onTriggerKeyDown(event);
@@ -284,14 +330,26 @@ export function SelectTrigger({ children, className, ...props }: SelectTriggerPr
 }
 
 export function SelectValue({ className, placeholder, ...props }: SelectValueProps) {
-    const { value, selectedLabel, placeholder: rootPlaceholder } = useSelectCtx("SelectValue");
+    const { value, selectedLabel, placeholder: rootPlaceholder, setValueNode } = useSelectRoot("SelectValue");
     const resolvedPlaceholder = placeholder ?? rootPlaceholder;
     const showPlaceholder = !value && resolvedPlaceholder !== undefined;
     const displayText = showPlaceholder ? resolvedPlaceholder : selectedLabel || value;
 
+    const setRef = useCallback(
+        (node: HTMLSpanElement | null) => {
+            setValueNode(node);
+        },
+        [setValueNode],
+    );
+
     return (
         <span
-            className={clsx(selectStyles.valueText, showPlaceholder && "text-refineui-alias-foreground-placeholder", className)}
+            ref={setRef}
+            className={clsx(
+                selectStyles.valueText,
+                showPlaceholder && "text-refineui-alias-foreground-placeholder",
+                className,
+            )}
             style={
                 showPlaceholder
                     ? { color: resolveColorTokenValue(componentColorTokens.select.placeholder) }
@@ -306,124 +364,270 @@ export function SelectValue({ className, placeholder, ...props }: SelectValuePro
 
 export function SelectContent({
     className,
-    align = "start",
-    side = "auto",
+    align: _align,
+    side: _side,
     sideOffset,
     style,
     children,
     ...props
 }: SelectContentProps) {
-    const { open, setOpen, close, value, triggerRef, menuRef, listboxId } = useSelectCtx("SelectContent");
-    const [fixedStyle, setFixedStyle] = useState<CSSProperties | null>(null);
-    /** 스크롤만으로 부족할 때 선택 행을 트리거 Y에 맞추기 위해 `fixed top`을 추가 보정 (Radix Select와 유사) */
-    const [alignTopShiftPx, setAlignTopShiftPx] = useState(0);
-    const [menuSide, setMenuSide] = useState<"top" | "bottom">("bottom");
-    const [alignReady, setAlignReady] = useState(false);
+    void _align;
+    void _side;
+    void sideOffset;
+
+    const root = useSelectRoot("SelectContent");
+    const {
+        open,
+        setOpen,
+        close,
+        triggerRef,
+        menuRef,
+        listboxId,
+        valueNode,
+        triggerPointerDownPosRef,
+    } = root;
+
+    const wrapperRef = useRef<HTMLDivElement | null>(null);
+    const contentRef = useRef<HTMLDivElement | null>(null);
+    const viewportRef = useRef<HTMLDivElement | null>(null);
+
+    const setContentAndMenuRef = useCallback(
+        (node: HTMLDivElement | null) => {
+            contentRef.current = node;
+            menuRef.current = node;
+        },
+        [menuRef],
+    );
+
+    const [selectedItem, setSelectedItem] = useState<HTMLElement | null>(null);
+    const [isPositioned, setIsPositioned] = useState(false);
     const [showTopChevron, setShowTopChevron] = useState(false);
     const [showBottomChevron, setShowBottomChevron] = useState(false);
 
-    const openRef = useRef(open);
-    openRef.current = open;
-    const valueRef = useRef(value);
-    valueRef.current = value;
-
-    const gapPx = sideOffset ?? -parseCssPxLen(spacings.sizeXSmall, 4);
-    const defaultMenuWidth = parseCssPxLen(componentSizes.dropdownMenuWidth, 180);
+    const firstValidItemFoundRef = useRef(false);
+    const shouldExpandOnScrollRef = useRef(false);
+    const prevViewportScrollTopRef = useRef(0);
     const layerIndex = Number.parseInt(String(zIndex.zIndexMessages), 10) || 10000;
 
-    useIsomorphicLayoutEffect(() => {
-        let positionRaf = 0;
-        let alignRaf1 = 0;
-        let alignRaf2 = 0;
-        const cancelAlignRafs = () => {
-            cancelAnimationFrame(alignRaf1);
-            cancelAnimationFrame(alignRaf2);
-        };
+    const itemRefCallback = useCallback(
+        (node: HTMLElement | null, itemValue: string, disabled: boolean) => {
+            if (!node) return;
+            const isFirstValidItem = !firstValidItemFoundRef.current && !disabled;
+            const isSelectedItem =
+                root.value !== undefined && root.value !== "" && root.value === itemValue;
+            if (isSelectedItem || isFirstValidItem) {
+                setSelectedItem(node);
+                if (isFirstValidItem) firstValidItemFoundRef.current = true;
+            }
+        },
+        [root.value],
+    );
 
-        if (!open) {
-            setFixedStyle(null);
-            setMenuSide("bottom");
-            setAlignTopShiftPx(0);
-            setAlignReady(false);
-            cancelAlignRafs();
-            return;
+    const contentCtx = useMemo<SelectContentCtx>(
+        () => ({
+            itemRefCallback,
+        }),
+        [itemRefCallback],
+    );
+
+    /** Radix SelectItemAlignedPosition.position — 트리거·값 노드·선택 라벨 정렬 기준 동일 */
+    const position = useCallback(() => {
+        const trigger = triggerRef.current;
+        const wrapper = wrapperRef.current;
+        const content = contentRef.current;
+        const viewport = viewportRef.current;
+        const selected = selectedItem;
+
+        if (!trigger || !wrapper || !content || !viewport || !selected) return;
+
+        const triggerRect = trigger.getBoundingClientRect();
+        const valueNodeRect = valueNode?.getBoundingClientRect() ?? triggerRect;
+
+        const contentRect = content.getBoundingClientRect();
+        const selectedTextEl =
+            selected.querySelector<HTMLElement>("[data-refineui-select-item-text]") ?? selected;
+        const itemTextRect = selectedTextEl.getBoundingClientRect();
+
+        const isRtl =
+            typeof window !== "undefined" &&
+            (getComputedStyle(trigger).direction === "rtl" || document.documentElement.dir === "rtl");
+
+        if (!isRtl) {
+            const itemTextOffset = itemTextRect.left - contentRect.left;
+            const left = valueNodeRect.left - itemTextOffset;
+            const leftDelta = triggerRect.left - left;
+            const minContentWidth = triggerRect.width + leftDelta;
+            const contentWidth = Math.max(minContentWidth, contentRect.width);
+            const rightEdge = window.innerWidth - CONTENT_MARGIN;
+            const clampedLeft = clampNumber(left, [
+                CONTENT_MARGIN,
+                Math.max(CONTENT_MARGIN, rightEdge - contentWidth),
+            ]);
+            wrapper.style.minWidth = `${minContentWidth}px`;
+            wrapper.style.left = `${clampedLeft}px`;
+            wrapper.style.right = "";
+        } else {
+            const itemTextOffset = contentRect.right - itemTextRect.right;
+            const right = window.innerWidth - valueNodeRect.right - itemTextOffset;
+            const rightDelta = window.innerWidth - triggerRect.right - right;
+            const minContentWidth = triggerRect.width + rightDelta;
+            const contentWidth = Math.max(minContentWidth, contentRect.width);
+            const leftEdge = window.innerWidth - CONTENT_MARGIN;
+            const clampedRight = clampNumber(right, [
+                CONTENT_MARGIN,
+                Math.max(CONTENT_MARGIN, leftEdge - contentWidth),
+            ]);
+            wrapper.style.minWidth = `${minContentWidth}px`;
+            wrapper.style.right = `${clampedRight}px`;
+            wrapper.style.left = "";
         }
 
-        /** 스크롤 한도를 넘는 오차는 `top` 보정으로 처리 (콘텐츠가 짧아 overflow가 없을 때 포함) */
-        const queueAlignSelectedToTrigger = () => {
-            cancelAlignRafs();
-            alignRaf1 = requestAnimationFrame(() => {
-                alignRaf2 = requestAnimationFrame(() => {
-                    if (!openRef.current) return;
-                    const menu = menuRef.current;
-                    const trigger = triggerRef.current;
-                    const val = valueRef.current;
-                    if (!menu || !trigger || !val) {
-                        setAlignTopShiftPx(0);
-                        setAlignReady(true);
-                        return;
-                    }
-                    const selected = menu.querySelector<HTMLElement>(
-                        '[data-refineui="select-item"][data-selected="true"]:not(:disabled)',
-                    );
-                    if (!selected) {
-                        setAlignTopShiftPx(0);
-                        setAlignReady(true);
-                        return;
-                    }
-                    const tTop = trigger.getBoundingClientRect().top;
-                    let iTop = selected.getBoundingClientRect().top;
-                    const delta = iTop - tTop;
-                    const maxScroll = Math.max(0, menu.scrollHeight - menu.clientHeight);
-                    menu.scrollTop = Math.max(0, Math.min(maxScroll, menu.scrollTop + delta));
-                    iTop = selected.getBoundingClientRect().top;
-                    const remainder = iTop - tTop;
-                    setAlignTopShiftPx(Math.abs(remainder) < 0.5 ? 0 : remainder);
-                    setAlignReady(true);
-                });
-            });
-        };
+        const items = Array.from(
+            viewport.querySelectorAll<HTMLElement>('[data-refineui="select-item"]:not(:disabled)'),
+        );
+        const availableHeight = window.innerHeight - CONTENT_MARGIN * 2;
+        const itemsHeight = viewport.scrollHeight;
 
-        const apply = () => {
-            setAlignReady(!valueRef.current);
-            const trigger = triggerRef.current;
-            if (!trigger) return;
-            const anchor = trigger.getBoundingClientRect();
-            const menuWidth = menuRef.current?.offsetWidth || defaultMenuWidth;
-            const menuHeight = menuRef.current?.offsetHeight || 272;
-            const pos = computeAnchoredMenuPosition({
-                anchor,
-                menuWidth,
-                menuHeight,
-                align,
-                side,
-                gap: gapPx,
-            });
-            const overlapTop = pos.side === "bottom" ? pos.top - Math.max(0, anchor.height + gapPx) : pos.top;
-            setMenuSide(pos.side);
-            setFixedStyle({
-                position: "fixed",
-                top: overlapTop,
-                left: pos.left,
-                width: anchor.width,
-                minWidth: componentSizes.dropdownMenuWidth,
-                maxHeight: "min(60vh, 20rem)",
-                zIndex: layerIndex,
-            });
-            queueAlignSelectedToTrigger();
-        };
+        const contentStyles = window.getComputedStyle(content);
+        const contentBorderTopWidth = Number.parseInt(contentStyles.borderTopWidth, 10) || 0;
+        const contentPaddingTop = Number.parseInt(contentStyles.paddingTop, 10) || 0;
+        const contentBorderBottomWidth = Number.parseInt(contentStyles.borderBottomWidth, 10) || 0;
+        const contentPaddingBottom = Number.parseInt(contentStyles.paddingBottom, 10) || 0;
+        const fullContentHeight =
+            contentBorderTopWidth +
+            contentPaddingTop +
+            itemsHeight +
+            contentPaddingBottom +
+            contentBorderBottomWidth;
+        const minContentHeight = Math.min(selected.offsetHeight * 5, fullContentHeight);
 
-        apply();
-        positionRaf = requestAnimationFrame(apply);
-        window.addEventListener("resize", apply);
-        const unsubScroll = subscribeScrollAndScrollableAncestors(triggerRef.current, apply);
+        const viewportStyles = window.getComputedStyle(viewport);
+        const viewportPaddingTop = Number.parseInt(viewportStyles.paddingTop, 10) || 0;
+        const viewportPaddingBottom = Number.parseInt(viewportStyles.paddingBottom, 10) || 0;
+
+        const topEdgeToTriggerMiddle = triggerRect.top + triggerRect.height / 2 - CONTENT_MARGIN;
+        const triggerMiddleToBottomEdge = availableHeight - topEdgeToTriggerMiddle;
+
+        const selectedItemHalfHeight = selected.offsetHeight / 2;
+        const itemOffsetMiddle = selected.offsetTop + selectedItemHalfHeight;
+        const contentTopToItemMiddle =
+            contentBorderTopWidth + contentPaddingTop + itemOffsetMiddle;
+        const itemMiddleToContentBottom = fullContentHeight - contentTopToItemMiddle;
+
+        const willAlignWithoutTopOverflow = contentTopToItemMiddle <= topEdgeToTriggerMiddle;
+
+        if (willAlignWithoutTopOverflow) {
+            const isLastItem = items.length > 0 && selected === items[items.length - 1];
+            wrapper.style.bottom = "0px";
+            wrapper.style.top = "";
+            const viewportOffsetBottom =
+                content.clientHeight - viewport.offsetTop - viewport.offsetHeight;
+            const clampedTriggerMiddleToBottomEdge = Math.max(
+                triggerMiddleToBottomEdge,
+                selectedItemHalfHeight +
+                    (isLastItem ? viewportPaddingBottom : 0) +
+                    viewportOffsetBottom +
+                    contentBorderBottomWidth,
+            );
+            const height = contentTopToItemMiddle + clampedTriggerMiddleToBottomEdge;
+            wrapper.style.height = `${height}px`;
+        } else {
+            const isFirstItem = items.length > 0 && selected === items[0];
+            wrapper.style.top = "0px";
+            wrapper.style.bottom = "";
+            const clampedTopEdgeToTriggerMiddle = Math.max(
+                topEdgeToTriggerMiddle,
+                contentBorderTopWidth +
+                    viewport.offsetTop +
+                    (isFirstItem ? viewportPaddingTop : 0) +
+                    selectedItemHalfHeight,
+            );
+            const height = clampedTopEdgeToTriggerMiddle + itemMiddleToContentBottom;
+            wrapper.style.height = `${height}px`;
+            viewport.scrollTop =
+                contentTopToItemMiddle - topEdgeToTriggerMiddle + viewport.offsetTop;
+        }
+
+        wrapper.style.margin = `${CONTENT_MARGIN}px 0`;
+        wrapper.style.minHeight = `${minContentHeight}px`;
+        wrapper.style.maxHeight = `${availableHeight}px`;
+
+        setIsPositioned(true);
+        requestAnimationFrame(() => {
+            shouldExpandOnScrollRef.current = true;
+        });
+    }, [triggerRef, valueNode, selectedItem]);
+
+    useLayoutEffect(() => {
+        if (!open) {
+            firstValidItemFoundRef.current = false;
+            setSelectedItem(null);
+            setIsPositioned(false);
+            shouldExpandOnScrollRef.current = false;
+            prevViewportScrollTopRef.current = 0;
+            return;
+        }
+        firstValidItemFoundRef.current = false;
+    }, [open, root.value]);
+
+    useLayoutEffect(() => {
+        if (!open) return;
+        position();
+        const id = requestAnimationFrame(() => position());
+        return () => cancelAnimationFrame(id);
+    }, [open, position, selectedItem]);
+
+    useLayoutEffect(() => {
+        if (!open) return;
+        window.addEventListener("resize", position);
+        const unsubScroll = subscribeScrollAndScrollableAncestors(triggerRef.current, position);
         return () => {
-            cancelAnimationFrame(positionRaf);
-            cancelAlignRafs();
-            window.removeEventListener("resize", apply);
+            window.removeEventListener("resize", position);
             unsubScroll();
         };
-    }, [open, align, side, gapPx, defaultMenuWidth, layerIndex, triggerRef, menuRef]);
+    }, [open, position, triggerRef]);
+
+    useEffect(() => {
+        if (!isPositioned || !selectedItem) return;
+        selectedItem.focus({ preventScroll: true });
+    }, [isPositioned, selectedItem]);
+
+    useEffect(() => {
+        const menu = contentRef.current;
+        if (!open || !menu) return;
+
+        let pointerMoveDelta = { x: 0, y: 0 };
+        const handlePointerMove = (event: PointerEvent) => {
+            pointerMoveDelta = {
+                x: Math.abs(Math.round(event.pageX) - (triggerPointerDownPosRef.current?.x ?? 0)),
+                y: Math.abs(Math.round(event.pageY) - (triggerPointerDownPosRef.current?.y ?? 0)),
+            };
+        };
+        const handlePointerUp = (event: PointerEvent) => {
+            if (pointerMoveDelta.x <= 10 && pointerMoveDelta.y <= 10) {
+                event.preventDefault();
+            } else if (!menu.contains(event.target as Node)) {
+                setOpen(false);
+            }
+            document.removeEventListener("pointermove", handlePointerMove);
+            triggerPointerDownPosRef.current = null;
+        };
+
+        if (triggerPointerDownPosRef.current !== null) {
+            document.addEventListener("pointermove", handlePointerMove);
+            document.addEventListener("pointerup", handlePointerUp, { capture: true, once: true });
+        }
+
+        return () => {
+            document.removeEventListener("pointermove", handlePointerMove);
+            document.removeEventListener("pointerup", handlePointerUp, { capture: true });
+        };
+    }, [open, setOpen, triggerPointerDownPosRef]);
+
+    useEffect(() => {
+        if (!open) return;
+        return acquireBodyScrollLock();
+    }, [open]);
 
     useEffect(() => {
         if (!open) return;
@@ -437,21 +641,24 @@ export function SelectContent({
     }, [open, setOpen, triggerRef, menuRef]);
 
     useEffect(() => {
-        if (!open) return;
-        return acquireBodyScrollLock();
-    }, [open]);
-
-    useEffect(() => {
         if (!open) {
             setShowTopChevron(false);
             setShowBottomChevron(false);
             return;
         }
-        const el = menuRef.current;
+        const el = viewportRef.current;
         if (!el) return;
         const update = () => {
-            setShowTopChevron(el.scrollTop > 0);
-            setShowBottomChevron(el.scrollTop + el.clientHeight < el.scrollHeight - 1);
+            const scrollable = el.scrollHeight > el.clientHeight + 1;
+            if (!scrollable) {
+                setShowTopChevron(false);
+                setShowBottomChevron(false);
+                return;
+            }
+            const top = el.scrollTop;
+            const max = Math.max(0, el.scrollHeight - el.clientHeight);
+            setShowTopChevron(top > 0);
+            setShowBottomChevron(top < max - 1);
         };
         update();
         el.addEventListener("scroll", update, { passive: true });
@@ -461,52 +668,132 @@ export function SelectContent({
             el.removeEventListener("scroll", update);
             ro?.disconnect();
         };
-    }, [open, children, menuRef]);
+    }, [open, children]);
 
-    const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    const onViewportScroll = useCallback(
+        (event: React.UIEvent<HTMLDivElement>) => {
+            const viewport = event.currentTarget;
+            const wrapper = wrapperRef.current;
+            if (!shouldExpandOnScrollRef.current || !wrapper) return;
+
+            const scrolledBy = Math.abs(prevViewportScrollTopRef.current - viewport.scrollTop);
+            prevViewportScrollTopRef.current = viewport.scrollTop;
+            if (scrolledBy <= 0) return;
+
+            const availableHeight = window.innerHeight - CONTENT_MARGIN * 2;
+            const cssMinHeight = Number.parseFloat(wrapper.style.minHeight);
+            const cssHeight = Number.parseFloat(wrapper.style.height);
+            const prevHeight = Math.max(Number.isFinite(cssMinHeight) ? cssMinHeight : 0, Number.isFinite(cssHeight) ? cssHeight : 0);
+
+            if (prevHeight < availableHeight) {
+                const nextHeight = prevHeight + scrolledBy;
+                const clampedNextHeight = Math.min(availableHeight, nextHeight);
+                const heightDiff = nextHeight - clampedNextHeight;
+
+                wrapper.style.height = `${clampedNextHeight}px`;
+                if (wrapper.style.bottom === "0px") {
+                    viewport.scrollTop = heightDiff > 0 ? heightDiff : 0;
+                    wrapper.style.justifyContent = "flex-end";
+                }
+            }
+        },
+        [],
+    );
+
+    const onContentKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
         if (event.key === "Escape" || event.key === "Tab") {
             event.preventDefault();
             close();
+            return;
+        }
+
+        const viewport = viewportRef.current;
+        if (!viewport) return;
+
+        const items = Array.from(
+            viewport.querySelectorAll<HTMLElement>('[data-refineui="select-item"]:not(:disabled)'),
+        );
+        if (items.length === 0) return;
+
+        const active = document.activeElement as HTMLElement | null;
+        let index = active ? items.indexOf(active) : -1;
+
+        if (event.key === "ArrowDown") {
+            event.preventDefault();
+            const next = index < 0 ? 0 : Math.min(items.length - 1, index + 1);
+            items[next]?.focus({ preventScroll: true });
+        } else if (event.key === "ArrowUp") {
+            event.preventDefault();
+            const next = index < 0 ? items.length - 1 : Math.max(0, index - 1);
+            items[next]?.focus({ preventScroll: true });
+        } else if (event.key === "Home") {
+            event.preventDefault();
+            items[0]?.focus({ preventScroll: true });
+        } else if (event.key === "End") {
+            event.preventDefault();
+            items[items.length - 1]?.focus({ preventScroll: true });
         }
     };
 
-    if (!open || !fixedStyle || typeof document === "undefined") return null;
+    if (!open || typeof document === "undefined") return null;
 
     return createPortal(
-        <div
-            ref={menuRef as Ref<HTMLDivElement>}
-            id={listboxId}
-            role="listbox"
-            tabIndex={-1}
-            data-refineui="select-menu"
-            data-side={menuSide}
-            className={clsx(selectStyles.content, className)}
-            style={{
-                ...fixedStyle,
-                ...style,
-                top:
-                    typeof fixedStyle.top === "number"
-                        ? fixedStyle.top - alignTopShiftPx
-                        : fixedStyle.top,
-                borderColor: resolveColorTokenValue(componentColorTokens.dropdown.menu.border),
-                backgroundColor: resolveColorTokenValue(componentColorTokens.dropdown.menu.background),
-                visibility: alignReady ? "visible" : "hidden",
-            }}
-            onKeyDown={onKeyDown}
-            {...props}
-        >
-            {showTopChevron ? (
-                <div aria-hidden className={selectStyles.scrollHintWrap}>
-                    <WebIcon name="chevron-up" size={iconSizes.xxsmall} className={selectStyles.scrollHintIcon} />
+        <SelectContentContext.Provider value={contentCtx}>
+            <div
+                ref={wrapperRef}
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    position: "fixed",
+                    zIndex: layerIndex,
+                }}
+            >
+                <div
+                    ref={setContentAndMenuRef}
+                    id={listboxId}
+                    role="listbox"
+                    tabIndex={-1}
+                    data-refineui="select-menu"
+                    className={clsx(selectStyles.content, className)}
+                    style={{
+                        boxSizing: "border-box",
+                        maxHeight: "100%",
+                        borderColor: resolveColorTokenValue(componentColorTokens.dropdown.menu.border),
+                        backgroundColor: resolveColorTokenValue(componentColorTokens.dropdown.menu.background),
+                        ...style,
+                    }}
+                    onKeyDown={onContentKeyDown}
+                    {...props}
+                >
+                    {showTopChevron ? (
+                        <div aria-hidden className={selectStyles.scrollHintWrap}>
+                            <WebIcon
+                                name="chevron-up"
+                                size={iconSizes.xxsmall}
+                                className={selectStyles.scrollHintIcon}
+                            />
+                        </div>
+                    ) : null}
+                    <div
+                        ref={viewportRef}
+                        className={selectStyles.viewport}
+                        style={{ position: "relative" }}
+                        onScroll={onViewportScroll}
+                    >
+                        {children}
+                    </div>
+                    {showBottomChevron ? (
+                        <div aria-hidden className={selectStyles.scrollHintWrap}>
+                            <WebIcon
+                                name="chevron-down"
+                                size={iconSizes.xxsmall}
+                                className={selectStyles.scrollHintIcon}
+                            />
+                        </div>
+                    ) : null}
                 </div>
-            ) : null}
-            {children}
-            {showBottomChevron ? (
-                <div aria-hidden className={selectStyles.scrollHintWrap}>
-                    <WebIcon name="chevron-down" size={iconSizes.xxsmall} className={selectStyles.scrollHintIcon} />
-                </div>
-            ) : null}
-        </div>,
+            </div>
+        </SelectContentContext.Provider>,
         document.body,
     );
 }
@@ -526,13 +813,22 @@ export function SelectItem({
     onMouseLeave,
     ...props
 }: SelectItemProps) {
-    const { value: selectedValue, setValue, close } = useSelectCtx("SelectItem");
+    const { value: selectedValue, setValue, close } = useSelectRoot("SelectItem");
+    const { itemRefCallback } = useSelectContent("SelectItem");
     const selected = selectedValue === value;
     const [pressed, setPressed] = useState(false);
+
+    const setItemRef = useCallback(
+        (node: HTMLButtonElement | null) => {
+            itemRefCallback(node, value, !!disabled);
+        },
+        [itemRefCallback, value, disabled],
+    );
 
     return (
         <button
             type="button"
+            ref={setItemRef}
             role="option"
             aria-selected={selected}
             data-refineui="select-item"
@@ -584,7 +880,9 @@ export function SelectItem({
             <span className={selectStyles.itemIcon} style={{ width: iconSizes.xsmall, height: iconSizes.xsmall }}>
                 {selected ? <WebIcon name="checkmark" size={iconSizes.xsmall} color="currentColor" aria-hidden /> : null}
             </span>
-            <span className={selectStyles.itemLabel}>{children}</span>
+            <span data-refineui-select-item-text className={selectStyles.itemLabel}>
+                {children}
+            </span>
         </button>
     );
 }
@@ -607,9 +905,11 @@ export function SelectSeparator({ className, ...props }: SelectSeparatorProps) {
             role="separator"
             aria-orientation="horizontal"
             data-refineui="select-separator"
-            className={clsx(selectStyles.separator, className)}
+            className={clsx(selectStyles.separatorWrap, className)}
             {...props}
-        />
+        >
+            <div className={selectStyles.separatorLine} />
+        </div>
     );
 }
 

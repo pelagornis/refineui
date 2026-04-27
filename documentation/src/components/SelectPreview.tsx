@@ -1,28 +1,72 @@
 import { spacings } from "@refineui/tokens";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectSection, SelectSeparator, SelectTrigger, SelectValue } from "@refineui/react";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectSection, SelectTrigger, SelectValue } from "@refineui/react";
 import PreviewFrame from "./PreviewFrame";
 
-const options = [
-    { value: "kr", label: "Select Menu Item" },
-    { value: "us", label: "Select Menu Item" },
-    { value: "jp", label: "Select Menu Item" },
-    { value: "de", label: "Select Menu Item" },
-    { value: "fr", label: "Select Menu Item" },
-    { value: "es", label: "Select Menu Item" },
+const groupedOptions = [
+    {
+        section: "North America",
+        items: [
+            "Eastern Standard Time",
+            "Central Standard Time",
+            "Mountain Standard Time",
+            "Pacific Standard Time",
+            "Alaska Standard Time",
+            "Hawaii Standard Time",
+        ],
+    },
+    {
+        section: "Europe & Africa",
+        items: [
+            "Greenwich Mean Time",
+            "Central European Time",
+            "Eastern European Time",
+            "Western European Summer Time",
+            "Central Africa Time",
+            "East Africa Time",
+        ],
+    },
+    {
+        section: "Asia",
+        items: [
+            "Moscow Time",
+            "India Standard Time",
+            "China Standard Time",
+            "Japan Standard Time",
+            "Korea Standard Time",
+            "Indonesia Central Standard Time",
+        ],
+    },
+    {
+        section: "Australia & Pacific",
+        items: [
+            "Australian Western Standard Time",
+            "Australian Central Standard Time",
+            "Australian Eastern Standard Time",
+            "New Zealand Standard Time",
+            "Fiji Time",
+        ],
+    },
+    {
+        section: "South America",
+        items: ["Argentina Time", "Bolivia Time", "Brasilia Time", "Chile Standard Time"],
+    },
 ];
 
 function selectMenu() {
     return (
         <SelectContent>
-            <SelectSection>Section Header</SelectSection>
-            <SelectSeparator />
-            <SelectGroup>
-                {options.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                    </SelectItem>
-                ))}
-            </SelectGroup>
+            {groupedOptions.map((group, groupIndex) => (
+                <div key={group.section}>
+                    <SelectSection>{group.section}</SelectSection>
+                    <SelectGroup>
+                        {group.items.map((label, itemIndex) => (
+                            <SelectItem key={`${group.section}-${label}`} value={`group-${groupIndex + 1}-item-${itemIndex + 1}`}>
+                                {label}
+                            </SelectItem>
+                        ))}
+                    </SelectGroup>
+                </div>
+            ))}
         </SelectContent>
     );
 }
@@ -37,7 +81,7 @@ export default function SelectPreview() {
                     </SelectTrigger>
                     {selectMenu()}
                 </Select>
-                <Select placeholder="Placeholder" defaultValue="es" aria-label="Select filled">
+                <Select placeholder="Placeholder" defaultValue="group-3-item-3" aria-label="Select filled">
                     <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder="Theme" />
                     </SelectTrigger>

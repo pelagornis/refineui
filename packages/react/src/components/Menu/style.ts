@@ -1,16 +1,16 @@
 export const menuStyles = {
     panel:
-        "box-border flex w-refineui-menu-panel-width flex-col gap-refineui-size-xxsmall rounded-refineui-xxlarge border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-surface p-refineui-size-xsmall shadow-refineui-2light",
+        "box-border flex w-refineui-menu-panel-width flex-col gap-refineui-size-xxsmall rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-surface p-refineui-size-xsmall shadow-refineui-2light",
     root: "relative inline-block",
     triggerFallback: "cursor-pointer border-none bg-transparent p-0 font-inherit text-inherit",
     popover: "absolute top-full left-0 z-refineui-popup pt-refineui-size-xsmall",
     list:
-        "box-border flex w-full flex-col gap-refineui-size-xxsmall rounded-refineui-xxlarge border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-surface p-refineui-size-xsmall shadow-refineui-2light",
+        "box-border flex w-full flex-col gap-refineui-size-xxsmall rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-surface p-refineui-size-xsmall shadow-refineui-2light",
     section: "flex w-full items-center overflow-hidden px-refineui-size-small py-refineui-size-medium",
-    sectionText: "refineui-typo-body-1 text-refineui-alias-foreground-primary",
+    sectionText: "refineui-typo-caption-1 text-refineui-alias-foreground-primary",
     dividerWrap: "flex w-full items-center px-refineui-size-small py-refineui-size-xxsmall",
     dividerLine: "w-full border-t border-refineui-hairline border-refineui-alias-border-default",
-    itemBase: "block w-full rounded-refineui-xlarge border-none bg-refineui-alias-background-surface p-refineui-size-small text-left",
+    itemBase: "block w-full rounded-refineui-xlarge border-none bg-transparent p-refineui-size-small text-left",
     itemDisabled: "cursor-not-allowed text-refineui-alias-foreground-disabled",
     itemEnabled: "cursor-pointer text-refineui-alias-foreground-primary",
     row: "flex items-center gap-refineui-size-small",

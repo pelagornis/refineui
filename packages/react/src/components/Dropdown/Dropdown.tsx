@@ -344,7 +344,7 @@ export function DropdownContent({
             data-side={menuSide}
             onKeyDown={onMenuKeyDown}
             className={clsx(
-                "box-border flex max-w-[min(100vw-16px,calc(100vw-2rem))] flex-col gap-px overflow-x-hidden overflow-y-auto overscroll-contain rounded-refineui-xxlarge border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xsmall shadow-refineui-2light outline-none",
+                "box-border flex max-w-[min(100vw-16px,calc(100vw-2rem))] flex-col gap-px overflow-x-hidden overflow-y-auto overscroll-contain rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xsmall shadow-refineui-2light outline-none",
                 className,
             )}
             {...props}
@@ -374,10 +374,10 @@ export function DropdownLabel({ className, ...props }: HTMLAttributes<HTMLDivEle
             role="presentation"
             data-refineui="dropdown-menu-label"
             className={clsx(
-                "refineui-typo-body-1 shrink-0 px-refineui-size-medium py-refineui-size-small font-medium text-refineui-alias-foreground-primary",
+                "refineui-typo-caption-1 shrink-0 px-refineui-size-medium py-refineui-size-small font-medium text-refineui-alias-foreground-primary",
                 className,
             )}
-            style={typographys.body1}
+            style={typographys.caption1}
             {...props}
         />
     );
@@ -618,7 +618,7 @@ export function DropdownSubContent({ className, children, ...props }: DropdownSu
             data-submenu="true"
             tabIndex={-1}
             className={clsx(
-                "box-border flex flex-col gap-px overflow-x-hidden overflow-y-auto overscroll-contain rounded-refineui-xxlarge border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xsmall shadow-refineui-2light outline-none",
+                "box-border flex flex-col gap-px overflow-x-hidden overflow-y-auto overscroll-contain rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xsmall shadow-refineui-2light outline-none",
                 className,
             )}
             style={{

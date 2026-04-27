@@ -6,16 +6,19 @@ export const selectStyles = {
         "box-border inline-flex items-center justify-between gap-refineui-size-xsmall border-refineui-thin outline-none transition-[border-color,box-shadow,background-color] duration-[var(--refineui-motion-duration-fast)]",
     valueText: "min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-left",
     content:
-        "z-refineui-popup flex max-h-[min(60vh,20rem)] flex-col overflow-x-hidden overflow-y-auto rounded-refineui-xxlarge border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xsmall shadow-refineui-2light outline-none",
+        "z-refineui-popup flex max-h-[min(60vh,20rem)] flex-col overflow-hidden rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xsmall shadow-refineui-2light outline-none",
+    viewport: "flex min-h-0 flex-1 flex-col gap-px overflow-x-hidden overflow-y-auto",
     item:
         "refineui-typo-body-2 box-border flex w-full items-center gap-refineui-size-medium rounded-refineui-xlarge border-none bg-transparent px-refineui-size-medium py-refineui-size-small text-left text-refineui-alias-foreground-primary outline-none",
     itemIcon: "inline-flex shrink-0 items-center justify-center",
     itemLabel: "min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap",
     section:
-        "refineui-typo-body-1 box-border flex items-center px-refineui-size-small py-refineui-size-medium font-medium text-refineui-alias-foreground-primary",
-    separator: "my-refineui-size-xsmall h-px shrink-0 bg-refineui-alias-border-default",
-    scrollHintWrap: "flex w-full items-center justify-center px-[53px] py-px",
-    scrollHintIcon: "text-refineui-alias-foreground-placeholder",
+        "refineui-typo-caption-1 box-border flex items-center px-refineui-size-small py-refineui-size-medium font-medium text-refineui-alias-foreground-primary",
+    separatorWrap: "flex w-full items-center px-refineui-size-small py-refineui-size-xxsmall",
+    separatorLine: "h-px w-full shrink-0 bg-refineui-alias-border-default",
+    scrollHintWrap:
+        "flex w-full items-center justify-center px-[53px] py-px text-refineui-alias-foreground-placeholder cursor-default select-none",
+    scrollHintIcon: "text-refineui-alias-foreground-primary",
 } as const;
 
 export const selectSizeClass: Record<NonNullable<SelectProps["size"]>, string> = {
