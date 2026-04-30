@@ -2,3 +2,7 @@ packages:
   - packages/**
   - documentation
   - examples
+
+ignoredBuiltDependencies:
+  - esbuild
+  - sharp

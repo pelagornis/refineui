@@ -1,5 +1,13 @@
 import { spacings } from "@refineui/tokens";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectSection, SelectTrigger, SelectValue } from "@refineui/react";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectSection,
+    SelectTrigger,
+    SelectValue,
+} from "@refineui/react";
 import PreviewFrame from "./PreviewFrame";
 
 const groupedOptions = [
@@ -15,112 +23,78 @@ const groupedOptions = [
         ],
     },
     {
-        section: "Europe & Africa",
-        items: [
-            "Greenwich Mean Time",
-            "Central European Time",
-            "Eastern European Time",
-            "Western European Summer Time",
-            "Central Africa Time",
-            "East Africa Time",
-        ],
-    },
-    {
         section: "Asia",
         items: [
-            "Moscow Time",
             "India Standard Time",
             "China Standard Time",
             "Japan Standard Time",
             "Korea Standard Time",
             "Indonesia Central Standard Time",
+            "Singapore Standard Time",
+            "Philippine Standard Time",
         ],
     },
     {
-        section: "Australia & Pacific",
+        section: "Europe",
         items: [
-            "Australian Western Standard Time",
-            "Australian Central Standard Time",
-            "Australian Eastern Standard Time",
-            "New Zealand Standard Time",
-            "Fiji Time",
+            "Greenwich Mean Time",
+            "Central European Time",
+            "Eastern European Time",
+            "Western European Summer Time",
+            "Turkey Time",
+            "Moscow Time",
         ],
-    },
-    {
-        section: "South America",
-        items: ["Argentina Time", "Bolivia Time", "Brasilia Time", "Chile Standard Time"],
     },
 ];
 
-function selectMenu() {
+function menu() {
     return (
         <SelectContent>
-            {groupedOptions.map((group, groupIndex) => (
-                <div key={group.section}>
-                    <SelectSection>{group.section}</SelectSection>
-                    <SelectGroup>
+            <SelectGroup>
+                {groupedOptions.map((group, groupIndex) => (
+                    <div key={group.section}>
+                        <SelectSection>{group.section}</SelectSection>
                         {group.items.map((label, itemIndex) => (
                             <SelectItem key={`${group.section}-${label}`} value={`group-${groupIndex + 1}-item-${itemIndex + 1}`}>
                                 {label}
                             </SelectItem>
                         ))}
-                    </SelectGroup>
-                </div>
-            ))}
+                    </div>
+                ))}
+            </SelectGroup>
         </SelectContent>
     );
 }
 
 export default function SelectPreview() {
     return (
-        <PreviewFrame>
-            <div style={{ width: "180px", display: "flex", flexDirection: "column", gap: spacings.sizeMedium }}>
-                <Select placeholder="Placeholder" defaultValue="" aria-label="Select default">
-                    <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Theme" />
-                    </SelectTrigger>
-                    {selectMenu()}
-                </Select>
-                <Select placeholder="Placeholder" defaultValue="group-3-item-3" aria-label="Select filled">
-                    <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Theme" />
-                    </SelectTrigger>
-                    {selectMenu()}
-                </Select>
-                <Select placeholder="Placeholder" defaultValue="" aria-label="Select focus">
-                    <SelectTrigger autoFocus className="w-[180px]">
-                        <SelectValue placeholder="Theme" />
-                    </SelectTrigger>
-                    {selectMenu()}
-                </Select>
-                <Select placeholder="Placeholder" defaultValue="" disabled aria-label="Select disabled">
-                    <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Theme" />
-                    </SelectTrigger>
-                    {selectMenu()}
-                </Select>
-                <div
-                    style={{
-                        border: "1px solid var(--refineui-color-alias-border-default)",
-                        borderRadius: "16px",
-                        padding: "4px",
-                        background: "var(--refineui-color-alias-background-primary)",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "1px",
-                    }}
-                >
-                    <button type="button" data-refineui="select-item" data-state="hover">
-                        Select Menu Item (Hover)
-                    </button>
-                    <button type="button" data-refineui="select-item" data-state="pressed">
-                        Select Menu Item (Pressed)
-                    </button>
-                    <button type="button" data-refineui="select-item" data-state="selected" data-selected="true">
-                        Select Menu Item (Selected)
-                    </button>
-                </div>
+        <PreviewFrame minHeight="85vh">
+            <div
+                style={{
+                    width: "100%",
+                    display: "grid",
+                    gridTemplateColumns: "repeat(3, minmax(280px, 1fr))",
+                    gap: spacings.sizeLarge,
+                    alignItems: "start",
+                }}
+            >
+                {Array.from({ length: 12 }).map((_, index) => (
+                    <Select
+                        key={`select-preview-${index + 1}`}
+                        fullWidth
+                        placeholder="Placeholder"
+                        defaultValue={index % 3 === 1 ? "group-2-item-3" : ""}
+                        disabled={index % 3 === 2}
+                        aria-label={`Select preview ${index + 1}`}
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder="Theme" />
+                        </SelectTrigger>
+                        {menu()}
+                    </Select>
+                ))}
             </div>
         </PreviewFrame>
     );
 }
+

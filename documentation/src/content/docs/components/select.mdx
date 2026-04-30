@@ -1,36 +1,39 @@
 ---
 title: Select
-description: 커스텀 선택 필드 — Input과 동일 필드 크기
+description: 커스텀 선택 필드 — Figma Web Kit Select 스타일 반영
 ---
 
 import SelectPreview from "../../../components/SelectPreview";
 
 # Select
 
-Figma Web Kit **Select** 스펙(`Default / Focus / Filled / Disabled`)에 맞춘 커스텀 Select 컴포넌트입니다. 필드 크기 규칙은 `sm / md / lg`를 사용합니다.
+Figma Web Kit `Select` (`1116:1429`, `1117:1177`, `1144:2410`, `1144:2756`) 스타일을 반영한 커스텀 Select 컴포넌트입니다.
 
 ## 설치·임포트
 
 ```tsx
-import { Select, SelectContent, SelectItem, SelectTrigger } from "@refineui/react";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+  SelectSection,
+} from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
 ## 기본 사용
 
-합성형 API로 `SelectTrigger`와 `SelectContent`/`SelectItem`을 조합합니다.
-
 ```tsx
-<Select
-  placeholder="국가 선택"
-  defaultValue=""
-  onValueChange={(next) => console.log(next)}
-  aria-label="국가"
->
-  <SelectTrigger />
+<Select placeholder="국가 선택" defaultValue="" onValueChange={(next) => console.log(next)}>
+  <SelectTrigger>
+    <SelectValue placeholder="선택하세요" />
+  </SelectTrigger>
   <SelectContent>
-    <SelectItem value="kr">한국</SelectItem>
-    <SelectItem value="us">미국</SelectItem>
+    <SelectSection>Asia</SelectSection>
+    <SelectItem value="kr">Korea Standard Time</SelectItem>
+    <SelectItem value="jp">Japan Standard Time</SelectItem>
   </SelectContent>
 </Select>;
 ```
@@ -46,44 +49,21 @@ import "@refineui/react/refineui.css";
 | Prop | 타입 | 기본값 | 설명 |
 |------|------|--------|------|
 | `placeholder` | `string` | — | 미선택 상태 라벨 |
-| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | 필드 높이·패딩·타이포 (Input과 동일) |
+| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | 필드 높이·패딩·타이포 |
 | `fullWidth` | `boolean` | `false` | 너비 100% |
-| `disabled` | `boolean` | — | 비활성 스타일 |
-| `value` | `string` | — | 현재 선택 값(제어) |
-| `defaultValue` | `string` | — | 초기 선택 값(비제어) |
-| `onValueChange` | `(value: string) => void` | — | 값 변경 콜백 |
-
-폼 연동을 위해 `name`, `required`를 지원하며, 호환용 `onChange`는 `event.target.value` 형태를 제공합니다.
+| `disabled` | `boolean` | `false` | 비활성화 |
+| `value` | `string` | — | 제어 값 |
+| `defaultValue` | `string` | `""` | 비제어 초기값 |
+| `open` | `boolean` | — | 제어 열림 상태 |
+| `onOpenChange` | `(open: boolean) => void` | — | 열림 상태 변경 |
+| `onValueChange` | `(value: string) => void` | — | 선택 값 변경 |
 
 ## Composition
 
 - `SelectTrigger` — 필드 트리거
+- `SelectValue` — 현재 선택 라벨/placeholder
 - `SelectContent` — 메뉴 패널
-- `SelectItem` — 옵션 아이템 (`value` 필수)
-- `SelectSection` — 메뉴 섹션 헤더
-- `SelectSeparator` — 메뉴 구분선 (필요할 때만 직접 추가)
+- `SelectGroup` — 그룹
+- `SelectSection` — 섹션 제목
+- `SelectItem` — 선택 항목
 
-`SelectSection` 아래에 Divider가 자동으로 붙지는 않습니다. 구분선이 필요할 때만 `SelectSeparator`를 명시적으로 배치하세요.
-
-## 예시: 제어 컴포넌트
-
-```tsx
-const [v, setV] = useState("a");
-
-<Select
-  value={v}
-  onValueChange={setV}
-  aria-label="제어 예시"
->
-  <SelectTrigger />
-  <SelectContent>
-    <SelectItem value="a">옵션 A</SelectItem>
-    <SelectItem value="b">옵션 B</SelectItem>
-  </SelectContent>
-</Select>
-```
-
-## 디자인 참고
-
-- `docs/design-specs-web-kit.md` §2 Input / Select
-- [Pelagornis RefineUI Web Kit](https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?node-id=1059-17524&t=pm5qP4FuH7CAitRc-1)

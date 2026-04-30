@@ -14,7 +14,7 @@ description: RefineUI 컴포넌트 색인 — 용도별 분류
 | [Button](/components/button/) | 주요·보조·윤곽·고스트·위험 액션 버튼 |
 | [Input](/components/input/) | 한 줄 텍스트 입력 (`size` sm/md/lg) |
 | [Textarea](/components/textarea/) | 여러 줄 입력 |
-| [Select](/components/select/) | 네이티브 `<select>`, Input과 동일 필드 크기 |
+| [Select](/components/select/) | 커스텀 선택 필드 (`Select / Menu / Item` 스타일) |
 | [Field](/components/field/) | 라벨·힌트·에러 래퍼 |
 | [Label](/components/label/) | 단독 라벨 |
 | [Checkbox](/components/checkbox/) | 체크박스 |
