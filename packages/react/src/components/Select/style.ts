@@ -16,7 +16,7 @@ export const selectStyles = {
     contentShell:
         "box-border flex w-full flex-col overflow-hidden rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xsmall shadow-refineui-2light outline-none min-h-0",
     contentPopper: "h-auto max-h-[var(--refineui-select-content-available-height,100dvh)]",
-    contentItemAligned: "h-full max-h-full",
+    contentItemAligned: "max-h-full",
     viewportPopper:
         "relative flex max-h-full min-h-0 min-w-full w-full flex-col overflow-x-hidden overflow-y-auto",
     viewportItemAligned:
