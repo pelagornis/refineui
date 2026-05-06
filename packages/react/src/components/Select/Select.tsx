@@ -920,21 +920,3 @@ export function SelectArrow({ children, ...props }: SelectArrowProps) {
     return <span {...props}>{children}</span>;
 }
 
-export {
-    Select as Root,
-    SelectTrigger as Trigger,
-    SelectValue as Value,
-    SelectIcon as Icon,
-    SelectPortal as Portal,
-    SelectContent as Content,
-    SelectViewport as Viewport,
-    SelectGroup as Group,
-    SelectLabel as Label,
-    SelectItem as Item,
-    SelectItemText as ItemText,
-    SelectItemIndicator as ItemIndicator,
-    SelectScrollUpButton as ScrollUpButton,
-    SelectScrollDownButton as ScrollDownButton,
-    SelectSeparator as Separator,
-    SelectArrow as Arrow,
-};

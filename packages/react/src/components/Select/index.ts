@@ -1,15 +1,4 @@
 export {
-    Arrow,
-    Content,
-    Group,
-    Icon,
-    Item,
-    ItemIndicator,
-    ItemText,
-    Portal,
-    Root,
-    ScrollDownButton,
-    ScrollUpButton,
     Select,
     SelectArrow,
     SelectContent,
@@ -27,10 +16,6 @@ export {
     SelectTrigger,
     SelectValue,
     SelectViewport,
-    Separator,
-    Trigger,
-    Value,
-    Viewport,
 } from "./Select";
 
 export type {

@@ -25,17 +25,6 @@ export {
 export { Checkbox, type CheckboxProps } from "./components/Checkbox";
 export { Radio, type RadioProps, RadioInput, type RadioInputProps } from "./components/Radio";
 export {
-    Arrow,
-    Content,
-    Group,
-    Icon,
-    Item,
-    ItemIndicator,
-    ItemText,
-    Portal,
-    Root,
-    ScrollDownButton,
-    ScrollUpButton,
     Select,
     SelectArrow,
     SelectContent,
@@ -53,10 +42,6 @@ export {
     SelectTrigger,
     SelectValue,
     SelectViewport,
-    Separator,
-    Trigger,
-    Value,
-    Viewport,
     type SelectArrowProps,
     type SelectContentProps,
     type SelectGroupProps,
