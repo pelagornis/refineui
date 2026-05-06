@@ -434,8 +434,6 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
     const portalFromCtx = useContext(PortalContainerContext);
     const [side, setSide] = useState<"top" | "bottom">("bottom");
     const [contentStyle, setContentStyle] = useState<CSSProperties>({});
-    const [thumbStyle, setThumbStyle] = useState<CSSProperties>({});
-    const [showScrollbar, setShowScrollbar] = useState(false);
     const rafRef = useRef<number | null>(null);
     const positionerRef = useRef<HTMLDivElement | null>(null);
     const shouldExpandOnScrollRef = useRef(false);
@@ -587,11 +585,11 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
 
     const updatePosition = isPopper ? updatePositionPopper : updatePositionItemAligned;
 
-    /** Radix Viewport onScroll: 아래에 붙인 패널(`bottom: 0`)일 때만 스크롤로 높이 늘리며 scrollTop·justifyContent 보정. 위에서 시작(`top: 0`)인 경우 이 블록을 타지 않음 — DOM `style.bottom` 문자열 대신 `side`로 판별(React는 `0`/`0px` 등으로 올 수 있음). */
-    const updateScrollbar = useCallback(() => {
+    /** Radix Viewport onScroll: 아래에 붙인 패널(`bottom: 0`)일 때만 스크롤로 높이 늘리며 scrollTop·justifyContent 보정 */
+    const onViewportScroll = useCallback(() => {
         const viewport = viewportRef.current;
         if (!viewport) return;
-        const { scrollTop, scrollHeight, clientHeight } = viewport;
+        const { scrollTop } = viewport;
         if (shouldExpandOnScrollRef.current) {
             const scrolledBy = Math.abs(prevScrollTopRef.current - scrollTop);
             if (scrolledBy > 0) {
@@ -621,20 +619,6 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
             }
         }
         prevScrollTopRef.current = scrollTop;
-        if (scrollHeight <= clientHeight + 1) {
-            setShowScrollbar(false);
-            setThumbStyle({});
-            return;
-        }
-        setShowScrollbar(true);
-        const ratio = clientHeight / scrollHeight;
-        const thumbHeight = Math.max(24, ratio * clientHeight);
-        const maxTop = clientHeight - thumbHeight;
-        const top = maxTop <= 0 ? 0 : (scrollTop / (scrollHeight - clientHeight)) * maxTop;
-        setThumbStyle({
-            height: `${thumbHeight}px`,
-            transform: `translateY(${top}px)`,
-        });
     }, [viewportRef, commitContentStyle, side]);
 
     /** Radix `focusFirst`와 동일: 첫 옵션은 맨 위(scrollTop 0), 마지막은 맨 아래로 스냅해 상단 붙음(bottom/top 앵커)과 무관하게 목록 시작점을 맞춘다 */
@@ -671,7 +655,7 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
         const settleId = requestAnimationFrame(() => {
             if (positionerRef.current) positionerRef.current.style.justifyContent = "";
             updatePosition();
-            updateScrollbar();
+            onViewportScroll();
             shouldExpandOnScrollRef.current = true;
             if (viewportRef.current) {
                 prevScrollTopRef.current = viewportRef.current.scrollTop;
@@ -682,15 +666,15 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
                 /** Radix `handleScrollButtonChange`: 스크롤/포커스 후 측정값이 바뀌면 `position()` 한 번 더 */
                 if (!isPopper) {
                     updatePosition();
-                    updateScrollbar();
+                    onViewportScroll();
                 }
                 shouldRepositionRef.current = false;
             }
         });
         const viewport = viewportRef.current;
-        viewport?.addEventListener("scroll", updateScrollbar);
+        viewport?.addEventListener("scroll", onViewportScroll);
         const timeoutId = window.setTimeout(schedule, 0);
-        const timeoutScrollbarId = window.setTimeout(updateScrollbar, 0);
+        const timeoutScrollbarId = window.setTimeout(onViewportScroll, 0);
         window.addEventListener("resize", schedule);
         const onAncestorScroll = (event: Event) => {
             const target = event.target as Node | null;
@@ -702,7 +686,7 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
             typeof ResizeObserver !== "undefined"
                 ? new ResizeObserver(() => {
                       schedule();
-                      updateScrollbar();
+                      onViewportScroll();
                   })
                 : null;
         if (ro && triggerRef.current) ro.observe(triggerRef.current);
@@ -712,7 +696,7 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
             window.clearTimeout(timeoutScrollbarId);
             window.removeEventListener("resize", schedule);
             unsubscribeAncestorScroll();
-            viewport?.removeEventListener("scroll", updateScrollbar);
+            viewport?.removeEventListener("scroll", onViewportScroll);
             ro?.disconnect();
             shouldExpandOnScrollRef.current = false;
             if (rafRef.current != null) {
@@ -720,7 +704,7 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
                 rafRef.current = null;
             }
         };
-    }, [open, itemsVersion, updatePosition, isPopper, triggerRef, contentRef, viewportRef, updateScrollbar, focusSelectedItem]);
+    }, [open, itemsVersion, updatePosition, isPopper, triggerRef, contentRef, viewportRef, onViewportScroll, focusSelectedItem]);
 
     const setContentRefs = useCallback(
         (node: HTMLDivElement | null) => {
@@ -766,11 +750,6 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
                 >
                     <div className={isPopper ? selectStyles.scrollAreaRootPopper : selectStyles.scrollAreaRootItemAligned}>
                         {normalizedChildren}
-                        {showScrollbar ? (
-                            <div className={clsx(selectStyles.scrollAreaScrollbar)} aria-hidden>
-                                <div className={selectStyles.scrollAreaThumb} style={thumbStyle} />
-                            </div>
-                        ) : null}
                     </div>
                 </div>
             </div>

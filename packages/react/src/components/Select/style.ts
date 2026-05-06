@@ -18,13 +18,11 @@ export const selectStyles = {
     contentPopper: "h-auto max-h-[var(--refineui-select-content-available-height,100dvh)]",
     contentItemAligned: "h-full max-h-full",
     viewportPopper:
-        "relative flex max-h-full min-h-0 min-w-full w-full flex-col overflow-x-hidden overflow-y-auto pr-refineui-size-xsmall [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+        "relative flex max-h-full min-h-0 min-w-full w-full flex-col overflow-x-hidden overflow-y-auto",
     viewportItemAligned:
-        "relative flex min-h-0 min-w-full w-full max-h-full flex-1 flex-col overflow-x-hidden overflow-y-auto pr-refineui-size-xsmall [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+        "relative flex min-h-0 min-w-full w-full max-h-full flex-1 flex-col overflow-x-hidden overflow-y-auto",
     scrollAreaRootPopper: "relative flex max-h-full min-h-0 flex-col",
     scrollAreaRootItemAligned: "relative flex h-full min-h-0 flex-1 flex-col",
-    scrollAreaScrollbar: "absolute bottom-0 right-0 top-0 w-[6px]",
-    scrollAreaThumb: "w-full rounded-refineui-large bg-refineui-alias-background-surface-hover transition-transform",
 
     group: "flex flex-col",
     label: "refineui-typo-caption-1 px-refineui-size-small py-refineui-size-medium text-refineui-alias-foreground-primary",
