@@ -57,7 +57,6 @@ type SelectCtxValue = {
     disabled: boolean;
     activeIndex: number;
     setActiveIndex: (i: number) => void;
-    /** `SelectItem` 등록/해제마다 증가 — `SelectContent`가 측정을 다시 돌릴 때 사용 */
     itemsVersion: number;
     itemsRef: MutableRefObject<RegisteredItem[]>;
     registerItem: (item: RegisteredItem) => () => void;
@@ -197,20 +196,10 @@ export function Select({
         setActiveIndex(selected >= 0 ? selected : enabledItems.length > 0 ? 0 : -1);
     }, [open, value, enabledItems]);
 
-    /** 키보드로 하이라이트만 이동할 때만 스냅 — 열릴 때(`prev === -1`에서의 첫 인덱스)는 `SelectContent`가 스크롤 담당 */
-    const prevActiveIndexForScrollRef = useRef(-1);
-    useIsomorphicLayoutEffect(() => {
-        if (!open) {
-            prevActiveIndexForScrollRef.current = -1;
-            return;
-        }
-        if (activeIndex < 0) return;
-        const prev = prevActiveIndexForScrollRef.current;
-        if (prev !== -1 && prev !== activeIndex) {
-            enabledItems[activeIndex]?.ref.current?.scrollIntoView({ block: "nearest" });
-        }
-        prevActiveIndexForScrollRef.current = activeIndex;
-    }, [open, activeIndex, enabledItems]);
+    /**
+     * active item 변경 시 강제 `scrollIntoView`를 하지 않습니다.
+     * - 마우스 hover 이동 중 목록이 자동으로 따라 스크롤되는 현상 방지
+     */
 
     useEffect(() => {
         if (!open) return;
