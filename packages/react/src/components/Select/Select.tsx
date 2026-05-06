@@ -100,40 +100,31 @@ function clampNumber(value: number, [minB, maxB]: [number, number]) {
 
 const useIsomorphicLayoutEffect = typeof document !== "undefined" ? useLayoutEffect : useEffect;
 
-function subscribeScrollAndScrollableAncestors(target: HTMLElement | null, fn: (event: Event) => void): () => void {
-    if (typeof window === "undefined") return () => {};
-    const list: (Element | Window)[] = [window];
-    let el: HTMLElement | null = target?.parentElement ?? null;
-    while (el) {
-        const { overflow, overflowX, overflowY } = getComputedStyle(el);
-        if (
-            [overflow, overflowX, overflowY].some((o) => o === "auto" || o === "scroll" || o === "overlay") ||
-            el.scrollHeight > el.clientHeight + 1
-        ) {
-            list.push(el);
-        }
-        el = el.parentElement;
-    }
-    for (const t of list) t.addEventListener("scroll", fn, true);
-    return () => {
-        for (const t of list) t.removeEventListener("scroll", fn, true);
-    };
+function isScrollableElement(el: HTMLElement): boolean {
+    const { overflow, overflowX, overflowY } = getComputedStyle(el);
+    return (
+        [overflow, overflowX, overflowY].some((o) => o === "auto" || o === "scroll" || o === "overlay") ||
+        el.scrollHeight > el.clientHeight + 1
+    );
 }
 
 function getScrollableAncestors(target: HTMLElement | null): HTMLElement[] {
     const list: HTMLElement[] = [];
     let el: HTMLElement | null = target?.parentElement ?? null;
     while (el) {
-        const { overflow, overflowX, overflowY } = getComputedStyle(el);
-        if (
-            [overflow, overflowX, overflowY].some((o) => o === "auto" || o === "scroll" || o === "overlay") ||
-            el.scrollHeight > el.clientHeight + 1
-        ) {
-            list.push(el);
-        }
+        if (isScrollableElement(el)) list.push(el);
         el = el.parentElement;
     }
     return list;
+}
+
+function subscribeScrollAndScrollableAncestors(target: HTMLElement | null, fn: (event: Event) => void): () => void {
+    if (typeof window === "undefined") return () => {};
+    const list: (Element | Window)[] = [window, ...getScrollableAncestors(target)];
+    for (const t of list) t.addEventListener("scroll", fn, true);
+    return () => {
+        for (const t of list) t.removeEventListener("scroll", fn, true);
+    };
 }
 
 function useSelectContentPosition() {
@@ -258,7 +249,7 @@ export function Select({
             }
             releaseBodyLock();
         };
-    }, [open, triggerRef]);
+    }, [open]);
 
     const onKeyDown = useCallback(
         (event: KeyboardEvent<HTMLElement>) => {
