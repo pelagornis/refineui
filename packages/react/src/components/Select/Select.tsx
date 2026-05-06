@@ -19,6 +19,7 @@ import {
 import { createPortal } from "react-dom";
 import { iconSizes } from "@refineui/tokens";
 import { componentSizes, foundationSizes } from "../../componentSizes";
+import { acquireBodyScrollLock } from "../../utils/bodyScrollLock";
 import { WebIcon } from "../../WebIcon";
 import { selectSizeClass, selectStyles } from "./style";
 import type {
@@ -119,6 +120,22 @@ function subscribeScrollAndScrollableAncestors(target: HTMLElement | null, fn: (
     };
 }
 
+function getScrollableAncestors(target: HTMLElement | null): HTMLElement[] {
+    const list: HTMLElement[] = [];
+    let el: HTMLElement | null = target?.parentElement ?? null;
+    while (el) {
+        const { overflow, overflowX, overflowY } = getComputedStyle(el);
+        if (
+            [overflow, overflowX, overflowY].some((o) => o === "auto" || o === "scroll" || o === "overlay") ||
+            el.scrollHeight > el.clientHeight + 1
+        ) {
+            list.push(el);
+        }
+        el = el.parentElement;
+    }
+    return list;
+}
+
 function useSelectContentPosition() {
     return useContext(SelectContentPositionContext);
 }
@@ -191,7 +208,7 @@ export function Select({
 
     /** 키보드로 하이라이트만 이동할 때만 스냅 — 열릴 때(`prev === -1`에서의 첫 인덱스)는 `SelectContent`가 스크롤 담당 */
     const prevActiveIndexForScrollRef = useRef(-1);
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         if (!open) {
             prevActiveIndexForScrollRef.current = -1;
             return;
@@ -215,15 +232,33 @@ export function Select({
         return () => document.removeEventListener("mousedown", onOutside);
     }, [open, setOpen]);
 
-    /** 열릴 때 배경 스크롤 잠금 (Radix RemoveScroll과 유사) */
+    /** 열릴 때 배경 및 스크롤 래퍼 잠금 */
     useEffect(() => {
         if (!open) return;
-        const prev = document.body.style.overflow;
-        document.body.style.overflow = "hidden";
+        const releaseBodyLock = acquireBodyScrollLock();
+        const ancestors = getScrollableAncestors(triggerRef.current).filter(
+            (el) => el !== document.body && el !== document.documentElement,
+        );
+        const prevStyles = ancestors.map((el) => ({
+            el,
+            overflow: el.style.overflow,
+            overflowX: el.style.overflowX,
+            overflowY: el.style.overflowY,
+        }));
+        for (const { el } of prevStyles) {
+            el.style.overflow = "hidden";
+            el.style.overflowX = "hidden";
+            el.style.overflowY = "hidden";
+        }
         return () => {
-            document.body.style.overflow = prev;
+            for (const { el, overflow, overflowX, overflowY } of prevStyles) {
+                el.style.overflow = overflow;
+                el.style.overflowX = overflowX;
+                el.style.overflowY = overflowY;
+            }
+            releaseBodyLock();
         };
-    }, [open]);
+    }, [open, triggerRef]);
 
     const onKeyDown = useCallback(
         (event: KeyboardEvent<HTMLElement>) => {
