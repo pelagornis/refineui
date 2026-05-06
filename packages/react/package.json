@@ -24,7 +24,6 @@
     "dev": "tsup --watch"
   },
   "dependencies": {
-    "@radix-ui/react-select": "^2.2.6",
     "@refineui/tokens": "workspace:*",
     "@refineui/utilities": "workspace:*",
     "@refineui/web-icons": "^0.3.32",

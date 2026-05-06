@@ -1,6 +1,22 @@
-import * as SelectPrimitive from "@radix-ui/react-select";
 import { clsx } from "clsx";
-import { Children, createContext, forwardRef, isValidElement, useContext, useMemo, type ReactNode } from "react";
+import {
+    Children,
+    createContext,
+    forwardRef,
+    isValidElement,
+    useCallback,
+    useContext,
+    useEffect,
+    useLayoutEffect,
+    useMemo,
+    useRef,
+    useState,
+    type CSSProperties,
+    type KeyboardEvent,
+    type MutableRefObject,
+    type ReactNode,
+} from "react";
+import { createPortal } from "react-dom";
 import { iconSizes } from "@refineui/tokens";
 import { componentSizes, foundationSizes } from "../../componentSizes";
 import { WebIcon } from "../../WebIcon";
@@ -25,155 +41,644 @@ import type {
     SelectViewportProps,
 } from "./types";
 
+type RegisteredItem = {
+    value: string;
+    label: string;
+    disabled: boolean;
+    ref: MutableRefObject<HTMLDivElement | null>;
+};
+
+type SelectCtxValue = {
+    value: string;
+    setValue: (v: string) => void;
+    open: boolean;
+    setOpen: (v: boolean) => void;
+    disabled: boolean;
+    activeIndex: number;
+    setActiveIndex: (i: number) => void;
+    itemsRef: MutableRefObject<RegisteredItem[]>;
+    registerItem: (item: RegisteredItem) => () => void;
+    triggerRef: MutableRefObject<HTMLButtonElement | null>;
+    contentRef: MutableRefObject<HTMLDivElement | null>;
+    viewportRef: MutableRefObject<HTMLDivElement | null>;
+    onKeyDown: (e: KeyboardEvent<HTMLElement>) => void;
+    getLabelByValue: (v: string) => string | undefined;
+    placeholder?: string;
+    size: "sm" | "md" | "lg";
+    fullWidth: boolean;
+};
+
+const SelectCtx = createContext<SelectCtxValue | null>(null);
+
+function useSelectCtx() {
+    const ctx = useContext(SelectCtx);
+    if (!ctx) throw new Error("Select subcomponents must be used within Select");
+    return ctx;
+}
+
+const PortalContainerContext = createContext<HTMLElement | undefined>(undefined);
+
+/** `SelectContent`의 `position` — Viewport·패널 스타일 분기 */
+const SelectContentPositionContext = createContext<"popper" | "item-aligned">("item-aligned");
+
 function parsePx(px: string, fallback: number) {
     const n = Number.parseFloat(px);
     return Number.isFinite(n) ? n : fallback;
 }
 
-/** @radix-ui/react-select Content `sideOffset` — Themes `4px`에 맞춤 (`foundationSize40`) */
+/** 콘텐츠·트리거 간 여백 (Themes sideOffset 4px 근사) */
 const SIDE_OFFSET = parsePx(foundationSizes.foundationSize40, 4);
+/** 뷰포트 가장자리 마진 */
+const CONTENT_MARGIN = parsePx(foundationSizes.foundationSize100, 10);
 
-type SelectSizeFull = "sm" | "md" | "lg";
-
-const SelectPlaceholderContext = createContext<string | undefined>(undefined);
-
-const SelectSizeContext = createContext<{ size: SelectSizeFull; fullWidth: boolean }>({
-    size: "md",
-    fullWidth: false,
-});
-
-/** `SelectContent`의 `position` — Viewport 스타일(목록 높이 맞춤 vs 래퍼 채움) 분기 */
-const SelectContentPositionContext = createContext<"popper" | "item-aligned">("item-aligned");
-
-function useSelectPlaceholder() {
-    return useContext(SelectPlaceholderContext);
+function clampNumber(value: number, [minB, maxB]: [number, number]) {
+    return Math.min(Math.max(value, minB), maxB);
 }
 
-function useSelectSize() {
-    return useContext(SelectSizeContext);
+const useIsomorphicLayoutEffect = typeof document !== "undefined" ? useLayoutEffect : useEffect;
+
+function subscribeScrollAndScrollableAncestors(target: HTMLElement | null, fn: (event: Event) => void): () => void {
+    if (typeof window === "undefined") return () => {};
+    const list: (Element | Window)[] = [window];
+    let el: HTMLElement | null = target?.parentElement ?? null;
+    while (el) {
+        const { overflow, overflowX, overflowY } = getComputedStyle(el);
+        if (
+            [overflow, overflowX, overflowY].some((o) => o === "auto" || o === "scroll" || o === "overlay") ||
+            el.scrollHeight > el.clientHeight + 1
+        ) {
+            list.push(el);
+        }
+        el = el.parentElement;
+    }
+    for (const t of list) t.addEventListener("scroll", fn, true);
+    return () => {
+        for (const t of list) t.removeEventListener("scroll", fn, true);
+    };
 }
 
 function useSelectContentPosition() {
     return useContext(SelectContentPositionContext);
 }
 
-export function Select(props: SelectProps) {
-    const {
-        placeholder,
-        size = "md",
-        fullWidth = false,
-        children,
-        value,
-        defaultValue,
-        onValueChange,
-        open,
-        defaultOpen,
-        onOpenChange,
-        disabled,
-        name,
-        required,
-        form,
-        dir,
-        autoComplete,
-        ...divProps
-    } = props;
+export function Select({
+    value: ctrlValue,
+    onValueChange,
+    defaultValue = "",
+    open: ctrlOpen,
+    onOpenChange,
+    children,
+    placeholder,
+    size = "md",
+    fullWidth = false,
+    disabled = false,
+    className,
+    ...props
+}: SelectProps) {
+    const [innerValue, setInnerValue] = useState(defaultValue);
+    const [innerOpen, setInnerOpen] = useState(false);
+    const [activeIndex, setActiveIndex] = useState(-1);
+    const [itemsVersion, setItemsVersion] = useState(0);
 
-    const { className: wrapperClassName, ...wrapperRest } = divProps;
+    const itemsRef = useRef<RegisteredItem[]>([]);
+    const labelCacheRef = useRef<Record<string, string>>({});
+    const triggerRef = useRef<HTMLButtonElement | null>(null);
+    const contentRef = useRef<HTMLDivElement | null>(null);
+    const viewportRef = useRef<HTMLDivElement | null>(null);
 
-    const isControlled = value !== undefined;
-    const normalizedValue = isControlled ? (value === "" ? undefined : value) : undefined;
-    const normalizedDefault =
-        !isControlled && (defaultValue === "" || defaultValue === undefined) ? undefined : !isControlled ? defaultValue : undefined;
+    const value = ctrlValue !== undefined ? ctrlValue : innerValue;
+    const open = ctrlOpen !== undefined ? ctrlOpen : innerOpen;
 
-    const sizeMemo = useMemo(() => ({ size, fullWidth }), [size, fullWidth]);
+    const setOpen = useCallback(
+        (nextOpen: boolean) => {
+            if (disabled) return;
+            if (ctrlOpen === undefined) setInnerOpen(nextOpen);
+            onOpenChange?.(nextOpen);
+        },
+        [ctrlOpen, onOpenChange, disabled],
+    );
+
+    const setValue = useCallback(
+        (nextValue: string) => {
+            if (ctrlValue === undefined) setInnerValue(nextValue);
+            onValueChange?.(nextValue);
+        },
+        [ctrlValue, onValueChange],
+    );
+
+    const registerItem = useCallback((item: RegisteredItem) => {
+        itemsRef.current = [...itemsRef.current.filter((i) => i.value !== item.value), item];
+        labelCacheRef.current[item.value] = item.label;
+        setItemsVersion((v) => v + 1);
+        return () => {
+            itemsRef.current = itemsRef.current.filter((i) => i.value !== item.value);
+            setItemsVersion((v) => v + 1);
+        };
+    }, []);
+
+    const enabledItems = useMemo(() => itemsRef.current.filter((i) => !i.disabled), [itemsVersion]);
+
+    useEffect(() => {
+        if (!open) {
+            setActiveIndex(-1);
+            return;
+        }
+        const selected = enabledItems.findIndex((item) => item.value === value);
+        setActiveIndex(selected >= 0 ? selected : enabledItems.length > 0 ? 0 : -1);
+    }, [open, value, enabledItems]);
+
+    useEffect(() => {
+        if (!open || activeIndex < 0) return;
+        enabledItems[activeIndex]?.ref.current?.scrollIntoView({ block: "nearest" });
+    }, [open, activeIndex, enabledItems]);
+
+    useEffect(() => {
+        if (!open) return;
+        const onOutside = (event: MouseEvent) => {
+            const target = event.target as Node;
+            if (triggerRef.current?.contains(target) || contentRef.current?.contains(target)) return;
+            setOpen(false);
+        };
+        document.addEventListener("mousedown", onOutside);
+        return () => document.removeEventListener("mousedown", onOutside);
+    }, [open, setOpen]);
+
+    /** 열릴 때 배경 스크롤 잠금 (Radix RemoveScroll과 유사) */
+    useEffect(() => {
+        if (!open) return;
+        const prev = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+        return () => {
+            document.body.style.overflow = prev;
+        };
+    }, [open]);
+
+    const onKeyDown = useCallback(
+        (event: KeyboardEvent<HTMLElement>) => {
+            if (disabled) return;
+
+            if (!open) {
+                if (["ArrowDown", "ArrowUp", "Enter", " "].includes(event.key)) {
+                    event.preventDefault();
+                    setOpen(true);
+                }
+                return;
+            }
+
+            switch (event.key) {
+                case "Escape":
+                    event.preventDefault();
+                    setOpen(false);
+                    triggerRef.current?.focus();
+                    return;
+                case "ArrowDown":
+                    event.preventDefault();
+                    setActiveIndex((prev) => Math.min(prev + 1, enabledItems.length - 1));
+                    return;
+                case "ArrowUp":
+                    event.preventDefault();
+                    setActiveIndex((prev) => Math.max(prev - 1, 0));
+                    return;
+                case "Home":
+                    event.preventDefault();
+                    setActiveIndex(enabledItems.length > 0 ? 0 : -1);
+                    return;
+                case "End":
+                    event.preventDefault();
+                    setActiveIndex(enabledItems.length - 1);
+                    return;
+                case "Enter":
+                case " ":
+                    event.preventDefault();
+                    if (activeIndex >= 0 && enabledItems[activeIndex]) {
+                        setValue(enabledItems[activeIndex].value);
+                        setOpen(false);
+                        triggerRef.current?.focus();
+                    }
+                    return;
+                default:
+                    if (event.key.length !== 1) return;
+                    const needle = event.key.toLowerCase();
+                    const next = enabledItems.findIndex(
+                        (item, index) => index > activeIndex && item.label.toLowerCase().startsWith(needle),
+                    );
+                    const found =
+                        next >= 0 ? next : enabledItems.findIndex((item) => item.label.toLowerCase().startsWith(needle));
+                    if (found >= 0) setActiveIndex(found);
+            }
+        },
+        [disabled, open, activeIndex, enabledItems, setOpen, setValue],
+    );
+
+    const getLabelByValue = useCallback(
+        (nextValue: string) =>
+            labelCacheRef.current[nextValue] ?? itemsRef.current.find((item) => item.value === nextValue)?.label,
+        [],
+    );
+
+    const ctxValue = useMemo(
+        () => ({
+            value,
+            setValue,
+            open,
+            setOpen,
+            disabled,
+            activeIndex,
+            setActiveIndex,
+            itemsRef,
+            registerItem,
+            triggerRef,
+            contentRef,
+            viewportRef,
+            onKeyDown,
+            getLabelByValue,
+            placeholder,
+            size,
+            fullWidth,
+        }),
+        [
+            value,
+            setValue,
+            open,
+            setOpen,
+            disabled,
+            activeIndex,
+            setActiveIndex,
+            registerItem,
+            onKeyDown,
+            getLabelByValue,
+            placeholder,
+            size,
+            fullWidth,
+        ],
+    );
 
     return (
-        <SelectPrimitive.Root
-            {...(isControlled ? { value: normalizedValue } : { defaultValue: normalizedDefault })}
-            onValueChange={onValueChange}
-            open={open}
-            defaultOpen={defaultOpen}
-            onOpenChange={onOpenChange}
-            disabled={disabled}
-            name={name}
-            required={required}
-            form={form}
-            dir={dir}
-            autoComplete={autoComplete}
-        >
-            <SelectPlaceholderContext.Provider value={placeholder}>
-                <SelectSizeContext.Provider value={sizeMemo}>
-                    <div className={clsx(selectStyles.root, fullWidth && "w-full", wrapperClassName)} {...wrapperRest}>
-                        {children}
-                    </div>
-                </SelectSizeContext.Provider>
-            </SelectPlaceholderContext.Provider>
-        </SelectPrimitive.Root>
+        <SelectCtx.Provider value={ctxValue}>
+            <div className={clsx(selectStyles.root, fullWidth && "w-full", className)} {...props}>
+                {children}
+            </div>
+        </SelectCtx.Provider>
     );
 }
 
 export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(function SelectTrigger(props, forwardedRef) {
     const { className, children, style, ...triggerRest } = props;
-    const { size, fullWidth } = useSelectSize();
+    const { open, setOpen, triggerRef, onKeyDown, size, fullWidth, disabled, value, getLabelByValue } = useSelectCtx();
+    const hasLabel = Boolean(getLabelByValue(value));
+    const setRefs = useCallback(
+        (node: HTMLButtonElement | null) => {
+            (triggerRef as MutableRefObject<HTMLButtonElement | null>).current = node;
+            if (typeof forwardedRef === "function") forwardedRef(node);
+            else if (forwardedRef) (forwardedRef as MutableRefObject<HTMLButtonElement | null>).current = node;
+        },
+        [forwardedRef, triggerRef],
+    );
     return (
-        <SelectPrimitive.Trigger ref={forwardedRef} asChild {...triggerRest}>
-            <button
-                type="button"
-                className={clsx(
-                    "data-[placeholder]:[&_[data-refineui-select-value]]:text-refineui-alias-foreground-placeholder",
-                    selectStyles.trigger,
-                    selectSizeClass[size],
-                    fullWidth && "w-full",
-                    className,
-                )}
-                style={{ minWidth: componentSizes.dropdownMenuWidth, ...style }}
-            >
-                <span className={selectStyles.triggerInner}>{children}</span>
-                <WebIcon name="chevron-down" size={iconSizes.xsmall} aria-hidden />
-            </button>
-        </SelectPrimitive.Trigger>
+        <button
+            ref={setRefs}
+            type="button"
+            role="combobox"
+            aria-expanded={open}
+            aria-haspopup="listbox"
+            data-state={open ? "open" : "closed"}
+            data-placeholder={hasLabel ? undefined : ""}
+            disabled={disabled}
+            onMouseDown={(event) => {
+                event.preventDefault();
+                setOpen(!open);
+                triggerRef.current?.focus();
+            }}
+            onKeyDown={onKeyDown}
+            className={clsx(
+                "data-[placeholder]:[&_[data-refineui-select-value]]:text-refineui-alias-foreground-placeholder",
+                selectStyles.trigger,
+                selectSizeClass[size],
+                disabled && selectStyles.triggerDisabled,
+                fullWidth && "w-full",
+                className,
+            )}
+            style={{ minWidth: componentSizes.dropdownMenuWidth, ...style }}
+            {...triggerRest}
+        >
+            <span data-refineui-select-trigger-value className={selectStyles.triggerInner}>
+                {children}
+            </span>
+            <WebIcon name="chevron-down" size={iconSizes.xsmall} aria-hidden />
+        </button>
     );
 });
 SelectTrigger.displayName = "SelectTrigger";
 
-export const SelectValue = forwardRef<HTMLSpanElement, SelectValueProps>(function SelectValue(
-    { placeholder, className, ...props },
-    forwardedRef,
-) {
-    const rootPlaceholder = useSelectPlaceholder();
+export function SelectValue({ placeholder, className, ...props }: SelectValueProps) {
+    const { value, getLabelByValue, placeholder: rootPlaceholder } = useSelectCtx();
+    const label = getLabelByValue(value);
     return (
-        <SelectPrimitive.Value
-            ref={forwardedRef}
-            data-refineui-select-value=""
-            placeholder={placeholder ?? rootPlaceholder ?? "Select..."}
-            className={clsx(selectStyles.value, className)}
-            {...props}
-        />
+        <span data-refineui-select-value="" className={clsx(selectStyles.value, !label && "text-refineui-alias-foreground-placeholder", className)} {...props}>
+            {label || placeholder || rootPlaceholder || "Select..."}
+        </span>
     );
-});
-SelectValue.displayName = "SelectValue";
-
-export const SelectIcon = forwardRef<HTMLSpanElement, SelectIconProps>(function SelectIcon(
-    { className, children, ...props },
-    forwardedRef,
-) {
-    return (
-        <SelectPrimitive.Icon ref={forwardedRef} asChild {...props}>
-            <span className={clsx(selectStyles.iconWrap, className)}>{children ?? <WebIcon name="chevron-down" size={iconSizes.xsmall} />}</span>
-        </SelectPrimitive.Icon>
-    );
-});
-SelectIcon.displayName = "SelectIcon";
-
-export function SelectPortal({ children, container }: SelectPortalProps) {
-    return <SelectPrimitive.Portal container={container ?? undefined}>{children}</SelectPrimitive.Portal>;
 }
 
-/** 기본 `position`은 `item-aligned`(트리거·항목 텍스트 정렬). 목록 높이에 맞춘 컴팩트 패널은 `position="popper"`. */
-export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(function SelectContent(
-    { className, children, position = "item-aligned", ...props },
-    forwardedRef,
-) {
+export function SelectIcon({ children, className, ...props }: SelectIconProps) {
+    return (
+        <span className={clsx(selectStyles.iconWrap, className)} {...props}>
+            {children ?? <WebIcon name="chevron-down" size={iconSizes.xsmall} />}
+        </span>
+    );
+}
+
+export function SelectPortal({ children, container }: SelectPortalProps) {
+    return <PortalContainerContext.Provider value={container ?? undefined}>{children}</PortalContainerContext.Provider>;
+}
+
+export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(function SelectContent(props, forwardedRef) {
+    const {
+        className,
+        children,
+        position = "item-aligned",
+        container: containerProp,
+        style: styleProp,
+        ...rest
+    } = props;
+    const { open, contentRef, onKeyDown, triggerRef, viewportRef, itemsRef, value } = useSelectCtx();
+    const portalFromCtx = useContext(PortalContainerContext);
+    const [side, setSide] = useState<"top" | "bottom">("bottom");
+    const [contentStyle, setContentStyle] = useState<CSSProperties>({});
+    const [thumbStyle, setThumbStyle] = useState<CSSProperties>({});
+    const [showScrollbar, setShowScrollbar] = useState(false);
+    const rafRef = useRef<number | null>(null);
+    const positionerRef = useRef<HTMLDivElement | null>(null);
+    const shouldExpandOnScrollRef = useRef(false);
+    const shouldRepositionRef = useRef(true);
+    const prevScrollTopRef = useRef(0);
+    const contentStyleRef = useRef<CSSProperties>({});
+    const isPopper = position === "popper";
+
+    const commitContentStyle = useCallback((next: CSSProperties) => {
+        const prev = contentStyleRef.current;
+        const fields: (keyof CSSProperties)[] = ["left", "top", "bottom", "height", "maxHeight", "minHeight", "minWidth", "margin"];
+        const unchanged = fields.every((key) => prev[key] === next[key]);
+        if (unchanged) return;
+        contentStyleRef.current = next;
+        setContentStyle(next);
+    }, []);
+
+    const updatePositionItemAligned = useCallback(() => {
+        if (!open || !triggerRef.current || !contentRef.current || !viewportRef.current) return;
+        const trigger = triggerRef.current;
+        const content = contentRef.current;
+        const viewport = viewportRef.current;
+        const triggerRect = trigger.getBoundingClientRect();
+        const contentRect = content.getBoundingClientRect();
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const valueNode = trigger.querySelector<HTMLElement>("[data-refineui-select-trigger-value]");
+        const itemsOrdered = itemsRef.current;
+        const selectedRegistration =
+            itemsOrdered.find((item) => item.value === value && item.ref.current) ??
+            itemsOrdered.find((item) => !item.disabled && item.ref.current);
+        const selectedItem = selectedRegistration?.ref.current ?? null;
+        const selectedItemText = selectedItem?.querySelector<HTMLElement>("[data-refineui-select-item-text]");
+        if (!valueNode || !selectedItem || !selectedItemText) return;
+
+        const itemTextRect = selectedItemText.getBoundingClientRect();
+        const itemTextOffset = itemTextRect.left - contentRect.left;
+        const left = valueNode.getBoundingClientRect().left - itemTextOffset;
+        const leftDelta = triggerRect.left - left;
+        const minContentWidth = triggerRect.width + leftDelta;
+        const contentWidth = Math.max(minContentWidth, contentRect.width);
+        const rightEdge = vw - CONTENT_MARGIN;
+        const clampedLeft = clampNumber(left, [CONTENT_MARGIN, Math.max(CONTENT_MARGIN, rightEdge - contentWidth)]);
+
+        const itemsHeight = viewport.scrollHeight;
+        const contentStyles = window.getComputedStyle(content);
+        const contentBorderTopWidth = Number.parseInt(contentStyles.borderTopWidth, 10) || 0;
+        const contentPaddingTop = Number.parseInt(contentStyles.paddingTop, 10) || 0;
+        const contentBorderBottomWidth = Number.parseInt(contentStyles.borderBottomWidth, 10) || 0;
+        const contentPaddingBottom = Number.parseInt(contentStyles.paddingBottom, 10) || 0;
+        const fullContentHeight =
+            contentBorderTopWidth + contentPaddingTop + itemsHeight + contentPaddingBottom + contentBorderBottomWidth;
+        const minContentHeight = Math.min(selectedItem.offsetHeight * 5, fullContentHeight);
+        const viewportStyles = window.getComputedStyle(viewport);
+        const viewportPaddingTop = Number.parseInt(viewportStyles.paddingTop, 10) || 0;
+        const viewportPaddingBottom = Number.parseInt(viewportStyles.paddingBottom, 10) || 0;
+        const availableHeight = vh - CONTENT_MARGIN * 2;
+        const topEdgeToTriggerMiddle = triggerRect.top + triggerRect.height / 2 - CONTENT_MARGIN;
+        const triggerMiddleToBottomEdge = availableHeight - topEdgeToTriggerMiddle;
+        const selectedItemHalfHeight = selectedItem.offsetHeight / 2;
+        // Radix 원본과 동일: selectedItem.offsetTop 기준으로 trigger-middle 정렬 계산
+        const itemOffsetMiddle = selectedItem.offsetTop + selectedItemHalfHeight;
+        const contentTopToItemMiddle = contentBorderTopWidth + contentPaddingTop + itemOffsetMiddle;
+        const itemMiddleToContentBottom = fullContentHeight - contentTopToItemMiddle;
+        const willAlignWithoutTopOverflow = contentTopToItemMiddle <= topEdgeToTriggerMiddle;
+        let wrapperHeightPx = 0;
+
+        if (willAlignWithoutTopOverflow) {
+            const isLastItem = itemsOrdered.length > 0 && selectedItem === itemsOrdered[itemsOrdered.length - 1]?.ref.current;
+            const viewportOffsetBottom = content.clientHeight - viewport.offsetTop - viewport.offsetHeight;
+            const clampedTriggerMiddleToBottomEdge = Math.max(
+                triggerMiddleToBottomEdge,
+                selectedItemHalfHeight +
+                    (isLastItem ? viewportPaddingBottom : 0) +
+                    viewportOffsetBottom +
+                    contentBorderBottomWidth,
+            );
+            wrapperHeightPx = contentTopToItemMiddle + clampedTriggerMiddleToBottomEdge;
+        } else {
+            const isFirstItem = itemsOrdered.length > 0 && selectedItem === itemsOrdered[0]?.ref.current;
+            const clampedTopEdgeToTriggerMiddle = Math.max(
+                topEdgeToTriggerMiddle,
+                contentBorderTopWidth + viewport.offsetTop + (isFirstItem ? viewportPaddingTop : 0) + selectedItemHalfHeight,
+            );
+            wrapperHeightPx = clampedTopEdgeToTriggerMiddle + itemMiddleToContentBottom;
+            viewport.scrollTop = contentTopToItemMiddle - topEdgeToTriggerMiddle + viewport.offsetTop;
+        }
+
+        const next: CSSProperties = {
+            position: "fixed",
+            left: `${clampedLeft}px`,
+            minWidth: `${minContentWidth}px`,
+            margin: `${CONTENT_MARGIN}px 0`,
+            minHeight: `${minContentHeight}px`,
+            maxHeight: `${availableHeight}px`,
+            height: `${wrapperHeightPx}px`,
+            ...(willAlignWithoutTopOverflow ? { bottom: 0, top: "auto" } : { top: 0, bottom: "auto" }),
+            ...styleProp,
+        };
+        (next as Record<string, string>)["--refineui-select-content-available-height"] = `${availableHeight}px`;
+        (next as Record<string, string>)["--refineui-select-trigger-width"] = `${minContentWidth}px`;
+        commitContentStyle(next);
+        setSide(willAlignWithoutTopOverflow ? "bottom" : "top");
+    }, [open, triggerRef, contentRef, styleProp, itemsRef, value, viewportRef, commitContentStyle]);
+
+    const updatePositionPopper = useCallback(() => {
+        if (!open || !triggerRef.current || !contentRef.current) return;
+        const triggerRect = triggerRef.current.getBoundingClientRect();
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        const minW = parsePx(componentSizes.dropdownMenuWidth, 180);
+        const width = Math.min(Math.max(triggerRect.width, minW), vw - 2 * CONTENT_MARGIN);
+        const left = clampNumber(triggerRect.left, [CONTENT_MARGIN, Math.max(CONTENT_MARGIN, vw - width - CONTENT_MARGIN)]);
+        const gap = SIDE_OFFSET;
+        const spaceBelow = vh - triggerRect.bottom - gap - CONTENT_MARGIN;
+        const spaceAbove = triggerRect.top - gap - CONTENT_MARGIN;
+        const scrollH = contentRef.current.scrollHeight;
+        const preferBelow = spaceBelow >= spaceAbove || (spaceBelow >= scrollH && spaceBelow >= 120);
+        const maxH = Math.max(120, preferBelow ? spaceBelow : spaceAbove);
+        const next: CSSProperties = {
+            position: "fixed",
+            left: `${left}px`,
+            width: `${width}px`,
+            maxHeight: `${maxH}px`,
+            ...styleProp,
+        };
+        if (preferBelow) {
+            next.top = `${triggerRect.bottom + gap}px`;
+            next.bottom = "auto";
+        } else {
+            next.top = "auto";
+            next.bottom = `${vh - triggerRect.top + gap}px`;
+        }
+        (next as Record<string, string>)["--refineui-select-content-available-height"] = `${maxH}px`;
+        (next as Record<string, string>)["--refineui-select-trigger-width"] = `${width}px`;
+        commitContentStyle(next);
+        setSide(preferBelow ? "bottom" : "top");
+    }, [open, triggerRef, contentRef, styleProp, commitContentStyle]);
+
+    const updatePosition = isPopper ? updatePositionPopper : updatePositionItemAligned;
+
+    const updateScrollbar = useCallback(() => {
+        const viewport = viewportRef.current;
+        if (!viewport) return;
+        const { scrollTop, scrollHeight, clientHeight } = viewport;
+        if (shouldExpandOnScrollRef.current) {
+            const scrolledBy = Math.abs(prevScrollTopRef.current - scrollTop);
+            if (scrolledBy > 0) {
+                const availableHeight = window.innerHeight - CONTENT_MARGIN * 2;
+                const wrapper = positionerRef.current;
+                if (wrapper) {
+                    const cssMinHeight = Number.parseFloat(wrapper.style.minHeight || "0") || 0;
+                    const cssHeight = Number.parseFloat(wrapper.style.height || "0") || 0;
+                    const prevHeight = Math.max(cssMinHeight, cssHeight);
+                    if (prevHeight < availableHeight) {
+                        const nextHeight = prevHeight + scrolledBy;
+                        const clampedNextHeight = Math.min(availableHeight, nextHeight);
+                        const heightDiff = nextHeight - clampedNextHeight;
+                        wrapper.style.height = `${clampedNextHeight}px`;
+                        if (wrapper.style.bottom === "0px") {
+                            viewport.scrollTop = heightDiff > 0 ? heightDiff : 0;
+                            wrapper.style.justifyContent = "flex-end";
+                        }
+                        const next = {
+                            ...contentStyleRef.current,
+                            height: `${clampedNextHeight}px`,
+                            ...(wrapper.style.bottom === "0px" ? { justifyContent: "flex-end" } : {}),
+                        } as CSSProperties;
+                        commitContentStyle(next);
+                    }
+                }
+            }
+        }
+        prevScrollTopRef.current = scrollTop;
+        if (scrollHeight <= clientHeight + 1) {
+            setShowScrollbar(false);
+            setThumbStyle({});
+            return;
+        }
+        setShowScrollbar(true);
+        const ratio = clientHeight / scrollHeight;
+        const thumbHeight = Math.max(24, ratio * clientHeight);
+        const maxTop = clientHeight - thumbHeight;
+        const top = maxTop <= 0 ? 0 : (scrollTop / (scrollHeight - clientHeight)) * maxTop;
+        setThumbStyle({
+            height: `${thumbHeight}px`,
+            transform: `translateY(${top}px)`,
+        });
+    }, [viewportRef, commitContentStyle]);
+
+    const focusSelectedItem = useCallback(() => {
+        const viewport = viewportRef.current;
+        if (!viewport) return;
+        const selectedItem =
+            itemsRef.current.find((item) => item.value === value && item.ref.current)?.ref.current ??
+            itemsRef.current.find((item) => !item.disabled && item.ref.current)?.ref.current;
+        if (!selectedItem) return;
+        selectedItem.scrollIntoView({ block: "nearest" });
+    }, [viewportRef, itemsRef, value]);
+
+    useIsomorphicLayoutEffect(() => {
+        if (!open) return;
+        shouldExpandOnScrollRef.current = false;
+        shouldRepositionRef.current = true;
+        prevScrollTopRef.current = 0;
+        const schedule = () => {
+            if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+            rafRef.current = requestAnimationFrame(() => {
+                rafRef.current = null;
+                updatePosition();
+            });
+        };
+        schedule();
+        const settleId = requestAnimationFrame(() => {
+            updatePosition();
+            updateScrollbar();
+            shouldExpandOnScrollRef.current = true;
+            if (viewportRef.current) {
+                prevScrollTopRef.current = viewportRef.current.scrollTop;
+            }
+            if (shouldRepositionRef.current) {
+                updatePosition();
+                focusSelectedItem();
+                shouldRepositionRef.current = false;
+            }
+        });
+        const viewport = viewportRef.current;
+        viewport?.addEventListener("scroll", updateScrollbar);
+        const timeoutId = window.setTimeout(schedule, 0);
+        const timeoutScrollbarId = window.setTimeout(updateScrollbar, 0);
+        window.addEventListener("resize", schedule);
+        const onAncestorScroll = (event: Event) => {
+            const target = event.target as Node | null;
+            if (target && contentRef.current?.contains(target)) return;
+            schedule();
+        };
+        const unsubscribeAncestorScroll = subscribeScrollAndScrollableAncestors(triggerRef.current, onAncestorScroll);
+        const ro =
+            typeof ResizeObserver !== "undefined"
+                ? new ResizeObserver(() => {
+                      schedule();
+                      updateScrollbar();
+                  })
+                : null;
+        if (ro && triggerRef.current) ro.observe(triggerRef.current);
+        return () => {
+            cancelAnimationFrame(settleId);
+            window.clearTimeout(timeoutId);
+            window.clearTimeout(timeoutScrollbarId);
+            window.removeEventListener("resize", schedule);
+            unsubscribeAncestorScroll();
+            viewport?.removeEventListener("scroll", updateScrollbar);
+            ro?.disconnect();
+            shouldExpandOnScrollRef.current = false;
+            if (rafRef.current != null) {
+                cancelAnimationFrame(rafRef.current);
+                rafRef.current = null;
+            }
+        };
+    }, [open, updatePosition, isPopper, triggerRef, contentRef, viewportRef, updateScrollbar, focusSelectedItem]);
+
+    const setContentRefs = useCallback(
+        (node: HTMLDivElement | null) => {
+            (contentRef as MutableRefObject<HTMLDivElement | null>).current = node;
+            if (typeof forwardedRef === "function") forwardedRef(node);
+            else if (forwardedRef) (forwardedRef as MutableRefObject<HTMLDivElement | null>).current = node;
+        },
+        [forwardedRef, contentRef],
+    );
+
+    if (!open) return null;
+
     const normalizedChildren = (() => {
         const flat = Children.toArray(children);
         if (flat.length === 1 && isValidElement(flat[0]) && flat[0].type === SelectViewport) {
@@ -182,50 +687,78 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
         return <SelectViewport>{children}</SelectViewport>;
     })();
 
-    const isPopper = position === "popper";
+    const portalTarget: HTMLElement | undefined =
+        (containerProp === null ? undefined : containerProp) ??
+        portalFromCtx ??
+        (typeof document !== "undefined" ? document.body : undefined);
 
-    return (
+    const panel = (
         <SelectContentPositionContext.Provider value={position}>
-            <SelectPrimitive.Content
-                ref={forwardedRef}
-                position={position}
-                sideOffset={SIDE_OFFSET}
-                className={clsx(
-                    selectStyles.positioner,
-                    selectStyles.contentShell,
-                    isPopper ? selectStyles.contentPopper : selectStyles.contentItemAligned,
-                    className,
-                )}
-                {...props}
-            >
-                <div className={isPopper ? selectStyles.scrollAreaRootPopper : selectStyles.scrollAreaRootItemAligned}>
-                    {normalizedChildren}
+            <div ref={positionerRef} className={selectStyles.positioner} style={contentStyle}>
+                <div
+                    ref={setContentRefs}
+                    role="listbox"
+                    tabIndex={-1}
+                    onKeyDown={onKeyDown}
+                    data-state="open"
+                    data-side={side}
+                    className={clsx(
+                        selectStyles.contentShell,
+                        isPopper ? selectStyles.contentPopper : selectStyles.contentItemAligned,
+                        "outline-none",
+                        className,
+                    )}
+                    {...rest}
+                >
+                    <div className={isPopper ? selectStyles.scrollAreaRootPopper : selectStyles.scrollAreaRootItemAligned}>
+                        {normalizedChildren}
+                        {showScrollbar ? (
+                            <div className={clsx(selectStyles.scrollAreaScrollbar)} aria-hidden>
+                                <div className={selectStyles.scrollAreaThumb} style={thumbStyle} />
+                            </div>
+                        ) : null}
+                    </div>
                 </div>
-            </SelectPrimitive.Content>
+            </div>
         </SelectContentPositionContext.Provider>
     );
+
+    if (typeof document === "undefined" || !portalTarget) return panel;
+    return createPortal(panel, portalTarget);
 });
 SelectContent.displayName = "SelectContent";
 
-export const SelectViewport = forwardRef<HTMLDivElement, SelectViewportProps>(function SelectViewport(
-    { className, ...props },
-    forwardedRef,
-) {
+export const SelectViewport = forwardRef<HTMLDivElement, SelectViewportProps>(function SelectViewport({ className, ...props }, forwardedRef) {
+    const { viewportRef } = useSelectCtx();
     const position = useSelectContentPosition();
-    const viewportStyle = position === "popper" ? selectStyles.viewportPopper : selectStyles.viewportItemAligned;
-    return <SelectPrimitive.Viewport ref={forwardedRef} className={clsx(viewportStyle, className)} {...props} />;
+    const viewportClass = position === "popper" ? selectStyles.viewportPopper : selectStyles.viewportItemAligned;
+    const setRefs = useCallback(
+        (node: HTMLDivElement | null) => {
+            (viewportRef as MutableRefObject<HTMLDivElement | null>).current = node;
+            if (typeof forwardedRef === "function") forwardedRef(node);
+            else if (forwardedRef) (forwardedRef as MutableRefObject<HTMLDivElement | null>).current = node;
+        },
+        [forwardedRef, viewportRef],
+    );
+    return <div ref={setRefs} className={clsx(viewportClass, className)} {...props} />;
 });
 SelectViewport.displayName = "SelectViewport";
 
-export const SelectGroup = forwardRef<HTMLDivElement, SelectGroupProps>(function SelectGroup({ className, ...props }, forwardedRef) {
-    return <SelectPrimitive.Group ref={forwardedRef} className={clsx(selectStyles.group, className)} {...props} />;
-});
-SelectGroup.displayName = "SelectGroup";
+export function SelectGroup({ children, className, ...props }: SelectGroupProps) {
+    return (
+        <div role="group" className={clsx(selectStyles.group, className)} {...props}>
+            {children}
+        </div>
+    );
+}
 
-export const SelectLabel = forwardRef<HTMLDivElement, SelectLabelProps>(function SelectLabel({ className, ...props }, forwardedRef) {
-    return <SelectPrimitive.Label ref={forwardedRef} className={clsx(selectStyles.label, className)} {...props} />;
-});
-SelectLabel.displayName = "SelectLabel";
+export function SelectLabel({ children, className, ...props }: SelectLabelProps) {
+    return (
+        <div className={clsx(selectStyles.label, className)} {...props}>
+            {children}
+        </div>
+    );
+}
 
 export function SelectSection({ children, className, ...props }: SelectSectionProps) {
     return (
@@ -235,76 +768,124 @@ export function SelectSection({ children, className, ...props }: SelectSectionPr
     );
 }
 
-export const SelectSeparator = forwardRef<HTMLDivElement, SelectSeparatorProps>(function SelectSeparator(
-    { className, ...props },
-    forwardedRef,
-) {
-    return <SelectPrimitive.Separator ref={forwardedRef} className={clsx(selectStyles.separator, className)} {...props} />;
-});
-SelectSeparator.displayName = "SelectSeparator";
+export function SelectSeparator({ className, ...props }: SelectSeparatorProps) {
+    return <div role="separator" className={clsx(selectStyles.separator, className)} {...props} />;
+}
 
-export const SelectItem = forwardRef<HTMLDivElement, SelectItemProps>(function SelectItem(
-    { value: itemValue, children, disabled, textValue, className, ...props },
-    forwardedRef,
-) {
+export function SelectItem({ value: itemValue, children, disabled = false, textValue, className, ...props }: SelectItemProps) {
+    const { value, setValue, setOpen, activeIndex, setActiveIndex, itemsRef, registerItem, triggerRef } = useSelectCtx();
+    const ref = useRef<HTMLDivElement | null>(null);
+    const pointerTypeRef = useRef<"mouse" | "touch" | "pen">("touch");
+    const [isFocused, setIsFocused] = useState(false);
+    const isSelected = value === itemValue;
+    const label = (textValue || (typeof children === "string" ? children : String(itemValue))).trim();
+
+    useEffect(() => {
+        return registerItem({ value: itemValue, label, disabled, ref });
+    }, [registerItem, itemValue, label, disabled]);
+
+    const enabledItems = itemsRef.current.filter((item) => !item.disabled);
+    const myIndex = enabledItems.findIndex((item) => item.value === itemValue);
+    const isActive = isFocused && !disabled;
+    const handleSelect = () => {
+        if (disabled) return;
+        setValue(itemValue);
+        setOpen(false);
+        triggerRef.current?.focus();
+    };
+
     return (
-        <SelectPrimitive.Item
-            ref={forwardedRef}
-            value={itemValue}
-            disabled={disabled}
-            textValue={textValue}
-            className={clsx(selectStyles.item, className)}
+        <div
+            ref={ref}
+            role="option"
+            tabIndex={disabled ? undefined : -1}
+            aria-selected={isSelected}
+            aria-disabled={disabled}
+            data-state={isSelected ? "checked" : "unchecked"}
+            data-highlighted={isActive ? "" : undefined}
+            data-disabled={disabled ? "" : undefined}
+            onFocus={() => {
+                setIsFocused(true);
+                if (myIndex >= 0) setActiveIndex(myIndex);
+            }}
+            onBlur={() => {
+                setIsFocused(false);
+            }}
+            onPointerDown={(event) => {
+                pointerTypeRef.current = event.pointerType as "mouse" | "touch" | "pen";
+            }}
+            onPointerMove={(event) => {
+                pointerTypeRef.current = event.pointerType as "mouse" | "touch" | "pen";
+                if (pointerTypeRef.current === "mouse") {
+                    if (disabled) {
+                        setActiveIndex(-1);
+                    } else {
+                        event.currentTarget.focus({ preventScroll: true });
+                    }
+                }
+            }}
+            onPointerLeave={(event) => {
+                if (event.currentTarget === document.activeElement) {
+                    setActiveIndex(-1);
+                }
+            }}
+            onPointerUp={() => {
+                if (pointerTypeRef.current === "mouse") handleSelect();
+            }}
+            onClick={() => {
+                if (pointerTypeRef.current !== "mouse") handleSelect();
+            }}
+            onKeyDown={(event) => {
+                if (event.key === " " || event.key === "Enter") {
+                    event.preventDefault();
+                    handleSelect();
+                }
+            }}
+            className={clsx(
+                selectStyles.item,
+                (isActive || isSelected) && selectStyles.itemActive,
+                disabled && selectStyles.itemDisabled,
+                className,
+            )}
             {...props}
         >
-            <SelectPrimitive.ItemIndicator className={selectStyles.itemIndicator}>
-                <WebIcon name="checkmark" size={iconSizes.xsmall} aria-hidden />
-            </SelectPrimitive.ItemIndicator>
-            <SelectPrimitive.ItemText className={selectStyles.itemText}>{children}</SelectPrimitive.ItemText>
-        </SelectPrimitive.Item>
+            <span className={selectStyles.itemIndicator} aria-hidden>
+                {isSelected ? <WebIcon name="checkmark" size={iconSizes.xsmall} /> : null}
+            </span>
+            <span data-refineui-select-item-text className={selectStyles.itemText}>
+                {children}
+            </span>
+        </div>
     );
-});
-SelectItem.displayName = "SelectItem";
+}
 
-export const SelectItemText = forwardRef<HTMLSpanElement, SelectItemTextProps>(function SelectItemText(
-    { className, ...props },
-    forwardedRef,
-) {
-    return <SelectPrimitive.ItemText ref={forwardedRef} className={clsx(selectStyles.itemText, className)} {...props} />;
-});
-SelectItemText.displayName = "SelectItemText";
-
-export const SelectItemIndicator = forwardRef<HTMLSpanElement, SelectItemIndicatorProps>(function SelectItemIndicator(
-    { className, children, ...props },
-    forwardedRef,
-) {
+export function SelectItemText({ children, className, ...props }: SelectItemTextProps) {
     return (
-        <SelectPrimitive.ItemIndicator ref={forwardedRef} className={clsx(selectStyles.itemIndicator, className)} {...props}>
-            {children ?? <WebIcon name="checkmark" size={iconSizes.xsmall} aria-hidden />}
-        </SelectPrimitive.ItemIndicator>
+        <span className={clsx(selectStyles.itemText, className)} {...props}>
+            {children}
+        </span>
     );
-});
-SelectItemIndicator.displayName = "SelectItemIndicator";
+}
 
-export const SelectScrollUpButton = forwardRef<HTMLDivElement, SelectScrollUpButtonProps>(function SelectScrollUpButton(
-    { className, ...props },
-    forwardedRef,
-) {
-    return <SelectPrimitive.ScrollUpButton ref={forwardedRef} className={className} {...props} />;
-});
-SelectScrollUpButton.displayName = "SelectScrollUpButton";
+export function SelectItemIndicator({ children, className, ...props }: SelectItemIndicatorProps) {
+    return (
+        <span className={clsx(selectStyles.itemIndicator, className)} {...props}>
+            {children}
+        </span>
+    );
+}
 
-export const SelectScrollDownButton = forwardRef<HTMLDivElement, SelectScrollDownButtonProps>(function SelectScrollDownButton(
-    { className, ...props },
-    forwardedRef,
-) {
-    return <SelectPrimitive.ScrollDownButton ref={forwardedRef} className={className} {...props} />;
-});
-SelectScrollDownButton.displayName = "SelectScrollDownButton";
+export function SelectScrollUpButton({ children, ...props }: SelectScrollUpButtonProps) {
+    return <div {...props}>{children}</div>;
+}
 
-export const SelectArrow = forwardRef<SVGSVGElement, SelectArrowProps>(function SelectArrow({ className, ...props }, forwardedRef) {
-    return <SelectPrimitive.Arrow ref={forwardedRef} className={className} {...props} />;
-});
-SelectArrow.displayName = "SelectArrow";
+export function SelectScrollDownButton({ children, ...props }: SelectScrollDownButtonProps) {
+    return <div {...props}>{children}</div>;
+}
+
+export function SelectArrow({ children, ...props }: SelectArrowProps) {
+    return <span {...props}>{children}</span>;
+}
 
 export {
     Select as Root,
