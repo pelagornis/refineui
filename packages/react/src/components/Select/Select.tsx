@@ -56,6 +56,8 @@ type SelectCtxValue = {
     disabled: boolean;
     activeIndex: number;
     setActiveIndex: (i: number) => void;
+    /** `SelectItem` 등록/해제마다 증가 — `SelectContent`가 측정을 다시 돌릴 때 사용 */
+    itemsVersion: number;
     itemsRef: MutableRefObject<RegisteredItem[]>;
     registerItem: (item: RegisteredItem) => () => void;
     triggerRef: MutableRefObject<HTMLButtonElement | null>;
@@ -187,9 +189,19 @@ export function Select({
         setActiveIndex(selected >= 0 ? selected : enabledItems.length > 0 ? 0 : -1);
     }, [open, value, enabledItems]);
 
-    useEffect(() => {
-        if (!open || activeIndex < 0) return;
-        enabledItems[activeIndex]?.ref.current?.scrollIntoView({ block: "nearest" });
+    /** 키보드로 하이라이트만 이동할 때만 스냅 — 열릴 때(`prev === -1`에서의 첫 인덱스)는 `SelectContent`가 스크롤 담당 */
+    const prevActiveIndexForScrollRef = useRef(-1);
+    useLayoutEffect(() => {
+        if (!open) {
+            prevActiveIndexForScrollRef.current = -1;
+            return;
+        }
+        if (activeIndex < 0) return;
+        const prev = prevActiveIndexForScrollRef.current;
+        if (prev !== -1 && prev !== activeIndex) {
+            enabledItems[activeIndex]?.ref.current?.scrollIntoView({ block: "nearest" });
+        }
+        prevActiveIndexForScrollRef.current = activeIndex;
     }, [open, activeIndex, enabledItems]);
 
     useEffect(() => {
@@ -285,6 +297,7 @@ export function Select({
             disabled,
             activeIndex,
             setActiveIndex,
+            itemsVersion,
             itemsRef,
             registerItem,
             triggerRef,
@@ -304,6 +317,7 @@ export function Select({
             disabled,
             activeIndex,
             setActiveIndex,
+            itemsVersion,
             registerItem,
             onKeyDown,
             getLabelByValue,
@@ -401,7 +415,7 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
         style: styleProp,
         ...rest
     } = props;
-    const { open, contentRef, onKeyDown, triggerRef, viewportRef, itemsRef, value } = useSelectCtx();
+    const { open, contentRef, onKeyDown, triggerRef, viewportRef, itemsRef, itemsVersion, value } = useSelectCtx();
     const portalFromCtx = useContext(PortalContainerContext);
     const [side, setSide] = useState<"top" | "bottom">("bottom");
     const [contentStyle, setContentStyle] = useState<CSSProperties>({});
@@ -417,7 +431,17 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
 
     const commitContentStyle = useCallback((next: CSSProperties) => {
         const prev = contentStyleRef.current;
-        const fields: (keyof CSSProperties)[] = ["left", "top", "bottom", "height", "maxHeight", "minHeight", "minWidth", "margin"];
+        const fields: (keyof CSSProperties)[] = [
+            "left",
+            "top",
+            "bottom",
+            "height",
+            "maxHeight",
+            "minHeight",
+            "minWidth",
+            "margin",
+            "justifyContent",
+        ];
         const unchanged = fields.every((key) => prev[key] === next[key]);
         if (unchanged) return;
         contentStyleRef.current = next;
@@ -548,6 +572,7 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
 
     const updatePosition = isPopper ? updatePositionPopper : updatePositionItemAligned;
 
+    /** Radix Viewport onScroll: 아래에 붙인 패널(`bottom: 0`)일 때만 스크롤로 높이 늘리며 scrollTop·justifyContent 보정. 위에서 시작(`top: 0`)인 경우 이 블록을 타지 않음 — DOM `style.bottom` 문자열 대신 `side`로 판별(React는 `0`/`0px` 등으로 올 수 있음). */
     const updateScrollbar = useCallback(() => {
         const viewport = viewportRef.current;
         if (!viewport) return;
@@ -566,14 +591,14 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
                         const clampedNextHeight = Math.min(availableHeight, nextHeight);
                         const heightDiff = nextHeight - clampedNextHeight;
                         wrapper.style.height = `${clampedNextHeight}px`;
-                        if (wrapper.style.bottom === "0px") {
+                        if (side === "bottom") {
                             viewport.scrollTop = heightDiff > 0 ? heightDiff : 0;
                             wrapper.style.justifyContent = "flex-end";
                         }
                         const next = {
                             ...contentStyleRef.current,
                             height: `${clampedNextHeight}px`,
-                            ...(wrapper.style.bottom === "0px" ? { justifyContent: "flex-end" } : {}),
+                            ...(side === "bottom" ? { justifyContent: "flex-end" } : {}),
                         } as CSSProperties;
                         commitContentStyle(next);
                     }
@@ -595,16 +620,22 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
             height: `${thumbHeight}px`,
             transform: `translateY(${top}px)`,
         });
-    }, [viewportRef, commitContentStyle]);
+    }, [viewportRef, commitContentStyle, side]);
 
+    /** Radix `focusFirst`와 동일: 첫 옵션은 맨 위(scrollTop 0), 마지막은 맨 아래로 스냅해 상단 붙음(bottom/top 앵커)과 무관하게 목록 시작점을 맞춘다 */
     const focusSelectedItem = useCallback(() => {
         const viewport = viewportRef.current;
         if (!viewport) return;
+        const enabledItems = itemsRef.current.filter((item) => !item.disabled);
+        const firstEl = enabledItems[0]?.ref.current ?? null;
+        const lastEl = enabledItems.length > 0 ? enabledItems[enabledItems.length - 1]?.ref.current ?? null : null;
         const selectedItem =
             itemsRef.current.find((item) => item.value === value && item.ref.current)?.ref.current ??
             itemsRef.current.find((item) => !item.disabled && item.ref.current)?.ref.current;
         if (!selectedItem) return;
         selectedItem.scrollIntoView({ block: "nearest" });
+        if (firstEl && selectedItem === firstEl) viewport.scrollTop = 0;
+        if (lastEl && selectedItem === lastEl) viewport.scrollTop = viewport.scrollHeight;
     }, [viewportRef, itemsRef, value]);
 
     useIsomorphicLayoutEffect(() => {
@@ -612,6 +643,8 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
         shouldExpandOnScrollRef.current = false;
         shouldRepositionRef.current = true;
         prevScrollTopRef.current = 0;
+        /** Radix `SelectItemAlignedPosition`: `useLayoutEffect(() => position(), [position])`와 같이 레이아웃 직후 동기 측정 */
+        updatePosition();
         const schedule = () => {
             if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
             rafRef.current = requestAnimationFrame(() => {
@@ -621,6 +654,7 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
         };
         schedule();
         const settleId = requestAnimationFrame(() => {
+            if (positionerRef.current) positionerRef.current.style.justifyContent = "";
             updatePosition();
             updateScrollbar();
             shouldExpandOnScrollRef.current = true;
@@ -630,6 +664,11 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
             if (shouldRepositionRef.current) {
                 updatePosition();
                 focusSelectedItem();
+                /** Radix `handleScrollButtonChange`: 스크롤/포커스 후 측정값이 바뀌면 `position()` 한 번 더 */
+                if (!isPopper) {
+                    updatePosition();
+                    updateScrollbar();
+                }
                 shouldRepositionRef.current = false;
             }
         });
@@ -666,7 +705,7 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
                 rafRef.current = null;
             }
         };
-    }, [open, updatePosition, isPopper, triggerRef, contentRef, viewportRef, updateScrollbar, focusSelectedItem]);
+    }, [open, itemsVersion, updatePosition, isPopper, triggerRef, contentRef, viewportRef, updateScrollbar, focusSelectedItem]);
 
     const setContentRefs = useCallback(
         (node: HTMLDivElement | null) => {
