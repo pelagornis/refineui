@@ -134,8 +134,8 @@ export const componentColorTokens = {
     },
     tooltip: {
         default: {
-            background: semanticToken("surfaceTooltip"),
-            foreground: semanticToken("foregroundInversed"),
+            background: semanticToken("surfacePopover"),
+            foreground: semanticToken("foregroundPrimary"),
         }
     },
     popover: {
