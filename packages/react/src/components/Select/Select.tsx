@@ -19,7 +19,7 @@ import {
 import { createPortal } from "react-dom";
 import { iconSizes } from "@refineui/tokens";
 import { componentSizes, foundationSizes } from "../../componentSizes";
-import { acquireBodyScrollLock } from "../../utils/bodyScrollLock";
+import { acquireBodyScrollLock } from "@refineui/utilities/react";
 import { WebIcon } from "../../WebIcon";
 import { selectSizeClass, selectStyles } from "./style";
 import type {

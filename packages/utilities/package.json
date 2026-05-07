@@ -5,14 +5,16 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "pnpm run build:color && pnpm run build:animation",
+    "build": "pnpm run build:color && pnpm run build:animation && pnpm run build:react",
     "build:color": "pnpm exec tsup src/color.ts --format cjs,esm --dts --clean --out-dir lib --external react --external react-dom",
-    "build:animation": "pnpm exec tsup src/animation.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom"
+    "build:animation": "pnpm exec tsup src/animation.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom",
+    "build:react": "pnpm exec tsup src/react.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom"
   },
   "exports": {
     ".": {"types": "./lib/index.d.ts", "import": "./lib/index.js", "require": "./lib/index.cjs"},
     "./color": {"types": "./lib/color.d.ts", "import": "./lib/color.js", "require": "./lib/color.cjs"},
-    "./animation": {"types": "./lib/animation.d.ts", "import": "./lib/animation.js", "require": "./lib/animation.cjs"}
+    "./animation": {"types": "./lib/animation.d.ts", "import": "./lib/animation.js", "require": "./lib/animation.cjs"},
+    "./react": {"types": "./lib/react.d.ts", "import": "./lib/react.js", "require": "./lib/react.cjs"}
   },
   "main": "./lib/index.cjs",
   "dependencies": {"@refineui/tokens": "workspace:*", "@refineui/version": "workspace:*"},

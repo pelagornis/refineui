@@ -28,9 +28,7 @@ import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentSizes } from "../../componentSizes";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
-import { composeRef } from "../../utils/composeRef";
-import { getMergeableTriggerChild } from "../../utils/mergeTriggerChild";
-import { acquireBodyScrollLock } from "../../utils/bodyScrollLock";
+import { acquireBodyScrollLock, composeRefs, getMergeableTriggerChild } from "@refineui/utilities/react";
 import { RadioInput } from "../Radio/RadioInput";
 import type {
     DropdownContentProps,
@@ -181,7 +179,7 @@ export function DropdownTrigger({ children, className, ...props }: DropdownTrigg
         const passthroughCn = (props as HTMLAttributes<HTMLElement>).className;
         return cloneElement(el, {
             ...props,
-            ref: composeRef(triggerRef, el.ref),
+            ref: composeRefs(triggerRef, el.ref),
             className: clsx(className, passthroughCn, (el.props as HTMLAttributes<HTMLElement>).className),
             "aria-expanded": open,
             "aria-haspopup": "menu" as const,

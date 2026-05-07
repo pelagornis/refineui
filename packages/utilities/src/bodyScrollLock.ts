@@ -1,4 +1,9 @@
-/** 루트 문서 스크롤 잠금 — 여러 오버레이가 겹칠 때 refCount로 안전하게 해제 */
+/**
+ * 루트 문서 스크롤 잠금 — 여러 오버레이가 겹칠 때 refCount로 안전하게 해제.
+ *
+ * Radix Primitives는 보통 `react-remove-scroll` 등으로 포털·포커스 스코프와 함께 처리합니다.
+ * RefineUI는 외부 패키지 추가 없이 동일한 ref-count 패턴으로 문서 `overflow`/`position`만 잠급니다.
+ */
 
 let lockCount = 0;
 let bodyOverflow = "";

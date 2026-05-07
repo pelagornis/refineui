@@ -20,6 +20,7 @@
       "@refineui/utilities": ["packages/utilities"],
       "@refineui/utilities/animation": ["packages/utilities/src/animation.ts"],
       "@refineui/utilities/color": ["packages/utilities/src/color.ts"],
+      "@refineui/utilities/react": ["packages/utilities/src/react.ts"],
     }
   },
   "exclude": ["node_modules", "dist"]

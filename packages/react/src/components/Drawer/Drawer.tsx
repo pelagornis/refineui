@@ -18,7 +18,7 @@ import { iconSizes, semanticInteraction } from "@refineui/tokens";
 import { motionMsToNumber } from "@refineui/utilities/animation";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentSizes } from "../../componentSizes";
-import { acquireBodyScrollLock } from "../../utils/bodyScrollLock";
+import { acquireBodyScrollLock } from "@refineui/utilities/react";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
 import { useFocusTrap } from "../../hooks/useFocusTrap";

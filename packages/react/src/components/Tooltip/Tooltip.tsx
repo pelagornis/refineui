@@ -4,7 +4,7 @@ import { cloneElement, useId, useRef, useState } from "react";
 import { spacings } from "@refineui/tokens";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
-import { getMergeableTriggerChild } from "../../utils/mergeTriggerChild";
+import { getMergeableTriggerChild } from "@refineui/utilities/react";
 import { tooltipArrowStyle, tooltipPanelStyle, tooltipStyles } from "./style";
 import type { TooltipProps, TooltipTriggerMergeProps } from "./types";
 

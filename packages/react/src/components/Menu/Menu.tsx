@@ -9,7 +9,7 @@ import { cloneElement, createContext, useCallback, useContext, useEffect, useMem
 import { iconSizes, semanticInteraction } from "@refineui/tokens";
 import { motionMsToNumber } from "@refineui/utilities/animation";
 import { componentSizes } from "../../componentSizes";
-import { getMergeableTriggerChild } from "../../utils/mergeTriggerChild";
+import { getMergeableTriggerChild } from "@refineui/utilities/react";
 import { menuStyles } from "./style";
 import type {
     MenuDividerProps,

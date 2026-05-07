@@ -22,8 +22,7 @@ import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentSizes, foundationSizes } from "../../componentSizes";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
-import { composeRef } from "../../utils/composeRef";
-import { getMergeableTriggerChild } from "../../utils/mergeTriggerChild";
+import { composeRefs, getMergeableTriggerChild } from "@refineui/utilities/react";
 import { popoverFloatingClasses, popoverStyles } from "./style";
 import type {
     PopOverProps,
@@ -198,7 +197,7 @@ export function PopoverTrigger({ children, className, ...props }: PopoverTrigger
         const passthroughCn = (props as HTMLAttributes<HTMLElement>).className;
         return cloneElement(el, {
             ...props,
-            ref: composeRef(triggerRef, el.ref),
+            ref: composeRefs(triggerRef, el.ref),
             className: clsx(className, passthroughCn, (el.props as HTMLAttributes<HTMLElement>).className),
             "aria-expanded": open,
             "aria-haspopup": "dialog" as const,
