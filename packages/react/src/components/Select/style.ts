@@ -1,7 +1,11 @@
 import type { SelectSize } from "./types";
 
-// Figma MCP: Select trigger (1116:1429), Select / Menu (1117:1177),
-// Select / Menu / Item (1144:2410), Select / Menu / Section (1144:2756)
+// Figma MCP — Web Kit `CxoaTfftpyh8ETDBamkkEK`:
+// Trigger `1116:1429`, Menu `1117:1177`, Section `1144:2756`.
+// Select / Menu / Item COMPONENT_SET 프레임 `1144:2411` — variant 노드별 State:
+// Default `1144:2410`, Hover `1144:2417`, Pressed `1144:2429`, Selected `1144:2435`, Disabled `1144:2423`.
+// `get_design_context`는 노드 하나만 받으므로 State 전체를 보려면 위 variant id 각각 호출하거나
+// 부모 `1144:2411`에 `get_metadata`로 목록 확인.
 export const selectStyles = {
     root: "relative inline-block",
     trigger:
@@ -28,9 +32,10 @@ export const selectStyles = {
     label: "refineui-typo-caption-1 px-refineui-size-small py-refineui-size-medium text-refineui-alias-foreground-primary",
     separator: "my-refineui-size-xsmall h-px bg-refineui-alias-border-default",
 
+    /** 배경·상태 색은 `refineui.css` `[data-refineui="select-item"]` + `[data-refineui="select-menu"]` 조합 (Figma `1144:2411`) */
     item:
-        "refineui-typo-body-2 relative mx-refineui-size-xsmall flex cursor-pointer items-center gap-refineui-size-medium rounded-refineui-xlarge px-refineui-size-medium py-refineui-size-small text-refineui-alias-foreground-primary outline-none transition-colors data-[highlighted]:bg-refineui-alias-background-surface-hover data-[state=checked]:bg-refineui-alias-background-surface-hover data-[disabled]:cursor-not-allowed data-[disabled]:text-refineui-alias-foreground-disabled",
-    /** @deprecated `data-[highlighted]` / `data-[disabled]`로 통합 — 하위 호환용 */
+        "refineui-typo-body-2 relative mx-refineui-size-xsmall flex cursor-pointer items-center gap-refineui-size-medium rounded-refineui-xlarge px-refineui-size-medium py-refineui-size-small text-refineui-alias-foreground-primary outline-none transition-colors data-[disabled]:cursor-not-allowed data-[disabled]:text-refineui-alias-foreground-disabled",
+    /** @deprecated 배경은 CSS alias 토큰으로 통일 — 호버는 `select-menu` 포커스·`:hover` 규칙 */
     itemActive: "bg-refineui-alias-background-surface-hover",
     itemDisabled: "cursor-not-allowed text-refineui-alias-foreground-disabled",
     itemIndicator: "inline-flex size-[16px] shrink-0 items-center justify-center",

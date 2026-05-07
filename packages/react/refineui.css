@@ -86,7 +86,7 @@
 [data-refineui="dropdown-item"][data-state="selected"]:not(:disabled) {
   background-color: var(--refineui-color-alias-background-surface-selected) !important;
 }
-[data-refineui="select-item"][data-selected="true"]:not(:disabled) {
+[data-refineui="select-item"][data-selected="true"]:not([aria-disabled="true"]) {
   background-color: var(--refineui-color-alias-background-surface-selected) !important;
 }
 /* Dropdown / Menu / Item — Web Kit `503:2985`: hover `surfaceHover`, pressed `surfaceActive` */
@@ -94,8 +94,9 @@
 [data-refineui="dropdown-menu"] [data-refineui="dropdown-item"]:not(:disabled):focus {
   background-color: var(--refineui-color-alias-background-surface-hover) !important;
 }
-[data-refineui="select-item"]:not(:disabled):not(:active):hover,
-[data-refineui="select-menu"] [data-refineui="select-item"]:not(:disabled):not(:active):focus {
+/* Select / Menu / Item — `1144:2411`: div option은 `:disabled` 미적용 → `aria-disabled`로 제외 */
+[data-refineui="select-item"]:not([aria-disabled="true"]):not(:active):hover,
+[data-refineui="select-menu"] [data-refineui="select-item"]:not([aria-disabled="true"]):not(:active):focus {
   background-color: var(--refineui-color-alias-background-surface-hover) !important;
 }
 [data-refineui="dropdown-item"]:not(:disabled):active {
@@ -106,25 +107,34 @@
 [data-refineui="dropdown-item"][data-selected="true"]:not(:disabled):active {
   background-color: var(--refineui-color-alias-background-surface-active) !important;
 }
-[data-refineui="select-item"]:not(:disabled):active {
+[data-refineui="select-item"]:not([aria-disabled="true"]):active {
   background-color: var(--refineui-color-alias-background-surface-active) !important;
 }
-[data-refineui="select-item"][data-selected="true"]:not(:disabled):active,
-[data-refineui="select-item"][data-state="pressed"]:not(:disabled) {
+[data-refineui="select-item"][data-selected="true"]:not([aria-disabled="true"]):active,
+[data-refineui="select-item"][data-state="pressed"]:not([aria-disabled="true"]) {
   background-color: var(--refineui-color-alias-background-surface-active) !important;
 }
-[data-refineui="select-item"][data-state="hover"] {
+[data-refineui="select-item"][data-state="hover"]:not([aria-disabled="true"]) {
   background-color: var(--refineui-color-alias-background-surface-hover) !important;
 }
-[data-refineui="select-item"][data-state="pressed"] {
+[data-refineui="select-item"][data-state="pressed"]:not([aria-disabled="true"]) {
   background-color: var(--refineui-color-alias-background-surface-active) !important;
 }
-[data-refineui="select-item"][data-state="pressed"]:hover,
-[data-refineui="select-item"][data-state="pressed"][data-selected="true"] {
+[data-refineui="select-item"][data-state="pressed"]:not([aria-disabled="true"]):hover,
+[data-refineui="select-item"][data-state="pressed"][data-selected="true"]:not([aria-disabled="true"]) {
   background-color: var(--refineui-color-alias-background-surface-active) !important;
 }
-[data-refineui="select-item"][data-state="selected"] {
+[data-refineui="select-item"][data-state="selected"]:not([aria-disabled="true"]) {
   background-color: var(--refineui-color-alias-background-surface-selected) !important;
+}
+/* State=Disabled `1144:2423` — 배경 surfaceDisabled + 글자 foregroundDisabled */
+[data-refineui="select-item"][aria-disabled="true"] {
+  background-color: var(--refineui-color-alias-background-surface-disabled) !important;
+  color: var(--refineui-color-alias-foreground-disabled) !important;
+  transform: none !important;
+}
+[data-refineui="select-item"][aria-disabled="true"] [data-refineui-select-item-text] {
+  color: inherit;
 }
 
 [data-refineui="dropdown-menu"][data-side="bottom"] {
@@ -337,7 +347,7 @@
 [data-refineui="pagination"]:not(:disabled):active,
 [data-refineui="accordion-trigger"]:active,
 [data-refineui="dropdown-item"]:not(:disabled):active,
-[data-refineui="select-item"]:not(:disabled):active,
+[data-refineui="select-item"]:not([aria-disabled="true"]):active,
 [data-refineui="menu-item"]:not(:disabled):active,
 [data-refineui="tab"]:active,
 [data-refineui="calendar-nav"]:active,
@@ -345,11 +355,20 @@
 [data-refineui="chip-remove"]:active {
   transform: scale(var(--refineui-motion-button-active-scale));
 }
+/* `data-state="pressed"` — div option(`select-item`)은 `:active`만으로 스케일이 빠질 수 있어 동일 적용 */
+[data-refineui="dropdown-item"][data-state="pressed"]:not(:disabled),
+[data-refineui="select-item"][data-state="pressed"]:not([aria-disabled="true"]),
+[data-refineui="menu-item"][data-state="pressed"]:not(:disabled) {
+  transform: scale(var(--refineui-motion-button-active-scale));
+}
 [data-refineui="button"]:focus-visible,
 [data-refineui="switch"]:focus-visible,
 [data-refineui="pagination"][data-page="true"]:focus-visible,
 [data-refineui="pagination"]:focus-visible,
 [data-refineui="accordion-trigger"]:focus-visible,
+[data-refineui="select-item"]:focus:not(:focus-visible) {
+  outline: none;
+}
 [data-refineui="dropdown-item"]:focus-visible,
 [data-refineui="select-item"]:focus-visible,
 [data-refineui="menu-item"]:focus-visible,

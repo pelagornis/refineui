@@ -738,6 +738,7 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
                     role="listbox"
                     tabIndex={-1}
                     onKeyDown={onKeyDown}
+                    data-refineui="select-menu"
                     data-state="open"
                     data-side={side}
                     className={clsx(
@@ -805,11 +806,25 @@ export function SelectSeparator({ className, ...props }: SelectSeparatorProps) {
     return <div role="separator" className={clsx(selectStyles.separator, className)} {...props} />;
 }
 
-export function SelectItem({ value: itemValue, children, disabled = false, textValue, className, ...props }: SelectItemProps) {
+export function SelectItem({
+    value: itemValue,
+    children,
+    disabled = false,
+    textValue,
+    className,
+    onPointerDown,
+    onPointerUp,
+    onPointerLeave,
+    onPointerCancel,
+    onMouseDown,
+    onMouseUp,
+    onMouseLeave,
+    ...props
+}: SelectItemProps) {
     const { value, setValue, setOpen, activeIndex, setActiveIndex, itemsRef, registerItem, triggerRef } = useSelectCtx();
     const ref = useRef<HTMLDivElement | null>(null);
     const pointerTypeRef = useRef<"mouse" | "touch" | "pen">("touch");
-    const [isFocused, setIsFocused] = useState(false);
+    const [pressed, setPressed] = useState(false);
     const isSelected = value === itemValue;
     const label = (textValue || (typeof children === "string" ? children : String(itemValue))).trim();
 
@@ -819,7 +834,8 @@ export function SelectItem({ value: itemValue, children, disabled = false, textV
 
     const enabledItems = itemsRef.current.filter((item) => !item.disabled);
     const myIndex = enabledItems.findIndex((item) => item.value === itemValue);
-    const isActive = isFocused && !disabled;
+    /** 키보드 `activeIndex`·마우스 호버(`setActiveIndex`)만 사용 — 옵션에 `focus()`하지 않아 포인터 클릭 시 focus ring 방지 */
+    const isHighlighted = myIndex >= 0 && activeIndex === myIndex && !disabled;
     const handleSelect = () => {
         if (disabled) return;
         setValue(itemValue);
@@ -834,36 +850,56 @@ export function SelectItem({ value: itemValue, children, disabled = false, textV
             tabIndex={disabled ? undefined : -1}
             aria-selected={isSelected}
             aria-disabled={disabled}
-            data-state={isSelected ? "checked" : "unchecked"}
-            data-highlighted={isActive ? "" : undefined}
+            data-refineui="select-item"
+            data-selected={isSelected ? true : undefined}
+            data-state={pressed ? "pressed" : isSelected ? "selected" : undefined}
+            data-highlighted={isHighlighted ? "" : undefined}
             data-disabled={disabled ? "" : undefined}
             onFocus={() => {
-                setIsFocused(true);
                 if (myIndex >= 0) setActiveIndex(myIndex);
             }}
-            onBlur={() => {
-                setIsFocused(false);
-            }}
             onPointerDown={(event) => {
+                onPointerDown?.(event);
                 pointerTypeRef.current = event.pointerType as "mouse" | "touch" | "pen";
+                if (!disabled) setPressed(true);
             }}
             onPointerMove={(event) => {
                 pointerTypeRef.current = event.pointerType as "mouse" | "touch" | "pen";
                 if (pointerTypeRef.current === "mouse") {
                     if (disabled) {
                         setActiveIndex(-1);
-                    } else {
-                        event.currentTarget.focus({ preventScroll: true });
+                    } else if (myIndex >= 0) {
+                        setActiveIndex(myIndex);
                     }
                 }
             }}
             onPointerLeave={(event) => {
+                onPointerLeave?.(event);
+                setPressed(false);
                 if (event.currentTarget === document.activeElement) {
                     setActiveIndex(-1);
                 }
             }}
-            onPointerUp={() => {
+            onPointerCancel={(event) => {
+                onPointerCancel?.(event);
+                setPressed(false);
+            }}
+            onPointerUp={(event) => {
+                onPointerUp?.(event);
+                setPressed(false);
                 if (pointerTypeRef.current === "mouse") handleSelect();
+            }}
+            onMouseDown={(event) => {
+                onMouseDown?.(event);
+                if (!disabled) setPressed(true);
+            }}
+            onMouseUp={(event) => {
+                onMouseUp?.(event);
+                setPressed(false);
+            }}
+            onMouseLeave={(event) => {
+                onMouseLeave?.(event);
+                setPressed(false);
             }}
             onClick={() => {
                 if (pointerTypeRef.current !== "mouse") handleSelect();
@@ -874,15 +910,13 @@ export function SelectItem({ value: itemValue, children, disabled = false, textV
                     handleSelect();
                 }
             }}
-            className={clsx(
-                selectStyles.item,
-                (isActive || isSelected) && selectStyles.itemActive,
-                disabled && selectStyles.itemDisabled,
-                className,
-            )}
+            className={clsx(selectStyles.item, disabled && selectStyles.itemDisabled, className)}
             {...props}
         >
-            <span className={selectStyles.itemIndicator} aria-hidden>
+            <span
+                className={clsx(selectStyles.itemIndicator, disabled && "text-refineui-alias-foreground-disabled")}
+                aria-hidden
+            >
                 {isSelected ? <WebIcon name="checkmark" size={iconSizes.xsmall} /> : null}
             </span>
             <span data-refineui-select-item-text className={selectStyles.itemText}>
