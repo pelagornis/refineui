@@ -35,7 +35,7 @@ export default function DrawerDemo() {
                         <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeSmall }}>
                         <Drawer>
                             <DrawerTrigger>Overlay / Small / Right / Footer Split</DrawerTrigger>
-                            <DrawerContent type="overlay" size="small" placement="right">
+                            <DrawerContent type="overlay" size="sm" placement="right">
                                 <DrawerHeader>
                                     <DrawerTitle>Drawer 제목</DrawerTitle>
                                     <DrawerDescription>Footer state = split (double button)</DrawerDescription>
@@ -52,7 +52,7 @@ export default function DrawerDemo() {
 
                         <Drawer>
                             <DrawerTrigger variant="secondary">Overlay / Medium / Left / Footer Icons</DrawerTrigger>
-                            <DrawerContent type="overlay" size="medium" placement="left">
+                            <DrawerContent type="overlay" size="md" placement="left">
                                 <DrawerHeader>
                                     <DrawerTitle>왼쪽 Medium Drawer</DrawerTitle>
                                     <DrawerDescription>Footer state = icons</DrawerDescription>
@@ -71,7 +71,7 @@ export default function DrawerDemo() {
 
                         <Drawer>
                             <DrawerTrigger variant="secondary">Overlay / Large / Right / Footer Single</DrawerTrigger>
-                            <DrawerContent type="overlay" size="large" placement="right">
+                            <DrawerContent type="overlay" size="lg" placement="right">
                                 <DrawerHeader>
                                     <DrawerTitle>오른쪽 Large Drawer</DrawerTitle>
                                     <DrawerDescription>Footer state = single (full width button)</DrawerDescription>
@@ -90,7 +90,7 @@ export default function DrawerDemo() {
                     <div style={{ display: "grid", gap: spacings.sizeSmall }}>
                         <p style={{ margin: 0, ...typographys.body4, color: colors.neutral700 }}>Inline Preview</p>
                         <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeSmall }}>
-                        <Drawer type="inline" size="small">
+                        <Drawer type="inline" size="sm">
                             <DrawerContent>
                                 <DrawerHeader showClose={false}>
                                     <DrawerTitle>Inline / Small</DrawerTitle>

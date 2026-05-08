@@ -6,23 +6,13 @@
  *
  * 페어 맵의 타입은 `types.ts`의 `SemanticPalettePairsOf<PaletteColors>`를 따른다.
  */
+import { paletteColorCssVar } from "@refineui/utilities";
 import type {
     PaletteColors,
     SemanticColorModePair,
     SemanticPalettePairFor,
     SemanticPalettePairsOf,
 } from "../types";
-
-function toKebab(str: string): string {
-    return str
-        .replace(/([a-z])([A-Z])/g, "$1-$2")
-        .replace(/([a-zA-Z])(\d)/g, "$1-$2")
-        .toLowerCase();
-}
-
-function paletteVarRef(key: keyof PaletteColors): string {
-    return `var(--refineui-color-${toKebab(String(key))})`;
-}
 
 export const SEMANTIC_PALETTE_PAIRS = {
     backgroundBrandActive: { light: "neutralBlack", dark: "primaryLightGray" },
@@ -120,8 +110,8 @@ function buildSemanticColors(): Record<SemanticColorName, SemanticColorModePair>
     for (const name of Object.keys(SEMANTIC_PALETTE_PAIRS) as SemanticPaletteName[]) {
         const { light, dark } = SEMANTIC_PALETTE_PAIRS[name];
         out[name] = {
-            light: paletteVarRef(light),
-            dark: paletteVarRef(dark),
+            light: paletteColorCssVar(light),
+            dark: paletteColorCssVar(dark),
         };
     }
     out.surfaceOverlay = { light: surfaceOverlayRgba.light, dark: surfaceOverlayRgba.dark };

@@ -16,7 +16,7 @@
       "@refineui/react": ["packages/react"],
       "@refineui/figma": ["packages/figma"],
       "@refineui/tokens": ["packages/tokens"],
-      "@refineui/version": ["packages/version"],
+      "@refineui/version": ["packages/version/src/index.ts"],
       "@refineui/utilities": ["packages/utilities"],
       "@refineui/utilities/animation": ["packages/utilities/src/animation.ts"],
       "@refineui/utilities/color": ["packages/utilities/src/color.ts"],

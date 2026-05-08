@@ -51,7 +51,7 @@ export default function AvatarStatusPreview() {
                                 className="flex flex-col items-center gap-refineui-size-x-small"
                             >
                                 <Avatar
-                                    size="xlarge"
+                                    size="xl"
                                     showStatus
                                     status={status}
                                 >

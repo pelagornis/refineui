@@ -70,20 +70,20 @@ import {
 
 export function AvatarStackExample() {
   return (
-    <AvatarGroup size="medium" layout="stack">
-      <Avatar size="medium" showStatus>
+    <AvatarGroup size="md" layout="stack">
+      <Avatar size="md" showStatus>
         <AvatarImage src="/avatar.jpg" alt="User" />
       </Avatar>
-      <Avatar size="medium" color="neutral">
+      <Avatar size="md" color="neutral">
         <AvatarIcon name="person" />
       </Avatar>
-      <Avatar size="medium" color="orange" alt="Park Lee">
+      <Avatar size="md" color="orange" alt="Park Lee">
         <AvatarText>PL</AvatarText>
       </Avatar>
-      <Avatar size="medium" color="red">
+      <Avatar size="md" color="red">
         <AvatarIcon name="person" />
       </Avatar>
-      <Avatar size="medium">
+      <Avatar size="md">
         <AvatarIcon name="more-horizontal" />
       </Avatar>
     </AvatarGroup>
@@ -102,9 +102,9 @@ const maxInline = 4;
 const inlineItems = names.slice(0, maxInline);
 const overflowItems = names.slice(maxInline);
 
-<AvatarGroup size="medium" layout="stack">
+<AvatarGroup size="md" layout="stack">
   {inlineItems.map((name) => (
-    <Avatar key={name} size="medium" color="orange" alt={name} />
+    <Avatar key={name} size="md" color="orange" alt={name} />
   ))}
   {overflowItems.length > 0 ? <AvatarGroupCount>+{overflowItems.length}</AvatarGroupCount> : null}
 </AvatarGroup>;
@@ -113,7 +113,7 @@ const overflowItems = names.slice(maxInline);
 `Avatar` 안에서는 `AvatarIcon`으로 시스템 아이콘을 넣고, `size`를 생략하면 Web Kit Person 슬롯(32·36·56px 티어별)에 맞는 글리프 크기가 적용됩니다.
 
 ```tsx
-<Avatar size="medium">
+<Avatar size="md">
   <AvatarFallback>
     <AvatarIcon name="person" color="var(--refineui-color-primary-black)" />
   </AvatarFallback>
@@ -123,9 +123,9 @@ const overflowItems = names.slice(maxInline);
 나란히 배치는 `AvatarGroup`에 `layout="spread"`를 쓰면 됩니다 (간격은 Web Kit **`Avatar` Spread** `69:3007`과 동기).
 
 ```tsx
-<AvatarGroup size="medium" layout="spread">
-  <Avatar size="medium">…</Avatar>
-  <Avatar size="medium">…</Avatar>
+<AvatarGroup size="md" layout="spread">
+  <Avatar size="md">…</Avatar>
+  <Avatar size="md">…</Avatar>
 </AvatarGroup>
 ```
 
@@ -155,7 +155,7 @@ const overflowItems = names.slice(maxInline);
 | `alt` | `string` | `""` | 이미지 대체 텍스트·이니셜 추출 |
 | `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | 지름 32·36·56px — Figma `Avatar` Stack 행 `Small`/`Medium`/`XLarge` 및 MCP `Avatar` `size` `Medium`/`Large`/`XXLarge`와 대응(위 MCP 표) |
 | `color` | `"neutral"` \| `"red"` \| `"orange"` | `"neutral"` | Web Kit `Avatar` `color`(MCP 세 가지) — 셸·기본 아이콘 톤 |
-| `layout` | `"image"` \| `"icon"` \| `"initials"` | — | **Deprecated**. `AvatarImage` / `AvatarIcon` / `AvatarText` 슬롯으로 자동 결정 |
+| `layout` | `"image"` \| `"icon"` \| `"initials"` | — | `AvatarImage` / `AvatarIcon` / `AvatarText` 슬롯을 지정하지 않으면 자동으로 결정 |
 | `showStatus` | `boolean` | `false` | Web Kit `showStatus` — `AvatarBadge`와 같은 상태 표시. `AvatarBadge` 자식이 있으면 그쪽만 렌더 |
 | `status` | `"online"` \| `"away"` \| `"unavailable"` \| `"offline"` | `"online"` | `showStatus`일 때만 — Figma `Avatar/Status` 변형과 대응 |
 | `innerClassName` | `string` | — | 원형 마스크 **안쪽** 면 전용 — 셸 배경·테두리 조정용. 바깥 래퍼는 `className` |

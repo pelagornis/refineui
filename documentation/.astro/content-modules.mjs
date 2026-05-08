@@ -1,12 +1,12 @@
 
 export default new Map([
-["src/content/docs/components/accordion.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Faccordion.mdx&astroContentModuleFlag=true")],
-["src/content/docs/components/avatars.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Favatars.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/components/alert.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Falert.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/components/badge.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Fbadge.mdx&astroContentModuleFlag=true")],
-["src/content/docs/components/breadcrumb.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Fbreadcrumb.mdx&astroContentModuleFlag=true")],
+["src/content/docs/components/accordion.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Faccordion.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/components/button.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Fbutton.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/components/calendar.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Fcalendar.mdx&astroContentModuleFlag=true")],
+["src/content/docs/components/breadcrumb.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Fbreadcrumb.mdx&astroContentModuleFlag=true")],
+["src/content/docs/components/avatars.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Favatars.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/components/checkbox.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Fcheckbox.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/components/card.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Fcard.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/components/dialog.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Fdialog.mdx&astroContentModuleFlag=true")],
@@ -29,8 +29,8 @@ export default new Map([
 ["src/content/docs/components/spinner.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Fspinner.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/components/switch.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Fswitch.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/components/tabs.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Ftabs.mdx&astroContentModuleFlag=true")],
-["src/content/docs/components/textarea.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Ftextarea.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/components/tag.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Ftag.mdx&astroContentModuleFlag=true")],
+["src/content/docs/components/textarea.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Ftextarea.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/components/toast.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Ftoast.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/components/tooltip.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Ftooltip.mdx&astroContentModuleFlag=true")]]);
 		

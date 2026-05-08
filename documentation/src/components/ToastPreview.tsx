@@ -91,7 +91,7 @@ export default function ToastPreview() {
     toast("동기화 중", {
       variant: "default",
       description: "Leading 슬롯에 Spinner 컴포넌트를 넣은 예시입니다.",
-      icon: <Spinner size="xSmall" />,
+      icon: <Spinner size="xs" />,
       action: { label: "취소", onClick: () => {}, variant: "secondary" },
     });
   };
@@ -101,7 +101,7 @@ export default function ToastPreview() {
       variant: "default",
       description: "Leading 슬롯에 Avatar 컴포넌트를 넣은 예시입니다.",
       icon: (
-        <Avatar size="xsmall" aria-hidden>
+        <Avatar size="xs" aria-hidden>
           <AvatarImage src="https://avatars.githubusercontent.com/u/108743931?s=80&v=4" alt="" />
         </Avatar>
       ),
@@ -173,8 +173,8 @@ export default function ToastPreview() {
             <Toast
               variant="default"
               title="처리 중"
-              message="로딩 상태 — 왼쪽은 Spinner (xSmall)."
-              icon={<Spinner size="xSmall" />}
+              message="로딩 상태 — 왼쪽은 Spinner (xs)."
+              icon={<Spinner size="xs" />}
               action={{ label: "취소", onClick: () => {}, variant: "secondary" }}
             />
             <Toast
@@ -182,7 +182,7 @@ export default function ToastPreview() {
               title="알림"
               message="보낸 사람 — Avatar는 xsmall(24px)로 슬롯에 맞춥니다."
               icon={
-                <Avatar size="xsmall" color="blue" alt="Kim Min" aria-hidden />
+                <Avatar size="xs" color="blue" alt="Kim Min" aria-hidden />
               }
               action={{ ...actionPrimary }}
             />
@@ -191,7 +191,7 @@ export default function ToastPreview() {
               title="멘션"
               message="이미지 Avatar + AvatarImage 조합."
               icon={
-                <Avatar size="xsmall" aria-hidden>
+                <Avatar size="xs" aria-hidden>
                   <AvatarImage src="https://avatars.githubusercontent.com/u/9919?s=80&v=4" alt="" />
                 </Avatar>
               }

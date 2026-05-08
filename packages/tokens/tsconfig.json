@@ -1,9 +1,10 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "dist"
+    "outDir": "dist",
+    "paths": {
+      "@refineui/utilities": ["packages/utilities/lib/index.d.ts"]
+    }
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

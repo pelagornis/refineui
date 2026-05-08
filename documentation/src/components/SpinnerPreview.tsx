@@ -2,7 +2,7 @@ import { spacings } from "@refineui/tokens";
 import { Spinner, type SpinnerSize } from "@refineui/react";
 import PreviewFrame from "./PreviewFrame";
 
-const allSizes: SpinnerSize[] = ["xSmall", "small", "medium", "large", "xLarge", "xxLarge"];
+const allSizes: SpinnerSize[] = ["xs", "sm", "md", "lg", "xl", "xxl"];
 
 export default function SpinnerPreview() {
   return (
@@ -14,9 +14,9 @@ export default function SpinnerPreview() {
           ))}
         </div>
         <div style={{ display: "flex", gap: spacings.sizeXXLarge, alignItems: "center", flexWrap: "wrap" }}>
-          <Spinner size="medium" label="Progress.." labelPosition="right" />
-          <Spinner size="medium" label="Progress.." labelPosition="left" />
-          <Spinner size="small" label="Progress.." labelPosition="bottom" />
+          <Spinner size="md" label="Progress.." labelPosition="right" />
+          <Spinner size="md" label="Progress.." labelPosition="left" />
+          <Spinner size="sm" label="Progress.." labelPosition="bottom" />
         </div>
       </div>
     </PreviewFrame>

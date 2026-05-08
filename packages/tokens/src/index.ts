@@ -3,6 +3,7 @@ export { colors } from "./global/colors";
 export { semanticColors, SEMANTIC_COLOR_ROWS, SEMANTIC_PALETTE_PAIRS, surfaceOverlayRgba } from "./semantic/colors";
 export type { SemanticColorName, SemanticPaletteName } from "./semantic/colors";
 export { semanticInteraction } from "./semantic/interaction";
+export { semanticShadows } from "./semantic/shadows";
 export {
     fontFamilies,
     fontSizes,

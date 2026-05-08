@@ -7,8 +7,8 @@ export const accordionStyles = {
 } as const;
 
 export const triggerTypo = {
-    small: "refineui-typo-caption-1",
-    medium: "refineui-typo-body-1",
-    large: "refineui-typo-sub-title-1",
+    sm: "refineui-typo-caption-1",
+    md: "refineui-typo-body-1",
+    lg: "refineui-typo-sub-title-1",
 } as const;
 

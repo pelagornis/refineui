@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { semanticInteraction } from "@refineui/tokens";
 import { getReducedMotionQuery } from "@refineui/utilities/animation";
 
-export type AccordionSize = "small" | "medium" | "large";
+export type AccordionSize = "sm" | "md" | "lg";
 export type AccordionType = "single" | "multiple";
 export type OpenState = Set<string>;
 

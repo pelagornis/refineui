@@ -4,7 +4,7 @@ import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import type { CSSProperties } from "react";
 
-export type AvatarSize =
+export type NormalizedAvatarSize =
     | "xxxsmall"
     | "xxsmall"
     | "xsmall"
@@ -14,6 +14,33 @@ export type AvatarSize =
     | "xlarge"
     | "xxlarge"
     | "xxxlarge";
+
+export type AvatarSize =
+    | "3xs"
+    | "2xs"
+    | "xs"
+    | "sm"
+    | "md"
+    | "lg"
+    | "xl"
+    | "2xl"
+    | "3xl";
+
+const avatarSizeAliasMap: Record<AvatarSize, NormalizedAvatarSize> = {
+    "3xs": "xxxsmall",
+    "2xs": "xxsmall",
+    xs: "xsmall",
+    sm: "small",
+    md: "medium",
+    lg: "large",
+    xl: "xlarge",
+    "2xl": "xxlarge",
+    "3xl": "xxxlarge",
+};
+
+export function normalizeAvatarSize(size: AvatarSize): NormalizedAvatarSize {
+    return avatarSizeAliasMap[size];
+}
 
 /** MCP / Figma `Avatar` `layout` */
 export type AvatarLayout = "image" | "icon" | "initials";
@@ -63,7 +90,7 @@ export function normalizeAvatarColor(layout: AvatarLayout | undefined, color: Av
 }
 
 /** Figma `Global/Size/{n}` → Tailwind `size-refineui-foundation-size-*` */
-export const avatarSizeDim: Record<AvatarSize, string> = {
+export const avatarSizeDim: Record<NormalizedAvatarSize, string> = {
     xxxsmall: "size-refineui-foundation-size-160",
     xxsmall: "size-refineui-foundation-size-200",
     xsmall: "size-refineui-foundation-size-240",
@@ -75,7 +102,7 @@ export const avatarSizeDim: Record<AvatarSize, string> = {
     xxxlarge: "size-refineui-foundation-size-600",
 };
 
-export const avatarTypoNeutral: Record<AvatarSize, string> = {
+export const avatarTypoNeutral: Record<NormalizedAvatarSize, string> = {
     xxxsmall: "refineui-typo-body-4",
     xxsmall: "refineui-typo-body-2",
     xsmall: "refineui-typo-body-1",
@@ -87,7 +114,7 @@ export const avatarTypoNeutral: Record<AvatarSize, string> = {
     xxxlarge: "refineui-typo-title-2",
 };
 
-export const avatarIconSlotSize: Record<AvatarSize, number> = {
+export const avatarIconSlotSize: Record<NormalizedAvatarSize, number> = {
     xxxsmall: iconSizes.xxsmall,
     xxsmall: iconSizes.xsmall,
     xsmall: iconSizes.small,
@@ -102,7 +129,7 @@ export const avatarIconSlotSize: Record<AvatarSize, number> = {
 export const AVATAR_INNER_MASK =
     "absolute inset-0 flex min-h-0 min-w-0 items-center justify-center overflow-hidden rounded-refineui-circle";
 
-function initialsAccentTypo(size: AvatarSize): string {
+function initialsAccentTypo(size: NormalizedAvatarSize): string {
     return clsx(
         size === "xxxlarge" && "refineui-typo-title-2",
         size === "xxlarge" && "refineui-typo-title-3",
@@ -157,7 +184,7 @@ export function resolveAvatarShellStyle(
 
 export function resolveAvatarShellColorLayer(
     _color: AvatarColor,
-    size: AvatarSize,
+    size: NormalizedAvatarSize,
     layout: AvatarLayout | undefined,
 ): string {
     if (layout === "initials") {
@@ -180,7 +207,7 @@ export const defaultPersonIconColor: Record<AvatarColorIcon, string> = {
 };
 
 /** `AvatarOverflow` more-horizontal */
-export const avatarOverflowIconSize: Record<AvatarSize, number> = {
+export const avatarOverflowIconSize: Record<NormalizedAvatarSize, number> = {
     xxxsmall: iconSizes.xsmall,
     xxsmall: iconSizes.xsmall,
     xsmall: iconSizes.small,
@@ -193,7 +220,7 @@ export const avatarOverflowIconSize: Record<AvatarSize, number> = {
 };
 
 /** `AvatarGroup` `layout="spread"` — Web Kit `Avatar` Spread `69:3007` */
-export const avatarSpreadGap: Record<AvatarSize, string> = {
+export const avatarSpreadGap: Record<NormalizedAvatarSize, string> = {
     xxxsmall: "gap-refineui-size-x-small",
     xxsmall: "gap-refineui-size-x-small",
     xsmall: "gap-refineui-size-small",
@@ -205,7 +232,7 @@ export const avatarSpreadGap: Record<AvatarSize, string> = {
     xxxlarge: "gap-refineui-size-x-large",
 };
 
-export const avatarGroupCountTypo: Record<AvatarSize, string> = {
+export const avatarGroupCountTypo: Record<NormalizedAvatarSize, string> = {
     xxxsmall: "refineui-typo-caption-3",
     xxsmall: "refineui-typo-caption-3",
     xsmall: "refineui-typo-caption-2",
@@ -217,7 +244,7 @@ export const avatarGroupCountTypo: Record<AvatarSize, string> = {
     xxxlarge: "refineui-typo-body-2",
 };
 
-export const avatarStatusPosition: Record<AvatarSize, string> = {
+export const avatarStatusPosition: Record<NormalizedAvatarSize, string> = {
     xxxsmall: "bottom-0 right-0",
     xxsmall: "bottom-0 right-0",
     xsmall: "bottom-px right-px",
@@ -229,7 +256,7 @@ export const avatarStatusPosition: Record<AvatarSize, string> = {
     xxxlarge: "bottom-[-2px] right-[-2px]",
 };
 
-export const avatarStatusDim: Record<AvatarSize, string> = {
+export const avatarStatusDim: Record<NormalizedAvatarSize, string> = {
     xxxsmall: "size-refineui-foundation-size-40",
     xxsmall: "size-refineui-foundation-size-60",
     xsmall: "size-refineui-foundation-size-60",
@@ -241,7 +268,7 @@ export const avatarStatusDim: Record<AvatarSize, string> = {
     xxxlarge: "size-refineui-avatar-status-xxxlarge",
 };
 
-export const avatarStackOverlapCssVar: Record<AvatarSize, string> = {
+export const avatarStackOverlapCssVar: Record<NormalizedAvatarSize, string> = {
     xxxsmall: "var(--refineui-size-foundation-size-40)",
     xxsmall: "var(--refineui-size-foundation-size-40)",
     xsmall: "var(--refineui-size-foundation-size-40)",

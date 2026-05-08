@@ -17,6 +17,7 @@ import {
     defaultPersonIconColor,
     avatarNeutralForegroundColor,
     normalizeAvatarColor,
+    normalizeAvatarSize,
     resolveAvatarShellColorLayer,
     resolveAvatarShellStyle,
     type AvatarColor,
@@ -25,6 +26,7 @@ import {
     type AvatarColorInitials,
     type AvatarLayout,
     type AvatarSize,
+    type NormalizedAvatarSize,
 } from "./avatarStyles";
 import { AvatarStatusGraphic } from "./avatarStatusGraphics";
 import { avatarStyles } from "./style";
@@ -40,8 +42,8 @@ import type {
     AvatarTextProps,
 } from "./types";
 
-const AvatarGroupContext = createContext<{ size: AvatarSize; layout: "stack" | "spread" } | null>(null);
-const AvatarShellSizeContext = createContext<AvatarSize | null>(null);
+const AvatarGroupContext = createContext<{ size: NormalizedAvatarSize; layout: "stack" | "spread" } | null>(null);
+const AvatarShellSizeContext = createContext<NormalizedAvatarSize | null>(null);
 
 export function AvatarIcon({ size: sizeProp, ...props }: AvatarIconProps) {
     const shell = useContext(AvatarShellSizeContext) ?? "medium";
@@ -79,10 +81,10 @@ function parseAvatarSlots(nodes: readonly ReactNode[]): ParsedSlots {
     return { image, fallback, badge, icon, text, leading };
 }
 
-function initialsFromAlt(alt: string, layout: AvatarLayout | undefined, size: AvatarSize): string {
+function initialsFromAlt(alt: string, layout: AvatarLayout | undefined, size: NormalizedAvatarSize): string {
     const parts = alt.trim().split(/\s+/).filter(Boolean);
     const letters = parts.map((p) => p[0] ?? "").join("").toUpperCase();
-    const oneLetterTiers: AvatarSize[] = ["xxxsmall", "xxsmall", "xsmall"];
+    const oneLetterTiers: readonly NormalizedAvatarSize[] = ["xxxsmall", "xxsmall", "xsmall"];
     const max = layout === "initials" ? 2 : oneLetterTiers.includes(size) ? 1 : 2;
     return letters.slice(0, max);
 }
@@ -97,7 +99,7 @@ function builtInFallback(initials: string, color: AvatarColor, layout: AvatarLay
 export function Avatar({
     src,
     alt = "",
-    size = "medium",
+    size = "md",
     layout,
     color,
     showStatus = false,
@@ -108,9 +110,10 @@ export function Avatar({
     ...props
 }: AvatarProps) {
     const [imageError, setImageError] = useState(false);
+    const normalizedSize = normalizeAvatarSize(size);
     const { image, fallback, badge, icon, text, leading } = parseAvatarSlots(Children.toArray(children));
     const slotPreferredLayout: AvatarLayout = icon ? "icon" : text ? "initials" : "image";
-    const initials = initialsFromAlt(alt, layout ?? slotPreferredLayout, size);
+    const initials = initialsFromAlt(alt, layout ?? slotPreferredLayout, normalizedSize);
     const effectiveSrc = image?.props.src ?? src;
     const effectiveAlt = image?.props.alt ?? alt;
     const showingImage = Boolean(effectiveSrc && !imageError);
@@ -133,20 +136,20 @@ export function Avatar({
     const hasStatus = showStatus || isValidElement(badge);
 
     return (
-        <AvatarShellSizeContext.Provider value={size}>
+        <AvatarShellSizeContext.Provider value={normalizedSize}>
             <div
                 data-refineui="avatar"
                 data-avatar-color={effectiveColor}
                 data-avatar-layout={resolvedLayout}
                 data-show-status={hasStatus ? "true" : undefined}
-                className={clsx(avatarStyles.root, avatarSizeDim[size], className)}
+                className={clsx(avatarStyles.root, avatarSizeDim[normalizedSize], className)}
                 {...props}
             >
                 <div
                     className={clsx(
                         AVATAR_INNER_MASK,
-                        resolveAvatarShellColorLayer(effectiveColor, size, resolvedLayout),
-                        useNeutralShellTypo && avatarTypoNeutral[size],
+                        resolveAvatarShellColorLayer(effectiveColor, normalizedSize, resolvedLayout),
+                        useNeutralShellTypo && avatarTypoNeutral[normalizedSize],
                         innerClassName,
                     )}
                     style={{
@@ -218,7 +221,7 @@ export function AvatarBadge({ className, status = "online", ...props }: AvatarBa
 }
 
 export function AvatarGroup({
-    size = "medium",
+    size = "md",
     layout = "stack",
     className,
     children,
@@ -226,20 +229,21 @@ export function AvatarGroup({
     ...props
 }: AvatarGroupProps) {
     const list = Children.toArray(children);
+    const normalizedSize = normalizeAvatarSize(size);
     return (
-        <AvatarGroupContext.Provider value={{ size, layout }}>
+        <AvatarGroupContext.Provider value={{ size: normalizedSize, layout }}>
             <div
                 {...props}
                 data-refineui="avatars"
                 data-layout={layout}
-                data-avatar-stack-size={size}
+                data-avatar-stack-size={normalizedSize}
                 className={clsx(
                     avatarStyles.groupRoot,
-                    layout === "stack" ? "gap-0" : avatarSpreadGap[size],
+                    layout === "stack" ? "gap-0" : avatarSpreadGap[normalizedSize],
                     className,
                 )}
                 style={{
-                    ...(layout === "stack" ? { ["--avatar-stack-overlap" as string]: avatarStackOverlapCssVar[size] } : {}),
+                    ...(layout === "stack" ? { ["--avatar-stack-overlap" as string]: avatarStackOverlapCssVar[normalizedSize] } : {}),
                     ...style,
                 }}
             >

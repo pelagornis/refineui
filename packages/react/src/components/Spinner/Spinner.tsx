@@ -3,7 +3,7 @@ import { spinnerLabelTypo, spinnerRingClass, spinnerStyles } from "./style";
 import type { SpinnerProps } from "./types";
 
 export function Spinner({
-    size = "medium",
+    size = "md",
     label,
     labelPosition = "right",
     className,

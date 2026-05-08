@@ -35,7 +35,7 @@ export const selectStyles = {
     /** 배경·상태 색은 `refineui.css` `[data-refineui="select-item"]` + `[data-refineui="select-menu"]` 조합 (Figma `1144:2411`) */
     item:
         "refineui-typo-body-2 relative mx-refineui-size-xsmall flex cursor-pointer items-center gap-refineui-size-medium rounded-refineui-xlarge px-refineui-size-medium py-refineui-size-small text-refineui-alias-foreground-primary outline-none transition-colors data-[disabled]:cursor-not-allowed data-[disabled]:text-refineui-alias-foreground-disabled",
-    /** @deprecated 배경은 CSS alias 토큰으로 통일 — 호버는 `select-menu` 포커스·`:hover` 규칙 */
+    /** 배경은 CSS alias 토큰으로 통일 — 호버는 `select-menu` 포커스·`:hover` 규칙 */
     itemActive: "bg-refineui-alias-background-surface-hover",
     itemDisabled: "cursor-not-allowed text-refineui-alias-foreground-disabled",
     itemIndicator: "inline-flex size-[16px] shrink-0 items-center justify-center",

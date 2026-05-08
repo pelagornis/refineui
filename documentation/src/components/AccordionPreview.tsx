@@ -37,7 +37,7 @@ export default function AccordionPreview() {
 
         <div style={{ height: spacings.sizeLarge }} />
 
-        <Accordion type="multiple" defaultValue={["faq"]} size="small">
+        <Accordion type="multiple" defaultValue={["faq"]} size="sm">
           <AccordionItem value="faq" icon="info">
             <AccordionTrigger>FAQ (multiple + icon)</AccordionTrigger>
             <AccordionContent>
@@ -46,7 +46,7 @@ export default function AccordionPreview() {
           </AccordionItem>
           <AccordionItem value="tips" icon="settings">
             <AccordionTrigger>Tips</AccordionTrigger>
-            <AccordionContent>필요하면 size도 small/medium/large로 조절할 수 있습니다.</AccordionContent>
+            <AccordionContent>필요하면 size도 sm / md / lg로 조절할 수 있습니다.</AccordionContent>
           </AccordionItem>
         </Accordion>
       </div>

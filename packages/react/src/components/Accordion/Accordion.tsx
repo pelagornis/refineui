@@ -25,7 +25,7 @@ export function Accordion({
     defaultValue,
     value,
     onValueChange,
-    size = "medium",
+    size = "md",
     className,
     children,
     ...props

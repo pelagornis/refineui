@@ -233,7 +233,7 @@ neutral100·neutral150; Outline은 테두리 neutral500·`#333`; Filled는 Badge
 | 속성            | 값                                                                                                                                                                                      |
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **type**        | Figma `Overlay` · `Inline` — React `Drawer`는 **Overlay(포털·스크림)** 만                                                                                                               |
-| **폭**          | Large → `componentSizes.drawerWidthLg` (850px); Medium → `componentSizes.drawerWidthMd` (575px); Small → `componentSizes.drawerWidthSm` (320px) — `size` `large` \| `medium` \| `small` |
+| **폭**          | `lg` → `componentSizes.drawerWidthLg` (850px); `md` → `componentSizes.drawerWidthMd` (575px); `sm` → `componentSizes.drawerWidthSm` (320px) — `size` `"sm"` \| `"md"` \| `"lg"` |
 | **패널 그림자** | `shadows.shadow16Light` (`toBoxShadow`)                                                                                                                                                 |
 | **헤더**        | `paddingTop`/`paddingLeft`/`paddingRight` `sizeXXLarge` (24px), `paddingBottom` `sizeMedium` (10px); 닫기·제목 행 `gap` `sizeSmall` (6px); 제목 `subTitle1` (20/28 Semi Bold)           |
 | **Divider**     | `strokeWidthThin` `neutral300` (헤더·본문 사이)                                                                                                                                         |
@@ -364,14 +364,14 @@ WebKit 계열은 `--refineui-slider-fill`(0–100%)로 레일 그라데이션을
 
 ## Spinner — Web Kit COMPONENT_SET `Spinner` `550:3669`
 
-| `size`         | 지름                                      | 링 두께                   | 라벨 타이포(Figma `showLabel`) |
-| -------------- | ----------------------------------------- | ------------------------- | ------------------------------ |
-| `xSmall`       | `componentSizes.spinnerSizeXSmall` (16px) | `spinnerRingWidthXSmall`  | `caption1`                     |
-| `small`        | `spinnerSizeSmall` (20px)                 | `spinnerRingWidthSmall`   | `body2`                        |
-| `medium`(기본) | `spinnerSizeMedium` (24px)                | `spinnerRingWidthMedium`  | `body1`                        |
-| `large`        | `spinnerSizeLarge` (28px)                 | `spinnerRingWidthLarge`   | `subTitle2`                    |
-| `xLarge`       | `spinnerSizeXLarge` (32px)                | `spinnerRingWidthXLarge`  | `subTitle1`                    |
-| `xxLarge`      | `spinnerSizeXXLarge` (48px)               | `spinnerRingWidthXXLarge` | `title3`                       |
+| `size`      | 지름                                      | 링 두께                   | 라벨 타이포(Figma `showLabel`) |
+| ----------- | ----------------------------------------- | ------------------------- | ------------------------------ |
+| `xs`        | `componentSizes.spinnerSizeXSmall` (16px) | `spinnerRingWidthXSmall`  | `caption1`                     |
+| `sm`        | `spinnerSizeSmall` (20px)                 | `spinnerRingWidthSmall`   | `body2`                        |
+| `md`(기본)  | `spinnerSizeMedium` (24px)                | `spinnerRingWidthMedium`  | `body1`                        |
+| `lg`        | `spinnerSizeLarge` (28px)                 | `spinnerRingWidthLarge`   | `subTitle2`                    |
+| `xl`        | `spinnerSizeXLarge` (32px)                | `spinnerRingWidthXLarge`  | `subTitle1`                    |
+| `xxl`       | `spinnerSizeXXLarge` (48px)               | `spinnerRingWidthXXLarge` | `title3`                       |
 
 | 속성                 | 값                                                                                  |
 | -------------------- | ----------------------------------------------------------------------------------- |
@@ -381,7 +381,7 @@ WebKit 계열은 `--refineui-slider-fill`(0–100%)로 레일 그라데이션을
 | **`labelPosition`**  | `left` \| `right`(Figma 기본) \| `top` \| `bottom`                                  |
 | **애니메이션**       | **`refineui.css`** `[data-refineui="spinner"]` `refineui-spin` 0.8s linear infinite |
 
-Figma 기본 `size`는 `XSmall`이나, 앱에서 가독성을 위해 React 기본값은 `medium`으로 둔다.
+Figma 기본 `size`는 `XSmall`이나, 앱에서 가독성을 위해 React 기본값은 `md`로 둔다.
 
 ---
 
@@ -475,7 +475,7 @@ Figma에는 라벨 옆 **Info** 아이콘·슬롯별 검증 아이콘이 있으�
 | **trigger minHeight**    | 44px                                                             |
 | **trigger padding**      | 6px 10px (sizeSmall sizeMedium)                                  |
 | **trigger gap**          | 10px (sizeMedium)                                                |
-| **trigger typography**   | `size` prop: small → caption1, medium → body1, large → subTitle1 |
+| **trigger typography**   | `size` prop: sm → caption1, md → body1, lg → subTitle1 |
 | **icon size**            | 20px (@refineui/web-icons)                                       |
 | **icon container**       | 20×20px                                                          |
 | **content padding**      | 10px (sizeMedium)                                                |

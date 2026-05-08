@@ -2,7 +2,7 @@ import type { CSSProperties, HTMLAttributes, ReactNode } from "react";
 import type { ButtonProps } from "../Button";
 
 export type DrawerPlacement = "left" | "right";
-export type DrawerSize = "small" | "medium" | "large";
+export type DrawerSize = "sm" | "md" | "lg";
 export type DrawerType = "overlay" | "inline";
 export type DrawerFooterState = "icons" | "single" | "split";
 

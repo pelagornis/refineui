@@ -73,9 +73,9 @@ export default function AvatarsPreview() {
           동일한 순서: Image(녹색 <strong>Status</strong>) → Neutral Icon → Initials(Orange) → Icon(Red) → More.
         </p>
         <div style={{ display: "flex", flexDirection: "column", gap: spacings.sizeLarge }}>
-          <AvatarStackRow size="medium" label="Medium (32px)" />
-          <AvatarStackRow size="large" label="Large (36px)" />
-          <AvatarStackRow size="xxlarge" label="XXLarge (56px)" />
+          <AvatarStackRow size="md" label="Medium (32px)" />
+          <AvatarStackRow size="lg" label="Large (36px)" />
+          <AvatarStackRow size="2xl" label="XXLarge (56px)" />
         </div>
       </div>
     </PreviewFrame>

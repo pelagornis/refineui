@@ -88,9 +88,9 @@ function useDrawerOpenState(
 
 function widthToken(s: DrawerSize): string {
     switch (s) {
-        case "medium":
+        case "md":
             return componentSizes.drawerWidthMd;
-        case "large":
+        case "lg":
             return componentSizes.drawerWidthLg;
         default:
             return componentSizes.drawerWidthSm;
@@ -104,7 +104,7 @@ export function Drawer({
     type = "overlay",
     showFooter = true,
     placement = "right",
-    size = "small",
+    size = "sm",
     children,
 }: DrawerProps) {
     const defaultByType = type === "inline" ? true : defaultOpen;

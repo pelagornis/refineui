@@ -177,46 +177,49 @@ export type ShadowLevel = {
 };
 
 /**
- * Design tokens for shadow levels (Lighter ~ Darker, key + ambient)
- * 사용: box-shadow: ${key}, ${ambient}
+ * Elevation 그림자 — Figma `Elevation/Light/Shadow N` · `Elevation/Dark/Shadow N` 와 1:1.
+ * 단계당 `*Light` / `*Dark` 두 토큰만 (중간 `shadow2`·`Lighter`·`Darker` 펼침 없음).
+ * 색 강도 램프는 `shadowColors` (`Global/Shadows/Key *`, `Ambient *`).
+ * 사용: box-shadow: ${toBoxShadow(level)}
  */
 export type ShadowTokens = {
-    shadow2Lighter: ShadowLevel;
     shadow2Light: ShadowLevel;
-    shadow2: ShadowLevel;
     shadow2Dark: ShadowLevel;
-    shadow2Darker: ShadowLevel;
-    shadow4Lighter: ShadowLevel;
     shadow4Light: ShadowLevel;
-    shadow4: ShadowLevel;
     shadow4Dark: ShadowLevel;
-    shadow4Darker: ShadowLevel;
-    shadow8Lighter: ShadowLevel;
     shadow8Light: ShadowLevel;
-    shadow8: ShadowLevel;
     shadow8Dark: ShadowLevel;
-    shadow8Darker: ShadowLevel;
-    shadow16Lighter: ShadowLevel;
     shadow16Light: ShadowLevel;
-    shadow16: ShadowLevel;
     shadow16Dark: ShadowLevel;
-    shadow16Darker: ShadowLevel;
-    shadow24Lighter: ShadowLevel;
     shadow24Light: ShadowLevel;
-    shadow24: ShadowLevel;
     shadow24Dark: ShadowLevel;
-    shadow24Darker: ShadowLevel;
-    shadow32Lighter: ShadowLevel;
     shadow32Light: ShadowLevel;
-    shadow32: ShadowLevel;
     shadow32Dark: ShadowLevel;
-    shadow32Darker: ShadowLevel;
-    shadow64Lighter: ShadowLevel;
     shadow64Light: ShadowLevel;
-    shadow64: ShadowLevel;
     shadow64Dark: ShadowLevel;
-    shadow64Darker: ShadowLevel;
 };
+
+/**
+ * 시맨틱 elevation 그림자 — UI 테마(Light/Dark)별 `ShadowLevel`.
+ * Foundation: Elevation/Light·Elevation/Dark 이펙트가 각각 `shadowNLight`·`shadowNDark` 글로벌 토큰과 대응.
+ */
+export type SemanticShadowElevationPair = {
+    light: ShadowLevel;
+    dark: ShadowLevel;
+};
+
+/** 시맨틱 elevation 단계 (Figma Shadow 2 / 4 / … / 64) */
+export type SemanticShadowElevationName =
+    | "shadow2"
+    | "shadow4"
+    | "shadow8"
+    | "shadow16"
+    | "shadow24"
+    | "shadow32"
+    | "shadow64";
+
+/** 시맨틱 elevation 이름 → 테마별 ShadowLevel (`semanticShadows`) */
+export type SemanticShadowElevationTokens = Record<SemanticShadowElevationName, SemanticShadowElevationPair>;
 
 /**
  * Design tokens for stroke width

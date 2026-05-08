@@ -32,7 +32,7 @@ import "@refineui/react/refineui.css";
 ```tsx
 <Drawer>
   <DrawerTrigger>Open</DrawerTrigger>
-  <DrawerContent placement="right" size="medium">
+  <DrawerContent placement="right" size="md">
     <DrawerHeader>
       <DrawerTitle>필터</DrawerTitle>
       <DrawerDescription>필터 조건을 선택하세요.</DrawerDescription>
@@ -62,7 +62,7 @@ import "@refineui/react/refineui.css";
 | `Drawer` `defaultOpen` | `boolean` | `false` | 비제어 초기 열림 상태 |
 | `Drawer` `onOpenChange` | `(open: boolean) => void` | — | 열림 상태 변경 콜백 |
 | `DrawerContent` `placement` | `"left"` \| `"right"` | `"right"` | 어느 쪽에서 등장 |
-| `DrawerContent` `size` | `"small"` \| `"medium"` \| `"large"` | `"small"` | 패널 폭 토큰 |
+| `DrawerContent` `size` | `"sm"` \| `"md"` \| `"lg"` | `"sm"` | 패널 폭 토큰 |
 
 ## 예시
 
@@ -71,7 +71,7 @@ import "@refineui/react/refineui.css";
 ```tsx
 <Drawer>
   <DrawerTrigger>메뉴 열기</DrawerTrigger>
-  <DrawerContent placement="left" size="small">
+  <DrawerContent placement="left" size="sm">
     <DrawerHeader>
       <DrawerTitle>메뉴</DrawerTitle>
     </DrawerHeader>
