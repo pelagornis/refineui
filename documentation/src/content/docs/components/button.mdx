@@ -1,30 +1,30 @@
 ---
 title: Button
-description: 버튼 — variant·size·전역 CSS 인터랙션
+description: Button — variant, size, global CSS interactions
 ---
 
 import ButtonPreview from "../../../components/ButtonPreview";
 
 # Button
 
-클릭 가능한 액션을 나타냅니다. Web Kit **Button** `79:3304`와 `docs/design-specs-web-kit.md` §1을 따릅니다. Figma에서는 **`Style`**(variant)·**`Size`**·**`Layout`**(라벨 / 아이콘만) 조합으로 정의됩니다. **`@refineui/react/refineui.css`**를 불러오면 hover·active·focus-visible 스타일이 적용됩니다.
+Represents a clickable action. Follows Web Kit **Button** `79:3304` and `docs/design-specs-web-kit.md` §1. In Figma, combinations use **`Style`** (variant), **`Size`**, and **`Layout`** (label vs icon-only). Import **`@refineui/react/refineui.css`** for hover, active, and focus-visible styles.
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import { Button } from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
-## 기본 사용
+## Basic usage
 
 ```tsx
 <Button type="button" onClick={() => console.log("clicked")}>
-  저장
+  Save
 </Button>
 ```
 
-`type`을 생략하면 기본값은 **`button`** 입니다(폼 안에서 의도치 않은 submit을 막기 위함).
+If `type` is omitted, it defaults to **`button`** (avoids accidental submits inside forms).
 
 ## Preview
 
@@ -34,84 +34,84 @@ import "@refineui/react/refineui.css";
 
 ## Props
 
-| Prop | 타입 | 기본값 | 설명 |
-|------|------|--------|------|
-| `variant` | `"primary"` \| `"secondary"` \| `"outline"` \| `"ghost"` | `"primary"` | Figma `Style`과 동일 |
-| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | 최소 높이·패딩·타이포(`Layout=Label`) 또는 아이콘 히트 영역(`Layout=Icon`) |
-| `layout` | `"label"` \| `"icon"` | `"label"` | Figma **`Layout`**: 텍스트(및 선택 시 좌우 아이콘) vs **아이콘만** |
-| `fullWidth` | `boolean` | `false` | 너비 100% |
-| `disabled` | `boolean` | — | 비활성 |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `"primary"` \| `"secondary"` \| `"outline"` \| `"ghost"` | `"primary"` | Matches Figma `Style` |
+| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | Min height, padding, typography (`Layout=Label`) or icon hit area (`Layout=Icon`) |
+| `layout` | `"label"` \| `"icon"` | `"label"` | Figma **`Layout`**: text (optional icons) vs **icon only** |
+| `fullWidth` | `boolean` | `false` | Full width |
+| `disabled` | `boolean` | — | Disabled |
 
-나머지는 **`ButtonHTMLAttributes`** (`onClick`, `type`, `aria-*`, `className` 등)를 지원합니다.
+Also supports **`ButtonHTMLAttributes`** (`onClick`, `type`, `aria-*`, `className`, etc.).
 
 ## Variants
 
-| 값 | 용도 |
-|----|------|
-| `primary` | 주요 액션 — 검정 배경 |
-| `secondary` | 보조 — 흰 배경 + 테두리 |
-| `outline` | 덜 강조 — 투명 배경 + 테두리 |
-| `ghost` | 텍스트 수준 — 배경·테두리 최소 |
+| Value | Use |
+|-------|-----|
+| `primary` | Primary action — dark fill |
+| `secondary` | Secondary — white fill + border |
+| `outline` | Lower emphasis — transparent + border |
+| `ghost` | Text-level — minimal chrome |
 
 ## Sizes
 
-`layout="label"`(기본)일 때 행 높이·좌우 패딩·타이포가 Size에 따라 달라집니다.
+With `layout="label"` (default), row height, horizontal padding, and typography change by Size.
 
-| 값 | 대략적 최소 높이 |
-|----|------------------|
+| Value | Approx. min height |
+|-------|-------------------|
 | `sm` | 28px |
 | `md` | 36px |
 | `lg` | 48px |
 
-## Layout · 아이콘만 (`layout="icon"`)
+## Layout · icon only (`layout="icon"`)
 
-Figma **Button** `79:3304`에는 **`Layout=Icon`** 변형이 따로 있습니다. **텍스트 없이** `children`으로 `WebIcon` 등만 넣을 때 사용합니다.
+Figma **Button** `79:3304` includes **`Layout=Icon`**. Use when **`children`** are only icons (e.g. `WebIcon`) with **no text**.
 
-- **히트 영역**: `Size`와 동일한 **정사각**(`sm` 28×28, `md` 36×36, `lg` 48×48).
-- **패딩·모서리**: Web Kit MCP 기준 — `sm`은 전면 `sizeXSmall`(4px) + `roundedSmall`, `md`는 `sizeSmall`(6px) + `roundedMedium`, `lg`는 `sizeMedium`(10px) + `roundedLarge`. (MCP에서 **Primary·Ghost** `Layout=Icon`은 테두리 없음 — 구현도 `border-0`로 라벨용 `border` 1px이 안쪽을 잡아먹지 않게 맞춤.)
-- **아이콘 글리프 크기(MCP 슬롯)**: `sm` → `iconSizes.small`(20px), `md` → `iconSizes.medium`(24px), `lg` → `iconSizes.large`(28px).
-- **접근성**: 보이는 레이블이 없으면 **`aria-label`**(또는 `aria-labelledby`)을 필수로 두세요.
+- **Hit area**: square per **Size** (`sm` 28×28, `md` 36×36, `lg` 48×48).
+- **Padding / radius**: Web Kit MCP — `sm` uses `sizeXSmall` (4px) + `roundedSmall`, `md` uses `sizeSmall` (6px) + `roundedMedium`, `lg` uses `sizeMedium` (10px) + `roundedLarge`. (MCP **Primary·Ghost** `Layout=Icon` has no border — implementation uses `border-0` so the label border does not shrink the inner box.)
+- **Icon glyph size (MCP slot)**: `sm` → `iconSizes.small` (20px), `md` → `iconSizes.medium` (24px), `lg` → `iconSizes.large` (28px).
+- **Accessibility**: when there is no visible label, provide **`aria-label`** (or `aria-labelledby`).
 
-`variant="ghost"` + `layout="icon"` + `size="sm"` 조합은 **Dialog** 헤더 닫기 버튼(`393:1181`)과 같은 축입니다.
+`variant="ghost"` + `layout="icon"` + `size="sm"` matches the **Dialog** header close control (`393:1181`).
 
-### Dialog 닫기 예시
+### Dialog close example
 
 ```tsx
 import { Button, WebIcon } from "@refineui/react";
 import { iconSizes } from "@refineui/tokens";
 
-<Button type="button" variant="ghost" size="sm" layout="icon" aria-label="닫기" onClick={onClose}>
+<Button type="button" variant="ghost" size="sm" layout="icon" aria-label="Close" onClick={onClose}>
   <WebIcon name="dismiss" size={iconSizes.small} color="currentColor" iconStyle="regular" aria-hidden />
 </Button>
 ```
 
-## 예시
+## Examples
 
-### 링크처럼 쓰기
+### Text-style action
 
 ```tsx
 <Button variant="ghost" type="button" onClick={openPanel}>
-  더 보기
+  See more
 </Button>
 ```
 
-### 전체 너비
+### Full width
 
 ```tsx
 <Button variant="primary" fullWidth type="submit">
-  가입 완료
+  Complete sign up
 </Button>
 ```
 
-### 비활성
+### Disabled
 
 ```tsx
 <Button variant="primary" disabled>
-  처리 중…
+  Processing…
 </Button>
 ```
 
-## 접근성
+## Accessibility
 
-- 키보드 포커스 시 `refineui.css`가 **focus-visible** 링을 그립니다.
-- 의미 있는 레이블이 없을 때는 `aria-label`을 고려하세요.
+- Keyboard focus gets a **focus-visible** ring from `refineui.css`.
+- Use `aria-label` when there is no visible text label.

@@ -11,7 +11,7 @@ import {
 import { spacings } from "@refineui/tokens";
 import PreviewFrame from "./PreviewFrame";
 
-/** 합성 Popover API + Preview 영역 확보 (`minWidth` / `minHeight`) */
+/** Composed Popover API + Preview sizing (`minWidth` / `minHeight`) */
 export default function PopOverDemo() {
   return (
     <PreviewFrame minHeight="min(560px, 70vh)" minWidth="480px">
@@ -38,7 +38,7 @@ export default function PopOverDemo() {
                       color: "var(--refineui-color-neutral-600, #6c6c6c)",
                     }}
                   >
-                    레이어 크기를 설정합니다. (Web Kit PopOver · 합성 API)
+                    Set layer dimensions. (Web Kit PopOver · composed API)
                   </p>
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: spacings.sizeMedium, width: "100%" }}>
@@ -66,10 +66,10 @@ export default function PopOverDemo() {
 
         <Popover>
           <PopoverTrigger>
-            <Button variant="primary">Start 정렬 패널</Button>
+            <Button variant="primary">Start-aligned panel</Button>
           </PopoverTrigger>
           <PopoverContent placement="bottom" align="start">
-            <div style={{ padding: spacings.sizeSmall }}>align=&quot;start&quot; 예시</div>
+            <div style={{ padding: spacings.sizeSmall }}>Example: align=&quot;start&quot;</div>
           </PopoverContent>
         </Popover>
       </div>

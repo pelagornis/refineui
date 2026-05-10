@@ -8,18 +8,18 @@ import AvatarStatusPreview from "../../../components/AvatarStatusPreview";
 
 # Avatars
 
-Web Kit 단일 **`Avatar`**(컴포넌트 세트)와 그룹 **`Avatar` Stack** `69:3008` · **`Avatar` Spread** `69:3007`에 맞춰, 겹침·나열은 **`AvatarGroup`**과 **`Avatar`** 조합으로 구성합니다.
+Aligned with Web Kit single **`Avatar`** (component set) and group **`Avatar` Stack** `69:3008` · **`Avatar` Spread** `69:3007`. Build overlap and rows with **`AvatarGroup`** and **`Avatar`**.
 
-### MCP(`get_design_context`) — Web Kit `Avatar`와 정확히 대응
+### MCP (`get_design_context`) — maps to Web Kit `Avatar`
 
-Figma 검색·export 기준 컴포넌트 이름은 **`Avatar`** / **`Avatar Stack`** / **`Avatar Spread`** / **`Avatar/Status`**(2026-04 기준). 스택 프레임 `69:3008`에는 여러 행이 있으며, 패키지 **`AvatarSize` 9단계**(`xxxsmall` … `xxxlarge`)가 MCP `Avatar` **`size`**(XXXSmall … XXXLarge)와 Foundation **`Global/Size/*`**(`foundationSizes`)에 대응합니다.
+Figma search/export names: **`Avatar`** / **`Avatar Stack`** / **`Avatar Spread`** / **`Avatar/Status`** (as of 2026-04). Stack frame `69:3008` has multiple rows; package **`AvatarSize`** nine steps (`xxxsmall` … `xxxlarge`) map to MCP `Avatar` **`size`** (XXXSmall … XXXLarge) and Foundation **`Global/Size/*`** (`foundationSizes`).
 
-**Figma `Avatar`(`56:254`) `Color` × `Layout`:** 플러그인 variant 기준 **`Image`→Neutral만**, **`Icon`**과 **`Initials`**는 **동일 10색**(Blue … Yellow). **`69:3008` Stack** 프레임은 그룹 데모일 뿐, 단일 `Avatar` 전체 색 목록과 동일하지 않다.
+**Figma `Avatar` (`56:254`) `Color` × `Layout`:** In plugin variants, **`Image`→Neutral only**; **`Icon`** and **`Initials`** share the **same 10 colors** (Blue … Yellow). The **`69:3008` Stack** frame is a group demo only—not the full single-`Avatar` color matrix.
 
-**주의:** 스택 행 변형 이름(`Size=Small` 등)과 내부 인스턴스의 Figma `Avatar` **`size`** 프로퍼티 이름이 **다를 수 있습니다**(MCP export 기준).
+**Note:** Stack row variant names (`Size=Small`, etc.) may **differ** from the inner Figma `Avatar` **`size`** property names (per MCP export).
 
-| `AvatarSize` | 지름 (`Global/Size/*`) | Figma `Avatar` MCP `size`(예) | Stack 겹침 (`foundationSizes`) |
-|--------------|-------------------------|--------------------------------|------------------------------|
+| `AvatarSize` | Diameter (`Global/Size/*`) | Figma `Avatar` MCP `size` (example) | Stack overlap (`foundationSizes`) |
+|--------------|------------------------------|---------------------------------------|-----------------------------------|
 | `xxxsmall` | `160` → 16px | `XXXSmall` | `40` → 4px |
 | `xxsmall` | `200` | `XXSmall` | `40` |
 | `xsmall` | `240` | `XSmall` | `40` |
@@ -30,19 +30,19 @@ Figma 검색·export 기준 컴포넌트 이름은 **`Avatar`** / **`Avatar Stac
 | `xxlarge` | `540` → 54px | `XXLarge` | `100` |
 | `xxxlarge` | `600` → 60px | `XXXLarge` | `120` → 12px |
 
-Foundation **`Global/Size/{n}`**에 해당하는 값은 `packages/react`의 **`foundationSizes`**로 `--refineui-size-foundation-size-*`에 반영된다. **`Avatar/Status`** XXXLarge(14px)만 `Global/Size/140`이 없어 **`componentSizes.avatarStatusXxxlarge`**를 쓴다.
+Values matching Foundation **`Global/Size/{n}`** flow to `--refineui-size-foundation-size-*` via **`foundationSizes`** in `packages/react`. **`Avatar/Status`** XXXLarge (14px) has no `Global/Size/140`, so use **`componentSizes.avatarStatusXxxlarge`**.
 
-| 구분 | MCP (`Avatar` 단위) | `packages/react` |
-|------|---------------------|-------------------|
+| | MCP (`Avatar`) | `packages/react` |
+|---|----------------|------------------|
 | `color` | `Neutral` \| `Red` \| `Orange` | `neutral` \| `red` \| `orange` |
 | `layout` | `Icon` \| `Initials` \| `Image` | `icon` \| `initials` \| `image` |
-| `showStatus` | `Avatar/Status` 지름 행별 | `showStatus` 또는 `<AvatarBadge />` |
-| Orange 이니셜 타이포 | 행별 Body / Subtitle / Title | `xlarge`→subtitle-1, `xxlarge`→title-3, `xxxlarge`→title-2, 그 외 body-1 |
-| `selectAvater` | 선택 링(래스터 오버레이) | **미구현** |
+| `showStatus` | Per `Avatar/Status` diameter row | `showStatus` or `<AvatarBadge />` |
+| Orange initials typography | Body / Subtitle / Title per row | `xlarge`→subtitle-1, `xxlarge`→title-3, `xxxlarge`→title-2, else body-1 |
+| `selectAvater` | Selection ring (raster overlay) | **Not implemented** |
 
-**`Avatar` Spread** `69:3007`: 각 행의 **`Size` = 그 행 안 `Avatar` 인스턴스의 Figma `size`**와 같습니다. `avatarSpreadGap`은 티어별로 `spacings`의 `sizeXSmall`~`sizeXLarge`에 매핑됩니다.
+**`Avatar` Spread** `69:3007`: Each row’s **`Size`** matches the Figma `size` on `Avatar` instances in that row. `avatarSpreadGap` maps per tier to `spacings` `sizeXSmall`–`sizeXLarge`.
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import {
@@ -55,9 +55,9 @@ import {
 } from "@refineui/react";
 ```
 
-## 기본 사용
+## Basic usage
 
-Web Kit **`Avatar` `color` / `layout`**에 맞춘 프리셋으로 긴 `className` 없이 스택을 구성할 수 있습니다.
+Use Web Kit **`Avatar` `color` / `layout`** presets to compose stacks without long `className` strings.
 
 ```tsx
 import {
@@ -91,9 +91,9 @@ export function AvatarStackExample() {
 }
 ```
 
-### 오버플로 분할
+### Overflow split
 
-표시할 개수를 정한 뒤 `slice`로 나누면 됩니다(별도 유틸 없음).
+Pick a max count and `slice`—no extra utility required.
 
 ```tsx
 import { Avatar, AvatarGroup, AvatarGroupCount } from "@refineui/react";
@@ -110,7 +110,7 @@ const overflowItems = names.slice(maxInline);
 </AvatarGroup>;
 ```
 
-`Avatar` 안에서는 `AvatarIcon`으로 시스템 아이콘을 넣고, `size`를 생략하면 Web Kit Person 슬롯(32·36·56px 티어별)에 맞는 글리프 크기가 적용됩니다.
+Inside `Avatar`, use `AvatarIcon` for system icons; omitting `size` applies glyph sizes for Web Kit Person slots per tier (32·36·56px).
 
 ```tsx
 <Avatar size="md">
@@ -120,7 +120,7 @@ const overflowItems = names.slice(maxInline);
 </Avatar>
 ```
 
-나란히 배치는 `AvatarGroup`에 `layout="spread"`를 쓰면 됩니다 (간격은 Web Kit **`Avatar` Spread** `69:3007`과 동기).
+Use `AvatarGroup` with `layout="spread"` for horizontal spacing (gaps match Web Kit **`Avatar` Spread** `69:3007`).
 
 ```tsx
 <AvatarGroup size="md" layout="spread">
@@ -137,7 +137,7 @@ const overflowItems = names.slice(maxInline);
 
 ## Status Preview
 
-`Avatar/Status` `65:65` — 아바타 **우하단**에 붙고, 지름은 `avatarStatusDim`과 같습니다. Online/Away/Unavailable/Offline 네 가지이며, Figma와 같이 **Away는 노란 초승달**(단색 원 아님), **Unavailable은 빨강 원 + 흰 가로 막대**입니다.
+`Avatar/Status` `65:65` — attaches **bottom-right** on the avatar; diameter matches `avatarStatusDim`. Four variants: Online, Away, Unavailable, Offline. Like Figma: **Away uses a yellow crescent** (not a solid dot); **Unavailable is red circle + white horizontal bar**.
 
 <div class="not-content">
   <AvatarStatusPreview client:load />
@@ -145,26 +145,26 @@ const overflowItems = names.slice(maxInline);
 
 ## Props
 
-`Avatar`의 **`className`**은 겹침·여백용 **바깥 래퍼**에만 붙습니다. 원 안쪽 배경·테두리만 바꿀 때는 **`innerClassName`**을 사용합니다.
+**`className`** on `Avatar` applies to the **outer wrapper** for overlap/margin only. For inner shell background/border, use **`innerClassName`**.
 
 ### `Avatar`
 
-| Prop | 타입 | 기본값 | 설명 |
-|------|------|--------|------|
-| `src` | `string \| null` | — | 이미지 URL (`AvatarImage`가 있으면 그쪽 `src` 우선) |
-| `alt` | `string` | `""` | 이미지 대체 텍스트·이니셜 추출 |
-| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | 지름 32·36·56px — Figma `Avatar` Stack 행 `Small`/`Medium`/`XLarge` 및 MCP `Avatar` `size` `Medium`/`Large`/`XXLarge`와 대응(위 MCP 표) |
-| `color` | `"neutral"` \| `"red"` \| `"orange"` | `"neutral"` | Web Kit `Avatar` `color`(MCP 세 가지) — 셸·기본 아이콘 톤 |
-| `layout` | `"image"` \| `"icon"` \| `"initials"` | — | `AvatarImage` / `AvatarIcon` / `AvatarText` 슬롯을 지정하지 않으면 자동으로 결정 |
-| `showStatus` | `boolean` | `false` | Web Kit `showStatus` — `AvatarBadge`와 같은 상태 표시. `AvatarBadge` 자식이 있으면 그쪽만 렌더 |
-| `status` | `"online"` \| `"away"` \| `"unavailable"` \| `"offline"` | `"online"` | `showStatus`일 때만 — Figma `Avatar/Status` 변형과 대응 |
-| `innerClassName` | `string` | — | 원형 마스크 **안쪽** 면 전용 — 셸 배경·테두리 조정용. 바깥 래퍼는 `className` |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `src` | `string \| null` | — | Image URL (`AvatarImage` `src` wins when present) |
+| `alt` | `string` | `""` | Alt text / initials extraction |
+| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | 32·36·56px diameters — maps to Figma `Avatar` Stack rows and MCP sizes (see table above) |
+| `color` | `"neutral"` \| `"red"` \| `"orange"` | `"neutral"` | Web Kit `Avatar` `color` — shell and default icon tone |
+| `layout` | `"image"` \| `"icon"` \| `"initials"` | — | Auto when `AvatarImage` / `AvatarIcon` / `AvatarText` slots omitted |
+| `showStatus` | `boolean` | `false` | Web Kit `showStatus` — same as `AvatarBadge`; if `AvatarBadge` child exists, only that renders |
+| `status` | `"online"` \| `"away"` \| `"unavailable"` \| `"offline"` | `"online"` | When `showStatus` — matches Figma `Avatar/Status` |
+| `innerClassName` | `string` | — | **Inside** the circular mask — shell bg/border. Outer wrapper uses `className` |
 
 ### `AvatarGroup`
 
-| Prop | 타입 | 기본값 | 설명 |
-|------|------|--------|------|
-| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | 자식 `Avatar`와 겹침/간격 티어 |
-| `layout` | `"stack"` \| `"spread"` | `"stack"` | 겹침(stack) / 간격 나열(spread) |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | Overlap/spacing tier with child `Avatar`s |
+| `layout` | `"stack"` \| `"spread"` | `"stack"` | Overlap (stack) vs spaced row (spread) |
 
-합성형 API: `AvatarImage`, `AvatarFallback`, `AvatarIcon`, `AvatarGroupCount`, `AvatarBadge` 등.
+Composed API: `AvatarImage`, `AvatarFallback`, `AvatarIcon`, `AvatarGroupCount`, `AvatarBadge`, etc.

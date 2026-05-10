@@ -2,8 +2,8 @@
 /* Import: import "@refineui/react/refineui.css" */
 /* Foundation: https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundation */
 
-/* @refineui/tokens — 팔레트·간격·반경 등 단일 소스 */
-/* Vite는 `@refineui/tokens/...` 를 index.mjs 기준으로 붙여 깨뜨리므로, sibling 패키지는 상대 경로로 */
+/* @refineui/tokens — single source for palette, spacing, radius, etc. */
+/* Vite can break `@refineui/tokens/...` when resolving via index.mjs; sibling packages use a relative import */
 @import "../tokens/dist/css-variables.css";
 @import "@refineui/web-icons/dist/fonts/refineui-system-icons.css";
 
@@ -79,7 +79,7 @@
 [data-refineui="select-item"] {
   transition: background-color var(--refineui-motion-duration-fast), transform 0.1s;
 }
-/* 선택된 행(안정 상태) — MCP: rest는 `surfaceSelected`; pressed는 아래 `:active` */
+/* Selected row (rest) — MCP: rest uses `surfaceSelected`; pressed uses `:active` below */
 [data-refineui="dropdown-item"][data-selected="true"]:not(:disabled) {
   background-color: var(--refineui-color-alias-background-surface-selected) !important;
 }
@@ -94,7 +94,7 @@
 [data-refineui="dropdown-menu"] [data-refineui="dropdown-item"]:not(:disabled):focus {
   background-color: var(--refineui-color-alias-background-surface-hover) !important;
 }
-/* Select / Menu / Item — `1144:2411`: div option은 `:disabled` 미적용 → `aria-disabled`로 제외 */
+/* Select / Menu / Item — `1144:2411`: div options ignore `:disabled` → use `aria-disabled` */
 [data-refineui="select-item"]:not([aria-disabled="true"]):not(:active):hover,
 [data-refineui="select-menu"] [data-refineui="select-item"]:not([aria-disabled="true"]):not(:active):focus {
   background-color: var(--refineui-color-alias-background-surface-hover) !important;
@@ -127,7 +127,7 @@
 [data-refineui="select-item"][data-state="selected"]:not([aria-disabled="true"]) {
   background-color: var(--refineui-color-alias-background-surface-selected) !important;
 }
-/* State=Disabled `1144:2423` — 배경 surfaceDisabled + 글자 foregroundDisabled */
+/* State=Disabled `1144:2423` — background surfaceDisabled + text foregroundDisabled */
 [data-refineui="select-item"][aria-disabled="true"] {
   background-color: var(--refineui-color-alias-background-surface-disabled) !important;
   color: var(--refineui-color-alias-foreground-disabled) !important;
@@ -202,16 +202,16 @@
   background-color: var(--refineui-color-alias-background-brand-strong) !important;
 }
 
-/* Tabs — 트랙과 패널 사이 `spacings.sizeMedium`; `hidden` 패널은 레이아웃 미참여 */
+/* Tabs — gap between track and panel: `spacings.sizeMedium`; `hidden` panels skip layout */
 [data-refineui="tabs"][data-variant="pill"] {
   display: flex;
   flex-direction: column;
   gap: var(--refineui-spacing-size-medium);
 }
 
-/* Tabs / Item — Web Kit `636:5372`: State=Hover(MCP 최신).
+/* Tabs / Item — Web Kit `636:5372`: State=Hover (latest MCP).
    Active=True+Hover: `backgroundSurfaceHover` + Shadow 2.
-   Active=False+Hover: 배경 없음(투명), 글자만 `foregroundPrimaryHover`. */
+   Active=False+Hover: transparent background, text only `foregroundPrimaryHover`. */
 [data-refineui="tabs"][data-variant="pill"] [data-refineui="tab"]:hover:not(:disabled):not([aria-disabled="true"]) {
   color: var(--refineui-color-alias-foreground-primary-hover) !important;
   opacity: 1;
@@ -239,7 +239,7 @@
   background-color: var(--refineui-color-alias-background-primary-active) !important;
   color: var(--refineui-color-alias-foreground-primary) !important;
 }
-/* Selected / Day — 선택은 고정(rest)만; hover·pressed로 배경을 바꾸지 않음(Web Kit) */
+/* Selected / Day — selection uses fixed rest only; no hover/pressed background (Web Kit) */
 /* Pagination — Web Kit `558:1989` · `Pagination / Item` `570:2332` */
 [data-refineui="pagination"]:not(:disabled):hover {
   background-color: var(--refineui-color-alias-background-surface-hover) !important;
@@ -283,7 +283,7 @@
   transform: none;
   opacity: 1;
 }
-/* Button — Web Kit `79:3304` — Hover는 `:hover:not(:active)`, Pressed는 `:active`만 (겹침 방지) */
+/* Button — Web Kit `79:3304` — Hover: `:hover:not(:active)`; Pressed: `:active` only (no overlap) */
 [data-refineui="button"][data-variant="primary"]:not([data-inactive="true"]):hover:not(:active) {
   background-color: var(--refineui-btn-primary-hover) !important;
 }
@@ -316,7 +316,7 @@
   color: var(--refineui-color-alias-foreground-primary) !important;
 }
 
-/* Button — inactive / disabled (`data-inactive` — native disabled 또는 aria-disabled) */
+/* Button — inactive / disabled (`data-inactive` — native disabled or aria-disabled) */
 [data-refineui="button"][data-inactive="true"] {
   opacity: 1;
   transform: none !important;
@@ -355,7 +355,7 @@
 [data-refineui="chip-remove"]:active {
   transform: scale(var(--refineui-motion-button-active-scale));
 }
-/* `data-state="pressed"` — div option(`select-item`)은 `:active`만으로 스케일이 빠질 수 있어 동일 적용 */
+/* `data-state="pressed"` — div options (`select-item`) can drop scale with `:active` alone; mirror here */
 [data-refineui="dropdown-item"][data-state="pressed"]:not(:disabled),
 [data-refineui="select-item"][data-state="pressed"]:not([aria-disabled="true"]),
 [data-refineui="menu-item"][data-state="pressed"]:not(:disabled) {
@@ -381,7 +381,7 @@
   outline-offset: var(--refineui-focus-offset);
 }
 
-/* Menu / Item — MCP 상태 토큰 기반 (hover / pressed / active / disabled) */
+/* Menu / Item — MCP state tokens (hover / pressed / active / disabled) */
 [data-refineui="menu-item"][data-state="hover"] {
   background-color: var(--refineui-color-alias-background-surface-hover) !important;
   color: var(--refineui-color-alias-foreground-primary) !important;
@@ -445,7 +445,7 @@
   }
 }
 
-/* Spin Button — Web Kit `561:2067` (포커스 링은 루트 테두리로 통일) */
+/* Spin Button — Web Kit `561:2067` (focus ring unified on root border) */
 [data-refineui="spinbutton"] {
   transition: border-color var(--refineui-motion-duration-fast), background-color var(--refineui-motion-duration-fast);
 }
@@ -453,7 +453,7 @@
   border-color: var(--refineui-color-alias-border-focus) !important;
 }
 
-/* Spin Button / Stepper — default · hover · pressed · disabled (아이콘은 currentColor) */
+/* Spin Button / Stepper — default · hover · pressed · disabled (icons: currentColor) */
 [data-refineui="spinbutton-step"] {
   transition: background-color var(--refineui-motion-duration-fast), color var(--refineui-motion-duration-fast),
     opacity var(--refineui-motion-duration-fast);
@@ -477,12 +477,12 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
-/* 포커스 링은 루트 `[data-refineui="spinbutton"]:focus-within` 테두리로 통일 — 스텝은 네이티브 링 제거 */
+/* Focus ring on root `[data-refineui="spinbutton"]:focus-within` — steps drop native ring */
 [data-refineui="spinbutton-step"]:focus-visible {
   outline: none;
 }
 
-/* Spin Button: 눌렀을 때 레이아웃 스케일 변화 없음 (버튼 공통 :active scale 미적용) */
+/* Spin Button: no layout scale on press (exempt from shared button :active scale) */
 [data-refineui="spinbutton"]:active,
 [data-refineui="spinbutton-step"]:active {
   transform: none !important;
@@ -545,7 +545,7 @@
   opacity: 1;
 }
 
-/* Toast — Sonner-like `<ol>/<li>` 스택 + `ol` 호버 시 전체 세로 펼침 (카드 스펙은 Web Kit `548:655`) */
+/* Toast — Sonner-like `<ol>/<li>` stack + expand full vertical stack on `ol` hover (card spec Web Kit `548:655`) */
 [data-refineui="toaster"] {
   --refineui-toaster-inset: var(--refineui-spacing-size-large);
   --refineui-toaster-safe-top: env(safe-area-inset-top, 0px);
@@ -553,7 +553,7 @@
   --refineui-toaster-safe-bottom: env(safe-area-inset-bottom, 0px);
   --refineui-toaster-safe-left: env(safe-area-inset-left, 0px);
   position: fixed;
-  /* fixed 가로 기준은 뷰포트; 노치 좌우는 env + 인셋 반영 */
+  /* fixed width uses viewport; notch sides via env + inset */
   width: min(
     calc(
       100% - var(--refineui-toaster-safe-left) - var(--refineui-toaster-safe-right) - 2 * var(--refineui-toaster-inset)
@@ -567,7 +567,7 @@
   margin: 0;
   padding: 0;
   pointer-events: none;
-  /* 자식이 `position:absolute`라 높이 0이 되지 않게 — 접힌/펼침 스택 높이로 호버 영역 확보 */
+  /* avoid zero height when children are `position:absolute` — hover hit area from collapsed/expanded stack height */
   min-height: var(--refineui-toast-collapsed-stack-height, var(--refineui-toast-front-height, 0px));
   transition: min-height var(--refineui-motion-duration-panel) var(--refineui-motion-easing-emphasized);
 }
@@ -627,8 +627,8 @@
 }
 
 /*
- * `ol`에 `pointer-events: none`이면 포인터는 li 밖(카드·카드 사이)으로 통과해 페이지로 가고,
- * `ol:hover`가 풀려 접힘처럼 보임. 투명 히트층은 `pointer-events: auto`로 빈 구간도 호버 유지(z-index는 li보다 아래).
+ * With `pointer-events: none` on `ol`, pointer passes through gaps to the page and `ol:hover` collapses.
+ * Transparent hit layer uses `pointer-events: auto` to keep hover across gaps (z-index below `li`).
  */
 [data-refineui="toaster"]::before {
   content: "";
@@ -658,8 +658,8 @@
 }
 
 /*
- * 하단 앵커: `li` 높이는 접힘 시 뒤 카드가 앞 카드 높이만큼만 받지만, 블록 흐름은 위→아래라
- * 긴 본문이 아래로 넘쳐 앞(뷰포트 쪽) 토스트와 겹친다. flex-end로 카드를 슬롯 **아래**에 붙여 넘침을 위로 보냄.
+ * Bottom anchor: collapsed `li` height stacks cards, but block flow is top→bottom so long bodies overflow
+ * downward and overlap front toasts. `flex-end` pins cards to the slot bottom so overflow goes upward.
  */
 [data-refineui="toaster"][data-position^="bottom"] [data-refineui="toast-item"] {
   top: auto;
@@ -681,8 +681,8 @@
 }
 
 /*
- * 스택용 scale/opacity는 카드 밖 래퍼에만 둠.
- * 카드에 `position:absolute; inset:0`을 주면 `li`도 absolute라 자식이 플로우에서 빠져 높이 0 → 측정·레이아웃 붕괴.
+ * Keep stack scale/opacity on the outer wrapper only.
+ * `position:absolute; inset:0` on the card pulls it out of flow with absolute `li` → zero height and broken layout.
  */
 [data-refineui="toast-scale-layer"] {
   --refineui-toast-stack-opacity-step: 0.12;
@@ -707,7 +707,7 @@
   }
 }
 
-/* 모바일·터치: 호버 펼침 불가 → 항상 펼친 세로 간격·풀 스케일(기본 규칙보다 뒤 + 구체적 선택자) */
+/* Mobile/touch: no hover expand → always expanded vertical spacing + full scale (later, more specific rules) */
 @media (hover: none), (pointer: coarse) {
   [data-refineui="toaster"] {
     min-height: var(--refineui-toast-expanded-stack-height, var(--refineui-toast-collapsed-stack-height, 0px));
@@ -739,7 +739,7 @@
   opacity: 0;
 }
 
-/* Toast — Web Kit `548:655` Focused: border strong + 2px stroke (유틸 `border-refineui-thin`보다 우선) */
+/* Toast — Web Kit `548:655` Focused: border strong + 2px stroke (beats utility `border-refineui-thin`) */
 [data-refineui="toast"]:focus-within {
   border-color: var(--refineui-color-alias-border-strong) !important;
   border-width: var(--refineui-stroke-width-thick) !important;
@@ -753,7 +753,7 @@
   }
 }
 
-/* Skeleton — Web Kit `570:6175` (MCP Mask: 90deg, 0%→22.5%→32.5%→50% 투명; 하이라이트 alias.backgroundPrimary; 베이스 alias.backgroundBrandSubtle) */
+/* Skeleton — Web Kit `570:6175` (MCP mask: 90deg, 0%→22.5%→32.5%→50% transparent; highlight alias.backgroundPrimary; base alias.backgroundBrandSubtle) */
 @keyframes refineui-skeleton-shimmer {
   0% {
     background-position: 100% 0;
@@ -807,14 +807,14 @@
 [data-refineui="checkbox"][data-variant="circular"] {
   border-radius: 9999px;
 }
-/* 미선택 — Hover: border subtle; Pressed: border strong (호버와 눌림 분리) */
+/* Unchecked — Hover: border subtle; Pressed: border strong */
 label:hover:not(:active) [data-refineui="checkbox"][data-checked="false"]:not([data-disabled="true"]) {
   border-color: var(--refineui-color-alias-border-subtle);
 }
 label:active [data-refineui="checkbox"][data-checked="false"]:not([data-disabled="true"]) {
   border-color: var(--refineui-color-alias-border-strong);
 }
-/* 선택 — Default brand; Hover brandHover; Pressed brandActive */
+/* Checked — Default brand; Hover brandHover; Pressed brandActive */
 [data-refineui="checkbox"][data-checked="true"]:not([data-disabled="true"]) {
   background-color: var(--refineui-color-alias-background-brand);
   border-color: var(--refineui-color-alias-background-brand);
@@ -827,7 +827,7 @@ label:active [data-refineui="checkbox"][data-checked="true"]:not([data-disabled=
   background-color: var(--refineui-color-alias-background-brand-active);
   border-color: var(--refineui-color-alias-background-brand-active);
 }
-/* Focused (Figma `state: Focused`) — `focus-within`: 숨김 input + `:focus-visible` 조합이 환경별로 빠지는 경우 보완 */
+/* Focused (Figma `state: Focused`) — `focus-within` covers hidden input + flaky `:focus-visible` */
 label:focus-within:not(:active) [data-refineui="checkbox"]:not([data-disabled="true"]) {
   outline: none;
   border-width: 2px;
@@ -848,7 +848,7 @@ label:focus-within:not(:active) [data-refineui="checkbox"][data-checked="true"]:
   border-color: var(--refineui-color-alias-background-brand-disabled);
 }
 
-/* Radio — Web Kit `397:1001` (`Radio` 행) + `Radio / Input` 16px 원 — MCP Alias만 */
+/* Radio — Web Kit `397:1001` (`Radio` row) + `Radio / Input` 16px circle — MCP aliases only */
 [data-refineui="radio"] {
   appearance: none;
   -webkit-appearance: none;
@@ -972,7 +972,7 @@ a[data-refineui="link"]:focus-visible {
   border-radius: 2px;
 }
 
-/* Breadcrumb ellipsis — Web Kit pressed (BreadcrumbItem Ellipsis, 링크와 동일 톤) */
+/* Breadcrumb ellipsis — Web Kit pressed (BreadcrumbItem Ellipsis, same tone as links) */
 [data-refineui="breadcrumb-ellipsis"] {
   box-sizing: border-box;
   margin: 0;
@@ -987,7 +987,7 @@ a[data-refineui="link"]:focus-visible {
 [data-refineui="breadcrumb-ellipsis"] > span {
   transition: color var(--refineui-motion-duration-fast);
 }
-/* Hover: Figma BreadcrumbItem Ellipsis Hover — 링크와 동일 foreground secondary (#6c6c6c) */
+/* Hover: Figma BreadcrumbItem Ellipsis Hover — same foreground secondary as links (#6c6c6c) */
 [data-refineui="breadcrumb-ellipsis"]:hover > span {
   color: var(--refineui-color-alias-foreground-secondary) !important;
 }
@@ -1092,7 +1092,7 @@ a[data-refineui="link"]:focus-visible {
   border-color: var(--refineui-color-alias-border-focus) !important;
 }
 
-/* Slider — Web Kit `526:1556` + Slider/Item (alias 색만; sm/md) */
+/* Slider — Web Kit `526:1556` + Slider/Item (alias colors only; sm/md) */
 [data-refineui="slider"] {
   -webkit-appearance: none;
   appearance: none;
@@ -1131,7 +1131,7 @@ a[data-refineui="link"]:focus-visible {
     var(--refineui-slider-rail) 100%
   );
 }
-/* Slider / Item — MCP Thumb `526:1740` 등: 흰 링=border(backgroundPrimary), 얇은 외곽+소프트 섀도우(Foundation elevation) */
+/* Slider / Item — MCP Thumb `526:1740`: white ring = border(backgroundPrimary), thin outer + soft shadow (Foundation elevation) */
 [data-refineui="slider"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   box-sizing: border-box;
@@ -1141,7 +1141,7 @@ a[data-refineui="link"]:focus-visible {
   border: 2px solid var(--refineui-color-alias-background-primary);
   background-color: var(--refineui-color-alias-background-brand);
   background-clip: padding-box;
-  /* strokeWidthThin: 바깥 1px borderDefault + 에셋과 유사한 소프트 헤일(--refineui-elevation-2lighter, var 값에 콤마 포함) */
+  /* strokeWidthThin: outer 1px borderDefault + soft halo like asset (--refineui-elevation-2lighter; var may contain commas) */
   box-shadow:
     0 0 0 1px var(--refineui-color-alias-border-default),
     var(--refineui-elevation-2lighter);

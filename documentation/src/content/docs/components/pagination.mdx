@@ -1,15 +1,15 @@
 ---
 title: Pagination
-description: 페이지 이전/다음·현재 페이지
+description: Previous / next / current page
 ---
 
 import PaginationDemo from "../../../components/PaginationDemo";
 
 # Pagination
 
-목록의 페이지를 바꿀 때 씁니다. Web Kit **Pagination** `558:1989` · **Pagination / Item** `570:2332`를 참고합니다.
+Use when changing pages of a list. Based on Web Kit **Pagination** `558:1989` · **Pagination / Item** `570:2332`.
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import {
@@ -24,7 +24,7 @@ import {
 import "@refineui/react/refineui.css";
 ```
 
-## 기본 사용
+## Basic usage
 
 ```tsx
 <Pagination>
@@ -61,27 +61,27 @@ import "@refineui/react/refineui.css";
 
 ## Props
 
-| Prop | 타입 | 설명 |
-|------|------|------|
-| `className` | `string` | 루트 컨테이너 스타일 확장 |
-| `...props` | `HTMLAttributes<HTMLElement>` | 루트 `<nav>` 속성 |
+| Prop | Type | Description |
+|------|------|-------------|
+| `className` | `string` | Extend root container |
+| `...props` | `HTMLAttributes<HTMLElement>` | Root `<nav>` attributes |
 
-`aria-label="Pagination"`이 `<nav>`에 설정됩니다.
+`aria-label="Pagination"` is set on `<nav>`.
 
-### 합성형 컴포넌트
+### Composed pieces
 
-| 컴포넌트 | 설명 |
-|------|------|
-| `PaginationContent` | 페이지 아이템을 담는 리스트 래퍼 |
-| `PaginationItem` | 각 아이템 래퍼 (`li`) |
-| `PaginationLink` | 페이지 링크 (`isActive` 지원) |
-| `PaginationPrevious` | 이전 페이지 버튼 |
-| `PaginationNext` | 다음 페이지 버튼 |
-| `PaginationEllipsis` | 생략 표시 아이템 |
+| Component | Description |
+|-----------|-------------|
+| `PaginationContent` | List wrapper for page items |
+| `PaginationItem` | Item wrapper (`li`) |
+| `PaginationLink` | Page link (`isActive` supported) |
+| `PaginationPrevious` | Previous page button |
+| `PaginationNext` | Next page button |
+| `PaginationEllipsis` | Ellipsis item |
 
-## 예시
+## Examples
 
-### 라우터 링크와 함께 사용
+### With router links
 
 ```tsx
 <PaginationLink href="/products?page=3">3</PaginationLink>

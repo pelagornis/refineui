@@ -1,11 +1,11 @@
 /**
- * RefineUI CSS 산출물 (`@refineui/tokens/dist`에 기록):
+ * RefineUI CSS output (written under `@refineui/tokens/dist`):
  * - css-variables.css — :root var(--refineui-*)
  * - tailwind-theme.css — @theme
  * - refineui-typography.css — @utility refineui-typo-*
  *
- * `@refineui/tokens` 빌드 산출물 + `componentSizes`를 합쳐 레이아웃 치수 변수를 완성한다.
- * 실행: `pnpm --filter @refineui/react build` (tsup 이후).
+ * Merges `@refineui/tokens` build output + `componentSizes` to finish layout dimension vars.
+ * Run: `pnpm --filter @refineui/react build` (after tsup).
  */
 import { writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -66,7 +66,7 @@ function zIndexKebab(key) {
     return toKebab(rest.charAt(0).toLowerCase() + rest.slice(1));
 }
 
-/** 타이포 CSS 변수 + @utility 블록 문자열 */
+/** Typography CSS variables + @utility block strings */
 function typographyBlocks() {
     const rootLines = [];
     const utilityBlocks = [];

@@ -1,31 +1,31 @@
 ---
 title: Divider
-description: 수평 구분선 — default · content · icon
+description: Horizontal divider — default, content, icon
 ---
 
 import DividerPreview from "../../../components/DividerPreview";
 
 # Divider
 
-콘텐츠를 나누는 **수평** 구분선입니다. Web Kit **Divider** `346:722`를 따릅니다. **세로 Divider는 지원하지 않습니다.**
+**Horizontal** separator between content. Web Kit **Divider** `346:722`. **Vertical dividers are not supported.**
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import { Divider } from "@refineui/react";
 ```
 
-## 레이아웃
+## Layout
 
-| `layout` | 설명 |
-|----------|------|
-| `default` (기본) | 전폭 1px 선 |
-| `content` | 가운데(또는 `align`에 따라) 텍스트 + 양쪽 선 |
-| `icon` | 가운데 아이콘 슬롯 + 양쪽 선 (`children`에 아이콘 등) |
+| `layout` | Description |
+|----------|-------------|
+| `default` | Full-width 1px line |
+| `content` | Text in the middle (or per `align`) with lines on both sides |
+| `icon` | Icon slot in the middle with lines (`children` for icon, etc.) |
 
-`content`·`icon`에서 `align`은 `"center"` \| `"left"` \| `"right"` (수평 정렬).
+For `content` and `icon`, `align` is `"center"` \| `"left"` \| `"right"` (horizontal alignment).
 
-## 기본 사용
+## Basic usage
 
 ```tsx
 <Divider />
@@ -37,17 +37,17 @@ import { Divider } from "@refineui/react";
   <DividerPreview client:load />
 </div>
 
-## 예시
+## Examples
 
-### 텍스트 구분
+### Text in the middle
 
 ```tsx
 <Divider layout="content" align="center">
-  또는
+  or
 </Divider>
 ```
 
-### 아이콘
+### Icon
 
 ```tsx
 <Divider layout="icon" align="center">

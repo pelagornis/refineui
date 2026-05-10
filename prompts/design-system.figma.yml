@@ -1,21 +1,21 @@
-# Design System — Figma Foundation 기반
-# RefineUI: Foundation URL을 단일 소스로 사용
+# Design System — Figma Foundation based
+# RefineUI: Foundation URL is the single source
 
 meta:
   name: design-system.figma
   strict: true
   scope: design
-  usage: "UI/디자인/토큰 관련 작업 시 system.core + 이 파일 적용"
+  usage: "For UI/design/token work apply system.core + this file"
 
 prompt: |
-  # Design System (Figma Foundation 기반)
+  # Design System (Figma Foundation based)
 
-  ## Foundation (단일 소스)
+  ## Foundation (single source)
   - Figma: https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundation?node-id=0-1
-  - 코드: packages/tokens/src/global/*.ts
+  - Code: packages/tokens/src/global/*.ts
 
-  ## 규칙
-  MUST: 색상, 간격, 타이포그래피, stroke, radius, shadow는 Foundation 또는 @refineui/tokens에서만 사용.
-  MUST: 새 컴포넌트/스타일 추가 시 Foundation에 정의된 토큰과 일치. Foundation에 없는 값은 추가 전 확인.
-  MUST NOT: hex/rgba, px 값 하드코딩. tokens import 후 사용.
-  MUST: Figma MCP로 디자인 가져올 때 Foundation URL 또는 해당 node-id 전달.
+  ## Rules
+  MUST: Use color, spacing, typography, stroke, radius, shadow only from Foundation or @refineui/tokens.
+  MUST: New components/styles match tokens defined in Foundation. Confirm before adding values not in Foundation.
+  MUST NOT: Hardcode hex/rgba or px. Import tokens instead.
+  MUST: When pulling design via Figma MCP pass the Foundation URL or the relevant node-id.

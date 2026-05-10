@@ -267,7 +267,7 @@ export function DialogClose({ className, onClick, type = "button", ...props }: D
             variant="ghost"
             size="sm"
             layout="icon"
-            aria-label="닫기"
+            aria-label="Close"
             className={className}
             onClick={(e) => {
                 onClick?.(e);

@@ -1,5 +1,5 @@
 # Code Review — same strict criteria, assumes system.core
-# RefineUI: packages/ 구조 변경 금지. Tools: use this file's prompt key. Human-readable: docs/review.md
+# RefineUI: do not change packages/ layout. Tools: use this file's prompt key. Human-readable: docs/review.md
 
 meta:
   name: review

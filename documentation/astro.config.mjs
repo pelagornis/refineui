@@ -8,7 +8,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
     ssr: {
-      /** CJS 엔트리만 잡히는 이슈 방지 — 번들 시 ESM로 통일 */
+      /** Avoid resolving CJS-only entries — keep ESM in the bundle */
       noExternal: ['@refineui/react', '@refineui/tokens'],
     },
     optimizeDeps: {
@@ -51,18 +51,18 @@ export default defineConfig({
         },
       ],
       title: 'RefineUI',
-      description: 'Pelagornis RefineUI Web Kit — 디자인 시스템 컴포넌트 라이브러리',
+      description: 'Pelagornis RefineUI Web Kit — design system component library',
       customCss: ['./src/styles/global.css'],
       sidebar: [
-        { label: '시작하기', slug: 'intro' },
+        { label: 'Getting started', slug: 'intro' },
         {
-          label: '컴포넌트',
+          label: 'Components',
           autogenerate: { directory: 'components' },
         },
         {
-          label: '가이드',
+          label: 'Guides',
           items: [
-            { label: '프로젝트 구조', slug: 'guides/packages' },
+            { label: 'Project structure', slug: 'guides/packages' },
             { label: 'CLI', slug: 'guides/cli' },
           ],
         },

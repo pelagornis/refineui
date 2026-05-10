@@ -15,7 +15,7 @@ export type AvatarPresenceStatus = "online" | "away" | "unavailable" | "offline"
 export type AvatarProps = Omit<HTMLAttributes<HTMLDivElement>, "color"> & {
     src?: string | null;
     alt?: string;
-    /** 슬롯 지정이 없으면 children 형태로 자동 레이아웃을 결정합니다. */
+    /** When slots are omitted, layout is inferred from children. */
     layout?: AvatarLayout;
     size?: AvatarSize;
     showStatus?: boolean;

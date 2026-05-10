@@ -6,12 +6,12 @@ export default function DividerPreview() {
   return (
     <>
       <PreviewFrame>
-        <p style={{ margin: 0 }}>Default — 전체 1px</p>
+        <p style={{ margin: 0 }}>Default — full-width 1px</p>
         <Divider />
-        <p style={{ margin: 0 }}>아래 내용</p>
+        <p style={{ margin: 0 }}>Content below</p>
       </PreviewFrame>
       <PreviewFrame>
-        <p style={{ margin: 0, marginBottom: spacings.sizeSmall }}>Content / Icon — gap 10px, 짧은 선 8px</p>
+        <p style={{ margin: 0, marginBottom: spacings.sizeSmall }}>Content / Icon — gap 10px, short line 8px</p>
         <div style={{ display: "flex", flexDirection: "column", gap: spacings.sizeMedium }}>
           <Divider layout="content" align="center">
             Content

@@ -79,7 +79,7 @@ export default function CardPreview() {
                         >
                             <CardContent className="py-refineui-size-large">
                                 <p className="m-0 refineui-typo-body-2 text-refineui-alias-foreground-secondary">
-                                    Subtle style (배경/테두리 최소화)
+                                    Subtle style (minimal background and border)
                                 </p>
                             </CardContent>
                         </Card>

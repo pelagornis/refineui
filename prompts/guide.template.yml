@@ -1,5 +1,5 @@
 # Task prompt template (assumes system.core + platform rules apply)
-# RefineUI: Web UI 라이브러리 monorepo (packages/react, packages/tokens, packages/utilities, packages/version)
+# RefineUI: Web UI library monorepo (packages/react, packages/tokens, packages/utilities, packages/version)
 # Copy, fill values, then paste into the AI. Use as YAML or render from the prompt_example below.
 
 meta:
@@ -10,9 +10,9 @@ meta:
 # Fields to fill (remove comments and enter values)
 fields:
   platform: "Web"
-  role: "One-line role, e.g. RefineUI packages 내 React 컴포넌트/유틸 수정"
+  role: "One-line role, e.g. edit RefineUI React components/utilities in packages"
   context:
-    project: "RefineUI — React/TypeScript 기반 웹 UI 라이브러리 monorepo"
+    project: "RefineUI — React/TypeScript web UI library monorepo"
     path: "packages/react | packages/tokens | packages/utilities | packages/version"
     stack: "React, TypeScript, pnpm workspace"
     rules_ref: "rules.by-platform web block"

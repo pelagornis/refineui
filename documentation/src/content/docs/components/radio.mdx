@@ -1,26 +1,26 @@
 ---
 title: Radio
-description: 라디오 그룹 — 제목·설명
+description: Radio group — title and description
 ---
 
 import RadioPreview from "../../../components/RadioPreview";
 
 # Radio
 
-라디오 버튼 한 항목입니다. Web Kit **Radio** `397:1001`과 같이 제목·설명 텍스트를 옵션으로 둘 수 있습니다. **같은 `name`**으로 여러 개를 두면 브라우저가 그룹으로 처리합니다.
+Single radio item. Web Kit **Radio** `397:1001` supports optional title and description. Use the **same `name`** on multiple radios so the browser groups them.
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import { Radio } from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
-## 기본 사용
+## Basic usage
 
 ```tsx
-<Radio name="plan" value="free" defaultChecked title="무료" />
-<Radio name="plan" value="pro" title="프로" description="월 과금" />
+<Radio name="plan" value="free" defaultChecked title="Free" />
+<Radio name="plan" value="pro" title="Pro" description="Billed monthly" />
 ```
 
 ## Preview
@@ -31,22 +31,22 @@ import "@refineui/react/refineui.css";
 
 ## Props
 
-| Prop | 타입 | 설명 |
-|------|------|------|
-| `title` | `ReactNode` | 주 라벨 |
-| `description` | `ReactNode` | 보조 설명 (작은 캡션) |
-| `disabled` | `boolean` | 비활성 |
+| Prop | Type | Description |
+|------|------|-------------|
+| `title` | `ReactNode` | Primary label |
+| `description` | `ReactNode` | Supporting caption |
+| `disabled` | `boolean` | Disabled |
 
-`value`, `checked`, `defaultChecked`, `onChange`, `name` 등 **`InputHTMLAttributes`** (type 제외)를 사용합니다.
+Uses **`InputHTMLAttributes`** except `type`: `value`, `checked`, `defaultChecked`, `onChange`, `name`, etc.
 
-## 예시
+## Examples
 
-### 필드셋으로 그룹 레이블
+### Fieldset group label
 
 ```tsx
 <fieldset>
-  <legend>결제 수단</legend>
-  <Radio name="pay" value="card" label="카드" />
-  <Radio name="pay" value="bank" label="계좌이체" />
+  <legend>Payment method</legend>
+  <Radio name="pay" value="card" label="Card" />
+  <Radio name="pay" value="bank" label="Bank transfer" />
 </fieldset>
 ```

@@ -1,15 +1,15 @@
 ---
 title: Accordion
-description: 접이식 섹션 — 여러 개 동시 펼침 가능
+description: Collapsible sections — multiple panels can be open
 ---
 
 import AccordionPreview from "../../../components/AccordionPreview";
 
 # Accordion
 
-여러 패널을 접었다 펼 수 있습니다. Web Kit **Accordion** `54:146`의 **sm / md / lg**에 맞춰 `size`로 트리거 타이포가 바뀝니다.
+Expand and collapse multiple panels. Web Kit **Accordion** `54:146` — trigger typography follows **`size`** **sm / md / lg**.
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import {
@@ -21,7 +21,7 @@ import {
 import "@refineui/react/refineui.css";
 ```
 
-## 기본 사용
+## Basic usage
 
 ```tsx
 <Accordion
@@ -53,26 +53,26 @@ import "@refineui/react/refineui.css";
 
 ## Props
 
-| Prop | 타입 | 기본값 | 설명 |
-|------|------|--------|------|
-| `type` | `"single"` \| `"multiple"` | `"single"` | 단일/다중 열림 모드 |
-| `collapsible` | `boolean` | `false` | `single` 모드에서 열린 항목 다시 닫기 허용 |
-| `defaultValue` | `string` \| `string[]` | — | 초기 열림 항목 |
-| `value` | `string` \| `string[]` | — | 제어 컴포넌트 값 |
-| `onValueChange` | `(value) => void` | — | 열림 값 변경 콜백 |
-| `size` | `"small"` \| `"medium"` \| `"large"` | — | 트리거 타이포 |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `type` | `"single"` \| `"multiple"` | `"single"` | Single vs multiple open items |
+| `collapsible` | `boolean` | `false` | In `single` mode, allow closing the open item |
+| `defaultValue` | `string` \| `string[]` | — | Initially open item(s) |
+| `value` | `string` \| `string[]` | — | Controlled value |
+| `onValueChange` | `(value) => void` | — | Change callback |
+| `size` | `"small"` \| `"medium"` \| `"large"` | — | Trigger typography |
 
-## 예시
+## Examples
 
-### 아이콘
+### Icon
 
-`AccordionItem`에 `icon`을 주면 아이콘이 제목 앞에 표시됩니다.
+Pass `icon` on `AccordionItem` to show an icon before the title.
 
 ```tsx
 <Accordion type="single" defaultValue="help">
   <AccordionItem value="help" icon="info">
-    <AccordionTrigger>도움말</AccordionTrigger>
-    <AccordionContent>아이콘이 포함된 항목입니다.</AccordionContent>
+    <AccordionTrigger>Help</AccordionTrigger>
+    <AccordionContent>Item content with a leading icon.</AccordionContent>
   </AccordionItem>
 </Accordion>
 ```

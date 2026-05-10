@@ -1,31 +1,31 @@
 ---
 title: Field
-description: 라벨·컨트롤·힌트·에러 래퍼
+description: Label, control, hint, and error wrapper
 ---
 
 import FieldPreview from "../../../components/FieldPreview";
 
 # Field
 
-폼 필드를 **라벨 + 자식 컨트롤 + (선택) 힌트/에러**로 묶습니다. Web Kit **Field** `525:1074`의 라벨 타이포·간격에 맞춥니다.
+Wraps a form field as **label + control + optional hint/error**. Matches Web Kit **Field** `525:1074` label typography and spacing.
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import { Field, FieldError, FieldHint, FieldLabel, FieldRequired, Input } from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
-## 기본 사용
+## Basic usage
 
 ```tsx
 <Field>
   <FieldLabel>
-    이메일
+    Email
     <FieldRequired />
   </FieldLabel>
   <Input id="email" name="email" type="email" fullWidth />
-  <FieldHint>로그인에 사용됩니다.</FieldHint>
+  <FieldHint>Used for sign-in.</FieldHint>
 </Field>
 ```
 
@@ -37,28 +37,28 @@ import "@refineui/react/refineui.css";
 
 ## Props
 
-| Prop | 타입 | 기본값 | 설명 |
-|------|------|--------|------|
-| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | 라벨 타이포 (sm→caption1, md→body2, lg→body1) |
-| `children` | `ReactNode` | — | 합성형 슬롯 (`FieldLabel`, `FieldHint`, `FieldError` 등) |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | Label typography (sm→caption1, md→body2, lg→body1) |
+| `children` | `ReactNode` | — | Slots (`FieldLabel`, `FieldHint`, `FieldError`, etc.) |
 
-`children`에 [Input](/components/input/), [Select](/components/select/), [Textarea](/components/textarea/) 등을 둡니다.
+Place [Input](/components/input/), [Select](/components/select/), [Textarea](/components/textarea/), etc. as children.
 
-## 예시
+## Examples
 
-### 에러 상태
+### Error state
 
 ```tsx
 <Field>
   <FieldLabel>
-    비밀번호
+    Password
     <FieldRequired />
   </FieldLabel>
   <Input id="pw" type="password" error fullWidth />
-  <FieldError>대소문자를 포함하세요.</FieldError>
+  <FieldError>Include upper and lower case letters.</FieldError>
 </Field>
 ```
 
-### 힌트만 (라벨 없음)
+### Hint only (no label)
 
-`FieldLabel` 없이 `FieldHint`만 둘 수 있습니다. 스크린 리더 연결은 자식에 `aria-label` 또는 별도 [Label](/components/label/)을 사용하세요.
+You can use `FieldHint` without `FieldLabel`. For screen readers, use `aria-label` on the control or a separate [Label](/components/label/).

@@ -7,17 +7,17 @@ export interface WebIconProps {
     name: string;
     size?: number;
     color?: string;
-    /** RefineUI System Icons 스타일 (기본 regular) */
+    /** RefineUI System Icons style (default: regular) */
     iconStyle?: "regular" | "filled";
     className?: string;
     style?: CSSProperties;
-    /** 글리프가 없을 때 표시 */
+    /** Shown when the glyph is missing */
     fallback?: ReactNode;
-    /** 접근성: 라벨이 없으면 aria-hidden */
+    /** Accessibility: omit label → aria-hidden */
     "aria-label"?: string;
 }
 
-/** @refineui/web-icons (RefineUI System Icons) 글리프 — 크기·색은 아이콘 글리프에 맞게 인라인 유지 */
+/** Glyph from @refineui/web-icons — size/color stay inline on the glyph */
 export function WebIcon({
     name,
     size = iconSizes.medium,

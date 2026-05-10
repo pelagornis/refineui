@@ -1,67 +1,67 @@
-# Figma Foundation — RefineUI 디자인 토큰
+# Figma Foundation — RefineUI design tokens
 
 ## Foundation URL
 
 **Pelagornis RefineUI Foundation (Figma) — Variables:**
 https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundation?node-id=1-650
 
-**Pelagornis RefineUI Web Kit (Figma) — 컴포넌트:**
+**Pelagornis RefineUI Web Kit (Figma) — components:**
 https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?node-id=0-1
 
-(`node-id=7-6`은 파일 내 **Accordion 예시 페이지**만 연다. 컴포넌트별 스펙은 MCP `search_design_system`과 해당 노드의 `get_design_context`를 쓴다 — 예: Breadcrumb `283:688`, Breadcrumb/BreadcrumbItem 변형 `279:2539` / `289:41` / `289:44`.)
+(`node-id=7-6` opens only an **Accordion example page** inside the file. Per-component specs use MCP `search_design_system` and `get_design_context` on that node — e.g. Breadcrumb `283:688`, Breadcrumb/BreadcrumbItem variants `279:2539` / `289:41` / `289:44`.)
 
-### Foundation과 Web Kit의 관계
+### Foundation and Web Kit
 
-- **Foundation → Web Kit**: Web Kit 컴포넌트는 **Foundation Variables**(색, spacing, padding, radius 등)에 **연결된 값**만 사용한다.
-- **모든 사이즈·padding·간격**은 Foundation을 거친다. Web Kit만의 임의 수치는 두지 않는다.
+- **Foundation → Web Kit**: Web Kit components use values **linked to Foundation Variables** (color, spacing, padding, radius, etc.).
+- **All sizes·padding·gaps** go through Foundation. Do not invent Web Kit–only numbers.
 
-## 역할
+## Roles
 
-- **Foundation = 단일 소스**: 색상, 타이포그래피, 간격, radius, shadow 등 모든 디자인 토큰의 기준
-- **코드 동기화**: `packages/tokens/src/global/*.ts`는 이 Foundation과 일치하도록 유지
+- **Foundation = single source** for color, typography, spacing, radius, shadow, and all design tokens.
+- **Code sync**: keep `packages/tokens/src/global/*.ts` aligned with Foundation.
 
-## 토큰 매핑
+## Token mapping
 
-| Foundation (Figma) | 코드 (packages/tokens) |
-|--------------------|------------------------|
+| Foundation (Figma) | Code (`packages/tokens`) |
+|--------------------|---------------------------|
 | Colors / Variables | `global/colors.ts` |
 | Typography | `global/fonts.ts` |
 | Typography styles | `global/typographys.ts` |
 | Spacing | `global/spacings.ts` |
 | Stroke width | `global/strokeWidths.ts` |
 | Border radius | `global/borderRadii.ts` |
-| Shadow | `global/shadows.ts` (Lighter~Darker, shadowColors 기반) |
+| Shadow | `global/shadows.ts` (Lighter~Darker, shadowColors) |
 | Z-index | `global/zIndex.ts` |
 | Text alignment | `global/textAlignments.ts` |
 
-## Figma MCP 사용
+## Using Figma MCP
 
-1. Cursor에서 Figma MCP 연결 후
-2. `get_variable_defs` — Foundation (node-id=1-650) 변수 조회
-3. `get_design_context` — Web Kit에서 **조회할 컴포넌트 노드** 지정(파일 진입용 기본 링크는 `node-id=0-1`; 예: Breadcrumb `283:688`)
-4. 특정 프레임/레이어만 필요하면 `?node-id=XXX-YYY` / MCP 인자 `nodeId` `XXX:YYY` 형태로 지정
+1. Connect Figma MCP in Cursor.
+2. `get_variable_defs` — query Foundation variables (node-id=1-650).
+3. `get_design_context` — pass the **component node** in Web Kit (file entry default link `node-id=0-1`; e.g. Breadcrumb `283:688`).
+4. For a specific frame/layer use `?node-id=XXX-YYY` / MCP `nodeId` `XXX:YYY`.
 
-## 동기화 절차
+## Sync workflow
 
-### Figma MCP로 자동 동기화 (권장)
+### Automatic sync via Figma MCP (recommended)
 
-1. Cursor에서 **Figma MCP 인증** (`mcp_auth` tool 호출 또는 Connect)
-2. 채팅에서 다음을 요청:
-   - *"Foundation (node-id=1-650) 변수를 가져와서 packages/tokens에 반영해줘"*
-   - *"Web Kit에서 Breadcrumb(283:688) 등 **해당 컴포넌트 node-id**로 get_design_context 해서 design-specs-web-kit.md와 React에 반영해줘"*
-3. AI가 `get_variable_defs` / `get_design_context`로 Figma에서 직접 값을 가져와 동기화
+1. **Authenticate Figma MCP** in Cursor (`mcp_auth` or Connect).
+2. Ask in chat, for example:
+   - *"Pull Foundation (node-id=1-650) variables into packages/tokens."*
+   - *"Run get_design_context on Web Kit Breadcrumb (283:688) and update design-specs-web-kit.md and React."*
+3. AI uses `get_variable_defs` / `get_design_context` to sync from Figma.
 
-### 수동 동기화
+### Manual sync
 
-Foundation 수정 시:
+When Foundation changes:
 
-1. Figma에서 변경 사항 확인
-2. `packages/tokens/src/global/*.ts` 해당 파일 수정
-3. 타입(`types.ts`)과 불일치 시 타입도 업데이트
-4. `pnpm build` 등으로 빌드 확인
+1. Review changes in Figma.
+2. Edit the matching `packages/tokens/src/global/*.ts` files.
+3. Update `types.ts` if types drift.
+4. Run `pnpm build` (or equivalent) to verify.
 
-## 관련 파일
+## Related files
 
-- `.cursor/rules/figma-foundation.mdc` — Cursor 규칙
-- `prompts/design-system.figma.yml` — 프롬프트 규칙
-- `prompt.config.js` — `taskPresets.design` 참조
+- `.cursor/rules/figma-foundation.mdc` — Cursor rules
+- `prompts/design-system.figma.yml` — prompt rules
+- `prompt.config.js` — references `taskPresets.design`

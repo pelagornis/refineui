@@ -9,7 +9,7 @@ export interface DropdownTriggerProps extends Omit<HTMLAttributes<HTMLElement>, 
 export interface DropdownContentProps extends HTMLAttributes<HTMLDivElement> {
     align?: MenuAlign;
     side?: "auto" | "top" | "bottom";
-    /** 트리거와 패널 사이 간격 — 기본 `sizeXSmall`(4px). */
+    /** Gap between trigger and panel — default `sizeXSmall` (4px). */
     sideOffset?: number;
 }
 

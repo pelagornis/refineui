@@ -27,7 +27,9 @@ export default function AlertPreview() {
               </AlertIcon>
               <AlertBody>
                 <AlertTitle>Alert Title</AlertTitle>
-                <AlertDescription>Alert Description — 기본(neutral) 톤, 제목 검정·본문 보조색.</AlertDescription>
+                <AlertDescription>
+                  Alert description — default (neutral) tone; title uses primary ink and body uses secondary.
+                </AlertDescription>
               </AlertBody>
             </AlertRow>
           </Alert>

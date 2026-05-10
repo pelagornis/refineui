@@ -1,5 +1,5 @@
 /**
- * 시맨틱 elevation — 단계 이름(`shadow2` …)마다 라이트/다크용 글로벌 그림자 한 쌍.
+ * Semantic elevation — one global shadow pair per step name (`shadow2` …) for light/dark.
  * Figma: `Elevation/Light/Shadow N` → `shadows.shadowNLight`, `Elevation/Dark/Shadow N` → `shadows.shadowNDark`
  *
  * Foundation: https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundation
@@ -7,7 +7,7 @@
 import { shadows } from "../global/shadows";
 import type { SemanticShadowElevationTokens } from "../types";
 
-/** `semanticShadows.shadow2.light` / `.dark` — 글로벌 `shadows`를 테마별로 고름 */
+/** `semanticShadows.shadow2.light` / `.dark` — pick global `shadows` per theme */
 export const semanticShadows: SemanticShadowElevationTokens = {
     shadow2: { light: shadows.shadow2Light, dark: shadows.shadow2Dark },
     shadow4: { light: shadows.shadow4Light, dark: shadows.shadow4Dark },

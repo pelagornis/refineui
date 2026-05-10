@@ -12,7 +12,7 @@ export const tooltipStyles = {
 const gap = spacings.sizeXSmall;
 const edgeInset = spacings.sizeMedium;
 
-/** 패널 `absolute` 오프셋 — MCP position × align */
+/** Panel `absolute` offset — MCP position × align */
 export function tooltipPanelStyle(position: TooltipPosition, align: TooltipAlign): CSSProperties {
     switch (position) {
         case "Top":
@@ -36,7 +36,7 @@ export function tooltipPanelStyle(position: TooltipPosition, align: TooltipAlign
     }
 }
 
-/** CSS border 삼각형 — 배경 `bg`(resolve 후 hex)·반변 `b`(sizeSmall) */
+/** CSS border triangle — background `bg` (resolved hex), half-edge `b` (sizeSmall) */
 export function tooltipArrowStyle(
     position: TooltipPosition,
     align: TooltipAlign,

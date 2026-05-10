@@ -1,20 +1,20 @@
 import type { ReactNode } from "react";
 import { borderRadii, spacings } from "@refineui/tokens";
 
-/** Web Kit 미리보기 박스 — `@refineui/tokens` `spacings`·`borderRadii` */
+/** Web Kit preview chrome — `@refineui/tokens` `spacings` and `borderRadii` */
 const previewPadding = spacings.sizeXXLarge;
 const previewRadius = borderRadii.roundedLarge;
 const previewMarginBottom = spacings.sizeXXLarge;
 
 interface PreviewFrameProps {
   children: ReactNode;
-  /** 미리보기 블록 위 한 줄 설명(예: 변형 이름) */
+  /** One-line caption above the preview (e.g. variant name) */
   title?: string;
-  /** 배경색 — light(기본) | dark */
+  /** Background — light (default) | dark */
   variant?: "light" | "dark";
-  /** 미리보기 영역 최소 높이 — 드롭다운·Popover 등 오버레이 데모 */
+  /** Min height for overlay demos (dropdown, popover, etc.) */
   minHeight?: string;
-  /** 가로 최소 폭 — 폼·패널 데모 등 */
+  /** Min width for form/panel demos */
   minWidth?: string;
 }
 

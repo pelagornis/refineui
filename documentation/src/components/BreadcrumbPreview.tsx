@@ -23,48 +23,48 @@ const caption = {
 } as const;
 
 /**
- * Web Kit Breadcrumb `283:688` (Figma Short / Long) — Long: 링크 / ⋯ / 링크 / 링크 / 현재
- * ⋯ 메뉴는 **Menu** 컴파운드 API. `BreadcrumbItem`은 기본 `overflow-clip`이라 `Menu` 패널(absolute)이 잘리므로, ⋯ 셀에 `overflow-visible` 필요. `minHeight`는 패널이 뷰에 들어가게.
+ * Web Kit Breadcrumb `283:688` (Figma Short / Long) — Long: link / ⋯ / link / link / current.
+ * ⋯ uses the **Menu** compound API. `BreadcrumbItem` defaults to `overflow-clip`, so the `Menu` panel (absolute) clips — set `overflow-visible` on the ⋯ cell. `minHeight` keeps the panel in view.
  */
 export default function BreadcrumbPreview() {
     return (
         <PreviewFrame minHeight="min(55vh, 520px)">
             <div style={{ display: "flex", flexDirection: "column", gap: spacings.sizeLarge, width: "100%" }}>
                 <div>
-                    <p style={caption}>Short — 링크 · 링크 · 현재 (구분자 /)</p>
+                    <p style={caption}>Short — link · link · current (separator /)</p>
                     <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem>
-                                <BreadcrumbLink href="#">홈</BreadcrumbLink>
+                                <BreadcrumbLink href="#">Home</BreadcrumbLink>
                             </BreadcrumbItem>
                             <BreadcrumbSeparator />
                             <BreadcrumbItem>
-                                <BreadcrumbLink href="#">문서</BreadcrumbLink>
+                                <BreadcrumbLink href="#">Docs</BreadcrumbLink>
                             </BreadcrumbItem>
                             <BreadcrumbSeparator />
                             <BreadcrumbItem>
-                                <BreadcrumbPage>컴포넌트</BreadcrumbPage>
+                                <BreadcrumbPage>Components</BreadcrumbPage>
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
                 </div>
                 <div>
-                    <p style={caption}>Long — 링크 / ⋯(메뉴) / 링크 / 링크 / 현재</p>
+                    <p style={caption}>Long — link / ⋯ (menu) / link / link / current</p>
                     <Breadcrumb>
                         <BreadcrumbList>
                             <BreadcrumbItem>
-                                <BreadcrumbLink href="#">홈</BreadcrumbLink>
+                                <BreadcrumbLink href="#">Home</BreadcrumbLink>
                             </BreadcrumbItem>
                             <BreadcrumbSeparator />
                             <BreadcrumbItem className="overflow-visible">
                                 <Menu positioning={{ autoSize: true }}>
                                     <MenuTrigger>
-                                        <BreadcrumbEllipsisTrigger aria-label="중간 경로 메뉴" />
+                                        <BreadcrumbEllipsisTrigger aria-label="Middle path menu" />
                                     </MenuTrigger>
                                     <MenuPopover>
                                         <MenuList className="w-refineui-menu-panel-width">
-                                            <MenuItem onClick={() => {}}>문서</MenuItem>
-                                            <MenuItem onClick={() => {}}>가이드</MenuItem>
+                                            <MenuItem onClick={() => {}}>Docs</MenuItem>
+                                            <MenuItem onClick={() => {}}>Guide</MenuItem>
                                         </MenuList>
                                     </MenuPopover>
                                 </Menu>
@@ -75,11 +75,11 @@ export default function BreadcrumbPreview() {
                             </BreadcrumbItem>
                             <BreadcrumbSeparator />
                             <BreadcrumbItem>
-                                <BreadcrumbLink href="#">참조</BreadcrumbLink>
+                                <BreadcrumbLink href="#">Reference</BreadcrumbLink>
                             </BreadcrumbItem>
                             <BreadcrumbSeparator />
                             <BreadcrumbItem>
-                                <BreadcrumbPage>현재 페이지</BreadcrumbPage>
+                                <BreadcrumbPage>Current page</BreadcrumbPage>
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>

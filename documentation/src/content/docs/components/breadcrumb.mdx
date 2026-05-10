@@ -1,16 +1,16 @@
 ---
 title: Breadcrumb
-description: 경로 탐색 — 링크·생략(ellipsis)
+description: Path navigation — links and ellipsis
 ---
 
 import BreadcrumbPreview from "../../../components/BreadcrumbPreview";
 
 # Breadcrumb
 
-현재 위치까지의 경로를 보여 줍니다. Web Kit **Breadcrumb** `283:688`(Figma: Caption1 Medium, `gap` sizeMedium, `py` sizeSmall, 구분자 `/`, 링크 tertiary · 현재 primary)를 따릅니다.  
-일반적인 **합성 컴포넌트** 패턴으로 조립합니다.
+Shows the path to the current location. Follows Web Kit **Breadcrumb** `283:688` (Figma: Caption1 Medium, `gap` sizeMedium, `py` sizeSmall, `/` separator, link tertiary · current primary).  
+Use the usual **composed component** pattern.
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import {
@@ -31,29 +31,29 @@ import {
 } from "@refineui/react";
 ```
 
-## 기본 사용
+## Basic usage
 
 ```tsx
 <Breadcrumb>
   <BreadcrumbList>
     <BreadcrumbItem>
-      <BreadcrumbLink href="/">홈</BreadcrumbLink>
+      <BreadcrumbLink href="/">Home</BreadcrumbLink>
     </BreadcrumbItem>
     <BreadcrumbSeparator />
     <BreadcrumbItem>
-      <BreadcrumbLink href="/docs">문서</BreadcrumbLink>
+      <BreadcrumbLink href="/docs">Docs</BreadcrumbLink>
     </BreadcrumbItem>
     <BreadcrumbSeparator />
     <BreadcrumbItem>
-      <BreadcrumbPage>컴포넌트</BreadcrumbPage>
+      <BreadcrumbPage>Components</BreadcrumbPage>
     </BreadcrumbItem>
   </BreadcrumbList>
 </Breadcrumb>
 ```
 
-## Next.js `Link` 와 함께
+## With Next.js `Link`
 
-`BreadcrumbLink`는 시맨틱 `<a>`입니다. App Router에서는 **`breadcrumbLinkClassName`**을 `Link`에 넘겨 동일한 Web Kit 스타일을 맞춥니다.
+`BreadcrumbLink` is a semantic `<a>`. In the App Router, pass **`breadcrumbLinkClassName`** to `Link` for the same Web Kit styles.
 
 ```tsx
 import Link from "next/link";
@@ -70,37 +70,39 @@ import { breadcrumbLinkClassName } from "@refineui/react";
   <BreadcrumbPreview client:load />
 </div>
 
-## 구성 요소
+## Building blocks
 
-| 컴포넌트 | 역할 |
-|----------|------|
-| `Breadcrumb` | 루트 `nav` (`data-refineui="breadcrumb"`) |
-| `BreadcrumbList` | `ol` 목록 (flex·wrap) |
-| `BreadcrumbItem` | 각 세그먼트 `li` (기본 `overflow-clip` — ⋯ 메뉴 열 때는 아래 절 참고) |
-| `BreadcrumbLink` | 이전 단계 링크 (`a`; Next.js 등은 `breadcrumbLinkClassName`) |
-| `BreadcrumbPage` | 현재 페이지 (`aria-current="page"`) |
-| `BreadcrumbSeparator` | 구분자 `li` (기본 `/`) |
-| `BreadcrumbEllipsis` | ⋯ 아이콘만 (`span`, 정적 표시용) |
-| `BreadcrumbEllipsisTrigger` | Web Kit ellipsis용 `button` (`ref` 전달) — `MenuTrigger` / `Dropdown` `trigger`에 사용 |
+| Component | Role |
+|-----------|------|
+| `Breadcrumb` | Root `nav` (`data-refineui="breadcrumb"`) |
+| `BreadcrumbList` | `ol` list (flex·wrap) |
+| `BreadcrumbItem` | Segment `li` (default `overflow-clip` — see ellipsis note below) |
+| `BreadcrumbLink` | Previous-step link (`a`; Next.js uses `breadcrumbLinkClassName`) |
+| `BreadcrumbPage` | Current page (`aria-current="page"`) |
+| `BreadcrumbSeparator` | Separator `li` (default `/`) |
+| `BreadcrumbEllipsis` | ⋯ icon only (`span`, static) |
+| `BreadcrumbEllipsisTrigger` | Web Kit ellipsis `button` (`ref` pass-through) — use with `MenuTrigger` / Dropdown `trigger` |
 
-### 생략 + 메뉴 (Long)
+### Ellipsis + menu (Long)
 
-Figma **Long**은 링크 / ⋯ / 링크 / 링크 / 현재 순입니다. **`BreadcrumbEllipsisTrigger`**(`button[data-refineui="breadcrumb-ellipsis"]`)를 쓰면 `refineui.css` 호버·포커스와 맞습니다. **`Button`**으로 감싸면 Web Kit 토큰 높이와 겹쳐 레이아웃이 어긋날 수 있습니다.
+Figma **Long** is link / ⋯ / link / link / current. **`BreadcrumbEllipsisTrigger`** (`button[data-refineui="breadcrumb-ellipsis"]`) matches `refineui.css` hover/focus. Wrapping with **`Button`** can misalign heights vs Web Kit tokens.
 
-**메뉴 패널:** **`Menu`**(Web Kit `633:4268`) 컴파운드 API를 권장합니다(`MenuPreview` 참고).
+**Menu panel:** Prefer the **`Menu`** compound API (Web Kit `633:4268`; see `MenuPreview`).
 
-**중요:** `BreadcrumbItem`은 시맨틱 셀마다 **`overflow-clip`** 이 기본이라, 패널이 **`absolute`** 인 **`Menu`** 는 세로로 펼칠 때 잘립니다. ⋯ 칸에는 **`className="overflow-visible"`** 을 함께 넣어 주세요. **`Dropdown`** 은 메뉴를 **`document`** 로 포털 처리하므로 보통 같은 제약이 없습니다.
+**Important:** `BreadcrumbItem` defaults to **`overflow-clip`** per cell, so an **`absolute`** **`Menu`** panel can clip when expanding vertically. Add **`className="overflow-visible"`** on the ⋯ cell.
+
+**`Dropdown`** portals the menu to **`document`**, so it usually avoids this clipping.
 
 ```tsx
 <BreadcrumbItem className="overflow-visible">
   <Menu positioning={{ autoSize: true }}>
     <MenuTrigger>
-      <BreadcrumbEllipsisTrigger aria-label="경로 메뉴" />
+      <BreadcrumbEllipsisTrigger aria-label="Path menu" />
     </MenuTrigger>
     <MenuPopover>
       <MenuList className="w-refineui-menu-panel-width">
-        <MenuItem onClick={() => {}}>문서</MenuItem>
-        <MenuItem onClick={() => {}}>가이드</MenuItem>
+        <MenuItem onClick={() => {}}>Docs</MenuItem>
+        <MenuItem onClick={() => {}}>Guide</MenuItem>
       </MenuList>
     </MenuPopover>
   </Menu>

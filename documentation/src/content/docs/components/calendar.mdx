@@ -1,22 +1,22 @@
 ---
 title: Calendar
-description: 날짜 선택 — 단일 · 범위
+description: Date selection — single and range
 ---
 
 import CalendarPreview from "../../../components/CalendarPreview";
 
 # Calendar
 
-월 그리드에서 날짜를 고릅니다. Web Kit **Calendar / Day** MCP `639:7052` · `docs/design-specs-web-kit.md` Calendar 절을 따릅니다.
+Pick dates from a month grid. Follows Web Kit **Calendar / Day** MCP `639:7052` and the Calendar section in `docs/design-specs-web-kit.md`.
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import { Calendar } from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
-## 기본 사용 (단일)
+## Basic usage (single)
 
 ```tsx
 const [d, setD] = useState(new Date());
@@ -31,19 +31,19 @@ const [d, setD] = useState(new Date());
 
 ## Props
 
-| Prop | 타입 | 설명 |
-|------|------|------|
-| `mode` | `"single"` \| `"range"` | 기본 `single` |
-| `value` | `Date` | 단일 선택 값 |
-| `onChange` | `(date: Date) => void` | 단일 모드 변경 |
-| `rangeStart` / `rangeEnd` | `Date` | 범위 모드 |
-| `onRangeChange` | `(start, end) => void` | 범위 변경 |
-| `weekStartsOn` | `0` \| `1` | 0=일요일 시작 |
-| `defaultMonth` | `Date` | 초기 표시 월 |
+| Prop | Type | Description |
+|------|------|-------------|
+| `mode` | `"single"` \| `"range"` | Default `single` |
+| `value` | `Date` | Single selection |
+| `onChange` | `(date: Date) => void` | Single mode change |
+| `rangeStart` / `rangeEnd` | `Date` | Range mode |
+| `onRangeChange` | `(start, end) => void` | Range change |
+| `weekStartsOn` | `0` \| `1` | 0 = week starts Sunday |
+| `defaultMonth` | `Date` | Initial visible month |
 
-## 예시
+## Examples
 
-### 범위 선택
+### Range selection
 
 ```tsx
 <Calendar

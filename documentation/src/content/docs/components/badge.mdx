@@ -1,22 +1,22 @@
 ---
 title: Badge
-description: 뱃지 — label / number 레이아웃
+description: Badge — label / number layout
 ---
 
 import BadgePreview from "../../../components/BadgePreview";
 
 # Badge
 
-짧은 상태·개수 표시에 씁니다. Web Kit **Badge** `270:3353` · **Badge Number** `276:515`를 따릅니다. Hover·pressed는 **`refineui.css`**입니다.
+Short status or count label. Web Kit **Badge** `270:3353` · **Badge Number** `276:515`. Hover and pressed states come from **`refineui.css`**.
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import { Badge } from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
-## 기본 사용
+## Basic usage
 
 ```tsx
 <Badge variant="default">New</Badge>
@@ -33,17 +33,17 @@ import "@refineui/react/refineui.css";
 
 ## Props
 
-| Prop | 타입 | 기본값 | 설명 |
-|------|------|--------|------|
-| `variant` | `"default"` \| `"neutral"` \| `"outline"` \| `"success"` \| `"warning"` \| `"danger"` | — | 색 조합 |
-| `layout` | `"label"` \| `"number"` | `"label"` | 캡슐 / 원형 숫자 |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `"default"` \| `"neutral"` \| `"outline"` \| `"success"` \| `"warning"` \| `"danger"` | — | Color pairing |
+| `layout` | `"label"` \| `"number"` | `"label"` | Capsule vs circular count |
 
-## 예시
+## Examples
 
-### 개수 알림
+### Count badge
 
 ```tsx
-<Badge layout="number" variant="danger" aria-label="읽지 않음 3건">
+<Badge layout="number" variant="danger" aria-label="3 unread">
   3
 </Badge>
 ```

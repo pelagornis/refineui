@@ -6,7 +6,7 @@ export default function InputPreview() {
   return (
     <PreviewFrame>
       <div style={{ display: "flex", flexDirection: "column", gap: spacings.sizeMedium, maxWidth: "320px" }}>
-        <Input placeholder="size md (기본)" />
+        <Input placeholder="size md (default)" />
         <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeSmall, alignItems: "center" }}>
           <Input size="sm" placeholder="sm" />
           <Input size="md" placeholder="md" />

@@ -7,10 +7,10 @@ export default function ButtonPreview() {
     <>
       <PreviewFrame>
         <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeMedium, alignItems: "center" }}>
-          <Button variant="primary" onClick={() => alert("Primary 클릭!")}>
+          <Button variant="primary" onClick={() => alert("Primary clicked")}>
             Primary
           </Button>
-          <Button variant="secondary" onClick={() => alert("Secondary 클릭!")}>
+          <Button variant="secondary" onClick={() => alert("Secondary clicked")}>
             Secondary
           </Button>
           <Button variant="outline">Outline</Button>
@@ -19,29 +19,29 @@ export default function ButtonPreview() {
       </PreviewFrame>
       <PreviewFrame title="Layout=Icon · Size=sm (Web Kit `79:3304`)">
         <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeMedium, alignItems: "center" }}>
-          <Button variant="primary" size="sm" layout="icon" type="button" aria-label="확인">
+          <Button variant="primary" size="sm" layout="icon" type="button" aria-label="Confirm">
             <WebIcon name="checkmark" size={iconSizes.small} color="currentColor" iconStyle="regular" aria-hidden />
           </Button>
-          <Button variant="secondary" size="sm" layout="icon" type="button" aria-label="정보">
+          <Button variant="secondary" size="sm" layout="icon" type="button" aria-label="Info">
             <WebIcon name="info" size={iconSizes.small} color="currentColor" aria-hidden />
           </Button>
-          <Button variant="outline" size="sm" layout="icon" type="button" aria-label="더보기">
+          <Button variant="outline" size="sm" layout="icon" type="button" aria-label="More">
             <WebIcon name="more-horizontal" size={iconSizes.small} color="currentColor" aria-hidden />
           </Button>
-          <Button variant="ghost" size="sm" layout="icon" type="button" aria-label="닫기">
+          <Button variant="ghost" size="sm" layout="icon" type="button" aria-label="Close">
             <WebIcon name="dismiss" size={iconSizes.small} color="currentColor" iconStyle="regular" aria-hidden />
           </Button>
         </div>
       </PreviewFrame>
-      <PreviewFrame title="Layout=Icon · Ghost · Size (Dialog 닫기와 동일 축)">
+      <PreviewFrame title="Layout=Icon · Ghost · Size (same axis as dialog close)">
         <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeMedium, alignItems: "center" }}>
-          <Button variant="ghost" size="sm" layout="icon" type="button" aria-label="닫기 sm">
+          <Button variant="ghost" size="sm" layout="icon" type="button" aria-label="Close sm">
             <WebIcon name="dismiss" size={iconSizes.small} color="currentColor" iconStyle="regular" aria-hidden />
           </Button>
-          <Button variant="ghost" size="md" layout="icon" type="button" aria-label="닫기 md">
+          <Button variant="ghost" size="md" layout="icon" type="button" aria-label="Close md">
             <WebIcon name="dismiss" size={iconSizes.medium} color="currentColor" iconStyle="regular" aria-hidden />
           </Button>
-          <Button variant="ghost" size="lg" layout="icon" type="button" aria-label="닫기 lg">
+          <Button variant="ghost" size="lg" layout="icon" type="button" aria-label="Close lg">
             <WebIcon name="dismiss" size={iconSizes.large} color="currentColor" iconStyle="regular" aria-hidden />
           </Button>
         </div>

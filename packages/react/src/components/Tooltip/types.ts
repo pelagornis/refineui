@@ -14,7 +14,7 @@ export interface TooltipProps extends Omit<HTMLAttributes<HTMLDivElement>, "titl
     delayMs?: number;
 }
 
-/** 트리거 자식 병합(`cloneElement`) 시 기대하는 이벤트 시그니처 */
+/** Expected event signatures when merging trigger children (`cloneElement`) */
 export interface TooltipTriggerMergeProps {
     onMouseEnter?: (e: MouseEvent<HTMLElement>) => void;
     onMouseLeave?: (e: MouseEvent<HTMLElement>) => void;

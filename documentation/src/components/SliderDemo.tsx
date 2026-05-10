@@ -10,14 +10,14 @@ export default function SliderDemo() {
     <PreviewFrame>
       <div style={{ maxWidth: "300px", display: "flex", flexDirection: "column", gap: spacings.sizeLarge }}>
         <div>
-          <p style={{ margin: 0, marginBottom: spacings.sizeXSmall, fontSize: fontSizes.fontSize300 }}>Medium (기본)</p>
+          <p style={{ margin: 0, marginBottom: spacings.sizeXSmall, fontSize: fontSizes.fontSize300 }}>Medium (default)</p>
           <Slider value={valueMd} onChange={setValueMd} min={0} max={100} size="md" />
-          <p style={{ marginTop: spacings.sizeSmall, marginBottom: 0, fontSize: fontSizes.fontSize300 }}>값: {valueMd}</p>
+          <p style={{ marginTop: spacings.sizeSmall, marginBottom: 0, fontSize: fontSizes.fontSize300 }}>Value: {valueMd}</p>
         </div>
         <div>
           <p style={{ margin: 0, marginBottom: spacings.sizeXSmall, fontSize: fontSizes.fontSize300 }}>Small</p>
           <Slider value={valueSm} onChange={setValueSm} min={0} max={100} size="sm" />
-          <p style={{ marginTop: spacings.sizeSmall, marginBottom: 0, fontSize: fontSizes.fontSize300 }}>값: {valueSm}</p>
+          <p style={{ marginTop: spacings.sizeSmall, marginBottom: 0, fontSize: fontSizes.fontSize300 }}>Value: {valueSm}</p>
         </div>
       </div>
     </PreviewFrame>

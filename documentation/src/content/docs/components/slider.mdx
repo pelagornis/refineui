@@ -1,25 +1,25 @@
 ---
 title: Slider
-description: 범위 슬라이더 — sm / md 레일 두께
+description: Range slider — sm / md rail thickness
 ---
 
 import SliderDemo from "../../../components/SliderDemo";
 
 # Slider
 
-`type="range"` 입력을 스타일한 슬라이더입니다. Web Kit **Slider** `526:1556`에 맞춰 **`size`**로 레일 두께(sm/md)를 바꿉니다.
+Styled `type="range"` input. Web Kit **Slider** `526:1556` — use **`size`** for rail thickness (sm/md).
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import { Slider } from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
-## 기본 사용
+## Basic usage
 
 ```tsx
-<Slider min={0} max={100} defaultValue={50} onChange={(v) => console.log(v)} aria-label="볼륨" />
+<Slider min={0} max={100} defaultValue={50} onChange={(v) => console.log(v)} aria-label="Volume" />
 ```
 
 ## Preview
@@ -30,19 +30,19 @@ import "@refineui/react/refineui.css";
 
 ## Props
 
-| Prop | 타입 | 기본값 | 설명 |
-|------|------|--------|------|
-| `min` | `number` | `0` | 최소 |
-| `max` | `number` | `100` | 최대 |
-| `step` | `number` | `1` | 단계 |
-| `value` | `number` | — | 제어 값 |
-| `defaultValue` | `number` | — | 비제어 값 |
-| `onChange` | `(value: number) => void` | — | 값 변경 |
-| `size` | `"sm"` \| `"md"` | `"md"` | 레일 두께 |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `min` | `number` | `0` | Minimum |
+| `max` | `number` | `100` | Maximum |
+| `step` | `number` | `1` | Step |
+| `value` | `number` | — | Controlled value |
+| `defaultValue` | `number` | — | Uncontrolled value |
+| `onChange` | `(value: number) => void` | — | Value change |
+| `size` | `"sm"` \| `"md"` | `"md"` | Rail thickness |
 
-## 예시
+## Examples
 
-### 제어 컴포넌트
+### Controlled
 
 ```tsx
 const [pct, setPct] = useState(30);

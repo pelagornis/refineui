@@ -1,15 +1,15 @@
 ---
 title: Select
-description: 커스텀 선택 필드 — Figma Web Kit Select 스타일 반영
+description: Custom select — Figma Web Kit Select styling
 ---
 
 import SelectPreview from "../../../components/SelectPreview";
 
 # Select
 
-Figma Web Kit `Select` — 트리거 `1116:1429`, 메뉴 `1117:1177`, 항목 COMPONENT_SET `1144:2411`(State 변형 노드: Default `1144:2410`, Hover `1144:2417`, Pressed `1144:2429`, Selected `1144:2435`, Disabled `1144:2423`), 섹션 `1144:2756`. MCP `get_design_context`는 단일 노드만 반환하므로 State별 스펙은 변형 노드 id를 각각 지정합니다.
+Figma Web Kit `Select` — trigger `1116:1429`, menu `1117:1177`, item COMPONENT_SET `1144:2411` (State nodes: Default `1144:2410`, Hover `1144:2417`, Pressed `1144:2429`, Selected `1144:2435`, Disabled `1144:2423`), section `1144:2756`. Because MCP `get_design_context` returns one node at a time, specify each variant node id for per-state specs.
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import {
@@ -24,14 +24,14 @@ import {
 import "@refineui/react/refineui.css";
 ```
 
-## 기본 사용
+## Basic usage
 
-메뉴는 `SelectPortal` 안에 `SelectContent`를 두고, 패널은 포털로 렌더링합니다.
+Put `SelectContent` inside `SelectPortal` so the panel renders in a portal.
 
 ```tsx
-<Select placeholder="국가 선택" onValueChange={(next) => console.log(next)}>
+<Select placeholder="Choose country" onValueChange={(next) => console.log(next)}>
   <SelectTrigger>
-    <SelectValue placeholder="선택하세요" />
+    <SelectValue placeholder="Select an option" />
   </SelectTrigger>
   <SelectPortal>
     <SelectContent>
@@ -51,25 +51,24 @@ import "@refineui/react/refineui.css";
 
 ## Props
 
-| Prop | 타입 | 기본값 | 설명 |
-|------|------|--------|------|
-| `placeholder` | `string` | — | 미선택 상태 라벨 |
-| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | 필드 높이·패딩·타이포 |
-| `fullWidth` | `boolean` | `false` | 너비 100% |
-| `disabled` | `boolean` | `false` | 비활성화 |
-| `value` | `string` | — | 제어 값 |
-| `defaultValue` | `string` | — | 비제어 초기값 (`undefined`면 미선택) |
-| `open` | `boolean` | — | 제어 열림 상태 |
-| `onOpenChange` | `(open: boolean) => void` | — | 열림 상태 변경 |
-| `onValueChange` | `(value: string) => void` | — | 선택 값 변경 |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `placeholder` | `string` | — | Label when nothing is selected |
+| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | Field height, padding, typography |
+| `fullWidth` | `boolean` | `false` | Full width |
+| `disabled` | `boolean` | `false` | Disabled |
+| `value` | `string` | — | Controlled value |
+| `defaultValue` | `string` | — | Uncontrolled initial value (`undefined` = empty) |
+| `open` | `boolean` | — | Controlled open state |
+| `onOpenChange` | `(open: boolean) => void` | — | Open state change |
+| `onValueChange` | `(value: string) => void` | — | Selection change |
 
 ## Composition
 
-- `SelectTrigger` — 필드 트리거
-- `SelectValue` — 현재 선택 라벨/placeholder
-- `SelectPortal` — 메뉴를 `document.body`(또는 `container`)로 포털
-- `SelectContent` — 메뉴 패널
-- `SelectGroup` — 그룹
-- `SelectSection` — 섹션 제목
-- `SelectItem` — 선택 항목
-
+- `SelectTrigger` — field trigger
+- `SelectValue` — current label / placeholder
+- `SelectPortal` — portals menu to `document.body` (or `container`)
+- `SelectContent` — menu panel
+- `SelectGroup` — group
+- `SelectSection` — section title
+- `SelectItem` — option

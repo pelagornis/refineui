@@ -1,8 +1,8 @@
 /**
- * 루트 문서 스크롤 잠금 — 여러 오버레이가 겹칠 때 refCount로 안전하게 해제.
+ * Root document scroll lock with ref-counting for nested overlays.
  *
- * Radix Primitives는 보통 `react-remove-scroll` 등으로 포털·포커스 스코프와 함께 처리합니다.
- * RefineUI는 외부 패키지 추가 없이 동일한 ref-count 패턴으로 문서 `overflow`/`position`만 잠급니다.
+ * Radix often uses `react-remove-scroll` with portals/focus scope.
+ * RefineUI locks only document `overflow`/`position` without extra dependencies.
  */
 
 let lockCount = 0;
@@ -40,8 +40,8 @@ function releaseLock(): void {
 }
 
 /**
- * 메뉴·모달 등이 열렸을 때 배경(문서) 스크롤을 막습니다.
- * @returns 해제 함수 — 반드시 언마운트/닫힐 때 호출
+ * Block background (document) scroll while menus/modals are open.
+ * @returns Release function — call on unmount/close
  */
 export function acquireBodyScrollLock(): () => void {
     if (typeof document === "undefined") return () => {};

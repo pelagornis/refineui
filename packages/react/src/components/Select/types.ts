@@ -36,9 +36,9 @@ export interface SelectIconProps extends HTMLAttributes<HTMLSpanElement> {
 
 export interface SelectContentProps extends HTMLAttributes<HTMLDivElement> {
     children?: ReactNode;
-    /** 기본 `item-aligned`. `popper`는 트리거 아래·위에 붙는 컴팩트 패널 */
+    /** Default `item-aligned`. `popper`: compact panel below/above trigger */
     position?: "item-aligned" | "popper";
-    /** 직접 지정 시 포털 타깃 (미지정이면 가장 가까운 `SelectPortal` 또는 `document.body`) */
+    /** Portal target when set (else nearest `SelectPortal` or `document.body`) */
     container?: HTMLElement | null;
 }
 

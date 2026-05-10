@@ -1,25 +1,25 @@
 ---
 title: Checkbox
-description: 체크박스 — default·circular 변형
+description: Checkbox — default and circular variants
 ---
 
 import CheckboxPreview from "../../../components/CheckboxPreview";
 
 # Checkbox
 
-체크박스 입력입니다. Web Kit **Checkbox** `327:2539`를 따릅니다. **`refineui.css`**에서 hover·checked·focus-visible을 보강합니다.
+Checkbox input. Follows Web Kit **Checkbox** `327:2539`. **`refineui.css`** adds hover, checked, and focus-visible styles.
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import { Checkbox } from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
-## 기본 사용
+## Basic usage
 
 ```tsx
-<Checkbox name="agree" defaultChecked={false} aria-label="약관 동의" />
+<Checkbox name="agree" defaultChecked={false} aria-label="Accept terms" />
 ```
 
 ## Preview
@@ -30,24 +30,24 @@ import "@refineui/react/refineui.css";
 
 ## Props
 
-| Prop | 타입 | 기본값 | 설명 |
-|------|------|--------|------|
-| `variant` | `"default"` \| `"circular"` | `"default"` | 사각 / 원형 |
-| `disabled` | `boolean` | — | 비활성 |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `"default"` \| `"circular"` | `"default"` | Square vs circular |
+| `disabled` | `boolean` | — | Disabled |
 
-그 외 **`InputHTMLAttributes`**에서 `type`을 제외한 속성(`checked`, `defaultChecked`, `onChange`, `name` 등)을 사용합니다.
+Other props from **`InputHTMLAttributes`** except `type` (`checked`, `defaultChecked`, `onChange`, `name`, etc.).
 
-## 예시
+## Examples
 
-### 제어 컴포넌트
+### Controlled
 
 ```tsx
 const [on, setOn] = useState(false);
 <Checkbox checked={on} onChange={(e) => setOn(e.target.checked)} />;
 ```
 
-### 원형 (라디오형 외형의 체크)
+### Circular (radio-like appearance)
 
 ```tsx
-<Checkbox variant="circular" aria-label="알림 받기" />
+<Checkbox variant="circular" aria-label="Enable notifications" />
 ```

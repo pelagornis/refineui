@@ -51,32 +51,32 @@ export default function ToastPreview() {
 
   const spawnToast = (variant: ToastVariant) => {
     const map = {
-      default: { title: "Toast", description: "짧은 설명이 여기에 표시됩니다." },
-      success: { title: "완료", description: "작업이 성공적으로 처리되었습니다." },
-      warning: { title: "주의", description: "이 작업은 되돌릴 수 없습니다." },
-      error: { title: "오류", description: "요청을 처리하지 못했습니다." },
+      default: { title: "Toast", description: "Short description appears here." },
+      success: { title: "Done", description: "Completed successfully." },
+      warning: { title: "Warning", description: "This action cannot be undone." },
+      error: { title: "Error", description: "We couldn’t complete the request." },
     } as const;
     const item = map[variant];
     toast(item.title, { variant, description: item.description, action: { ...actionPrimary } });
   };
 
   const spawnNoAction = () => {
-    toast("저장됨", { variant: "success", description: "액션 없이 본문만 표시합니다." });
+    toast("Saved", { variant: "success", description: "Body only, no action button." });
   };
 
   const spawnSecondaryAction = () => {
-    toast("휴지통으로 이동", {
+    toast("Moved to trash", {
       variant: "default",
-      description: "보조(Outline) 액션 예시입니다.",
-      action: { label: "실행 취소", onClick: () => {}, variant: "secondary" },
+      description: "Secondary (outline) action example.",
+      action: { label: "Undo", onClick: () => {}, variant: "secondary" },
     });
   };
 
   const spawnLongBody = () => {
-    toast("동기화", {
+    toast("Sync", {
       variant: "default",
       description:
-        "여러 줄에 가까운 긴 설명입니다. 카드 폭은 325px로 고정이며 본문은 줄바꿈됩니다. 아이콘 슬롯은 카드 세로 중앙에 맞춰집니다.",
+        "Long description spanning multiple lines. Card width is fixed at 325px with wrapping body text. The icon slot is vertically centered.",
       action: { label: "Action", onClick: () => {} },
     });
   };
@@ -88,18 +88,18 @@ export default function ToastPreview() {
   };
 
   const spawnSpinnerLeading = () => {
-    toast("동기화 중", {
+    toast("Syncing", {
       variant: "default",
-      description: "Leading 슬롯에 Spinner 컴포넌트를 넣은 예시입니다.",
+      description: "Leading slot with a Spinner component.",
       icon: <Spinner size="xs" />,
-      action: { label: "취소", onClick: () => {}, variant: "secondary" },
+      action: { label: "Cancel", onClick: () => {}, variant: "secondary" },
     });
   };
 
   const spawnAvatarLeading = () => {
-    toast("새 메시지", {
+    toast("New message", {
       variant: "default",
-      description: "Leading 슬롯에 Avatar 컴포넌트를 넣은 예시입니다.",
+      description: "Leading slot with an Avatar component.",
       icon: (
         <Avatar size="xs" aria-hidden>
           <AvatarImage src="https://avatars.githubusercontent.com/u/108743931?s=80&v=4" alt="" />
@@ -113,7 +113,7 @@ export default function ToastPreview() {
     <PreviewFrame minHeight="200px">
       <div style={{ display: "flex", flexDirection: "column", gap: spacings.sizeXXLarge, width: "100%" }}>
         <section>
-          <p style={sectionLabel}>Type · 인라인 카드</p>
+          <p style={sectionLabel}>Type · Inline cards</p>
           <div
             style={{
               display: "grid",
@@ -125,38 +125,38 @@ export default function ToastPreview() {
             <Toast
               variant="default"
               title="Default"
-              message="정보 톤 · 기본 아이콘"
+              message="Info tone · default icon"
               action={{ ...actionPrimary }}
             />
             <Toast
               variant="success"
               title="Success"
-              message="성공 상태 메시지"
+              message="Success state message"
               action={{ ...actionPrimary }}
             />
             <Toast
               variant="warning"
               title="Warning"
-              message="주의가 필요할 때"
+              message="When caution is needed"
               action={{ ...actionPrimary }}
             />
-            <Toast variant="error" title="Error" message="오류 또는 실패" action={{ ...actionPrimary }} />
+            <Toast variant="error" title="Error" message="Error or failure" action={{ ...actionPrimary }} />
           </div>
         </section>
 
         <section style={sectionGap}>
-          <p style={sectionLabel}>구성 예시</p>
+          <p style={sectionLabel}>Composition examples</p>
           <div style={{ display: "grid", gap: spacings.sizeLarge, maxWidth: 360 }}>
-            <Toast variant="default" title="제목만" />
+            <Toast variant="default" title="Title only" />
             <Toast
               variant="success"
-              title="액션 없음"
-              message="오른쪽 버튼 없이 본문만 두었습니다."
+              title="No action"
+              message="Body only without a right-side button."
             />
             <Toast
               variant="default"
-              title="커스텀 아이콘"
-              message="icon prop으로 leading 슬롯을 덮어씁니다."
+              title="Custom icon"
+              message="The icon prop overrides the leading slot."
               icon={<WebIcon name="mail" size={iconSizes.medium} color={colors.primaryBlack} aria-hidden />}
               action={{ ...actionPrimary }}
             />
@@ -166,21 +166,21 @@ export default function ToastPreview() {
         <section style={sectionGap}>
           <p style={sectionLabel}>Leading · Spinner / Avatar</p>
           <p style={mutedBody}>
-            <code>Toast / Icon</code> 자리에 <code>Spinner</code>, <code>Avatar</code> 등 패키지 컴포넌트를{" "}
-            <code>icon</code>으로 넣을 수 있습니다.
+            You can pass package components such as <code>Spinner</code> or <code>Avatar</code> to the{" "}
+            <code>icon</code> prop for the Toast / Icon slot.
           </p>
           <div style={{ display: "grid", gap: spacings.sizeLarge, maxWidth: 360 }}>
             <Toast
               variant="default"
-              title="처리 중"
-              message="로딩 상태 — 왼쪽은 Spinner (xs)."
+              title="Processing"
+              message="Loading — Spinner (xs) on the left."
               icon={<Spinner size="xs" />}
-              action={{ label: "취소", onClick: () => {}, variant: "secondary" }}
+              action={{ label: "Cancel", onClick: () => {}, variant: "secondary" }}
             />
             <Toast
               variant="default"
-              title="알림"
-              message="보낸 사람 — Avatar는 xsmall(24px)로 슬롯에 맞춥니다."
+              title="Notification"
+              message="Sender — Avatar fits the slot at xsmall (24px)."
               icon={
                 <Avatar size="xs" color="blue" alt="Kim Min" aria-hidden />
               }
@@ -188,8 +188,8 @@ export default function ToastPreview() {
             />
             <Toast
               variant="default"
-              title="멘션"
-              message="이미지 Avatar + AvatarImage 조합."
+              title="Mention"
+              message="Image Avatar + AvatarImage."
               icon={
                 <Avatar size="xs" aria-hidden>
                   <AvatarImage src="https://avatars.githubusercontent.com/u/9919?s=80&v=4" alt="" />
@@ -201,9 +201,9 @@ export default function ToastPreview() {
         </section>
 
         <section style={sectionGap}>
-          <p style={sectionLabel}>toast() · 포털 & 스택</p>
+          <p style={sectionLabel}>toast() · Portal & stack</p>
           <p style={mutedBody}>
-            <code>Toaster</code>의 <code>position</code>으로 뷰포트 앵커를 바꿀 수 있습니다.
+            Use <code>Toaster</code> <code>position</code> to change the viewport anchor.
           </p>
           <div
             style={{
@@ -228,28 +228,28 @@ export default function ToastPreview() {
             <Toaster position={toasterPosition} />
             <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeSmall }}>
               <Button variant="primary" size="sm" onClick={() => spawnToast("default")}>
-                기본
+                Default
               </Button>
               <Button variant="secondary" size="sm" onClick={() => spawnToast("success")}>
-                성공
+                Success
               </Button>
               <Button variant="outline" size="sm" onClick={() => spawnToast("warning")}>
-                주의
+                Warning
               </Button>
               <Button variant="ghost" size="sm" onClick={() => spawnToast("error")}>
-                오류
+                Error
               </Button>
               <Button variant="outline" size="sm" onClick={spawnNoAction}>
-                액션 없음
+                No action
               </Button>
               <Button variant="outline" size="sm" onClick={spawnSecondaryAction}>
-                보조 액션
+                Secondary action
               </Button>
               <Button variant="outline" size="sm" onClick={spawnLongBody}>
-                긴 본문
+                Long body
               </Button>
               <Button variant="secondary" size="sm" onClick={spawnStack}>
-                스택 3개
+                Stack ×3
               </Button>
               <Button variant="outline" size="sm" onClick={spawnSpinnerLeading}>
                 Leading Spinner

@@ -6,8 +6,8 @@ import { colors } from "./colors";
 const SHADOW_BASE = colors.primaryBlack;
 
 /**
- * Shadow color — Figma `Global/Shadows/Key *` · `Ambient *` (lighter ~ darker 램프).
- * Elevation 이펙트는 보통 Key light + Ambient light (Light 모드) / Key dark + Ambient dark (Dark 모드).
+ * Shadow color — Figma `Global/Shadows/Key *` · `Ambient *` (lighter → darker ramp).
+ * Elevation usually pairs Key light + Ambient light (light theme) / Key dark + Ambient dark (dark theme).
  */
 export const shadowColors: ShadowColorTokens = {
     shadowColorKeyLighter: hexToRgba(SHADOW_BASE, 0.02),
@@ -22,7 +22,7 @@ export const shadowColors: ShadowColorTokens = {
     shadowColorAmbientDarker: hexToRgba(SHADOW_BASE, 0.25),
 };
 
-/** 레벨별 dimension (x y blur spread) — Figma Shadow 2 / 4 / … */
+/** Per-level dimensions (x y blur spread) — Figma Shadow 2 / 4 / … */
 const SHADOW_DIMS = {
     shadow2: { key: "0 1px 2px 0", ambient: "0 2px 4px 0" },
     shadow4: { key: "0 2px 2px 0", ambient: "0 4px 8px 0" },
@@ -33,7 +33,7 @@ const SHADOW_DIMS = {
     shadow64: { key: "0 24px 24px 0", ambient: "0 48px 96px 0" },
 } as const satisfies Record<SemanticShadowElevationName, { key: string; ambient: string }>;
 
-/** Elevation Dark / Shadow 4 — Foundation ambient만 `0 6px 10px 0` */
+/** Elevation Dark / Shadow 4 — Foundation ambient override `0 6px 10px 0` */
 const SHADOW4_DARK_AMBIENT = "0 6px 10px 0";
 
 function shadowLevel(
@@ -48,13 +48,13 @@ function shadowLevel(
     };
 }
 
-/** key + ambient를 box-shadow 문자열로 합침 */
+/** Concatenate key + ambient into one box-shadow string */
 export function toBoxShadow(level: ShadowLevel): string {
     return `${level.key}, ${level.ambient}`;
 }
 
 /**
- * Elevation 그림자 — Figma `Elevation/Light` → `shadowNLight`, `Elevation/Dark` → `shadowNDark`
+ * Elevation shadows — Figma `Elevation/Light` → `shadowNLight`, `Elevation/Dark` → `shadowNDark`
  * Foundation: https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundation?node-id=1-5785
  */
 export const shadows: ShadowTokens = {

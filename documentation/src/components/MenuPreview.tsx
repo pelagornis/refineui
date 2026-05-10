@@ -12,7 +12,7 @@ export default function MenuPreview() {
           <MenuPopover>
             <MenuList>
               <MenuSection>Section Header</MenuSection>
-              <MenuItem onClick={() => alert("새로 만들기")}>New</MenuItem>
+              <MenuItem onClick={() => alert("Create new")}>New</MenuItem>
               <MenuItem>New Window</MenuItem>
               <MenuItem disabled>Open File</MenuItem>
               <MenuItem>Open Folder</MenuItem>
@@ -24,7 +24,7 @@ export default function MenuPreview() {
         </Menu>
       </PreviewFrame>
 
-      <PreviewFrame title="Menu Only (고정 프리뷰)">
+      <PreviewFrame title="Menu only (fixed preview)">
         <div style={{ width: "244px", maxWidth: "100%" }}>
           <MenuList>
             <MenuSection>Section Header</MenuSection>

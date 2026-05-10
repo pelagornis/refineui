@@ -1,7 +1,7 @@
 /**
  * Prompt Guide config — RefineUI
- * RefineUI: React/TypeScript 기반 웹 UI 라이브러리 monorepo.
- * packages/ 구조는 유지. Edit 후 `prompt-guide install` 실행.
+ * RefineUI: React/TypeScript web UI library monorepo.
+ * Keep the packages/ layout. After edits run `prompt-guide install`.
  * @see https://github.com/pelagornis/prompt-guide
  */
 module.exports = {
@@ -46,7 +46,7 @@ module.exports = {
     refactor: { description: 'Refactor only; preserve behavior', prompt: 'prompts/system.core.yml', rules_extra: ['Change behavior only when requested; preserve semantics.', 'Prefer small, incremental steps.'] },
     implement: { description: 'Implement from spec/ticket', prompt: 'prompts/system.core.yml', rules_extra: ['Implement exactly what is specified.', 'Add tests or test plan.'] },
     fix_bug: { description: 'Locate and fix with minimal change', prompt: 'prompts/system.core.yml', rules_extra: ['Identify root cause before changing code.', 'Minimal diff; no refactors unless required.'] },
-    design: { description: 'UI/디자인·토큰 작업 (Foundation 기반)', prompt: 'prompts/design-system.figma.yml', rules_extra: ['Apply design-system.figma + system.core. Use @refineui/tokens only.'] },
+    design: { description: 'UI/design/token work (Foundation-based)', prompt: 'prompts/design-system.figma.yml', rules_extra: ['Apply design-system.figma + system.core. Use @refineui/tokens only.'] },
     security_audit: { description: 'Security-focused review', prompt: 'prompts/review.yml', rules_extra: ['Focus on: secrets, input validation, auth, sensitive data in logs.'] },
   },
 

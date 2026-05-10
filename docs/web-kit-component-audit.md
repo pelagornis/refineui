@@ -1,38 +1,38 @@
-# Web Kit 컴포넌트 재검토 (Foundation → 규칙 적용)
+# Web Kit component audit (Foundation → rules)
 
-**목적:** `Pelagornis RefineUI Web Kit` Figma와 **`@refineui/tokens`(Foundation 연동)** 만으로 `packages/react`를 다시 맞춘다.
+**Goal:** Re-align `packages/react` with the `Pelagornis RefineUI Web Kit` Figma file and **`@refineui/tokens`** (Foundation-linked) only.
 
-## 원칙 (반드시)
+## Principles (required)
 
-1. **Foundation → Web Kit** — Web Kit의 padding·size·색은 모두 Foundation Variables와 연결된 값이어야 한다 (`.cursor/rules/figma-foundation.mdc`).
-2. **변형·API 일치** — Figma에 없는 props·슬롯·동작은 넣지 않는다.
-3. **토큰만 사용** — `colors`, `spacings`, `typographys`, `strokeWidths`, `borderRadii`, `shadows`, `iconSizes`, `foundationSizes`, `componentSizes` 등. 임의 `#hex` / `px` 금지 (`.cursor/rules/tokens-in-components.mdc`).
-4. **검증** — 컴포넌트별로 Figma MCP `get_design_context`(해당 node-id)로 스펙 확인.
+1. **Foundation → Web Kit** — Web Kit padding·size·color must use values tied to Foundation Variables (`.cursor/rules/figma-foundation.mdc`).
+2. **Variants·API match** — Do not add props·slots·behavior that are not in Figma.
+3. **Tokens only** — `colors`, `spacings`, `typographys`, `strokeWidths`, `borderRadii`, `shadows`, `iconSizes`, `foundationSizes`, `componentSizes`, etc. No arbitrary `#hex` / `px` (`.cursor/rules/tokens-in-components.mdc`).
+4. **Verification** — Per component, confirm spec with Figma MCP `get_design_context` (that node-id).
 
-## 컴포넌트별 체크리스트 (복사용)
+## Per-component checklist (copy-paste)
 
-- [ ] Web Kit에서 **COMPONENT_SET** 이름·node-id 확인
-- [ ] 변형(props)이 Figma와 동일한 범위인가
-- [ ] 스타일이 전부 `@refineui/tokens`인가
-- [ ] 문서 `documentation/.../components/*.mdx`·Preview와 한 줄이라도 맞는가
+- [ ] Confirm **COMPONENT_SET** name·node-id in Web Kit
+- [ ] Variants (props) match Figma scope
+- [ ] Styles use only `@refineui/tokens`
+- [ ] Docs `documentation/.../components/*.mdx`·Preview align at least at a high level
 
-## 진행 순서
+## Order
 
-**알파벳 순**으로 하나씩 진행한다. 아래 표에서 순서대로 ✅로 갱신한다.
+Work **alphabetically**, one at a time. Update the table below with ✅ in order.
 
-| # | 컴포넌트 | Web Kit 노드 (조회 후 기입) | 상태 |
-|---|----------|----------------------------|------|
+| # | Component | Web Kit node (fill after lookup) | Status |
+|---|-----------|-----------------------------------|--------|
 | 1 | Accordion | `54:146` (COMPONENT_SET) | ✅ |
 | 2 | Alert | `384:885` (COMPONENT_SET) | ✅ |
-| 3 | Avatar | Web Kit `Avater` (COMPONENT_SET); 스택 `69:3008` | ✅ |
+| 3 | Avatar | Web Kit `Avater` (COMPONENT_SET); stack `69:3008` | ✅ |
 | 4 | Avatars | `Avater Stack` `69:3008`, `Avater Spread` `69:3007` | ✅ |
 | 5 | Badge | `Badge` `270:3353`, `Badge Number` `276:515` | ✅ |
 | 6 | Breadcrumb | `283:688` (COMPONENT_SET) | ✅ |
 | 7 | Button | `79:3304` (COMPONENT_SET) | ✅ |
 | 8 | Calendar | Day `639:7052` · Month container `639:6845` | ✅ |
-| 9 | Card | COMPONENT_SET `Card` (§7, node-id MCP로 확인) | ✅ |
+| 9 | Card | COMPONENT_SET `Card` (§7 in design-specs; confirm node-id via MCP) | ✅ |
 | 10 | Checkbox | `327:2539` (COMPONENT_SET) | ✅ |
-| 11 | Chip | Web Kit 이름 `Tag` `574:6578` (`Chip`/`Tag` 동일) | ✅ |
+| 11 | Chip | Web Kit name `Tag` `574:6578` (`Chip`/`Tag` same) | ✅ |
 | 12 | Dialog | `393:1181` (COMPONENT_SET) | ✅ |
 | 13 | Divider | `346:722` (COMPONENT_SET) | ✅ |
 | 14 | Drawer | `635:1756` (COMPONENT_SET) | ✅ |
@@ -46,22 +46,22 @@
 | 22 | PopOver | `553:5669` (COMPONENT_SET) | ✅ |
 | 23 | Progress | `452:3994` COMPONENT_SET `Progress bar` | ✅ |
 | 24 | Radio | `397:1001` (COMPONENT_SET) | ✅ |
-| 25 | Select | (단독 세트 없음) 필드 = **Input** `518:7373` | ✅ |
+| 25 | Select | (no standalone set) field = **Input** `518:7373` | ✅ |
 | 26 | Skeleton | `570:6175` (COMPONENT_SET) | ✅ |
 | 27 | Slider | `526:1556` (COMPONENT_SET) | ✅ |
 | 28 | SpinButton | `561:2067` (COMPONENT_SET `Spin Button`) | ✅ |
 | 29 | Spinner | `550:3669` (COMPONENT_SET) | ✅ |
 | 30 | Switch | `270:3057` (COMPONENT_SET) | ✅ |
 | 31 | Tabs | `636:5371` · `Tabs / Item` `636:5372` | ✅ |
-| 32 | Tag | `574:6578` (COMPONENT_SET `Tag`; `Chip` 동일) | ✅ |
+| 32 | Tag | `574:6578` (COMPONENT_SET `Tag`; same as `Chip`) | ✅ |
 | 33 | Textarea | `529:5454` (COMPONENT_SET) | ✅ |
 | 34 | Toast | `548:655` (COMPONENT_SET) | ✅ |
-| 35 | Toggle | `270:3057` (Web Kit 이름 **Switch**; `Toggle` 동일 구현) | ✅ |
+| 35 | Toggle | `270:3057` (Web Kit name **Switch**; same impl as `Toggle`) | ✅ |
 | 36 | Tooltip | `90:1686` (COMPONENT_SET) | ✅ |
 
-> `WebIcon`은 아이콘 래퍼로 이 표에 포함하지 않아도 된다.
+> `WebIcon` is an icon wrapper and does not need to appear in this table.
 
-## 현재 진행
+## Current status
 
-- **알파벳 순 표(위 1–36)** 항목은 모두 ✅ 처리됨. 추가로 Web Kit·토큰을 바꾼 뒤에는 **필요한 행만** 위 체크리스트로 재확인하면 된다.
-- **이후 작업 예시:** 문서 사이트 `pnpm docs:build`로 Astro 빌드 확인, Foundation/Web Kit 파일이 바뀌면 `design-specs-web-kit.md`·이 표의 해당 노드 재대조, `Select`처럼 단독 세트가 없는 항목은 **Input** 등 상위 규칙만 유지되는지 점검.
+- Rows **1–36** above are all ✅. After Web Kit·token changes, re-check **only the rows that matter** with the checklist above.
+- **Examples next:** run `pnpm docs:build` for the docs site; if Foundation/Web Kit files change, re-verify `design-specs-web-kit.md` and the matching nodes in this table; for items without a standalone set (like `Select`), confirm parent rules (**Input**, etc.) still hold.

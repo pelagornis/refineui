@@ -21,10 +21,10 @@ import PreviewFrame from "./PreviewFrame";
 
 export default function DropdownDemo() {
   return (
-      <PreviewFrame title="Dropdown — 기본 합성 사용" minHeight="min(56vh, 560px)">
+      <PreviewFrame title="Dropdown — basic composition" minHeight="min(56vh, 560px)">
         <p className="m-0 mb-refineui-size-large refineui-typo-caption-2 text-refineui-alias-foreground-secondary">
-          `Dropdown` 합성 API만 사용한 기본 패턴입니다.
-          <strong className="font-medium"> DropdownSub</strong> 도 동일 패턴에서 구성합니다.
+          Basic pattern using only the `Dropdown` composed API.
+          <strong className="font-medium"> DropdownSub</strong> follows the same pattern.
         </p>
         <div className="flex flex-wrap items-start gap-refineui-size-xlarge">
           <Dropdown>
@@ -93,24 +93,24 @@ export default function DropdownDemo() {
             </DropdownTrigger>
             <DropdownContent align="start" className="min-w-44">
               <DropdownGroup>
-                <DropdownLabel>파일</DropdownLabel>
+                <DropdownLabel>File</DropdownLabel>
                 <DropdownItem>
-                  새 탭
+                  New tab
                   <DropdownShortcut>⌘T</DropdownShortcut>
                 </DropdownItem>
                 <DropdownSub>
-                  <DropdownSubTrigger>공유…</DropdownSubTrigger>
+                  <DropdownSubTrigger>Share…</DropdownSubTrigger>
                   <DropdownPortal>
                     <DropdownSubContent>
-                      <DropdownItem>링크 복사</DropdownItem>
-                      <DropdownItem>메일 보내기</DropdownItem>
+                      <DropdownItem>Copy link</DropdownItem>
+                      <DropdownItem>Send email</DropdownItem>
                     </DropdownSubContent>
                   </DropdownPortal>
                 </DropdownSub>
               </DropdownGroup>
               <DropdownSeparator />
               <DropdownGroup>
-                <DropdownItem disabled>비활성 예시</DropdownItem>
+                <DropdownItem disabled>Disabled example</DropdownItem>
               </DropdownGroup>
             </DropdownContent>
           </Dropdown>

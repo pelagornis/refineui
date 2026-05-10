@@ -1,15 +1,15 @@
 ---
 title: Alert
-description: 인라인 알림 — variant·아이콘·액션
+description: Inline alert — variant, icon, actions
 ---
 
 import AlertPreview from "../../../components/AlertPreview";
 
 # Alert
 
-페이지·섹션 상단 등에 쓰는 인라인 알림입니다. Web Kit **Alert** `384:885` 및 `docs/design-specs-web-kit.md` §5를 따릅니다.
+Inline alert for page or section chrome. Follows Web Kit **Alert** `384:885` and `docs/design-specs-web-kit.md` §5.
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import {
@@ -26,7 +26,7 @@ import {
 import "@refineui/react/refineui.css";
 ```
 
-## 기본 사용
+## Basic usage
 
 ```tsx
 <Alert className="max-w-md">
@@ -50,15 +50,15 @@ import "@refineui/react/refineui.css";
 
 ## Props
 
-| Prop | 타입 | 설명 |
-|------|------|------|
-| `variant` | `"default"` \| `"info"` \| `"success"` \| `"warning"` \| `"danger"` \| `"custom"` | 색상 컨텍스트 |
-| `className` | `string` | 루트 스타일 확장 |
-| `...props` | `HTMLAttributes<HTMLDivElement>` | 루트 `<div>` 속성 |
+| Prop | Type | Description |
+|------|------|-------------|
+| `variant` | `"default"` \| `"info"` \| `"success"` \| `"warning"` \| `"danger"` \| `"custom"` | Color context |
+| `className` | `string` | Extend root |
+| `...props` | `HTMLAttributes<HTMLDivElement>` | Root `<div>` props |
 
-## 예시
+## Examples
 
-### 합성형
+### Composed
 
 ```tsx
 <Alert>
@@ -74,20 +74,20 @@ import "@refineui/react/refineui.css";
 </Alert>
 ```
 
-### 닫기 + 액션
+### Close + actions
 
 ```tsx
 <Alert variant="success">
   <AlertRow>
     <AlertIcon name="checkmark" />
     <AlertBody>
-      <AlertTitle>저장됨</AlertTitle>
-      <AlertDescription>변경 사항이 반영되었습니다.</AlertDescription>
+      <AlertTitle>Saved</AlertTitle>
+      <AlertDescription>Your changes were applied.</AlertDescription>
     </AlertBody>
     <AlertClose onClick={() => {}} />
   </AlertRow>
   <AlertActions>
-    <AlertAction onClick={() => {}}>실행 취소</AlertAction>
+    <AlertAction onClick={() => {}}>Undo</AlertAction>
   </AlertActions>
 </Alert>
 ```

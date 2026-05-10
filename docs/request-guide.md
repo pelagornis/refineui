@@ -140,14 +140,14 @@ App sometimes crashes when going to home after login. Find the cause and fix wit
 Repro: Login success → tap Home tab (roughly 10% of the time).
 ```
 
-### 4. Using guide.template — RefineUI (packages 내 수정)
+### 4. Using guide.template — RefineUI (edits inside packages)
 
 ```
 Platform: Web
-Role: RefineUI packages 내 React 컴포넌트/유틸 수정
+Role: Edit RefineUI React components/utilities inside packages
 Context: Project RefineUI, path packages/react/, stack React + TypeScript, pnpm workspace
 Task: Add a new component using @refineui/tokens
-Constraints: Reuse existing patterns, keep a11y, packages 구조는 그대로
+Constraints: Reuse existing patterns, keep a11y, keep packages layout unchanged
 Output: explanation + code, include usage and how to test
 ```
 

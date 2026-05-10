@@ -1,20 +1,20 @@
 # Composition-Only Component API
 
-## 목적
+## Purpose
 
-RefineUI 컴포넌트 API는 **합성형(Composable)만 허용**한다.
+RefineUI component APIs are **composable only**.
 
-## 규칙
+## Rules
 
-- **MUST**: 컴포넌트는 슬롯/서브컴포넌트 조합으로 사용 가능해야 한다.
-- **MUST NOT**: `title`, `description`, `items`, `actions`, `onClose` 같은 완성형(편의형) props 기반 API를 새로 추가하지 않는다.
-- **MUST NOT**: 기존 합성형을 우회하는 단일 props 렌더링 경로를 추가하지 않는다.
-- **MUST**: 루트 컴포넌트는 컨테이너 역할만 하고, 실제 UI 구성은 서브컴포넌트로 분리한다.
-- **MUST**: 상태/표현/행동 확장은 서브컴포넌트로 노출한다. (예: `ComponentHeader`, `ComponentBody`, `ComponentAction`)
-- **MUST**: 문서 예제는 합성형 API만 보여준다.
+- **MUST**: Components must be usable via slot/subcomponent composition.
+- **MUST NOT**: Do not add new “convenience” prop APIs like `title`, `description`, `items`, `actions`, `onClose`.
+- **MUST NOT**: Do not add single-prop render paths that bypass existing composition.
+- **MUST**: Root components are containers only; actual UI is split into subcomponents.
+- **MUST**: State/presentation/behavior extensions are exposed via subcomponents (e.g. `ComponentHeader`, `ComponentBody`, `ComponentAction`).
+- **MUST**: Documentation examples show the composable API only.
 
-## 마이그레이션 원칙
+## Migration
 
-- 기존 완성형 API가 남아있다면 단계적으로 제거한다.
-- 제거 시 `packages/react/src/index.ts`, 각 컴포넌트 `index.ts`, 문서 preview/mdx를 함께 정리한다.
-- 변경 후 `@refineui/react`와 `@refineui/documentation` 빌드로 검증한다.
+- Remove legacy convenience APIs incrementally.
+- When removing, update `packages/react/src/index.ts`, each component `index.ts`, and docs previews/mdx together.
+- Validate with `@refineui/react` and `@refineui/documentation` builds after changes.

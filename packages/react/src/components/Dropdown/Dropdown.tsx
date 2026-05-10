@@ -155,7 +155,7 @@ export function Dropdown({ className, children, ...props }: HTMLAttributes<HTMLD
     );
 }
 
-/** `PopoverTrigger` · `MenuTrigger` 와 같이 단일 병합 가능 자식이면 ref·이벤트를 합성하고, 아니면 래퍼 `button`을 둡니다. */
+/** Like `PopoverTrigger` / `MenuTrigger`: merge ref/events onto one mergeable child, else wrap in `button`. */
 export function DropdownTrigger({ children, className, ...props }: DropdownTriggerProps) {
     const { open, setOpen, triggerRef, menuId } = useDropdownRoot("DropdownTrigger");
 
@@ -479,7 +479,7 @@ export function DropdownShortcut({ className, ...props }: HTMLAttributes<HTMLSpa
     );
 }
 
-/** 호환용 — 서브 패널은 내부에서 이미 `document.body`로 포털합니다. 자식만 렌더합니다. */
+/** Legacy: sub-panel already portals to `document.body` internally — renders children only. */
 export function DropdownPortal({ children }: { children: ReactNode }) {
     return <>{children}</>;
 }

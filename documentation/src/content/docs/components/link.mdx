@@ -1,27 +1,27 @@
 ---
 title: Link
-description: 텍스트 링크 — Web Kit Default
+description: Text link — Web Kit Default
 ---
 
 import LinkPreview from "../../../components/LinkPreview";
 
 # Link
 
-`<a>` 스타일 링크입니다. Web Kit **Link** `226:158` — 색·밑줄·호버는 **`refineui.css`** `[data-refineui="link"]`입니다.
+Styled `<a>` link. Web Kit **Link** `226:158` — color, underline, hover via **`refineui.css`** `[data-refineui="link"]`.
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import { Link } from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
-## 기본 사용
+## Basic usage
 
 ```tsx
-<Link href="/docs">문서</Link>
+<Link href="/docs">Documentation</Link>
 <Link href="https://example.com" target="_blank" rel="noopener noreferrer">
-  외부 사이트
+  External site
 </Link>
 ```
 
@@ -33,20 +33,20 @@ import "@refineui/react/refineui.css";
 
 ## Props
 
-| Prop | 타입 | 기본값 | 설명 |
-|------|------|--------|------|
-| `variant` | `"default"` \| `"subtle"` | `"default"` | 강조 / 덜 강조 |
-| `showExternalIcon` | `boolean` | (자동) | `target="_blank"`이면 기본으로 외부 아이콘 |
-| `disabled` | `boolean` | `false` | `aria-disabled`·클릭 차단 |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `"default"` \| `"subtle"` | `"default"` | Emphasis level |
+| `showExternalIcon` | `boolean` | (auto) | With `target="_blank"`, external icon is shown by default |
+| `disabled` | `boolean` | `false` | `aria-disabled` and blocks clicks |
 
-`href`, `children`, `className` 등 **`AnchorHTMLAttributes`**를 사용합니다.
+Uses **`AnchorHTMLAttributes`**: `href`, `children`, `className`, etc.
 
-## 예시
+## Examples
 
-### 새 창 아이콘 숨김
+### Hide new-window icon
 
 ```tsx
 <Link href="https://…" target="_blank" showExternalIcon={false}>
-  링크
+  Link
 </Link>
 ```

@@ -1,8 +1,8 @@
-# Pelagornis RefineUI Web Kit — Component List (32개)
+# Pelagornis RefineUI Web Kit — Component List (32)
 
 **Figma:** https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?node-id=36-82
 
-| # | 컴포넌트 | 경로 | 상태 |
+| # | Component | Path | Status |
 |---|----------|------|------|
 | 1 | Accordion | `components/Accordion` | ✅ |
 | 2 | Avatars | `components/Avatars` | ✅ |

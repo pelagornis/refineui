@@ -8,7 +8,7 @@ export function parseCssPxLen(value: string, fallback: number): number {
     return Number.isFinite(n) ? n : fallback;
 }
 
-/** 스크롤 가능한 조상 + window — `getBoundingClientRect` 기준 갱신용 */
+/** Scrollable ancestors + window — for `getBoundingClientRect` refresh */
 export function subscribeScrollAndScrollableAncestors(target: HTMLElement | null, fn: () => void): () => void {
     if (typeof window === "undefined") return () => {};
     const list: (Element | Window)[] = [window];
@@ -33,7 +33,7 @@ export function subscribeScrollAndScrollableAncestors(target: HTMLElement | null
     };
 }
 
-/** shadcn `align` + RefineUI `side` 와 동일한 고정 메뉴 배치 (뷰포트 클램프). */
+/** Anchored menu placement matching shadcn `align` + RefineUI `side` (viewport clamp). */
 export function computeAnchoredMenuPosition(params: {
     anchor: DOMRect;
     menuWidth: number;
@@ -105,7 +105,7 @@ export function computeSubmenuPanelPosition(params: {
     panelHeight: number;
     gap: number;
     edge?: number;
-    /** 기본 트리거 오른쪽; 공간 부족 시 왼쪽 */
+    /** Default: right of trigger; flip left if needed */
     preferredSide?: "right" | "left";
 }): { top: number; left: number } {
     const edge = params.edge ?? 8;

@@ -10,7 +10,7 @@ import {
 import { borderRadii, colors, spacings, strokeWidths, typographys } from "@refineui/tokens";
 import PreviewFrame from "./PreviewFrame";
 
-/** 미리보기 무대 — Dialog는 `document.body` 포털로만 표시 */
+/** Preview stage — Dialog shell portals to `document.body` only */
 export default function DialogDemo() {
     const [openSm, setOpenSm] = useState(false);
     return (
@@ -29,23 +29,23 @@ export default function DialogDemo() {
             >
                 <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeSmall }}>
                     <Dialog>
-                        <DialogTrigger type="button">Dialog 열기 (Large)</DialogTrigger>
+                        <DialogTrigger type="button">Open dialog (Large)</DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
-                                <DialogTitle>Dialog 제목</DialogTitle>
-                                <DialogDescription>Large 폭(600px) 본문입니다.</DialogDescription>
+                                <DialogTitle>Dialog title</DialogTitle>
+                                <DialogDescription>Large width (600px) body copy.</DialogDescription>
                             </DialogHeader>
                         </DialogContent>
                     </Dialog>
 
                     <Dialog open={openSm} onOpenChange={setOpenSm} size="sm">
                         <DialogTrigger type="button" variant="secondary">
-                            Dialog 열기 (Small)
+                            Open dialog (Small)
                         </DialogTrigger>
                         <DialogContent>
                             <DialogHeader>
-                                <DialogTitle>Small 제목</DialogTitle>
-                                <DialogDescription>좁은 폭(300px) 예시입니다.</DialogDescription>
+                                <DialogTitle>Small title</DialogTitle>
+                                <DialogDescription>Narrow width (300px) example.</DialogDescription>
                             </DialogHeader>
                         </DialogContent>
                     </Dialog>
@@ -59,8 +59,8 @@ export default function DialogDemo() {
                         color: colors.neutral600,
                     }}
                 >
-                    열리면 스크림과 패널은 미리보기 박스가 아니라 <strong>페이지 전체</strong> 위에 표시됩니다. ESC
-                    또는 배경을 누르면 닫힙니다.
+                    When open, the scrim and panel render over the <strong>full page</strong>, not inside the preview
+                    box. Press ESC or click the backdrop to close.
                 </p>
             </div>
         </PreviewFrame>

@@ -10,7 +10,7 @@ export default function TagDemo() {
           <Tag variant="default">Default</Tag>
           <Tag variant="outline">Outline</Tag>
           <Tag variant="filled">Filled</Tag>
-          <Tag onRemove={() => alert("제거")}>제거 가능</Tag>
+          <Tag onRemove={() => alert("Remove")}>Removable</Tag>
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeMedium, alignItems: "center" }}>
           <Tag size="lg">Large</Tag>

@@ -1,20 +1,20 @@
 ---
 title: CLI
-description: Prompt Guide CLI — prompt.config.js 및 prompts 동기화
+description: Prompt Guide CLI — prompt.config.js and prompts sync
 ---
 
 # CLI (Prompt Guide)
 
-이 저장소는 **[Prompt Guide](https://github.com/pelagornis/prompt-guide)** 설정(`prompt.config.js`, `prompts/`)을 사용해 AI·에디터용 규칙을 한곳에서 관리합니다. **RefineUI 컴포넌트 문서와는 별개**이며, 팀에서 프롬프트 규칙을 설치·검사할 때 씁니다.
+This repo uses **[Prompt Guide](https://github.com/pelagornis/prompt-guide)** (`prompt.config.js`, `prompts/`) to centralize AI/editor rules. It is **separate from RefineUI component docs**—use it when installing or validating prompt rules for your team.
 
-## 언제 쓰나
+## When to use it
 
-- 새 프로젝트에 `prompt.config.js` / `prompts/` 템플릿을 넣을 때
-- `prompt-guide doctor`로 설정이 깨졌는지 확인할 때
+- Adding `prompt.config.js` / `prompts/` templates to a new project
+- Running `prompt-guide doctor` to verify configuration
 
-## 설치·실행
+## Install & run
 
-### 전역 설치
+### Global install
 
 ```bash
 npm install -g @pelagornis/prompt-guide
@@ -22,7 +22,7 @@ prompt-guide init
 prompt-guide doctor --fix
 ```
 
-### npx (권장, 일회성)
+### npx (recommended for one-offs)
 
 ```bash
 npx @pelagornis/prompt-guide init
@@ -30,16 +30,16 @@ npx @pelagornis/prompt-guide init --platform=web
 npx @pelagornis/prompt-guide doctor --fix
 ```
 
-## 주요 명령
+## Commands
 
-| 명령 | 설명 |
-|------|------|
-| `init` | 대화형 초기화 — `prompt.config.js`, `prompts/` 생성 |
-| `doctor` | 설정 검사 |
-| `doctor --fix` | 자동으로 고칠 수 있는 항목 수정 |
+| Command | Description |
+|---------|-------------|
+| `init` | Interactive setup — creates `prompt.config.js` and `prompts/` |
+| `doctor` | Validate configuration |
+| `doctor --fix` | Auto-fix what can be fixed |
 
-## RefineUI 저장소에서
+## In this RefineUI repo
 
-루트에 이미 `prompt.config.js`와 `prompts/`가 있으면 **반복해서 init 할 필요는 없습니다.** 내용을 바꾼 뒤에는 다음 에디터/채팅 세션부터 반영됩니다.
+If `prompt.config.js` and `prompts/` already exist at the root, you **do not need to run `init` again.** Changes apply from the next editor/chat session.
 
-UI 라이브러리 **빌드·배포**는 `pnpm build`를 사용하세요. Prompt Guide CLI와 혼동하지 마세요.
+For the UI library **build and release**, use `pnpm build`. Do not confuse that with Prompt Guide CLI.

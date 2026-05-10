@@ -1,21 +1,21 @@
 ---
-description: React 컴포넌트는 디자인 값을 @refineui/tokens와 @refineui/react(componentSizes)에서만 가져온다
+description: React components take design values only from @refineui/tokens and @refineui/react (componentSizes)
 ---
 
 # Tokens in components (`@refineui/react`)
 
-Figma에서는 **Foundation → Web Kit** 이다. **색·padding·spacing·radius 등은 모두 Foundation과 연결**되고, 코드에서는 `@refineui/tokens`로만 참조한다.
+In Figma the flow is **Foundation → Web Kit**. **Color·padding·spacing·radius** are all tied to Foundation; in code reference them only via `@refineui/tokens`.
 
-컴포넌트 **범위·변형**은 **Web Kit Figma와 동일**해야 한다 — `.cursor/rules/figma-foundation.mdc`의「컴포넌트 ↔ Figma Web Kit」.
+Component **scope and variants** must match **Web Kit Figma** — see「Components ↔ Figma Web Kit」in `.cursor/rules/figma-foundation.mdc`.
 
 ## MUST
 
-- **색·간격·반경·선 두께·타이포 프리셋·그림자·z-index**는 `@refineui/tokens`의 `colors`, `spacings`, `borderRadii`, `strokeWidths`, `typographys`, `shadows` / `toBoxShadow`, `zIndex`, `fontSizes` 등에서만 참조한다.
-- **Foundation `Global/Size/{n}` 스케일**은 `@refineui/react`의 **`foundationSizes`**에서만 참조한다.
-- **Web Kit 컴포넌트별 치수**는 **`componentSizes`**에서만 참조한다(값은 **Web Kit 스펙과 동일**). **아이콘 글리프 픽셀(WebIcon `size`)**는 `@refineui/tokens`의 **`iconSizes`**, **모달 스크rim**은 `overlays`를 사용한다.
-- **하드코딩 금지**: 임의의 `px` 숫자, `#hex`, `rgb()`를 컴포넌트 스타일에 두지 않는다. (레이아웃 상 `0`, `minWidth: 0`, 포지셔닝 트릭 등 의미상 0만 예외로 둘 수 있다.)
-- 새 치수가 필요하면 **Figma 스펙과 맞는 값**으로, Foundation `Global/Size`이면 `foundationSizes`, Web Kit 전용이면 `componentSizes`에 추가한 뒤 참조한다. 스펙에 없는 값은 Foundation/Web Kit 갱신 후 반영한다.
+- **Color·spacing·radius·stroke·typography presets·shadow·z-index** come only from `@refineui/tokens`: `colors`, `spacings`, `borderRadii`, `strokeWidths`, `typographys`, `shadows` / `toBoxShadow`, `zIndex`, `fontSizes`, etc.
+- **Foundation `Global/Size/{n}` scale** is referenced only via **`foundationSizes`** in `@refineui/react`.
+- **Per–Web Kit component dimensions** come only from **`componentSizes`** (values **match Web Kit spec**). **Icon glyph pixels (WebIcon `size`)** use **`iconSizes`** from `@refineui/tokens`; **modal scrim** uses `overlays`.
+- **No hardcoding**: no arbitrary `px`, `#hex`, or `rgb()` in component styles. (Exceptions: literal `0`, `minWidth: 0`, positioning tricks where zero is intentional.)
+- When new dimensions are needed, add them to `foundationSizes` (Foundation `Global/Size`) or `componentSizes` (Web Kit–specific) per Figma spec, then reference. Values missing from spec require Foundation/Web Kit updates first.
 
 ## RECOMMENDED
 
-- 문서용 Preview에서도 가능하면 동일 토큰·시맨틱 색을 쓰고, 데모 전용 임의 hex는 피한다.
+- In documentation Previews, prefer the same tokens and semantic colors; avoid demo-only arbitrary hex.

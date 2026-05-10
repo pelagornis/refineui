@@ -80,7 +80,7 @@ function useSelectCtx() {
 
 const PortalContainerContext = createContext<HTMLElement | undefined>(undefined);
 
-/** `SelectContent`의 `position` — Viewport·패널 스타일 분기 */
+/** `SelectContent` `position` — viewport vs panel style branch */
 const SelectContentPositionContext = createContext<"popper" | "item-aligned">("item-aligned");
 
 function parsePx(px: string, fallback: number) {
@@ -88,9 +88,9 @@ function parsePx(px: string, fallback: number) {
     return Number.isFinite(n) ? n : fallback;
 }
 
-/** 콘텐츠·트리거 간 여백 (Themes sideOffset 4px 근사) */
+/** Content–trigger gap (~Themes sideOffset 4px) */
 const SIDE_OFFSET = parsePx(foundationSizes.foundationSize40, 4);
-/** 뷰포트 가장자리 마진 */
+/** Viewport edge margin */
 const CONTENT_MARGIN = parsePx(foundationSizes.foundationSize100, 10);
 
 function clampNumber(value: number, [minB, maxB]: [number, number]) {
@@ -196,11 +196,6 @@ export function Select({
         setActiveIndex(selected >= 0 ? selected : enabledItems.length > 0 ? 0 : -1);
     }, [open, value, enabledItems]);
 
-    /**
-     * active item 변경 시 강제 `scrollIntoView`를 하지 않습니다.
-     * - 마우스 hover 이동 중 목록이 자동으로 따라 스크롤되는 현상 방지
-     */
-
     useEffect(() => {
         if (!open) return;
         const onOutside = (event: MouseEvent) => {
@@ -212,7 +207,7 @@ export function Select({
         return () => document.removeEventListener("mousedown", onOutside);
     }, [open, setOpen]);
 
-    /** 열릴 때 배경 및 스크롤 래퍼 잠금 */
+    /** Lock document + scrollable ancestors while open */
     useEffect(() => {
         if (!open) return;
         const releaseBodyLock = acquireBodyScrollLock();
@@ -504,7 +499,7 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
         const topEdgeToTriggerMiddle = triggerRect.top + triggerRect.height / 2 - CONTENT_MARGIN;
         const triggerMiddleToBottomEdge = availableHeight - topEdgeToTriggerMiddle;
         const selectedItemHalfHeight = selectedItem.offsetHeight / 2;
-        // Radix 원본과 동일: selectedItem.offsetTop 기준으로 trigger-middle 정렬 계산
+        // Same as Radix: trigger-middle alignment from selectedItem.offsetTop
         const itemOffsetMiddle = selectedItem.offsetTop + selectedItemHalfHeight;
         const contentTopToItemMiddle = contentBorderTopWidth + contentPaddingTop + itemOffsetMiddle;
         const itemMiddleToContentBottom = fullContentHeight - contentTopToItemMiddle;
@@ -585,7 +580,7 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
 
     const updatePosition = isPopper ? updatePositionPopper : updatePositionItemAligned;
 
-    /** Radix Viewport onScroll: 아래에 붙인 패널(`bottom: 0`)일 때만 스크롤로 높이 늘리며 scrollTop·justifyContent 보정 */
+    /** Radix Viewport onScroll: when panel is bottom-anchored, grow height via scroll; fix scrollTop/justifyContent */
     const onViewportScroll = useCallback(() => {
         const viewport = viewportRef.current;
         if (!viewport) return;
@@ -621,7 +616,7 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
         prevScrollTopRef.current = scrollTop;
     }, [viewportRef, commitContentStyle, side]);
 
-    /** Radix `focusFirst`와 동일: 첫 옵션은 맨 위(scrollTop 0), 마지막은 맨 아래로 스냅해 상단 붙음(bottom/top 앵커)과 무관하게 목록 시작점을 맞춘다 */
+    /** Radix `focusFirst`: first option scrollTop 0, last snaps to bottom so list start matches regardless of anchor */
     const focusSelectedItem = useCallback(() => {
         const viewport = viewportRef.current;
         if (!viewport) return;
@@ -642,7 +637,7 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
         shouldExpandOnScrollRef.current = false;
         shouldRepositionRef.current = true;
         prevScrollTopRef.current = 0;
-        /** Radix `SelectItemAlignedPosition`: `useLayoutEffect(() => position(), [position])`와 같이 레이아웃 직후 동기 측정 */
+        /** Radix `SelectItemAlignedPosition`: sync measure after layout like `useLayoutEffect(() => position(), [position])` */
         updatePosition();
         const schedule = () => {
             if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
@@ -663,7 +658,7 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
             if (shouldRepositionRef.current) {
                 updatePosition();
                 focusSelectedItem();
-                /** Radix `handleScrollButtonChange`: 스크롤/포커스 후 측정값이 바뀌면 `position()` 한 번 더 */
+                /** Radix `handleScrollButtonChange`: if metrics change after scroll/focus, run `position()` again */
                 if (!isPopper) {
                     updatePosition();
                     onViewportScroll();
@@ -834,7 +829,7 @@ export function SelectItem({
 
     const enabledItems = itemsRef.current.filter((item) => !item.disabled);
     const myIndex = enabledItems.findIndex((item) => item.value === itemValue);
-    /** 키보드 `activeIndex`·마우스 호버(`setActiveIndex`)만 사용 — 옵션에 `focus()`하지 않아 포인터 클릭 시 focus ring 방지 */
+    /** Keyboard `activeIndex` + hover only — no `focus()` on options to avoid focus ring on pointer click */
     const isHighlighted = myIndex >= 0 && activeIndex === myIndex && !disabled;
     const handleSelect = () => {
         if (disabled) return;

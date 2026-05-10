@@ -1,4 +1,4 @@
-/** Foundation Alias/Color — Light·Dark별 CSS 값 (`var(--refineui-color-*)` 등) */
+/** Foundation Alias/Color — Light/Dark CSS values (`var(--refineui-color-*)`, etc.) */
 export type SemanticColorModePair = { light: string; dark: string };
 
 /**
@@ -133,24 +133,24 @@ export type PaletteColors = {
 };
 
 /**
- * Foundation Alias/Color — Light·Dark가 각각 가리키는 팔레트 토큰 이름.
- * @typeParam P — 팔레트 맵 타입(기본 구현은 `PaletteColors` / `global/colors`와 동기)
+ * Foundation Alias/Color — palette token names for Light and Dark.
+ * @typeParam P — palette map type (defaults align with `PaletteColors` / `global/colors`)
  */
 export type SemanticPalettePairFor<P extends Record<string, string>> = {
     light: keyof P;
     dark: keyof P;
 };
 
-/** Alias 이름 → Light/Dark 페어 전체 맵 */
+/** Alias name → full map of Light/Dark pairs */
 export type SemanticPalettePairsOf<P extends Record<string, string>> = Readonly<
     Record<string, SemanticPalettePairFor<P>>
 >;
 
-/** `PaletteColors` 전용 단일 Alias 페어 (구현에서 가장 많이 씀) */
+/** Single alias pair for `PaletteColors` (most common in implementations) */
 export type SemanticPalettePair = SemanticPalettePairFor<PaletteColors>;
 
 /**
- * Shadow color (Figma Variables — Lighter ~ Darker, Key/Ambient별)
+ * Shadow color (Figma Variables — Lighter ~ Darker, per Key/Ambient)
  * Foundation: ambient lighter, ambient light, ambient, ambient dark, ambient darker
  */
 export type ShadowColorTokens = {
@@ -167,9 +167,9 @@ export type ShadowColorTokens = {
 };
 
 /**
- * Key + Ambient shadow pair (Material Design 3 / Figma Variables 구조)
- * - key: 방향성 있는 그림자 (y offset, 작은 blur)
- * - ambient: 부드럽게 퍼지는 그림자 (큰 blur)
+ * Key + Ambient shadow pair (Material Design 3 / Figma Variables shape)
+ * - key: directional shadow (y offset, smaller blur)
+ * - ambient: soft diffuse shadow (larger blur)
  */
 export type ShadowLevel = {
     key: string;
@@ -177,10 +177,10 @@ export type ShadowLevel = {
 };
 
 /**
- * Elevation 그림자 — Figma `Elevation/Light/Shadow N` · `Elevation/Dark/Shadow N` 와 1:1.
- * 단계당 `*Light` / `*Dark` 두 토큰만 (중간 `shadow2`·`Lighter`·`Darker` 펼침 없음).
- * 색 강도 램프는 `shadowColors` (`Global/Shadows/Key *`, `Ambient *`).
- * 사용: box-shadow: ${toBoxShadow(level)}
+ * Elevation shadows — 1:1 with Figma `Elevation/Light/Shadow N` · `Elevation/Dark/Shadow N`.
+ * Two tokens per step only (`*Light` / `*Dark`); no intermediate `shadow2` / Lighter / Darker expansion.
+ * Color ramps live in `shadowColors` (`Global/Shadows/Key *`, `Ambient *`).
+ * Usage: box-shadow: ${toBoxShadow(level)}
  */
 export type ShadowTokens = {
     shadow2Light: ShadowLevel;
@@ -200,15 +200,15 @@ export type ShadowTokens = {
 };
 
 /**
- * 시맨틱 elevation 그림자 — UI 테마(Light/Dark)별 `ShadowLevel`.
- * Foundation: Elevation/Light·Elevation/Dark 이펙트가 각각 `shadowNLight`·`shadowNDark` 글로벌 토큰과 대응.
+ * Semantic elevation shadows — `ShadowLevel` per UI theme (Light/Dark).
+ * Foundation: Elevation/Light and Elevation/Dark map to `shadowNLight` / `shadowNDark` globals.
  */
 export type SemanticShadowElevationPair = {
     light: ShadowLevel;
     dark: ShadowLevel;
 };
 
-/** 시맨틱 elevation 단계 (Figma Shadow 2 / 4 / … / 64) */
+/** Semantic elevation steps (Figma Shadow 2 / 4 / … / 64) */
 export type SemanticShadowElevationName =
     | "shadow2"
     | "shadow4"
@@ -218,7 +218,7 @@ export type SemanticShadowElevationName =
     | "shadow32"
     | "shadow64";
 
-/** 시맨틱 elevation 이름 → 테마별 ShadowLevel (`semanticShadows`) */
+/** Semantic elevation name → per-theme ShadowLevel (`semanticShadows`) */
 export type SemanticShadowElevationTokens = Record<SemanticShadowElevationName, SemanticShadowElevationPair>;
 
 /**
@@ -262,7 +262,7 @@ export type SpacingTokens = {
     sizeXXXLarge: string;
 };
 
-/** 모션·스케일 문자열 — CSS `transform` 등과 공유 */
+/** Motion/scale strings — shared with CSS `transform`, etc. */
 export type MotionTokens = {
     dialogEnterScale: string;
     buttonActiveScale: string;

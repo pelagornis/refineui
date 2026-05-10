@@ -1,27 +1,27 @@
 ---
 title: Tag
-description: 태그·칩 — Chip과 동일
+description: Tag / chip — same as Chip
 ---
 
 import TagDemo from "../../../components/TagDemo";
 
 # Tag
 
-필터·키워드 등에 쓰는 태그입니다. 코드 export 이름은 **`Chip`**이며 **`Tag`**는 같은 컴포넌트입니다. Web Kit 이름은 **Tag** `574:6578`.
+Tag for filters, keywords, etc. The code export is **`Chip`**; **`Tag`** is the same component. Web Kit name: **Tag** `574:6578`.
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import { Tag, Chip } from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
-## 기본 사용
+## Basic usage
 
 ```tsx
 <Tag>React</Tag>
 <Tag variant="outline" onRemove={() => {}}>
-  제거 가능
+  Removable
 </Tag>
 ```
 
@@ -33,20 +33,20 @@ import "@refineui/react/refineui.css";
 
 ## Props
 
-| Prop | 타입 | 설명 |
-|------|------|------|
-| `variant` | `"default"` \| `"outline"` \| `"filled"` | 스타일 |
-| `size` | `"sm"` \| `"md"` \| `"lg"` | 타이포·아이콘 |
-| `avatar` | `ReactNode` | 앞쪽 슬롯 |
-| `onRemove` | `() => void` | 있으면 제거 버튼 |
-| `disabled` | `boolean` | 비활성 |
+| Prop | Type | Description |
+|------|------|-------------|
+| `variant` | `"default"` \| `"outline"` \| `"filled"` | Style |
+| `size` | `"sm"` \| `"md"` \| `"lg"` | Typography and icon |
+| `avatar` | `ReactNode` | Leading slot |
+| `onRemove` | `() => void` | Shows remove button when set |
+| `disabled` | `boolean` | Disabled |
 
-## 예시
+## Examples
 
-### 아바타 + 제거
+### Avatar + remove
 
 ```tsx
 <Tag avatar={<img src="…" alt="" width={16} height={16} />} onRemove={() => {}}>
-  사용자
+  User
 </Tag>
 ```

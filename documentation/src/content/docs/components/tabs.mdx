@@ -1,15 +1,16 @@
 ---
 title: Tabs
-description: 탭 — Web Kit Pill (shadcn 스타일 합성 API)
+description: Tabs — Web Kit Pill (icon + label, state tokens)
 ---
 
 import TabsDemo from '../../../components/TabsDemo';
 
 # Tabs
 
-한 화면에서 섹션을 전환할 때 쓰는 탭입니다. Web Kit **Tabs** `636:5371` · **Tabs / Item** `636:5372`. **Card** 등과 같이 **`Tabs` → `TabsList` → `TabsTrigger`** · **`TabsContent`** 로 조합합니다 (Radix/shadcn과 같은 패턴).
+Tabs for switching sections on one screen. Web Kit **Tabs** `636:5371` · **Tabs / Item** `636:5372`. Compose like **Card**: **`Tabs` → `TabsList` → `TabsTrigger`** and **`TabsContent`** (same pattern as Radix/shadcn).
+Matches latest Web Kit for Pill track/item radius, item padding, selected shadow, and hover tokens (`surfaceHover` / `foregroundPrimaryHover`).
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import {
@@ -21,30 +22,30 @@ import {
 import "@refineui/react/refineui.css";
 ```
 
-`Card` 등 다른 RefineUI 컴포넌트와 **같은 패키지**에서 함께 가져옵니다 (`@/components/ui/*` 같은 별칭이 아닙니다).
+Import alongside other RefineUI components from the **same package** (not a `@/components/ui/*` alias).
 
-## 기본 사용 (합성 API)
+## Basic usage (composed API)
 
-shadcn의 `Tabs` · `TabsList` · `TabsTrigger` · `TabsContent` 조합과 동일합니다. 초기 탭은 **`defaultValue`**, 제어 모드는 **`value`** + **`onValueChange`** 입니다.
+Same composition as shadcn `Tabs` · `TabsList` · `TabsTrigger` · `TabsContent`. Uncontrolled: **`defaultValue`**; controlled: **`value`** + **`onValueChange`**.
 
 ```tsx
 <Tabs defaultValue="a" className="max-w-md">
   <TabsList>
-    <TabsTrigger value="a">첫 번째</TabsTrigger>
-    <TabsTrigger value="b">두 번째</TabsTrigger>
+    <TabsTrigger value="a">First</TabsTrigger>
+    <TabsTrigger value="b">Second</TabsTrigger>
   </TabsList>
   <TabsContent value="a">
-    <p>내용 A</p>
+    <p>Panel A</p>
   </TabsContent>
   <TabsContent value="b">
-    <p>내용 B</p>
+    <p>Panel B</p>
   </TabsContent>
 </Tabs>
 ```
 
-## Card와 함께 (탭마다 패널)
+## With Card (panel per tab)
 
-각 `TabsContent` 안에 RefineUI **`Card`** 를 넣는 패턴입니다. 아래는 문서 사이트 Preview(`TabsDemo`)와 같은 구조입니다.
+Put a RefineUI **`Card`** inside each `TabsContent`. Below matches the docs site preview (`TabsDemo`).
 
 ```tsx
 import {
@@ -81,7 +82,6 @@ export function TabsDemo() {
           </CardContent>
         </Card>
       </TabsContent>
-      {/* 나머지 탭도 동일 패턴으로 TabsContent + Card */}
     </Tabs>
   );
 }
@@ -97,26 +97,26 @@ export function TabsDemo() {
 
 ### `Tabs`
 
-| Prop | 타입 | 설명 |
+| Prop | Type | Description |
 | --- | --- | --- |
-| `defaultValue` | `string` | 비제어 모드 초기 선택 값 |
-| `value` | `string` | 제어 모드 선택 값 |
-| `onValueChange` | `(value: string) => void` | 선택 변경 시 |
+| `defaultValue` | `string` | Initial value (uncontrolled) |
+| `value` | `string` | Selected value (controlled) |
+| `onValueChange` | `(value: string) => void` | Called when selection changes |
 
 ### `TabsTrigger`
 
-| Prop | 타입 | 설명 |
+| Prop | Type | Description |
 | --- | --- | --- |
-| `value` | `string` | (필수) 패널·트리거와 매칭되는 id |
-| `disabled` | `boolean` | 비활성 |
+| `value` | `string` | (Required) id matching a panel |
+| `disabled` | `boolean` | Disabled |
 
 ### `TabsContent`
 
-| Prop | 타입 | 설명 |
+| Prop | Type | Description |
 | --- | --- | --- |
-| `value` | `string` | (필수) 열릴 때 표시할 패널 |
+| `value` | `string` | (Required) Panel to show when selected |
 
-## 접근성
+## Accessibility
 
-- `role="tablist"` / `tab` / `tabpanel`, `aria-controls` · `aria-labelledby` 연결.
-- 화살표 / Home / End 로 포커스 이동.
+- `role="tablist"` / `tab` / `tabpanel`, with `aria-controls` · `aria-labelledby`.
+- Arrow keys / Home / End move focus.

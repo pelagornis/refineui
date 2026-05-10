@@ -1,6 +1,6 @@
 /**
- * refineui.css의 팔레트 hex를 @refineui/tokens `css-variables.css`의 `var(--refineui-color-*)`로 치환.
- * 실행: node packages/react/scripts/tokenize-refineui-css.mjs (repo 루트에서)
+ * Replace palette hex in refineui.css with `var(--refineui-color-*)` from `@refineui/tokens` `css-variables.css`.
+ * Run: node packages/react/scripts/tokenize-refineui-css.mjs (from repo root)
  */
 import { readFileSync, writeFileSync } from "fs";
 import { dirname, join } from "path";
@@ -26,11 +26,11 @@ for (const [k, v] of Object.entries(colors)) {
     byHex.set(v.toLowerCase(), name);
 }
 
-/* 팔레트 3자리·문서용 단축 hex */
+/* Palette 3-digit / doc shorthand hex */
 css = css.replace(/#333\b/g, "var(--refineui-color-neutral-750)");
 css = css.replace(/#888888/gi, "var(--refineui-color-neutral-550)");
 
-/** 긴 hex 먼저 */
+/** Longer hex first */
 const hexes = [...byHex.keys()].sort((a, b) => b.length - a.length);
 
 for (const hex of hexes) {

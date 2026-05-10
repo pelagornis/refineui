@@ -28,7 +28,7 @@ const rowLabel: CSSProperties = {
   color: colors.neutral600,
 };
 
-/** Web Kit `Avatar` Stack `69:3008` — 행 `76:1427` / `76:1435` / `76:1451` */
+/** Web Kit `Avatar` Stack `69:3008` — rows `76:1427` / `76:1435` / `76:1451` */
 function AvatarStackRow({ size, label }: { size: AvatarSize; label: string }) {
   return (
     <div className="flex flex-wrap items-center gap-refineui-size-medium rounded-refineui-large bg-refineui-neutral-150 px-refineui-size-large py-refineui-size-medium">
@@ -69,8 +69,8 @@ export default function AvatarsPreview() {
             lineHeight: 1.5,
           }}
         >
-          Web Kit <strong>Avatar Stack</strong> (<code style={{ fontFamily: "monospace", fontSize: "0.95em" }}>69:3008</code>)과
-          동일한 순서: Image(녹색 <strong>Status</strong>) → Neutral Icon → Initials(Orange) → Icon(Red) → More.
+          Same order as Web Kit <strong>Avatar Stack</strong> (<code style={{ fontFamily: "monospace", fontSize: "0.95em" }}>69:3008</code>):
+          Image (green <strong>Status</strong>) → Neutral Icon → Initials (Orange) → Icon (Red) → More.
         </p>
         <div style={{ display: "flex", flexDirection: "column", gap: spacings.sizeLarge }}>
           <AvatarStackRow size="md" label="Medium (32px)" />

@@ -3,7 +3,7 @@ import type { TooltipAlign, TooltipPosition } from "@refineui/react";
 import { Tooltip, Button } from "@refineui/react";
 import PreviewFrame from "./PreviewFrame";
 
-/** MCP 노드 명명과 동일 — 예: Top-Start, Left-Top (= Left + Start) */
+/** Labels match MCP node naming — e.g. Top-Start, Left-Top (= Left + Start) */
 const ROWS: { position: TooltipPosition; align: TooltipAlign; label: string }[][] = [
   [
     { position: "Top", align: "Start", label: "Top-Start" },
@@ -30,7 +30,7 @@ const ROWS: { position: TooltipPosition; align: TooltipAlign; label: string }[][
 export default function TooltipDemo() {
   return (
     <PreviewFrame
-      title="Web Kit MCP — position × align 12조합 · 기본값은 position Bottom, align Start"
+      title="Web Kit MCP — position × align (12 combos) · defaults: position Bottom, align Start"
       minHeight="min(42rem, 88vh)"
     >
       <div

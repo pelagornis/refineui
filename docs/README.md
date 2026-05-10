@@ -1,7 +1,7 @@
-# Prompt Guide — RefineUI Docs index
+# Prompt Guide — RefineUI docs index
 
-RefineUI 프로젝트용 **설정, 규칙, CLI** 문서입니다.  
-설정: `prompt.config.js` · 규칙 원문: `prompts/*.yml` · 사람이 읽기 쉬운 요약: 이 디렉터리.
+**Config, rules, and CLI** docs for the RefineUI project.  
+Config: `prompt.config.js` · rule sources: `prompts/*.yml` · human-readable summaries: this directory.
 
 ---
 
@@ -9,21 +9,21 @@ RefineUI 프로젝트용 **설정, 규칙, CLI** 문서입니다.
 
 | Document | Audience | Content |
 |----------|----------|---------|
-| **[packages.md](packages.md)** | All | **packages/ 구조 및 정책** — monorepo 패키지 목록, packages는 그대로 유지. |
-| **[CLI.md](CLI.md)** | Users, developers | CLI 실행 방법, `init` / `doctor` 명령, 옵션, 예시, 에러/종료 코드. |
-| **[what-install.md](what-install.md)** | Users, maintainers | CLI, config, presets, platforms가 **추가하는 것**과 **나중에 수정할 항목**. |
-| **[request-guide.md](request-guide.md)** | Developers | **요청 작성 가이드**: per-preset 팁, guide.template 필드, spec/ticket 작성, 예시. |
-| **[system.core.md](system.core.md)** | Developers, reviewers | 핵심 규칙 요약 (역할, 코드 품질, 보안, 에러, 문서, 협업). Source: `prompts/system.core.yml`. |
-| **[review.md](review.md)** | Reviewers | 코드 리뷰 범위, 체크리스트, 출력 형식, 결론 규칙. Source: `prompts/review.yml`. |
-| **[rules-by-platform.md](rules-by-platform.md)** | Platform developers | 플랫폼별 규칙 요약 (Web/RefineUI 중심). Source: `prompts/rules.by-platform.yml`. |
-| **[rules-by-tool.md](rules-by-tool.md)** | Users, maintainers | **AI 도구별 규칙 위치**: Cursor, Claude Code, Codex, Windsurf. 형식 및 제한. |
+| **[packages.md](packages.md)** | All | **packages/ layout and policy** — monorepo package list; keep `packages/` as-is. |
+| **[CLI.md](CLI.md)** | Users, developers | How to run the CLI, `init` / `doctor`, options, examples, errors/exit codes. |
+| **[what-install.md](what-install.md)** | Users, maintainers | What the CLI, config, presets, and platforms **add** and **what to edit later**. |
+| **[request-guide.md](request-guide.md)** | Developers | **How to write requests**: per-preset tips, guide.template fields, spec/ticket style, examples. |
+| **[system.core.md](system.core.md)** | Developers, reviewers | Core rules summary (role, quality, security, errors, docs, collaboration). Source: `prompts/system.core.yml`. |
+| **[review.md](review.md)** | Reviewers | Review scope, checklist, output format, conclusion rules. Source: `prompts/review.yml`. |
+| **[rules-by-platform.md](rules-by-platform.md)** | Platform developers | Per-platform rules summary (Web/RefineUI focused). Source: `prompts/rules.by-platform.yml`. |
+| **[rules-by-tool.md](rules-by-tool.md)** | Users, maintainers | **Where each AI tool loads rules**: Cursor, Claude Code, Codex, Windsurf. Formats and limits. |
 
 ---
 
 ## Suggested reading order
 
-1. **RefineUI 프로젝트 구조**  
-   [packages.md](packages.md) — packages/ 구조, packages는 그대로 유지 정책
+1. **RefineUI project layout**  
+   [packages.md](packages.md) — `packages/` structure and keep-as-is policy
 
 2. **First-time setup**  
    [CLI.md](CLI.md) → [what-install.md](what-install.md) (sections 1, 2, 6, 7)
@@ -49,7 +49,7 @@ RefineUI 프로젝트용 **설정, 규칙, CLI** 문서입니다.
 | system.core.md | prompts/system.core.yml | `prompt` |
 | review.md | prompts/review.yml | `prompt` |
 | rules-by-platform.md | prompts/rules.by-platform.yml | `platforms.<name>.prompt` |
-| packages.md | — | (정책 문서, YAML 없음) |
+| packages.md | — | (policy doc, no YAML) |
 
 Tools read the corresponding key from the YAML and inject it as system role / prompt.  
 The Markdown docs are **human-friendly summaries** of the same content.

@@ -72,10 +72,10 @@ declare function isColorTokenRef(value: unknown): value is ColorTokenRef;
 declare function resolveColorTokenValue<T extends string>(value: T): T;
 declare function resolveColorTokenValue(value: ColorTokenRef): string;
 /**
- * hex → rgba 변환 (palette 색상 등)
+ * Convert hex to rgba (e.g. palette colors)
  */
 declare function hexToRgba(hex: string, alpha: number): string;
-/** dimension(x y blur spread) + color로 box-shadow 문자열 생성 */
+/** Build a box-shadow string from dimensions (x y blur spread) + colors */
 declare function shadowWithColor(keyDim: string, ambientDim: string, keyColor: string, ambientColor: string): string;
 
 type Booleanish = boolean | "true" | "false";
@@ -92,26 +92,26 @@ declare const buttonProps: (props: React.ButtonHTMLAttributes<HTMLButtonElement>
 declare const imgProps: (props: React.ImgHTMLAttributes<HTMLImageElement> & DataAttr) => WithoutRef<React.ImgHTMLAttributes<HTMLImageElement>>;
 
 /**
- * 루트 문서 스크롤 잠금 — 여러 오버레이가 겹칠 때 refCount로 안전하게 해제.
+ * Root document scroll lock with ref-counting for nested overlays.
  *
- * Radix Primitives는 보통 `react-remove-scroll` 등으로 포털·포커스 스코프와 함께 처리합니다.
- * RefineUI는 외부 패키지 추가 없이 동일한 ref-count 패턴으로 문서 `overflow`/`position`만 잠급니다.
+ * Radix often uses `react-remove-scroll` with portals/focus scope.
+ * RefineUI locks only document `overflow`/`position` without extra dependencies.
  */
 /**
- * 메뉴·모달 등이 열렸을 때 배경(문서) 스크롤을 막습니다.
- * @returns 해제 함수 — 반드시 언마운트/닫힐 때 호출
+ * Block background (document) scroll while menus/modals are open.
+ * @returns Release function — call on unmount/close
  */
 declare function acquireBodyScrollLock(): () => void;
 
 declare function composeRefs<T>(...refs: (Ref<T> | undefined)[]): (instance: T | null) => void;
-/** Radix `useComposedRefs` — cloneElement·forwardRef 조합 시 안정적인 ref 콜백 */
+/** Radix `useComposedRefs` — stable ref callback when merging cloneElement + forwardRef */
 declare function useComposedRefs<T>(...refs: (Ref<T> | undefined)[]): (instance: T | null) => void;
-/** 하위 호환 별칭 — `composeRefs` 사용 권장 */
+/** @deprecated Prefer `composeRefs` */
 declare const composeRef: typeof composeRefs;
 
 /**
- * 트리거에 이벤트·ref 등을 한 엘리먼트에만 합성하기 위한 단일 자식 확인.
- * (Fragment 한 겹만 풀며, 그 외 패턴은 `null` → 호출부에서 기본 래퍼 버튼/스팬 사용.)
+ * Resolve a single mergeable child so events/refs attach to one element.
+ * (Unwraps one Fragment layer; otherwise returns `null` — caller supplies a default button/span wrapper.)
  */
 declare function getMergeableTriggerChild(children: ReactNode): ReactElement | null;
 

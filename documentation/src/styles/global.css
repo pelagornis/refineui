@@ -1,5 +1,5 @@
-/* Inter: `astro.config.mjs` Starlight `head` — `@pelagornis/page` base.css 의 중간 @import 는 PostCSS 경고 유발 → `pelagornis-base.css` */
-/* monorepo: 패키지 alias 없이 tokens 진입만 상대 경로 (외부 앱은 `@import "@refineui/tokens/tailwind.css"`) */
+/* Inter: Starlight `head` in `astro.config.mjs` — mid-file @import in `@pelagornis/page` base.css triggers PostCSS warnings → use `pelagornis-base.css` */
+/* Monorepo: relative import into tokens only (no package alias); external apps use `@import "@refineui/tokens/tailwind.css"` */
 @import "../../../packages/tokens/tailwind.css";
 @source "../../../packages/react/src/**/*.{tsx,ts}";
 @import "@pelagornis/page/styles/refineui-fonts-override.css";
@@ -19,7 +19,7 @@
   background: var(--refineui-color-neutral-100);
 }
 
-/* 문서 테마에 따라 Preview 배경 자동 전환 (Starlight data-theme 연동) */
+/* Preview background follows doc theme (Starlight data-theme) */
 [data-theme="dark"] [data-refineui-preview]:not([data-preview-variant="light"]) {
   background: #1a1a1a;
 }
@@ -27,7 +27,7 @@
   background: var(--refineui-color-neutral-100);
 }
 
-/* variant로 강제 지정 시 */
+/* Forced via variant */
 [data-refineui-preview][data-preview-variant="dark"] {
   background: #1a1a1a !important;
 }

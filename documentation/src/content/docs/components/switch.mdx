@@ -1,28 +1,28 @@
 ---
 title: Switch
-description: 스위치 — Toggle과 동일 구현
+description: Switch — same implementation as Toggle
 ---
 
 import SwitchDemo from "../../../components/SwitchDemo";
 
 # Switch
 
-켜짐/꺼짐 상태를 나타내는 스위치입니다. Web Kit COMPONENT_SET 이름은 **Switch** `270:3057`이며, **`Toggle`**과 **동일한 구현**을 export합니다(`data-refineui="switch"`).
+On/off switch. Web Kit COMPONENT_SET **Switch** `270:3057`. **`Toggle`** is the **same implementation** (`data-refineui="switch"`).
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import { Switch } from "@refineui/react";
-// 또는 동일 컴포넌트:
+// or the same component:
 // import { Toggle } from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
-## 기본 사용
+## Basic usage
 
 ```tsx
 const [on, setOn] = useState(false);
-<Switch checked={on} onCheckedChange={setOn} aria-label="알림" />;
+<Switch checked={on} onCheckedChange={setOn} aria-label="Notifications" />;
 ```
 
 ## Preview
@@ -33,18 +33,18 @@ const [on, setOn] = useState(false);
 
 ## Props
 
-| Prop | 타입 | 설명 |
-|------|------|------|
-| `checked` | `boolean` | 켜짐 여부 |
-| `onCheckedChange` | `(checked: boolean) => void` | 클릭 시 상태 변경 |
-| `disabled` | `boolean` | 비활성 (트랙·썸 색 변경) |
+| Prop | Type | Description |
+|------|------|-------------|
+| `checked` | `boolean` | On/off |
+| `onCheckedChange` | `(checked: boolean) => void` | Called when toggled |
+| `disabled` | `boolean` | Disabled (track and thumb colors) |
 
-`role="switch"`, `aria-checked`가 설정됩니다. 나머지는 **`ButtonHTMLAttributes`**에서 `children` 제외.
+Sets `role="switch"` and `aria-checked`. Other props from **`ButtonHTMLAttributes`** except `children`.
 
-## 예시
+## Examples
 
-### 폼 기본값
+### Default in a form
 
 ```tsx
-<Switch defaultChecked aria-label="다크 모드" />
+<Switch defaultChecked aria-label="Dark mode" />
 ```

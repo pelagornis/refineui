@@ -1,23 +1,23 @@
 ---
 title: Dropdown
-description: Web Kit Dropdown 503:2985 — 합성 API 기본 사용
+description: Web Kit Dropdown 503:2985 — composed API
 ---
 
 import DropdownDemo from '../../../components/DropdownDemo';
 
 # Dropdown
 
-Figma Web Kit **Dropdown** `503:2985`와 동일 토큰·시각입니다.
+Matches Figma Web Kit **Dropdown** `503:2985` tokens and visuals.
 
-| 방식 | 컴포넌트 | 설명 |
-|------|----------|------|
-| **합성(기본)** | `Dropdown`, `DropdownTrigger`, `DropdownContent`, `DropdownItem`, … | 라벨·단축키·서브메뉴를 JSX로 조합 |
+| Approach | Components | Description |
+|----------|------------|-------------|
+| **Composed (default)** | `Dropdown`, `DropdownTrigger`, `DropdownContent`, `DropdownItem`, … | Build labels, shortcuts, and submenus in JSX |
 
-열리면 **`body` / `html`에 `overflow: hidden`** 이 걸려 페이지 배경 스크롤이 멈춥니다.
+When open, **`overflow: hidden`** is applied to `body` / `html` to lock page scroll.
 
 ---
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import {
@@ -40,7 +40,7 @@ import '@refineui/react/refineui.css';
 
 ---
 
-## 기본 사용 — 합성
+## Basic usage — composed
 
 ```tsx
 <Dropdown>
@@ -78,29 +78,29 @@ import '@refineui/react/refineui.css';
 </Dropdown>
 ```
 
-- **`DropdownItem`** 을 누르면 기본으로 메뉴가 닫힙니다. `onClick`에서 `preventDefault()` 하면 유지할 수 있습니다.
-- **`DropdownPortal`** 은 이전 API 호환용으로 자식만 렌더합니다. 서브 패널은 내부에서 이미 `document.body`로 그립니다.
+- **`DropdownItem`** closes the menu by default. Call `preventDefault()` in `onClick` to keep it open.
+- **`DropdownPortal`** is a legacy compatibility wrapper that only renders children. Sub-panels already portal to `document.body` internally.
 
-### 구성 요소
+### Building blocks
 
-| 컴포넌트 | 역할 |
-|----------|------|
-| `Dropdown` | 루트 · 열림 상태 |
-| `DropdownTrigger` | 단일 자식이면 `PopoverTrigger`처럼 자동 병합 |
-| `DropdownContent` | 본문 패널(포털) |
+| Component | Role |
+|-----------|------|
+| `Dropdown` | Root · open state |
+| `DropdownTrigger` | Merges like `PopoverTrigger` when there is a single child |
+| `DropdownContent` | Panel (portal) |
 | `DropdownGroup` | `role="group"` |
-| `DropdownLabel` | 그룹 제목 |
+| `DropdownLabel` | Group title |
 | `DropdownItem` | `role="menuitem"` |
-| `DropdownSeparator` | 구분선 |
-| `DropdownShortcut` | 단축키 텍스트 |
-| `DropdownSub` / `SubTrigger` / `SubContent` | 서브메뉴 |
-| `DropdownPortal` | 호환 래퍼 |
+| `DropdownSeparator` | Divider |
+| `DropdownShortcut` | Shortcut text |
+| `DropdownSub` / `SubTrigger` / `SubContent` | Submenu |
+| `DropdownPortal` | Compatibility wrapper |
 
-### Props (요지)
+### Props (summary)
 
-**`DropdownContent`:** `align` · `side` · `sideOffset` + `className`  
-**`DropdownTrigger`:** 자식이 하나의 컴포넌트면 ref·클릭을 그 요소에 합성  
-**`DropdownItem`:** 평소 `<button>` 과 동일(`disabled`, `onClick` 등).
+**`DropdownContent`:** `align`, `side`, `sideOffset`, `className`  
+**`DropdownTrigger`:** merges ref/click onto a single child element  
+**`DropdownItem`:** same as `<button>` (`disabled`, `onClick`, etc.)
 
 ---
 

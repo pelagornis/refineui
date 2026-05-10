@@ -415,7 +415,7 @@ export function DrawerClose({
             variant={variant ?? (iconOnly ? "ghost" : "outline")}
             size={size ?? "md"}
             layout={layout ?? (iconOnly ? "icon" : "label")}
-            aria-label={iconOnly ? "닫기" : undefined}
+            aria-label={iconOnly ? "Close" : undefined}
             className={className}
             onClick={(e) => {
                 onClick?.(e);

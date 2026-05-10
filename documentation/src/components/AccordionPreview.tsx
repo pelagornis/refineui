@@ -41,12 +41,12 @@ export default function AccordionPreview() {
           <AccordionItem value="faq" icon="info">
             <AccordionTrigger>FAQ (multiple + icon)</AccordionTrigger>
             <AccordionContent>
-              `type="multiple"` 모드에서는 여러 항목을 동시에 열 수 있습니다.
+              In `type="multiple"` mode you can open several items at once.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="tips" icon="settings">
             <AccordionTrigger>Tips</AccordionTrigger>
-            <AccordionContent>필요하면 size도 sm / md / lg로 조절할 수 있습니다.</AccordionContent>
+            <AccordionContent>You can set size to sm / md / lg when needed.</AccordionContent>
           </AccordionItem>
         </Accordion>
       </div>

@@ -13,7 +13,7 @@ import {
 import { borderRadii, colors, spacings, strokeWidths, typographys } from "@refineui/tokens";
 import PreviewFrame from "./PreviewFrame";
 
-/** Preview 안에서 본문과 구분되는 데모 무대 — Drawer 본체는 body 포털로만 렌더됨 */
+/** Demo stage inside Preview — Drawer shell renders via body portal only */
 export default function DrawerDemo() {
     return (
         <PreviewFrame>
@@ -37,7 +37,7 @@ export default function DrawerDemo() {
                             <DrawerTrigger>Overlay / Small / Right / Footer Split</DrawerTrigger>
                             <DrawerContent type="overlay" size="sm" placement="right">
                                 <DrawerHeader>
-                                    <DrawerTitle>Drawer 제목</DrawerTitle>
+                                    <DrawerTitle>Drawer title</DrawerTitle>
                                     <DrawerDescription>Footer state = split (double button)</DrawerDescription>
                                 </DrawerHeader>
                                 <DrawerBody>
@@ -54,11 +54,11 @@ export default function DrawerDemo() {
                             <DrawerTrigger variant="secondary">Overlay / Medium / Left / Footer Icons</DrawerTrigger>
                             <DrawerContent type="overlay" size="md" placement="left">
                                 <DrawerHeader>
-                                    <DrawerTitle>왼쪽 Medium Drawer</DrawerTitle>
+                                    <DrawerTitle>Left Medium drawer</DrawerTitle>
                                     <DrawerDescription>Footer state = icons</DrawerDescription>
                                 </DrawerHeader>
                                 <DrawerBody>
-                                    <p style={{ margin: 0 }}>아이콘 버튼 4개 상태입니다.</p>
+                                    <p style={{ margin: 0 }}>Footer uses four icon buttons.</p>
                                 </DrawerBody>
                                 <DrawerFooter state="icons">
                                     <DrawerClose />
@@ -73,14 +73,14 @@ export default function DrawerDemo() {
                             <DrawerTrigger variant="secondary">Overlay / Large / Right / Footer Single</DrawerTrigger>
                             <DrawerContent type="overlay" size="lg" placement="right">
                                 <DrawerHeader>
-                                    <DrawerTitle>오른쪽 Large Drawer</DrawerTitle>
+                                    <DrawerTitle>Right Large drawer</DrawerTitle>
                                     <DrawerDescription>Footer state = single (full width button)</DrawerDescription>
                                 </DrawerHeader>
                                 <DrawerBody>
-                                    <p style={{ margin: 0 }}>단일 액션 버튼 상태입니다.</p>
+                                    <p style={{ margin: 0 }}>Footer uses a single full-width action.</p>
                                 </DrawerBody>
                                 <DrawerFooter state="single">
-                                    <Button style={{ width: "100%" }}>확인</Button>
+                                    <Button style={{ width: "100%" }}>OK</Button>
                                 </DrawerFooter>
                             </DrawerContent>
                         </Drawer>
@@ -94,13 +94,13 @@ export default function DrawerDemo() {
                             <DrawerContent>
                                 <DrawerHeader showClose={false}>
                                     <DrawerTitle>Inline / Small</DrawerTitle>
-                                    <DrawerDescription>페이지 안에서 바로 렌더</DrawerDescription>
+                                    <DrawerDescription>Renders inline in the page</DrawerDescription>
                                 </DrawerHeader>
                                 <DrawerBody>
-                                    <p style={{ margin: 0 }}>스크림/포털 없이 인라인으로 표시됩니다.</p>
+                                    <p style={{ margin: 0 }}>Shown inline without scrim or portal.</p>
                                 </DrawerBody>
                                 <DrawerFooter state="single">
-                                    <Button style={{ width: "100%" }}>확인</Button>
+                                    <Button style={{ width: "100%" }}>OK</Button>
                                 </DrawerFooter>
                             </DrawerContent>
                         </Drawer>
@@ -117,8 +117,8 @@ export default function DrawerDemo() {
                         color: colors.neutral600,
                     }}
                 >
-                    Drawer Preview는 단일 케이스가 아니라 Type(Overlay/Inline), Size, Placement, showFooter 상태를
-                    함께 보여주도록 구성했습니다. Overlay는 <strong>페이지 전체</strong> 레이어로 렌더됩니다.
+                    This preview covers Type (Overlay/Inline), Size, Placement, and footer variants together—not a
+                    single case. Overlay drawers render as a <strong>full-page</strong> layer.
                 </p>
             </div>
         </PreviewFrame>

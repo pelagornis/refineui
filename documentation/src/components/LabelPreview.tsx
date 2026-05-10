@@ -2,7 +2,7 @@ import { spacings } from "@refineui/tokens";
 import { Label } from "@refineui/react";
 import PreviewFrame from "./PreviewFrame";
 
-/** Web Kit Label만 표시(Input·Field 조합은 Input/Field 문서 참고). */
+/** Web Kit Label only (see Input/Field docs for composed forms). */
 export default function LabelPreview() {
   return (
     <PreviewFrame>
@@ -14,7 +14,7 @@ export default function LabelPreview() {
           <Label disabled>disabled</Label>
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeSmall, alignItems: "center" }}>
-          <Label required>필수 표시(별)</Label>
+          <Label required>Required (asterisk)</Label>
         </div>
       </div>
     </PreviewFrame>

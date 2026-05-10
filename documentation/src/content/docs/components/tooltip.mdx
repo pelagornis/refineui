@@ -1,35 +1,35 @@
 ---
 title: Tooltip
-description: MCP와 동일 — position(Top/Bottom/Left/Right) × align(Start/Center/End)
+description: MCP-aligned — position (Top/Bottom/Left/Right) × align (Start/Center/End)
 ---
 
 import TooltipDemo from "../../../components/TooltipDemo";
 
 # Tooltip
 
-트리거에 마우스를 올리거나 포커스하면 설명을 띄웁니다. Web Kit **Tooltip** COMPONENT_SET `90:1686`와 같이 MCP의 **`position`** · **`align`** 속성 이름·값(**PascalCase**)을 따릅니다.
+Shows helper text on hover or focus. Web Kit **Tooltip** COMPONENT_SET `90:1686` — **`position`** and **`align`** use MCP names and **PascalCase** values.
 
-- **top/bottom** × **Start/Center/End**: 가로 정렬(Start=왼쪽, End=오른쪽) → 예: Top-Start, Bottom-End  
-- **left/right** × **Start/Center/End**: 세로 정렬(Start=위, End=아래) → 예: Left-Top(`Left`+`Start`), Right-Bottom(`Right`+`End`)
+- **top/bottom** × **Start/Center/End**: horizontal alignment (Start=left, End=right) — e.g. Top-Start, Bottom-End  
+- **left/right** × **Start/Center/End**: vertical alignment (Start=top, End=bottom) — e.g. Left-Top (`Left`+`Start`), Right-Bottom (`Right`+`End`)
 
-패딩·`roundedMedium`·**body4**·**shadow8Light** 등은 디자인 스펙과 동일한 토큰을 사용합니다.
+Padding, `roundedMedium`, **body4**, **shadow8Light**, etc. use the same tokens as the design spec.
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import { Tooltip, Button } from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
-## 기본 사용
+## Basic usage
 
-기본값은 MCP 생성 컴포넌트와 동일하게 **`position="Bottom"`**, **`align="Start"`** 입니다.
+Defaults match MCP-generated components: **`position="Bottom"`**, **`align="Start"`**.
 
 ```tsx
-<Tooltip trigger={<Button variant="secondary">저장</Button>} content="⌘S로 저장" />
+<Tooltip trigger={<Button variant="secondary">Save</Button>} content="Save with ⌘S" />
 ```
 
-위 예시 한 줄만 쓰면 Bottom-Start 툴팁입니다.
+A single line like above yields a Bottom-Start tooltip.
 
 ## Preview
 
@@ -39,22 +39,22 @@ import "@refineui/react/refineui.css";
 
 ## Props
 
-| Prop | 타입 | 기본값 | 설명 |
-|------|------|--------|------|
-| `trigger` | `ReactNode` | (필수) | 대상 요소 |
-| `content` | `ReactNode` | (필수) | 툴팁 내용 |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `trigger` | `ReactNode` | (required) | Target element |
+| `content` | `ReactNode` | (required) | Tooltip body |
 | `position` | `"Top"` \| `"Bottom"` \| `"Left"` \| `"Right"` | `"Bottom"` | MCP `position` |
 | `align` | `"Start"` \| `"Center"` \| `"End"` | `"Start"` | MCP `align` |
-| `delayMs` | `number` | `120` | 표시 전 지연(ms) |
+| `delayMs` | `number` | `120` | Delay before show (ms) |
 
-## 예시
+## Examples
 
 ### Top · Center
 
 ```tsx
 <Tooltip
-  trigger={<Button variant="secondary">도움말</Button>}
-  content="설명"
+  trigger={<Button variant="secondary">Help</Button>}
+  content="Description"
   position="Top"
   align="Center"
 />
@@ -63,11 +63,11 @@ import "@refineui/react/refineui.css";
 ### Bottom · End
 
 ```tsx
-<Tooltip trigger={<span>링크</span>} content="설명" position="Bottom" align="End" />
+<Tooltip trigger={<span>Link</span>} content="Description" position="Bottom" align="End" />
 ```
 
-### 키보드 포커스
+### Keyboard focus
 
 ```tsx
-<Tooltip trigger={<Button variant="secondary">포커스</Button>} content="Tab으로 포커스 시에도 표시" />
+<Tooltip trigger={<Button variant="secondary">Focus me</Button>} content="Also shows when focused with Tab" />
 ```

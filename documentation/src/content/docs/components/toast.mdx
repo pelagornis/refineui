@@ -1,29 +1,29 @@
 ---
 title: Toast
-description: 토스트 메시지 카드
+description: Toast message cards
 ---
 
 import ToastPreview from "../../../components/ToastPreview";
 
 # Toast
 
-짧은 피드백을 **Web Kit Toast** `548:655`와 동일한 카드로 보여 줍니다(폭 325px, 카드 패딩 `sizeLarge`, 행 gap `sizeMedium`, 본문 열 `sizeXSmall`, **shadow 4**, 카드 모서리 **`roundedXLarge`**). `<Toaster />`는 뷰포트에 고정된 `<ol>` 안에 `<li>`로 쌓이며, **`position`**으로 `top-left` · `top-center` · `top-right` · `bottom-left` · `bottom-center` · `bottom-right` 중 하나를 고를 수 있습니다(기본 `top-center`). **기본은 Sonner처럼 접힌 스택**이고 **`<ol>` 영역에 포인터를 올리면** 같은 간격으로 **전체가 세로로 펼쳐** 집니다.
+Short feedback as a card matching **Web Kit Toast** `548:655` (width 325px, card padding `sizeLarge`, row gap `sizeMedium`, body column `sizeXSmall`, **shadow 4**, card radius **`roundedXLarge`**). `<Toaster />` renders a fixed viewport `<ol>` of `<li>` items; use **`position`** for `top-left` · `top-center` · `top-right` · `bottom-left` · `bottom-center` · `bottom-right` (default `top-center`). **Default stacking is collapsed like Sonner**; **hovering the `<ol>`** expands the stack vertically at even spacing.
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import { Toaster, toast, Button, Spinner, Avatar, AvatarImage } from "@refineui/react";
 ```
 
-## 기본 사용
+## Basic usage
 
 ```tsx
 <Toaster position="top-center" />
 <Button
   onClick={() =>
-    toast("완료", {
+    toast("Done", {
       variant: "success",
-      description: "복사되었습니다.",
+      description: "Copied to clipboard.",
       action: { label: "Action", onClick: () => {} },
     })
   }
@@ -40,57 +40,57 @@ import { Toaster, toast, Button, Spinner, Avatar, AvatarImage } from "@refineui/
 
 ## Props
 
-| Prop | 타입 | 설명 |
-|------|------|------|
-| `variant` | `"default"` \| `"success"` \| `"error"` \| `"warning"` | Figma **Type** — 기본 아이콘·색; 루트에 `data-variant` |
-| `title` | `ReactNode` | 제목 |
-| `message` | `ReactNode` | 부가 설명 |
-| `icon` / `iconName` | `ReactNode` / `string` | **Toast / Icon** 슬롯 (`data-refineui="toast-icon"`); 우선순위: `icon` > `iconName` > `variant` 기본 |
-| `action` | `ReactNode` 또는 `{ label, onClick, variant? }` | 우측 버튼 |
-| `stackState` | `"entering"` \| `"idle"` \| `"leaving"` | `<Toaster>`가 내부적으로만 설정(직접 쓸 일 없음) |
+| Prop | Type | Description |
+|------|------|-------------|
+| `variant` | `"default"` \| `"success"` \| `"error"` \| `"warning"` | Figma **Type** — default icon/color; root gets `data-variant` |
+| `title` | `ReactNode` | Title |
+| `message` | `ReactNode` | Supporting text |
+| `icon` / `iconName` | `ReactNode` / `string` | **Toast / Icon** slot (`data-refineui="toast-icon"`); precedence: `icon` > `iconName` > variant default |
+| `action` | `ReactNode` or `{ label, onClick, variant? }` | Right-side button |
+| `stackState` | `"entering"` \| `"idle"` \| `"leaving"` | Set internally by `<Toaster>` only |
 
 ### `<Toaster />`
 
-| Prop | 타입 | 설명 |
-|------|------|------|
-| `position` | `ToastPosition` | 기본 `top-center` — `top-left` \| `top-center` \| `top-right` \| `bottom-left` \| `bottom-center` \| `bottom-right` |
-| `maxToasts` | `number` | 동시에 유지할 최대 개수(기본 5) |
-| `className` | `string` | 루트 `<ol>`에 추가 클래스 |
+| Prop | Type | Description |
+|------|------|-------------|
+| `position` | `ToastPosition` | Default `top-center` — `top-left` \| `top-center` \| `top-right` \| `bottom-left` \| `bottom-center` \| `bottom-right` |
+| `maxToasts` | `number` | Max concurrent toasts (default 5) |
+| `className` | `string` | Extra class on root `<ol>` |
 
-### 모바일
+### Mobile
 
-`refineui.css`는 **`(hover: none)` 또는 `(pointer: coarse)`**일 때 호버 대신 **항상 펼친 스택**·풀 스케일을 쓰고, `env(safe-area-inset-*)`로 노치·홈 인디케이터를 피합니다. `max-width: 480px`에서는 컨테이너 인셋·카드 패딩·행 gap을 토큰으로 줄이며, `Toaster`는 스택 세로 간격을 `sizeMedium`으로 계산합니다. 노치에 세이프 영역을 쓰려면 앱 HTML에 `viewport-fit=cover`가 포함된 viewport 메타가 있으면 됩니다.
+`refineui.css` uses **expanded stack** and **full scale** when **`(hover: none)` or `(pointer: coarse)`** instead of hover-expand, and `env(safe-area-inset-*)` for notches and home indicators. Below `max-width: 480px`, container inset, card padding, and row gap shrink via tokens; `Toaster` computes stack spacing with `sizeMedium`. For safe-area with notches, include `viewport-fit=cover` in your viewport meta tag.
 
-## 예시
+## Examples
 
-### 보조 버튼
+### Secondary action
 
 ```tsx
 <Toast
-  title="라벨"
-  message="설명"
-  action={{ label: "보조", variant: "secondary", onClick: () => {} }}
+  title="Label"
+  message="Description"
+  action={{ label: "Secondary", variant: "secondary", onClick: () => {} }}
 />
 ```
 
-### 커스텀 아이콘
+### Custom icon
 
 ```tsx
-<Toast title="메일" message="새 메시지" iconName="mail" />
+<Toast title="Mail" message="New message" iconName="mail" />
 ```
 
-### Leading에 Spinner / Avatar (`toast` 옵션 `icon`)
+### Leading Spinner / Avatar (`toast` `icon` option)
 
-`toast()`의 옵션에도 `icon`을 넣을 수 있습니다. `Spinner`, `Avatar` 등 `@refineui/react` 컴포넌트를 그대로 전달하면 됩니다.
+Pass `icon` in `toast()` options. Forward `Spinner`, `Avatar`, etc. from `@refineui/react` directly.
 
 ```tsx
-toast("동기화 중", {
-  description: "처리 중입니다.",
+toast("Syncing", {
+  description: "Processing…",
   icon: <Spinner size="xs" />,
 });
 
-toast("새 메시지", {
-  description: "보낸 사람",
+toast("New message", {
+  description: "From sender",
   icon: (
     <Avatar size="xs" layout="image" color="neutral" aria-hidden>
       <AvatarImage src="https://example.com/photo.png" alt="" />

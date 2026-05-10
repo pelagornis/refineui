@@ -58,7 +58,7 @@ export function AlertAction({ className, type = "button", ...props }: AlertActio
 
 export function AlertClose({ className, type = "button", children, ...props }: AlertCloseProps) {
     return (
-        <Button type={type} variant="ghost" size="sm" layout="icon" aria-label="닫기" className={className} {...props}>
+        <Button type={type} variant="ghost" size="sm" layout="icon" aria-label="Close" className={className} {...props}>
             {children ?? (
                 <WebIcon
                     name="dismiss"

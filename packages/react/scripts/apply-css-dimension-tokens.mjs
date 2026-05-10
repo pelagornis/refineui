@@ -1,5 +1,5 @@
 /**
- * refineui.css의 px·scale을 @refineui/tokens `css-variables.css` 변수로 치환.
+ * Replace px/scale in refineui.css with `@refineui/tokens` `css-variables.css` vars.
  */
 import { readFileSync, writeFileSync } from "fs";
 import { dirname, join } from "path";

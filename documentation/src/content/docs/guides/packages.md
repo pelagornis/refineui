@@ -1,56 +1,52 @@
 ---
-title: 프로젝트 구조
-description: RefineUI monorepo 패키지와 빌드
+title: Project structure
+description: RefineUI monorepo packages and builds
 ---
 
-# 프로젝트 구조
+# Project structure
 
-RefineUI는 **pnpm workspace** 기준 monorepo입니다. 루트에서 스크립트를 실행하면 패키지가 순서대로
-빌드됩니다.
+RefineUI is a **pnpm workspace** monorepo. Running scripts from the root builds packages in order.
 
-## 디렉터리 개요
+## Directory overview
 
-| 경로                 | 역할                                                         |
-| -------------------- | ------------------------------------------------------------ |
-| `packages/tokens`    | `@refineui/tokens` — TS 토큰 + `pnpm build` 시 `css-variables` / `tailwind-theme` 생성; Tailwind 유틸 접두사 `refineui-*` |
-| `packages/react`     | `@refineui/react` — UI 컴포넌트 + `refineui.css`             |
-| `packages/utilities` | `@refineui/utilities` — 공용 유틸                            |
-| `documentation`      | Astro + Starlight 기반 **이 사이트**                         |
-| `examples`           | 예제 앱(있을 경우)                                           |
+| Path | Role |
+| ---- | ---- |
+| `packages/tokens` | `@refineui/tokens` — TS tokens; `pnpm build` emits `css-variables` / `tailwind-theme`; Tailwind utilities use the `refineui-*` prefix |
+| `packages/react` | `@refineui/react` — UI components + `refineui.css` |
+| `packages/utilities` | `@refineui/utilities` — shared utilities |
+| `documentation` | Astro + Starlight **this site** |
+| `examples` | Example apps (when present) |
 
-## 패키지 의존 관계
+## Package dependencies
 
-- `@refineui/react`는 **`@refineui/tokens`**, **`@refineui/utilities`**, **`@refineui/web-icons`**에
-  의존합니다.
-- 앱에서 컴포넌트만 쓸 때는 보통 **`@refineui/react`**와 **`@refineui/tokens`**(토큰을 직접 쓸 때)를
-  설치합니다.
+- `@refineui/react` depends on **`@refineui/tokens`**, **`@refineui/utilities`**, and **`@refineui/web-icons`**.
+- Apps typically install **`@refineui/react`** and **`@refineui/tokens`** (when using tokens directly).
 
 ## Tailwind
 
-- **다른 프로젝트**: 글로벌 CSS에 `@import "@refineui/tokens/tailwind.css";` (Tailwind v4 + `peerDependencies`의 `tailwindcss`).
-- **이 monorepo 문서 사이트**: Vite alias 없이 `global.css`가 `packages/tokens/tailwind.css`를 상대 경로로 불러옵니다.
-- **클래스 예**: `bg-refineui-neutral-500`, `p-refineui-size-medium` — `:root` 변수는 그대로 `var(--refineui-*)`.
+- **Other projects**: `@import "@refineui/tokens/tailwind.css";` in global CSS (Tailwind v4 + `tailwindcss` as a peer).
+- **This monorepo docs**: `global.css` imports `packages/tokens/tailwind.css` via a relative path (no Vite alias).
+- **Example classes**: `bg-refineui-neutral-500`, `p-refineui-size-medium` — `:root` vars remain `var(--refineui-*)`.
 
-## 빌드
+## Build
 
-저장소 루트에서:
+From the repo root:
 
 ```bash
 pnpm install
 pnpm build
 ```
 
-순서는 **`tokens` → `react`** 입니다 (`package.json`의 `build` 스크립트).
+Order is **`tokens` → `react`** (see root `package.json` `build` script).
 
-## 문서 사이트
+## Documentation site
 
 ```bash
-pnpm docs        # 개발 서버
-pnpm docs:build  # 정적 빌드 (tokens + react 빌드 포함)
+pnpm docs        # dev server
+pnpm docs:build  # static build (includes tokens + react build)
 ```
 
-## 스펙 단일 소스
+## Single source of truth
 
-- Figma **Foundation**·**Web Kit**은 디자인 단일 소스입니다.
-- 구현·문서와의 대조 표는 저장소의 `docs/web-kit-component-audit.md`,
-  `docs/design-specs-web-kit.md`를 참고하세요.
+- Figma **Foundation** and **Web Kit** are the design sources of truth.
+- For audit tables vs implementation, see `docs/web-kit-component-audit.md` and `docs/design-specs-web-kit.md`.

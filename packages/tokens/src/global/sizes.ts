@@ -1,5 +1,5 @@
 /**
- * 아이콘 글리프 크기(px) — **폰트·typography 토큰과 연동하지 않음** (명시 값만 사용).
+ * Icon glyph sizes (px) — **not tied to font/typography tokens** (explicit values only).
  */
 export const iconSizes = {
     xxsmall: 12,

@@ -52,7 +52,7 @@ export function resolveColorTokenValue(value: ColorTokenValue): string {
 }
 
 /**
- * hex → rgba 변환 (palette 색상 등)
+ * Convert hex to rgba (e.g. palette colors)
  */
 export function hexToRgba(hex: string, alpha: number): string {
     const h = hex.replace("#", "");
@@ -71,7 +71,7 @@ export function hexToRgba(hex: string, alpha: number): string {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-/** dimension(x y blur spread) + color로 box-shadow 문자열 생성 */
+/** Build a box-shadow string from dimensions (x y blur spread) + colors */
 export function shadowWithColor(
     keyDim: string,
     ambientDim: string,

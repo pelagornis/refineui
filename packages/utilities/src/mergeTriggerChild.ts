@@ -1,8 +1,8 @@
 import { Children, Fragment, isValidElement, type ReactElement, type ReactNode } from "react";
 
 /**
- * 트리거에 이벤트·ref 등을 한 엘리먼트에만 합성하기 위한 단일 자식 확인.
- * (Fragment 한 겹만 풀며, 그 외 패턴은 `null` → 호출부에서 기본 래퍼 버튼/스팬 사용.)
+ * Resolve a single mergeable child so events/refs attach to one element.
+ * (Unwraps one Fragment layer; otherwise returns `null` — caller supplies a default button/span wrapper.)
  */
 export function getMergeableTriggerChild(children: ReactNode): ReactElement | null {
     let node: ReactNode;

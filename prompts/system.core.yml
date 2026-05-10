@@ -1,5 +1,5 @@
 # System Core — base rules for all prompts (enforced)
-# RefineUI: packages/ 구조는 그대로 유지. Tools: use this file's prompt key. Human-readable: docs/system.core.md
+# RefineUI: keep packages/ layout unchanged. Tools: use this file's prompt key. Human-readable: docs/system.core.md
 
 meta:
   name: system.core

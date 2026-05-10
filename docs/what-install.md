@@ -97,7 +97,7 @@ Changing the preset applies **different rules/prompts for that task only** in th
 
 If `platform` is null or unset, only the top-level **context** in `prompt.config.js` is used.
 
-**RefineUI**: `packages/` 구조는 그대로 유지. See [packages.md](packages.md).
+**RefineUI**: keep the `packages/` layout unchanged. See [packages.md](packages.md).
 
 ---
 

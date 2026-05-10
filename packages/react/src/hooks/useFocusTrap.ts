@@ -9,7 +9,7 @@ function focusableIn(root: HTMLElement): HTMLElement[] {
     );
 }
 
-/** 열림 동안 포커스를 루트 안에 가두고, 닫을 때 이전 포커스로 복귀 */
+/** While open, keep focus inside the root; restore previous focus on close */
 export function useFocusTrap(open: boolean, rootRef: RefObject<HTMLElement | null>) {
     const previousFocus = useRef<HTMLElement | null>(null);
 

@@ -1,123 +1,121 @@
-# Pelagornis RefineUI Web Kit — Design Specs (구현 기준)
+# Pelagornis RefineUI Web Kit — Design Specs (implementation reference)
 
 **Figma Web Kit:**
 https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?node-id=7-6  
 **Foundation:** https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundation?node-id=1-650
 
-> ⚠️ Figma MCP 인증이 필요한 경우, `get_design_context` / `get_variable_defs`로 Figma에서 직접
-> 스펙을 가져올 수 있습니다.  
-> 아래 스펙은 `packages/react` 구현과 `packages/tokens`를 기반으로 Figma Web Kit에 맞춰 정합된
-> 값입니다.
+> ⚠️ If Figma MCP authentication is required, pull specs directly from Figma with `get_design_context` / `get_variable_defs`.  
+> The values below are aligned with Figma Web Kit based on `packages/react` and `packages/tokens`.
 
-**컴포넌트 전체 재검토 진행표:** [web-kit-component-audit.md](web-kit-component-audit.md)
-(Foundation → Web Kit 규칙, 알파벳 순 체크리스트)
+**Full component audit tracker:** [web-kit-component-audit.md](web-kit-component-audit.md)  
+(Foundation → Web Kit rules, alphabetical checklist)
 
 ---
 
 ## 1. Button — Web Kit `79:3304` (COMPONENT_SET)
 
-| 속성                     | sm                                        | md                                  | lg                                   |
+| Property                 | sm                                        | md                                  | lg                                   |
 | ------------------------ | ----------------------------------------- | ----------------------------------- | ------------------------------------ |
 | **minHeight**            | `componentSizes.buttonMinHeightSm` (28px) | `buttonMinHeightMd` (36px)          | `buttonMinHeightLg` (48px)           |
 | **padding (Label)**      | `sizeXSmall` `sizeMedium` (4px 10px)      | `sizeSmall` `sizeMedium` (6px 10px) | `sizeMedium` `sizeLarge` (10px 16px) |
-| **gap** (라벨·아이콘 간) | `sizeXSmall` (4px)                        | 동일                                | 동일                                 |
+| **gap** (label · icon)   | `sizeXSmall` (4px)                        | same                                | same                                 |
 | **borderRadius**         | `roundedSmall` (4px)                      | `roundedMedium` (6px)               | `roundedLarge` (8px)                 |
 | **typography**           | body3 (14/20)                             | body1 (16/24)                       | subTitle1 (20/28 Semi Bold)          |
 
-### Variants (기본 상태, Figma `style` 이름)
+### Variants (default state, Figma `style` names)
 
-| `variant`   | Figma     | 배경 / 테두리                                                                                    |
-| ----------- | --------- | ------------------------------------------------------------------------------------------------ |
-| `primary`   | Primary   | `primaryBlack` 배경, 흰 글자                                                                     |
-| `secondary` | Secondary | 흰 배경 + `strokeWidthThin` `neutral300` (Secondary는 hover 시 `neutral200` 등 — `refineui.css`) |
-| `outline`   | Outline   | 투명 + `strokeWidthThin` `neutral300` (Figma Default 테두리)                                     |
-| `ghost`     | Ghost     | 투명, 테두리 없음                                                                                |
+| `variant`   | Figma     | Background / border                                                                               |
+| ----------- | --------- | ------------------------------------------------------------------------------------------------- |
+| `primary`   | Primary   | `primaryBlack` fill, white text                                                                  |
+| `secondary` | Secondary | White fill + `strokeWidthThin` `neutral300` (Secondary hover uses `neutral200` etc. — `refineui.css`) |
+| `outline`   | Outline   | Transparent + `strokeWidthThin` `neutral300` (Figma Default border)                               |
+| `ghost`     | Ghost     | Transparent, no border                                                                            |
 
-**Disabled:** Primary·Secondary는 배경 `neutral150`, 글자 `neutral500`; Secondary·Outline 테두리
-`neutral250` (`refineui.css`). Ghost는 배경 없음·글자만 `neutral500`.
+**Disabled:** Primary·Secondary use fill `neutral150`, text `neutral500`; Secondary·Outline borders
+`neutral250` (`refineui.css`). Ghost has no fill—text only `neutral500`.
 
-인터랙션 hover·pressed·disabled 등은 **`refineui.css`** `[data-refineui="button"]`로 맞춤.
+Interactions (hover·pressed·disabled) match **`refineui.css`** `[data-refineui="button"]`.
 
 ---
 
 ## 2. Input — Web Kit `518:7373` (COMPONENT_SET)
 
-| 속성             | sm                                      | md                                      | lg                                      |
+| Property         | sm                                      | md                                      | lg                                      |
 | ---------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- |
 | **minHeight**    | `componentSizes.controlHeightSm` (32px) | `componentSizes.controlHeightMd` (40px) | `componentSizes.controlHeightLg` (48px) |
-| **padding**      | `sizeSmall` `sizeMedium` (6px 10px)     | `sizeMedium` `sizeLarge` (10px 16px)    | `sizeLarge` (16px 전면)                 |
+| **padding**      | `sizeSmall` `sizeMedium` (6px 10px)     | `sizeMedium` `sizeLarge` (10px 16px)    | `sizeLarge` (16px all sides)            |
 | **borderRadius** | `roundedMedium` (6px)                   | `roundedLarge` (8px)                    | `roundedXLarge` (12px)                  |
 | **typography**   | `caption1`                              | `body2`                                 | `body1`                                 |
 
-기본 테두리 `strokeWidthThin` `neutral300`, 에러 `red500`, 성공 `green500`, disabled 배경
+Default border `strokeWidthThin` `neutral300`, error `red500`, success `green500`, disabled fill
 `neutral150` — `packages/react` `Input`·`refineui.css` `[data-refineui="input"]`.
 
 ### Select / Textarea
 
-| 속성          | Select                                                                                      | Textarea                                                                                                                                                                                                                                               |
-| ------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **현재 구현** | **Input** `518:7373`과 동일 `size` `sm` / `md` / `lg` (기본 `md`) — 위 Input 표와 동일 토큰 | Web Kit **Textarea** `529:5454` (COMPONENT_SET): `minHeight` `componentSizes.controlTextareaMin` (80px), **`roundedLarge`**, **`body2`**, **필드 패딩** `sizeMedium` `sizeSmall` (10px 6px) — Input **md** 행의 좌우 패딩(`sizeLarge` 16px)과 **다름** |
+| Property           | Select                                                                                      | Textarea                                                                                                                                                                                                                                               |
+| ------------------ | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Current impl.**  | Same `size` `sm` / `md` / `lg` as **Input** `518:7373` (default `md`) — same tokens as Input table above | Web Kit **Textarea** `529:5454` (COMPONENT_SET): `minHeight` `componentSizes.controlTextareaMin` (80px), **`roundedLarge`**, **`body2`**, **field padding** `sizeMedium` `sizeSmall` (10px 6px) — **differs** from Input **md** horizontal padding (`sizeLarge` 16px) |
 
-Web Kit에 **단독 Select COMPONENT_SET** 이름이 없으면, 네이티브 `<select>` 필드는 **Input** 필드
-규칙을 따른다.
+If Web Kit has **no standalone Select COMPONENT_SET** name, native `<select>` fields follow **Input**
+field rules.
 
 ---
 
 ## 3. Badge — Web Kit `Badge` `270:3353` · `Badge Number` `276:515`
 
-| 속성             | `layout="label"` (기본)             | `layout="number"` |
+| Property         | `layout="label"` (default)          | `layout="number"` |
 | ---------------- | ----------------------------------- | ----------------- |
-| **padding**      | `sizeXXSmall` `sizeSmall` (2px 6px) | 동일              |
+| **padding**      | `sizeXXSmall` `sizeSmall` (2px 6px) | same              |
 | **borderRadius** | `roundedMedium` (6px)               | `roundedCircle`   |
-| **typography**   | `caption2` (12/16 Regular)          | 동일              |
+| **typography**   | `caption2` (12/16 Regular)          | same              |
 
-### Variants (기본 상태 = Figma `state=Default` 토큰 매핑)
+### Variants (default = Figma `state=Default` token mapping)
 
-| `variant`               | 배경                                  | 글자색         | 비고                                                     |
+| `variant`               | Background                            | Text color     | Notes                                                    |
 | ----------------------- | ------------------------------------- | -------------- | -------------------------------------------------------- |
-| `default`               | `primaryBlack`                        | `neutralWhite` | Hover/Pressed는 `refineui.css` `[data-refineui="badge"]` |
+| `default`               | `primaryBlack`                        | `neutralWhite` | Hover/Pressed via `refineui.css` `[data-refineui="badge"]` |
 | `neutral` (`Secondary`) | `primaryLightGray`                    | `neutralBlack` |                                                          |
-| `outline`               | 투명 + `strokeWidthThin` `neutral300` | `neutralBlack` |                                                          |
+| `outline`               | Transparent + `strokeWidthThin` `neutral300` | `neutralBlack` |                                                          |
 | `success`               | `green500`                            | `neutralWhite` |                                                          |
-| `warning`               | `orange500`                           | `neutralWhite` | 노랑 `yellow*` 아님                                      |
+| `warning`               | `orange500`                           | `neutralWhite` | Not yellow `yellow*`                                       |
 | `danger`                | `red500`                              | `neutralWhite` |                                                          |
 
 ---
 
 ## 4. Breadcrumb — Web Kit `283:688` (COMPONENT_SET)
 
-| 속성         | 값                                                            |
+| Property     | Value                                                         |
 | ------------ | ------------------------------------------------------------- |
 | **gap**      | `sizeMedium` (10px)                                           |
-| **padding**  | `sizeSmall` 상·하 (6px)                                       |
-| **타이포**   | `caption1` — 비현재·구분자 `neutral500`, 현재 `primaryBlack`  |
-| **ellipsis** | `sizeXLarge`(20×20) 영역 + `more-horizontal` (`iconSizes.sm`) |
+| **padding**  | `sizeSmall` vertical (6px)                                    |
+| **type**     | `caption1` — non-current·separator `neutral500`, current `primaryBlack` |
+| **ellipsis** | `sizeXLarge`(20×20) hit area + `more-horizontal` (`iconSizes.sm`) |
 
-**구분자** 기본 `/` (Caption1 · tertiary, `neutral500`).
+**Separator** default `/` (Caption1 · tertiary, `neutral500`).
 
 ---
 
 ## 5. Alert — Web Kit COMPONENT_SET `Alert` `384:885`
 
-| 속성             | 값                                               |
+| Property         | Value                                            |
 | ---------------- | ------------------------------------------------ |
-| **배경**         | neutralWhite                                     |
+| **background**   | neutralWhite                                     |
 | **border**       | 1px solid neutral300                             |
 | **borderRadius** | 6px (roundedMedium)                              |
 | **padding**      | 10px (sizeMedium)                                |
-| **레이아웃**     | flex, 아이콘(왼쪽) + 텍스트(중앙) + 액션(오른쪽) |
+| **layout**       | flex, icon (left) + text (center) + actions (right) |
 
-### 아이콘
+### Icon
 
-- 원형 아웃라인 (border 2px, accent 색상)
-- 크기: 24×24px
+- Circular outline (border 2px, accent color)
+- Size: 24×24px
 
-### 텍스트
+### Text
 
 - **title**: subTitle2 (16px/24px Semi Bold), primaryBlack
-- **description**: body4 (12px/16px), accent 색상
+- **description**: body4 (12px/16px), accent color
 
-### Variants (accent 색상)
+### Variants (accent colors)
 
 | Variant | accent       |
 | ------- | ------------ |
@@ -128,349 +126,342 @@ Web Kit에 **단독 Select COMPONENT_SET** 이름이 없으면, 네이티브 `<s
 | danger  | red600       |
 | custom  | purple600    |
 
-### 액션
+### Actions
 
-- 닫기 버튼 (×): 우측 상단
-- 액션 버튼: 최대 2개, primary sm
+- Dismiss (×): top right
+- Action buttons: up to 2, primary sm
 
 ---
 
-## 6. Avatar — Web Kit `Avater` (COMPONENT_SET; Figma 철자 원문)
+## 6. Avatar — Web Kit `Avater` (COMPONENT_SET; Figma spelling as in file)
 
-**단일 아바타**는 `packages/react` `Avatar`로, 크기는 `componentSizes.avatarSm` / `avatarMd` /
-`avatarLg`와 Web Kit `Avater`의 **Small / Medium / XLarge** 지름이 같다 (32 / 36 / 56px). 그룹
-겹침은 `Avater Stack` 노드 `69:3008` 참고.
+**Single avatar** is `packages/react` `Avatar`; diameters match `componentSizes.avatarSm` / `avatarMd` /
+`avatarLg` to Web Kit `Avater` **Small / Medium / XLarge** (32 / 36 / 56px). Group overlap follows
+`Avater Stack` node `69:3008`.
 
-| `size` | 지름 | Web Kit `Size` | 이니셜 타이포 | 이니셜 글자 수 | 빈 슬롯 `person` 아이콘 (`iconSizes`) |
-| ------ | ---- | -------------- | ------------- | -------------- | ------------------------------------- |
-| `sm`   | 32px | Small          | caption1      | 1              | md                                    |
-| `md`   | 36px | Medium         | body2         | 2              | lg                                    |
-| `lg`   | 56px | XLarge         | subTitle1     | 2              | xl                                    |
+| `size` | Diameter | Web Kit `Size` | Initials type | Initial char count | Empty-slot `person` icon (`iconSizes`) |
+| ------ | -------- | -------------- | ------------- | ------------------ | -------------------------------------- |
+| `sm`   | 32px     | Small          | caption1      | 1                  | md                                     |
+| `md`   | 36px     | Medium         | body2         | 2                  | lg                                     |
+| `lg`   | 56px     | XLarge         | subTitle1     | 2                  | xl                                     |
 
-- **Orange `layout=Initials` (MCP `76:1451`)**: 56px 티어 이니셜 타이포는
-  **`typographys.title3`**(Web/Title/Title 3 — 24px semibold); 32·36px 티어는 **Body 1**(16px
-  medium) 유지.
-- **배경(이니셜·아이콘)**: `neutral300` (Neutral 톤)
-- **이미지**: `object-fit: cover`, 원형 마스크 `roundedCircle`
+- **Orange `layout=Initials` (MCP `76:1451`)**: 56px tier initials use **`typographys.title3`** (Web/Title/Title 3 — 24px semibold); 32·36px tiers keep **Body 1** (16px medium).
+- **Background (initials·icon)**: `neutral300` (Neutral tone)
+- **Image**: `object-fit: cover`, circular mask `roundedCircle`
 
 ### Avatars (`Avater Stack` / `Avater Spread`)
 
-`packages/react` `Avatars` — `layout="stack"`(기본)은 **Avater Stack** `69:3008`,
-`layout="spread"`는 **Avater Spread** `69:3007`.
+`packages/react` `Avatars` — `layout="stack"` (default) is **Avater Stack** `69:3008`;
+`layout="spread"` is **Avater Spread** `69:3007`.
 
-| 항목            | `stack`                                                                                                                   | `spread`                                                                                                                                       |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| **간격**        | 인접 타일 **겹침** — `componentSizes.avatarStackOverlapSm` / `Md` / `Lg`(6 / 8 / 10px). 컨테이너 `paddingRight`에 동일 값 | `gap`: `sm` → `spacings.sizeMedium`(10px), `md` → `spacings.sizeLarge`(16px), `lg` → `spacings.sizeXLarge`(20px) — MCP Avater Spread `69:3007` |
-| **타일 테두리** | Figma `Avater` 벡터(Subtract 등)에 포함된 분리감 — MCP `get_design_context` 스택 행에는 **래퍼 `border` 없음**            | 테두리 없음(나란히 간격만)                                                                                                                     |
-| **+N 오버플로** | 흰 배경, `strokeWidthThin` + `neutral300`, 타이포 `sm`→caption2 / `md`→caption1 / `lg`→body2, `neutral600`                | 동일                                                                                                                                           |
+| Item              | `stack`                                                                                                                   | `spread`                                                                                                                                       |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Spacing**       | Adjacent tiles **overlap** — `componentSizes.avatarStackOverlapSm` / `Md` / `Lg` (6 / 8 / 10px). Same value on container `paddingRight` | `gap`: `sm` → `spacings.sizeMedium`(10px), `md` → `spacings.sizeLarge`(16px), `lg` → `spacings.sizeXLarge`(20px) — MCP Avater Spread `69:3007` |
+| **Tile border**   | Separation baked into Figma `Avater` vectors (Subtract etc.) — MCP `get_design_context` stack rows have **no wrapper `border`** | No border (horizontal gap only)                                                                                                           |
+| **+N overflow**   | White fill, `strokeWidthThin` + `neutral300`, type `sm`→caption2 / `md`→caption1 / `lg`→body2, `neutral600`               | same                                                                                                                                           |
 
 ---
 
-## 7. Card — Web Kit COMPONENT_SET `Card` (node-id는 파일 내에서 MCP `search_design_system` "Card" + `get_design_context`로 확인)
+## 7. Card — Web Kit COMPONENT_SET `Card` (confirm node-id in file via MCP `search_design_system` "Card" + `get_design_context`)
 
-| 속성             | elevated                               | outlined                       |
+| Property         | elevated                               | outlined                       |
 | ---------------- | -------------------------------------- | ------------------------------ |
-| **배경**         | `neutralWhite`                         | `neutralWhite`                 |
-| **padding**      | `sizeLarge` (16px)                     | 동일                           |
-| **borderRadius** | `roundedLarge` (8px)                   | 동일                           |
-| **shadow**       | `shadows.shadow8Light` (`toBoxShadow`) | 없음                           |
-| **border**       | 없음                                   | `strokeWidthThin` `neutral300` |
+| **background**   | `neutralWhite`                         | `neutralWhite`                 |
+| **padding**      | `sizeLarge` (16px)                     | same                           |
+| **borderRadius** | `roundedLarge` (8px)                   | same                           |
+| **shadow**       | `shadows.shadow8Light` (`toBoxShadow`) | none                           |
+| **border**       | none                                   | `strokeWidthThin` `neutral300` |
 
 ---
 
 ## Checkbox — Web Kit `327:2539` (COMPONENT_SET)
 
-| 속성          | 값                                                                                                                                |
+| Property      | Value                                                                                                                             |
 | ------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| **박스**      | `componentSizes.controlCheckbox` (16×16), 라벨과 `gap` `sizeSmall` (6px)                                                          |
-| **variant**   | `default` — `roundedSmall` (4px); `circular` — `roundedCircle`                                                                    |
-| **Unchecked** | 배경 `neutralWhite`, 테두리 `strokeWidthThin` `neutral300`                                                                        |
-| **Checked**   | 기본 `primaryDarkGray`, hover `neutralBlack`, pressed `neutral600`, focus `primaryBlack` + `strokeWidthThick` `neutral450` 테두리 |
-| **Disabled**  | 미선택: 배경 `neutral100`, 테두리 `neutral250`; 선택: 배경 `neutral200`, 체크 `neutral600`                                        |
-| **라벨**      | `body2`; `description` 있으면 `caption2`, 보조색 `neutral600`                                                                     |
+| **box**       | `componentSizes.controlCheckbox` (16×16), `gap` to label `sizeSmall` (6px)                                                        |
+| **variant**   | `default` — `roundedSmall` (4px); `circular` — `roundedCircle`                                                                  |
+| **Unchecked** | Fill `neutralWhite`, border `strokeWidthThin` `neutral300`                                                                        |
+| **Checked**   | Default `primaryDarkGray`, hover `neutralBlack`, pressed `neutral600`, focus `primaryBlack` + `strokeWidthThick` `neutral450` border |
+| **Disabled**  | Unchecked: fill `neutral100`, border `neutral250`; checked: fill `neutral200`, check mark `neutral600`                            |
+| **label**     | `body2`; with `description`, `caption2`, secondary `neutral600`                                                                  |
 
-인터랙션(hover·active·focus-visible)은 **`refineui.css`** `[data-refineui="checkbox"]` (Foundation
-팔레트와 동일 hex).
+Interactions (hover·active·focus-visible) use **`refineui.css`** `[data-refineui="checkbox"]` (same hex as Foundation palette).
 
 ---
 
-## Chip / Tag — Web Kit COMPONENT_SET `Tag` `574:6578` (`packages/react`는 **`Chip`** export · **`Tag`** 동일 컴포넌트)
+## Chip / Tag — Web Kit COMPONENT_SET `Tag` `574:6578` (`packages/react` **`Chip`** export · **`Tag`** same component)
 
-| 속성             | 값                                                                                                                                                                                              |
+| Property         | Value                                                                                                                                                                                           |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **패딩**         | `sizeSmall` (6px)                                                                                                                                                                               |
-| **gap**          | `sizeXSmall` (4px) — 텍스트·dismiss·`avatar` 사이                                                                                                                                               |
+| **padding**      | `sizeSmall` (6px)                                                                                                                                                                               |
+| **gap**          | `sizeXSmall` (4px) — between text·dismiss·`avatar`                                                                                                                                               |
 | **borderRadius** | `roundedMedium` (6px)                                                                                                                                                                           |
 | **size**         | `lg` → `body1` + dismiss `iconSizes.lg`; `md` → `body3` + `iconSizes.md`; `sm` → `caption1` + `iconSizes.xs`                                                                                    |
-| **variant**      | `default` — 배경 `neutralWhite`, 글자 `primaryBlack`(Figma `foregroundbrand` #212121); `outline` — `strokeWidthThin` `neutral300`; `filled` — Figma `Selected`, `primaryBlack` + `neutralWhite` |
-| **disabled**     | `default`/`outline`: 배경 `neutral150`, 글자 `neutral400`; `outline` 테두리 `neutral250`; `filled`: 배경 `neutral200`                                                                           |
-| **avatar**       | 선택 슬롯 (Figma `showAvater`); 크기는 소비자가 `Avatar` 등으로 맞춤                                                                                                                            |
+| **variant**      | `default` — fill `neutralWhite`, text `primaryBlack` (Figma `foregroundbrand` #212121); `outline` — `strokeWidthThin` `neutral300`; `filled` — Figma `Selected`, `primaryBlack` + `neutralWhite` |
+| **disabled**     | `default`/`outline`: fill `neutral150`, text `neutral400`; `outline` border `neutral250`; `filled`: fill `neutral200`                                                                           |
+| **avatar**       | Optional slot (Figma `showAvater`); size aligned by consumer with `Avatar`, etc.                                                                                                                  |
 
-인터랙션은 **`refineui.css`** `[data-refineui="chip"]` (Default hover·pressed는
-neutral100·neutral150; Outline은 테두리 neutral500·`#333`; Filled는 Badge primary 톤).
+Interactions use **`refineui.css`** `[data-refineui="chip"]` (Default hover·pressed
+neutral100·neutral150; Outline border neutral500·`#333`; Filled matches Badge primary tone).
 
 ---
 
 ## Dialog — Web Kit COMPONENT_SET `Dialog` `393:1181`
 
-| 속성               | 값                                                                                                                            |
+| Property           | Value                                                                                                                         |
 | ------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| **패널 패딩**      | `sizeXXLarge` (24px)                                                                                                          |
-| **헤더·본문 사이** | `sizeLarge` (16px) — 헤더 하단 보더 없음(Figma auto-layout `gap`)                                                             |
-| **폭**             | Large → `componentSizes.dialogMaxWidth` (600px); Small → `componentSizes.dialogWidthSm` (300px) — `Dialog` `size` `lg` / `sm` |
+| **panel padding**  | `sizeXXLarge` (24px)                                                                                                          |
+| **header–body**    | `sizeLarge` (16px) — no header bottom border (Figma auto-layout `gap`)                                                         |
+| **width**          | Large → `componentSizes.dialogMaxWidth` (600px); Small → `componentSizes.dialogWidthSm` (300px) — `Dialog` `size` `lg` / `sm` |
 | **borderRadius**   | `roundedLarge` (8px)                                                                                                          |
 | **shadow**         | `shadows.shadow8Light` (`toBoxShadow`)                                                                                        |
-| **제목**           | `subTitle2` (16/24 Semi Bold), `primaryBlack`                                                                                 |
-| **닫기**           | dismiss `iconSizes.xl` (24px 영역)                                                                                            |
-| **본문**           | 기본 `body2`                                                                                                                  |
+| **title**          | `subTitle2` (16/24 Semi Bold), `primaryBlack`                                                                                 |
+| **dismiss**        | dismiss `iconSizes.xl` (24px hit area)                                                                                        |
+| **body**           | default `body2`                                                                                                               |
 
-스크rim은 `overlays.backdrop`; 오버레이·ESC·포털은 `packages/react` `Dialog` 구현.
+Scrim uses `overlays.backdrop`; overlay, ESC, portal — `packages/react` `Dialog`.
 
 ---
 
 ## Drawer — Web Kit COMPONENT_SET `Drawer` `635:1756`
 
-| 속성            | 값                                                                                                                                                                                      |
+| Property        | Value                                                                                                                                                                                   |
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **type**        | Figma `Overlay` · `Inline` — React `Drawer`는 **Overlay(포털·스크림)** 만                                                                                                               |
-| **폭**          | `lg` → `componentSizes.drawerWidthLg` (850px); `md` → `componentSizes.drawerWidthMd` (575px); `sm` → `componentSizes.drawerWidthSm` (320px) — `size` `"sm"` \| `"md"` \| `"lg"` |
-| **패널 그림자** | `shadows.shadow16Light` (`toBoxShadow`)                                                                                                                                                 |
-| **헤더**        | `paddingTop`/`paddingLeft`/`paddingRight` `sizeXXLarge` (24px), `paddingBottom` `sizeMedium` (10px); 닫기·제목 행 `gap` `sizeSmall` (6px); 제목 `subTitle1` (20/28 Semi Bold)           |
-| **Divider**     | `strokeWidthThin` `neutral300` (헤더·본문 사이)                                                                                                                                         |
-| **본문**        | `padding` `sizeXXLarge`; 기본 `body2`                                                                                                                                                   |
+| **type**        | Figma `Overlay` · `Inline` — React `Drawer` is **Overlay (portal·scrim) only**                                                                                                          |
+| **width**       | `lg` → `componentSizes.drawerWidthLg` (850px); `md` → `componentSizes.drawerWidthMd` (575px); `sm` → `componentSizes.drawerWidthSm` (320px) — `size` `"sm"` \| `"md"` \| `"lg"` |
+| **panel shadow**| `shadows.shadow16Light` (`toBoxShadow`)                                                                                                                                                 |
+| **header**      | `paddingTop`/`paddingLeft`/`paddingRight` `sizeXXLarge` (24px), `paddingBottom` `sizeMedium` (10px); dismiss·title row `gap` `sizeSmall` (6px); title `subTitle1` (20/28 Semi Bold)       |
+| **Divider**     | `strokeWidthThin` `neutral300` (between header and body)                                                                                                                                |
+| **body**        | `padding` `sizeXXLarge`; default `body2`                                                                                                                                                |
 
-Figma에는 헤더에 **Cancel/Ok** 등 **Button Container**, 하단 **Drawer / Footer** 변형이 있으나,
-`packages/react` `Drawer`는 **닫기 + 제목 + Divider + `children`** 만 제공합니다. 액션·푸터는
-`children` 또는 상위 레이아웃에서 구성합니다.
+Figma includes header **Cancel/Ok** **Button Container** and bottom **Drawer / Footer** variants;
+`packages/react` `Drawer` exposes **dismiss + title + Divider + `children`** only. Actions and footer go in
+`children` or parent layout.
 
 ---
 
 ## Dropdown — Web Kit COMPONENT_SET `Dropdown` `503:2985`
 
-| 속성                | 값                                                                                                                                                                                                                                                                                         |
+| Property            | Value                                                                                                                                                                                                                                                                                      |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **메뉴 폭**         | `componentSizes.dropdownMenuWidth` (180px)                                                                                                                                                                                                                                                 |
-| **메뉴**            | `padding` `sizeXSmall` (4px); 항목 간 **`gap` 1px** (`gap-px`); `borderRadius` `roundedLarge`; 테두리 **`strokeWidthHairline`** · **`alias.borderDefault`**; 배경 **`alias.backgroundPrimary`**; `shadows.shadow2Light`                                                                    |
-| **Title Item**      | `padding` 세로 `sizeSmall` · 가로 `sizeMedium` (6px 10px); `body2` · **`alias.foregroundPrimary`**                                                                                                                                                                                         |
-| **Menu / Item**     | 동일 패딩; `body4`; 라벨 **`alias.foregroundPrimary`**; (Figma More·Avatar 등) **좌측 16px 아이콘** — React `DropdownItem` `startIcon`; 단축키 등 보조 **`alias.foregroundSecondary`**; 호버 **`alias.backgroundSurfaceHover`**; 선택/체크 행 MCP 기준 **`alias.backgroundSurfaceActive`** |
-| **트리거(Default)** | `roundedSmall`, `strokeWidthThin` **`alias.borderDefault`**; chevron 분리 시 우측 영역 좌측 세로선 **`strokeWidthHairline`**; chevron 글리프 **`iconSizes.small`** (20px)                                                                                                                  |
+| **menu width**      | `componentSizes.dropdownMenuWidth` (180px)                                                                                                                                                                                                                                                 |
+| **menu**            | `padding` `sizeXSmall` (4px); **`gap` 1px** between items (`gap-px`); `borderRadius` `roundedLarge`; border **`strokeWidthHairline`** · **`alias.borderDefault`**; fill **`alias.backgroundPrimary`**; `shadows.shadow2Light`                                                               |
+| **Title Item**      | `padding` vertical `sizeSmall` · horizontal `sizeMedium` (6px 10px); `body2` · **`alias.foregroundPrimary`**                                                                                                                                                                             |
+| **Menu / Item**     | Same padding; `body4`; label **`alias.foregroundPrimary`**; (Figma More·Avatar etc.) **left 16px icon** — React `DropdownItem` `startIcon`; shortcuts etc. secondary **`alias.foregroundSecondary`**; hover **`alias.backgroundSurfaceHover`**; selected/check rows per MCP **`alias.backgroundSurfaceActive`** |
+| **trigger (Default)** | `roundedSmall`, `strokeWidthThin` **`alias.borderDefault`**; when chevron is split, vertical hairline left of right zone **`strokeWidthHairline`**; chevron glyph **`iconSizes.small`** (20px)                                                                                               |
 
-React `Dropdown`·`DropdownItem`는 `selected`·`selection`(`none` \| `checkbox` \| `radio`)로 체크/라디오
-행·ARIA(`menuitemcheckbox` / `menuitemradio`)를 지원한다. Figma **Avatar** 트리거 등은 Preview·`startIcon`으로 맞춘다.
+React `Dropdown`·`DropdownItem` support `selected`·`selection`(`none` \| `checkbox` \| `radio`) for checkbox/radio
+rows and ARIA (`menuitemcheckbox` / `menuitemradio`). Match Figma **Avatar** triggers via Preview·`startIcon`.
 
 ---
 
 ## Menu — Web Kit COMPONENT_SET `Menu` `633:4268`
 
-| 속성        | 값                                                                                                                                                                                        |
+| Property    | Value                                                                                                                                                                                     |
 | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **패널 폭** | `componentSizes.menuPanelWidth` (244px)                                                                                                                                                   |
-| **패널**    | `padding` `sizeXSmall`; `gap` `sizeMinimal` (항목 간); `borderRadius` `roundedLarge`; `strokeWidthHairline` `alias.borderDefault`; 배경 `alias.backgroundSurface`; `shadows.shadow2Light` |
-| **항목**    | `padding` `sizeSmall` (6px); `borderRadius` `roundedLarge`; `body2`; 기본 `alias.foregroundPrimary`; disabled `alias.foregroundDisabled`                                                  |
-| **구성**    | `Menu / Item` Content `633:4270` 기준 — `startIcon`(20px 슬롯), `label`(body2), 선택 `description`(body4), 선택 `shortcut`, 선택 `endIcon`(chevron 등)                                    |
+| **panel width** | `componentSizes.menuPanelWidth` (244px)                                                                                                                                               |
+| **panel**   | `padding` `sizeXSmall`; `gap` `sizeMinimal` (between items); `borderRadius` `roundedLarge`; `strokeWidthHairline` `alias.borderDefault`; fill `alias.backgroundSurface`; `shadows.shadow2Light` |
+| **item**    | `padding` `sizeSmall` (6px); `borderRadius` `roundedLarge`; `body2`; default `alias.foregroundPrimary`; disabled `alias.foregroundDisabled`                                                  |
+| **composition** | Per `Menu / Item` Content `633:4270` — `startIcon`(20px slot), `label`(body2), optional `description`(body4), optional `shortcut`, optional `endIcon`(chevron etc.)                    |
 
-Figma에는 **Section Header**, **Divider**, **아이콘·단축키** 열이 있으며, React `Menu`는 `items`
-기반으로 `startIcon`/`description`/`shortcut`/`endIcon` 슬롯을 제공한다. **Dropdown**의 좁은
-메뉴(180px, `body4`/`neutral850` 행)와는 별도 컴포넌트다.
+Figma has **Section Header**, **Divider**, and **icon·shortcut** columns; React `Menu` exposes `items`
+with `startIcon`/`description`/`shortcut`/`endIcon` slots. Separate from **Dropdown**’s narrow
+menu (180px, `body4`/`neutral850` rows).
 
 ---
 
 ## Pagination — Web Kit `Pagination` `558:1989` · COMPONENT_SET `Pagination / Item` `570:2332`
 
-| 속성            | 값                                                                                                                                           |
+| Property        | Value                                                                                                                                        |
 | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| **행 간격**     | `sizeMedium` (10px)                                                                                                                          |
-| **항목**        | `padding` `sizeSmall`; 최소 `componentSizes.paginationButtonMinWidth` (36×36); `borderRadius` `roundedLarge`; `strokeWidthThin` `neutral300` |
-| **아이콘**      | chevron `iconSizes.xl` (24px 슬롯)                                                                                                           |
-| **페이지 표시** | `body1`                                                                                                                                      |
+| **row gap**     | `sizeMedium` (10px)                                                                                                                          |
+| **item**        | `padding` `sizeSmall`; min `componentSizes.paginationButtonMinWidth` (36×36); `borderRadius` `roundedLarge`; `strokeWidthThin` `neutral300` |
+| **icon**        | chevron `iconSizes.xl` (24px slot)                                                                                                           |
+| **page label**  | `body1`                                                                                                                                      |
 
-호버·비활성 배경/테두리는 **`refineui.css`** `[data-refineui="pagination"]`. Figma의 **번호
-그리드·생략(…)·현재 페이지 강조** 전체는 포함하지 않고, **이전 / `page / totalPages` / 다음** 만
-제공합니다.
+Hover/disabled fill/border via **`refineui.css`** `[data-refineui="pagination"]`. Does **not** ship the full Figma **number grid·ellipsis (…)·current highlight**—only **Previous / `page / totalPages` / Next**.
 
 ---
 
 ## Progress bar — Web Kit COMPONENT_SET `Progress bar` `452:3994`
 
-| 속성           | 값                                                                                                                 |
+| Property       | Value                                                                                                              |
 | -------------- | ------------------------------------------------------------------------------------------------------------------ |
-| **size**       | `sm` — 트랙 높이 `componentSizes.progressTrackHeightSm` (2px); `lg` — `componentSizes.progressTrackHeightLg` (4px) |
-| **트랙 배경**  | `alias.backgroundBrandSubtle`                                                                                      |
-| **채움(기본)** | `alias.backgroundBrand`                                                                                            |
+| **size**       | `sm` — track height `componentSizes.progressTrackHeightSm` (2px); `lg` — `componentSizes.progressTrackHeightLg` (4px) |
+| **track fill** | `alias.backgroundBrandSubtle`                                                                                      |
+| **fill (default)** | `alias.backgroundBrand`                                                                                        |
 
-`variant` `success` / `warning` / `danger` 는 Web Kit **Progress bar** 그리드에 없으면 프로덕트
-확장으로 둔다.
+`variant` `success` / `warning` / `danger` — treat as product extension if missing from Web Kit **Progress bar** grid.
 
 ---
 
 ## Radio — Web Kit COMPONENT_SET `Radio` `397:1001` · `Radio / Input`
 
-| 속성                | 값                                                                                                                                                                           |
+| Property            | Value                                                                                                                                                                        |
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`Radio / Input`** | 16×16 원 — 미선택: `strokeWidthThin` `alias.borderDefault`, `alias.backgroundPrimary`; 포커스(미선택/선택): `strokeWidthThick` 외곽 `alias.borderStrong` (MCP `397:1147` 등) |
-| **컨트롤**          | `componentSizes.controlCheckboxRadio` (16×16), `roundedCircle` — **`refineui.css`** `[data-refineui="radio"]` (별칭 색·`label:hover` / `label:focus-within`)                 |
-| **선택 시**         | 링 `alias.backgroundBrand`, 내부 점 동일; 호버 링·점 `alias.backgroundBrandActive`; 포커스 링 `alias.borderStrong` + 점 `alias.backgroundBrand`                              |
-| **disabled**        | 배경 `alias.backgroundPrimary`, 테두리 `alias.borderDisabled`; 선택 시 점 `alias.foregroundDisabled`                                                                         |
-| **행**              | 컨트롤·텍스트 `gap` `sizeMedium` (10px); 라벨 래퍼 `padding` `sizeXXSmall`                                                                                                   |
-| **라벨**            | `caption1`, `alias.foregroundPrimary` — disabled 시 `alias.foregroundDisabled`                                                                                               |
-| **설명**            | `caption3`, `alias.foregroundSecondary` — disabled 시 `alias.foregroundDisabled`                                                                                             |
+| **`Radio / Input`** | 16×16 circle — unchecked: `strokeWidthThin` `alias.borderDefault`, `alias.backgroundPrimary`; focus (unchecked/checked): `strokeWidthThick` outer `alias.borderStrong` (MCP `397:1147` etc.) |
+| **control**         | `componentSizes.controlCheckboxRadio` (16×16), `roundedCircle` — **`refineui.css`** `[data-refineui="radio"]` (alias colors·`label:hover` / `label:focus-within`)                 |
+| **selected**        | Ring `alias.backgroundBrand`, inner dot same; hover ring·dot `alias.backgroundBrandActive`; focus ring `alias.borderStrong` + dot `alias.backgroundBrand`                              |
+| **disabled**        | Fill `alias.backgroundPrimary`, border `alias.borderDisabled`; when selected, dot `alias.foregroundDisabled`                                                                         |
+| **row**             | Control·text `gap` `sizeMedium` (10px); label wrapper `padding` `sizeXXSmall`                                                                                                   |
+| **label**           | `caption1`, `alias.foregroundPrimary` — when disabled `alias.foregroundDisabled`                                                                                               |
+| **description**     | `caption3`, `alias.foregroundSecondary` — when disabled `alias.foregroundDisabled`                                                                                             |
 
 ---
 
 ## Skeleton — Web Kit COMPONENT_SET `Skeleton` `570:6175`
 
-| 속성          | 값                                                                                                                                                                                                  |
+| Property      | Value                                                                                                                                                                                               |
 | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **배경**      | `alias.backgroundBrandSubtle` (Shimmer Color)                                                                                                                                                       |
-| **모양**      | `shape` `rectangle` → `roundedLarge`; `circle` → `roundedCircle`                                                                                                                                    |
-| **기본 높이** | `componentSizes.skeletonDefaultHeight` (20px) — 사각은 너비 기본 `100%`, 원은 한 변만 주면 정사각                                                                                                   |
-| **쉬머**      | MCP Mask(`570:6320`): `90deg` — `transparent 0%` → `alias.backgroundPrimary` `22.5%`–`32.5%` → `transparent 50%` — **`refineui.css`** `refineui-skeleton-shimmer`; `prefers-reduced-motion` 시 정지 |
+| **fill**      | `alias.backgroundBrandSubtle` (Shimmer Color)                                                                                                                                                       |
+| **shape**     | `shape` `rectangle` → `roundedLarge`; `circle` → `roundedCircle`                                                                                                                                    |
+| **default height** | `componentSizes.skeletonDefaultHeight` (20px) — rectangle defaults width `100%`; circle is square when one dimension set                                                                                                   |
+| **shimmer**   | MCP Mask(`570:6320`): `90deg` — `transparent 0%` → `alias.backgroundPrimary` `22.5%`–`32.5%` → `transparent 50%` — **`refineui.css`** `refineui-skeleton-shimmer`; stops under `prefers-reduced-motion` |
 
 ---
 
 ## Slider — Web Kit COMPONENT_SET `Slider` `526:1556`
 
-| 속성                   | 값                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **size**               | `sm` — 레일 높이 `componentSizes.sliderTrackHeightSm` (2px); `md`(기본) — `componentSizes.sliderTrackHeightMd` (4px)                                                                                                                                                                                                                                                                                                                                                          |
-| **레일(비채움)**       | `alias.backgroundBrandSubtle` — `borderRadii.roundedXSmall` (2px)                                                                                                                                                                                                                                                                                                                                                                                                             |
-| **채움**               | `alias.backgroundBrand` — **disabled** 시 `alias.foregroundDisabled` (Track-fill)                                                                                                                                                                                                                                                                                                                                                                                             |
-| **썸 (Slider / Item)** | COMPONENT_SET 노드별 MCP 변수 — 16×16 `roundedCircle` (**`refineui.css`**): 공통 흰 링 `alias.backgroundPrimary` + 바깥 링 — **Default** `526:1739` 중심 `alias.backgroundBrand`, 링 `alias.borderDefault`(얇음); **Hover** `526:1714` 중심 `alias.backgroundBrandHover`, 링 `alias.borderStrong`; **Focus** `526:1718` 중심 `alias.backgroundBrandActive`, 링 `alias.borderDefault`; **Disabled** `526:1840` 중심 `alias.backgroundBrandDisabled`, 링 `alias.borderDisabled` |
-| **터치 영역**          | 입력 높이 `componentSizes.sliderInteractionHeight` (24px)                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Property                 | Value                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **size**                 | `sm` — rail height `componentSizes.sliderTrackHeightSm` (2px); `md` (default) — `componentSizes.sliderTrackHeightMd` (4px)                                                                                                                                                                                                                                                                                                                                                          |
+| **rail (unfilled)**      | `alias.backgroundBrandSubtle` — `borderRadii.roundedXSmall` (2px)                                                                                                                                                                                                                                                                                                                                                                                                             |
+| **fill**                 | `alias.backgroundBrand` — **disabled** uses `alias.foregroundDisabled` (Track-fill)                                                                                                                                                                                                                                                                                                                                                                                             |
+| **thumb (Slider / Item)** | Per COMPONENT_SET node MCP vars — 16×16 `roundedCircle` (**`refineui.css`**): shared white ring `alias.backgroundPrimary` + outer ring — **Default** `526:1739` center `alias.backgroundBrand`, ring `alias.borderDefault`(thin); **Hover** `526:1714` center `alias.backgroundBrandHover`, ring `alias.borderStrong`; **Focus** `526:1718` center `alias.backgroundBrandActive`, ring `alias.borderDefault`; **Disabled** `526:1840` center `alias.backgroundBrandDisabled`, ring `alias.borderDisabled` |
+| **touch target**         | Input height `componentSizes.sliderInteractionHeight` (24px)                                                                                                                                                                                                                                                                                                                                                                                                                     |
 
-WebKit 계열은 `--refineui-slider-fill`(0–100%)로 레일 그라데이션을 맞추고, Firefox는
-`::-moz-range-progress`로 채움을 처리한다.
+WebKit uses `--refineui-slider-fill` (0–100%) for rail gradient; Firefox uses `::-moz-range-progress` for fill.
 
 ---
 
 ## Spin Button — Web Kit COMPONENT_SET `Spin Button` `561:2067`
 
-| 속성                  | `sm`                                                                                        | `md`(기본)                              | `lg`                                    |
+| Property              | `sm`                                                                                        | `md` (default)                          | `lg`                                    |
 | --------------------- | ------------------------------------------------------------------------------------------- | --------------------------------------- | --------------------------------------- |
-| **높이**              | `componentSizes.controlHeightSm` (32px)                                                     | `componentSizes.controlHeightMd` (40px) | `componentSizes.controlHeightLg` (48px) |
-| **모서리**            | `roundedMedium` (6px)                                                                       | `roundedLarge` (8px)                    | `roundedXLarge` (12px)                  |
-| **값 영역 타이포**    | `caption1`                                                                                  | `body2`                                 | `body1`                                 |
-| **값 영역 좌측 패딩** | `componentSizes.spinFieldPaddingInlineStart` (12px)                                         | 동일                                    | 동일                                    |
-| **Stepper 열**        | `componentSizes.spinStepperWidth` (32px); 반칸 높이 `spinStepperStepHeightSm` / `Md` / `Lg` |                                         |                                         |
-| **아이콘**            | chevron `iconSizes.sm` (12px)                                                               | 동일                                    | 동일                                    |
+| **height**            | `componentSizes.controlHeightSm` (32px)                                                     | `componentSizes.controlHeightMd` (40px) | `componentSizes.controlHeightLg` (48px) |
+| **radius**            | `roundedMedium` (6px)                                                                       | `roundedLarge` (8px)                    | `roundedXLarge` (12px)                  |
+| **value area type**   | `caption1`                                                                                  | `body2`                                 | `body1`                                 |
+| **value area padding start** | `componentSizes.spinFieldPaddingInlineStart` (12px)                                  | same                                    | same                                    |
+| **Stepper column**    | `componentSizes.spinStepperWidth` (32px); half-step heights `spinStepperStepHeightSm` / `Md` / `Lg` |                                         |                                         |
+| **icon**              | chevron `iconSizes.sm` (12px)                                                               | same                                    | same                                    |
 
-| 상태                  | 스타일                                                                                                                          |
+| State                 | Style                                                                                                                           |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| **기본**              | 배경 `alias.backgroundPrimary`, 테두리 `strokeWidthThin` `alias.borderDefault`, 글자 `alias.foregroundPrimary`                  |
-| **포커스(포함 영역)** | 테두리 `alias.borderFocus` — **`refineui.css`** `[data-refineui="spinbutton"]:focus-within`                                     |
-| **disabled**          | 배경 `alias.backgroundSurfaceDisabled`, 테두리 `alias.borderDisabled`, 글자 `alias.foregroundDisabled`; Stepper는 `opacity` 0.5 |
+| **default**           | Fill `alias.backgroundPrimary`, border `strokeWidthThin` `alias.borderDefault`, text `alias.foregroundPrimary`                  |
+| **focus (whole field)** | Border `alias.borderFocus` — **`refineui.css`** `[data-refineui="spinbutton"]:focus-within`                                     |
+| **disabled**          | Fill `alias.backgroundSurfaceDisabled`, border `alias.borderDisabled`, text `alias.foregroundDisabled`; Stepper at `opacity` 0.5 |
 
 ---
 
 ## Spinner — Web Kit COMPONENT_SET `Spinner` `550:3669`
 
-| `size`      | 지름                                      | 링 두께                   | 라벨 타이포(Figma `showLabel`) |
+| `size`      | Diameter                                  | Ring width                | Label type (Figma `showLabel`) |
 | ----------- | ----------------------------------------- | ------------------------- | ------------------------------ |
 | `xs`        | `componentSizes.spinnerSizeXSmall` (16px) | `spinnerRingWidthXSmall`  | `caption1`                     |
 | `sm`        | `spinnerSizeSmall` (20px)                 | `spinnerRingWidthSmall`   | `body2`                        |
-| `md`(기본)  | `spinnerSizeMedium` (24px)                | `spinnerRingWidthMedium`  | `body1`                        |
+| `md` (default) | `spinnerSizeMedium` (24px)             | `spinnerRingWidthMedium`  | `body1`                        |
 | `lg`        | `spinnerSizeLarge` (28px)                 | `spinnerRingWidthLarge`   | `subTitle2`                    |
 | `xl`        | `spinnerSizeXLarge` (32px)                | `spinnerRingWidthXLarge`  | `subTitle1`                    |
 | `xxl`       | `spinnerSizeXXLarge` (48px)               | `spinnerRingWidthXXLarge` | `title3`                       |
 
-| 속성                 | 값                                                                                  |
+| Property             | Value                                                                               |
 | -------------------- | ----------------------------------------------------------------------------------- |
-| **트랙**             | `alias.backgroundBrandSubtle` (`#e6e6e6`)                                           |
-| **강조(회전 구간)**  | `alias.backgroundBrand` (`#212121`) — CSS `border-top-color` + 회전                 |
-| **라벨·아이콘 간격** | `sizeSmall` (6px)                                                                   |
-| **`labelPosition`**  | `left` \| `right`(Figma 기본) \| `top` \| `bottom`                                  |
-| **애니메이션**       | **`refineui.css`** `[data-refineui="spinner"]` `refineui-spin` 0.8s linear infinite |
+| **track**            | `alias.backgroundBrandSubtle` (`#e6e6e6`)                                           |
+| **accent (spin arc)**| `alias.backgroundBrand` (`#212121`) — CSS `border-top-color` + rotation             |
+| **label·icon gap**   | `sizeSmall` (6px)                                                                   |
+| **`labelPosition`**  | `left` \| `right` (Figma default) \| `top` \| `bottom`                              |
+| **animation**        | **`refineui.css`** `[data-refineui="spinner"]` `refineui-spin` 0.8s linear infinite |
 
-Figma 기본 `size`는 `XSmall`이나, 앱에서 가독성을 위해 React 기본값은 `md`로 둔다.
+Figma default `size` is `XSmall`; React defaults to `md` for readability in apps.
 
 ---
 
 ## PopOver — Web Kit COMPONENT_SET `PopOver` `553:5669`
 
-| 속성     | `variant="default"`                                                                                                                                         | `variant="inverted"`                                                                           |
+| Property | `variant="default"`                                                                                                                                         | `variant="inverted"`                                                                           |
 | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| **패널** | `minWidth` `componentSizes.popoverPanelWidth` (325px); `padding` `sizeLarge` (16px); `roundedXXLarge`; `strokeWidthThin` `neutral300`; `shadows.shadow8Light` | 배경 `surfaceInverse`, 글자 `foregroundInversed`, 테두리 `borderStrong`, `shadows.shadow8Dark` |
+| **panel**| `minWidth` `componentSizes.popoverPanelWidth` (325px); `padding` `sizeLarge` (16px); `roundedXXLarge`; `strokeWidthThin` `neutral300`; `shadows.shadow8Light` | Fill `surfaceInverse`, text `foregroundInversed`, border `borderStrong`, `shadows.shadow8Dark` |
 
-| API                                                       | Figma 대응                                                                                                                                                                                                         |
+| API                                                       | Figma mapping                                                                                                                                                                                                      |
 | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **`placement`**                                           | `position` — `top` \| `bottom` \| `left` \| `right`                                                                                                                                                                |
-| **`align`** (`start` \| `center` \| `end`, 기본 `center`) | `align` — 패널·비크 기준축 정렬                                                                                                                                                                                    |
-| **비크(beak)**                                            | 패널 가장자리에 삼각형(`foundationSize160` × `foundationSize80`). Bottom/Top Start·End 비크 가로 inset은 `popoverBeakInsetFromStartEdge`·`popoverBeakInsetFromEndEdge`; 좌우 변형에서는 세로 inset에 `sizeMedium`. |
+| **`align`** (`start` \| `center` \| `end`, default `center`) | `align` — panel·beak alignment on axis                                                                                                                                                                           |
+| **beak**                                                  | Triangle on panel edge (`foundationSize160` × `foundationSize80`). Bottom/Top Start·End horizontal beak inset: `popoverBeakInsetFromStartEdge`·`popoverBeakInsetFromEndEdge`; left/right placements use vertical inset + `sizeMedium`. |
 
 ---
 
 ## Field — Web Kit COMPONENT_SET `Field` `525:1074`
 
-| 속성               | 값                                                                                                |
+| Property           | Value                                                                                             |
 | ------------------ | ------------------------------------------------------------------------------------------------- |
-| **size** (`Field`) | `sm` — 라벨 `caption1`; `md`(기본) — `body2`; `lg` — `body1` (Figma Label Small / Medium / Large) |
-| **라벨·컨트롤**    | 라벨 하단 `margin` `sizeXSmall` (4px)                                                             |
-| **검증(error)**    | `caption3`, `red700`                                                                              |
-| **헬퍼(hint)**     | `caption3`, `neutral500`(Figma foreground tertiary)                                               |
-| **필수**           | `*` `red700`                                                                                      |
+| **size** (`Field`) | `sm` — label `caption1`; `md` (default) — `body2`; `lg` — `body1` (Figma Label Small / Medium / Large) |
+| **label·control**  | Label bottom `margin` `sizeXSmall` (4px)                                                          |
+| **validation (error)** | `caption3`, `red700`                                                                          |
+| **helper (hint)**  | `caption3`, `neutral500` (Figma foreground tertiary)                                              |
+| **required**       | `*` `red700`                                                                                      |
 
-Figma에는 라벨 옆 **Info** 아이콘·슬롯별 검증 아이콘이 있으나, React `Field`는 **텍스트 라벨 + 자식
-컨트롤 + error/hint** 만 제공합니다.
+Figma has **Info** icon beside label and per-slot validation icons; React `Field` exposes **text label + child
+control + error/hint** only.
 
 ---
 
 ## Label — Web Kit COMPONENT_SET `Label` `216:1681`
 
-| 속성           | sm         | md      | lg      |
+| Property       | sm         | md      | lg      |
 | -------------- | ---------- | ------- | ------- |
 | **typography** | `caption1` | `body2` | `body1` |
 
-| 속성          | 값                                                           |
+| Property      | Value                                                        |
 | ------------- | ------------------------------------------------------------ |
-| **disabled**  | `true`일 때 글자색 `neutral400` (Figma `foregrounddisabled`) |
-| **블록 간격** | `marginBottom` `sizeXSmall` — `Field` 라벨과 동일            |
-| **필수 `*`**  | `red700` — `Field`와 동일                                    |
+| **disabled**  | When `true`, text `neutral400` (Figma `foregrounddisabled`) |
+| **block spacing** | `marginBottom` `sizeXSmall` — same as `Field` label      |
+| **required `*`** | `red700` — same as `Field`                              |
 
-`packages/react` `Label` 기본 `size`는 **`md`** (`Field`/`Input`과 맞춤). Figma COMPONENT_SET의 기본
-변형은 **Large** (`lg`).
+`packages/react` `Label` default `size` is **`md`** (aligned with `Field`/`Input`). Figma COMPONENT_SET default
+variant is **Large** (`lg`).
 
 ---
 
 ## Link — Web Kit COMPONENT_SET `Link` `226:158`
 
-| 상태         | `variant="default"` (토큰)                          |
+| State        | `variant="default"` (tokens)                        |
 | ------------ | --------------------------------------------------- |
-| **Default**  | `body1`, `blue700`, 밑줄 없음                       |
-| **Hover**    | `blue800`, 밑줄 (`refineui.css`)                    |
-| **Focus**    | `blue900`, 밑줄 + 포커스 링                         |
+| **Default**  | `body1`, `blue700`, no underline                    |
+| **Hover**    | `blue800`, underline (`refineui.css`)               |
+| **Focus**    | `blue900`, underline + focus ring                   |
 | **Pressed**  | `blue500` (Figma Pressed / `foregroundlinkvisited`) |
-| **Disabled** | `neutral400`, 밑줄 없음                             |
+| **Disabled** | `neutral400`, no underline                          |
 
-**외부 링크 아이콘** — `open` `iconSizes.lg` (20px), 텍스트와 `gap` `sizeXSmall` (4px).
+**External link icon** — `open` `iconSizes.lg` (20px), `gap` to text `sizeXSmall` (4px).
 
-**`variant="subtle"`** — Web Kit 그리드에 없음. `neutral600` 기준, 상호작용 색은 `refineui.css`
+**`variant="subtle"`** — not in Web Kit grid. Base `neutral600`; interaction colors in `refineui.css`
 (`neutral700` / `neutral800`).
 
 ---
 
 ## 8. Divider — Web Kit COMPONENT_SET `Divider` `346:722`
 
-| layout      | 설명                                                                                                                                                                                                                                                     |
+| layout      | Description                                                                                                                                                                                                                                              |
 | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **default** | 전폭 1px (`strokeWidthThin`), `neutral300`                                                                                                                                                                                                               |
-| **content** | Caption 2(12/16 Regular), **글자색 `neutralBlack`** (Figma `global/colors/neutral/black`), 분할 선 + 텍스트, `gap` sizeMedium(10px), `overflow` clip, 행 `justify-center`, 짧은 쪽 선 **`componentSizes.dividerShortEnd`(8px)**, 긴 쪽 **`flex: 1 0 0`** |
-| **icon**    | **`componentSizes.dividerIconSlot`(20×20)** 프레임, Shape **`componentSizes.dividerIconCircleDiameter`** + **`componentSizes.dividerIconCircleInset`**(3px) 오프셋(Figma `346:722`), 동일 gap·선·flex 규칙                                               |
+| **default** | Full-width 1px (`strokeWidthThin`), `neutral300`                                                                                                                                                                                                         |
+| **content** | Caption 2 (12/16 Regular), **text `neutralBlack`** (Figma `global/colors/neutral/black`), split lines + text, `gap` sizeMedium(10px), `overflow` clip, row `justify-center`, short side **`componentSizes.dividerShortEnd`(8px)**, long side **`flex: 1 0 0`** |
+| **icon**    | **`componentSizes.dividerIconSlot`(20×20)** frame, Shape **`componentSizes.dividerIconCircleDiameter`** + **`componentSizes.dividerIconCircleInset`** (3px) offset (Figma `346:722`), same gap·line·flex rules                                               |
 
 | align      | (content / icon)                       |
 | ---------- | -------------------------------------- |
-| **center** | 양쪽 선 `flex: 1 0 0`                  |
-| **left**   | 왼쪽 `dividerShortEnd` + 오른쪽 늘어남 |
-| **right**  | 왼쪽 늘어남 + 오른쪽 `dividerShortEnd` |
+| **center** | Both lines `flex: 1 0 0`               |
+| **left**   | Left `dividerShortEnd` + right grows   |
+| **right**  | Left grows + right `dividerShortEnd`   |
 
-(Web Kit `346:722`에는 **세로 Divider** 변형이 없습니다. 구현도 **수평**만 지원합니다.)
+(Web Kit `346:722` has **no vertical Divider** variant. Implementation supports **horizontal** only.)
 
 ---
 
-## 9. Accordion — Web Kit `COMPONENT_SET` node-id `54:146` (페이지 루트 링크는 `7-6`)
+## 9. Accordion — Web Kit `COMPONENT_SET` node-id `54:146` (page root link `7-6`)
 
-(Figma MCP 심볼: `Size=Small` → Caption1, `Medium` → Body1, `Larger` → SubTitle1 20/28 Semi Bold.)
+(Figma MCP symbols: `Size=Small` → Caption1, `Medium` → Body1, `Larger` → SubTitle1 20/28 Semi Bold.)
 
-| 속성                     | 값                                                               |
+| Property                 | Value                                                            |
 | ------------------------ | ---------------------------------------------------------------- |
 | **trigger minHeight**    | 44px                                                             |
 | **trigger padding**      | 6px 10px (sizeSmall sizeMedium)                                  |
@@ -488,45 +479,45 @@ Figma에는 라벨 옆 **Info** 아이콘·슬롯별 검증 아이콘이 있으�
 
 ## 10. Switch / Toggle — Web Kit COMPONENT_SET `Switch` `270:3057`
 
-| 속성                | 값                                                                                                                                                                                      |
+| Property            | Value                                                                                                                                                                                   |
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **트랙(전체)**      | `componentSizes.switchWidth` (44px) × `componentSizes.switchHeight` (24px); 내부 트랙 영역 40×20                                                                                        |
-| **패딩**            | `componentSizes.switchPadding` (2px)                                                                                                                                                    |
-| **모서리**          | `roundedXLarge` (12px)                                                                                                                                                                  |
-| **썸**              | `componentSizes.switchThumb` (20×20), `roundedXLarge` (12px), 기본 `alias.backgroundPrimary` (`#ffffff`)                                                                                |
-| **트랙 배경(켜짐)** | `alias.backgroundBrand` (`#212121`)                                                                                                                                                     |
-| **트랙 배경(꺼짐)** | `alias.backgroundPrimaryActive` (`#f0f0f0`)                                                                                                                                             |
-| **disabled 트랙**   | `alias.backgroundBrandDisabled` (`#f0f0f0`)                                                                                                                                             |
-| **disabled 썸**     | `alias.backgroundBrandSubtle` (`#e6e6e6`)                                                                                                                                               |
+| **track (overall)** | `componentSizes.switchWidth` (44px) × `componentSizes.switchHeight` (24px); inner track area 40×20                                                                                        |
+| **padding**         | `componentSizes.switchPadding` (2px)                                                                                                                                                    |
+| **radius**          | `roundedXLarge` (12px)                                                                                                                                                                  |
+| **thumb**           | `componentSizes.switchThumb` (20×20), `roundedXLarge` (12px), default `alias.backgroundPrimary` (`#ffffff`)                                                                             |
+| **track fill (on)** | `alias.backgroundBrand` (`#212121`)                                                                                                                                                     |
+| **track fill (off)**| `alias.backgroundPrimaryActive` (`#f0f0f0`)                                                                                                                                            |
+| **disabled track**  | `alias.backgroundBrandDisabled` (`#f0f0f0`)                                                                                                                                             |
+| **disabled thumb**  | `alias.backgroundBrandSubtle` (`#e6e6e6`)                                                                                                                                               |
 | **hover / pressed** | **`refineui.css`** `[data-refineui="switch"]` — OFF: `alias.backgroundPrimaryHover` / `alias.backgroundPrimaryActive`; ON: `alias.backgroundBrandHover` / `alias.backgroundBrandStrong` |
 
-`packages/react`의 `Switch`는 `Toggle`과 동일 구현이다.
+`packages/react` `Switch` and `Toggle` share the same implementation.
 
 ---
 
 ## 10.1 Tabs — Web Kit `Tabs` `636:5371` · `Tabs / Item` `636:5372`
 
-(`get_design_context`와 동일 — 코드·문서는 이 표를 단일 소스로 맞춘다.)
+(Same as `get_design_context` — code and docs treat this table as the single source of truth.)
 
-| 속성 | MCP 값 |
+| Property | MCP value |
 | --- | --- |
-| **탭 바(래퍼)** | 배경 **`alias.backgroundSurfaceActive`** (MCP `Background/Surface/Active` · `#f0f0f0`), 테두리 `strokeWidthThin` **`alias.borderDefault`**, 패딩 `sizeSmall`, **항목 간격 `sizeMedium`(10px)**, 외곽 모서리 **`roundedXLarge`(12px)** |
-| **탭 칩** | `py` **sizeXSmall**(4px) · `px` **sizeSmall**(6px)(MCP 최신), 내부 모서리 **`roundedLarge`(8px)** |
-| **선행 아이콘** | 선택적 16×16(MCP `showIcon`), 라벨과 간격 **`sizeSmall`(6px)** |
-| **타이포** | **Caption 1** — Web Font Size 200 / Line 200 (`refineui-typo-caption-1`) |
-| **선택됨** | 배경 **`alias.backgroundSurface`**, **`shadows.shadow2Light`** |
-| **선택 · Hover** | 배경 **`alias.backgroundSurfaceHover`**, Shadow 2 유지(`Active=True, State=Hover`) |
-| **비선택 · Hover** | 배경 없음(투명), 글자 **`alias.foregroundPrimaryHover`**만 (`Active=False, State=Hover`) |
-| **선택 + disabled** | 배경 **`alias.backgroundSurfaceDisabled`**, 동일 Shadow 2(MCP `Tabs / Item`) |
-| **비선택** | 배경 투명, 글자 **`alias.foregroundPrimary`** |
-| **disabled(비선택)** | 글자 **`alias.foregroundDisabled`** |
+| **Tab bar (wrapper)** | Fill **`alias.backgroundSurfaceActive`** (MCP `Background/Surface/Active` · `#f0f0f0`), border `strokeWidthThin` **`alias.borderDefault`**, padding `sizeSmall`, **item gap `sizeMedium`(10px)**, outer radius **`roundedXLarge`(12px)** |
+| **Tab chip** | `py` **sizeXSmall**(4px) · `px` **sizeSmall**(6px) (latest MCP), inner radius **`roundedLarge`(8px)** |
+| **Leading icon** | Optional 16×16 (MCP `showIcon`), gap to label **`sizeSmall`(6px)** |
+| **type** | **Caption 1** — Web Font Size 200 / Line 200 (`refineui-typo-caption-1`) |
+| **Selected** | Fill **`alias.backgroundSurface`**, **`shadows.shadow2Light`** |
+| **Selected · Hover** | Fill **`alias.backgroundSurfaceHover`**, keep Shadow 2 (`Active=True, State=Hover`) |
+| **Unselected · Hover** | No fill (transparent), text only **`alias.foregroundPrimaryHover`** (`Active=False, State=Hover`) |
+| **Selected + disabled** | Fill **`alias.backgroundSurfaceDisabled`**, same Shadow 2 (MCP `Tabs / Item`) |
+| **Unselected** | Transparent fill, text **`alias.foregroundPrimary`** |
+| **disabled (unselected)** | Text **`alias.foregroundDisabled`** |
 
 ---
 
 ## 11. Spacing (packages/tokens)
 
-| 토큰         | 값   |
-| ------------ | ---- |
+| Token        | Value |
+| ------------ | ----- |
 | sizeNone     | 0    |
 | sizeXXSmall  | 2px  |
 | sizeXSmall   | 4px  |
@@ -541,7 +532,7 @@ Figma에는 라벨 옆 **Info** 아이콘·슬롯별 검증 아이콘이 있으�
 
 ## 12. Typography (packages/tokens) — Foundation node-id=1-650
 
-| 스타일    | fontSize | lineHeight | fontWeight  |
+| Style     | fontSize | lineHeight | fontWeight  |
 | --------- | -------- | ---------- | ----------- |
 | heading1  | 64px     | 86px       | 800 (Heavy) |
 | heading2  | 40px     | 60px       | 700         |
@@ -564,7 +555,7 @@ Figma에는 라벨 옆 **Info** 아이콘·슬롯별 검증 아이콘이 있으�
 
 ## 13. Border Radius (packages/tokens)
 
-| 토큰           | 값     |
+| Token          | Value  |
 | -------------- | ------ |
 | roundedNone    | 0      |
 | roundedXSmall  | 2px    |
@@ -579,8 +570,8 @@ Figma에는 라벨 옆 **Info** 아이콘·슬롯별 검증 아이콘이 있으�
 
 ## 14. Stroke Width (packages/tokens)
 
-| 토큰                | 값  |
-| ------------------- | --- |
+| Token               | Value |
+| ------------------- | ----- |
 | strokeWidthNone     | 0   |
 | strokeWidthThin     | 1px |
 | strokeWidthThick    | 2px |
@@ -596,14 +587,14 @@ Figma에는 라벨 옆 **Info** 아이콘·슬롯별 검증 아이콘이 있으�
 - **Tooltip**: `shadow8Light`
 - **Card (elevated)**: `shadow8Light`
 
-Shadow 레벨: shadow2, shadow4, shadow8, shadow16, shadow24, shadow32, shadow64  
-각 레벨별: Lighter, Light, (default), Dark, Darker
+Shadow levels: shadow2, shadow4, shadow8, shadow16, shadow24, shadow32, shadow64  
+Per level: Lighter, Light, (default), Dark, Darker
 
 ---
 
-## 16. Color (주요 사용)
+## 16. Color (common usage)
 
-| 용도            | 토큰                   |
+| Use case        | Token                  |
 | --------------- | ---------------------- |
 | primary text/bg | primaryBlack (#212121) |
 | primary outline | primaryBlack           |
@@ -618,64 +609,63 @@ Shadow 레벨: shadow2, shadow4, shadow8, shadow16, shadow24, shadow32, shadow64
 
 ## Toast — Web Kit COMPONENT_SET `548:655`
 
-| 속성                          | 값                                                                                                                                                                                                                                 |
+| Property                      | Value                                                                                                                                                                                                                              |
 | ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **폭**                        | 325px — `componentSizes.toastMinWidth` · `componentSizes.toastMaxWidth` (기본 카드 `548:654`·`552:2029`)                                                                                                                           |
+| **width**                     | 325px — `componentSizes.toastMinWidth` · `componentSizes.toastMaxWidth` (default cards `548:654`·`552:2029`)                                                                                                                       |
 | **padding**                   | `sizeLarge` (16px)                                                                                                                                                                                                                 |
-| **행 gap** (아이콘·본문·액션) | `sizeMedium` (10px)                                                                                                                                                                                                                |
-| **borderRadius**              | `roundedXLarge` (12px) — MCP/Web Kit Toast 카드 갱신                                                                                                                                                                               |
-| **border**                    | `strokeWidthThin` `neutral300`; **Focus** (`552:2029`)는 `strokeWidthThick` + `neutral450` 테두리 — 키보드 포커스는 **`refineui.css`** `focus-visible` 링 패턴으로 정렬                                                            |
-| **shadow**                    | `shadows.shadow4Light` (Elevation Shadow 4)                                                                                                                                                                                        |
-| **Toast / Icon** (왼쪽)       | 24×24 (`spacings.sizeXXLarge`); `WebIcon` `iconSizes.md`; 행 `items-center`로 **카드 세로 중앙**; DOM `data-refineui="toast-icon"`, Type은 루트 `data-variant` (`default` \| `success` \| `error` \| `warning`) + 기본 아이콘 매핑 |
+| **row gap** (icon·body·action)| `sizeMedium` (10px)                                                                                                                                                                                                                |
+| **borderRadius**              | `roundedXLarge` (12px) — MCP/Web Kit Toast card refresh                                                                                                                                                                            |
+| **border**                    | `strokeWidthThin` `neutral300`; **Focus** (`552:2029`) uses `strokeWidthThick` + `neutral450` border — keyboard focus aligns with **`refineui.css`** `focus-visible` ring pattern                                                   |
+| **shadow**                    | `shadows.shadow4Light` (Elevation Shadow 4)                                                                                                                                                                                      |
+| **Toast / Icon** (left)       | 24×24 (`spacings.sizeXXLarge`); `WebIcon` `iconSizes.md`; row `items-center` for **vertical center** in card; DOM `data-refineui="toast-icon"`; Type from root `data-variant` (`default` \| `success` \| `error` \| `warning`) + default icon map |
 | **title**                     | `body2`                                                                                                                                                                                                                            |
 | **message**                   | `body4`, `neutral500`                                                                                                                                                                                                              |
-| **액션**                      | `Toast / Action` — 내부 **Button** Small (Web Kit 버튼 sm)                                                                                                                                                                         |
+| **action**                    | `Toast / Action` — inner **Button** Small (Web Kit button sm)                                                                                                                                                                      |
 
-**`variant`** (`default` \| `success` \| `error` \| `warning`)는 Figma **Type**에 대응하며 **기본
-아이콘 이름·액센트 색**을 바꾼다. Web Kit **Toast** 그리드는 **`State=Default`**·**`Focus`**만 있고,
-Type 변형은 React·`data-variant`로만 구분한다.
+**`variant`** (`default` \| `success` \| `error` \| `warning`) maps to Figma **Type** and switches **default
+icon name·accent color**. Web Kit **Toast** grid only has **`State=Default`**·**`Focus`**;
+Type variants are distinguished in React via `data-variant` only.
 
-**`<Toaster />` 뷰포트 위치:** Figma 컴포넌트 세트에는 없고, 앱 UX를 위한 React 확장이다.
-`data-refineui="toaster"`에 `data-position`(`top-left` \| `top-center` \| `top-right` \|
-`bottom-left` \| `bottom-center` \| `bottom-right`)을 붙이며, `refineui.css`에서 앵커·하단 스택
-`translateY` 부호를 분기한다.
+**`<Toaster />` viewport placement:** not in Figma component set; React extension for app UX.
+`data-refineui="toaster"` gets `data-position` (`top-left` \| `top-center` \| `top-right` \|
+`bottom-left` \| `bottom-center` \| `bottom-right`); `refineui.css` branches anchor and bottom-stack
+`translateY` sign.
 
 ---
 
 ## Tooltip — Web Kit COMPONENT_SET `90:1686`
 
-| 속성             | 값                                                                                  |
+| Property         | Value                                                                               |
 | ---------------- | ----------------------------------------------------------------------------------- |
 | **padding**      | `sizeSmall` `sizeMedium` (6px 10px)                                                 |
 | **borderRadius** | `roundedMedium` (6px)                                                               |
 | **typography**   | `body4`                                                                             |
 | **shadow**       | `shadows.shadow8Light`                                                              |
 | **maxWidth**     | `componentSizes.tooltipMaxWidth` (200px)                                            |
-| **화살표**       | 반변 `sizeSmall`(6px) CSS 삼각형(너비 12px) — Figma는 `position`×`align`별 SVG 비크 |
+| **arrow**        | Half-edge `sizeSmall`(6px) CSS triangle (12px wide) — Figma uses SVG beaks per `position`×`align` |
 
-**`position` × `align`:** MCP와 동일한 **PascalCase** — `position` `Top` \| `Bottom` \| `Left` \| `Right`, `align` `Start` \| `Center` \| `End` (**12조합**). `packages/react` `Tooltip`은 prop 이름·값이 위와 같고, **기본값** `position="Bottom"`, `align="Start"`. Figma 비크는 SVG, React는 토큰 기반 CSS 삼각형으로 근사.
-
----
-
-## Calendar — Web Kit (`Calendar / Day` COMPONENT_SET MCP `639:7052`; Month 행 컨테이너 MCP **`639:6845`**)
-
-| 속성                     | 값                                                                                                                                                                                                                                            |
-| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **컨테이너**             | `padding` `sizeLarge`(16px), `minWidth` `componentSizes.calendarMinWidth`, `borderRadius` `roundedLarge`, 배경 `alias.backgroundPrimary` — MCP Day·헤더 export에 **외곽 stroke 없음**                                                           |
-| **월 헤더** (`639:6845`) | 한 행 **`flex` + `justify-between`**, 자식 **4개** 순서: 이전(chevron) · 월(label) · 연(label) · 다음(chevron). Web Kit **`Button`** Ghost · Small (`79:3304`). 인터랙션은 **`refineui.css`** Ghost — `data-refineui` 덮어쓰기 금지              |
-| **이전/다음**            | `Button` Ghost · Icon · Small, chevron `iconSizes.small`                                                                                                                                                                                      |
-| **월·연도**              | `Button` Ghost · Label · Small — MCP 내보내기 기준 라벨 타이포 **`body3`**(14/20 Regular)                                                                                                                                                      |
-| **요일·날짜 셀**         | `componentSizes.calendarDaySize`(32×32), `caption1`(MCP `Calendar / Day`), 타월 `neutral400`                                                                                                                                                  |
-| **Day 인터랙션**         | `refineui.css` `[data-refineui="calendar-day"]` — 비선택 셀 hover·pressed 배경 `neutral200`/`neutral300`(Ghost와 동일); `data-range-middle`도 동일; **`data-selected`는 배경 hover·pressed 없음**(선택 고정)                                  |
-| **월 그리드**            | 요일 행 + 주 행을 `gap` `sizeSmall`(6px) 한 열에 둠 (MCP Month 그리드)                                                                                                                                                                         |
-| **선택**                 | 단일/끝점 `primaryBlack` + 흰 글자, 범위 중간 배경 `neutral100`, 엔드포인트 래퍼는 MCP와 동일하게 한쪽만 `roundedLarge`                                                                                                                       |
-
-`packages/react` `Calendar`는 `single` / `range` 모드를 지원하며, 범위 UI는 위 Figma 그리드와 같은
-규칙을 따른다.
+**`position` × `align`:** Same **PascalCase** as MCP — `position` `Top` \| `Bottom` \| `Left` \| `Right`, `align` `Start` \| `Center` \| `End` (**12 combos**). `packages/react` `Tooltip` uses the prop names·values above; **defaults** `position="Bottom"`, `align="Start"`. Figma beaks are SVG; React approximates with token-based CSS triangles.
 
 ---
 
-## JSON 요약 (구현 참조용)
+## Calendar — Web Kit (`Calendar / Day` COMPONENT_SET MCP `639:7052`; Month row container MCP **`639:6845`**)
+
+| Property                 | Value                                                                                                                                                                                                                                       |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **container**            | `padding` `sizeLarge`(16px), `minWidth` `componentSizes.calendarMinWidth`, `borderRadius` `roundedLarge`, fill `alias.backgroundPrimary` — MCP Day·header exports have **no outer stroke**                                                    |
+| **month header** (`639:6845`) | One row **`flex` + `justify-between`**, **4** children in order: prev (chevron) · month (label) · year (label) · next (chevron). Web Kit **`Button`** Ghost · Small (`79:3304`). Interactions via **`refineui.css`** Ghost — do not override `data-refineui` |
+| **prev/next**            | `Button` Ghost · Icon · Small, chevron `iconSizes.small`                                                                                                                                                                                    |
+| **month·year**           | `Button` Ghost · Label · Small — label type per MCP export **`body3`** (14/20 Regular)                                                                                                                                                        |
+| **weekday·date cells**   | `componentSizes.calendarDaySize`(32×32), `caption1`(MCP `Calendar / Day`), other-month `neutral400`                                                                                                                                            |
+| **Day interaction**      | `refineui.css` `[data-refineui="calendar-day"]` — unselected cell hover·pressed fill `neutral200`/`neutral300` (same as Ghost); `data-range-middle` same; **`data-selected` has no hover·pressed fill** (selection locked)                  |
+| **month grid**           | Weekday row + week rows in one column with `gap` `sizeSmall`(6px) (MCP Month grid)                                                                                                                                                             |
+| **selection**            | Single/endpoints `primaryBlack` + white text, range middle fill `neutral100`, endpoint wrappers match MCP with `roundedLarge` on one side only                                                                                             |
+
+`packages/react` `Calendar` supports `single` / `range` modes; range UI follows the Figma grid rules above.
+
+---
+
+## JSON summary (implementation reference)
 
 ```json
 {
@@ -741,7 +731,7 @@ Type 변형은 React·`data-variant`로만 구분한다.
     "success": "green500"
   },
   "select": {
-    "note": "Web Kit 단독 COMPONENT_SET 없음 — Input 518:7373 동일 size",
+    "note": "No standalone Web Kit COMPONENT_SET — same size as Input 518:7373",
     "sizes": "same as input"
   },
   "textarea": {
@@ -750,7 +740,7 @@ Type 변형은 React·`data-variant`로만 구분한다.
     "padding": "sizeMedium sizeSmall",
     "borderRadius": "roundedLarge",
     "type": "body2",
-    "note": "필드 패딩은 Input md(10px 16px)와 다름 — Web Kit Textarea 인스턴스 기준"
+    "note": "Field padding differs from Input md (10px 16px) — per Web Kit Textarea instances"
   },
   "badge": {
     "padding": "2px 6px",
@@ -982,7 +972,7 @@ Type 변형은 React·`data-variant`로만 구분한다.
     "disabled": "neutral400",
     "externalIcon": "iconSizes.lg",
     "gapIcon": "sizeXSmall",
-    "subtle": "neutral600 (Web Kit 외 확장)"
+    "subtle": "neutral600 (extension beyond Web Kit)"
   },
   "divider": {
     "node": "346:722",
@@ -1023,7 +1013,7 @@ Type 변형은 React·`data-variant`로만 구분한다.
   "toggle": {
     "node": "270:3057",
     "figmaName": "Switch",
-    "note": "packages/react Toggle — Switch와 동일 구현·동일 data-refineui=switch"
+    "note": "packages/react Toggle — same implementation as Switch, same data-refineui=switch"
   },
   "tabs": {
     "container": "636:5371",
@@ -1033,7 +1023,7 @@ Type 변형은 React·`data-variant`로만 구분한다.
       "selected": "alias.backgroundPrimary shadow2Light roundedLarge body1 (dark contrast)",
       "disabled": "alias.foregroundDisabled; selected+disabled alias.backgroundSurfaceDisabled"
     },
-    "underline": "borderBottom thick neutral200; selected thick primaryBlack (React 확장)"
+    "underline": "borderBottom thick neutral200; selected thick primaryBlack (React extension)"
   },
   "toast": {
     "node": "548:655",
@@ -1059,7 +1049,7 @@ Type 변형은 React·`data-variant`로만 구분한다.
     "arrow": "half sizeSmall (6px), CSS triangle",
     "position": "Top | Bottom | Left | Right",
     "align": "Start | Center | End",
-    "defaults": "position Bottom, align Start — MCP와 동일"
+    "defaults": "position Bottom, align Start — same as MCP"
   }
 }
 ```

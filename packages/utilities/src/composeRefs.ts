@@ -1,5 +1,5 @@
 /**
- * `@radix-ui/react-compose-refs`와 동일한 ref 병합 패턴
+ * Same ref-merging pattern as `@radix-ui/react-compose-refs`
  * @see https://github.com/radix-ui/primitives/tree/main/packages/react/compose-refs
  */
 import * as React from "react";
@@ -17,10 +17,10 @@ export function composeRefs<T>(...refs: (Ref<T> | undefined)[]) {
     return (instance: T | null) => refs.forEach((ref) => setRef(ref, instance));
 }
 
-/** Radix `useComposedRefs` — cloneElement·forwardRef 조합 시 안정적인 ref 콜백 */
+/** Radix `useComposedRefs` — stable ref callback when merging cloneElement + forwardRef */
 export function useComposedRefs<T>(...refs: (Ref<T> | undefined)[]) {
     return React.useCallback(composeRefs(...refs), refs);
 }
 
-/** 하위 호환 별칭 — `composeRefs` 사용 권장 */
+/** @deprecated Prefer `composeRefs` */
 export const composeRef = composeRefs;

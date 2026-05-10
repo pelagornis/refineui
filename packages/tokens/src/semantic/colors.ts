@@ -1,10 +1,10 @@
 /**
  * Foundation Alias/Color — Pelagornis RefineUI Foundation Variables.
- * Light / Dark는 `PaletteColors` 키로 정의하고, CSS에는 `var(--refineui-color-*)`로 풀린다.
+ * Light / Dark map to `PaletteColors` keys; CSS resolves `var(--refineui-color-*)`.
  *
- * surfaceOverlay만 Global alias가 아니라 원시 RGBA(스크림)로 Foundation에 정의됨.
+ * `surfaceOverlay` is raw RGBA scrim in Foundation (not a global alias).
  *
- * 페어 맵의 타입은 `types.ts`의 `SemanticPalettePairsOf<PaletteColors>`를 따른다.
+ * Pair map typing follows `SemanticPalettePairsOf<PaletteColors>` in `types.ts`.
  */
 import { paletteColorCssVar } from "@refineui/utilities";
 import type {
@@ -88,7 +88,7 @@ export const SEMANTIC_PALETTE_PAIRS = {
 
 export type SemanticPaletteName = keyof typeof SEMANTIC_PALETTE_PAIRS;
 
-/** 하위 호환: [aliasTail, lightKey, darkKey | "__RGBA__"] (surfaceOverlay 전용) */
+/** Legacy row shape: [aliasTail, lightKey, darkKey | "__RGBA__"] (surfaceOverlay only) */
 export const SEMANTIC_COLOR_ROWS = [
     ...(Object.entries(SEMANTIC_PALETTE_PAIRS) as [
         SemanticPaletteName,
@@ -99,7 +99,7 @@ export const SEMANTIC_COLOR_ROWS = [
 
 export type SemanticColorName = SemanticPaletteName | "surfaceOverlay";
 
-/** Foundation surfaceOverlay (Overlay and Modal) — 원시 RGBA */
+/** Foundation surfaceOverlay (Overlay and Modal) — raw RGBA */
 export const surfaceOverlayRgba = {
     light: "rgba(0, 0, 0, 0.2)",
     dark: "rgba(0, 0, 0, 0.6)",
@@ -118,5 +118,5 @@ function buildSemanticColors(): Record<SemanticColorName, SemanticColorModePair>
     return out;
 }
 
-/** 시맨틱 색 — 값은 CSS var(--refineui-color-*) 또는 rgba(...) */
+/** Semantic colors — values are CSS var(--refineui-color-*) or rgba(...) */
 export const semanticColors: Record<SemanticColorName, SemanticColorModePair> = buildSemanticColors();

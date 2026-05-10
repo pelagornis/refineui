@@ -4,8 +4,8 @@
  * Primitive (global/colors) -> Semantic (semantic/colors) ->
  * Component Token (this file) -> Component implementation.
  *
- * 이 파일은 색 문자열을 직접 만들지 않고 token ref만 선언한다.
- * 실제 CSS variable 해석은 @refineui/utilities가 담당한다.
+ * This file declares token refs only (no raw color strings).
+ * `@refineui/utilities` resolves CSS variables.
  */
 import type { PaletteColors, SemanticColorName } from "@refineui/tokens";
 import { paletteColorToken, semanticColorToken } from "@refineui/utilities/color";
@@ -576,7 +576,7 @@ export const componentColorTokens = {
             border: semanticToken("borderDefault"),
             foreground: semanticToken("foregroundSecondary"),
         },
-        /** 셀 채우기만 — MCP `Color`별 Global tint. 글리프·이니셜 잉크는 `avatar.icon`. */
+        /** Cell fill only — Global tint per MCP `Color`. Glyph/initials ink: `avatar.icon`. */
         shell: {
             background: {
                 neutral: paletteToken("neutral300"),

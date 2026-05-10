@@ -12,10 +12,10 @@ const sectionLabel: CSSProperties = {
 };
 
 const STATUS_ROWS: { label: string; sub: string; status: AvatarPresenceStatus }[] = [
-    { label: "Online", sub: "녹색 원", status: "online" },
-    { label: "Away", sub: "노란 초승달", status: "away" },
-    { label: "Unavailable", sub: "빨강 + 흰 막대", status: "unavailable" },
-    { label: "Offline", sub: "회색 원", status: "offline" },
+    { label: "Online", sub: "Green dot", status: "online" },
+    { label: "Away", sub: "Yellow crescent", status: "away" },
+    { label: "Unavailable", sub: "Red dot + white bar", status: "unavailable" },
+    { label: "Offline", sub: "Gray dot", status: "offline" },
 ];
 
 const SIZES: AvatarSize[] = [
@@ -43,7 +43,7 @@ export default function AvatarStatusPreview() {
         <PreviewFrame minHeight="min(18vh, 680px)">
             <div className="flex flex-col gap-refineui-size-large">
                 <div>
-                    <p style={sectionLabel}>Presence 종류 (Figma Avatar/Status · 65:65)</p>
+                    <p style={sectionLabel}>Presence variants (Figma Avatar/Status · 65:65)</p>
                     <div className="flex flex-wrap justify-center gap-refineui-size-x-large gap-y-refineui-size-large">
                         {STATUS_ROWS.map(({ label, sub, status }) => (
                             <div

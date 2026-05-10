@@ -1,25 +1,25 @@
 ---
 title: Textarea
-description: 여러 줄 텍스트 입력
+description: Multi-line text input
 ---
 
 import TextareaPreview from "../../../components/TextareaPreview";
 
 # Textarea
 
-여러 줄 텍스트 입력입니다. Web Kit **Textarea** `529:5454` 기준으로 패딩은 **`sizeMedium` × `sizeSmall`**, 최소 높이는 **`controlTextareaMin`(80px)**, 타이포는 **body2**입니다. Input `md`와 좌우 패딩이 다를 수 있습니다(`docs/design-specs-web-kit.md` §2).
+Multi-line text input. Web Kit **Textarea** `529:5454`: padding **`sizeMedium` × `sizeSmall`**, min height **`controlTextareaMin`** (80px), typography **body2**. Horizontal padding may differ from Input `md` — see `docs/design-specs-web-kit.md` §2.
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import { Textarea } from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
-## 기본 사용
+## Basic usage
 
 ```tsx
-<Textarea name="bio" rows={4} placeholder="소개를 입력하세요" />
+<Textarea name="bio" rows={4} placeholder="Tell us about yourself" />
 ```
 
 ## Preview
@@ -30,24 +30,24 @@ import "@refineui/react/refineui.css";
 
 ## Props
 
-| Prop | 타입 | 기본값 | 설명 |
-|------|------|--------|------|
-| `error` | `boolean` | `false` | 에러 테두리 |
-| `success` | `boolean` | `false` | 성공 테두리 |
-| `fullWidth` | `boolean` | `false` | 너비 100% |
-| `disabled` | `boolean` | — | 비활성 |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `error` | `boolean` | `false` | Error border |
+| `success` | `boolean` | `false` | Success border |
+| `fullWidth` | `boolean` | `false` | Full width |
+| `disabled` | `boolean` | — | Disabled |
 
-나머지는 **`TextareaHTMLAttributes`** (`rows`, `cols`, `value`, `onChange`, `maxLength` 등)입니다.
+Remaining props follow **`TextareaHTMLAttributes`** (`rows`, `cols`, `value`, `onChange`, `maxLength`, etc.).
 
-## 예시
+## Examples
 
-### 제한 길이
+### Max length
 
 ```tsx
-<Textarea maxLength={500} placeholder="최대 500자" />
+<Textarea maxLength={500} placeholder="Up to 500 characters" />
 ```
 
-### 폼과 함께
+### In a form
 
 ```tsx
 <Textarea name="comment" required rows={3} defaultValue="" />

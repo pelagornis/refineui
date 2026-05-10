@@ -1,15 +1,15 @@
 ---
 title: Menu
-description: 메뉴 패널 — 키보드 탐색
+description: Menu panel — keyboard navigation
 ---
 
 import MenuPreview from "../../../components/MenuPreview";
 
 # Menu
 
-항목 목록만 있는 메뉴 패널입니다. Web Kit **Menu** `633:4268` (단순 텍스트 리스트)에 맞춥니다. **Dropdown**은 트리거+열기까지 포함하고, **Menu**는 패널만 둘 때 쓸 수 있습니다. **합성 드롭다운**(`Dropdown`, `DropdownTrigger`, …)은 [Dropdown](/components/dropdown/) 문서에 정리되어 있습니다.
+Menu panel with a list of items. Matches Web Kit **Menu** `633:4268` (simple text list). **Dropdown** includes trigger + open behavior; **Menu** is for **panel-only** use cases. Composed dropdowns (`Dropdown`, `DropdownTrigger`, …) are documented under [Dropdown](/components/dropdown/).
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import {
@@ -25,7 +25,7 @@ import {
 import "@refineui/react/refineui.css";
 ```
 
-## 기본 사용
+## Basic usage
 
 ```tsx
 <Menu positioning={{ autoSize: true }}>
@@ -35,12 +35,12 @@ import "@refineui/react/refineui.css";
   <MenuPopover>
     <MenuList>
       <MenuSection>Section Header</MenuSection>
-      <MenuItem>복사</MenuItem>
-      <MenuItem shortcut="Cmd+V">붙여넣기</MenuItem>
-      <MenuItem disabled>삭제</MenuItem>
+      <MenuItem>Copy</MenuItem>
+      <MenuItem shortcut="Cmd+V">Paste</MenuItem>
+      <MenuItem disabled>Delete</MenuItem>
       <MenuDivider />
-      <MenuSection>고급</MenuSection>
-      <MenuItem>환경설정</MenuItem>
+      <MenuSection>Advanced</MenuSection>
+      <MenuItem>Preferences</MenuItem>
     </MenuList>
   </MenuPopover>
 </Menu>
@@ -54,8 +54,8 @@ import "@refineui/react/refineui.css";
 
 ## Props
 
-| Prop | 타입 | 설명 |
-|------|------|------|
-| `positioning` | `{ autoSize?: boolean }` | popover 너비 자동 조절 옵션 |
+| Prop | Type | Description |
+|------|------|-------------|
+| `positioning` | `{ autoSize?: boolean }` | Optional auto-width for the popover |
 
-`Menu`는 `MenuTrigger`, `MenuPopover`, `MenuList`, `MenuItem`으로 조합하는 컴파운드 API만 사용합니다.
+`Menu` only exposes the compound API: `MenuTrigger`, `MenuPopover`, `MenuList`, `MenuItem`, etc.

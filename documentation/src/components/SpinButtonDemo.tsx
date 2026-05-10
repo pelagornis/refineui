@@ -19,7 +19,6 @@ export default function SpinButtonDemo() {
       >
         <div>
           <p style={{ margin: 0, marginBottom: spacings.sizeXSmall, fontSize: fontSizes.fontSize300 }}>Medium</p>
-          {/* 기본 `w-full`은 Preview가 본문 전폭이라 컨트롤도 가로로 꽉 차 보임 — 문서 예시만 intrinsic 폭 */}
           <SpinButton className="w-auto" value={a} onChange={setA} min={0} max={10} step={1} size="md" />
         </div>
         <div>

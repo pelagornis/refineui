@@ -1,21 +1,21 @@
 ---
 title: Progress
-description: 진행률 바 — sm / lg
+description: Progress bar — sm / lg
 ---
 
 import ProgressPreview from "../../../components/ProgressPreview";
 
 # Progress
 
-작업 진행 비율을 표시합니다. Web Kit **Progress bar** `452:3994`를 따릅니다.
+Shows task progress. Follows Web Kit **Progress bar** `452:3994`.
 
-## 설치·임포트
+## Install & import
 
 ```tsx
 import { Progress } from "@refineui/react";
 ```
 
-## 기본 사용
+## Basic usage
 
 ```tsx
 <Progress value={45} max={100} />
@@ -29,19 +29,19 @@ import { Progress } from "@refineui/react";
 
 ## Props
 
-| Prop | 타입 | 기본값 | 설명 |
-|------|------|--------|------|
-| `value` | `number` | (필수) | 현재 값 |
-| `max` | `number` | `100` | 최대값 |
-| `size` | `"sm"` \| `"lg"` | `"sm"` | 트랙 높이 (2px / 4px) |
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `number` | (required) | Current value |
+| `max` | `number` | `100` | Maximum |
+| `size` | `"sm"` \| `"lg"` | `"sm"` | Track height (2px / 4px) |
 
-채움 색은 Web Kit과 동일하게 `primaryBlack` 한 가지입니다.
+Fill color matches Web Kit: single `primaryBlack` tone.
 
-## 예시
+## Examples
 
-### 퍼센트 표시와 함께
+### With a percentage label
 
-진행률 숫자는 컴포넌트 밖에서 레이아웃합니다.
+Layout the label outside the component.
 
 ```tsx
 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>

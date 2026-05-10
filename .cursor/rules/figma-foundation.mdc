@@ -1,47 +1,47 @@
 ---
-description: Pelagornis RefineUI Foundation — Figma 디자인 토큰 단일 소스
+description: Pelagornis RefineUI Foundation — single source for Figma design tokens
 alwaysApply: true
 ---
 
-# Figma Foundation (디자인 토큰 단일 소스)
+# Figma Foundation (single source for design tokens)
 
-## 두 Figma 파일의 관계 (Foundation → Web Kit)
+## Two Figma files (Foundation → Web Kit)
 
-Figma에는 다음 **두 파일**이 있다. 관계를 이렇게 이해한다:
+There are **two** Figma files. Their relationship:
 
-| 파일 | 역할 |
+| File | Role |
 |------|------|
-| **Pelagornis RefineUI Foundation** | **Variables** 단일 소스 — 색, **spacing**, **padding**, radius, typography, shadow 등 모든 토큰 |
-| **Pelagornis RefineUI Web Kit** | **컴포넌트** — Foundation 변수를 **연결해** 사용해 조립한 UI |
+| **Pelagornis RefineUI Foundation** | **Variables** single source — color, **spacing**, **padding**, radius, typography, shadow, and all tokens |
+| **Pelagornis RefineUI Web Kit** | **Components** — UI assembled using **linked** Foundation variables |
 
-- **비유**: **Foundation → Web Kit** (Web Kit은 Foundation 위에 얹힌 컴포넌트 레이어).
-- **MUST**: Web Kit에 보이는 **모든 사이즈·padding·간격**은 **Foundation Variables와 연결된 값**이어야 한다. 임의 px·Foundation에 없는 간격을 Web Kit만의 규칙으로 두지 않는다. 필요한 값이 없으면 **Foundation을 먼저 갱신**한 뒤 `packages/tokens`에 반영한다.
+- **Model**: **Foundation → Web Kit** (Web Kit is the component layer on top of Foundation).
+- **MUST**: Every **size·padding·gap** visible in Web Kit must be **linked to Foundation Variables**. Do not invent arbitrary px or gaps that skip Foundation. If a value is missing, **update Foundation first**, then mirror it in `packages/tokens`.
 
-## Foundation URL
+## Foundation URLs
 
-**Figma Foundation (Pelagornis RefineUI) — Variables/토큰:**
+**Figma Foundation (Pelagornis RefineUI) — Variables/tokens:**
 https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundation?node-id=1-650
 
-**Pelagornis RefineUI Web Kit (컴포넌트):**
+**Pelagornis RefineUI Web Kit (components):**
 https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?node-id=0-1
 
-(`node-id=7-6` 등은 파일 내 **특정 예시 페이지**(예: Accordion)만 연다. 컴포넌트 스펙은 MCP `search_design_system` + 해당 컴포넌트 `node-id`의 `get_design_context`로 본다 — 예: **Breadcrumb** `283:688`, **Breadcrumb/BreadcrumbItem** 변형 `279:2539` / `289:41` / `289:44`.)
+(`node-id=7-6` etc. open **example pages** inside the file only, e.g. Accordion. For component specs use MCP `search_design_system` + `get_design_context` on that component’s `node-id` — e.g. **Breadcrumb** `283:688`, **Breadcrumb/BreadcrumbItem** variants `279:2539` / `289:41` / `289:44`.)
 
-## 규칙
+## Rules
 
-### 컴포넌트 ↔ Figma Web Kit
+### Components ↔ Figma Web Kit
 
-- **MUST**: `packages/react` 등 UI 컴포넌트는 **Pelagornis RefineUI Web Kit** Figma에 있는 **해당 컴포넌트·변형·프로퍼티 범위와 동일**해야 한다. Figma에 없는 변형, props, 슬롯(`children`) 오버라이드, orientation 등 **추가 API·동작은 넣지 않는다**. 구현 전·리뷰 시 해당 노드의 `get_design_context` 등으로 스펙을 확인한다.
-- **MUST**: 컴포넌트 **내부 스타일·치수**는 디자인 토큰만 쓴다. 색·간격·타이포·선·반경·그림자·z-index·`iconSizes`는 **`@refineui/tokens`**, Foundation `Global/Size`·Web Kit 컴포넌트 치수는 **`@refineui/react`의 `foundationSizes` / `componentSizes`**에서 참조하고, 임의 숫자·hex·rgb 하드코딩 금지. (세부: `.cursor/rules/tokens-in-components.mdc`.)
+- **MUST**: UI in `packages/react` must match **Pelagornis RefineUI Web Kit** — same **component·variants·property scope**. Do **not** add variants, props, slot (`children`) overrides, orientation, or other **extra APIs or behavior** not in Figma. Before implementation and in review, confirm spec via `get_design_context` on that node.
+- **MUST**: **Internal styles and dimensions** use design tokens only. Color·spacing·typography·stroke·radius·shadow·z-index·`iconSizes` come from **`@refineui/tokens`**; Foundation `Global/Size` and Web Kit component dimensions from **`foundationSizes` / `componentSizes`** in `@refineui/react`. No arbitrary numbers, hex, or rgb in components. (Details: `.cursor/rules/tokens-in-components.mdc`.)
 
-### Foundation · 토큰 동기화
+### Foundation · token sync
 
-- **MUST**: UI/디자인 관련 작업 시 **Foundation Variables**를 **단일 소스**로 참조한다. Web Kit은 **항상 Foundation과 연결된 수치**만 사용한다. `packages/tokens`는 이 Foundation과 동기화된 상태를 유지한다.
-- **MUST**: 새 토큰(color, spacing, typography, radius, shadow 등) 추가 시 Foundation에 정의된 값과 일치시킬 것. Foundation에 없는 값은 Foundation 업데이트 후 반영.
-- **MUST**: Figma MCP 사용 시 `get_variable_defs` 또는 `get_design_context`로 위 URL(또는 특정 node-id)을 전달해 Foundation 토큰/스타일을 조회.
-- **RECOMMENDED**: Foundation 변경 시 `packages/tokens/src/global/*.ts`를 수동 또는 도구로 동기화.
+- **MUST**: For UI/design work, treat **Foundation Variables** as the **single source**. Web Kit must **always** use values **linked to Foundation**. Keep `packages/tokens` in sync with Foundation.
+- **MUST**: When adding tokens (color, spacing, typography, radius, shadow, etc.), align with Foundation definitions. Values not in Foundation require a Foundation update first, then code.
+- **MUST**: With Figma MCP, pass the URLs above (or a specific node-id) to `get_variable_defs` or `get_design_context` to read Foundation tokens/styles.
+- **RECOMMENDED**: After Foundation changes, sync `packages/tokens/src/global/*.ts` manually or with tooling.
 
-## 토큰 패키지 구조
+## Token package layout
 
 - `packages/tokens/src/global/colors.ts` — Palette
 - `packages/tokens/src/global/fonts.ts` — fontFamilies, fontSizes, fontWeights, lineHeights
