@@ -1,6 +1,6 @@
 # Packages — RefineUI monorepo layout
 
-RefineUI is a **pnpm workspace** monorepo.  
+RefineUI is a **workspace monorepo** (pnpm or Bun).  
 The `packages/` directory is **kept as-is** and is not treated as something to restructure in AI prompt guides.
 
 ---
@@ -19,12 +19,12 @@ The `packages/` directory is **kept as-is** and is not treated as something to r
 ## Policy: keep `packages/` stable
 
 - **No structural moves**: do not add/remove/move packages inside `packages/` as part of routine AI tasks.
-- **Dependencies**: respect `pnpm-workspace.yaml` and each package’s `package.json` exports.
+- **Dependencies**: respect `pnpm-workspace.yaml` / `package.json` workspaces and each package’s `package.json` exports.
 - **AI scope**: work requested via the prompt guide is limited to edits **inside** existing packages (e.g. add components in `packages/react`, edit tokens in `packages/tokens`).
 
 ---
 
 ## See also
 
-- Workspace definition: `pnpm-workspace.yaml`
-- Root config: `package.json`, `tsconfig.base.json`, `tsconfig.json`
+- Workspace definition: `pnpm-workspace.yaml`, root `package.json` `workspaces`
+- Root config: `package.json`, `bunfig.toml`, `tsconfig.base.json`, `tsconfig.json`

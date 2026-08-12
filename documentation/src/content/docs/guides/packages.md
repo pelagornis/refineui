@@ -5,13 +5,13 @@ description: RefineUI monorepo packages and builds
 
 # Project structure
 
-RefineUI is a **pnpm workspace** monorepo. Running scripts from the root builds packages in order.
+RefineUI is a **workspace monorepo** (pnpm or Bun). Running scripts from the root builds packages in order.
 
 ## Directory overview
 
 | Path | Role |
 | ---- | ---- |
-| `packages/tokens` | `@refineui/tokens` — TS tokens; `pnpm build` emits `css-variables` / `tailwind-theme`; Tailwind utilities use the `refineui-*` prefix |
+| `packages/tokens` | `@refineui/tokens` — TS tokens; `build` emits `css-variables` / `tailwind-theme`; Tailwind utilities use the `refineui-*` prefix |
 | `packages/react` | `@refineui/react` — UI components + `refineui.css` |
 | `packages/utilities` | `@refineui/utilities` — shared utilities |
 | `documentation` | Astro + Starlight **this site** |
@@ -33,17 +33,22 @@ RefineUI is a **pnpm workspace** monorepo. Running scripts from the root builds 
 From the repo root:
 
 ```bash
+# Bun
+bun install
+bun run build
+
+# or pnpm
 pnpm install
 pnpm build
 ```
 
-Order is **`tokens` → `react`** (see root `package.json` `build` script).
+Order is **`utilities` → `tokens` → `react`** (see root `package.json` `build` script).
 
 ## Documentation site
 
 ```bash
-pnpm docs        # dev server
-pnpm docs:build  # static build (includes tokens + react build)
+bun run docs        # or: pnpm docs
+bun run docs:build  # or: pnpm docs:build — static build (includes package builds)
 ```
 
 ## Single source of truth

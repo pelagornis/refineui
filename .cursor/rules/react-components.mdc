@@ -1,0 +1,12 @@
+---
+alwaysApply: false
+description: React component implementation rules for RefineUI
+globs: ["packages/react/**/*.{tsx,ts}"]
+---
+
+- Functional components + hooks
+- Define props with interface; avoid `any`
+- Match Web Kit Figma variants and property scope exactly
+- Use @refineui/tokens and componentSizes/foundationSizes only — no hardcoded design values
+- Composable subcomponent API only — no convenience props
+- Consider a11y: semantics, ARIA, keyboard, focus

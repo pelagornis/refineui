@@ -1001,7 +1001,7 @@ a[data-refineui="link"]:focus-visible {
   border-radius: 2px;
 }
 
-/* Card — Web Kit `Card` `394:865` (State: Default / Hover / Pressed / Disabled) */
+/* Card — Web Kit COMPONENT_SET `Card` `394:865` (State: Default / Hover / Pressed / Disabled); Header px `sizeXLarge` py `sizeLarge`, Footer `p` `sizeMedium`, elevated = Shadow 4, radius `roundedXXLarge` */
 [data-refineui="card"] {
   transition: background-color var(--refineui-motion-duration-fast), border-color var(--refineui-motion-duration-fast);
 }

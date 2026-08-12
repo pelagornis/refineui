@@ -1,21 +1,21 @@
 ---
+alwaysApply: false
 description: React components take design values only from @refineui/tokens and @refineui/react (componentSizes)
+globs: ["packages/react/**/*.{ts,tsx}"]
 ---
 
 # Tokens in components (`@refineui/react`)
 
-In Figma the flow is **Foundation → Web Kit**. **Color·padding·spacing·radius** are all tied to Foundation; in code reference them only via `@refineui/tokens`.
+In Figma the flow is **Foundation → Web Kit**. Color·padding·spacing·radius are tied to Foundation; in code reference them only via `@refineui/tokens`.
 
-Component **scope and variants** must match **Web Kit Figma** — see「Components ↔ Figma Web Kit」in `.cursor/rules/figma-foundation.mdc`.
+Component **scope and variants** must match **Web Kit Figma** — see `figma-foundation` rule.
 
 ## MUST
-
-- **Color·spacing·radius·stroke·typography presets·shadow·z-index** come only from `@refineui/tokens`: `colors`, `spacings`, `borderRadii`, `strokeWidths`, `typographys`, `shadows` / `toBoxShadow`, `zIndex`, `fontSizes`, etc.
+- **Color·spacing·radius·stroke·typography·shadow·z-index** come only from `@refineui/tokens`.
 - **Foundation `Global/Size/{n}` scale** is referenced only via **`foundationSizes`** in `@refineui/react`.
-- **Per–Web Kit component dimensions** come only from **`componentSizes`** (values **match Web Kit spec**). **Icon glyph pixels (WebIcon `size`)** use **`iconSizes`** from `@refineui/tokens`; **modal scrim** uses `overlays`.
-- **No hardcoding**: no arbitrary `px`, `#hex`, or `rgb()` in component styles. (Exceptions: literal `0`, `minWidth: 0`, positioning tricks where zero is intentional.)
-- When new dimensions are needed, add them to `foundationSizes` (Foundation `Global/Size`) or `componentSizes` (Web Kit–specific) per Figma spec, then reference. Values missing from spec require Foundation/Web Kit updates first.
+- **Per–Web Kit component dimensions** come only from **`componentSizes`**. **Icon glyph pixels** use **`iconSizes`** from `@refineui/tokens`; **modal scrim** uses `overlays`.
+- **No hardcoding**: no arbitrary `px`, `#hex`, or `rgb()` in component styles. (Exceptions: literal `0`, `minWidth: 0`.)
+- When new dimensions are needed, add them to `foundationSizes` or `componentSizes` per Figma spec first.
 
 ## RECOMMENDED
-
-- In documentation Previews, prefer the same tokens and semantic colors; avoid demo-only arbitrary hex.
+- In documentation Previews, prefer the same tokens and semantic colors.

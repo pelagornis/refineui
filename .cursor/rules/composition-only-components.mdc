@@ -1,20 +1,22 @@
-# Composition-Only Component API
+---
+alwaysApply: false
+description: RefineUI component APIs are composable only — no convenience prop APIs
+globs: ["packages/react/**/*.{ts,tsx}"]
+---
 
-## Purpose
+# Composition-Only Component API
 
 RefineUI component APIs are **composable only**.
 
 ## Rules
-
 - **MUST**: Components must be usable via slot/subcomponent composition.
-- **MUST NOT**: Do not add new “convenience” prop APIs like `title`, `description`, `items`, `actions`, `onClose`.
+- **MUST NOT**: Do not add convenience prop APIs like `title`, `description`, `items`, `actions`, `onClose`.
 - **MUST NOT**: Do not add single-prop render paths that bypass existing composition.
 - **MUST**: Root components are containers only; actual UI is split into subcomponents.
 - **MUST**: State/presentation/behavior extensions are exposed via subcomponents (e.g. `ComponentHeader`, `ComponentBody`, `ComponentAction`).
 - **MUST**: Documentation examples show the composable API only.
 
 ## Migration
-
 - Remove legacy convenience APIs incrementally.
 - When removing, update `packages/react/src/index.ts`, each component `index.ts`, and docs previews/mdx together.
 - Validate with `@refineui/react` and `@refineui/documentation` builds after changes.

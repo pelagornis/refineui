@@ -162,15 +162,23 @@ field rules.
 
 ---
 
-## 7. Card — Web Kit COMPONENT_SET `Card` (confirm node-id in file via MCP `search_design_system` "Card" + `get_design_context`)
+## 7. Card — Web Kit COMPONENT_SET `Card` `394:865`
 
-| Property         | elevated                               | outlined                       |
-| ---------------- | -------------------------------------- | ------------------------------ |
-| **background**   | `neutralWhite`                         | `neutralWhite`                 |
-| **padding**      | `sizeLarge` (16px)                     | same                           |
-| **borderRadius** | `roundedLarge` (8px)                   | same                           |
-| **shadow**       | `shadows.shadow8Light` (`toBoxShadow`) | none                           |
-| **border**       | none                                   | `strokeWidthThin` `neutral300` |
+| Property         | elevated                                                       | outlined                       |
+| ---------------- | -------------------------------------------------------------- | ------------------------------ |
+| **background**   | `neutralWhite` / alias `backgroundPrimary` per state           | `neutralWhite`                 |
+| **borderRadius** | `roundedXXLarge` (16px)                                        | same                           |
+| **shadow**       | `shadows.shadow4Light` (`toBoxShadow`) — Elevation Shadow 4    | none                           |
+| **border**       | none                                                           | `strokeWidthThin` `neutral300` |
+
+**Regions (MCP `394:853` / `Card / Header` · `Card / Footer`):**
+
+| Slot            | Padding / gap                                                                 |
+| --------------- | ------------------------------------------------------------------------------- |
+| **Card / Header** | Horizontal `sizeXLarge` (20px), vertical `sizeLarge` (16px) — `py`, not `pt` only |
+| **Card / Content** | Match header horizontal inset: `sizeXLarge`; vertical per layout (default body uses bottom `sizeLarge` in React) |
+| **Card / Footer** | `sizeMedium` (10px) on all sides                                              |
+| **Title ↔ description** | `sizeXSmall` (4px) gap in **CardHeaderMain**                                |
 
 ---
 
@@ -585,7 +593,7 @@ variant is **Large** (`lg`).
 - **Button**: `shadow2Light` (key + ambient)
 - **Toast**: `shadow4Light` (key + ambient)
 - **Tooltip**: `shadow8Light`
-- **Card (elevated)**: `shadow8Light`
+- **Card (elevated)**: `shadow4Light`
 
 Shadow levels: shadow2, shadow4, shadow8, shadow16, shadow24, shadow32, shadow64  
 Per level: Lighter, Light, (default), Dark, Darker
@@ -758,10 +766,13 @@ Type variants are distinguished in React via `data-variant` only.
     "separator": "/"
   },
   "card": {
-    "padding": "16px",
-    "borderRadius": "8px",
-    "elevated": { "shadow": "shadow8Light" },
-    "outlined": { "border": "1px solid neutral300" }
+    "node": "394:865",
+    "borderRadius": "roundedXXLarge (16px)",
+    "elevated": { "shadow": "shadow4Light" },
+    "outlined": { "border": "1px solid neutral300" },
+    "header": "px sizeXLarge, py sizeLarge",
+    "footer": "p sizeMedium",
+    "note": "Spec §7 JSON previously listed 8px radius + shadow8 — Web Kit file uses 16px radius + Shadow 4"
   },
   "checkbox": {
     "node": "327:2539",

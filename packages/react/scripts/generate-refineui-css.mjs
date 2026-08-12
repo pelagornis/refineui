@@ -5,7 +5,7 @@
  * - refineui-typography.css — @utility refineui-typo-*
  *
  * Merges `@refineui/tokens` build output + `componentSizes` to finish layout dimension vars.
- * Run: `pnpm --filter @refineui/react build` (after tsup).
+ * Run: workspace build for `@refineui/react` (after tsup).
  */
 import { writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";

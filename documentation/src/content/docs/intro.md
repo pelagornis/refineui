@@ -24,6 +24,8 @@ description: Pelagornis RefineUI Web Kit — design system React components
 Example for apps outside this monorepo:
 
 ```bash
+bun add @refineui/react @refineui/tokens
+# or
 pnpm add @refineui/react @refineui/tokens
 # or
 npm install @refineui/react @refineui/tokens

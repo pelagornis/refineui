@@ -21,7 +21,7 @@ Thumbs.db
 .env.*
 !.env.example
 # Local config overrides
-prompt.config.local.js
+prompt-guide.local.yml
 *.local.yml
 # Logs / temp
 *.log
@@ -30,6 +30,7 @@ temp/
 .cache/
 # Dependencies
 node_modules/
+.bun/
 
 # prompt-guide (Web)
 # Build output

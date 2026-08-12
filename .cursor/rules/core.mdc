@@ -1,0 +1,19 @@
+---
+alwaysApply: true
+---
+
+# Core rules
+
+## Execution principles
+- Validate assumptions before acting. Read existing code first.
+- Minimal change principle. Reuse before implementing.
+- Present a plan before changes; proceed after confirmation.
+
+## Forbidden
+- Hardcoding hex/rgba or arbitrary px in component styles
+- Adding component variants, props, or APIs not in Figma Web Kit
+- Convenience prop APIs (title, description, items, actions, onClose)
+- Secrets, keys, or tokens in code, commits, or comments
+- Changing packages/ layout or restructuring monorepo packages
+- Using any type in TypeScript
+- Changing dependency versions arbitrarily

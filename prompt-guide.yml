@@ -1,0 +1,234 @@
+version: "1"
+
+project:
+  name: refineui
+  type: web-react
+  description: RefineUI — React/TypeScript web UI library monorepo (packages/react, packages/tokens, packages/utilities, packages/version)
+
+tools:
+  claude_code: false
+  codex: false
+  cursor: true
+
+context:
+  tech_stack:
+    - React
+    - TypeScript
+    - pnpm workspace
+    - "@refineui/tokens"
+    - Figma Foundation / Web Kit
+
+  summary: |
+    RefineUI is a React/TypeScript web UI library monorepo.
+    Packages: packages/react, packages/tokens, packages/utilities, packages/version.
+    Keep the packages/ layout unchanged. Follow existing exports, peer dependencies, and patterns.
+    Respond in the user's chosen language. When referring to code, give path and line.
+    Minimal change principle — reuse before implementing; preserve existing behavior unless requested.
+
+  path_rules:
+    - name: system-core
+      path: ["**/*"]
+      description: Base rules for all prompts (required)
+      content: |
+        # System Core (required rules)
+
+        ## Scope
+        MUST: Apply identically across the monorepo. Language and framework neutral where possible.
+
+        ## Role and response
+        MUST: Understand the request, reflect context, and only provide actionable results.
+        MUST: For ambiguous requirements, pick one reasonable interpretation, state it, then proceed.
+        MUST: Structure responses (steps, code blocks, file:line references).
+
+        ## Code quality
+        MUST: Naming must reveal intent. No magic numbers or strings — use constants or config.
+        MUST: Keep existing indentation, quotes, naming, and directory structure. New code must follow existing patterns.
+        MUST: Functions and classes have single responsibility. No repeated logic — extract to shared utils/components.
+        MUST: Minimize dependencies. Respect pnpm-lock.yaml; do not change versions arbitrarily.
+
+        ## Web — RefineUI (required)
+        MUST: Follow React/TypeScript conventions. Monorepo packages: react, tokens, utilities, version.
+        MUST: Follow existing package exports and peer dependencies. New code must match existing patterns.
+        MUST: Consider a11y (semantics, ARIA, keyboard, focus), responsive layout. Keep component API consistent with @refineui/*.
+        MUST NOT: Ship secrets in client code or build output. Consider XSS, CORS, CSP. No PII in logs or errors.
+
+        ## Security
+        MUST NOT: Put secrets, keys, or tokens in code, commits, or comments. Use env or a secret manager only.
+        MUST: Validate user and external input before use.
+        MUST NOT: Include secrets or PII in logs, errors, or responses.
+
+        ## Errors and robustness
+        MUST: Always consider failure cases: network, files, API, bad input, timeouts.
+        MUST: Error messages must be specific enough to debug.
+
+        ## Documentation and maintenance
+        MUST: Comments explain "why" only. Document public APIs.
+        MUST: Do not make breaking or behavior changes without checking call sites and compatibility.
+
+        ## Collaboration and checks
+        MUST: Before submitting — style match, error handling, no secrets, tests/validation, existing behavior preserved.
+
+        ## Exceptions
+        Only relax a rule when the user explicitly says so.
+
+    - name: figma-foundation
+      path: ["packages/react/**", "packages/tokens/**"]
+      description: Pelagornis RefineUI Foundation — single source for Figma design tokens
+      content: |
+        # Figma Foundation (single source for design tokens)
+
+        ## Two Figma files (Foundation → Web Kit)
+
+        | File | Role |
+        |------|------|
+        | **Pelagornis RefineUI Foundation** | **Variables** single source — color, spacing, padding, radius, typography, shadow, and all tokens |
+        | **Pelagornis RefineUI Web Kit** | **Components** — UI assembled using **linked** Foundation variables |
+
+        - **Model**: Foundation → Web Kit (Web Kit is the component layer on top of Foundation).
+        - **MUST**: Every size·padding·gap visible in Web Kit must be **linked to Foundation Variables**. Do not invent arbitrary px or gaps. If a value is missing, update Foundation first, then mirror it in `packages/tokens`.
+
+        ## Foundation URLs
+
+        **Figma Foundation (Variables/tokens):**
+        https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundation?node-id=1-650
+
+        **Pelagornis RefineUI Web Kit (components):**
+        https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?node-id=0-1
+
+        For component specs use MCP `search_design_system` + `get_design_context` on that component's node-id.
+
+        ## Rules
+
+        ### Components ↔ Figma Web Kit
+        - **MUST**: UI in `packages/react` must match **Pelagornis RefineUI Web Kit** — same component·variants·property scope. Do **not** add variants, props, slot overrides, orientation, or other extra APIs not in Figma. Confirm spec via `get_design_context` before implementation and in review.
+        - **MUST**: Internal styles and dimensions use design tokens only. See `tokens-in-components` rule.
+
+        ### Foundation · token sync
+        - **MUST**: Treat Foundation Variables as the single source. Keep `packages/tokens` in sync with Foundation.
+        - **MUST**: When adding tokens, align with Foundation definitions. Values not in Foundation require a Foundation update first, then code.
+        - **MUST**: With Figma MCP, pass the URLs above (or a specific node-id) to `get_variable_defs` or `get_design_context`.
+        - **RECOMMENDED**: After Foundation changes, sync `packages/tokens/src/global/*.ts` manually or with tooling.
+
+        ## Token package layout
+        - `packages/tokens/src/global/colors.ts` — Palette
+        - `packages/tokens/src/global/fonts.ts` — fontFamilies, fontSizes, fontWeights, lineHeights
+        - `packages/tokens/src/global/spacings.ts` — sizeNone ~ sizeXXXLarge
+        - `packages/tokens/src/global/strokeWidths.ts` — strokeWidthNone ~ strokeWidthThickest
+        - `packages/tokens/src/global/borderRadii.ts` — roundedNone ~ roundedCircle
+        - `packages/tokens/src/global/shadows.ts` — shadow2~64, shadowColors
+        - `packages/tokens/src/global/typographys.ts` — heading1~4, title1~3, body1~4, caption1~3
+        - `packages/tokens/src/global/zIndex.ts` — zIndexBackground ~ zIndexDebug
+        - `packages/tokens/src/global/textAlignments.ts` — start, center, end, justify
+
+    - name: tokens-in-components
+      path: ["packages/react/**/*.{ts,tsx}"]
+      description: React components take design values only from @refineui/tokens and @refineui/react (componentSizes)
+      content: |
+        # Tokens in components (`@refineui/react`)
+
+        In Figma the flow is **Foundation → Web Kit**. Color·padding·spacing·radius are tied to Foundation; in code reference them only via `@refineui/tokens`.
+
+        Component **scope and variants** must match **Web Kit Figma** — see `figma-foundation` rule.
+
+        ## MUST
+        - **Color·spacing·radius·stroke·typography·shadow·z-index** come only from `@refineui/tokens`.
+        - **Foundation `Global/Size/{n}` scale** is referenced only via **`foundationSizes`** in `@refineui/react`.
+        - **Per–Web Kit component dimensions** come only from **`componentSizes`**. **Icon glyph pixels** use **`iconSizes`** from `@refineui/tokens`; **modal scrim** uses `overlays`.
+        - **No hardcoding**: no arbitrary `px`, `#hex`, or `rgb()` in component styles. (Exceptions: literal `0`, `minWidth: 0`.)
+        - When new dimensions are needed, add them to `foundationSizes` or `componentSizes` per Figma spec first.
+
+        ## RECOMMENDED
+        - In documentation Previews, prefer the same tokens and semantic colors.
+
+    - name: composition-only-components
+      path: ["packages/react/**/*.{ts,tsx}"]
+      description: RefineUI component APIs are composable only — no convenience prop APIs
+      content: |
+        # Composition-Only Component API
+
+        RefineUI component APIs are **composable only**.
+
+        ## Rules
+        - **MUST**: Components must be usable via slot/subcomponent composition.
+        - **MUST NOT**: Do not add convenience prop APIs like `title`, `description`, `items`, `actions`, `onClose`.
+        - **MUST NOT**: Do not add single-prop render paths that bypass existing composition.
+        - **MUST**: Root components are containers only; actual UI is split into subcomponents.
+        - **MUST**: State/presentation/behavior extensions are exposed via subcomponents (e.g. `ComponentHeader`, `ComponentBody`, `ComponentAction`).
+        - **MUST**: Documentation examples show the composable API only.
+
+        ## Migration
+        - Remove legacy convenience APIs incrementally.
+        - When removing, update `packages/react/src/index.ts`, each component `index.ts`, and docs previews/mdx together.
+        - Validate with `@refineui/react` and `@refineui/documentation` builds after changes.
+
+    - name: react-components
+      path: ["packages/react/**/*.{tsx,ts}"]
+      description: React component implementation rules for RefineUI
+      content: |
+        - Functional components + hooks
+        - Define props with interface; avoid `any`
+        - Match Web Kit Figma variants and property scope exactly
+        - Use @refineui/tokens and componentSizes/foundationSizes only — no hardcoded design values
+        - Composable subcomponent API only — no convenience props
+        - Consider a11y: semantics, ARIA, keyboard, focus
+
+  skills:
+    - name: review
+      description: Code review with RefineUI checklist. Invoke when reviewing diffs or PRs.
+      allowed_tools: [Read, Grep, Glob, "Bash(git:*)"]
+      auto_invoke: false
+      prompt: |
+        # Review (required criteria)
+
+        ## Scope
+        MUST: Review all of — full diff, new dependencies, config and env changes.
+        MUST NOT: Approve changes that add/remove/restructure packages/ — packages structure is fixed.
+
+        ## Checklist (report only violations as file:line)
+        1. Consistency: match existing naming, style, layout, patterns.
+        2. Quality: single responsibility, no duplication, no magic values.
+        3. Security: no secrets in code or logs; input validation required.
+        4. Errors: failure cases, timeouts considered; error messages specific.
+        5. Compatibility: no breaking API or behavior without documentation.
+        6. Figma alignment: components match Web Kit spec; tokens from Foundation only.
+
+        ## Output format
+        MUST: Summary in 1–2 sentences (Approve / Conditional approve / Request changes).
+        MUST: Only violated items as file:line and concrete description.
+        If any item fails, conclude "Request changes".
+
+    - name: design-system
+      description: UI/design/token work using Figma Foundation. Invoke for design token or component spec tasks.
+      allowed_tools: [Read, Write, Grep, Glob]
+      auto_invoke: false
+      paths: ["packages/react/**", "packages/tokens/**"]
+      prompt: |
+        # Design System (Figma Foundation based)
+
+        Apply system-core + figma-foundation + tokens-in-components rules.
+
+        ## Foundation (single source)
+        - Figma: https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundation?node-id=1-650
+        - Code: packages/tokens/src/global/*.ts
+
+        ## Rules
+        MUST: Use color, spacing, typography, stroke, radius, shadow only from Foundation or @refineui/tokens.
+        MUST: New components/styles match tokens defined in Foundation. Confirm before adding values not in Foundation.
+        MUST NOT: Hardcode hex/rgba or px. Import tokens instead.
+        MUST: When pulling design via Figma MCP pass the Foundation URL or the relevant node-id.
+
+  agents: []
+
+  forbidden:
+    - "Hardcoding hex/rgba or arbitrary px in component styles"
+    - "Adding component variants, props, or APIs not in Figma Web Kit"
+    - "Convenience prop APIs (title, description, items, actions, onClose)"
+    - "Secrets, keys, or tokens in code, commits, or comments"
+    - "Changing packages/ layout or restructuring monorepo packages"
+    - "Using any type in TypeScript"
+    - "Changing dependency versions arbitrarily"
+
+  cursor:
+    always_apply_rules:
+      - system-core
+      - figma-foundation

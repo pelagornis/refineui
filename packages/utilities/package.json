@@ -5,11 +5,11 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "pnpm run build:color && pnpm run build:animation && pnpm run build:react && pnpm run build:index",
-    "build:color": "pnpm exec tsup src/color.ts --format cjs,esm --dts --clean --out-dir lib --external react --external react-dom",
-    "build:animation": "pnpm exec tsup src/animation.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom",
-    "build:react": "pnpm exec tsup src/react.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom",
-    "build:index": "pnpm exec tsup src/index.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom"
+    "build": "tsup src/color.ts --format cjs,esm --dts --clean --out-dir lib --external react --external react-dom && tsup src/animation.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom && tsup src/react.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom && tsup src/index.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom",
+    "build:color": "tsup src/color.ts --format cjs,esm --dts --clean --out-dir lib --external react --external react-dom",
+    "build:animation": "tsup src/animation.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom",
+    "build:react": "tsup src/react.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom",
+    "build:index": "tsup src/index.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom"
   },
   "exports": {
     ".": {"types": "./lib/index.d.ts", "import": "./lib/index.js", "require": "./lib/index.cjs"},

@@ -2,13 +2,14 @@
   "name": "@refineui/project",
   "version": "0.0.0",
   "private": true,
-  "workspaces": ["packages", "documentation", "examples"],
+  "workspaces": ["packages/*", "documentation"],
   "scripts": {
-    "build": "pnpm run build:tokens && pnpm run build:react",
-    "build:tokens": "pnpm --filter @refineui/tokens build",
-    "build:react": "pnpm --filter @refineui/react build",
-    "docs": "pnpm --filter @refineui/documentation dev",
-    "docs:build": "pnpm run build && pnpm --filter @refineui/documentation build"
+    "build": "node scripts/ws.mjs @refineui/utilities build && node scripts/ws.mjs @refineui/tokens build && node scripts/ws.mjs @refineui/react build",
+    "build:utilities": "node scripts/ws.mjs @refineui/utilities build",
+    "build:tokens": "node scripts/ws.mjs @refineui/tokens build",
+    "build:react": "node scripts/ws.mjs @refineui/react build",
+    "docs": "node scripts/ws.mjs @refineui/documentation dev",
+    "docs:build": "node scripts/ws.mjs @refineui/utilities build && node scripts/ws.mjs @refineui/tokens build && node scripts/ws.mjs @refineui/react build && node scripts/ws.mjs @refineui/documentation build"
   },
   "devDependencies": {
     "@changesets/cli": "^2.28.1",
