@@ -12,13 +12,26 @@ https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?
 
 ---
 
+## Typography token model
+
+| Layer | Package | Example |
+| ----- | ------- | ------- |
+| **Foundation** | `@refineui/tokens` `typographys` | `body2` → 14px / 20px / medium |
+| **Semantic** | `@refineui/tokens` `SEMANTIC_TEXT` | `bodyMd` → `body2` |
+| **Component** | `@refineui/react` `componentTypographyTokens` | `formControl.md` → `bodyMd` |
+| **CSS** | `refineui-typo-*` utility + `--refineui-text-body-md-*` aliases | `semanticTextClass('bodyMd')` |
+
+Shared control scale (`sm` / `md` / `lg`): **label** caption1 · body2 · body1 — **form control** body3 · body2 · body1 — **button** body3 · body1 · subTitle1.
+
+---
+
 ## 1. Button — Web Kit `79:3304` (COMPONENT_SET)
 
 | Property                 | sm                                        | md                                  | lg                                   |
 | ------------------------ | ----------------------------------------- | ----------------------------------- | ------------------------------------ |
 | **minHeight**            | `componentSizes.buttonMinHeightSm` (28px) | `buttonMinHeightMd` (36px)          | `buttonMinHeightLg` (48px)           |
-| **padding (Label)**      | `sizeXSmall` `sizeMedium` (4px 10px)      | `sizeSmall` `sizeMedium` (6px 10px) | `sizeMedium` `sizeLarge` (10px 16px) |
-| **gap** (label · icon)   | `sizeXSmall` (4px)                        | same                                | same                                 |
+| **padding (Label)**      | `sizeXXSmall` `sizeMedium` (4px 10px)      | `sizeXSmall` `sizeMedium` (6px 10px) | `sizeMedium` `sizeLarge` (10px 16px) |
+| **gap** (label · icon)   | `sizeXXSmall` (4px)                        | same                                | same                                 |
 | **borderRadius**         | `roundedSmall` (4px)                      | `roundedMedium` (6px)               | `roundedLarge` (8px)                 |
 | **typography**           | body3 (14/20)                             | body1 (16/24)                       | subTitle1 (20/28 Semi Bold)          |
 
@@ -40,21 +53,21 @@ Interactions (hover·pressed·disabled) match **`refineui.css`** `[data-refineui
 
 ## 2. Input — Web Kit `518:7373` (COMPONENT_SET)
 
-| Property         | sm                                      | md                                      | lg                                      |
+| Property         | sm                                      | md                                      | lg (default)                            |
 | ---------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- |
-| **minHeight**    | `componentSizes.controlHeightSm` (32px) | `componentSizes.controlHeightMd` (40px) | `componentSizes.controlHeightLg` (48px) |
-| **padding**      | `sizeSmall` `sizeMedium` (6px 10px)     | `sizeMedium` `sizeLarge` (10px 16px)    | `sizeLarge` (16px all sides)            |
-| **borderRadius** | `roundedMedium` (6px)                   | `roundedLarge` (8px)                    | `roundedXLarge` (12px)                  |
-| **typography**   | `caption1`                              | `body2`                                 | `body1`                                 |
+| **minHeight**    | `componentSizes.controlHeightSm` (36px) | `componentSizes.controlHeightMd` (44px) | `componentSizes.controlHeightLg` (52px) |
+| **padding**      | `sizeXSmall` `sizeMedium` (6px 10px)     | `sizeMedium` `sizeLarge` (10px 16px)    | `sizeLarge` `sizeXLarge` (16px 20px)    |
+| **borderRadius** | `roundedLarge` (8px)                    | `roundedXLarge` (12px)                  | `roundedXXLarge` (16px)                 |
+| **typography**   | `body3`                                 | `body2`                                 | `body1`                                 |
 
 Default border `strokeWidthThin` `neutral300`, error `red500`, success `green500`, disabled fill
-`neutral150` — `packages/react` `Input`·`refineui.css` `[data-refineui="input"]`.
+`neutral150` — shared **`formControlSizes.ts`** for Input / Select trigger / SpinButton; interactions in **`refineui.css`** `[data-refineui="input"]` · `[data-refineui="select-trigger"]`.
 
 ### Select / Textarea
 
 | Property           | Select                                                                                      | Textarea                                                                                                                                                                                                                                               |
 | ------------------ | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Current impl.**  | Same `size` `sm` / `md` / `lg` as **Input** `518:7373` (default `md`) — same tokens as Input table above | Web Kit **Textarea** `529:5454` (COMPONENT_SET): `minHeight` `componentSizes.controlTextareaMin` (80px), **`roundedLarge`**, **`body2`**, **field padding** `sizeMedium` `sizeSmall` (10px 6px) — **differs** from Input **md** horizontal padding (`sizeLarge` 16px) |
+| **Current impl.**  | Same `size` `sm` / `md` / `lg` as **Input** `518:7373` (default `md`) — same tokens as Input table above | Web Kit **Textarea** `529:5454` (COMPONENT_SET): `minHeight` `componentSizes.controlTextareaMin` (80px), **`roundedLarge`**, **`body2`**, **field padding** `sizeMedium` `sizeXSmall` (10px 6px) — **differs** from Input **md** horizontal padding (`sizeLarge` 16px). Border / hover / focus / disabled aliases match **Input** (`borderError` · `borderSuccess` · `borderDisabled`). |
 
 If Web Kit has **no standalone Select COMPONENT_SET** name, native `<select>` fields follow **Input**
 field rules.
@@ -65,7 +78,7 @@ field rules.
 
 | Property         | `layout="label"` (default)          | `layout="number"` |
 | ---------------- | ----------------------------------- | ----------------- |
-| **padding**      | `sizeXXSmall` `sizeSmall` (2px 6px) | same              |
+| **padding**      | `sizeXXXSmall` `sizeXSmall` (2px 6px) | same              |
 | **borderRadius** | `roundedMedium` (6px)               | `roundedCircle`   |
 | **typography**   | `caption2` (12/16 Regular)          | same              |
 
@@ -87,11 +100,12 @@ field rules.
 | Property     | Value                                                         |
 | ------------ | ------------------------------------------------------------- |
 | **gap**      | `sizeMedium` (10px)                                           |
-| **padding**  | `sizeSmall` vertical (6px)                                    |
-| **type**     | `caption1` — non-current·separator `neutral500`, current `primaryBlack` |
-| **ellipsis** | `sizeXLarge`(20×20) hit area + `more-horizontal` (`iconSizes.sm`) |
+| **padding**  | `sizeXSmall` vertical (6px) on root                           |
+| **type**     | `caption1` — link/separator `foregroundTertiary`; current `foregroundPrimary` + `font-medium` |
+| **link hit** | `px` `sizeMedium`, `py` `sizeXSmall`; hover **color only** (`foregroundSecondary`); pressed `backgroundPrimaryActive` + `roundedSmall` |
+| **ellipsis** | same row padding as link (`px` `sizeMedium`, `py` `sizeXSmall`); icon `iconSizes.small` (20px) centered in row |
 
-**Separator** default `/` (Caption1 · tertiary, `neutral500`).
+**Separator** default `/` (Caption1 · tertiary). Inline text nav — not button/chip shell (unlike Pagination).
 
 ---
 
@@ -177,8 +191,8 @@ field rules.
 | --------------- | ------------------------------------------------------------------------------- |
 | **Card / Header** | Horizontal `sizeXLarge` (20px), vertical `sizeLarge` (16px) — `py`, not `pt` only |
 | **Card / Content** | Match header horizontal inset: `sizeXLarge`; vertical per layout (default body uses bottom `sizeLarge` in React) |
-| **Card / Footer** | `sizeMedium` (10px) on all sides                                              |
-| **Title ↔ description** | `sizeXSmall` (4px) gap in **CardHeaderMain**                                |
+| **Card / Footer** | Horizontal `sizeXLarge` (align with header/content), vertical `sizeMedium`   |
+| **Title ↔ description** | `sizeXXSmall` (4px) gap in **CardHeaderMain**                                |
 
 ---
 
@@ -186,7 +200,7 @@ field rules.
 
 | Property      | Value                                                                                                                             |
 | ------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| **box**       | `componentSizes.controlCheckbox` (16×16), `gap` to label `sizeSmall` (6px)                                                        |
+| **box**       | `componentSizes.controlCheckbox` (20×20), `gap` to label `sizeXSmall` (6px)                                                        |
 | **variant**   | `default` — `roundedSmall` (4px); `circular` — `roundedCircle`                                                                  |
 | **Unchecked** | Fill `neutralWhite`, border `strokeWidthThin` `neutral300`                                                                        |
 | **Checked**   | Default `primaryDarkGray`, hover `neutralBlack`, pressed `neutral600`, focus `primaryBlack` + `strokeWidthThick` `neutral450` border |
@@ -201,10 +215,11 @@ Interactions (hover·active·focus-visible) use **`refineui.css`** `[data-refine
 
 | Property         | Value                                                                                                                                                                                           |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **padding**      | `sizeSmall` (6px)                                                                                                                                                                               |
-| **gap**          | `sizeXSmall` (4px) — between text·dismiss·`avatar`                                                                                                                                               |
+| **minHeight**    | `sm` `chipMinHeightSm` (20px · Foundation 200) · `md` `chipMinHeightMd` (24px · 240) · `lg` `chipMinHeightLg` (32px · 320) — **below** Button `28/36/48`; Chakra/Carbon/M3 compact-tag norm     |
+| **padding-x**    | `sm`/`md` → `sizeXSmall` (6px); `lg` → `sizeSmall` (8px). Vertical centering via `min-h` + `items-center`                                                                                         |
+| **gap**          | `sizeXXSmall` (4px) — between text·dismiss·`avatar`                                                                                                                                               |
 | **borderRadius** | `roundedMedium` (6px)                                                                                                                                                                           |
-| **size**         | `lg` → `body1` + dismiss `iconSizes.lg`; `md` → `body3` + `iconSizes.md`; `sm` → `caption1` + `iconSizes.xs`                                                                                    |
+| **size**         | default **`md`**. Typo `labelSm` / `bodySm` / `bodyLg`; dismiss icon `iconSizes.xxsmall` / `xsmall` / `small` (12/16/20) — kept under chip height                                                 |
 | **variant**      | `default` — fill `neutralWhite`, text `primaryBlack` (Figma `foregroundbrand` #212121); `outline` — `strokeWidthThin` `neutral300`; `filled` — Figma `Selected`, `primaryBlack` + `neutralWhite` |
 | **disabled**     | `default`/`outline`: fill `neutral150`, text `neutral400`; `outline` border `neutral250`; `filled`: fill `neutral200`                                                                           |
 | **avatar**       | Optional slot (Figma `showAvater`); size aligned by consumer with `Avatar`, etc.                                                                                                                  |
@@ -238,7 +253,7 @@ Scrim uses `overlays.backdrop`; overlay, ESC, portal — `packages/react` `Dialo
 | **type**        | Figma `Overlay` · `Inline` — React `Drawer` is **Overlay (portal·scrim) only**                                                                                                          |
 | **width**       | `lg` → `componentSizes.drawerWidthLg` (850px); `md` → `componentSizes.drawerWidthMd` (575px); `sm` → `componentSizes.drawerWidthSm` (320px) — `size` `"sm"` \| `"md"` \| `"lg"` |
 | **panel shadow**| `shadows.shadow16Light` (`toBoxShadow`)                                                                                                                                                 |
-| **header**      | `paddingTop`/`paddingLeft`/`paddingRight` `sizeXXLarge` (24px), `paddingBottom` `sizeMedium` (10px); dismiss·title row `gap` `sizeSmall` (6px); title `subTitle1` (20/28 Semi Bold)       |
+| **header**      | `paddingTop`/`paddingLeft`/`paddingRight` `sizeXXLarge` (24px), `paddingBottom` `sizeMedium` (10px); dismiss·title row `gap` `sizeXSmall` (6px); title `subTitle1` (20/28 Semi Bold)       |
 | **Divider**     | `strokeWidthThin` `neutral300` (between header and body)                                                                                                                                |
 | **body**        | `padding` `sizeXXLarge`; default `body2`                                                                                                                                                |
 
@@ -253,8 +268,8 @@ Figma includes header **Cancel/Ok** **Button Container** and bottom **Drawer / F
 | Property            | Value                                                                                                                                                                                                                                                                                      |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **menu width**      | `componentSizes.dropdownMenuWidth` (180px)                                                                                                                                                                                                                                                 |
-| **menu**            | `padding` `sizeXSmall` (4px); **`gap` 1px** between items (`gap-px`); `borderRadius` `roundedLarge`; border **`strokeWidthHairline`** · **`alias.borderDefault`**; fill **`alias.backgroundPrimary`**; `shadows.shadow2Light`                                                               |
-| **Title Item**      | `padding` vertical `sizeSmall` · horizontal `sizeMedium` (6px 10px); `body2` · **`alias.foregroundPrimary`**                                                                                                                                                                             |
+| **menu**            | `padding` `sizeXXSmall` (4px); **`gap` 1px** between items (`gap-px`); `borderRadius` `roundedLarge`; border **`strokeWidthHairline`** · **`alias.borderDefault`**; fill **`alias.backgroundPrimary`**; `shadows.shadow2Light`                                                               |
+| **Title Item**      | `padding` vertical `sizeXSmall` · horizontal `sizeMedium` (6px 10px); `body2` · **`alias.foregroundPrimary`**                                                                                                                                                                             |
 | **Menu / Item**     | Same padding; `body4`; label **`alias.foregroundPrimary`**; (Figma More·Avatar etc.) **left 16px icon** — React `DropdownItem` `startIcon`; shortcuts etc. secondary **`alias.foregroundSecondary`**; hover **`alias.backgroundSurfaceHover`**; selected/check rows per MCP **`alias.backgroundSurfaceActive`** |
 | **trigger (Default)** | `roundedSmall`, `strokeWidthThin` **`alias.borderDefault`**; when chevron is split, vertical hairline left of right zone **`strokeWidthHairline`**; chevron glyph **`iconSizes.small`** (20px)                                                                                               |
 
@@ -268,13 +283,13 @@ rows and ARIA (`menuitemcheckbox` / `menuitemradio`). Match Figma **Avatar** tri
 | Property    | Value                                                                                                                                                                                     |
 | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **panel width** | `componentSizes.menuPanelWidth` (244px)                                                                                                                                               |
-| **panel**   | `padding` `sizeXSmall`; `gap` `sizeMinimal` (between items); `borderRadius` `roundedLarge`; `strokeWidthHairline` `alias.borderDefault`; fill `alias.backgroundSurface`; `shadows.shadow2Light` |
-| **item**    | `padding` `sizeSmall` (6px); `borderRadius` `roundedLarge`; `body2`; default `alias.foregroundPrimary`; disabled `alias.foregroundDisabled`                                                  |
+| **panel**   | `padding` `sizeXXSmall`; `gap` `sizeMinimal` (between items); `borderRadius` `roundedLarge`; `strokeWidthHairline` `alias.borderDefault`; fill `alias.backgroundSurface`; `shadows.shadow2Light` |
+| **item**    | `padding` `sizeXSmall` (6px); `borderRadius` `roundedLarge`; `body2`; default `alias.foregroundPrimary`; disabled `alias.foregroundDisabled`; description/shortcut `body4` `alias.foregroundTertiary` |
 | **composition** | Per `Menu / Item` Content `633:4270` — `startIcon`(20px slot), `label`(body2), optional `description`(body4), optional `shortcut`, optional `endIcon`(chevron etc.)                    |
 
-Figma has **Section Header**, **Divider**, and **icon·shortcut** columns; React `Menu` exposes `items`
-with `startIcon`/`description`/`shortcut`/`endIcon` slots. Separate from **Dropdown**’s narrow
-menu (180px, `body4`/`neutral850` rows).
+Figma has **Section Header**, **Divider**, and **icon·shortcut** columns; React `Menu` exposes composition
+slots (`startIcon` / `description` / `shortcut` / `endIcon`) plus **`MenuSub` / `MenuSubTrigger` / `MenuSubContent`**
+for chevron nested panels. Separate from **Dropdown**’s narrow menu (180px, `body4`/`neutral850` rows).
 
 ---
 
@@ -283,8 +298,8 @@ menu (180px, `body4`/`neutral850` rows).
 | Property        | Value                                                                                                                                        |
 | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | **row gap**     | `sizeMedium` (10px)                                                                                                                          |
-| **item**        | `padding` `sizeSmall`; min `componentSizes.paginationButtonMinWidth` (36×36); `borderRadius` `roundedLarge`; `strokeWidthThin` `neutral300` |
-| **icon**        | chevron `iconSizes.xl` (24px slot)                                                                                                           |
+| **item**        | `padding` `sizeXSmall`; min `componentSizes.paginationButtonMinWidth` (40×40); `borderRadius` `roundedXLarge` (12px); `strokeWidthThin` `alias.borderDefault`; fill `alias.backgroundPrimary` |
+| **icon**        | chevron `iconSizes.medium` (24px slot)                                                                                                           |
 | **page label**  | `body1`                                                                                                                                      |
 
 Hover/disabled fill/border via **`refineui.css`** `[data-refineui="pagination"]`. Does **not** ship the full Figma **number grid·ellipsis (…)·current highlight**—only **Previous / `page / totalPages` / Next**.
@@ -307,12 +322,12 @@ Hover/disabled fill/border via **`refineui.css`** `[data-refineui="pagination"]`
 
 | Property            | Value                                                                                                                                                                        |
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`Radio / Input`** | 16×16 circle — unchecked: `strokeWidthThin` `alias.borderDefault`, `alias.backgroundPrimary`; focus (unchecked/checked): `strokeWidthThick` outer `alias.borderStrong` (MCP `397:1147` etc.) |
-| **control**         | `componentSizes.controlCheckboxRadio` (16×16), `roundedCircle` — **`refineui.css`** `[data-refineui="radio"]` (alias colors·`label:hover` / `label:focus-within`)                 |
+| **`Radio / Input`** | 20×20 circle — unchecked: `strokeWidthThin` `alias.borderDefault`, `alias.backgroundPrimary`; inner dot `sizeMedium` (10px); focus (unchecked/checked): `strokeWidthThick` outer `alias.borderStrong` (MCP `397:1147` etc.) |
+| **control**         | `componentSizes.controlCheckboxRadio` (20×20), `roundedCircle` — **`refineui.css`** `[data-refineui="radio"]` (alias colors·`label:hover` / `label:focus-within`)                 |
 | **selected**        | Ring `alias.backgroundBrand`, inner dot same; hover ring·dot `alias.backgroundBrandActive`; focus ring `alias.borderStrong` + dot `alias.backgroundBrand`                              |
 | **disabled**        | Fill `alias.backgroundPrimary`, border `alias.borderDisabled`; when selected, dot `alias.foregroundDisabled`                                                                         |
-| **row**             | Control·text `gap` `sizeMedium` (10px); label wrapper `padding` `sizeXXSmall`                                                                                                   |
-| **label**           | `caption1`, `alias.foregroundPrimary` — when disabled `alias.foregroundDisabled`                                                                                               |
+| **row**             | Control·text `gap` `sizeXSmall` (6px); label `body2` / description `caption2` (shared `Label` companion styles)                                                              |
+| **label**           | `body2`, `alias.foregroundPrimary` — when disabled `alias.foregroundDisabled`                                                                                               |
 | **description**     | `caption3`, `alias.foregroundSecondary` — when disabled `alias.foregroundDisabled`                                                                                             |
 
 ---
@@ -336,7 +351,7 @@ Hover/disabled fill/border via **`refineui.css`** `[data-refineui="pagination"]`
 | **rail (unfilled)**      | `alias.backgroundBrandSubtle` — `borderRadii.roundedXSmall` (2px)                                                                                                                                                                                                                                                                                                                                                                                                             |
 | **fill**                 | `alias.backgroundBrand` — **disabled** uses `alias.foregroundDisabled` (Track-fill)                                                                                                                                                                                                                                                                                                                                                                                             |
 | **thumb (Slider / Item)** | Per COMPONENT_SET node MCP vars — 16×16 `roundedCircle` (**`refineui.css`**): shared white ring `alias.backgroundPrimary` + outer ring — **Default** `526:1739` center `alias.backgroundBrand`, ring `alias.borderDefault`(thin); **Hover** `526:1714` center `alias.backgroundBrandHover`, ring `alias.borderStrong`; **Focus** `526:1718` center `alias.backgroundBrandActive`, ring `alias.borderDefault`; **Disabled** `526:1840` center `alias.backgroundBrandDisabled`, ring `alias.borderDisabled` |
-| **touch target**         | Input height `componentSizes.sliderInteractionHeight` (24px)                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| **touch target**         | Input height `componentSizes.sliderInteractionHeight` (28px · Foundation 280; Web Kit visual row ~24px, slightly taller hit area)                                                                                                                                                                                                                                                                                  |
 
 WebKit uses `--refineui-slider-fill` (0–100%) for rail gradient; Firefox uses `::-moz-range-progress` for fill.
 
@@ -376,7 +391,7 @@ WebKit uses `--refineui-slider-fill` (0–100%) for rail gradient; Firefox uses 
 | -------------------- | ----------------------------------------------------------------------------------- |
 | **track**            | `alias.backgroundBrandSubtle` (`#e6e6e6`)                                           |
 | **accent (spin arc)**| `alias.backgroundBrand` (`#212121`) — CSS `border-top-color` + rotation             |
-| **label·icon gap**   | `sizeSmall` (6px)                                                                   |
+| **label·icon gap**   | `sizeXSmall` (6px)                                                                   |
 | **`labelPosition`**  | `left` \| `right` (Figma default) \| `top` \| `bottom`                              |
 | **animation**        | **`refineui.css`** `[data-refineui="spinner"]` `refineui-spin` 0.8s linear infinite |
 
@@ -402,8 +417,8 @@ Figma default `size` is `XSmall`; React defaults to `md` for readability in apps
 
 | Property           | Value                                                                                             |
 | ------------------ | ------------------------------------------------------------------------------------------------- |
-| **size** (`Field`) | `sm` — label `caption1`; `md` (default) — `body2`; `lg` — `body1` (Figma Label Small / Medium / Large) |
-| **label·control**  | Label bottom `margin` `sizeXSmall` (4px)                                                          |
+| **size** (`Field`) | `sm` — label `caption1`; `md` — `body2`; `lg` (default) — `body1` (Figma Label Small / Medium / Large) |
+| **label·control·feedback** | Stack `gap` `sizeXXSmall` (4px) between label, control, hint/error                                      |
 | **validation (error)** | `caption3`, `red700`                                                                          |
 | **helper (hint)**  | `caption3`, `neutral500` (Figma foreground tertiary)                                              |
 | **required**       | `*` `red700`                                                                                      |
@@ -422,11 +437,12 @@ control + error/hint** only.
 | Property      | Value                                                        |
 | ------------- | ------------------------------------------------------------ |
 | **disabled**  | When `true`, text `neutral400` (Figma `foregrounddisabled`) |
-| **block spacing** | `marginBottom` `sizeXSmall` — same as `Field` label      |
+| **block spacing** | `marginBottom` `sizeXXSmall` — same as `Field` label      |
 | **required `*`** | `red700` — same as `Field`                              |
 
-`packages/react` `Label` default `size` is **`md`** (aligned with `Field`/`Input`). Figma COMPONENT_SET default
-variant is **Large** (`lg`).
+`packages/react` `Label` default `size` is **`md`**. **`Field`** default is **`lg`** (Figma COMPONENT_SET default variant Large). Child **`Input`** inherits `Field` `size` when its own `size` is omitted.
+
+**React mapping:** `Label` + `LabelRequired` are the shared atoms; `FieldLabel` / `FieldRequired` are Field-scoped wrappers (size from `Field` context).
 
 ---
 
@@ -440,7 +456,7 @@ variant is **Large** (`lg`).
 | **Pressed**  | `blue500` (Figma Pressed / `foregroundlinkvisited`) |
 | **Disabled** | `neutral400`, no underline                          |
 
-**External link icon** — `open` `iconSizes.lg` (20px), `gap` to text `sizeXSmall` (4px).
+**External link icon** — `open` `iconSizes.lg` (20px), `gap` to text `sizeXXSmall` (4px).
 
 **`variant="subtle"`** — not in Web Kit grid. Base `neutral600`; interaction colors in `refineui.css`
 (`neutral700` / `neutral800`).
@@ -467,21 +483,19 @@ variant is **Large** (`lg`).
 
 ## 9. Accordion — Web Kit `COMPONENT_SET` node-id `54:146` (page root link `7-6`)
 
-(Figma MCP symbols: `Size=Small` → Caption1, `Medium` → Body1, `Larger` → SubTitle1 20/28 Semi Bold.)
-
 | Property                 | Value                                                            |
 | ------------------------ | ---------------------------------------------------------------- |
+| **root gap**             | `sizeXSmall` between items                                       |
 | **trigger minHeight**    | 44px                                                             |
-| **trigger padding**      | 6px 10px (sizeSmall sizeMedium)                                  |
+| **trigger padding**      | 6px 10px (sizeXSmall sizeMedium)                                  |
 | **trigger gap**          | 10px (sizeMedium)                                                |
-| **trigger typography**   | `size` prop: sm → caption1, md → body1, lg → subTitle1 |
-| **icon size**            | 20px (@refineui/web-icons)                                       |
-| **icon container**       | 20×20px                                                          |
-| **content padding**      | 10px (sizeMedium)                                                |
-| **content bg**           | primaryLightGray                                                 |
-| **content typography**   | body4 (12px/16px)                                                |
-| **content borderRadius** | 4px (roundedSmall)                                               |
-| **border**               | strokeWidthThin solid neutral300                                 |
+| **trigger typography**   | `size`: sm → body2, md → body1, lg → subTitle1 |
+| **icon size**            | scales with `size`: sm → xsmall, md → small, lg → medium         |
+| **chevron**              | `chevron-down` + rotate 180° when open                           |
+| **content padding**      | 10px horizontal/bottom (`sizeMedium`); flush under trigger (no top gap) |
+| **open item shell**        | single `backgroundPrimaryHover` on item — trigger + content share surface |
+| **trigger press**          | `:active` only — `backgroundPrimaryActive` + `scale(0.98)` (no hover) |
+| **content typography**     | sm → body3, md → body2, lg → body1; color `foregroundSecondary` |
 
 ---
 
@@ -495,9 +509,11 @@ variant is **Large** (`lg`).
 | **thumb**           | `componentSizes.switchThumb` (20×20), `roundedXLarge` (12px), default `alias.backgroundPrimary` (`#ffffff`)                                                                             |
 | **track fill (on)** | `alias.backgroundBrand` (`#212121`)                                                                                                                                                     |
 | **track fill (off)**| `alias.backgroundPrimaryActive` (`#f0f0f0`)                                                                                                                                            |
-| **disabled track**  | `alias.backgroundBrandDisabled` (`#f0f0f0`)                                                                                                                                             |
-| **disabled thumb**  | `alias.backgroundBrandSubtle` (`#e6e6e6`)                                                                                                                                               |
-| **hover / pressed** | **`refineui.css`** `[data-refineui="switch"]` — OFF: `alias.backgroundPrimaryHover` / `alias.backgroundPrimaryActive`; ON: `alias.backgroundBrandHover` / `alias.backgroundBrandStrong` |
+| **disabled track**  | OFF `alias.backgroundSurfaceDisabled`; ON `alias.backgroundBrandSubtle` (on/off stay distinguishable)                                                                                   |
+| **disabled thumb**  | OFF `alias.backgroundBrandSubtle`; ON `alias.backgroundPrimary`                                                                                                                          |
+| **hover / pressed** | OFF: `surfaceSelected` / `brandSubtle` (darken vs rest); ON: `brandHover` / `brandActive` (aligned with Checkbox) — **`refineui.css`** `[data-refineui="switch"]`                      |
+| **focus**           | `outline` 2px `alias.borderFocus`                                                                                                                                                       |
+| **thumb elevation** | enabled `shadow2`; disabled none                                                                                                                                                        |
 
 `packages/react` `Switch` and `Toggle` share the same implementation.
 
@@ -509,9 +525,9 @@ variant is **Large** (`lg`).
 
 | Property | MCP value |
 | --- | --- |
-| **Tab bar (wrapper)** | Fill **`alias.backgroundSurfaceActive`** (MCP `Background/Surface/Active` · `#f0f0f0`), border `strokeWidthThin` **`alias.borderDefault`**, padding `sizeSmall`, **item gap `sizeMedium`(10px)**, outer radius **`roundedXLarge`(12px)** |
-| **Tab chip** | `py` **sizeXSmall**(4px) · `px` **sizeSmall**(6px) (latest MCP), inner radius **`roundedLarge`(8px)** |
-| **Leading icon** | Optional 16×16 (MCP `showIcon`), gap to label **`sizeSmall`(6px)** |
+| **Tab bar (wrapper)** | Fill **`alias.backgroundSurfaceActive`** (MCP `Background/Surface/Active` · `#f0f0f0`), border `strokeWidthThin` **`alias.borderDefault`**, padding `sizeXSmall`, **item gap `sizeMedium`(10px)**, outer radius **`roundedXLarge`(12px)** |
+| **Tab chip** | `py` **sizeXXSmall**(4px) · `px` **sizeXSmall**(6px) (latest MCP), inner radius **`roundedLarge`(8px)** |
+| **Leading icon** | Optional 16×16 (MCP `showIcon`), gap to label **`sizeXSmall`(6px)** |
 | **type** | **Caption 1** — Web Font Size 200 / Line 200 (`refineui-typo-caption-1`) |
 | **Selected** | Fill **`alias.backgroundSurface`**, **`shadows.shadow2Light`** |
 | **Selected · Hover** | Fill **`alias.backgroundSurfaceHover`**, keep Shadow 2 (`Active=True, State=Hover`) |
@@ -527,9 +543,10 @@ variant is **Large** (`lg`).
 | Token        | Value |
 | ------------ | ----- |
 | sizeNone     | 0    |
-| sizeXXSmall  | 2px  |
-| sizeXSmall   | 4px  |
-| sizeSmall    | 6px  |
+| sizeXXXSmall | 2px  |
+| sizeXXSmall  | 4px  |
+| sizeXSmall   | 6px  |
+| sizeSmall    | 8px  |
 | sizeMedium   | 10px |
 | sizeLarge    | 16px |
 | sizeXLarge   | 20px |
@@ -623,7 +640,7 @@ Per level: Lighter, Light, (default), Dark, Darker
 | **padding**                   | `sizeLarge` (16px)                                                                                                                                                                                                                 |
 | **row gap** (icon·body·action)| `sizeMedium` (10px)                                                                                                                                                                                                                |
 | **borderRadius**              | `roundedXLarge` (12px) — MCP/Web Kit Toast card refresh                                                                                                                                                                            |
-| **border**                    | `strokeWidthThin` `neutral300`; **Focus** (`552:2029`) uses `strokeWidthThick` + `neutral450` border — keyboard focus aligns with **`refineui.css`** `focus-visible` ring pattern                                                   |
+| **border**                    | `strokeWidthThin` `neutral300`; **Focus** (`552:2029`) keeps thin width and uses `neutral450` / `alias.borderStrong` color only (no width jump)                                                                                          |
 | **shadow**                    | `shadows.shadow4Light` (Elevation Shadow 4)                                                                                                                                                                                      |
 | **Toast / Icon** (left)       | 24×24 (`spacings.sizeXXLarge`); `WebIcon` `iconSizes.md`; row `items-center` for **vertical center** in card; DOM `data-refineui="toast-icon"`; Type from root `data-variant` (`default` \| `success` \| `error` \| `warning`) + default icon map |
 | **title**                     | `body2`                                                                                                                                                                                                                            |
@@ -645,12 +662,12 @@ Type variants are distinguished in React via `data-variant` only.
 
 | Property         | Value                                                                               |
 | ---------------- | ----------------------------------------------------------------------------------- |
-| **padding**      | `sizeSmall` `sizeMedium` (6px 10px)                                                 |
+| **padding**      | `sizeXSmall` `sizeMedium` (6px 10px)                                                 |
 | **borderRadius** | `roundedMedium` (6px)                                                               |
 | **typography**   | `body4`                                                                             |
 | **shadow**       | `shadows.shadow8Light`                                                              |
 | **maxWidth**     | `componentSizes.tooltipMaxWidth` (200px)                                            |
-| **arrow**        | Half-edge `sizeSmall`(6px) CSS triangle (12px wide) — Figma uses SVG beaks per `position`×`align` |
+| **arrow**        | Half-edge `sizeXSmall`(6px) CSS triangle (12px wide) — Figma uses SVG beaks per `position`×`align` |
 
 **`position` × `align`:** Same **PascalCase** as MCP — `position` `Top` \| `Bottom` \| `Left` \| `Right`, `align` `Start` \| `Center` \| `End` (**12 combos**). `packages/react` `Tooltip` uses the prop names·values above; **defaults** `position="Bottom"`, `align="Start"`. Figma beaks are SVG; React approximates with token-based CSS triangles.
 
@@ -660,13 +677,13 @@ Type variants are distinguished in React via `data-variant` only.
 
 | Property                 | Value                                                                                                                                                                                                                                       |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **container**            | `padding` `sizeLarge`(16px), `minWidth` `componentSizes.calendarMinWidth`, `borderRadius` `roundedLarge`, fill `alias.backgroundPrimary` — MCP Day·header exports have **no outer stroke**                                                    |
-| **month header** (`639:6845`) | One row **`flex` + `justify-between`**, **4** children in order: prev (chevron) · month (label) · year (label) · next (chevron). Web Kit **`Button`** Ghost · Small (`79:3304`). Interactions via **`refineui.css`** Ghost — do not override `data-refineui` |
+| **container**            | `padding` `sizeXLarge`(20px), `minWidth` `componentSizes.calendarMinWidth`, `borderRadius` `roundedLarge`, fill `alias.backgroundPrimary` — **no outer stroke**                                                                                  |
+| **month header** (`639:6845`) | One row **`flex` + `justify-between` + `items-center`**, **4** children: prev · month · year · next. **`pb` `sizeLarge`(16px)** — horizontal inset from container only. Web Kit **`Button`** Ghost · Small — do not override `data-refineui` |
 | **prev/next**            | `Button` Ghost · Icon · Small, chevron `iconSizes.small`                                                                                                                                                                                    |
 | **month·year**           | `Button` Ghost · Label · Small — label type per MCP export **`body3`** (14/20 Regular)                                                                                                                                                        |
-| **weekday·date cells**   | `componentSizes.calendarDaySize`(32×32), `caption1`(MCP `Calendar / Day`), other-month `neutral400`                                                                                                                                            |
+| **weekday·date cells**   | `componentSizes.calendarDaySize`(32×32), `caption1`(MCP `Calendar / Day`), other-month `neutral400`; weekday label `py` `sizeXSmall`(6px)                                                                                                     |
 | **Day interaction**      | `refineui.css` `[data-refineui="calendar-day"]` — unselected cell hover·pressed fill `neutral200`/`neutral300` (same as Ghost); `data-range-middle` same; **`data-selected` has no hover·pressed fill** (selection locked)                  |
-| **month grid**           | Weekday row + week rows in one column with `gap` `sizeSmall`(6px) (MCP Month grid)                                                                                                                                                             |
+| **month grid**           | Weekday row + week rows in one column with `gap` `sizeSmall`(8px) — enough air so range-middle rows don’t fuse; **no** horizontal gap (in-row range stays continuous)                                                                         |
 | **selection**            | Single/endpoints `primaryBlack` + white text, range middle fill `neutral100`, endpoint wrappers match MCP with `roundedLarge` on one side only                                                                                             |
 
 `packages/react` `Calendar` supports `single` / `range` modes; range UI follows the Figma grid rules above.
@@ -682,13 +699,13 @@ Type variants are distinguished in React via `data-variant` only.
     "sizes": {
       "sm": {
         "minHeight": "componentSizes.buttonMinHeightSm",
-        "padding": "sizeXSmall sizeMedium",
+        "padding": "sizeXXSmall sizeMedium",
         "borderRadius": "roundedSmall",
         "type": "body3"
       },
       "md": {
         "minHeight": "componentSizes.buttonMinHeightMd",
-        "padding": "sizeSmall sizeMedium",
+        "padding": "sizeXSmall sizeMedium",
         "borderRadius": "roundedMedium",
         "type": "body1"
       },
@@ -705,38 +722,40 @@ Type variants are distinguished in React via `data-variant` only.
   "calendar": {
     "dayComponentSet": "639:7052",
     "monthHeaderContainer": "639:6845",
-    "padding": "sizeLarge",
+    "padding": "sizeXLarge",
     "minWidth": "componentSizes.calendarMinWidth",
     "dayCell": "componentSizes.calendarDaySize",
     "navButton": "Button ghost icon sm; do not override data-refineui (refineui.css ghost hover)",
-    "monthHeader": "639:6845 — flex justify-between 4× Button ghost sm (prev, month, year, next); px sizeSmall pb sizeMedium",
-    "weekRowGap": "sizeSmall"
+    "monthHeader": "639:6845 — flex justify-between items-center 4× Button ghost sm; pb sizeLarge (container sizeXLarge supplies horizontal inset)",
+    "weekRowGap": "sizeSmall",
+    "weekdayPy": "sizeXSmall"
   },
   "input": {
     "node": "518:7373",
     "sizes": {
       "sm": {
         "minHeight": "componentSizes.controlHeightSm",
-        "padding": "sizeSmall sizeMedium",
-        "borderRadius": "roundedMedium",
-        "type": "caption1"
+        "padding": "sizeXSmall sizeMedium",
+        "borderRadius": "roundedLarge",
+        "type": "body3"
       },
       "md": {
         "minHeight": "componentSizes.controlHeightMd",
         "padding": "sizeMedium sizeLarge",
-        "borderRadius": "roundedLarge",
+        "borderRadius": "roundedXLarge",
         "type": "body2"
       },
       "lg": {
         "minHeight": "componentSizes.controlHeightLg",
-        "padding": "sizeLarge",
-        "borderRadius": "roundedXLarge",
+        "padding": "sizeLarge sizeXLarge",
+        "borderRadius": "roundedXXLarge",
         "type": "body1"
       }
     },
     "border": "strokeWidthThin neutral300",
     "error": "red500",
-    "success": "green500"
+    "success": "green500",
+    "defaultSize": "lg"
   },
   "select": {
     "note": "No standalone Web Kit COMPONENT_SET — same size as Input 518:7373",
@@ -745,7 +764,7 @@ Type variants are distinguished in React via `data-variant` only.
   "textarea": {
     "node": "529:5454",
     "minHeight": "componentSizes.controlTextareaMin",
-    "padding": "sizeMedium sizeSmall",
+    "padding": "sizeMedium sizeXSmall",
     "borderRadius": "roundedLarge",
     "type": "body2",
     "note": "Field padding differs from Input md (10px 16px) — per Web Kit Textarea instances"
@@ -759,10 +778,11 @@ Type variants are distinguished in React via `data-variant` only.
   "breadcrumb": {
     "node": "283:688",
     "gap": "sizeMedium",
-    "padding": "sizeSmall 0",
+    "padding": "sizeXSmall 0",
     "typography": "caption1",
-    "linkColor": "neutral500",
-    "currentColor": "primaryBlack",
+    "linkColor": "foregroundTertiary",
+    "currentColor": "foregroundPrimary",
+    "linkRadius": "roundedSmall",
     "separator": "/"
   },
   "card": {
@@ -771,13 +791,13 @@ Type variants are distinguished in React via `data-variant` only.
     "elevated": { "shadow": "shadow4Light" },
     "outlined": { "border": "1px solid neutral300" },
     "header": "px sizeXLarge, py sizeLarge",
-    "footer": "p sizeMedium",
+    "footer": "px sizeXLarge, py sizeMedium",
     "note": "Spec §7 JSON previously listed 8px radius + shadow8 — Web Kit file uses 16px radius + Shadow 4"
   },
   "checkbox": {
     "node": "327:2539",
     "box": "componentSizes.controlCheckbox",
-    "gap": "sizeSmall",
+    "gap": "sizeXSmall",
     "variant": { "default": "roundedSmall", "circular": "roundedCircle" },
     "checked": {
       "default": "primaryDarkGray",
@@ -790,13 +810,19 @@ Type variants are distinguished in React via `data-variant` only.
     "node": "574:6578",
     "figmaName": "Tag",
     "export": "Chip",
-    "padding": "sizeSmall",
-    "gap": "sizeXSmall",
+    "minHeight": {
+      "sm": "chipMinHeightSm (20)",
+      "md": "chipMinHeightMd (24)",
+      "lg": "chipMinHeightLg (32)"
+    },
+    "paddingX": { "sm": "sizeXSmall", "md": "sizeXSmall", "lg": "sizeSmall" },
+    "gap": "sizeXXSmall",
     "borderRadius": "roundedMedium",
+    "defaultSize": "md",
     "size": {
-      "lg": "body1 + iconSizes.lg",
-      "md": "body3 + iconSizes.md",
-      "sm": "caption1 + iconSizes.xs"
+      "sm": "labelSm + iconSizes.xxsmall",
+      "md": "bodySm + iconSizes.xsmall",
+      "lg": "bodyLg + iconSizes.small"
     },
     "variant": {
       "default": "neutralWhite + primaryBlack text",
@@ -822,13 +848,13 @@ Type variants are distinguished in React via `data-variant` only.
       "large": "componentSizes.drawerWidthLg"
     },
     "shadow": "shadow16Light",
-    "header": "pt/px sizeXXLarge, pb sizeMedium, title subTitle1, dismiss gap sizeSmall",
+    "header": "pt/px sizeXXLarge, pb sizeMedium, title subTitle1, dismiss gap sizeXSmall",
     "body": "padding sizeXXLarge, body2"
   },
   "dropdown": {
     "node": "503:2985",
     "menuWidth": "componentSizes.dropdownMenuWidth",
-    "menuPadding": "sizeXSmall",
+    "menuPadding": "sizeXXSmall",
     "itemGap": "sizeMinimal",
     "shadow": "shadow2Light",
     "titleItem": "body2",
@@ -837,12 +863,12 @@ Type variants are distinguished in React via `data-variant` only.
   "menu": {
     "node": "633:4268",
     "panelWidth": "componentSizes.menuPanelWidth",
-    "padding": "sizeXSmall",
+    "padding": "sizeXXSmall",
     "itemGap": "sizeMinimal",
     "border": "strokeWidthHairline alias.borderDefault",
     "panelBackground": "alias.backgroundSurface",
     "shadow": "shadow2Light",
-    "itemPadding": "sizeSmall",
+    "itemPadding": "sizeXSmall",
     "itemRadius": "roundedLarge",
     "itemType": "body2 alias.foregroundPrimary",
     "itemDisabled": "alias.foregroundDisabled",
@@ -853,9 +879,9 @@ Type variants are distinguished in React via `data-variant` only.
     "item": "570:2332",
     "rowGap": "sizeMedium",
     "itemMin": "componentSizes.paginationButtonMinWidth",
-    "itemPadding": "sizeSmall",
-    "itemRadius": "roundedLarge",
-    "chevron": "iconSizes.xl",
+    "itemPadding": "sizeXSmall",
+    "itemRadius": "roundedXLarge",
+    "chevron": "iconSizes.medium",
     "label": "body1"
   },
   "progress": {
@@ -944,7 +970,7 @@ Type variants are distinguished in React via `data-variant` only.
     ],
     "track": "alias.backgroundBrandSubtle",
     "accent": "alias.backgroundBrand",
-    "labelGap": "sizeSmall",
+    "labelGap": "sizeXSmall",
     "labelPosition": ["left", "right", "top", "bottom"],
     "animation": "refineui-spin (refineui.css)"
   },
@@ -963,7 +989,7 @@ Type variants are distinguished in React via `data-variant` only.
   },
   "field": {
     "node": "525:1074",
-    "label": { "sm": "caption1", "md": "body2", "lg": "body1" },
+    label: { "sm": "caption1", "md": "body2", "lg": "body1", "default": "lg" },
     "error": "caption3 red700",
     "hint": "caption3 neutral500"
   },
@@ -982,7 +1008,7 @@ Type variants are distinguished in React via `data-variant` only.
     "pressed": "blue500",
     "disabled": "neutral400",
     "externalIcon": "iconSizes.lg",
-    "gapIcon": "sizeXSmall",
+    "gapIcon": "sizeXXSmall",
     "subtle": "neutral600 (extension beyond Web Kit)"
   },
   "divider": {
@@ -1012,14 +1038,20 @@ Type variants are distinguished in React via `data-variant` only.
     "track": {
       "on": "alias.backgroundBrand",
       "off": "alias.backgroundPrimaryActive",
-      "disabled": "alias.backgroundBrandDisabled"
+      "hoverOff": "alias.backgroundSurfaceSelected",
+      "activeOff": "alias.backgroundBrandSubtle",
+      "hoverOn": "alias.backgroundBrandHover",
+      "activeOn": "alias.backgroundBrandActive",
+      "disabledOff": "alias.backgroundSurfaceDisabled",
+      "disabledOn": "alias.backgroundBrandSubtle"
     },
     "thumb": {
-      "on": "alias.backgroundPrimary",
-      "off": "alias.backgroundPrimary",
-      "disabled": "alias.backgroundBrandSubtle"
+      "default": "alias.backgroundPrimary + shadow2",
+      "disabledOff": "alias.backgroundBrandSubtle",
+      "disabledOn": "alias.backgroundPrimary"
     },
-    "interaction": "refineui.css [data-refineui=switch] hover/active"
+    "focus": "outline 2px alias.borderFocus",
+    "interaction": "refineui.css [data-refineui=switch] hover/active/focus"
   },
   "toggle": {
     "node": "270:3057",
@@ -1030,7 +1062,7 @@ Type variants are distinguished in React via `data-variant` only.
     "container": "636:5371",
     "item": "636:5372",
     "pill": {
-      "bar": "alias.backgroundPrimaryActive strokeWidthThin alias.borderDefault padding sizeSmall gap sizeMedium roundedLarge",
+      "bar": "alias.backgroundPrimaryActive strokeWidthThin alias.borderDefault padding sizeXSmall gap sizeMedium roundedLarge",
       "selected": "alias.backgroundPrimary shadow2Light roundedLarge body1 (dark contrast)",
       "disabled": "alias.foregroundDisabled; selected+disabled alias.backgroundSurfaceDisabled"
     },
@@ -1052,12 +1084,12 @@ Type variants are distinguished in React via `data-variant` only.
   },
   "tooltip": {
     "node": "90:1686",
-    "padding": "sizeSmall sizeMedium",
+    "padding": "sizeXSmall sizeMedium",
     "borderRadius": "roundedMedium",
     "type": "body4",
     "shadow": "shadow8Light",
     "maxWidth": "componentSizes.tooltipMaxWidth",
-    "arrow": "half sizeSmall (6px), CSS triangle",
+    "arrow": "half sizeXSmall (6px), CSS triangle",
     "position": "Top | Bottom | Left | Right",
     "align": "Start | Center | End",
     "defaults": "position Bottom, align Start — same as MCP"

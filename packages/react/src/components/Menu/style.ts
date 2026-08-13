@@ -1,26 +1,40 @@
+import { clsx } from "clsx";
+import { componentTypographyTokens } from "../../tokens/componentTypographyTokens";
+import { componentTextClass } from "../../typography";
+
 export const menuStyles = {
+    /** Panel chrome — Web Kit Menu `633:4268` (fill matches Dropdown elevated panel for contrast on docs) */
     panel:
-        "box-border flex w-refineui-menu-panel-width flex-col gap-refineui-size-xxsmall rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-surface p-refineui-size-xsmall shadow-refineui-2light",
-    root: "relative inline-block",
+        "box-border flex w-refineui-menu-panel-width flex-col gap-px overflow-hidden rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xx-small shadow-refineui-2",
+    root: "relative inline-flex items-center leading-none",
     triggerFallback: "cursor-pointer border-none bg-transparent p-0 font-inherit text-inherit",
-    popover: "absolute top-full left-0 z-refineui-popup pt-refineui-size-xsmall",
+    /** Portal shell — position/z-index from `MenuPopover` fixed style */
+    popover: "z-refineui-messages",
     list:
-        "box-border flex w-full flex-col gap-refineui-size-xxsmall rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-surface p-refineui-size-xsmall shadow-refineui-2light",
-    section: "flex w-full items-center overflow-hidden px-refineui-size-small py-refineui-size-medium",
-    sectionText: "refineui-typo-caption-1 text-refineui-alias-foreground-primary",
-    dividerWrap: "flex w-full items-center px-refineui-size-small py-refineui-size-xxsmall",
-    dividerLine: "w-full border-t border-refineui-hairline border-refineui-alias-border-default",
-    itemBase: "block w-full rounded-refineui-xlarge border-none bg-transparent p-refineui-size-small text-left",
+        "box-border flex w-full min-w-refineui-menu-panel-width flex-col gap-px overflow-hidden rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xx-small shadow-refineui-2 outline-none",
+    subPanel:
+        "box-border flex w-refineui-menu-panel-width min-w-refineui-menu-panel-width flex-col gap-px overflow-hidden rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xx-small shadow-refineui-2 outline-none",
+    section: "flex w-full items-center overflow-hidden px-refineui-size-x-small py-refineui-size-x-small",
+    sectionText: clsx(
+        componentTextClass(componentTypographyTokens.menu.section),
+        "text-refineui-alias-foreground-tertiary",
+    ),
+    dividerWrap: "flex w-full items-center px-refineui-size-x-small py-refineui-size-xxx-small",
+    dividerLine: "h-px w-full shrink-0 bg-refineui-alias-border-default",
+    itemBase:
+        "block w-full rounded-refineui-large border-none bg-transparent p-refineui-size-x-small text-left outline-none",
     itemDisabled: "cursor-not-allowed text-refineui-alias-foreground-disabled",
     itemEnabled: "cursor-pointer text-refineui-alias-foreground-primary",
-    row: "flex items-center gap-refineui-size-small",
-    iconWrap: "inline-flex shrink-0 items-center justify-center [&>span]:leading-none",
-    textCol: "flex min-w-0 flex-1 flex-col px-refineui-size-xxsmall",
-    title: "refineui-typo-body-2 truncate",
-    description: "refineui-typo-body-4 truncate",
-    descriptionEnabled: "text-refineui-alias-foreground-primary",
+    row: "flex items-center gap-refineui-size-x-small",
+    iconWrap: "inline-flex shrink-0 items-center justify-center text-current [&>span]:leading-none",
+    textCol: "flex min-w-0 flex-1 flex-col gap-refineui-size-xxx-small px-refineui-size-xxx-small",
+    title: clsx(componentTextClass(componentTypographyTokens.menu.item), "truncate"),
+    description: clsx(componentTextClass(componentTypographyTokens.menu.description), "truncate"),
+    descriptionEnabled: "text-refineui-alias-foreground-tertiary",
     descriptionDisabled: "text-refineui-alias-foreground-disabled",
-    rightWrap: "flex shrink-0 items-center gap-refineui-size-small",
-    shortcut: "refineui-typo-body-4 text-refineui-alias-foreground-primary",
+    rightWrap: "flex shrink-0 items-center gap-refineui-size-x-small",
+    shortcut: clsx(
+        componentTextClass(componentTypographyTokens.menu.shortcut),
+        "tracking-wide text-refineui-alias-foreground-tertiary",
+    ),
 } as const;
-

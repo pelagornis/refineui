@@ -76,7 +76,7 @@ export function Checkbox({
                     {checked && (
                         <WebIcon
                             name="checkmark"
-                            size={iconSizes.xxsmall}
+                            size={iconSizes.small}
                             color={checkColor}
                             iconStyle="filled"
                         />

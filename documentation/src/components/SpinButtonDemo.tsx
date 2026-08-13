@@ -18,15 +18,15 @@ export default function SpinButtonDemo() {
         }}
       >
         <div>
-          <p style={{ margin: 0, marginBottom: spacings.sizeXSmall, fontSize: fontSizes.fontSize300 }}>Medium</p>
+          <p style={{ margin: 0, marginBottom: spacings.sizeXXSmall, fontSize: fontSizes.fontSize300 }}>Medium</p>
           <SpinButton className="w-auto" value={a} onChange={setA} min={0} max={10} step={1} size="md" />
         </div>
         <div>
-          <p style={{ margin: 0, marginBottom: spacings.sizeXSmall, fontSize: fontSizes.fontSize300 }}>Small</p>
+          <p style={{ margin: 0, marginBottom: spacings.sizeXXSmall, fontSize: fontSizes.fontSize300 }}>Small</p>
           <SpinButton className="w-auto" value={b} onChange={setB} min={0} max={10} step={1} size="sm" />
         </div>
         <div>
-          <p style={{ margin: 0, marginBottom: spacings.sizeXSmall, fontSize: fontSizes.fontSize300 }}>Large · disabled</p>
+          <p style={{ margin: 0, marginBottom: spacings.sizeXXSmall, fontSize: fontSizes.fontSize300 }}>Large · disabled</p>
           <SpinButton className="w-auto" value={c} onChange={setC} min={0} max={99} step={1} size="lg" disabled />
         </div>
       </div>

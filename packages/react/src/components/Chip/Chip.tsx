@@ -1,11 +1,18 @@
 import { clsx } from "clsx";
 import { WebIcon } from "../../WebIcon";
-import { chipDisabledVariantClass, chipSizeIcon, chipSizeTypo, chipStyles, chipVariantClass } from "./style";
+import {
+    chipDisabledVariantClass,
+    chipSizeClass,
+    chipSizeIcon,
+    chipSizeTypo,
+    chipStyles,
+    chipVariantClass,
+} from "./style";
 import type { ChipProps } from "./types";
 
 export function Chip({
     variant = "default",
-    size = "lg",
+    size = "md",
     disabled = false,
     avatar,
     onRemove,
@@ -24,6 +31,7 @@ export function Chip({
             aria-disabled={disabled || undefined}
             className={clsx(
                 chipStyles.root,
+                chipSizeClass[size],
                 chipSizeTypo[size],
                 disabled ? chipDisabledVariantClass[variant] : chipVariantClass[variant],
                 className,

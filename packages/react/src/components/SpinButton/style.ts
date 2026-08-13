@@ -1,4 +1,5 @@
 import type { SpinButtonProps } from "./types";
+import { formControlShellHeightClass, formControlTypoClass } from "../../formControlSizes";
 
 type SpinButtonSize = NonNullable<SpinButtonProps["size"]>;
 
@@ -9,34 +10,19 @@ export const spinButtonStyles = {
     bgDisabled: "bg-refineui-alias-background-surface-disabled",
     bgDefault: "bg-refineui-alias-background-primary",
     value:
-        "flex min-w-0 flex-[1_1_auto] items-center pl-refineui-spin-field-padding-inline-start pr-refineui-size-small",
+        "flex min-w-0 flex-[1_1_auto] items-center pl-refineui-spin-field-padding-inline-start pr-refineui-size-x-small",
     valueInput: "w-full border-none bg-transparent p-0 outline-none placeholder:text-refineui-alias-foreground-placeholder",
     valueTextDisabled: "text-refineui-alias-foreground-disabled",
     valueTextDefault: "text-refineui-alias-foreground-primary",
-    stepper: "flex w-refineui-spin-stepper-width shrink-0 flex-col",
+    stepper: "flex h-full min-h-0 w-refineui-spin-stepper-width shrink-0 flex-col",
+    /** Split column evenly inside shared `controlHeight*` shell */
     stepButtonBase:
-        "flex w-refineui-spin-stepper-width items-center justify-center border-none p-0 text-refineui-alias-foreground-placeholder",
-    stepButtonUpPadding: "pt-refineui-size-xsmall",
-    stepButtonDownPadding: "pb-refineui-size-xsmall",
+        "box-border flex min-h-0 w-full flex-1 items-center justify-center border-none p-0 text-refineui-alias-foreground-secondary",
     stepButtonDisabled: "cursor-not-allowed bg-refineui-alias-background-surface-disabled opacity-50",
     stepButtonEnabled: "cursor-pointer bg-refineui-alias-background-primary opacity-100",
 } as const;
 
-export const spinButtonShellClass: Record<SpinButtonSize, string> = {
-    sm: "min-h-refineui-control-height-sm h-refineui-control-height-sm rounded-refineui-medium",
-    md: "min-h-refineui-control-height-md h-refineui-control-height-md rounded-refineui-large",
-    lg: "min-h-refineui-control-height-lg h-refineui-control-height-lg rounded-refineui-xlarge",
-};
+/** Height + radius from shared form-control tokens; typography on value only */
+export const spinButtonShellClass: Record<SpinButtonSize, string> = formControlShellHeightClass;
 
-export const spinButtonValueTypo: Record<SpinButtonSize, string> = {
-    sm: "refineui-typo-caption-1",
-    md: "refineui-typo-body-2",
-    lg: "refineui-typo-body-1",
-};
-
-export const spinButtonStepHeight: Record<SpinButtonSize, string> = {
-    sm: "h-refineui-spin-stepper-step-height-sm",
-    md: "h-refineui-spin-stepper-step-height-md",
-    lg: "h-refineui-spin-stepper-step-height-lg",
-};
-
+export const spinButtonValueTypo: Record<SpinButtonSize, string> = formControlTypoClass;

@@ -1,17 +1,16 @@
 // src/animation.ts
 var motionDurations = {
-  // Keep in sync with @refineui/tokens semanticInteraction.duration
-  instant: "0ms",
-  fast: "150ms",
-  normal: "180ms",
-  slow: "240ms",
-  toast: "320ms"
+  // Resolve via `@refineui/tokens` CSS (Foundation → semanticInteraction roles)
+  instant: "var(--refineui-motion-duration-instant)",
+  fast: "var(--refineui-motion-duration-fast)",
+  normal: "var(--refineui-motion-duration-normal)",
+  slow: "var(--refineui-motion-duration-slow)",
+  toast: "var(--refineui-motion-duration-panel)"
 };
 var motionEasings = {
-  // Keep in sync with @refineui/tokens semanticInteraction.easing
-  standard: "cubic-bezier(0.2, 0, 0, 1)",
-  emphasized: "cubic-bezier(0.16, 1, 0.3, 1)",
-  linear: "linear"
+  standard: "var(--refineui-motion-easing-standard)",
+  emphasized: "var(--refineui-motion-easing-emphasized)",
+  linear: "var(--refineui-motion-easing-linear)"
 };
 var motionPresets = {
   fadeIn: { keyframes: "refineui-fade-in", duration: "normal", easing: "standard", fillMode: "both" },
@@ -99,7 +98,7 @@ var motionKeyframesCss = `
 
 // src/color.ts
 function toKebab(str) {
-  return str.replace(/([a-z])([A-Z])/g, "$1-$2").replace(/([a-zA-Z])(\d)/g, "$1-$2").toLowerCase();
+  return str.replace(/([a-z0-9])([A-Z])/g, "$1-$2").replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2").replace(/([a-zA-Z])(\d)/g, "$1-$2").toLowerCase();
 }
 function semanticColorToken(name) {
   return { type: "semantic", name };
@@ -228,6 +227,22 @@ function getMergeableTriggerChild(children) {
   }
   return node;
 }
+
+// src/typography.ts
+function semanticTextToken(name) {
+  return { type: "semantic-text", name };
+}
+function foundationTypographyToken(name) {
+  return { type: "foundation-typography", name };
+}
+function foundationTypographyUtilityClass(foundationKey) {
+  return `refineui-typo-${toKebab(foundationKey)}`;
+}
+function isSemanticTextTokenRef(value) {
+  if (typeof value !== "object" || value === null) return false;
+  const candidate = value;
+  return candidate.type === "semantic-text" && typeof candidate.name === "string";
+}
 export {
   acquireBodyScrollLock,
   ariaAttr,
@@ -238,12 +253,15 @@ export {
   createTransitionStyle,
   dataAttr,
   elementProps,
+  foundationTypographyToken,
+  foundationTypographyUtilityClass,
   getMergeableTriggerChild,
   getReducedMotionQuery,
   hexToRgba,
   imgProps,
   inputProps,
   isColorTokenRef,
+  isSemanticTextTokenRef,
   labelProps,
   motionDurations,
   motionEasings,
@@ -256,6 +274,7 @@ export {
   resolveColorTokenValue,
   semanticColorCssVar,
   semanticColorToken,
+  semanticTextToken,
   shadowWithColor,
   toKebab,
   useComposedRefs

@@ -143,3 +143,11 @@ export const shadows: ShadowTokens = {
         shadowColors.shadowColorAmbientDark
     ),
 };
+
+/** Softest elevation-2 (slider thumb halo) — Key/Ambient lighter ramp */
+export const shadow2Lighter = shadowLevel(
+    SHADOW_DIMS.shadow2.key,
+    SHADOW_DIMS.shadow2.ambient,
+    shadowColors.shadowColorKeyLighter,
+    shadowColors.shadowColorAmbientLighter
+);

@@ -11,7 +11,7 @@ export default function AccordionPreview() {
   return (
     <PreviewFrame>
       <div style={{ width: "100%", maxWidth: 760 }}>
-        <Accordion type="single" collapsible defaultValue="shipping">
+        <Accordion type="single" collapsible defaultValue="returns">
           <AccordionItem value="shipping">
             <AccordionTrigger>What are your shipping options?</AccordionTrigger>
             <AccordionContent>
@@ -47,6 +47,22 @@ export default function AccordionPreview() {
           <AccordionItem value="tips" icon="settings">
             <AccordionTrigger>Tips</AccordionTrigger>
             <AccordionContent>You can set size to sm / md / lg when needed.</AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
+        <div style={{ height: spacings.sizeLarge }} />
+
+        <Accordion type="single" collapsible size="lg">
+          <AccordionItem value="lg-a" icon="info">
+            <AccordionTrigger>Large size accordion</AccordionTrigger>
+            <AccordionContent>
+              Size `lg` uses SubTitle1 for the trigger and Body1 for content, with
+              medium icons.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="lg-b">
+            <AccordionTrigger>Another large item</AccordionTrigger>
+            <AccordionContent>Content stays secondary for hierarchy.</AccordionContent>
           </AccordionItem>
         </Accordion>
       </div>

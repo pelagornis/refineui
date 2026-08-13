@@ -5,7 +5,7 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "tsup src/color.ts --format cjs,esm --dts --clean --out-dir lib --external react --external react-dom && tsup src/animation.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom && tsup src/react.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom && tsup src/index.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom",
+    "build": "tsup src/color.ts --format cjs,esm --dts --clean --out-dir lib --external react --external react-dom && tsup src/typography.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom && tsup src/animation.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom && tsup src/react.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom && tsup src/index.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom",
     "build:color": "tsup src/color.ts --format cjs,esm --dts --clean --out-dir lib --external react --external react-dom",
     "build:animation": "tsup src/animation.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom",
     "build:react": "tsup src/react.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom",
@@ -14,6 +14,7 @@
   "exports": {
     ".": {"types": "./lib/index.d.ts", "import": "./lib/index.js", "require": "./lib/index.cjs"},
     "./color": {"types": "./lib/color.d.ts", "import": "./lib/color.js", "require": "./lib/color.cjs"},
+    "./typography": {"types": "./lib/typography.d.ts", "import": "./lib/typography.js", "require": "./lib/typography.cjs"},
     "./animation": {"types": "./lib/animation.d.ts", "import": "./lib/animation.js", "require": "./lib/animation.cjs"},
     "./react": {"types": "./lib/react.d.ts", "import": "./lib/react.js", "require": "./lib/react.cjs"}
   },

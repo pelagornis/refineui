@@ -26,3 +26,12 @@ export interface MenuItemProps extends Omit<ButtonHTMLAttributes<HTMLButtonEleme
     state?: "default" | "hover" | "pressed" | "active" | "disabled";
 }
 
+/** Submenu trigger — chevron is built-in (Web Kit endIcon). */
+export interface MenuSubTriggerProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
+    children: ReactNode;
+    description?: ReactNode;
+    startIcon?: ReactNode;
+    state?: "default" | "hover" | "pressed" | "active" | "disabled";
+}
+
+export type MenuSubContentProps = HTMLAttributes<HTMLDivElement>;

@@ -252,6 +252,7 @@ export type BorderRadiusTokens = {
  */
 export type SpacingTokens = {
     sizeNone: string;
+    sizeXXXSmall: string;
     sizeXXSmall: string;
     sizeXSmall: string;
     sizeSmall: string;
@@ -262,13 +263,48 @@ export type SpacingTokens = {
     sizeXXXLarge: string;
 };
 
-/** Motion/scale strings — shared with CSS `transform`, etc. */
-export type MotionTokens = {
-    dialogEnterScale: string;
-    buttonActiveScale: string;
-    sliderThumbHoverScale: string;
+/**
+ * Foundation motion primitives (`global/motion.ts`).
+ * Value-based steps only — no UI role names.
+ */
+export type FoundationMotionTokens = {
+    duration: {
+        duration0: string;
+        duration150: string;
+        duration180: string;
+        duration200: string;
+        duration240: string;
+        duration260: string;
+        duration280: string;
+        duration320: string;
+        duration380: string;
+        duration800: string;
+        duration1500: string;
+    };
+    easing: {
+        easingStandard: string;
+        easingEmphasized: string;
+        easingPanel: string;
+        easingContent: string;
+        easingLinear: string;
+        easingEaseOut: string;
+        easingEaseInOut: string;
+    };
+    scale: {
+        scale96: string;
+        scale98: string;
+        scale115: string;
+    };
+    distance: {
+        distance4: string;
+    };
 };
 
+/**
+ * Semantic motion roles (`semantic/interaction.ts`) — resolved Foundation strings.
+ * Prefer role keys (`press`, `fast`, `panel`) in new code; component scale aliases
+ * (`buttonActive`, …) mirror the same Foundation steps for existing CSS vars.
+ */
 export type SemanticInteractionTokens = {
     duration: {
         instant: string;
@@ -293,6 +329,9 @@ export type SemanticInteractionTokens = {
         easeInOut: string;
     };
     scale: {
+        enter: string;
+        press: string;
+        hoverGrow: string;
         dialogEnter: string;
         buttonActive: string;
         sliderThumbHover: string;
@@ -301,6 +340,9 @@ export type SemanticInteractionTokens = {
         float: string;
     };
 };
+
+/** @deprecated Use `FoundationMotionTokens` — kept for older imports. */
+export type MotionTokens = FoundationMotionTokens;
 
 /**
  * Design tokens for font

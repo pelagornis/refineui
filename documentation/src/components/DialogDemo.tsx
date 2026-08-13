@@ -27,7 +27,7 @@ export default function DialogDemo() {
                     backgroundColor: colors.neutralWhite,
                 }}
             >
-                <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeSmall }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeXSmall }}>
                     <Dialog>
                         <DialogTrigger type="button">Open dialog (Large)</DialogTrigger>
                         <DialogContent>

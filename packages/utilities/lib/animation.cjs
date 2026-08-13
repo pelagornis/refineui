@@ -31,18 +31,17 @@ __export(animation_exports, {
 });
 module.exports = __toCommonJS(animation_exports);
 var motionDurations = {
-  // Keep in sync with @refineui/tokens semanticInteraction.duration
-  instant: "0ms",
-  fast: "150ms",
-  normal: "180ms",
-  slow: "240ms",
-  toast: "320ms"
+  // Resolve via `@refineui/tokens` CSS (Foundation → semanticInteraction roles)
+  instant: "var(--refineui-motion-duration-instant)",
+  fast: "var(--refineui-motion-duration-fast)",
+  normal: "var(--refineui-motion-duration-normal)",
+  slow: "var(--refineui-motion-duration-slow)",
+  toast: "var(--refineui-motion-duration-panel)"
 };
 var motionEasings = {
-  // Keep in sync with @refineui/tokens semanticInteraction.easing
-  standard: "cubic-bezier(0.2, 0, 0, 1)",
-  emphasized: "cubic-bezier(0.16, 1, 0.3, 1)",
-  linear: "linear"
+  standard: "var(--refineui-motion-easing-standard)",
+  emphasized: "var(--refineui-motion-easing-emphasized)",
+  linear: "var(--refineui-motion-easing-linear)"
 };
 var motionPresets = {
   fadeIn: { keyframes: "refineui-fade-in", duration: "normal", easing: "standard", fillMode: "both" },

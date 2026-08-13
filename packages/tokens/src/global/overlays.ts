@@ -1,9 +1,12 @@
-import { hexToRgba } from "@refineui/utilities";
-import { colors } from "./colors";
+import { opacities } from "./opacities";
 
-/** Dialog / Drawer scrim — spec alpha ~0.25 (primaryBlack) */
+/**
+ * Overlay helpers (static snapshots for JS).
+ * In CSS, `--refineui-overlay-backdrop` tracks `var(--refineui-color-alias-surface-overlay)`.
+ */
 export const overlays = {
-    backdrop: hexToRgba(colors.neutralBlack, 0.25),
-    /** `data-theme="dark"` Ghost button hover — `refineui.css` */
-    ghostButtonHoverDark: "rgba(255, 255, 255, 0.08)",
+    /** Light-mode scrim snapshot — keep in sync with `surfaceOverlayRgba.light` */
+    backdrop: "rgba(0, 0, 0, 0.2)",
+    /** Dark Ghost button hover */
+    ghostButtonHoverDark: `rgba(255, 255, 255, ${opacities.opacityGhostHover})`,
 } as const;

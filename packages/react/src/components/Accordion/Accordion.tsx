@@ -1,5 +1,6 @@
 import type { HTMLAttributes } from "react";
 import { useCallback, useMemo, useRef, useState } from "react";
+import { clsx } from "clsx";
 import {
     AccordionContext,
     type AccordionSize,
@@ -8,6 +9,7 @@ import {
     toSet,
     usePrefersReducedMotion,
 } from "./context";
+import { accordionStyles } from "./style";
 
 export interface AccordionProps extends HTMLAttributes<HTMLDivElement> {
     type?: AccordionType;
@@ -15,7 +17,7 @@ export interface AccordionProps extends HTMLAttributes<HTMLDivElement> {
     defaultValue?: string | string[];
     value?: string | string[];
     onValueChange?: (value: string | string[] | undefined) => void;
-    /** Figma Web Kit: Small → Caption1, Medium → Body1, Large → SubTitle1 */
+    /** Web Kit size tier — scales trigger & content typography via `componentTypographyTokens.accordion`. */
     size?: AccordionSize;
 }
 
@@ -102,7 +104,7 @@ export function Accordion({
 
     return (
         <AccordionContext.Provider value={contextValue}>
-            <div data-refineui="accordion" className={className} {...props}>
+            <div data-refineui="accordion" className={clsx(accordionStyles.root, className)} {...props}>
                 {children}
             </div>
         </AccordionContext.Provider>

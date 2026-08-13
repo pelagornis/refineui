@@ -7,7 +7,9 @@ import FieldPreview from "../../../components/FieldPreview";
 
 # Field
 
-Wraps a form field as **label + control + optional hint/error**. Matches Web Kit **Field** `525:1074` label typography and spacing.
+Wraps a form field as **label + control + optional hint/error**. Matches Web Kit **Field** `525:1074`.
+
+`FieldLabel` / `FieldRequired` reuse the [Label](/components/label/) atom (`Label` / `LabelRequired`) so size and required marks stay in sync.
 
 ## Install & import
 
@@ -39,7 +41,7 @@ import "@refineui/react/refineui.css";
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | Label typography (sm→caption1, md→body2, lg→body1) |
+| `size` | `"sm"` \| `"md"` \| `"lg"` | `"lg"` | Label typography (sm→caption1, md→body2, lg→body1). Child controls inherit when `size` is omitted. |
 | `children` | `ReactNode` | — | Slots (`FieldLabel`, `FieldHint`, `FieldError`, etc.) |
 
 Place [Input](/components/input/), [Select](/components/select/), [Textarea](/components/textarea/), etc. as children.

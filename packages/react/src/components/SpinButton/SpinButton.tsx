@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import type { ChangeEvent, KeyboardEvent } from "react";
 import { iconSizes } from "@refineui/tokens";
 import { WebIcon } from "../../WebIcon";
-import { spinButtonShellClass, spinButtonStepHeight, spinButtonStyles, spinButtonValueTypo } from "./style";
+import { spinButtonShellClass, spinButtonStyles, spinButtonValueTypo } from "./style";
 import type { SpinButtonProps } from "./types";
 
 export function SpinButton({
@@ -184,14 +184,18 @@ export function SpinButton({
                     disabled={disabled || atMax}
                     className={clsx(
                         spinButtonStyles.stepButtonBase,
-                        spinButtonStyles.stepButtonUpPadding,
-                        spinButtonStepHeight[size],
                         disabled || atMax
                             ? spinButtonStyles.stepButtonDisabled
                             : spinButtonStyles.stepButtonEnabled,
                     )}
                 >
-                    <WebIcon name="chevron-up" size={iconSizes.xxsmall} color="currentColor" fallback="▲" />
+                    <WebIcon
+                        name="chevron-up"
+                        size={iconSizes.xsmall}
+                        color="currentColor"
+                        iconStyle="filled"
+                        fallback="▲"
+                    />
                 </button>
                 <button
                     type="button"
@@ -201,14 +205,18 @@ export function SpinButton({
                     disabled={disabled || atMin}
                     className={clsx(
                         spinButtonStyles.stepButtonBase,
-                        spinButtonStyles.stepButtonDownPadding,
-                        spinButtonStepHeight[size],
                         disabled || atMin
                             ? spinButtonStyles.stepButtonDisabled
                             : spinButtonStyles.stepButtonEnabled,
                     )}
                 >
-                    <WebIcon name="chevron-down" size={iconSizes.xxsmall} color="currentColor" fallback="▼" />
+                    <WebIcon
+                        name="chevron-down"
+                        size={iconSizes.xsmall}
+                        color="currentColor"
+                        iconStyle="filled"
+                        fallback="▼"
+                    />
                 </button>
             </div>
         </div>

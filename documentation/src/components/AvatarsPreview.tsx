@@ -64,7 +64,7 @@ export default function AvatarsPreview() {
             fontSize: fontSizes.fontSize200,
             color: colors.neutral550,
             margin: 0,
-            marginTop: `calc(-1 * ${spacings.sizeSmall})`,
+            marginTop: `calc(-1 * ${spacings.sizeXSmall})`,
             marginBottom: spacings.sizeLarge,
             lineHeight: 1.5,
           }}

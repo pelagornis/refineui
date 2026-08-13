@@ -15,7 +15,7 @@ export default function PaginationDemo() {
       <Pagination>
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious type="button" aria-label="Previous page" />
+            <PaginationPrevious type="button" />
           </PaginationItem>
           <PaginationItem>
             <PaginationLink href="#">1</PaginationLink>
@@ -29,10 +29,16 @@ export default function PaginationDemo() {
             <PaginationLink href="#">3</PaginationLink>
           </PaginationItem>
           <PaginationItem>
+            <PaginationLink href="#">4</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
             <PaginationEllipsis />
           </PaginationItem>
           <PaginationItem>
-            <PaginationNext type="button" aria-label="Next page" />
+            <PaginationLink href="#">12</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext type="button" />
           </PaginationItem>
         </PaginationContent>
       </Pagination>

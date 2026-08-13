@@ -65,6 +65,7 @@ export function BreadcrumbPage({ className, ...props }: BreadcrumbPageProps) {
             role="link"
             aria-disabled="true"
             aria-current="page"
+            data-refineui="breadcrumb-page"
             className={clsx(
                 breadcrumbStyles.textRow,
                 breadcrumbStyles.page,
@@ -100,7 +101,13 @@ export function BreadcrumbEllipsis({ className, ...props }: BreadcrumbEllipsisPr
             )}
             {...props}
         >
-            <WebIcon name="more-horizontal" size={iconSizes.small} color="currentColor" fallback="⋯" />
+            <WebIcon
+                name="more-horizontal"
+                size={iconSizes.small}
+                color="currentColor"
+                fallback="⋯"
+                className="items-center justify-center"
+            />
         </span>
     );
 }
@@ -119,7 +126,13 @@ export const BreadcrumbEllipsisTrigger = forwardRef<HTMLButtonElement, Breadcrum
                 {...props}
             >
                 {children ?? (
-                    <WebIcon name="more-horizontal" size={iconSizes.small} color="currentColor" fallback="⋯" />
+                    <WebIcon
+                name="more-horizontal"
+                size={iconSizes.small}
+                color="currentColor"
+                fallback="⋯"
+                className="items-center justify-center"
+            />
                 )}
             </button>
         );

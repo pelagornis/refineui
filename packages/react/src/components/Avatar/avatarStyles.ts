@@ -1,7 +1,8 @@
-import { clsx } from "clsx";
 import { iconSizes } from "@refineui/tokens";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
+import { componentTypographyTokens } from "../../tokens/componentTypographyTokens";
+import { buildSemanticTextClassMap, componentTextClass } from "../../typography";
 import type { CSSProperties } from "react";
 
 export type NormalizedAvatarSize =
@@ -89,7 +90,20 @@ export function normalizeAvatarColor(layout: AvatarLayout | undefined, color: Av
     return "neutral";
 }
 
-/** Figma `Global/Size/{n}` → Tailwind `size-refineui-foundation-size-*` */
+/** Figma `Global/Size/{n}` → CSS var (Avatar shell — do not rely only on Tailwind `size-*`). */
+export const avatarSizeVar: Record<NormalizedAvatarSize, string> = {
+    xxxsmall: "var(--refineui-size-foundation-size-160)",
+    xxsmall: "var(--refineui-size-foundation-size-200)",
+    xsmall: "var(--refineui-size-foundation-size-240)",
+    small: "var(--refineui-size-foundation-size-280)",
+    medium: "var(--refineui-size-foundation-size-320)",
+    large: "var(--refineui-size-foundation-size-360)",
+    xlarge: "var(--refineui-size-foundation-size-480)",
+    xxlarge: "var(--refineui-size-foundation-size-540)",
+    xxxlarge: "var(--refineui-size-foundation-size-600)",
+};
+
+/** Tailwind mirror of `avatarSizeVar` (optional; var styles are authoritative). */
 export const avatarSizeDim: Record<NormalizedAvatarSize, string> = {
     xxxsmall: "size-refineui-foundation-size-160",
     xxsmall: "size-refineui-foundation-size-200",
@@ -102,17 +116,9 @@ export const avatarSizeDim: Record<NormalizedAvatarSize, string> = {
     xxxlarge: "size-refineui-foundation-size-600",
 };
 
-export const avatarTypoNeutral: Record<NormalizedAvatarSize, string> = {
-    xxxsmall: "refineui-typo-body-4",
-    xxsmall: "refineui-typo-body-2",
-    xsmall: "refineui-typo-body-1",
-    small: "refineui-typo-body-1",
-    medium: "refineui-typo-body-1",
-    large: "refineui-typo-body-1",
-    xlarge: "refineui-typo-sub-title-1",
-    xxlarge: "refineui-typo-title-3",
-    xxxlarge: "refineui-typo-title-2",
-};
+export const avatarTypoNeutral = buildSemanticTextClassMap(
+    componentTypographyTokens.avatar.initialsNeutral,
+);
 
 export const avatarIconSlotSize: Record<NormalizedAvatarSize, number> = {
     xxxsmall: iconSizes.xxsmall,
@@ -127,15 +133,14 @@ export const avatarIconSlotSize: Record<NormalizedAvatarSize, number> = {
 };
 
 export const AVATAR_INNER_MASK =
-    "absolute inset-0 flex min-h-0 min-w-0 items-center justify-center overflow-hidden rounded-refineui-circle";
+    "relative flex size-full min-h-0 min-w-0 items-center justify-center overflow-hidden rounded-refineui-circle";
 
 function initialsAccentTypo(size: NormalizedAvatarSize): string {
-    return clsx(
-        size === "xxxlarge" && "refineui-typo-title-2",
-        size === "xxlarge" && "refineui-typo-title-3",
-        size === "xlarge" && "refineui-typo-sub-title-1",
-        !["xxxlarge", "xxlarge", "xlarge"].includes(size) && "refineui-typo-body-1",
-    );
+    const tokens = componentTypographyTokens.avatar.initialsAccent;
+    if (size === "xxxlarge") return componentTextClass(tokens.xxxlarge);
+    if (size === "xxlarge") return componentTextClass(tokens.xxlarge);
+    if (size === "xlarge") return componentTextClass(tokens.xlarge);
+    return componentTextClass(tokens.default);
 }
 
 const avatarShellBackgroundColor: Record<AvatarColor, string> = {
@@ -221,9 +226,9 @@ export const avatarOverflowIconSize: Record<NormalizedAvatarSize, number> = {
 
 /** `AvatarGroup` `layout="spread"` — Web Kit `Avatar` Spread `69:3007` */
 export const avatarSpreadGap: Record<NormalizedAvatarSize, string> = {
-    xxxsmall: "gap-refineui-size-x-small",
-    xxsmall: "gap-refineui-size-x-small",
-    xsmall: "gap-refineui-size-small",
+    xxxsmall: "gap-refineui-size-xx-small",
+    xxsmall: "gap-refineui-size-xx-small",
+    xsmall: "gap-refineui-size-x-small",
     small: "gap-refineui-size-medium",
     medium: "gap-refineui-size-medium",
     large: "gap-refineui-size-large",
@@ -232,17 +237,9 @@ export const avatarSpreadGap: Record<NormalizedAvatarSize, string> = {
     xxxlarge: "gap-refineui-size-x-large",
 };
 
-export const avatarGroupCountTypo: Record<NormalizedAvatarSize, string> = {
-    xxxsmall: "refineui-typo-caption-3",
-    xxsmall: "refineui-typo-caption-3",
-    xsmall: "refineui-typo-caption-2",
-    small: "refineui-typo-caption-2",
-    medium: "refineui-typo-caption-1",
-    large: "refineui-typo-caption-1",
-    xlarge: "refineui-typo-body-2",
-    xxlarge: "refineui-typo-body-2",
-    xxxlarge: "refineui-typo-body-2",
-};
+export const avatarGroupCountTypo = buildSemanticTextClassMap(
+    componentTypographyTokens.avatar.groupCount,
+);
 
 export const avatarStatusPosition: Record<NormalizedAvatarSize, string> = {
     xxxsmall: "bottom-0 right-0",
@@ -266,6 +263,19 @@ export const avatarStatusDim: Record<NormalizedAvatarSize, string> = {
     xlarge: "size-refineui-foundation-size-120",
     xxlarge: "size-refineui-foundation-size-120",
     xxxlarge: "size-refineui-avatar-status-xxxlarge",
+};
+
+/** Status dot CSS vars — prevents SVG default ~300px when Tailwind `size-*` is missing. */
+export const avatarStatusSizeVar: Record<NormalizedAvatarSize, string> = {
+    xxxsmall: "var(--refineui-size-foundation-size-40)",
+    xxsmall: "var(--refineui-size-foundation-size-60)",
+    xsmall: "var(--refineui-size-foundation-size-60)",
+    small: "var(--refineui-size-foundation-size-60)",
+    medium: "var(--refineui-size-foundation-size-80)",
+    large: "var(--refineui-size-foundation-size-100)",
+    xlarge: "var(--refineui-size-foundation-size-120)",
+    xxlarge: "var(--refineui-size-foundation-size-120)",
+    xxxlarge: "var(--refineui-size-avatar-status-xxxlarge)",
 };
 
 export const avatarStackOverlapCssVar: Record<NormalizedAvatarSize, string> = {

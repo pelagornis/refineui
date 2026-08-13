@@ -11,7 +11,7 @@ RefineUI is a **workspace monorepo** (pnpm or Bun). Running scripts from the roo
 
 | Path | Role |
 | ---- | ---- |
-| `packages/tokens` | `@refineui/tokens` — TS tokens; `build` emits `css-variables` / `tailwind-theme`; Tailwind utilities use the `refineui-*` prefix |
+| `packages/tokens` | `@refineui/tokens` — TS tokens; `build` emits `css-variables` / `tailwind-theme` / typography CSS; Tailwind utilities use the `refineui-*` prefix |
 | `packages/react` | `@refineui/react` — UI components + `refineui.css` |
 | `packages/utilities` | `@refineui/utilities` — shared utilities |
 | `documentation` | Astro + Starlight **this site** |
@@ -42,7 +42,7 @@ pnpm install
 pnpm build
 ```
 
-Order is **`utilities` → `tokens` → `react`** (see root `package.json` `build` script).
+Order is **`utilities` → `tokens` → `react`** (see root `package.json` `build` script). Tokens emit CSS; react appends component size vars.
 
 ## Documentation site
 

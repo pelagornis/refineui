@@ -209,7 +209,7 @@ export default function ToastPreview() {
             style={{
               display: "flex",
               flexWrap: "wrap",
-              gap: spacings.sizeSmall,
+              gap: spacings.sizeXSmall,
               marginBottom: spacings.sizeLarge,
             }}
           >
@@ -226,7 +226,7 @@ export default function ToastPreview() {
           </div>
           <div style={{ position: "relative", minHeight: 200 }}>
             <Toaster position={toasterPosition} />
-            <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeSmall }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeXSmall }}>
               <Button variant="primary" size="sm" onClick={() => spawnToast("default")}>
                 Default
               </Button>

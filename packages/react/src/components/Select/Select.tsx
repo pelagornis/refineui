@@ -21,7 +21,8 @@ import { iconSizes } from "@refineui/tokens";
 import { componentSizes, foundationSizes } from "../../componentSizes";
 import { acquireBodyScrollLock } from "@refineui/utilities/react";
 import { WebIcon } from "../../WebIcon";
-import { selectSizeClass, selectStyles } from "./style";
+import { selectTriggerSizeClass, selectStyles } from "./style";
+import { useOptionalFieldSize } from "../Field/context";
 import type {
     SelectArrowProps,
     SelectContentProps,
@@ -138,12 +139,14 @@ export function Select({
     onOpenChange,
     children,
     placeholder,
-    size = "md",
+    size: sizeProp,
     fullWidth = false,
     disabled = false,
     className,
     ...props
 }: SelectProps) {
+    const fieldSize = useOptionalFieldSize();
+    const size = sizeProp ?? fieldSize ?? "lg";
     const [innerValue, setInnerValue] = useState(defaultValue);
     const [innerOpen, setInnerOpen] = useState(false);
     const [activeIndex, setActiveIndex] = useState(-1);
@@ -365,6 +368,8 @@ export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(f
             role="combobox"
             aria-expanded={open}
             aria-haspopup="listbox"
+            data-refineui="select-trigger"
+            data-size={size}
             data-state={open ? "open" : "closed"}
             data-placeholder={hasLabel ? undefined : ""}
             disabled={disabled}
@@ -377,7 +382,7 @@ export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(f
             className={clsx(
                 "data-[placeholder]:[&_[data-refineui-select-value]]:text-refineui-alias-foreground-placeholder",
                 selectStyles.trigger,
-                selectSizeClass[size],
+                selectTriggerSizeClass[size],
                 disabled && selectStyles.triggerDisabled,
                 fullWidth && "w-full",
                 className,

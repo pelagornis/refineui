@@ -5,33 +5,33 @@ import PreviewFrame from "./PreviewFrame";
 export default function FieldPreview() {
   return (
     <PreviewFrame>
-      <div style={{ display: "flex", flexDirection: "column", gap: spacings.sizeLarge, maxWidth: "320px" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: spacings.sizeXLarge, maxWidth: "360px" }}>
         <Field>
           <FieldLabel>
             Email
             <FieldRequired />
           </FieldLabel>
-          <Input type="email" placeholder="email@example.com" />
+          <Input type="email" placeholder="email@example.com" fullWidth />
         </Field>
         <Field>
           <FieldLabel>Password</FieldLabel>
-          <Input type="password" placeholder="••••••••" />
+          <Input type="password" placeholder="Enter password" fullWidth />
           <FieldError>Please enter your password</FieldError>
         </Field>
         <Field>
           <FieldLabel>Nickname</FieldLabel>
-          <Input placeholder="Enter text" success />
+          <Input placeholder="Enter text" success fullWidth />
           <FieldHint>2–12 characters</FieldHint>
         </Field>
-        <Field>
-          <FieldLabel>Description</FieldLabel>
-          <Input placeholder="Enter text" />
-          <FieldHint>Enter at least 8 characters</FieldHint>
+        <Field size="md">
+          <FieldLabel>Medium field</FieldLabel>
+          <Input placeholder="size=md" fullWidth />
+          <FieldHint>Label body2 · control 40px</FieldHint>
         </Field>
-        <Field size="lg">
-          <FieldLabel>Large label</FieldLabel>
-          <Input placeholder="Enter text" />
-          <FieldHint>size=lg → body1</FieldHint>
+        <Field size="sm">
+          <FieldLabel>Compact field</FieldLabel>
+          <Input placeholder="size=sm" fullWidth />
+          <FieldHint>Label caption1 · control 32px</FieldHint>
         </Field>
       </div>
     </PreviewFrame>

@@ -6,6 +6,9 @@ export {
     MenuSection,
     MenuDivider,
     MenuItem,
+    MenuSub,
+    MenuSubTrigger,
+    MenuSubContent,
 } from "./Menu";
 export type {
     MenuProps,
@@ -14,4 +17,6 @@ export type {
     MenuSectionProps,
     MenuDividerProps,
     MenuItemProps,
+    MenuSubTriggerProps,
+    MenuSubContentProps,
 } from "./types";

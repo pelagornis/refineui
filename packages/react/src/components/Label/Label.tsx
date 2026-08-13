@@ -1,4 +1,5 @@
 import { clsx } from "clsx";
+import { LabelRequired } from "./LabelRequired";
 import { labelSizeTypo, labelStyles } from "./style";
 import type { LabelProps } from "./types";
 
@@ -19,22 +20,13 @@ export function Label({
             className={clsx(
                 labelStyles.base,
                 labelSizeTypo[size],
-                disabled
-                    ? labelStyles.disabled
-                    : labelStyles.enabled,
+                disabled ? labelStyles.disabled : labelStyles.enabled,
                 className,
             )}
             {...props}
         >
             {children}
-            {required && (
-                <span
-                    className={labelStyles.required}
-                    aria-hidden
-                >
-                    *
-                </span>
-            )}
+            {required ? <LabelRequired /> : null}
         </label>
     );
 }

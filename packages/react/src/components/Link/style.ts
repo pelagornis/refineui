@@ -1,7 +1,9 @@
+import { componentTypographyTokens } from "../../tokens/componentTypographyTokens";
+import { componentTextClass } from "../../typography";
+
 export const linkStyles = {
-    base: "refineui-typo-body-1",
-    withIcon: "inline-flex items-center gap-refineui-size-xsmall",
+    base: componentTextClass(componentTypographyTokens.link),
+    withIcon: "inline-flex items-center gap-refineui-size-xx-small",
     inline: "inline",
     disabled: "cursor-not-allowed",
 } as const;
-

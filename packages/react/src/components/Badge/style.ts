@@ -1,7 +1,13 @@
 import type { BadgeVariant } from "./types";
+import { clsx } from "clsx";
+import { componentTypographyTokens } from "../../tokens/componentTypographyTokens";
+import { componentTextClass } from "../../typography";
 
 export const badgeStyles = {
-    base: "refineui-typo-caption-2 inline-flex items-center justify-center py-refineui-size-xxsmall px-refineui-size-small",
+    base: clsx(
+        componentTextClass(componentTypographyTokens.badge),
+        "inline-flex items-center justify-center py-refineui-size-xxsmall px-refineui-size-small",
+    ),
     number: "rounded-refineui-circle",
     label: "rounded-refineui-medium",
 } as const;
@@ -15,4 +21,3 @@ export const badgeVariantClass: Record<BadgeVariant, string> = {
     warning: "bg-refineui-alias-background-warning text-refineui-alias-foreground-inversed",
     danger: "bg-refineui-alias-background-error text-refineui-alias-foreground-inversed",
 };
-

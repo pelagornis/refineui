@@ -164,7 +164,7 @@ export function DialogContent({ className, style, container, children, ...props 
         opacity: entered ? 1 : 0,
         transform: entered
             ? "scale(1) translateY(0)"
-            : "scale(var(--refineui-motion-dialog-enter-scale)) translateY(var(--refineui-spacing-size-350))",
+            : "scale(var(--refineui-motion-scale-enter)) translateY(var(--refineui-spacing-size-small))",
         transition: `opacity ${PANEL_MS}ms ${EASING}, transform ${PANEL_MS}ms ${EASING}`,
         willChange: "opacity, transform",
         maxWidth: size === "lg" ? componentSizes.dialogMaxWidth : componentSizes.dialogWidthSm,

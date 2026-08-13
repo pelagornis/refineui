@@ -43,29 +43,45 @@ export default function TooltipDemo() {
           margin: "0 auto",
         }}
       >
-        {ROWS.flat().map((c) => (
-          <div
-            key={`${c.position}-${c.align}`}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              minHeight: "5.5rem",
-              padding: spacings.sizeSmall,
-            }}
-          >
-            <Tooltip
-              trigger={
-                <Button variant="secondary" size="sm" style={{ fontSize: "0.6875rem" }}>
-                  {c.label}
-                </Button>
-              }
-              content={c.label}
-              position={c.position}
-              align={c.align}
-            />
-          </div>
-        ))}
+        {ROWS.flat().map((c) => {
+          const side = c.position === "Left" || c.position === "Right";
+          return (
+            <div
+              key={`${c.position}-${c.align}`}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                minHeight: side ? "7.5rem" : "5.5rem",
+                padding: spacings.sizeXSmall,
+              }}
+            >
+              <Tooltip
+                trigger={
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    style={{
+                      fontSize: "0.6875rem",
+                      ...(side
+                        ? {
+                            minHeight: spacings.sizeXXXLarge,
+                            height: "auto",
+                            paddingBlock: spacings.sizeLarge,
+                          }
+                        : null),
+                    }}
+                  >
+                    {c.label}
+                  </Button>
+                }
+                content={c.label}
+                position={c.position}
+                align={c.align}
+              />
+            </div>
+          );
+        })}
       </div>
     </PreviewFrame>
   );

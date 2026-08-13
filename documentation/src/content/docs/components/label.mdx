@@ -1,33 +1,38 @@
 ---
 title: Label
-description: Accessible form label
+description: Accessible form label atom (shared with Field)
 ---
 
 import LabelPreview from "../../../components/LabelPreview";
 
 # Label
 
-Styled native `<label>`. Matches Web Kit **Label** `216:1681`; default size is **`md`** (same as [Field](/components/field/) and [Input](/components/input/)).
+Styled native `<label>`. Web Kit **Label** `216:1681`. Default size **`md`** — same scale as [Field](/components/field/) / [Input](/components/input/).
+
+`FieldLabel` / `FieldRequired` are thin wrappers around **`Label`** / **`LabelRequired`** so form shells and standalone labels share one atom.
 
 ## Install & import
 
 ```tsx
-import { Label, Input } from "@refineui/react";
+import { Label, LabelRequired, Input } from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
 ## Basic usage
 
-Connect to an input with `htmlFor` / `id`.
+Prefer composing `LabelRequired` (same pattern as Field):
 
 ```tsx
 <>
-  <Label htmlFor="name" required>
+  <Label htmlFor="name">
     Name
+    <LabelRequired />
   </Label>
   <Input id="name" name="name" />
 </>
 ```
+
+`required` on `Label` still appends the same mark when you want a shorter form.
 
 ## Preview
 
@@ -37,21 +42,32 @@ Connect to an input with `htmlFor` / `id`.
 
 ## Props
 
+### `Label`
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | Typography |
-| `disabled` | `boolean` | `false` | Text color `neutral400` |
-| `required` | `boolean` | `false` | Shows `*` (`red700`) |
+| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | Typography (`caption1` / `body2` / `body1`) |
+| `disabled` | `boolean` | `false` | Text `foregroundDisabled` |
+| `required` | `boolean` | `false` | Convenience — renders `LabelRequired` |
 
-Supports **`LabelHTMLAttributes`** such as `htmlFor`, `children`, `className`.
+Also accepts **`LabelHTMLAttributes`** (`htmlFor`, `children`, `className`, …).
+
+### `LabelRequired`
+
+Decorative `*` (`aria-hidden`). Same atom as `FieldRequired`.
 
 ## Examples
 
-### Label only (without Field)
+### With Field
 
 ```tsx
-<Label htmlFor="city" size="sm">
-  City
-</Label>
-<Input id="city" size="sm" />
+<Field size="md">
+  <FieldLabel>
+    Email
+    <FieldRequired />
+  </FieldLabel>
+  <Input id="email" fullWidth />
+</Field>
 ```
+
+`FieldLabel` inherits `Field`’s `size` unless you pass `size` on the label.

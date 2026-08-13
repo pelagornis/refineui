@@ -2,16 +2,16 @@ import * as React from 'react';
 import { CSSProperties, Ref, ReactNode, ReactElement } from 'react';
 
 declare const motionDurations: {
-    readonly instant: "0ms";
-    readonly fast: "150ms";
-    readonly normal: "180ms";
-    readonly slow: "240ms";
-    readonly toast: "320ms";
+    readonly instant: "var(--refineui-motion-duration-instant)";
+    readonly fast: "var(--refineui-motion-duration-fast)";
+    readonly normal: "var(--refineui-motion-duration-normal)";
+    readonly slow: "var(--refineui-motion-duration-slow)";
+    readonly toast: "var(--refineui-motion-duration-panel)";
 };
 declare const motionEasings: {
-    readonly standard: "cubic-bezier(0.2, 0, 0, 1)";
-    readonly emphasized: "cubic-bezier(0.16, 1, 0.3, 1)";
-    readonly linear: "linear";
+    readonly standard: "var(--refineui-motion-easing-standard)";
+    readonly emphasized: "var(--refineui-motion-easing-emphasized)";
+    readonly linear: "var(--refineui-motion-easing-linear)";
 };
 type MotionDuration = keyof typeof motionDurations;
 type MotionEasing = keyof typeof motionEasings;
@@ -115,4 +115,18 @@ declare const composeRef: typeof composeRefs;
  */
 declare function getMergeableTriggerChild(children: ReactNode): ReactElement | null;
 
-export { type AnimationStyleOptions, type ColorTokenRef, type ColorTokenValue, type MotionDuration, type MotionEasing, type MotionPresetName, type PaletteColorTokenRef, type SemanticColorTokenRef, type TransitionStyleOptions, acquireBodyScrollLock, ariaAttr, buttonProps, composeRef, composeRefs, createAnimationStyle, createTransitionStyle, dataAttr, elementProps, getMergeableTriggerChild, getReducedMotionQuery, hexToRgba, imgProps, inputProps, isColorTokenRef, labelProps, motionDurations, motionEasings, motionKeyframesCss, motionMsToNumber, motionPresets, paletteColorCssVar, paletteColorToken, resolveColorToken, resolveColorTokenValue, semanticColorCssVar, semanticColorToken, shadowWithColor, toKebab, useComposedRefs };
+type SemanticTextTokenRef<TName extends string = string> = Readonly<{
+    type: "semantic-text";
+    name: TName;
+}>;
+type FoundationTypographyTokenRef<TName extends string = string> = Readonly<{
+    type: "foundation-typography";
+    name: TName;
+}>;
+declare function semanticTextToken<TName extends string>(name: TName): SemanticTextTokenRef<TName>;
+declare function foundationTypographyToken<TName extends string>(name: TName): FoundationTypographyTokenRef<TName>;
+/** Tailwind `@utility refineui-typo-*` class for a Foundation typography key (`body2`, `caption1`, …). */
+declare function foundationTypographyUtilityClass(foundationKey: string): string;
+declare function isSemanticTextTokenRef(value: unknown): value is SemanticTextTokenRef;
+
+export { type AnimationStyleOptions, type ColorTokenRef, type ColorTokenValue, type FoundationTypographyTokenRef, type MotionDuration, type MotionEasing, type MotionPresetName, type PaletteColorTokenRef, type SemanticColorTokenRef, type SemanticTextTokenRef, type TransitionStyleOptions, acquireBodyScrollLock, ariaAttr, buttonProps, composeRef, composeRefs, createAnimationStyle, createTransitionStyle, dataAttr, elementProps, foundationTypographyToken, foundationTypographyUtilityClass, getMergeableTriggerChild, getReducedMotionQuery, hexToRgba, imgProps, inputProps, isColorTokenRef, isSemanticTextTokenRef, labelProps, motionDurations, motionEasings, motionKeyframesCss, motionMsToNumber, motionPresets, paletteColorCssVar, paletteColorToken, resolveColorToken, resolveColorTokenValue, semanticColorCssVar, semanticColorToken, semanticTextToken, shadowWithColor, toKebab, useComposedRefs };

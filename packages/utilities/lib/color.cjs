@@ -33,7 +33,7 @@ __export(color_exports, {
 });
 module.exports = __toCommonJS(color_exports);
 function toKebab(str) {
-  return str.replace(/([a-z])([A-Z])/g, "$1-$2").replace(/([a-zA-Z])(\d)/g, "$1-$2").toLowerCase();
+  return str.replace(/([a-z0-9])([A-Z])/g, "$1-$2").replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2").replace(/([a-zA-Z])(\d)/g, "$1-$2").toLowerCase();
 }
 function semanticColorToken(name) {
   return { type: "semantic", name };

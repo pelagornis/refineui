@@ -3,7 +3,6 @@ import { iconSizes } from "@refineui/tokens";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
-import { Button } from "../Button";
 import { paginationStyles } from "./style";
 import type {
     PaginationContentProps,
@@ -35,7 +34,7 @@ export function PaginationLink({ className, isActive, ...props }: PaginationLink
             data-page="true"
             data-selected={isActive ? "true" : "false"}
             aria-current={isActive ? "page" : undefined}
-            className={clsx(paginationStyles.itemBase, paginationStyles.page, className)}
+            className={clsx(paginationStyles.itemShell, paginationStyles.page, className)}
             {...props}
         />
     );
@@ -44,25 +43,22 @@ export function PaginationLink({ className, isActive, ...props }: PaginationLink
 function PaginationNavButton({
     direction,
     className,
+    disabled,
     ...props
 }: (PaginationPreviousProps | PaginationNextProps) & { direction: "prev" | "next" }) {
     const isPrev = direction === "prev";
-    const iconColor = props.disabled
+    const iconColor = disabled
         ? resolveColorTokenValue(componentColorTokens.pagination.navIcon.disabled)
         : resolveColorTokenValue(componentColorTokens.pagination.navIcon.default);
+
     return (
-        <Button
-            variant="outline"
-            size="md"
-            layout="icon"
+        <button
+            type="button"
             data-refineui="pagination"
+            data-nav="true"
+            disabled={disabled}
             aria-label={isPrev ? "Previous page" : "Next page"}
-            className={clsx(
-                paginationStyles.itemBase,
-                paginationStyles.navBtn,
-                props.disabled && paginationStyles.navBtnDisabled,
-                className,
-            )}
+            className={clsx(paginationStyles.itemShell, paginationStyles.nav, className)}
             {...props}
         >
             <WebIcon
@@ -71,7 +67,7 @@ function PaginationNavButton({
                 color={iconColor}
                 fallback={isPrev ? "‹" : "›"}
             />
-        </Button>
+        </button>
     );
 }
 
@@ -88,8 +84,8 @@ export function PaginationEllipsis({ className, ...props }: PaginationEllipsisPr
         <span
             aria-hidden
             data-refineui="pagination"
-            data-page="true"
-            className={clsx(paginationStyles.itemBase, paginationStyles.ellipsis, className)}
+            data-ellipsis="true"
+            className={clsx(paginationStyles.itemShell, paginationStyles.ellipsis, className)}
             {...props}
         >
             <WebIcon

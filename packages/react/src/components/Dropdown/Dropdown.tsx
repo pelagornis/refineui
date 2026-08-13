@@ -23,11 +23,12 @@ import {
     useState,
 } from "react";
 import { createPortal } from "react-dom";
-import { iconSizes, spacings, strokeWidths, typographys, zIndex } from "@refineui/tokens";
+import { iconSizes, spacings, strokeWidths, zIndex } from "@refineui/tokens";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentSizes } from "../../componentSizes";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
+import { dropdownStyles } from "./style";
 import { acquireBodyScrollLock, composeRefs, getMergeableTriggerChild } from "@refineui/utilities/react";
 import { RadioInput } from "../Radio/RadioInput";
 import type {
@@ -87,8 +88,28 @@ function useDropdownRoot(component: string): RootCtx {
     return v;
 }
 
-export function Dropdown({ className, children, ...props }: HTMLAttributes<HTMLDivElement>) {
-    const [open, setOpen] = useState(false);
+export function Dropdown({
+    className,
+    children,
+    defaultOpen = false,
+    open: openProp,
+    onOpenChange,
+    ...props
+}: HTMLAttributes<HTMLDivElement> & {
+    defaultOpen?: boolean;
+    open?: boolean;
+    onOpenChange?: (open: boolean) => void;
+}) {
+    const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
+    const open = openProp ?? uncontrolledOpen;
+    const setOpen = useCallback<Dispatch<SetStateAction<boolean>>>(
+        (value) => {
+            const next = typeof value === "function" ? value(open) : value;
+            if (openProp === undefined) setUncontrolledOpen(next);
+            onOpenChange?.(next);
+        },
+        [open, openProp, onOpenChange],
+    );
     const triggerRef = useRef<HTMLElement | null>(null);
     const menuRef = useRef<HTMLDivElement | null>(null);
     const subPanelRef = useRef<HTMLDivElement | null>(null);
@@ -101,7 +122,7 @@ export function Dropdown({ className, children, ...props }: HTMLAttributes<HTMLD
     const close = useCallback(() => {
         setOpen(false);
         triggerRef.current?.focus({ preventScroll: true });
-    }, []);
+    }, [setOpen]);
 
     const ctx = useMemo(
         () => ({
@@ -239,7 +260,7 @@ export function DropdownContent({
     const [fixedStyle, setFixedStyle] = useState<CSSProperties | null>(null);
     const [menuSide, setMenuSide] = useState<"top" | "bottom">("bottom");
 
-    const gapPx = sideOffset ?? parseCssPxLen(spacings.sizeXSmall, 4);
+    const gapPx = sideOffset ?? parseCssPxLen(spacings.sizeXXSmall, 4);
     const defaultMenuW = parseCssPxLen(componentSizes.dropdownMenuWidth, 180);
     const z = Number.parseInt(String(zIndex.zIndexMessages), 10) || 10000;
 
@@ -342,7 +363,7 @@ export function DropdownContent({
             data-side={menuSide}
             onKeyDown={onMenuKeyDown}
             className={clsx(
-                "box-border flex max-w-[min(100vw-16px,calc(100vw-2rem))] flex-col gap-px overflow-x-hidden overflow-y-auto overscroll-contain rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xsmall shadow-refineui-2light outline-none",
+                "box-border flex w-refineui-dropdown-menu-width min-w-refineui-dropdown-menu-width max-w-[min(100vw-16px,calc(100vw-2rem))] flex-col gap-px overflow-x-hidden overflow-y-auto overscroll-contain rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xx-small shadow-refineui-2 outline-none",
                 className,
             )}
             {...props}
@@ -371,11 +392,7 @@ export function DropdownLabel({ className, ...props }: HTMLAttributes<HTMLDivEle
         <div
             role="presentation"
             data-refineui="dropdown-menu-label"
-            className={clsx(
-                "refineui-typo-caption-1 shrink-0 px-refineui-size-medium py-refineui-size-small font-medium text-refineui-alias-foreground-primary",
-                className,
-            )}
-            style={typographys.caption1}
+            className={clsx(dropdownStyles.label, className)}
             {...props}
         />
     );
@@ -409,11 +426,8 @@ export function DropdownItem({
             data-state={pressed ? "pressed" : selected ? "selected" : undefined}
             disabled={disabled}
             tabIndex={-1}
-            className={clsx(
-                "refineui-typo-body-2 flex w-full cursor-pointer items-center justify-between gap-refineui-size-medium rounded-refineui-xlarge border-none bg-transparent px-refineui-size-medium py-refineui-size-small text-left font-medium text-refineui-alias-foreground-primary outline-none disabled:cursor-not-allowed disabled:text-refineui-alias-foreground-disabled",
-                className,
-            )}
-            style={{ ...typographys.body2, ...style }}
+            className={clsx(dropdownStyles.item, className)}
+            style={style}
             onClick={(e) => {
                 onClick?.(e);
                 if (!e.defaultPrevented) close();
@@ -459,9 +473,17 @@ export function DropdownSeparator({ className, ...props }: HTMLAttributes<HTMLDi
             role="separator"
             aria-orientation="horizontal"
             data-refineui="dropdown-menu-separator"
-            className={clsx("-mx-refineui-size-xsmall my-refineui-size-xxsmall h-px shrink-0 bg-refineui-alias-border-default", className)}
+            className={clsx(
+                "flex w-full items-center px-refineui-size-x-small py-refineui-size-xxx-small",
+                className,
+            )}
             {...props}
-        />
+        >
+            <div
+                role="presentation"
+                className="h-px w-full shrink-0 bg-refineui-alias-border-default"
+            />
+        </div>
     );
 }
 
@@ -469,11 +491,7 @@ export function DropdownShortcut({ className, ...props }: HTMLAttributes<HTMLSpa
     return (
         <span
             data-refineui="dropdown-menu-shortcut"
-            className={clsx(
-                "refineui-typo-body-4 ml-auto shrink-0 tracking-wide text-refineui-alias-foreground-primary",
-                className,
-            )}
-            style={typographys.body4}
+            className={clsx(dropdownStyles.shortcut, className)}
             {...props}
         />
     );
@@ -484,23 +502,99 @@ export function DropdownPortal({ children }: { children: ReactNode }) {
     return <>{children}</>;
 }
 
+/** Hover open/close — short open, longer close so the pointer can cross the gap */
+const SUBMENU_OPEN_DELAY_MS = 75;
+const SUBMENU_CLOSE_DELAY_MS = 220;
+
+function isFinePointerHover(): boolean {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+        return false;
+    }
+    return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+}
+
 type SubCtx = {
     open: boolean;
     setOpen: Dispatch<SetStateAction<boolean>>;
     triggerRef: RefObject<HTMLButtonElement | null>;
+    openIntent: () => void;
+    closeIntent: () => void;
+    cancelClose: () => void;
 };
 
 const SubCtxBox = createContext<SubCtx | null>(null);
 
 export function DropdownSub({ children }: { children: ReactNode }) {
     const [subOpen, setSubOpen] = useState(false);
+    const subOpenRef = useRef(false);
     const triggerRef = useRef<HTMLButtonElement | null>(null);
-    const ctx = useMemo(() => ({ open: subOpen, setOpen: setSubOpen, triggerRef }), [subOpen]);
-
+    const openTimerRef = useRef<number | null>(null);
+    const closeTimerRef = useRef<number | null>(null);
     const root = useContext(DropdownCtx);
+
+    subOpenRef.current = subOpen;
+
+    const clearTimers = useCallback(() => {
+        if (openTimerRef.current != null) {
+            window.clearTimeout(openTimerRef.current);
+            openTimerRef.current = null;
+        }
+        if (closeTimerRef.current != null) {
+            window.clearTimeout(closeTimerRef.current);
+            closeTimerRef.current = null;
+        }
+    }, []);
+
+    const cancelClose = useCallback(() => {
+        if (closeTimerRef.current != null) {
+            window.clearTimeout(closeTimerRef.current);
+            closeTimerRef.current = null;
+        }
+    }, []);
+
+    const openIntent = useCallback(() => {
+        cancelClose();
+        if (subOpenRef.current) return;
+        if (openTimerRef.current != null) return;
+        openTimerRef.current = window.setTimeout(() => {
+            openTimerRef.current = null;
+            setSubOpen(true);
+        }, SUBMENU_OPEN_DELAY_MS);
+    }, [cancelClose]);
+
+    const closeIntent = useCallback(() => {
+        if (openTimerRef.current != null) {
+            window.clearTimeout(openTimerRef.current);
+            openTimerRef.current = null;
+        }
+        if (closeTimerRef.current != null) return;
+        closeTimerRef.current = window.setTimeout(() => {
+            closeTimerRef.current = null;
+            setSubOpen(false);
+        }, SUBMENU_CLOSE_DELAY_MS);
+    }, []);
+
+    const setOpen = useCallback<Dispatch<SetStateAction<boolean>>>(
+        (value) => {
+            clearTimers();
+            setSubOpen(value);
+        },
+        [clearTimers],
+    );
+
+    const ctx = useMemo(
+        () => ({ open: subOpen, setOpen, triggerRef, openIntent, closeIntent, cancelClose }),
+        [subOpen, setOpen, openIntent, closeIntent, cancelClose],
+    );
+
     useEffect(() => {
-        if (!root?.open) setSubOpen(false);
-    }, [root?.open]);
+        if (!root?.open) {
+            clearTimers();
+            setSubOpen(false);
+        }
+    }, [root?.open, clearTimers]);
+
+    useEffect(() => () => clearTimers(), [clearTimers]);
 
     return <SubCtxBox.Provider value={ctx}>{children}</SubCtxBox.Provider>;
 }
@@ -511,8 +605,17 @@ function useSub(component: string): SubCtx {
     return v;
 }
 
-export function DropdownSubTrigger({ className, children, onClick, ...props }: DropdownSubTriggerProps) {
-    const { open, setOpen, triggerRef } = useSub("DropdownSubTrigger");
+export function DropdownSubTrigger({
+    className,
+    children,
+    onClick,
+    onPointerEnter,
+    onPointerLeave,
+    disabled,
+    ...props
+}: DropdownSubTriggerProps) {
+    const { open, setOpen, triggerRef, openIntent, closeIntent, cancelClose } = useSub("DropdownSubTrigger");
+    const isDisabled = Boolean(disabled);
 
     return (
         <button
@@ -521,38 +624,61 @@ export function DropdownSubTrigger({ className, children, onClick, ...props }: D
             role="menuitem"
             aria-haspopup="menu"
             aria-expanded={open}
+            disabled={isDisabled}
             data-refineui="dropdown-item"
             data-slot="dropdown-menu-sub-trigger"
             tabIndex={-1}
             className={clsx(
-                "refineui-typo-body-2 flex w-full cursor-pointer items-center gap-refineui-size-medium rounded-refineui-xlarge border-none bg-transparent px-refineui-size-medium py-refineui-size-small text-left font-medium text-refineui-alias-foreground-primary outline-none",
-                open && "bg-refineui-alias-background-surface-hover",
+                dropdownStyles.item,
+                open && !isDisabled && "bg-refineui-alias-background-surface-hover",
+                isDisabled && "cursor-not-allowed text-refineui-alias-foreground-disabled",
                 className,
             )}
-            style={typographys.body2}
+            onPointerEnter={(event) => {
+                onPointerEnter?.(event);
+                if (!isDisabled && isFinePointerHover()) {
+                    openIntent();
+                }
+            }}
+            onPointerLeave={(event) => {
+                onPointerLeave?.(event);
+                if (!isDisabled && isFinePointerHover()) {
+                    closeIntent();
+                }
+            }}
             onClick={(e) => {
                 onClick?.(e);
-                setOpen((o) => !o);
+                if (e.defaultPrevented || isDisabled) return;
+                cancelClose();
+                if (isFinePointerHover()) {
+                    setOpen(true);
+                } else {
+                    setOpen((value) => !value);
+                }
             }}
             {...props}
         >
-            <span
-                className="refineui-typo-body-2 min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap font-medium"
-                style={typographys.body2}
-            >
-                {children}
-            </span>
-            <WebIcon name="chevron-right" size={iconSizes.small} color="currentColor" aria-hidden className="ml-auto shrink-0" />
+            {children}
+            <WebIcon
+                name="chevron-right"
+                size={iconSizes.small}
+                color="currentColor"
+                aria-hidden
+                className="ml-auto shrink-0"
+            />
         </button>
     );
 }
 
-export function DropdownSubContent({ className, children, ...props }: DropdownSubContentProps) {
+export function DropdownSubContent({ className, children, style, ...props }: DropdownSubContentProps) {
     const root = useDropdownRoot("DropdownSubContent");
     const sub = useSub("DropdownSubContent");
     const panelRef = useRef<HTMLDivElement | null>(null);
     const [fixedStyle, setFixedStyle] = useState<CSSProperties | null>(null);
+    const [side, setSide] = useState<"left" | "right">("right");
     const defaultMenuW = parseCssPxLen(componentSizes.dropdownMenuWidth, 180);
+    /** Tighter gap — easier to move pointer onto the panel without closing */
+    const gapPx = parseCssPxLen(spacings.sizeXXXSmall, 2);
 
     const setPanelEl = useCallback(
         (el: HTMLDivElement | null) => {
@@ -570,14 +696,22 @@ export function DropdownSubContent({ className, children, ...props }: DropdownSu
         }
 
         const apply = () => {
-            const tr = sub.triggerRef.current?.getBoundingClientRect();
-            if (!tr) return;
+            const triggerEl = sub.triggerRef.current;
+            const tr = triggerEl?.getBoundingClientRect();
+            if (!tr || !triggerEl) return;
+
+            const vh = window.innerHeight;
+            const vw = window.innerWidth;
+            if (tr.bottom < 0 || tr.top > vh || tr.right < 0 || tr.left > vw) {
+                sub.setOpen(false);
+                return;
+            }
+
             const pw = panelRef.current?.offsetWidth && panelRef.current.offsetWidth > 0 ? panelRef.current.offsetWidth : defaultMenuW;
             const ph =
                 panelRef.current?.offsetHeight && panelRef.current.offsetHeight > 0
                     ? panelRef.current.offsetHeight
                     : 160;
-            const gapPx = parseCssPxLen(spacings.sizeXSmall, 4);
             const pos = computeSubmenuPanelPosition({
                 trigger: tr,
                 panelWidth: pw,
@@ -585,6 +719,7 @@ export function DropdownSubContent({ className, children, ...props }: DropdownSu
                 gap: gapPx,
             });
 
+            setSide(pos.left >= tr.right - 1 ? "right" : "left");
             setFixedStyle({
                 position: "fixed",
                 top: pos.top,
@@ -604,9 +739,9 @@ export function DropdownSubContent({ className, children, ...props }: DropdownSu
             window.removeEventListener("resize", apply);
             unsubScroll();
         };
-    }, [sub.open, sub.triggerRef, root.open, defaultMenuW, root]);
+    }, [sub.open, sub.triggerRef, sub, root.open, defaultMenuW, gapPx, root]);
 
-    if (!sub.open || !fixedStyle || typeof document === "undefined") return null;
+    if (!sub.open || !root.open || !fixedStyle || typeof document === "undefined") return null;
 
     const panel = (
         <div
@@ -614,15 +749,24 @@ export function DropdownSubContent({ className, children, ...props }: DropdownSu
             role="menu"
             data-refineui="dropdown-menu"
             data-submenu="true"
+            data-state="open"
+            data-side={side}
             tabIndex={-1}
             className={clsx(
-                "box-border flex flex-col gap-px overflow-x-hidden overflow-y-auto overscroll-contain rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xsmall shadow-refineui-2light outline-none",
+                "box-border flex w-refineui-dropdown-menu-width min-w-refineui-dropdown-menu-width flex-col gap-px overflow-x-hidden overflow-y-auto overscroll-contain rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xx-small shadow-refineui-2 outline-none",
                 className,
             )}
             style={{
                 ...fixedStyle,
+                ...style,
                 borderColor: resolveColorTokenValue(componentColorTokens.dropdown.menu.border),
                 backgroundColor: resolveColorTokenValue(componentColorTokens.dropdown.menu.background),
+            }}
+            onPointerEnter={() => sub.cancelClose()}
+            onPointerLeave={() => {
+                if (isFinePointerHover()) {
+                    sub.closeIntent();
+                }
             }}
             {...props}
         >

@@ -9,10 +9,12 @@ import {
     avatarGroupCountTypo,
     avatarIconSlotSize,
     avatarSizeDim,
+    avatarSizeVar,
     avatarSpreadGap,
     avatarStackOverlapCssVar,
     avatarStatusDim,
     avatarStatusPosition,
+    avatarStatusSizeVar,
     avatarTypoNeutral,
     defaultPersonIconColor,
     avatarNeutralForegroundColor,
@@ -107,10 +109,12 @@ export function Avatar({
     className,
     innerClassName,
     children,
+    style,
     ...props
 }: AvatarProps) {
     const [imageError, setImageError] = useState(false);
     const normalizedSize = normalizeAvatarSize(size);
+    const box = avatarSizeVar[normalizedSize];
     const { image, fallback, badge, icon, text, leading } = parseAvatarSlots(Children.toArray(children));
     const slotPreferredLayout: AvatarLayout = icon ? "icon" : text ? "initials" : "image";
     const initials = initialsFromAlt(alt, layout ?? slotPreferredLayout, normalizedSize);
@@ -143,6 +147,7 @@ export function Avatar({
                 data-avatar-layout={resolvedLayout}
                 data-show-status={hasStatus ? "true" : undefined}
                 className={clsx(avatarStyles.root, avatarSizeDim[normalizedSize], className)}
+                style={{ width: box, height: box, minWidth: box, minHeight: box, ...style }}
                 {...props}
             >
                 <div
@@ -202,8 +207,9 @@ export function AvatarText({ className, ...props }: AvatarTextProps) {
     return <span className={clsx(avatarStyles.text, className)} {...props} />;
 }
 
-export function AvatarBadge({ className, status = "online", ...props }: AvatarBadgeProps) {
+export function AvatarBadge({ className, status = "online", style, ...props }: AvatarBadgeProps) {
     const shell = useContext(AvatarShellSizeContext) ?? "medium";
+    const box = avatarStatusSizeVar[shell];
     return (
         <span
             className={clsx(
@@ -213,6 +219,7 @@ export function AvatarBadge({ className, status = "online", ...props }: AvatarBa
                 className,
             )}
             data-avatar-status={status}
+            style={{ width: box, height: box, minWidth: box, minHeight: box, ...style }}
             {...props}
         >
             <AvatarStatusGraphic status={status} />

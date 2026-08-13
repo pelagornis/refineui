@@ -169,7 +169,7 @@ export const componentColorTokens = {
         },
         checkIcon: {
             default: semanticToken("foregroundInversed"),
-            disabled: semanticToken("foregroundDisabled"),
+            disabled: semanticToken("foregroundSecondary"),
         },
     },
     radio: {
@@ -193,14 +193,17 @@ export const componentColorTokens = {
             on: semanticToken("backgroundBrand"),
             off: semanticToken("backgroundPrimaryActive"),
             hoverOn: semanticToken("backgroundBrandHover"),
-            activeOn: semanticToken("backgroundBrandStrong"),
-            hoverOff: semanticToken("backgroundPrimaryHover"),
-            activeOff: semanticToken("backgroundPrimaryActive"),
-            disabled: semanticToken("backgroundBrandDisabled"),
+            activeOn: semanticToken("backgroundBrandActive"),
+            /** Darken on hover/press (rest is already primaryActive) */
+            hoverOff: semanticToken("backgroundSurfaceSelected"),
+            activeOff: semanticToken("backgroundBrandSubtle"),
+            disabledOff: semanticToken("backgroundSurfaceDisabled"),
+            disabledOn: semanticToken("backgroundBrandSubtle"),
         },
         thumb: {
             default: semanticToken("backgroundPrimary"),
-            disabled: semanticToken("backgroundBrandSubtle"),
+            disabledOff: semanticToken("backgroundBrandSubtle"),
+            disabledOn: semanticToken("backgroundPrimary"),
         },
     },
     switch: {
@@ -208,14 +211,16 @@ export const componentColorTokens = {
             on: semanticToken("backgroundBrand"),
             off: semanticToken("backgroundPrimaryActive"),
             hoverOn: semanticToken("backgroundBrandHover"),
-            activeOn: semanticToken("backgroundBrandStrong"),
-            hoverOff: semanticToken("backgroundPrimaryHover"),
-            activeOff: semanticToken("backgroundPrimaryActive"),
-            disabled: semanticToken("backgroundBrandDisabled"),
+            activeOn: semanticToken("backgroundBrandActive"),
+            hoverOff: semanticToken("backgroundSurfaceSelected"),
+            activeOff: semanticToken("backgroundBrandSubtle"),
+            disabledOff: semanticToken("backgroundSurfaceDisabled"),
+            disabledOn: semanticToken("backgroundBrandSubtle"),
         },
         thumb: {
             default: semanticToken("backgroundPrimary"),
-            disabled: semanticToken("backgroundBrandSubtle"),
+            disabledOff: semanticToken("backgroundBrandSubtle"),
+            disabledOn: semanticToken("backgroundPrimary"),
         },
     },
     dialog: {
@@ -382,8 +387,7 @@ export const componentColorTokens = {
         label: semanticToken("foregroundPrimary"),
     },
     skeleton: {
-        background: semanticToken("backgroundBrandSubtle"),
-        shimmer: semanticToken("backgroundPrimary"),
+        background: semanticToken("backgroundSurfaceSelected"),
     },
     toast: {
         background: semanticToken("backgroundPrimary"),
@@ -402,13 +406,15 @@ export const componentColorTokens = {
     },
     tabs: {
         pill: {
-            barBackground: semanticToken("backgroundPrimaryActive"),
+            barBackground: semanticToken("backgroundBrandSubtle"),
             barBorder: semanticToken("borderDefault"),
-            itemForeground: semanticToken("foregroundPrimary"),
+            itemForeground: semanticToken("foregroundSecondary"),
             itemDisabledForeground: semanticToken("foregroundDisabled"),
-            selectedBackground: semanticToken("backgroundPrimary"),
-            selectedForeground: semanticToken("foregroundPrimary"),
+            selectedBackground: semanticToken("backgroundBrand"),
+            selectedForeground: semanticToken("foregroundOnBrand"),
+            selectedHoverBackground: semanticToken("backgroundBrandHover"),
             selectedDisabledBackground: semanticToken("backgroundSurfaceDisabled"),
+            hoverForeground: semanticToken("foregroundPrimary"),
         },
         underline: {
             line: paletteToken("neutral200"),
@@ -427,7 +433,7 @@ export const componentColorTokens = {
             border: semanticToken("borderDefault"),
         },
         content: {
-            background: paletteToken("primaryLightGray"),
+            background: semanticToken("backgroundPrimaryHover"),
             foreground: semanticToken("foregroundPrimary"),
             border: semanticToken("borderDefault"),
         },

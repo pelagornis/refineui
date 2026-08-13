@@ -1,10 +1,9 @@
 import { clsx } from "clsx";
 import type { HTMLAttributes, KeyboardEvent } from "react";
 import { useContext } from "react";
-import { iconSizes } from "@refineui/tokens";
 import { WebIcon } from "../../WebIcon";
 import { AccordionContext, AccordionItemContext } from "./context";
-import { accordionStyles, triggerTypo } from "./style";
+import { accordionIconSize, accordionStyles, triggerTypo } from "./style";
 
 export interface AccordionTriggerProps extends HTMLAttributes<HTMLButtonElement> {}
 
@@ -12,6 +11,8 @@ export function AccordionTrigger({ className, children, ...props }: AccordionTri
     const accordion = useContext(AccordionContext);
     const item = useContext(AccordionItemContext);
     if (!accordion || !item) throw new Error("AccordionTrigger must be used within AccordionItem.");
+
+    const iconSize = accordionIconSize[accordion.size];
 
     const onTriggerKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
         switch (e.key) {
@@ -46,20 +47,24 @@ export function AccordionTrigger({ className, children, ...props }: AccordionTri
             id={item.triggerId}
             onClick={() => accordion.toggle(item.value)}
             onKeyDown={onTriggerKeyDown}
-            className={clsx(triggerTypo[accordion.size], accordionStyles.triggerBase, className)}
+            className={clsx(accordionStyles.triggerBase, className)}
             {...props}
         >
-            <span className={accordionStyles.triggerRow}>
-                {item.icon ? <WebIcon name={item.icon} size={iconSizes.small} color="currentColor" /> : null}
+            <span className={clsx(accordionStyles.triggerRow, triggerTypo[accordion.size])}>
+                {item.icon ? <WebIcon name={item.icon} size={iconSize} color="currentColor" /> : null}
                 {children}
             </span>
             <WebIcon
-                name={item.open ? "chevron-up" : "chevron-down"}
-                size={iconSizes.small}
+                name="chevron-down"
+                size={iconSize}
                 color="currentColor"
                 fallback="▼"
+                className={clsx(
+                    accordionStyles.chevron,
+                    item.open && accordionStyles.chevronOpen,
+                    accordion.reduceMotion && "transition-none",
+                )}
             />
         </button>
     );
 }
-

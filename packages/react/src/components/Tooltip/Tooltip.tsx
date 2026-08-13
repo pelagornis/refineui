@@ -41,7 +41,7 @@ export function Tooltip({
         setOpen(false);
     };
 
-    const arrowHalf = Number.parseInt(spacings.sizeSmall, 10) || 6;
+    const arrowHalf = Number.parseInt(spacings.sizeXSmall, 10) || 6;
     const panelPos: CSSProperties = tooltipPanelStyle(position, align);
     const arrow: CSSProperties = tooltipArrowStyle(position, align, bg, arrowHalf);
 

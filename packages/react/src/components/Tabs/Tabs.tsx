@@ -1,11 +1,13 @@
 import { clsx } from "clsx";
-import type { KeyboardEvent } from "react";
+import type { CSSProperties, KeyboardEvent } from "react";
 import {
     createContext,
     forwardRef,
     useCallback,
     useContext,
+    useEffect,
     useId,
+    useLayoutEffect,
     useMemo,
     useRef,
     useState,
@@ -74,20 +76,85 @@ export function Tabs({
     );
 }
 
-export function TabsList({ className, ...props }: TabsListProps) {
-    const { tabListRef } = useTabsContext("TabsList");
+type IndicatorBox = {
+    left: number;
+    width: number;
+    ready: boolean;
+};
+
+export function TabsList({ className, children, ...props }: TabsListProps) {
+    const { tabListRef, selectedValue } = useTabsContext("TabsList");
+    const [indicator, setIndicator] = useState<IndicatorBox>({
+        left: 0,
+        width: 0,
+        ready: false,
+    });
+
+    const updateIndicator = useCallback(() => {
+        const list = tabListRef.current;
+        if (!list) return;
+        const selected = list.querySelector<HTMLElement>(
+            '[data-refineui="tab"][data-selected="true"]',
+        );
+        if (!selected) {
+            setIndicator((prev) => ({ ...prev, width: 0, ready: false }));
+            return;
+        }
+        setIndicator({
+            left: selected.offsetLeft,
+            width: selected.offsetWidth,
+            ready: true,
+        });
+    }, [tabListRef]);
+
+    useLayoutEffect(() => {
+        updateIndicator();
+    }, [updateIndicator, selectedValue, children]);
+
+    useEffect(() => {
+        const list = tabListRef.current;
+        if (!list) return;
+
+        const ro = new ResizeObserver(() => {
+            updateIndicator();
+        });
+        ro.observe(list);
+        for (const tab of Array.from(list.querySelectorAll("[data-refineui='tab']"))) {
+            ro.observe(tab);
+        }
+
+        list.addEventListener("scroll", updateIndicator, { passive: true });
+        window.addEventListener("resize", updateIndicator);
+
+        return () => {
+            ro.disconnect();
+            list.removeEventListener("scroll", updateIndicator);
+            window.removeEventListener("resize", updateIndicator);
+        };
+    }, [tabListRef, updateIndicator, children]);
+
+    const indicatorStyle: CSSProperties = {
+        width: indicator.width,
+        transform: `translate3d(${indicator.left}px, 0, 0)`,
+    };
 
     return (
         <div
             ref={tabListRef as React.Ref<HTMLDivElement>}
             role="tablist"
             aria-orientation="horizontal"
-            className={clsx(
-                tabsStyles.list,
-                className,
-            )}
+            className={clsx(tabsStyles.list, className)}
             {...props}
-        />
+        >
+            <span
+                data-refineui="tabs-indicator"
+                data-ready={indicator.ready ? "true" : undefined}
+                aria-hidden
+                className={tabsStyles.indicator}
+                style={indicatorStyle}
+            />
+            {children}
+        </div>
     );
 }
 
@@ -167,10 +234,7 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(funct
             tabIndex={selected && !disabled ? 0 : -1}
             className={clsx(
                 tabsStyles.trigger,
-                disabled
-                    ? tabsStyles.triggerDisabled
-                    : tabsStyles.triggerEnabled,
-                selected && tabsStyles.triggerSelectedShadow,
+                disabled ? tabsStyles.triggerDisabled : tabsStyles.triggerEnabled,
                 selected && !disabled && tabsStyles.triggerSelectedEnabled,
                 selected && disabled && tabsStyles.triggerSelectedDisabled,
                 !selected && tabsStyles.triggerUnselected,

@@ -1,5 +1,12 @@
 export { componentColorTokens } from "./tokens/componentColorTokens";
-export { componentSizes, foundationSizes } from "./componentSizes";
+export { componentTypographyTokens, type ControlSize } from "./tokens/componentTypographyTokens";
+export {
+    componentTextClass,
+    semanticTextClass,
+    sizedComponentTextClass,
+} from "./typography";
+export { SEMANTIC_TEXT, type FoundationTypographyName, type SemanticTextName } from "@refineui/tokens";
+export { componentSizes, componentSizeFoundationKeys, foundationSizes } from "./componentSizes";
 export { WebIcon, type WebIconProps } from "./WebIcon";
 export {
     Button,
@@ -9,6 +16,7 @@ export {
     type ButtonVariant,
 } from "./components/Button";
 export { Input, type InputProps } from "./components/Input";
+export { Text, type TextProps } from "./components/Text";
 export { Textarea, type TextareaProps } from "./components/Textarea";
 export { Badge, type BadgeProps, type BadgeVariant, type BadgeLayout } from "./components/Badge";
 export {
@@ -231,7 +239,12 @@ export {
     type FieldProps,
     type FieldRequiredProps,
 } from "./components/Field";
-export { Label, type LabelProps } from "./components/Label";
+export {
+    Label,
+    LabelRequired,
+    type LabelProps,
+    type LabelRequiredProps,
+} from "./components/Label";
 export { Link, type LinkProps } from "./components/Link";
 export {
     Menu,
@@ -241,7 +254,12 @@ export {
     MenuSection,
     MenuDivider,
     MenuItem,
+    MenuSub,
+    MenuSubTrigger,
+    MenuSubContent,
     type MenuProps,
+    type MenuSubTriggerProps,
+    type MenuSubContentProps,
 } from "./components/Menu";
 export {
     Pagination,

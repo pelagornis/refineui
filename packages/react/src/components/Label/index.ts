@@ -1,2 +1,3 @@
 export { Label } from "./Label";
-export type { LabelProps } from "./types";
+export { LabelRequired } from "./LabelRequired";
+export type { LabelProps, LabelRequiredProps } from "./types";

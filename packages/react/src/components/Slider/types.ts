@@ -6,7 +6,7 @@ export interface SliderProps extends Omit<InputHTMLAttributes<HTMLInputElement>,
     step?: number;
     value?: number;
     onChange?: (value: number) => void;
-    /** Web Kit Slider `526:1556` — sm/md rail thickness. */
+    /** Rail thickness: `sm` (2px) / `md` (4px, default). */
     size?: "sm" | "md";
 }
 

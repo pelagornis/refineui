@@ -7,7 +7,7 @@ export interface SpinButtonProps extends Omit<HTMLAttributes<HTMLDivElement>, "o
     min?: number;
     max?: number;
     step?: number;
-    /** Web Kit COMPONENT_SET `Spin Button` `561:2067` — Small / Medium / Large */
+    /** Field size — shares Input / Select control height tokens (`sm` / `md` / `lg`). */
     size?: "sm" | "md" | "lg";
     disabled?: boolean;
 }

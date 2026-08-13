@@ -28,7 +28,7 @@ export default function PopOverDemo() {
             >
               <div style={{ display: "flex", flexDirection: "column", gap: spacings.sizeLarge, width: "100%" }}>
                 <div>
-                  <p className="refineui-typo-body-2 font-medium" style={{ margin: 0, marginBottom: spacings.sizeXSmall }}>
+                  <p className="refineui-typo-body-2 font-medium" style={{ margin: 0, marginBottom: spacings.sizeXXSmall }}>
                     Dimensions
                   </p>
                   <p
@@ -69,7 +69,7 @@ export default function PopOverDemo() {
             <Button variant="primary">Start-aligned panel</Button>
           </PopoverTrigger>
           <PopoverContent placement="bottom" align="start">
-            <div style={{ padding: spacings.sizeSmall }}>Example: align=&quot;start&quot;</div>
+            <div style={{ padding: spacings.sizeXSmall }}>Example: align=&quot;start&quot;</div>
           </PopoverContent>
         </Popover>
       </div>

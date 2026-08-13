@@ -1,38 +1,51 @@
+import { motion } from "../global/motion";
 import type { SemanticInteractionTokens } from "../types";
 
 /**
- * Foundation Alias/Interaction — durations, easing, scale, offsets.
- * React component motion and `refineui.css` should reference this map.
+ * Semantic motion roles — meaning layer over Foundation `motion`.
+ *
+ * UI, `@refineui/utilities` CSS helpers, and `refineui.css` should prefer these
+ * role names (fast / press / panel…), not raw Foundation steps.
+ *
+ * Flow: Foundation `motion` → `semanticInteraction` → CSS `--refineui-motion-*`
+ *       (and component JS that reads resolved ms strings).
  */
 export const semanticInteraction: SemanticInteractionTokens = {
     duration: {
-        instant: "0ms",
-        fast: "150ms",
-        normal: "180ms",
-        medium: "200ms",
-        slow: "240ms",
-        overlay: "280ms",
-        panel: "320ms",
-        accordionPanel: "380ms",
-        accordionContent: "260ms",
-        skeleton: "1500ms",
-        spinner: "800ms",
+        instant: motion.duration.duration0,
+        fast: motion.duration.duration150,
+        normal: motion.duration.duration180,
+        medium: motion.duration.duration200,
+        slow: motion.duration.duration240,
+        overlay: motion.duration.duration280,
+        panel: motion.duration.duration320,
+        accordionPanel: motion.duration.duration380,
+        accordionContent: motion.duration.duration260,
+        skeleton: motion.duration.duration1500,
+        spinner: motion.duration.duration800,
     },
     easing: {
-        standard: "cubic-bezier(0.2, 0, 0, 1)",
-        emphasized: "cubic-bezier(0.16, 1, 0.3, 1)",
-        panel: "cubic-bezier(0.32, 0.72, 0, 1)",
-        content: "cubic-bezier(0.4, 0, 0.2, 1)",
-        linear: "linear",
-        easeOut: "ease-out",
-        easeInOut: "ease-in-out",
+        standard: motion.easing.easingStandard,
+        emphasized: motion.easing.easingEmphasized,
+        panel: motion.easing.easingPanel,
+        content: motion.easing.easingContent,
+        linear: motion.easing.easingLinear,
+        easeOut: motion.easing.easingEaseOut,
+        easeInOut: motion.easing.easingEaseInOut,
     },
     scale: {
-        dialogEnter: "0.96",
-        buttonActive: "0.98",
-        sliderThumbHover: "1.15",
+        /** Dialog / modal enter under-scale */
+        enter: motion.scale.scale96,
+        /** Pressed control squash (Button, Slider thumb active, …) */
+        press: motion.scale.scale98,
+        /** Hover grow (Slider thumb, …) */
+        hoverGrow: motion.scale.scale115,
+        /** Component aliases — same Foundation steps as role keys above */
+        dialogEnter: motion.scale.scale96,
+        buttonActive: motion.scale.scale98,
+        sliderThumbHover: motion.scale.scale115,
     },
     distance: {
-        float: "4px",
+        float: motion.distance.distance4,
     },
 };

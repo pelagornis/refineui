@@ -1,6 +1,6 @@
 ---
 alwaysApply: false
-description: React components take design values only from @refineui/tokens and @refineui/react (componentSizes)
+description: React components take design values only from @refineui/tokens (Foundation + componentSizes aliases)
 globs: ["packages/react/**/*.{ts,tsx}"]
 ---
 
@@ -12,10 +12,10 @@ Component **scope and variants** must match **Web Kit Figma** — see `figma-fou
 
 ## MUST
 - **Color·spacing·radius·stroke·typography·shadow·z-index** come only from `@refineui/tokens`.
-- **Foundation `Global/Size/{n}` scale** is referenced only via **`foundationSizes`** in `@refineui/react`.
-- **Per–Web Kit component dimensions** come only from **`componentSizes`**. **Icon glyph pixels** use **`iconSizes`** from `@refineui/tokens`; **modal scrim** uses `overlays`.
-- **No hardcoding**: no arbitrary `px`, `#hex`, or `rgb()` in component styles. (Exceptions: literal `0`, `minWidth: 0`.)
-- When new dimensions are needed, add them to `foundationSizes` or `componentSizes` per Figma spec first.
+- **Foundation `Global/Size/{n}`** via **`foundationSizes`**.
+- **Per–Web Kit dimensions** via **`componentSizes`** — aliases only (`componentSizeFoundationKeys` → Foundation). CSS uses `var(--refineui-size-foundation-size-*)`. **No raw `"Npx"`** in `componentSizes`; extend Foundation first.
+- **Icon glyphs** → `iconSizes`; **modal scrim** → `overlays`.
+- **No hardcoding**: no arbitrary `px`, `#hex`, or `rgb()` in component styles. (Exceptions: literal `0`, `minWidth: 0`, viewport units like `90vh`.)
 
 ## RECOMMENDED
 - In documentation Previews, prefer the same tokens and semantic colors.

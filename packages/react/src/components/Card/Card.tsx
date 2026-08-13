@@ -20,6 +20,7 @@ export function Card({
     return (
         <div
             data-refineui="card"
+            data-variant={variant}
             data-interactive={interactive ? "true" : undefined}
             data-state={state}
             aria-disabled={isDisabled || undefined}

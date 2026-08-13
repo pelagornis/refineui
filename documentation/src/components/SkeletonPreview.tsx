@@ -9,7 +9,7 @@ export default function SkeletonPreview() {
         <div style={{ display: "flex", gap: spacings.sizeMedium, marginBottom: spacings.sizeMedium }}>
           <Skeleton width={40} height={40} shape="circle" />
           <div style={{ flex: 1 }}>
-            <Skeleton height={16} style={{ marginBottom: spacings.sizeSmall }} />
+            <Skeleton height={16} style={{ marginBottom: spacings.sizeXSmall }} />
             <Skeleton height={12} width="80%" />
           </div>
         </div>

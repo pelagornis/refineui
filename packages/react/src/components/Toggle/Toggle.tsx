@@ -11,6 +11,20 @@ export function Toggle({
     disabled,
     ...props
 }: ToggleProps) {
+    const trackClass = disabled
+        ? checked
+            ? toggleStyles.disabledChecked
+            : toggleStyles.disabledUnchecked
+        : checked
+          ? toggleStyles.checked
+          : toggleStyles.unchecked;
+
+    const thumbClass = disabled
+        ? checked
+            ? toggleStyles.thumbDisabledChecked
+            : toggleStyles.thumbDisabledUnchecked
+        : toggleStyles.thumbDefault;
+
     return (
         <button
             type="button"
@@ -18,15 +32,7 @@ export function Toggle({
             data-checked={checked ? "true" : "false"}
             role="switch"
             aria-checked={checked}
-            className={clsx(
-                toggleStyles.root,
-                disabled
-                    ? toggleStyles.disabled
-                    : checked
-                      ? toggleStyles.checked
-                      : toggleStyles.unchecked,
-                className,
-            )}
+            className={clsx(toggleStyles.root, trackClass, className)}
             onClick={(e) => {
                 onCheckedChange?.(!checked);
                 onClick?.(e);
@@ -35,10 +41,7 @@ export function Toggle({
             {...props}
         >
             <span
-                className={clsx(
-                    toggleStyles.thumb,
-                    disabled ? toggleStyles.thumbDisabled : toggleStyles.thumbDefault,
-                )}
+                className={clsx(toggleStyles.thumb, thumbClass)}
                 style={{
                     transform: checked ? `translateX(${componentSizes.switchThumb})` : "translateX(0)",
                 }}

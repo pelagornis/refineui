@@ -13,7 +13,7 @@ type Props = {
 export function AvatarStatusGraphic({ status, className, ...props }: Props) {
     const uid = useId().replace(/:/g, "");
     const clipId = `avatar-status-clip-${uid}`;
-    const cn = clsx("size-full shrink-0", className);
+    const cn = clsx("block size-full max-h-full max-w-full shrink-0", className);
 
     switch (status) {
         case "online":

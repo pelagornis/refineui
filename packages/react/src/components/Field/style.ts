@@ -1,15 +1,10 @@
-import type { FieldProps } from "./types";
+import { componentTypographyTokens } from "../../tokens/componentTypographyTokens";
+import { componentTextClass } from "../../typography";
 
+/** Field shell + feedback only — label/required styles live on `Label` */
 export const fieldStyles = {
-    root: "mb-refineui-size-medium",
-    label: "mb-refineui-size-xsmall block",
-    required: "ml-refineui-size-xxsmall",
-    feedback: "refineui-typo-caption-3 mt-refineui-size-xsmall",
+    root: "mb-refineui-size-medium flex w-full flex-col gap-refineui-size-xx-small",
+    /** Overrides standalone `Label` bottom margin — stack gap comes from `root` */
+    label: "!mb-0",
+    feedback: componentTextClass(componentTypographyTokens.fieldFeedback),
 } as const;
-
-export const fieldLabelTypo: Record<NonNullable<FieldProps["size"]>, string> = {
-    sm: "refineui-typo-caption-1",
-    md: "refineui-typo-body-2",
-    lg: "refineui-typo-body-1",
-};
-

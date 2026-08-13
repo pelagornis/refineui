@@ -1,16 +1,16 @@
 import { CSSProperties } from 'react';
 
 declare const motionDurations: {
-    readonly instant: "0ms";
-    readonly fast: "150ms";
-    readonly normal: "180ms";
-    readonly slow: "240ms";
-    readonly toast: "320ms";
+    readonly instant: "var(--refineui-motion-duration-instant)";
+    readonly fast: "var(--refineui-motion-duration-fast)";
+    readonly normal: "var(--refineui-motion-duration-normal)";
+    readonly slow: "var(--refineui-motion-duration-slow)";
+    readonly toast: "var(--refineui-motion-duration-panel)";
 };
 declare const motionEasings: {
-    readonly standard: "cubic-bezier(0.2, 0, 0, 1)";
-    readonly emphasized: "cubic-bezier(0.16, 1, 0.3, 1)";
-    readonly linear: "linear";
+    readonly standard: "var(--refineui-motion-easing-standard)";
+    readonly emphasized: "var(--refineui-motion-easing-emphasized)";
+    readonly linear: "var(--refineui-motion-easing-linear)";
 };
 type MotionDuration = keyof typeof motionDurations;
 type MotionEasing = keyof typeof motionEasings;

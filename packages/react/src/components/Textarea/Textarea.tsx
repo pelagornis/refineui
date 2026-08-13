@@ -21,14 +21,17 @@ export function Textarea({
     return (
         <textarea
             data-refineui="textarea"
-            data-size="md"
-            data-error={error ? "true" : undefined}
-            data-success={success ? "true" : undefined}
+            data-error={error || undefined}
+            data-success={success || undefined}
             disabled={disabled}
+            aria-invalid={error || undefined}
             className={clsx(
                 textareaStyles.base,
+                textareaStyles.field,
+                textareaStyles.text,
+                textareaStyles.disabledText,
                 borderClass,
-                disabled ? textareaStyles.bgDisabled : textareaStyles.bgDefault,
+                disabled ? textareaStyles.disabledBg : textareaStyles.defaultBg,
                 fullWidth && "w-full",
                 className,
             )}

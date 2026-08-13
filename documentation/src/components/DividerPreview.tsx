@@ -11,7 +11,7 @@ export default function DividerPreview() {
         <p style={{ margin: 0 }}>Content below</p>
       </PreviewFrame>
       <PreviewFrame>
-        <p style={{ margin: 0, marginBottom: spacings.sizeSmall }}>Content / Icon — gap 10px, short line 8px</p>
+        <p style={{ margin: 0, marginBottom: spacings.sizeXSmall }}>Content / Icon — gap 10px, short line 8px</p>
         <div style={{ display: "flex", flexDirection: "column", gap: spacings.sizeMedium }}>
           <Divider layout="content" align="center">
             Content

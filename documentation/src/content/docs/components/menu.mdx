@@ -1,13 +1,13 @@
 ---
 title: Menu
-description: Menu panel — keyboard navigation
+description: Menu panel with nested submenus
 ---
 
 import MenuPreview from "../../../components/MenuPreview";
 
 # Menu
 
-Menu panel with a list of items. Matches Web Kit **Menu** `633:4268` (simple text list). **Dropdown** includes trigger + open behavior; **Menu** is for **panel-only** use cases. Composed dropdowns (`Dropdown`, `DropdownTrigger`, …) are documented under [Dropdown](/components/dropdown/).
+Menu panel with a list of items. Matches Web Kit **Menu** `633:4268`. Use [Dropdown](/components/dropdown/) when you need a compact trigger menu; use **Menu** for the wider panel composition (icons, descriptions, shortcuts, nested menus).
 
 ## Install & import
 
@@ -20,6 +20,9 @@ import {
   MenuList,
   MenuPopover,
   MenuSection,
+  MenuSub,
+  MenuSubContent,
+  MenuSubTrigger,
   MenuTrigger,
 } from "@refineui/react";
 import "@refineui/react/refineui.css";
@@ -34,17 +37,22 @@ import "@refineui/react/refineui.css";
   </MenuTrigger>
   <MenuPopover>
     <MenuList>
-      <MenuSection>Section Header</MenuSection>
-      <MenuItem>Copy</MenuItem>
-      <MenuItem shortcut="Cmd+V">Paste</MenuItem>
-      <MenuItem disabled>Delete</MenuItem>
+      <MenuSection>Edit</MenuSection>
+      <MenuItem shortcut="⌘C">Copy</MenuItem>
       <MenuDivider />
-      <MenuSection>Advanced</MenuSection>
-      <MenuItem>Preferences</MenuItem>
+      <MenuSub>
+        <MenuSubTrigger>Preferences</MenuSubTrigger>
+        <MenuSubContent>
+          <MenuItem>General</MenuItem>
+          <MenuItem>Appearance</MenuItem>
+        </MenuSubContent>
+      </MenuSub>
     </MenuList>
   </MenuPopover>
 </Menu>
 ```
+
+Chevron on `MenuSubTrigger` is built-in (Web Kit `endIcon`). Prefer `MenuSub` over a plain `MenuItem` with a chevron `endIcon` when the row opens a nested panel.
 
 ## Preview
 
@@ -58,4 +66,6 @@ import "@refineui/react/refineui.css";
 |------|------|-------------|
 | `positioning` | `{ autoSize?: boolean }` | Optional auto-width for the popover |
 
-`Menu` only exposes the compound API: `MenuTrigger`, `MenuPopover`, `MenuList`, `MenuItem`, etc.
+Compound API: `MenuTrigger`, `MenuPopover`, `MenuList`, `MenuItem`, `MenuSub`, `MenuSubTrigger`, `MenuSubContent`, …
+
+`MenuItem` slots: `startIcon`, `description`, `shortcut`, `endIcon`.

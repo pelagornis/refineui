@@ -1,13 +1,13 @@
 ---
 title: Textarea
-description: Multi-line text input
+description: Multi-line text input — validation state aligned with Input
 ---
 
 import TextareaPreview from "../../../components/TextareaPreview";
 
 # Textarea
 
-Multi-line text input. Web Kit **Textarea** `529:5454`: padding **`sizeMedium` × `sizeSmall`**, min height **`controlTextareaMin`** (80px), typography **body2**. Horizontal padding may differ from Input `md` — see `docs/design-specs-web-kit.md` §2.
+Multi-line text field. Web Kit **Textarea** `529:5454`: padding **`sizeMedium` × `sizeXSmall`** (10×6), min height **`controlTextareaMin`** (80px), radius **`roundedLarge`**, typography **body2**. Focus, placeholder, and disabled styles pair with **`refineui.css`** `[data-refineui="textarea"]` (same interaction pattern as [Input](/components/input/)).
 
 ## Install & import
 
@@ -32,10 +32,10 @@ import "@refineui/react/refineui.css";
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `error` | `boolean` | `false` | Error border |
+| `error` | `boolean` | `false` | Error border (`aria-invalid` set automatically) |
 | `success` | `boolean` | `false` | Success border |
 | `fullWidth` | `boolean` | `false` | Full width |
-| `disabled` | `boolean` | — | Disabled |
+| `disabled` | `boolean` | — | Disabled background, border, and text |
 
 Remaining props follow **`TextareaHTMLAttributes`** (`rows`, `cols`, `value`, `onChange`, `maxLength`, etc.).
 
@@ -44,11 +44,19 @@ Remaining props follow **`TextareaHTMLAttributes`** (`rows`, `cols`, `value`, `o
 ### Max length
 
 ```tsx
-<Textarea maxLength={500} placeholder="Up to 500 characters" />
+<Textarea maxLength={500} placeholder="Up to 500 characters" fullWidth />
 ```
 
-### In a form
+### With validation (Field recommended)
+
+Use `error` for the border; place messages in [Field](/components/field/) or adjacent text.
 
 ```tsx
-<Textarea name="comment" required rows={3} defaultValue="" />
+<Textarea id="bio" name="bio" error rows={3} fullWidth />
+<p role="alert">Please add a short bio.</p>
 ```
+
+## Accessibility
+
+- With `error`, `aria-invalid` is set automatically.
+- Connect labels via [Label](/components/label/) or `<label htmlFor>`.

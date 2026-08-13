@@ -8,7 +8,7 @@ const sectionLabel: CSSProperties = {
     fontSize: fontSizes.fontSize200,
     fontWeight: fontWeights.fontWeightMedium,
     color: colors.neutral600,
-    marginBottom: spacings.sizeSmall,
+    marginBottom: spacings.sizeXSmall,
 };
 
 const STATUS_ROWS: { label: string; sub: string; status: AvatarPresenceStatus }[] = [
@@ -34,7 +34,7 @@ const heroCaption: CSSProperties = {
     fontSize: fontSizes.fontSize200,
     fontWeight: fontWeights.fontWeightMedium,
     color: colors.neutral600,
-    marginTop: spacings.sizeXSmall,
+    marginTop: spacings.sizeXXSmall,
     textAlign: "center",
 };
 
@@ -48,7 +48,7 @@ export default function AvatarStatusPreview() {
                         {STATUS_ROWS.map(({ label, sub, status }) => (
                             <div
                                 key={status}
-                                className="flex flex-col items-center gap-refineui-size-x-small"
+                                className="flex flex-col items-center gap-refineui-size-xx-small"
                             >
                                 <Avatar
                                     size="xl"

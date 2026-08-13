@@ -8,8 +8,8 @@ export const popoverStyles = {
     panelWrap: "relative inline-block min-w-refineui-popover-panel-width",
     beakWrap: "pointer-events-none absolute z-[1]",
     panel:
-        "relative z-0 box-border min-w-refineui-popover-panel-width rounded-refineui-xxlarge border-refineui-thin outline-none",
-    panelShadowDefault: "shadow-refineui-8light",
+        "relative z-0 box-border min-w-refineui-popover-panel-width rounded-refineui-xx-large border-refineui-thin outline-none",
+    panelShadowDefault: "shadow-refineui-8",
 } as const;
 
 export function popoverFloatingClasses(placement: PopoverPlacement, align: PopoverAlign): string {

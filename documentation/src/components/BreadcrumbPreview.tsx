@@ -17,7 +17,7 @@ import PreviewFrame from "./PreviewFrame";
 
 const caption = {
     margin: 0,
-    marginBottom: spacings.sizeSmall,
+    marginBottom: spacings.sizeXSmall,
     fontSize: fontSizes.fontSize200,
     color: colors.neutral600,
 } as const;

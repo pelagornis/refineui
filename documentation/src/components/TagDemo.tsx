@@ -10,13 +10,24 @@ export default function TagDemo() {
           <Tag variant="default">Default</Tag>
           <Tag variant="outline">Outline</Tag>
           <Tag variant="filled">Filled</Tag>
-          <Tag onRemove={() => alert("Remove")}>Removable</Tag>
+          <Tag onRemove={() => {}}>Removable</Tag>
         </div>
+
         <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeMedium, alignItems: "center" }}>
-          <Tag size="lg">Large</Tag>
-          <Tag size="md">Medium</Tag>
           <Tag size="sm">Small</Tag>
+          <Tag size="md">Medium</Tag>
+          <Tag size="lg">Large</Tag>
+          <Tag size="sm" onRemove={() => {}}>
+            sm
+          </Tag>
+          <Tag size="md" onRemove={() => {}}>
+            md
+          </Tag>
+          <Tag size="lg" onRemove={() => {}}>
+            lg
+          </Tag>
         </div>
+
         <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeMedium, alignItems: "center" }}>
           <Tag disabled variant="default">
             Disabled default

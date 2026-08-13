@@ -33,6 +33,7 @@ For component specs use MCP `search_design_system` + `get_design_context` on tha
 ### Foundation · token sync
 - **MUST**: Treat Foundation Variables as the single source. Keep `packages/tokens` in sync with Foundation.
 - **MUST**: When adding tokens, align with Foundation definitions. Values not in Foundation require a Foundation update first, then code.
+- **MUST**: Web Kit component dimensions live in `packages/tokens` `componentSizes` as **aliases** of `foundationSizes` (`componentSizeFoundationKeys`). Do not hardcode px in `packages/react`.
 - **MUST**: With Figma MCP, pass the URLs above (or a specific node-id) to `get_variable_defs` or `get_design_context`.
 - **RECOMMENDED**: After Foundation changes, sync `packages/tokens/src/global/*.ts` manually or with tooling.
 
@@ -40,9 +41,13 @@ For component specs use MCP `search_design_system` + `get_design_context` on tha
 - `packages/tokens/src/global/colors.ts` — Palette
 - `packages/tokens/src/global/fonts.ts` — fontFamilies, fontSizes, fontWeights, lineHeights
 - `packages/tokens/src/global/spacings.ts` — sizeNone ~ sizeXXXLarge
+- `packages/tokens/src/global/foundationSizes.ts` — Global/Size steps (incl. Web Kit–needed steps)
+- `packages/tokens/src/semantic/componentSizes.ts` — Web Kit dimension aliases → Foundation
 - `packages/tokens/src/global/strokeWidths.ts` — strokeWidthNone ~ strokeWidthThickest
 - `packages/tokens/src/global/borderRadii.ts` — roundedNone ~ roundedCircle
 - `packages/tokens/src/global/shadows.ts` — shadow2~64, shadowColors
 - `packages/tokens/src/global/typographys.ts` — heading1~4, title1~3, body1~4, caption1~3
+- `packages/tokens/src/global/motion.ts` — Foundation duration / easing / scale / distance steps
+- `packages/tokens/src/semantic/interaction.ts` — Semantic motion roles → Foundation
 - `packages/tokens/src/global/zIndex.ts` — zIndexBackground ~ zIndexDebug
 - `packages/tokens/src/global/textAlignments.ts` — start, center, end, justify

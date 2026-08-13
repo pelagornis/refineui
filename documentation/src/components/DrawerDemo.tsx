@@ -30,9 +30,9 @@ export default function DrawerDemo() {
                 }}
             >
                 <div style={{ display: "grid", gap: spacings.sizeMedium }}>
-                    <div style={{ display: "grid", gap: spacings.sizeSmall }}>
+                    <div style={{ display: "grid", gap: spacings.sizeXSmall }}>
                         <p style={{ margin: 0, ...typographys.body4, color: colors.neutral700 }}>Overlay Preview</p>
-                        <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeSmall }}>
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeXSmall }}>
                         <Drawer>
                             <DrawerTrigger>Overlay / Small / Right / Footer Split</DrawerTrigger>
                             <DrawerContent type="overlay" size="sm" placement="right">
@@ -87,9 +87,9 @@ export default function DrawerDemo() {
                         </div>
                     </div>
 
-                    <div style={{ display: "grid", gap: spacings.sizeSmall }}>
+                    <div style={{ display: "grid", gap: spacings.sizeXSmall }}>
                         <p style={{ margin: 0, ...typographys.body4, color: colors.neutral700 }}>Inline Preview</p>
-                        <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeSmall }}>
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: spacings.sizeXSmall }}>
                         <Drawer type="inline" size="sm">
                             <DrawerContent>
                                 <DrawerHeader showClose={false}>
