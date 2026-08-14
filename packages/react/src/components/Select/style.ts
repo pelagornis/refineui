@@ -22,9 +22,9 @@ export const selectStyles = {
     contentPopper: "h-auto max-h-[var(--refineui-select-content-available-height,100dvh)]",
     contentItemAligned: "max-h-full",
     viewportPopper:
-        "relative flex max-h-full min-h-0 min-w-full w-full flex-col overflow-x-hidden overflow-y-auto",
+        "relative flex max-h-full min-h-0 min-w-full w-full flex-col",
     viewportItemAligned:
-        "relative flex min-h-0 min-w-full w-full max-h-full flex-1 flex-col overflow-x-hidden overflow-y-auto",
+        "relative flex min-h-0 min-w-full w-full max-h-full flex-1 flex-col",
     scrollAreaRootPopper: "relative flex max-h-full min-h-0 flex-col",
     scrollAreaRootItemAligned: "relative flex h-full min-h-0 flex-1 flex-col",
 

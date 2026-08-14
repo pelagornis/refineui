@@ -26,7 +26,7 @@ export const drawerStyles = {
     ),
     body: clsx(
         componentTextClass(componentTypographyTokens.drawer.body),
-        "box-border min-h-0 flex-1 overflow-auto p-refineui-size-xx-large text-refineui-alias-foreground-primary",
+        "box-border min-h-0 flex-1 text-refineui-alias-foreground-primary",
     ),
     footerRoot: "mt-auto shrink-0",
     footer: "flex items-center justify-end gap-refineui-size-x-small px-refineui-size-xx-large py-refineui-size-x-large",

@@ -7,6 +7,7 @@ import type {
 } from "react";
 import {
     createContext,
+    forwardRef,
     useCallback,
     useContext,
     useEffect,
@@ -15,6 +16,7 @@ import {
     useRef,
     useState,
 } from "react";
+import { useComposedRefs } from "@refineui/utilities/react";
 import {
     SCROLL_AREA_THUMB_MIN_PX,
     scrollAreaScrollbarOrientationClass,
@@ -125,12 +127,15 @@ function resolveThumbGeometry(
     return { thumbSize, offset };
 }
 
-export function ScrollArea({
-    type = "hover",
-    className,
-    children,
-    ...props
-}: ScrollAreaProps) {
+export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function ScrollArea(
+    {
+        type = "hover",
+        className,
+        children,
+        ...props
+    },
+    ref,
+) {
     const viewportRef = useRef<HTMLDivElement | null>(null);
     const [viewportEpoch, setViewportEpoch] = useState(0);
     const [vertical, setVertical] = useState<ScrollAxisMetrics>(EMPTY_METRICS);
@@ -141,6 +146,7 @@ export function ScrollArea({
     const hideTimerRef = useRef<number | null>(null);
 
     const setViewportNode = useCallback((node: HTMLDivElement | null) => {
+        if (viewportRef.current === node) return;
         viewportRef.current = node;
         setViewportEpoch((n) => n + 1);
     }, []);
@@ -227,6 +233,7 @@ export function ScrollArea({
     return (
         <ScrollAreaContext.Provider value={ctx}>
             <div
+                ref={ref}
                 data-refineui="scroll-area"
                 data-type={type}
                 data-scrolling={scrolling || undefined}
@@ -238,24 +245,27 @@ export function ScrollArea({
             </div>
         </ScrollAreaContext.Provider>
     );
-}
+});
 
-export function ScrollAreaViewport({ className, children, ...props }: ScrollAreaViewportProps) {
-    const { setViewportNode, overflowX } = useScrollAreaContext("ScrollAreaViewport");
+export const ScrollAreaViewport = forwardRef<HTMLDivElement, ScrollAreaViewportProps>(
+    function ScrollAreaViewport({ className, children, ...props }, forwardedRef) {
+        const { setViewportNode, overflowX } = useScrollAreaContext("ScrollAreaViewport");
+        const composedRef = useComposedRefs(setViewportNode, forwardedRef);
 
-    return (
-        <div
-            ref={setViewportNode}
-            data-refineui="scroll-area-viewport"
-            data-overflow-x={overflowX ? "true" : undefined}
-            tabIndex={0}
-            className={clsx(scrollAreaStyles.viewport, className)}
-            {...props}
-        >
-            {children}
-        </div>
-    );
-}
+        return (
+            <div
+                ref={composedRef}
+                data-refineui="scroll-area-viewport"
+                data-overflow-x={overflowX ? "true" : undefined}
+                tabIndex={0}
+                className={clsx(scrollAreaStyles.viewport, className)}
+                {...props}
+            >
+                {children}
+            </div>
+        );
+    },
+);
 
 export function ScrollAreaScrollbar({
     orientation = "vertical",

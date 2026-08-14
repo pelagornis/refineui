@@ -17,6 +17,12 @@ export type DialogTriggerProps = ButtonProps;
 export interface DialogContentProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
     container?: Element | DocumentFragment | null;
     style?: CSSProperties;
+    /**
+     * When `false`, children render directly in the panel (no ScrollArea).
+     * Useful for composed surfaces like Command that manage their own scroll.
+     * @default true
+     */
+    scrollable?: boolean;
 }
 
 export interface DialogHeaderProps extends HTMLAttributes<HTMLDivElement> {

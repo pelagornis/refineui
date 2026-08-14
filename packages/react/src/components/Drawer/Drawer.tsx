@@ -24,6 +24,7 @@ import { WebIcon } from "../../WebIcon";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
 import { Button } from "../Button";
 import { drawerStyles } from "./style";
+import { ScrollAreaRegion } from "../ScrollArea/ScrollAreaRegion";
 import type {
     DrawerBodyProps,
     DrawerCloseProps,
@@ -355,12 +356,11 @@ export function DrawerDescription({ className, id, children, ...props }: DrawerD
 
 export function DrawerBody({ className, ...props }: DrawerBodyProps) {
     return (
-        <div
+        <ScrollAreaRegion
+            type="hover"
             data-name="Body"
-            className={clsx(
-                drawerStyles.body,
-                className,
-            )}
+            className={clsx(drawerStyles.body, className)}
+            viewportClassName="box-border p-refineui-size-xx-large"
             {...props}
         />
     );

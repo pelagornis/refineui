@@ -30,6 +30,7 @@ import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
 import { dropdownStyles } from "./style";
 import { acquireBodyScrollLock, composeRefs, getMergeableTriggerChild } from "@refineui/utilities/react";
+import { ScrollAreaRegion } from "../ScrollArea/ScrollAreaRegion";
 import { RadioInput } from "../Radio/RadioInput";
 import type {
     DropdownContentProps,
@@ -362,10 +363,7 @@ export function DropdownContent({
             data-align={align}
             data-side={menuSide}
             onKeyDown={onMenuKeyDown}
-            className={clsx(
-                "box-border flex w-refineui-dropdown-menu-width min-w-refineui-dropdown-menu-width max-w-[min(100vw-16px,calc(100vw-2rem))] flex-col gap-px overflow-x-hidden overflow-y-auto overscroll-contain rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xx-small shadow-refineui-2 outline-none",
-                className,
-            )}
+            className={clsx(dropdownStyles.menuShell, className)}
             {...props}
             style={{
                 ...fixedStyle,
@@ -374,7 +372,9 @@ export function DropdownContent({
                 backgroundColor: resolveColorTokenValue(componentColorTokens.dropdown.menu.background),
             }}
         >
-            {children}
+            <ScrollAreaRegion type="hover" className="min-h-0 max-h-full" viewportClassName={dropdownStyles.menuViewport}>
+                {children}
+            </ScrollAreaRegion>
         </div>
     );
 
@@ -752,10 +752,7 @@ export function DropdownSubContent({ className, children, style, ...props }: Dro
             data-state="open"
             data-side={side}
             tabIndex={-1}
-            className={clsx(
-                "box-border flex w-refineui-dropdown-menu-width min-w-refineui-dropdown-menu-width flex-col gap-px overflow-x-hidden overflow-y-auto overscroll-contain rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xx-small shadow-refineui-2 outline-none",
-                className,
-            )}
+            className={clsx(dropdownStyles.submenuShell, className)}
             style={{
                 ...fixedStyle,
                 ...style,
@@ -770,7 +767,9 @@ export function DropdownSubContent({ className, children, style, ...props }: Dro
             }}
             {...props}
         >
-            {children}
+            <ScrollAreaRegion type="hover" className="min-h-0 max-h-full" viewportClassName={dropdownStyles.menuViewport}>
+                {children}
+            </ScrollAreaRegion>
         </div>
     );
 

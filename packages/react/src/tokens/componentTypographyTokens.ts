@@ -54,6 +54,14 @@ export const componentTypographyTokens = {
         description: role("bodyXs"),
         shortcut: role("bodyXs"),
     },
+    /** Command palette — same scale as Menu (list / section / shortcut). */
+    command: {
+        group: role("captionLg"),
+        item: role("bodyMd"),
+        empty: role("bodyXs"),
+        shortcut: role("bodyXs"),
+        input: role("bodyMd"),
+    },
     dropdown: {
         label: role("captionLg"),
         item: role("bodyMd"),
@@ -101,6 +109,11 @@ export const componentTypographyTokens = {
     },
     badge: role("captionMd"),
     tabs: role("captionLg"),
+    table: {
+        head: role("bodySm"),
+        cell: role("bodySm"),
+        caption: role("bodyXs"),
+    },
     tooltip: role("bodyXs"),
     textarea: role("bodyMd"),
     select: {
@@ -113,6 +126,12 @@ export const componentTypographyTokens = {
     },
     divider: {
         contentLabel: role("captionMd"),
+    },
+    chart: {
+        axisLabel: role("captionSm"),
+        legendLabel: role("captionMd"),
+        tooltipLabel: role("captionMd"),
+        tooltipValue: role("bodySm"),
     },
     spinner: {
         xs: role("captionLg"),

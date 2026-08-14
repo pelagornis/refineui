@@ -202,6 +202,67 @@
   outline-offset: var(--refineui-spacing-size-xxx-small);
 }
 
+/* Table — header rail · inset rows · selected matches Menu/Dropdown (no brand mark) */
+[data-refineui="table"] table {
+  border-collapse: separate;
+  border-spacing: 0 var(--refineui-spacing-size-xx-small);
+}
+
+/* Chrome strips — header + footer share surface language */
+[data-refineui="table"] thead th,
+[data-refineui="table"] tfoot td {
+  background-color: var(--refineui-color-alias-background-surface-active);
+}
+[data-refineui="table"] thead th:first-child,
+[data-refineui="table"] tfoot td:first-child {
+  border-top-left-radius: var(--refineui-radius-rounded-large);
+  border-bottom-left-radius: var(--refineui-radius-rounded-large);
+}
+[data-refineui="table"] thead th:last-child,
+[data-refineui="table"] tfoot td:last-child {
+  border-top-right-radius: var(--refineui-radius-rounded-large);
+  border-bottom-right-radius: var(--refineui-radius-rounded-large);
+}
+
+/* Header labels — quieter than body, same strip as footer */
+[data-refineui="table"] thead th {
+  color: var(--refineui-color-alias-foreground-tertiary);
+  box-shadow: inset 0 calc(-1 * var(--refineui-stroke-width-thin)) 0 0
+    var(--refineui-color-alias-border-subtle);
+}
+
+/* Footer values — secondary emphasis on the same strip */
+[data-refineui="table"] tfoot td {
+  font-weight: 500;
+  color: var(--refineui-color-alias-foreground-secondary);
+}
+
+/* Inset hover — Menu / Dropdown `surfaceHover` */
+[data-refineui="table"] tbody [data-refineui="table-row"]:not([data-state="selected"]):hover > * {
+  background-color: var(--refineui-color-alias-background-surface-hover);
+}
+[data-refineui="table"] tbody [data-refineui="table-row"]:not([data-state="selected"]):hover > *:first-child {
+  border-top-left-radius: var(--refineui-radius-rounded-large);
+  border-bottom-left-radius: var(--refineui-radius-rounded-large);
+}
+[data-refineui="table"] tbody [data-refineui="table-row"]:not([data-state="selected"]):hover > *:last-child {
+  border-top-right-radius: var(--refineui-radius-rounded-large);
+  border-bottom-right-radius: var(--refineui-radius-rounded-large);
+}
+
+/* Selected — Menu / Dropdown `surfaceSelected`, no leading brand bar */
+[data-refineui="table"] tbody [data-refineui="table-row"][data-state="selected"] > * {
+  background-color: var(--refineui-color-alias-background-surface-selected);
+}
+[data-refineui="table"] tbody [data-refineui="table-row"][data-state="selected"] > *:first-child {
+  border-top-left-radius: var(--refineui-radius-rounded-large);
+  border-bottom-left-radius: var(--refineui-radius-rounded-large);
+}
+[data-refineui="table"] tbody [data-refineui="table-row"][data-state="selected"] > *:last-child {
+  border-top-right-radius: var(--refineui-radius-rounded-large);
+  border-bottom-right-radius: var(--refineui-radius-rounded-large);
+}
+
 /* Tabs — track ↔ panel gap; sliding brand indicator */
 [data-refineui="tabs"][data-variant="pill"] {
   display: flex;
@@ -1426,4 +1487,63 @@ a[data-refineui="link"]:focus-visible {
 [data-refineui="scroll-area"][data-interacting] > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"],
 [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-active="true"] {
   opacity: 1;
+}
+
+/* Chart — enter motion + hover / selected */
+[data-refineui="chart-bar"] {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  animation: refineui-chart-bar-enter var(--refineui-motion-duration-panel)
+    var(--refineui-motion-easing-emphasized) both;
+  transition: opacity var(--refineui-motion-duration-fast)
+    var(--refineui-motion-easing-ease-out);
+}
+[data-refineui="chart-plot-frame"][data-hover] [data-refineui="chart-bar"][data-state="default"] {
+  opacity: var(--refineui-opacity-disabled);
+}
+[data-refineui="chart-bar"][data-state="hover"],
+[data-refineui="chart-bar"][data-state="selected"] {
+  opacity: var(--refineui-opacity-full);
+}
+[data-refineui="chart-bar-track"] {
+  pointer-events: none;
+}
+[data-refineui="chart-line-stroke"] {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: refineui-chart-line-enter var(--refineui-motion-duration-panel)
+    var(--refineui-motion-easing-emphasized) both;
+}
+[data-refineui="chart-line-area"] {
+  animation: refineui-chart-point-enter var(--refineui-motion-duration-panel)
+    var(--refineui-motion-easing-emphasized) both;
+}
+[data-refineui="chart-point"] {
+  animation: refineui-chart-point-enter var(--refineui-motion-duration-fast)
+    var(--refineui-motion-easing-emphasized) both;
+}
+
+@keyframes refineui-chart-bar-enter {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes refineui-chart-line-enter {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes refineui-chart-point-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

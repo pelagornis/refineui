@@ -19,8 +19,9 @@ import {
 import { createPortal } from "react-dom";
 import { iconSizes } from "@refineui/tokens";
 import { componentSizes, foundationSizes } from "../../componentSizes";
-import { acquireBodyScrollLock } from "@refineui/utilities/react";
+import { acquireBodyScrollLock, composeRefs } from "@refineui/utilities/react";
 import { WebIcon } from "../../WebIcon";
+import { ScrollAreaRegion } from "../ScrollArea/ScrollAreaRegion";
 import { selectTriggerSizeClass, selectStyles } from "./style";
 import { useOptionalFieldSize } from "../Field/context";
 import type {
@@ -749,9 +750,7 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
                     )}
                     {...rest}
                 >
-                    <div className={isPopper ? selectStyles.scrollAreaRootPopper : selectStyles.scrollAreaRootItemAligned}>
-                        {normalizedChildren}
-                    </div>
+                    {normalizedChildren}
                 </div>
             </div>
         </SelectContentPositionContext.Provider>
@@ -762,19 +761,25 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
 });
 SelectContent.displayName = "SelectContent";
 
-export const SelectViewport = forwardRef<HTMLDivElement, SelectViewportProps>(function SelectViewport({ className, ...props }, forwardedRef) {
+export const SelectViewport = forwardRef<HTMLDivElement, SelectViewportProps>(function SelectViewport(
+    { className, children, ...props },
+    forwardedRef,
+) {
     const { viewportRef } = useSelectCtx();
     const position = useSelectContentPosition();
     const viewportClass = position === "popper" ? selectStyles.viewportPopper : selectStyles.viewportItemAligned;
-    const setRefs = useCallback(
-        (node: HTMLDivElement | null) => {
-            (viewportRef as MutableRefObject<HTMLDivElement | null>).current = node;
-            if (typeof forwardedRef === "function") forwardedRef(node);
-            else if (forwardedRef) (forwardedRef as MutableRefObject<HTMLDivElement | null>).current = node;
-        },
-        [forwardedRef, viewportRef],
+    const rootClass = position === "popper" ? selectStyles.scrollAreaRootPopper : selectStyles.scrollAreaRootItemAligned;
+    return (
+        <ScrollAreaRegion
+            type="hover"
+            className={rootClass}
+            viewportClassName={clsx(viewportClass, className)}
+            viewportRef={composeRefs(viewportRef, forwardedRef)}
+            {...props}
+        >
+            {children}
+        </ScrollAreaRegion>
     );
-    return <div ref={setRefs} className={clsx(viewportClass, className)} {...props} />;
 });
 SelectViewport.displayName = "SelectViewport";
 

@@ -48,6 +48,7 @@ The table below groups components **by purpose**. Click a name to open its docs.
 
 | Component | Description |
 |-----------|-------------|
+| [Command](/components/command/) | Command palette (searchable actions) |
 | [Dialog](/components/dialog/) | Modal dialog |
 | [Drawer](/components/drawer/) | Side panel |
 | [Dropdown](/components/dropdown/) | Composed Dropdown API — Web Kit Dropdown |
@@ -75,5 +76,6 @@ The table below groups components **by purpose**. Click a name to open its docs.
 | [Bubble](/components/bubble/) | Conversational message bubble |
 | [Calendar](/components/calendar/) | Date picker (single/range) |
 | [Link](/components/link/) | Text link |
+| [Table](/components/table/) | Semantic data table (header, body, footer) |
 
-These **38** routes (including Select) cover the components documented from `@refineui/react`. Icon wrappers such as `WebIcon` are documented in their own packages.
+These **40** routes (including Select) cover the components documented from `@refineui/react`. Icon wrappers such as `WebIcon` are documented in their own packages.

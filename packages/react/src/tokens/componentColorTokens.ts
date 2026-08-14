@@ -381,6 +381,36 @@ export const componentColorTokens = {
             danger: semanticToken("backgroundError"),
         },
     },
+    chart: {
+        plotBackground: semanticToken("backgroundPrimary"),
+        grid: semanticToken("borderSubtle"),
+        gridBaseline: semanticToken("borderDefault"),
+        axis: semanticToken("foregroundTertiary"),
+        pointStroke: semanticToken("backgroundPrimary"),
+        cursor: semanticToken("backgroundSurfaceHover"),
+        tooltip: {
+            background: semanticToken("surfacePopover"),
+            foreground: semanticToken("foregroundPrimary"),
+            muted: semanticToken("foregroundSecondary"),
+            border: semanticToken("borderDefault"),
+        },
+        series: {
+            brand: semanticToken("backgroundBrand"),
+            info: semanticToken("backgroundInfo"),
+            success: semanticToken("backgroundSuccess"),
+            warning: semanticToken("backgroundWarning"),
+            error: semanticToken("backgroundError"),
+            discovery: semanticToken("backgroundDiscovery"),
+        },
+        seriesSubtle: {
+            brand: semanticToken("backgroundBrandSubtle"),
+            info: semanticToken("backgroundInfoSubtle"),
+            success: semanticToken("backgroundSuccessSubtle"),
+            warning: semanticToken("backgroundWarningSubtle"),
+            error: semanticToken("backgroundErrorSubtle"),
+            discovery: semanticToken("backgroundDiscoverySubtle"),
+        },
+    },
     spinner: {
         track: semanticToken("backgroundBrandSubtle"),
         indicator: semanticToken("backgroundBrand"),
@@ -509,6 +539,26 @@ export const componentColorTokens = {
             activeBackground: semanticToken("backgroundSurfaceSelected"),
             pressedBackground: semanticToken("backgroundSurfaceActive"),
             disabledBackground: semanticToken("backgroundSurfaceDisabled"),
+        },
+    },
+    command: {
+        panel: {
+            background: semanticToken("backgroundPrimary"),
+            border: semanticToken("borderDefault"),
+        },
+        input: {
+            foreground: semanticToken("foregroundPrimary"),
+            placeholder: semanticToken("foregroundPlaceholder"),
+            icon: semanticToken("foregroundTertiary"),
+        },
+        group: semanticToken("foregroundTertiary"),
+        empty: semanticToken("foregroundTertiary"),
+        separator: semanticToken("borderDefault"),
+        item: {
+            text: semanticToken("foregroundPrimary"),
+            disabledText: semanticToken("foregroundDisabled"),
+            selectedBackground: semanticToken("backgroundSurfaceHover"),
+            shortcut: semanticToken("foregroundTertiary"),
         },
     },
     link: {

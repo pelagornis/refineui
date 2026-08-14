@@ -78,6 +78,30 @@ export {
 export { Toggle, type ToggleProps } from "./components/Toggle";
 export { Switch, type SwitchProps } from "./components/Switch";
 export { Chip, type ChipProps, type ChipVariant, type ChipSize } from "./components/Chip";
+export {
+    Command,
+    CommandDialog,
+    CommandEmpty,
+    CommandGroup,
+    CommandGroupHeading,
+    CommandInput,
+    CommandItem,
+    CommandList,
+    CommandSeparator,
+    CommandShortcut,
+    defaultCommandFilter,
+    type CommandDialogProps,
+    type CommandEmptyProps,
+    type CommandFilter,
+    type CommandGroupHeadingProps,
+    type CommandGroupProps,
+    type CommandInputProps,
+    type CommandItemProps,
+    type CommandListProps,
+    type CommandProps,
+    type CommandSeparatorProps,
+    type CommandShortcutProps,
+} from "./components/Command";
 export { Tag, type TagProps, type TagVariant, type TagSize } from "./components/Tag";
 export {
     Avatar,
@@ -145,6 +169,24 @@ export {
     type TabsTriggerProps,
     type TabsContentProps,
 } from "./components/Tabs";
+export {
+    Table,
+    TableHeader,
+    TableBody,
+    TableFooter,
+    TableRow,
+    TableHead,
+    TableCell,
+    TableCaption,
+    type TableProps,
+    type TableHeaderProps,
+    type TableBodyProps,
+    type TableFooterProps,
+    type TableRowProps,
+    type TableHeadProps,
+    type TableCellProps,
+    type TableCaptionProps,
+} from "./components/Table";
 export {
     Accordion,
     AccordionContent,
@@ -383,3 +425,31 @@ export {
     type ToasterProps,
 } from "./components/Toast";
 export { Tooltip, type TooltipAlign, type TooltipPosition, type TooltipProps } from "./components/Tooltip";
+export {
+    Chart,
+    ChartAxisLabels,
+    ChartBars,
+    ChartBody,
+    ChartContent,
+    ChartGrid,
+    ChartLegend,
+    ChartLegendItem,
+    ChartLine,
+    ChartPlot,
+    ChartTooltip,
+    ChartYAxisLabels,
+    type ChartAxisLabelsProps,
+    type ChartBarsProps,
+    type ChartBodyProps,
+    type ChartContentProps,
+    type ChartGridProps,
+    type ChartItemState,
+    type ChartLegendItemProps,
+    type ChartLegendProps,
+    type ChartLineProps,
+    type ChartPlotProps,
+    type ChartProps,
+    type ChartSeriesColor,
+    type ChartTooltipProps,
+    type ChartYAxisLabelsProps,
+} from "./components/Chart";

@@ -23,6 +23,7 @@ import { WebIcon } from "../../WebIcon";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
 import { Button } from "../Button";
 import { dialogStyles } from "./style";
+import { ScrollAreaRegion } from "../ScrollArea/ScrollAreaRegion";
 import type {
     DialogCloseProps,
     DialogContentProps,
@@ -122,7 +123,7 @@ export const DialogTrigger = forwardRef<HTMLButtonElement, DialogTriggerProps>(f
     );
 });
 
-export function DialogContent({ className, style, container, children, ...props }: DialogContentProps) {
+export function DialogContent({ className, style, container, scrollable = true, children, ...props }: DialogContentProps) {
     const { open, setOpen, size, titleId, descriptionId, panelRef, hasTitle, hasDescription } =
         useDialogContext("DialogContent");
     const [rendering, setRendering] = useState(open);
@@ -170,6 +171,18 @@ export function DialogContent({ className, style, container, children, ...props 
         maxWidth: size === "lg" ? componentSizes.dialogMaxWidth : componentSizes.dialogWidthSm,
     };
 
+    const panelBody = scrollable ? (
+        <ScrollAreaRegion
+            type="hover"
+            className={dialogStyles.panelScrollWrap}
+            viewportClassName="flex min-h-0 min-w-0 flex-1 flex-col gap-refineui-size-large"
+        >
+            {children}
+        </ScrollAreaRegion>
+    ) : (
+        children
+    );
+
     const root = (
         <div
             data-refineui="dialog"
@@ -202,9 +215,7 @@ export function DialogContent({ className, style, container, children, ...props 
                 style={{ ...panelMotion, ...style }}
                 onClick={(e) => e.stopPropagation()}
             >
-                <div className={dialogStyles.panelScrollWrap}>
-                    {children}
-                </div>
+                {panelBody}
             </div>
         </div>
     );

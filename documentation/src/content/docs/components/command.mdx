@@ -1,0 +1,135 @@
+---
+title: Command
+description: Command palette — search, groups, keyboard navigation
+---
+
+import CommandPreview from "../../../components/CommandPreview";
+
+# Command
+
+Composable **command palette** for quick actions and navigation. API shape follows common patterns (cmdk / shadcn `Command`); visuals reuse RefineUI **Menu** + **Dialog** token language (no Figma Web Kit node for this component).
+
+## Install & import
+
+```tsx
+import {
+  Button,
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandGroupHeading,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+} from "@refineui/react";
+import "@refineui/react/refineui.css";
+```
+
+## Basic usage (inline)
+
+```tsx
+<Command label="Command menu">
+  <CommandInput placeholder="Type a command or search…" />
+  <CommandList>
+    <CommandEmpty>No results found.</CommandEmpty>
+    <CommandGroup>
+      <CommandGroupHeading>Suggestions</CommandGroupHeading>
+      <CommandItem value="calendar" onSelect={(v) => console.log(v)}>
+        Calendar
+        <CommandShortcut>⌘K</CommandShortcut>
+      </CommandItem>
+      <CommandItem value="emoji">Search Emoji</CommandItem>
+    </CommandGroup>
+    <CommandSeparator />
+    <CommandGroup>
+      <CommandGroupHeading>Settings</CommandGroupHeading>
+      <CommandItem value="profile">Profile</CommandItem>
+      <CommandItem value="settings" shortcut="⌘S">
+        Settings
+      </CommandItem>
+    </CommandGroup>
+  </CommandList>
+</Command>
+```
+
+## Command dialog (palette)
+
+`CommandDialog` wraps `Dialog` at **`size="lg"`** (`dialogMaxWidth` / 600px) with zero panel padding so the command chrome fills the modal.
+
+```tsx
+const [open, setOpen] = useState(false);
+
+<>
+  <Button type="button" onClick={() => setOpen(true)}>
+    Open
+  </Button>
+  <CommandDialog open={open} onOpenChange={setOpen}>
+    <CommandInput />
+    <CommandList>
+      <CommandEmpty>No results found.</CommandEmpty>
+      <CommandItem value="new-file" onSelect={() => setOpen(false)}>
+        New File
+      </CommandItem>
+    </CommandList>
+  </CommandDialog>
+</>;
+```
+
+## Preview
+
+<div class="not-content">
+  <CommandPreview client:load />
+</div>
+
+## Composition
+
+```
+Command | CommandDialog
+├── CommandInput
+└── CommandList
+    ├── CommandEmpty
+    ├── CommandGroup
+    │   ├── CommandGroupHeading
+    │   └── CommandItem (+ optional CommandShortcut / startIcon)
+    └── CommandSeparator
+```
+
+## Filtering
+
+| Prop | Default | Description |
+|------|---------|-------------|
+| `shouldFilter` | `true` | Filter items with the built-in (or custom) score function |
+| `filter` | substring match | `(value, search, keywords?) => number` — `0` hides the item |
+| `value` / `onValueChange` | — | Controlled search query |
+| `selectedValue` / `onSelectedValueChange` | — | Controlled highlighted item |
+
+Set `shouldFilter={false}` when the parent already filters the item tree (async search, server results, etc.).
+
+`CommandItem` accepts `keywords` for extra match strings and `forceMount` to keep an item visible while filtering.
+
+## Keyboard
+
+| Key | Action |
+|-----|--------|
+| `↑` / `↓` | Move highlight |
+| `Home` / `End` | First / last enabled item |
+| `Enter` | Activate highlighted item |
+| `Escape` | Close dialog (via `Dialog`) |
+
+## Subcomponents
+
+| Component | Description |
+|-----------|-------------|
+| `Command` | Context root — search, filter, selection, keyboard |
+| `CommandDialog` | `Dialog` + `Command` palette shell (`size` default `lg`) |
+| `CommandInput` | Combobox search field (search icon by default) |
+| `CommandList` | Scrollable listbox |
+| `CommandEmpty` | Shown when the query has no visible items |
+| `CommandGroup` | Group container (hides when empty after filter) |
+| `CommandGroupHeading` | Group label |
+| `CommandItem` | Selectable option (`value`, `onSelect`, icons, shortcut) |
+| `CommandShortcut` | Trailing keyboard hint |
+| `CommandSeparator` | Horizontal divider |
