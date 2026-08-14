@@ -8,12 +8,12 @@ import { componentTextClass } from "../../typography";
  */
 export const tabsStyles = {
     list: clsx(
-        "relative box-border inline-flex max-w-full w-fit flex-nowrap items-center gap-refineui-size-none",
-        "overflow-x-auto rounded-refineui-circle border-refineui-thin border-refineui-alias-border-default",
-        "bg-refineui-alias-background-brand-subtle p-refineui-size-xx-small",
+        "relative box-border inline-flex max-w-full w-fit flex-nowrap items-stretch gap-refineui-size-none",
+        "overflow-hidden rounded-refineui-circle border-refineui-thin border-refineui-alias-border-default",
+        "bg-refineui-alias-background-brand-subtle",
     ),
     indicator: clsx(
-        "pointer-events-none absolute top-refineui-size-xx-small bottom-refineui-size-xx-small left-0 z-0",
+        "pointer-events-none absolute inset-y-0 left-0 z-0 block h-full",
         "rounded-refineui-circle bg-refineui-alias-background-brand shadow-refineui-2",
         "will-change-[transform,width]",
     ),

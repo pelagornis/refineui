@@ -123,12 +123,10 @@ export function TabsList({ className, children, ...props }: TabsListProps) {
             ro.observe(tab);
         }
 
-        list.addEventListener("scroll", updateIndicator, { passive: true });
         window.addEventListener("resize", updateIndicator);
 
         return () => {
             ro.disconnect();
-            list.removeEventListener("scroll", updateIndicator);
             window.removeEventListener("resize", updateIndicator);
         };
     }, [tabListRef, updateIndicator, children]);
@@ -146,7 +144,7 @@ export function TabsList({ className, children, ...props }: TabsListProps) {
             className={clsx(tabsStyles.list, className)}
             {...props}
         >
-            <span
+            <div
                 data-refineui="tabs-indicator"
                 data-ready={indicator.ready ? "true" : undefined}
                 aria-hidden

@@ -211,6 +211,7 @@
 
 [data-refineui="tabs-indicator"] {
   transition: none;
+  display: block;
 }
 [data-refineui="tabs-indicator"][data-ready="true"] {
   transition:
@@ -370,6 +371,17 @@
 [data-refineui="drawer-close"]:focus-visible {
   outline: 2px solid var(--refineui-focus-color);
   outline-offset: var(--refineui-focus-offset);
+}
+/* Pill tabs: inset focus — outline is not clipped by track overflow */
+[data-refineui="tabs"][data-variant="pill"] [data-refineui="tab"]:focus-visible {
+  outline: none;
+  outline-offset: 0;
+}
+[data-refineui="tabs"][data-variant="pill"] [data-refineui="tab"]:not([data-selected="true"]):focus-visible {
+  box-shadow: inset 0 0 0 var(--refineui-stroke-width-thick) var(--refineui-color-alias-border-focus);
+}
+[data-refineui="tabs"][data-variant="pill"] [data-refineui="tab"][data-selected="true"]:focus-visible {
+  box-shadow: none;
 }
 
 /* Menu / Item — MCP state tokens (hover / pressed / active / disabled) */
