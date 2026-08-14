@@ -1,7 +1,9 @@
 import { clsx } from "clsx";
 import {
+    Children,
     createContext,
     forwardRef,
+    isValidElement,
     useCallback,
     useContext,
     useEffect,
@@ -11,11 +13,13 @@ import {
     useRef,
     useState,
     type KeyboardEvent as ReactKeyboardEvent,
+    type ReactElement,
+    type ReactNode,
     type RefObject,
 } from "react";
 import { iconSizes } from "@refineui/tokens";
-import { WebIcon } from "../../WebIcon";
 import { Dialog, DialogContent } from "../Dialog";
+import { SearchField, SearchFieldClear, SearchFieldIcon, SearchFieldInput } from "../SearchField";
 import { commandStyles } from "./style";
 import type {
     CommandDialogProps,
@@ -341,7 +345,12 @@ export function CommandDialog({
     return (
         <Dialog size={size} {...dialogProps}>
             <DialogContent style={commandStyles.dialogContentPanel} scrollable={false}>
-                <Command {...commandProps}>{children}</Command>
+                <Command
+                    {...commandProps}
+                    className={clsx(commandStyles.rootInDialog, commandProps?.className)}
+                >
+                    {children}
+                </Command>
             </DialogContent>
         </Dialog>
     );
@@ -352,38 +361,33 @@ export const CommandInput = forwardRef<HTMLInputElement, CommandInputProps>(func
     ref,
 ) {
     const { search, setSearch, listId, label, selectedValue } = useCommandContext("CommandInput");
-    const inputId = useId();
-
     const activeDescendantId = selectedValue ? `${listId}-item-${cssEscape(selectedValue)}` : undefined;
 
     return (
         <div data-refineui="command-input" className={commandStyles.inputWrap}>
-            <span className={commandStyles.inputIcon} aria-hidden>
-                {startIcon ?? (
-                    <WebIcon name="search" size={iconSizes.small} color="currentColor" aria-hidden />
-                )}
-            </span>
-            <input
-                ref={ref}
-                id={inputId}
-                type="text"
-                role="combobox"
-                aria-autocomplete="list"
-                aria-expanded
-                aria-controls={listId}
-                aria-activedescendant={activeDescendantId}
-                aria-label={label}
-                autoComplete="off"
-                autoCorrect="off"
-                spellCheck={false}
-                disabled={disabled}
-                placeholder={placeholder}
+            <SearchField
                 value={search}
-                className={clsx(commandStyles.input, className)}
-                onChange={(event) => setSearch(event.target.value)}
-                onKeyDown={onKeyDown}
-                {...props}
-            />
+                onValueChange={setSearch}
+                disabled={disabled}
+                aria-label={label}
+            >
+                <SearchFieldIcon>{startIcon}</SearchFieldIcon>
+                <SearchFieldInput
+                    ref={ref}
+                    role="combobox"
+                    aria-autocomplete="list"
+                    aria-expanded
+                    aria-controls={listId}
+                    aria-activedescendant={activeDescendantId}
+                    autoCorrect="off"
+                    spellCheck={false}
+                    placeholder={placeholder}
+                    className={className}
+                    onKeyDown={onKeyDown}
+                    {...props}
+                />
+                <SearchFieldClear />
+            </SearchField>
         </div>
     );
 });
@@ -504,6 +508,34 @@ export function CommandSeparator({ className, ...props }: CommandSeparatorProps)
     );
 }
 
+export function CommandShortcut({ className, children, ...props }: CommandShortcutProps) {
+    return (
+        <span data-refineui="command-shortcut" className={clsx(commandStyles.shortcut, className)} {...props}>
+            {children}
+        </span>
+    );
+}
+
+function isCommandShortcutElement(node: ReactNode): node is ReactElement {
+    return isValidElement(node) && node.type === CommandShortcut;
+}
+
+function partitionCommandItemChildren(children: ReactNode): {
+    content: ReactNode[];
+    shortcuts: ReactElement[];
+} {
+    const content: ReactNode[] = [];
+    const shortcuts: ReactElement[] = [];
+    Children.forEach(children, (child) => {
+        if (isCommandShortcutElement(child)) {
+            shortcuts.push(child);
+        } else {
+            content.push(child);
+        }
+    });
+    return { content, shortcuts };
+}
+
 export const CommandItem = forwardRef<HTMLButtonElement, CommandItemProps>(function CommandItem(
     {
         className,
@@ -536,6 +568,8 @@ export const CommandItem = forwardRef<HTMLButtonElement, CommandItemProps>(funct
     const onSelectRef = useRef(onSelect);
     onSelectRef.current = onSelect;
     const keywordsKey = keywords?.join("\0") ?? "";
+    const { content, shortcuts } = partitionCommandItemChildren(children);
+    const hasTrailing = shortcuts.length > 0 || shortcut != null || endIcon != null;
 
     const setRefs = useCallback(
         (node: HTMLButtonElement | null) => {
@@ -575,12 +609,12 @@ export const CommandItem = forwardRef<HTMLButtonElement, CommandItemProps>(funct
             aria-selected={isSelected}
             disabled={disabled}
             data-refineui="command-item"
+            data-state={disabled ? "disabled" : isSelected ? "active" : "default"}
             data-selected={isSelected || undefined}
             data-disabled={disabled || undefined}
             className={clsx(
                 commandStyles.itemBase,
                 disabled ? commandStyles.itemDisabled : commandStyles.itemEnabled,
-                isSelected && !disabled && commandStyles.itemSelected,
                 className,
             )}
             onMouseMove={(event) => {
@@ -606,37 +640,34 @@ export const CommandItem = forwardRef<HTMLButtonElement, CommandItemProps>(funct
                     {startIcon}
                 </span>
             ) : null}
-            {children}
-            {shortcut ? (
-                typeof shortcut === "string" || typeof shortcut === "number" ? (
-                    <CommandShortcut>{shortcut}</CommandShortcut>
-                ) : (
-                    shortcut
-                )
-            ) : null}
-            {endIcon ? (
-                <span
-                    className={commandStyles.iconWrap}
-                    style={{
-                        width: iconSizes.small,
-                        minWidth: iconSizes.small,
-                        height: iconSizes.small,
-                    }}
-                >
-                    {endIcon}
+            <span className={commandStyles.label}>{content}</span>
+            {hasTrailing ? (
+                <span className={commandStyles.rightWrap}>
+                    {shortcuts}
+                    {shortcut ? (
+                        typeof shortcut === "string" || typeof shortcut === "number" ? (
+                            <CommandShortcut>{shortcut}</CommandShortcut>
+                        ) : (
+                            shortcut
+                        )
+                    ) : null}
+                    {endIcon ? (
+                        <span
+                            className={commandStyles.iconWrap}
+                            style={{
+                                width: iconSizes.small,
+                                minWidth: iconSizes.small,
+                                height: iconSizes.small,
+                            }}
+                        >
+                            {endIcon}
+                        </span>
+                    ) : null}
                 </span>
             ) : null}
         </button>
     );
 });
-
-export function CommandShortcut({ className, children, ...props }: CommandShortcutProps) {
-    return (
-        <span data-refineui="command-shortcut" className={clsx(commandStyles.shortcut, className)} {...props}>
-            {children}
-        </span>
-    );
-}
 
 /** Safe-ish id fragment for aria-activedescendant (values may contain spaces). */
 function cssEscape(value: string): string {

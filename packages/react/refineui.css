@@ -46,9 +46,11 @@
 [data-refineui="pagination"],
 [data-refineui="accordion-trigger"],
 [data-refineui="menu-item"],
+[data-refineui="command-item"],
 [data-refineui="tab"],
 [data-refineui="calendar-nav"],
-[data-refineui="chip-remove"] {
+[data-refineui="chip-remove"],
+[data-refineui="search-field-clear"] {
   transition: opacity var(--refineui-motion-duration-fast), background-color var(--refineui-motion-duration-fast), transform 0.1s;
 }
 [data-refineui="dropdown-item"] {
@@ -404,6 +406,7 @@
 [data-refineui="dropdown-item"]:not(:disabled):active,
 [data-refineui="select-item"]:not([aria-disabled="true"]):active,
 [data-refineui="menu-item"]:not(:disabled):active,
+[data-refineui="command-item"]:not(:disabled):active,
 [data-refineui="calendar-nav"]:active,
 [data-refineui="calendar-day"]:active,
 [data-refineui="chip-remove"]:active {
@@ -412,7 +415,8 @@
 /* `data-state="pressed"` — div options (`select-item`) can drop scale with `:active` alone; mirror here */
 [data-refineui="dropdown-item"][data-state="pressed"]:not(:disabled),
 [data-refineui="select-item"][data-state="pressed"]:not([aria-disabled="true"]),
-[data-refineui="menu-item"][data-state="pressed"]:not(:disabled) {
+[data-refineui="menu-item"][data-state="pressed"]:not(:disabled),
+[data-refineui="command-item"][data-state="pressed"]:not(:disabled) {
   transform: scale(var(--refineui-motion-scale-press));
 }
 [data-refineui="button"]:focus-visible,
@@ -425,11 +429,13 @@
 [data-refineui="dropdown-item"]:focus-visible,
 [data-refineui="select-item"]:focus-visible,
 [data-refineui="menu-item"]:focus-visible,
+[data-refineui="command-item"]:focus-visible,
 [data-refineui="tab"]:focus-visible,
 [data-refineui="calendar-nav"]:focus-visible,
 [data-refineui="calendar-day"]:focus-visible,
 [data-refineui="chip-remove"]:focus-visible,
-[data-refineui="drawer-close"]:focus-visible {
+[data-refineui="drawer-close"]:focus-visible,
+[data-refineui="search-field-clear"]:focus-visible {
   outline: 2px solid var(--refineui-focus-color);
   outline-offset: var(--refineui-focus-offset);
 }
@@ -467,6 +473,37 @@
   color: var(--refineui-color-alias-foreground-primary) !important;
 }
 [data-refineui="menu-item"][data-state="default"]:not(:disabled):active {
+  background-color: var(--refineui-color-alias-background-surface-active) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
+}
+
+/* Command / Item — same surface tokens as Menu */
+[data-refineui="command-item"][data-state="hover"],
+[data-refineui="command-item"][data-selected="true"]:not(:disabled):not(:active) {
+  background-color: var(--refineui-color-alias-background-surface-hover) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
+}
+[data-refineui="command-item"][data-state="pressed"],
+[data-refineui="command-item"][data-state="active"]:not(:disabled):active,
+[data-refineui="command-item"][data-selected="true"]:not(:disabled):active {
+  background-color: var(--refineui-color-alias-background-surface-active) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
+}
+[data-refineui="command-item"][data-state="active"]:not(:disabled):not(:active) {
+  background-color: var(--refineui-color-alias-background-surface-hover) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
+}
+[data-refineui="command-item"][data-state="disabled"],
+[data-refineui="command-item"]:disabled {
+  background-color: transparent !important;
+  color: var(--refineui-color-alias-foreground-disabled) !important;
+}
+[data-refineui="command-item"][data-state="default"]:not(:disabled):hover {
+  background-color: var(--refineui-color-alias-background-surface-hover) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
+}
+[data-refineui="command-item"][data-state="default"]:not(:disabled):active,
+[data-refineui="command-item"]:not(:disabled):active {
   background-color: var(--refineui-color-alias-background-surface-active) !important;
   color: var(--refineui-color-alias-foreground-primary) !important;
 }
@@ -669,17 +706,46 @@
   line-height: var(--refineui-typography-title-2-line-height);
 }
 /* Hover: slightly lighter plate */
-[data-refineui="input-otp"]:not([data-disabled="true"]) [data-refineui="input-otp-slot"]:not(:disabled):not(:focus):hover {
+[data-refineui="input-otp"]:not([data-disabled="true"]) [data-refineui="input-otp-slot"]:not(:disabled):not(:focus):hover,
+[data-refineui="search-field"]:not([data-appearance="plain"]):not([data-disabled="true"]):not(:focus-within):hover {
   background-color: var(--refineui-color-alias-background-surface-active);
 }
-/* Focus: light border — softer than Input focus ring */
-[data-refineui="input-otp-slot"]:focus:not(:disabled) {
-  background-color: var(--refineui-color-alias-background-primary);
+/* Focus: keep soft plate; thin border only — OTP slot & Search Field share one rule */
+[data-refineui="input-otp-slot"]:focus:not(:disabled),
+[data-refineui="search-field"]:not([data-appearance="plain"]):not([data-disabled="true"]):focus-within {
   border-color: var(--refineui-color-alias-border-default);
+}
+
+/* Search Field — rest plate is Tailwind class only (same as OTP slot); hover/focus above */
+[data-refineui="search-field"] {
+  caret-color: var(--refineui-color-alias-foreground-primary);
+}
+[data-refineui="search-field"][data-disabled="true"]:not([data-appearance="plain"]) {
+  cursor: not-allowed;
+  background-color: var(--refineui-color-alias-background-surface-disabled);
+  border-color: var(--refineui-color-alias-border-disabled);
+}
+[data-refineui="search-field"][data-disabled="true"] {
+  cursor: not-allowed;
+}
+[data-refineui="search-field-input"]::-webkit-search-decoration,
+[data-refineui="search-field-input"]::-webkit-search-cancel-button,
+[data-refineui="search-field-input"]::-webkit-search-results-button,
+[data-refineui="search-field-input"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+[data-refineui="search-field-clear"]:not(:disabled):hover {
+  color: var(--refineui-color-alias-foreground-primary);
+}
+[data-refineui="search-field"]:active,
+[data-refineui="search-field-clear"]:active {
+  transform: none !important;
 }
 [data-refineui="input"]::placeholder,
 [data-refineui="textarea"]::placeholder,
-[data-refineui="select-trigger"]::placeholder {
+[data-refineui="select-trigger"]::placeholder,
+[data-refineui="search-field-input"]::placeholder {
   color: var(--refineui-color-alias-foreground-placeholder);
 }
 [data-refineui="input"]:disabled,

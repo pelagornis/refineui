@@ -23,6 +23,16 @@ export {
     type InputOTPSlotProps,
     type InputOTPSize,
 } from "./components/InputOTP";
+export {
+    SearchField,
+    SearchFieldClear,
+    SearchFieldIcon,
+    SearchFieldInput,
+    type SearchFieldClearProps,
+    type SearchFieldIconProps,
+    type SearchFieldInputProps,
+    type SearchFieldProps,
+} from "./components/SearchField";
 export { Text, type TextProps } from "./components/Text";
 export { Textarea, type TextareaProps } from "./components/Textarea";
 export { Badge, type BadgeProps, type BadgeVariant, type BadgeLayout } from "./components/Badge";

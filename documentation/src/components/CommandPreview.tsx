@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { borderRadii, colors, iconSizes, spacings, strokeWidths, typographys } from "@refineui/tokens";
+import { colors, iconSizes, spacings, typographys } from "@refineui/tokens";
 import {
     Button,
     Command,
@@ -101,11 +101,8 @@ export default function CommandPreview() {
             >
                 <div
                     style={{
-                        borderRadius: borderRadii.roundedLarge,
-                        border: `${strokeWidths.strokeWidthHairline} solid ${colors.neutral300}`,
-                        overflow: "hidden",
                         maxWidth: "600px",
-                        backgroundColor: colors.neutralWhite,
+                        width: "100%",
                     }}
                 >
                     <Command label="Inline command menu">

@@ -41,3 +41,4 @@
 | 36 | Resizable | `components/Resizable` | ✅ (token-based composition) |
 | 37 | Input OTP | `components/InputOTP` | ✅ (token-based composition) |
 | 38 | Scroll Area | `components/ScrollArea` | ✅ (token-based composition) |
+| 39 | Search Field | `components/SearchField` | ✅ (token-based composition) |

@@ -13,6 +13,7 @@ The table below groups components **by purpose**. Click a name to open its docs.
 |-----------|-------------|
 | [Button](/components/button/) | Primary, secondary, outline, ghost, and danger actions |
 | [Input](/components/input/) | Single-line text (`size` sm/md/lg) |
+| [Search Field](/components/search-field/) | Soft search bar (icon + clear) |
 | [Input OTP](/components/input-otp/) | One-time password digit slots |
 | [Textarea](/components/textarea/) | Multi-line input |
 | [Select](/components/select/) | Custom select (`Select` / `Menu` / `Item` styling) |
@@ -78,4 +79,4 @@ The table below groups components **by purpose**. Click a name to open its docs.
 | [Link](/components/link/) | Text link |
 | [Table](/components/table/) | Semantic data table (header, body, footer) |
 
-These **40** routes (including Select) cover the components documented from `@refineui/react`. Icon wrappers such as `WebIcon` are documented in their own packages.
+These **41** routes (including Select) cover the components documented from `@refineui/react`. Icon wrappers such as `WebIcon` are documented in their own packages.

@@ -7,7 +7,7 @@ import CommandPreview from "../../../components/CommandPreview";
 
 # Command
 
-Composable **command palette** for quick actions and navigation. API shape follows common patterns (cmdk / shadcn `Command`); visuals reuse RefineUI **Menu** + **Dialog** token language (no Figma Web Kit node for this component).
+Composable **command palette** for quick actions and navigation. API shape follows common patterns (cmdk / shadcn `Command`). The query control is [Search Field](/components/search-field/); list chrome follows **Menu** + **Dialog** token language.
 
 ## Install & import
 
@@ -57,7 +57,7 @@ import "@refineui/react/refineui.css";
 
 ## Command dialog (palette)
 
-`CommandDialog` wraps `Dialog` at **`size="lg"`** (`dialogMaxWidth` / 600px) with zero panel padding so the command chrome fills the modal.
+`CommandDialog` wraps `Dialog` at **`size="lg"`** with zero panel padding so the command chrome fills the modal. Panel corners follow Dialog (`roundedXXLarge`).
 
 ```tsx
 const [open, setOpen] = useState(false);
@@ -88,7 +88,7 @@ const [open, setOpen] = useState(false);
 
 ```
 Command | CommandDialog
-├── CommandInput
+├── CommandInput  (= SearchField + Icon + Input + Clear)
 └── CommandList
     ├── CommandEmpty
     ├── CommandGroup
@@ -125,7 +125,7 @@ Set `shouldFilter={false}` when the parent already filters the item tree (async 
 |-----------|-------------|
 | `Command` | Context root — search, filter, selection, keyboard |
 | `CommandDialog` | `Dialog` + `Command` palette shell (`size` default `lg`) |
-| `CommandInput` | Combobox search field (search icon by default) |
+| `CommandInput` | [Search Field](/components/search-field/) (`filled`) as combobox — icon + input + clear |
 | `CommandList` | Scrollable listbox |
 | `CommandEmpty` | Shown when the query has no visible items |
 | `CommandGroup` | Group container (hides when empty after filter) |
