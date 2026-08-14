@@ -1,0 +1,100 @@
+---
+title: Input OTP
+description: One-time password — separate soft input cells
+---
+
+import InputOTPDemo from "../../../components/InputOTPDemo";
+
+# Input OTP
+
+Six (or N) **separate** soft square inputs — one digit each, with gap between cells. Not a merged field.
+
+## Install & import
+
+```tsx
+import { InputOTP, InputOTPSlot } from "@refineui/react";
+import "@refineui/react/refineui.css";
+```
+
+## Basic usage
+
+```tsx
+const [code, setCode] = useState("");
+
+<InputOTP maxLength={6} value={code} onValueChange={setCode} aria-label="Verification code">
+  <InputOTPSlot index={0} />
+  <InputOTPSlot index={1} />
+  <InputOTPSlot index={2} />
+  <InputOTPSlot index={3} />
+  <InputOTPSlot index={4} />
+  <InputOTPSlot index={5} />
+</InputOTP>
+```
+
+## Preview
+
+<div class="not-content">
+  <InputOTPDemo client:load />
+</div>
+
+## Composition
+
+```
+InputOTP
+├── InputOTPSlot
+├── InputOTPSlot
+└── …
+```
+
+## Props
+
+### InputOTP
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `maxLength` | `number` | — | Slot count (required) |
+| `value` | `string` | — | Controlled value |
+| `defaultValue` | `string` | `""` | Uncontrolled initial value |
+| `onValueChange` | `(value: string) => void` | — | Value callback |
+| `size` | `"sm"` \| `"md"` \| `"lg"` | `"lg"` | Cell size + digit type (inherits from [Field](/components/field/) when omitted) |
+| `disabled` | `boolean` | `false` | Disables every slot |
+| `pattern` | `RegExp` | `/\d/` | Per-character allowlist |
+| `inputMode` | `string` | `"numeric"` | Mobile keyboard hint |
+| `autoComplete` | `string` | `"one-time-code"` | Applied to the first slot |
+
+### InputOTPSlot
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `index` | `number` | Zero-based slot index (required) |
+
+## Examples
+
+### With Field
+
+```tsx
+<Field size="md">
+  <FieldLabel>Verification code</FieldLabel>
+  <InputOTP maxLength={6} value={code} onValueChange={setCode}>
+    <InputOTPSlot index={0} />
+    <InputOTPSlot index={1} />
+    <InputOTPSlot index={2} />
+    <InputOTPSlot index={3} />
+    <InputOTPSlot index={4} />
+    <InputOTPSlot index={5} />
+  </InputOTP>
+  {invalid ? <FieldError>Enter the 6-digit code from your email.</FieldError> : null}
+</Field>
+```
+
+## Behavior
+
+- Each slot is a real `<input>` (soft surface fill, no default outline).
+- Typing advances; Backspace clears / moves left; arrows move between cells.
+- Paste / SMS autofill on the first cell fills across slots.
+
+## Accessibility
+
+- Root `role="group"` + `aria-label`.
+- Each slot has `aria-label` like `Digit 1 of 6`.
+- Validation copy belongs on [Field](/components/field/) (`FieldError`).

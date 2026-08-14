@@ -32,5 +32,11 @@ export default new Map([
 ["src/content/docs/components/tag.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Ftag.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/components/textarea.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Ftextarea.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/components/toast.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Ftoast.mdx&astroContentModuleFlag=true")],
-["src/content/docs/components/tooltip.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Ftooltip.mdx&astroContentModuleFlag=true")]]);
+["src/content/docs/components/tooltip.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Ftooltip.mdx&astroContentModuleFlag=true")],
+["src/content/docs/components/carousel.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Fcarousel.mdx&astroContentModuleFlag=true")],
+["src/content/docs/components/bubble.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Fbubble.mdx&astroContentModuleFlag=true")],
+["src/content/docs/components/stepper.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Fstepper.mdx&astroContentModuleFlag=true")],
+["src/content/docs/components/input-otp.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Finput-otp.mdx&astroContentModuleFlag=true")],
+["src/content/docs/components/resizable.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Fresizable.mdx&astroContentModuleFlag=true")],
+["src/content/docs/components/scroll-area.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fcomponents%2Fscroll-area.mdx&astroContentModuleFlag=true")]]);
 		

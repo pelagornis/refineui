@@ -570,6 +570,40 @@
   border-color: var(--refineui-color-alias-background-success-hover) !important;
   box-shadow: 0 0 0 0.5px var(--refineui-color-alias-background-success-hover);
 }
+[data-refineui="input-otp-slot"] {
+  transition:
+    background-color var(--refineui-motion-duration-fast),
+    border-color var(--refineui-motion-duration-fast);
+  caret-color: var(--refineui-color-alias-foreground-primary);
+}
+/* OTP digit typography — CSS vars (not Tailwind @utility; runtime-resolved classes are tree-shaken) */
+[data-refineui="input-otp"][data-size="sm"] [data-refineui="input-otp-slot"] {
+  font-family: var(--refineui-typography-sub-title-1-font-family);
+  font-size: var(--refineui-typography-sub-title-1-font-size);
+  font-weight: var(--refineui-typography-sub-title-1-font-weight);
+  line-height: var(--refineui-typography-sub-title-1-line-height);
+}
+[data-refineui="input-otp"][data-size="md"] [data-refineui="input-otp-slot"] {
+  font-family: var(--refineui-typography-title-3-font-family);
+  font-size: var(--refineui-typography-title-3-font-size);
+  font-weight: var(--refineui-typography-title-3-font-weight);
+  line-height: var(--refineui-typography-title-3-line-height);
+}
+[data-refineui="input-otp"][data-size="lg"] [data-refineui="input-otp-slot"] {
+  font-family: var(--refineui-typography-title-2-font-family);
+  font-size: var(--refineui-typography-title-2-font-size);
+  font-weight: var(--refineui-typography-title-2-font-weight);
+  line-height: var(--refineui-typography-title-2-line-height);
+}
+/* Hover: slightly lighter plate */
+[data-refineui="input-otp"]:not([data-disabled="true"]) [data-refineui="input-otp-slot"]:not(:disabled):not(:focus):hover {
+  background-color: var(--refineui-color-alias-background-surface-active);
+}
+/* Focus: light border — softer than Input focus ring */
+[data-refineui="input-otp-slot"]:focus:not(:disabled) {
+  background-color: var(--refineui-color-alias-background-primary);
+  border-color: var(--refineui-color-alias-border-default);
+}
 [data-refineui="input"]::placeholder,
 [data-refineui="textarea"]::placeholder,
 [data-refineui="select-trigger"]::placeholder {
@@ -808,6 +842,32 @@
     animation: none;
     opacity: 1;
   }
+}
+
+/* Carousel — stage drag + control focus (nav lives below slides) */
+@media (prefers-reduced-motion: reduce) {
+  [data-refineui="carousel-track"][data-animated="true"] {
+    transition: none !important;
+  }
+}
+[data-refineui="carousel-viewport"] {
+  touch-action: pan-y;
+}
+[data-refineui="carousel-viewport"][data-dragging="true"] {
+  cursor: grabbing;
+}
+[data-refineui="carousel-indicator-thumb"] {
+  transition: none;
+}
+[data-refineui="carousel-indicator-thumb"][data-ready="true"] {
+  transition: transform var(--refineui-motion-duration-medium) var(--refineui-motion-easing-emphasized),
+    width var(--refineui-motion-duration-medium) var(--refineui-motion-easing-emphasized);
+}
+[data-refineui="carousel-nav"]:focus-visible,
+[data-refineui="carousel-indicator"]:focus-visible,
+[data-refineui="carousel"]:focus-visible {
+  outline: 2px solid var(--refineui-focus-color);
+  outline-offset: var(--refineui-focus-offset);
 }
 
 /* Spinner — Web Kit COMPONENT_SET `Spinner` `550:3669` */
@@ -1298,4 +1358,60 @@ a[data-refineui="link"]:focus-visible {
   box-shadow: none;
   transform: none;
   cursor: not-allowed;
+}
+
+/* ScrollArea — hide native scrollbar; padded track + thumb; visibility */
+[data-refineui="scroll-area-viewport"] {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+[data-refineui="scroll-area-viewport"]::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+/**
+ * Outer rail: inset from the container edge.
+ * sizeMedium (10px) — between the old 4px track and the 12px bump.
+ */
+[data-refineui="scroll-area-scrollbar"][data-orientation="vertical"] {
+  top: var(--refineui-spacing-size-xxx-small);
+  right: var(--refineui-spacing-size-xxx-small);
+  bottom: var(--refineui-spacing-size-xxx-small);
+  width: var(--refineui-spacing-size-medium);
+}
+[data-refineui="scroll-area-scrollbar"][data-orientation="horizontal"] {
+  left: var(--refineui-spacing-size-xxx-small);
+  right: var(--refineui-spacing-size-xxx-small);
+  bottom: var(--refineui-spacing-size-xxx-small);
+  height: var(--refineui-spacing-size-medium);
+}
+[data-refineui="scroll-area-track"] {
+  background-color: var(--refineui-color-alias-background-surface-selected);
+  border-radius: var(--refineui-radius-rounded-circle);
+}
+[data-refineui="scroll-area-thumb"][data-orientation="vertical"] {
+  left: 0;
+  width: 100%;
+}
+[data-refineui="scroll-area-thumb"][data-orientation="horizontal"] {
+  top: 0;
+  height: 100%;
+}
+[data-refineui="scroll-area-scrollbar"][data-state="hidden"] {
+  pointer-events: none;
+  opacity: 0;
+}
+[data-refineui="scroll-area-scrollbar"][data-visibility="always"][data-state="visible"] {
+  opacity: 1;
+}
+[data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"] {
+  opacity: 0;
+}
+[data-refineui="scroll-area"]:hover > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"],
+[data-refineui="scroll-area"]:focus-within > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"],
+[data-refineui="scroll-area"][data-scrolling] > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"],
+[data-refineui="scroll-area"][data-interacting] > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"],
+[data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-active="true"] {
+  opacity: 1;
 }

@@ -76,6 +76,19 @@ export const componentTypographyTokens = {
         title: role("captionLg"),
         description: role("captionLg"),
     },
+    bubble: role("bodyMd"),
+    /** Digits use title scale — applied via `refineui.css` `[data-refineui="input-otp"][data-size]`. */
+    inputOtp: {
+        sm: role("subtitleLg"),
+        md: role("titleSm"),
+        lg: role("titleMd"),
+    },
+    stepper: {
+        indicator: role("captionLg"),
+        title: role("labelMd"),
+        description: role("captionMd"),
+    },
+
     toast: {
         title: role("bodyMd"),
         message: role("bodyXs"),

@@ -16,6 +16,13 @@ export {
     type ButtonVariant,
 } from "./components/Button";
 export { Input, type InputProps } from "./components/Input";
+export {
+    InputOTP,
+    InputOTPSlot,
+    type InputOTPProps,
+    type InputOTPSlotProps,
+    type InputOTPSize,
+} from "./components/InputOTP";
 export { Text, type TextProps } from "./components/Text";
 export { Textarea, type TextareaProps } from "./components/Textarea";
 export { Badge, type BadgeProps, type BadgeVariant, type BadgeLayout } from "./components/Badge";
@@ -293,6 +300,76 @@ export {
 } from "./components/PopOver";
 export { Skeleton, type SkeletonProps } from "./components/Skeleton";
 export { Slider, type SliderProps } from "./components/Slider";
+export {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselControls,
+    CarouselPrevious,
+    CarouselNext,
+    CarouselIndicators,
+    type CarouselProps,
+    type CarouselContentProps,
+    type CarouselItemProps,
+    type CarouselControlsProps,
+    type CarouselPreviousProps,
+    type CarouselNextProps,
+    type CarouselIndicatorsProps,
+} from "./components/Carousel";
+export {
+    Bubble,
+    BubbleContent,
+    BubbleReactions,
+    BubbleGroup,
+    type BubbleProps,
+    type BubbleContentProps,
+    type BubbleReactionsProps,
+    type BubbleGroupProps,
+    type BubbleVariant,
+    type BubbleAlign,
+    type BubbleReactionsSide,
+} from "./components/Bubble";
+export {
+    Stepper,
+    StepperList,
+    StepperItem,
+    StepperIndicator,
+    StepperContent,
+    StepperTitle,
+    StepperDescription,
+    StepperSeparator,
+    type StepperProps,
+    type StepperListProps,
+    type StepperItemProps,
+    type StepperIndicatorProps,
+    type StepperContentProps,
+    type StepperTitleProps,
+    type StepperDescriptionProps,
+    type StepperSeparatorProps,
+    type StepperOrientation,
+    type StepperState,
+} from "./components/Stepper";
+export {
+    ResizablePanelGroup,
+    ResizablePanel,
+    ResizableHandle,
+    type ResizablePanelGroupProps,
+    type ResizablePanelProps,
+    type ResizableHandleProps,
+    type ResizableOrientation,
+} from "./components/Resizable";
+export {
+    ScrollArea,
+    ScrollAreaViewport,
+    ScrollAreaScrollbar,
+    ScrollAreaThumb,
+    type ScrollAreaProps,
+    type ScrollAreaViewportProps,
+    type ScrollAreaScrollbarProps,
+    type ScrollAreaThumbProps,
+    type ScrollAreaOrientation,
+    type ScrollAreaType,
+} from "./components/ScrollArea";
 export { SpinButton, type SpinButtonProps } from "./components/SpinButton";
 export {
     Toast,

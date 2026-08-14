@@ -13,6 +13,7 @@ The table below groups components **by purpose**. Click a name to open its docs.
 |-----------|-------------|
 | [Button](/components/button/) | Primary, secondary, outline, ghost, and danger actions |
 | [Input](/components/input/) | Single-line text (`size` sm/md/lg) |
+| [Input OTP](/components/input-otp/) | One-time password digit slots |
 | [Textarea](/components/textarea/) | Multi-line input |
 | [Select](/components/select/) | Custom select (`Select` / `Menu` / `Item` styling) |
 | [Field](/components/field/) | Label, hint, and error wrapper |
@@ -28,7 +29,9 @@ The table below groups components **by purpose**. Click a name to open its docs.
 | Component | Description |
 |-----------|-------------|
 | [Breadcrumb](/components/breadcrumb/) | Path navigation |
-| [Tabs](/components/tabs/) | Tabs (pill / underline) |
+| [Tabs](/components/tabs/) | Pill tabs with sliding indicator |
+| [Stepper](/components/stepper/) | Multi-step progress rail |
+| [Carousel](/components/carousel/) | Composed slide carousel |
 | [Accordion](/components/accordion/) | Collapsible sections |
 | [Pagination](/components/pagination/) | Page-number navigation |
 
@@ -38,6 +41,8 @@ The table below groups components **by purpose**. Click a name to open its docs.
 |-----------|-------------|
 | [Card](/components/card/) | Card container |
 | [Divider](/components/divider/) | Horizontal rules — content/icon variants |
+| [Resizable](/components/resizable/) | Accessible resizable panel groups |
+| [Scroll Area](/components/scroll-area/) | Custom scrollbar viewport |
 
 ## Overlays & floating UI
 
@@ -67,7 +72,8 @@ The table below groups components **by purpose**. Click a name to open its docs.
 | [Badge](/components/badge/) | Badge and numeric badge |
 | [Tag](/components/tag/) | Tag/chip (same as `Chip`) |
 | [Avatars](/components/avatars/) | `Avatar` · `AvatarGroup` — Web Kit Avatar Stack / Spread |
+| [Bubble](/components/bubble/) | Conversational message bubble |
 | [Calendar](/components/calendar/) | Date picker (single/range) |
 | [Link](/components/link/) | Text link |
 
-These **33** routes (including Select) cover the components documented from `@refineui/react`. Icon wrappers such as `WebIcon` are documented in their own packages.
+These **38** routes (including Select) cover the components documented from `@refineui/react`. Icon wrappers such as `WebIcon` are documented in their own packages.

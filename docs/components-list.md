@@ -1,4 +1,4 @@
-# Pelagornis RefineUI Web Kit — Component List (32)
+# Pelagornis RefineUI Web Kit — Component List (32 + token compositions)
 
 **Figma:** https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?node-id=36-82
 
@@ -35,4 +35,9 @@
 | 29 | Tag | `components/Tag` | ✅ |
 | 30 | Textarea | `components/Textarea` | ✅ |
 | 31 | Toast | `components/Toast` | ✅ |
-| 32 | Tooltip | `components/Tooltip` | ✅ |
+| 33 | Carousel | `components/Carousel` | ✅ (token-based composition) |
+| 34 | Bubble | `components/Bubble` | ✅ (token-based composition) |
+| 35 | Stepper | `components/Stepper` | ✅ (token-based composition) |
+| 36 | Resizable | `components/Resizable` | ✅ (token-based composition) |
+| 37 | Input OTP | `components/InputOTP` | ✅ (token-based composition) |
+| 38 | Scroll Area | `components/ScrollArea` | ✅ (token-based composition) |

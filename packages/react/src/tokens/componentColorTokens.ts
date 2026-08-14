@@ -389,6 +389,28 @@ export const componentColorTokens = {
     skeleton: {
         background: semanticToken("backgroundSurfaceSelected"),
     },
+    carousel: {
+        nav: {
+            background: semanticToken("backgroundPrimary"),
+            border: semanticToken("borderDefault"),
+            foreground: semanticToken("foregroundPrimary"),
+            hoverBackground: semanticToken("backgroundSurfaceHover"),
+            hoverBorder: semanticToken("borderStrong"),
+        },
+        indicator: {
+            default: semanticToken("backgroundBrandSubtle"),
+            selected: semanticToken("backgroundBrand"),
+        },
+    },
+    scrollArea: {
+        track: {
+            background: semanticToken("backgroundSurfaceSelected"),
+        },
+        thumb: {
+            background: semanticToken("borderStrong"),
+            hoverBackground: semanticToken("foregroundSecondary"),
+        },
+    },
     toast: {
         background: semanticToken("backgroundPrimary"),
         border: semanticToken("borderDefault"),

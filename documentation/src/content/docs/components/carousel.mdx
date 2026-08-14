@@ -1,0 +1,70 @@
+---
+title: Carousel
+description: Drag-friendly carousel with controls below the stage
+---
+
+import CarouselDemo from "../../../components/CarouselDemo";
+
+# Carousel
+
+Horizontal slides using existing tokens. **Nav never overlays content** — put Previous / Indicators / Next inside **`CarouselControls`** under the stage. The viewport supports **pointer drag / swipe**.
+
+## Install & import
+
+```tsx
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselControls,
+  CarouselPrevious,
+  CarouselNext,
+  CarouselIndicators,
+} from "@refineui/react";
+import "@refineui/react/refineui.css";
+```
+
+## Basic usage
+
+```tsx
+<Carousel loop>
+  <CarouselContent>
+    <CarouselItem>Slide 1</CarouselItem>
+    <CarouselItem>Slide 2</CarouselItem>
+  </CarouselContent>
+  <CarouselControls>
+    <CarouselPrevious />
+    <CarouselIndicators />
+    <CarouselNext />
+  </CarouselControls>
+</Carousel>
+```
+
+## Preview
+
+<div class="not-content">
+  <CarouselDemo client:load />
+</div>
+
+## Props
+
+### Carousel
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `index` | `number` | — | Controlled index |
+| `defaultIndex` | `number` | `0` | Uncontrolled start |
+| `onIndexChange` | `(index: number) => void` | — | Change callback |
+| `loop` | `boolean` | `false` | Wrap at ends |
+
+Drag the stage or use **`Button`** outline icon prev/next. Indicators are a **sliding brand pill** in a track (not dots). With **`loop`**, first/last clones animate continuously, then snap invisibly so it feels infinite.
+
+### Parts
+
+| Part | Role |
+|------|------|
+| `CarouselContent` | Stage + drag surface |
+| `CarouselItem` | Full-width slide |
+| `CarouselControls` | Bottom row for nav + indicator |
+| `CarouselPrevious` / `CarouselNext` | Outline icon `Button`s |
+| `CarouselIndicators` | Sliding brand pill in a track |

@@ -1,0 +1,119 @@
+---
+title: Bubble
+description: Conversational message bubble — variants, alignment, grouping, reactions
+---
+
+import BubbleDemo from "../../../components/BubbleDemo";
+
+# Bubble
+
+Displays conversational content in a message bubble. Token-composed surface for chat text, short structured output, quoted replies, and reactions. Avatars, names, and timestamps belong in a separate message row — not in `Bubble`.
+
+## Install & import
+
+```tsx
+import {
+  Bubble,
+  BubbleContent,
+  BubbleReactions,
+  BubbleGroup,
+} from "@refineui/react";
+import "@refineui/react/refineui.css";
+```
+
+## Basic usage
+
+```tsx
+<Bubble>
+  <BubbleContent>I checked the registry and removed the stale route.</BubbleContent>
+  <BubbleReactions role="img" aria-label="Reaction: thumbs up">
+    <span>👍</span>
+  </BubbleReactions>
+</Bubble>
+```
+
+## Preview
+
+<div class="not-content">
+  <BubbleDemo client:load />
+</div>
+
+## Composition
+
+```
+Bubble
+├── BubbleContent
+└── BubbleReactions
+
+BubbleGroup
+├── Bubble → BubbleContent
+└── Bubble → BubbleContent
+```
+
+## Props
+
+### Bubble
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `variant` | `"default"` \| `"secondary"` \| `"muted"` \| `"tinted"` \| `"outline"` \| `"ghost"` \| `"destructive"` | `"default"` | Visual treatment |
+| `align` | `"start"` \| `"end"` | `"start"` | Inline alignment in the column |
+
+Framed variants size to content up to **80%** of the container. `ghost` drops the frame and max-width so assistant text can span the row.
+
+### BubbleContent
+
+Presentational content wrapper. Put links or buttons **inside** the content (or wrap the bubble yourself) — there is no polymorphic `render` prop.
+
+### BubbleReactions
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `side` | `"top"` \| `"bottom"` | `"bottom"` | Anchor to the top or bottom edge |
+| `align` | `"start"` \| `"end"` | opposite of `Bubble` | Inline inset on the bubble edge |
+
+Reactions anchor to the **top/bottom edge**, inset with spacing tokens, and overlap slightly (`translateY` 75%). By default they sit toward the **conversation center** — other (`align="start"`) → trailing, mine (`align="end"`) → leading. Bubbles with reactions add `sizeXXLarge` margin; thread columns should use a generous gap (e.g. `sizeXXXLarge`) so rows do not collide.
+
+Label emoji rows for assistive tech:
+
+```tsx
+<BubbleReactions role="img" aria-label="Reactions: thumbs up, fire, and 2 more">
+  <span>👍</span>
+  <span>🔥</span>
+  <span>+2</span>
+</BubbleReactions>
+```
+
+### BubbleGroup
+
+Groups consecutive bubbles from the same sender. Set `align` on each `Bubble`, not on the group.
+
+## Examples
+
+### Alignment
+
+```tsx
+<Bubble align="start">
+  <BubbleContent>Incoming</BubbleContent>
+</Bubble>
+<Bubble variant="default" align="end">
+  <BubbleContent>Outgoing</BubbleContent>
+</Bubble>
+```
+
+### Group
+
+```tsx
+<BubbleGroup>
+  <Bubble variant="muted">
+    <BubbleContent>First</BubbleContent>
+  </Bubble>
+  <Bubble variant="muted">
+    <BubbleContent>Second</BubbleContent>
+  </Bubble>
+</BubbleGroup>
+```
+
+### Collapsible content
+
+Compose long copy with [Accordion](/components/accordion/) inside `BubbleContent` for show more / show less.
