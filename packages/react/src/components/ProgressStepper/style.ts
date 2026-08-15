@@ -3,14 +3,15 @@ import { componentTypographyTokens } from "../../tokens/componentTypographyToken
 import { componentTextClass } from "../../typography";
 
 /**
- * Track is a 16px pill. Pips are inset past the end cap.
+ * Track is a 16px pill. End inset matches the cap radius so first/last
+ * pips sit on the straight run without extra lead/trail length.
  * Fill stays a pill; width is current pip plus the fill cap radius so the
  * round tip sits after the pip instead of wrapping it.
  */
 export const progressStepperVars = {
     ["--refineui-progress-stepper-track" as string]: "var(--refineui-size-foundation-size-160)",
     ["--refineui-progress-stepper-pip" as string]: "var(--refineui-size-foundation-size-80)",
-    ["--refineui-progress-stepper-inset" as string]: "var(--refineui-size-foundation-size-160)",
+    ["--refineui-progress-stepper-inset" as string]: "var(--refineui-size-foundation-size-80)",
 } as const;
 
 export const progressStepperStyles = {
