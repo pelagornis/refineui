@@ -1,0 +1,140 @@
+---
+title: Footer
+description: Site footer — brand, link columns, copyright
+---
+
+import FooterPreview from "../../../components/FooterPreview";
+
+# Footer
+
+Site footer landmark for marketing and docs surfaces. **Figma Web Kit 미수록** — RefineUI token composition.  
+Site footer landmark for marketing and docs surfaces. **Figma Web Kit 미수록** — RefineUI token composition.  
+Two regions: **explore** (`FooterBrand` + sitemap columns) then a hairline, then **meta** (copyright · locale `Select` · social). No fill surfaces.
+
+## Install & import
+
+```tsx
+import {
+  footerLinkClassName,
+  footerLocaleLinkClassName,
+  footerLocaleTriggerClassName,
+  footerSocialLinkClassName,
+  Footer,
+  FooterBottom,
+  FooterBrand,
+  FooterBrandDescription,
+  FooterBrandName,
+  FooterContent,
+  FooterCopyright,
+  FooterGroup,
+  FooterGroupLabel,
+  FooterLink,
+  FooterLocale,
+  FooterLogo,
+  FooterNav,
+  FooterSocial,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectPortal,
+  SelectTrigger,
+  SelectValue,
+} from "@refineui/react";
+```
+
+## Basic usage
+
+Put `Select` in `FooterLocale`. Pass **`footerLocaleTriggerClassName`** (and `style={{ minWidth: 0 }}`) so the trigger reads as a footer text control, not a form field.
+
+```tsx
+<Footer>
+  <FooterContent>
+    <FooterBrand>
+      <FooterBrandName>RefineUI</FooterBrandName>
+      <FooterBrandDescription>
+        Design system for calm product interfaces.
+      </FooterBrandDescription>
+    </FooterBrand>
+    <FooterNav>
+      <FooterGroup>
+        <FooterGroupLabel>Product</FooterGroupLabel>
+        <FooterLink href="/components">Components</FooterLink>
+        <FooterLink href="/tokens">Tokens</FooterLink>
+      </FooterGroup>
+      <FooterGroup>
+        <FooterGroupLabel>Resources</FooterGroupLabel>
+        <FooterLink href="/guides">Guides</FooterLink>
+        <FooterLink href="/changelog">Changelog</FooterLink>
+      </FooterGroup>
+    </FooterNav>
+  </FooterContent>
+  <FooterBottom>
+    <FooterCopyright>© 2026 Pelagornis</FooterCopyright>
+    <FooterLocale>
+      <Select size="sm" defaultValue="en">
+        <SelectTrigger
+          aria-label="Language"
+          className={footerLocaleTriggerClassName}
+          style={{ minWidth: 0 }}
+        >
+          <SelectValue />
+        </SelectTrigger>
+        <SelectPortal>
+          <SelectContent>
+            <SelectItem value="en">English</SelectItem>
+            <SelectItem value="ko">한국어</SelectItem>
+          </SelectContent>
+        </SelectPortal>
+      </Select>
+    </FooterLocale>
+    <FooterSocial>
+      <FooterLink href="https://github.com">GitHub</FooterLink>
+    </FooterSocial>
+  </FooterBottom>
+</Footer>
+```
+
+## Preview
+
+<div class="not-content">
+  <FooterPreview client:load />
+</div>
+
+## Building blocks
+
+| Component | Role |
+|-----------|------|
+| `Footer` | Root `footer` (`data-refineui="footer"`) |
+| `FooterContent` | Explore region — brand column + sitemap |
+| `FooterBrand` | Brand column (logo, name, tagline) |
+| `FooterLogo` | Logo mark slot |
+| `FooterBrandName` | Product / brand name |
+| `FooterBrandDescription` | Short tagline |
+| `FooterNav` | Sitemap columns `nav` (`aria-label` default `"Footer"`) |
+| `FooterGroup` | One labeled link column |
+| `FooterGroupLabel` | Column heading |
+| `FooterLink` | Footer link (`a`; social density follows `FooterSocial`) |
+| `FooterBottom` | Meta region — copyright / locale / social, under a hairline |
+| `FooterCopyright` | Legal line |
+| `FooterLocale` | Language slot — compose ghost `Select` beside `FooterSocial` |
+| `FooterSocial` | Social / utility link cluster |
+
+## With Next.js `Link`
+
+`FooterLink` is a semantic `<a>`. Pass **`footerLinkClassName`** or **`footerSocialLinkClassName`** to App Router `Link`.
+
+```tsx
+import Link from "next/link";
+import { footerLinkClassName } from "@refineui/react";
+
+<Link href="/docs" className={footerLinkClassName}>
+  Docs
+</Link>
+```
+
+## Accessibility
+
+- Root is a `footer` landmark.
+- `FooterNav` is a `nav` with `aria-label` (override when multiple footers exist).
+- Locale `SelectTrigger` needs `aria-label="Language"`.
+- Prefer clear link text; icon-only social links need `aria-label`.

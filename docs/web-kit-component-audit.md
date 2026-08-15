@@ -52,7 +52,7 @@ Work **alphabetically**, one at a time. Update the table below with ✅ in order
 | 28 | SpinButton | `561:2067` (COMPONENT_SET `Spin Button`) | ✅ |
 | 29 | Spinner | `550:3669` (COMPONENT_SET) | ✅ |
 | 30 | Switch | `270:3057` (COMPONENT_SET) | ✅ |
-| 31 | Tabs | `636:5371` · `Tabs / Item` `636:5372` | ✅ |
+| 31 | Tabs | `636:5371` · `Tabs / Item` `636:5372` | ✅ pill → `SegmentedControl`; underline `Tabs` is token-based |
 | 32 | Tag | `574:6578` (COMPONENT_SET `Tag`; same as `Chip`) | ✅ |
 | 33 | Textarea | `529:5454` (COMPONENT_SET) | ✅ |
 | 34 | Toast | `548:655` (COMPONENT_SET) | ✅ |
@@ -63,5 +63,5 @@ Work **alphabetically**, one at a time. Update the table below with ✅ in order
 
 ## Current status
 
-- Rows **1–36** above are all ✅. After Web Kit·token changes, re-check **only the rows that matter** with the checklist above.
+- Rows **1–36** above are ✅. Web Kit **Tabs** pill is `SegmentedControl`; underline `Tabs` is token-based. After Web Kit·token changes, re-check **only the rows that matter** with the checklist above.
 - **Examples next:** run `pnpm docs:build` for the docs site; if Foundation/Web Kit files change, re-verify `design-specs-web-kit.md` and the matching nodes in this table; for items without a standalone set (like `Select`), confirm parent rules (**Input**, etc.) still hold.

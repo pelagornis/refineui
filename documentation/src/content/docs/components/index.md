@@ -22,6 +22,7 @@ The table below groups components **by purpose**. Click a name to open its docs.
 | [Checkbox](/components/checkbox/) | Checkbox |
 | [Radio](/components/radio/) | Radio with title and description |
 | [Switch](/components/switch/) | Switch (same implementation as `Toggle`) |
+| [Segmented Control](/components/segmented-control/) | Compact mutually exclusive choice |
 | [SpinButton](/components/spin-button/) | Numeric spin input |
 | [Slider](/components/slider/) | Range slider |
 
@@ -30,7 +31,9 @@ The table below groups components **by purpose**. Click a name to open its docs.
 | Component | Description |
 |-----------|-------------|
 | [Breadcrumb](/components/breadcrumb/) | Path navigation |
-| [Tabs](/components/tabs/) | Pill tabs with sliding indicator |
+| [Footer](/components/footer/) | Site footer — brand, link columns, copyright |
+| [Navigation Menu](/components/navigation-menu/) | Top nav with link triggers and panels |
+| [Tabs](/components/tabs/) | Underline tabs for switching panels |
 | [Stepper](/components/stepper/) | Multi-step progress rail |
 | [Carousel](/components/carousel/) | Composed slide carousel |
 | [Accordion](/components/accordion/) | Collapsible sections |
@@ -79,4 +82,4 @@ The table below groups components **by purpose**. Click a name to open its docs.
 | [Link](/components/link/) | Text link |
 | [Table](/components/table/) | Semantic data table (header, body, footer) |
 
-These **41** routes (including Select) cover the components documented from `@refineui/react`. Icon wrappers such as `WebIcon` are documented in their own packages.
+These **45** routes (including Select) cover the components documented from `@refineui/react`. Icon wrappers such as `WebIcon` are documented in their own packages.

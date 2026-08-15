@@ -1,0 +1,171 @@
+---
+title: Navigation Menu
+description: Site navigation with link triggers and dropdown panels
+---
+
+import NavigationMenuPreview from "../../../components/NavigationMenuPreview";
+
+# Navigation Menu
+
+Horizontal site / app navigation. Token-based composition (no Web Kit COMPONENT_SET) — panel chrome matches [Menu](/components/menu/), trigger density matches [Breadcrumb](/components/breadcrumb/).
+
+| Use | Component |
+| --- | --- |
+| Top destinations + flyout panels | **Navigation Menu** |
+| Actions, shortcuts, nested command lists | [Menu](/components/menu/) |
+| Path trail | [Breadcrumb](/components/breadcrumb/) |
+| In-page section panels | [Tabs](/components/tabs/) |
+| In-page mode switch | [Segmented Control](/components/segmented-control/) |
+
+## Install & import
+
+```tsx
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@refineui/react";
+import "@refineui/react/refineui.css";
+```
+
+## Basic usage
+
+```tsx
+<NavigationMenu>
+  <NavigationMenuList>
+    <NavigationMenuItem value="products">
+      <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+      <NavigationMenuContent>
+        <NavigationMenuLink href="/components">Components</NavigationMenuLink>
+        <NavigationMenuLink href="/tokens">Tokens</NavigationMenuLink>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
+
+    <NavigationMenuItem value="pricing">
+      <NavigationMenuLink href="/pricing">Pricing</NavigationMenuLink>
+    </NavigationMenuItem>
+  </NavigationMenuList>
+</NavigationMenu>
+```
+
+Hover opens panels (with a short delay). Click / Enter / Space toggles. Escape and outside pointer close. Arrow Left / Right move across top-level triggers and links.
+
+## Preview
+
+<div class="not-content">
+  <NavigationMenuPreview client:load />
+</div>
+
+## Composition
+
+```
+NavigationMenu
+└── NavigationMenuList
+    ├── NavigationMenuItem
+    │   ├── NavigationMenuTrigger
+    │   └── NavigationMenuContent
+    │       └── NavigationMenuLink …
+    └── NavigationMenuItem
+        └── NavigationMenuLink
+```
+
+## Tokens & states
+
+| Surface | Tokens |
+| --- | --- |
+| Trigger / top link (rest) | `foregroundTertiary`, `roundedLarge` |
+| Trigger / top link (hover) | `backgroundPrimaryHover` + `foregroundPrimaryHover` |
+| Trigger / top link (press) | `backgroundPrimaryActive` + `foregroundPrimary` |
+| Trigger (open) | `backgroundPrimaryHover` + `foregroundPrimary` |
+| Content panel | Menu chrome — `backgroundPrimary`, `borderDefault`, `roundedLarge`, `shadow2` |
+| Content link (hover / press) | `backgroundSurfaceHover` / `backgroundSurfaceActive` |
+
+Motion uses semantic `duration.fast` / `duration.normal` (hover delay defaults).
+
+## Props
+
+### NavigationMenu
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `string` | — | Controlled open item (`""` = closed) |
+| `defaultValue` | `string` | `""` | Uncontrolled initial open item |
+| `onValueChange` | `(value: string) => void` | — | Open-item callback |
+| `delayDuration` | `number` | semantic `duration.normal` | Hover-open delay (ms) |
+| `skipDelayDuration` | `number` | semantic `duration.fast` | Delay when switching between open items (ms) |
+| `aria-label` | `string` | `"Main"` | Landmark name |
+
+### NavigationMenuList / NavigationMenuContent / NavigationMenuTrigger
+
+Standard HTML attributes for `ul` / panel / `button`. Trigger chevron is built-in.
+
+### NavigationMenuItem
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `value` | `string` | Stable id for open state (auto-generated if omitted) |
+
+### NavigationMenuLink
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `active` | `boolean` | Current page (`aria-current="page"`) |
+| `href` | `string` | Destination |
+
+Extends native `<a>` attributes. Top-level links use the same padding and `roundedLarge` plate as triggers; links inside `NavigationMenuContent` use Menu-row density.
+
+## Accessibility
+
+- Root renders `<nav>` with `aria-label` (default `"Main"`).
+- Trigger: `aria-expanded`, `aria-controls`, `aria-haspopup`.
+- Content: `role="region"` labelled by the trigger.
+- **Escape** closes and returns focus to the trigger.
+- **Arrow Left / Right** move among top-level triggers and links.
+- **Enter / Space / Arrow Down** open a closed trigger.
+- Outside pointer down closes the open panel.
+- `NavigationMenuLink` `active` sets `aria-current="page"`.
+
+## Examples
+
+### Controlled open item
+
+```tsx
+const [open, setOpen] = useState("");
+
+<NavigationMenu value={open} onValueChange={setOpen}>
+  <NavigationMenuList>
+    <NavigationMenuItem value="learn">
+      <NavigationMenuTrigger>Learn</NavigationMenuTrigger>
+      <NavigationMenuContent>
+        <NavigationMenuLink href="/docs">Docs</NavigationMenuLink>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
+  </NavigationMenuList>
+</NavigationMenu>
+```
+
+### Content with title + description
+
+Compose freely inside `NavigationMenuLink` — no convenience props:
+
+```tsx
+<NavigationMenuLink href="/components">
+  <span className="flex flex-col gap-refineui-size-xxx-small px-refineui-size-xxx-small">
+    <span>Components</span>
+    <span className="text-refineui-alias-foreground-tertiary">
+      Buttons, inputs, overlays
+    </span>
+  </span>
+</NavigationMenuLink>
+```
+
+### Instant hover (no delay)
+
+```tsx
+<NavigationMenu delayDuration={0} skipDelayDuration={0}>
+  …
+</NavigationMenu>
+```

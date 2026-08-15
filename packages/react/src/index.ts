@@ -180,6 +180,12 @@ export {
     type TabsContentProps,
 } from "./components/Tabs";
 export {
+    SegmentedControl,
+    SegmentedControlItem,
+    type SegmentedControlProps,
+    type SegmentedControlItemProps,
+} from "./components/SegmentedControl";
+export {
     Table,
     TableHeader,
     TableBody,
@@ -228,6 +234,40 @@ export {
     type BreadcrumbProps,
     type BreadcrumbSeparatorProps,
 } from "./components/Breadcrumb";
+export {
+    footerLinkClassName,
+    footerLocaleLinkClassName,
+    footerLocaleTriggerClassName,
+    footerSocialLinkClassName,
+    Footer,
+    FooterBottom,
+    FooterBrand,
+    FooterBrandDescription,
+    FooterBrandName,
+    FooterContent,
+    FooterCopyright,
+    FooterGroup,
+    FooterGroupLabel,
+    FooterLink,
+    FooterLocale,
+    FooterLogo,
+    FooterNav,
+    FooterSocial,
+    type FooterBottomProps,
+    type FooterBrandDescriptionProps,
+    type FooterBrandNameProps,
+    type FooterBrandProps,
+    type FooterContentProps,
+    type FooterCopyrightProps,
+    type FooterGroupLabelProps,
+    type FooterGroupProps,
+    type FooterLinkProps,
+    type FooterLocaleProps,
+    type FooterLogoProps,
+    type FooterNavProps,
+    type FooterProps,
+    type FooterSocialProps,
+} from "./components/Footer";
 export { Calendar, type CalendarProps, type CalendarMode } from "./components/Calendar";
 export {
     Dialog,
@@ -320,6 +360,22 @@ export {
     type MenuSubTriggerProps,
     type MenuSubContentProps,
 } from "./components/Menu";
+export {
+    NavigationMenu,
+    NavigationMenuList,
+    NavigationMenuItem,
+    NavigationMenuTrigger,
+    NavigationMenuContent,
+    NavigationMenuLink,
+    NavigationMenuIndicator,
+    type NavigationMenuProps,
+    type NavigationMenuListProps,
+    type NavigationMenuItemProps,
+    type NavigationMenuTriggerProps,
+    type NavigationMenuContentProps,
+    type NavigationMenuLinkProps,
+    type NavigationMenuIndicatorProps,
+} from "./components/NavigationMenu";
 export {
     Pagination,
     PaginationContent,

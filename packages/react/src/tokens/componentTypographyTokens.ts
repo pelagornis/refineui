@@ -48,6 +48,20 @@ export const componentTypographyTokens = {
     breadcrumb: {
         row: role("captionLg"),
     },
+    /** Top navigation — trigger denser like segmented control; content links match menu rows. */
+    navigationMenu: {
+        trigger: role("captionLg"),
+        link: role("captionLg"),
+        contentLink: role("bodyMd"),
+    },
+    /** Site footer — brand column + receding sitemap. */
+    footer: {
+        brandName: role("titleSm"),
+        brandDescription: role("bodySm"),
+        groupLabel: role("bodyXs"),
+        link: role("bodySm"),
+        copyright: role("bodyXs"),
+    },
     menu: {
         section: role("captionLg"),
         item: role("bodyMd"),
@@ -108,6 +122,7 @@ export const componentTypographyTokens = {
         lg: role("bodyLg"),
     },
     badge: role("captionMd"),
+    segmentedControl: role("captionLg"),
     tabs: role("captionLg"),
     table: {
         head: role("bodySm"),
@@ -117,6 +132,12 @@ export const componentTypographyTokens = {
     tooltip: role("bodyXs"),
     textarea: role("bodyMd"),
     select: {
+        /** Trigger density matches Navigation Menu (`captionLg` at md). */
+        trigger: {
+            sm: role("captionMd"),
+            md: role("captionLg"),
+            lg: role("bodyMd"),
+        },
         label: role("captionLg"),
         item: role("bodyMd"),
     },

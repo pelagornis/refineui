@@ -147,7 +147,7 @@ export function Select({
     ...props
 }: SelectProps) {
     const fieldSize = useOptionalFieldSize();
-    const size = sizeProp ?? fieldSize ?? "lg";
+    const size = sizeProp ?? fieldSize ?? "md";
     const [innerValue, setInnerValue] = useState(defaultValue);
     const [innerOpen, setInnerOpen] = useState(false);
     const [activeIndex, setActiveIndex] = useState(-1);
@@ -384,17 +384,24 @@ export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(f
                 "data-[placeholder]:[&_[data-refineui-select-value]]:text-refineui-alias-foreground-placeholder",
                 selectStyles.trigger,
                 selectTriggerSizeClass[size],
+                open && selectStyles.triggerOpen,
                 disabled && selectStyles.triggerDisabled,
                 fullWidth && "w-full",
                 className,
             )}
-            style={{ minWidth: componentSizes.dropdownMenuWidth, ...style }}
+            style={style}
             {...triggerRest}
         >
             <span data-refineui-select-trigger-value className={selectStyles.triggerInner}>
                 {children}
             </span>
-            <WebIcon name="chevron-down" size={iconSizes.xsmall} aria-hidden />
+            <WebIcon
+                name="chevron-down"
+                size={iconSizes.xsmall}
+                color="currentColor"
+                className={clsx(selectStyles.chevron, open && selectStyles.chevronOpen)}
+                aria-hidden
+            />
         </button>
     );
 });

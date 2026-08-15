@@ -3,29 +3,31 @@ import { componentTypographyTokens } from "../../tokens/componentTypographyToken
 import { componentTextClass } from "../../typography";
 
 /**
- * Pill Tabs — vivid brand indicator that slides between triggers.
- * Colors/spacing from semantic + spacing tokens only.
+ * Page / section Tabs — underline track, sliding brand indicator, tabpanels.
+ * Token composition (Web Kit `Tabs` pill visual ships as SegmentedControl).
  */
 export const tabsStyles = {
+    root: "flex w-full min-w-0 flex-col gap-refineui-size-medium",
     list: clsx(
-        "relative box-border inline-flex max-w-full w-fit flex-nowrap items-stretch gap-refineui-size-none",
-        "overflow-hidden rounded-refineui-circle border-refineui-thin border-refineui-alias-border-default",
-        "bg-refineui-alias-background-brand-subtle",
+        "relative flex w-full min-w-0 flex-nowrap items-stretch overflow-x-auto",
+        "after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0",
+        "after:h-(--refineui-stroke-width-thin) after:bg-refineui-alias-border-default",
     ),
     indicator: clsx(
-        "pointer-events-none absolute inset-y-0 left-0 z-0 block h-full",
-        "rounded-refineui-circle bg-refineui-alias-background-brand shadow-refineui-2",
+        "pointer-events-none absolute bottom-0 left-0 z-[1] block",
+        "h-(--refineui-stroke-width-thick) bg-refineui-alias-background-brand",
         "will-change-[transform,width]",
     ),
     trigger: clsx(
         componentTextClass(componentTypographyTokens.tabs),
-        "relative z-[1] box-border inline-flex min-h-0 min-w-0 shrink-0 items-center justify-center gap-refineui-size-xx-small",
-        "rounded-refineui-circle border-none bg-transparent px-refineui-size-medium py-refineui-size-x-small outline-none",
+        "relative z-[1] box-border inline-flex min-h-0 min-w-0 shrink-0 items-center justify-center",
+        "gap-refineui-size-x-small border-none bg-transparent",
+        "px-refineui-size-medium py-refineui-size-x-small outline-none",
         "transition-colors duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",
     ),
     triggerDisabled: "cursor-not-allowed text-refineui-alias-foreground-disabled",
     triggerEnabled: "cursor-pointer",
-    triggerSelectedEnabled: "text-refineui-alias-foreground-on-brand",
+    triggerSelectedEnabled: "text-refineui-alias-foreground-primary",
     triggerSelectedDisabled: "text-refineui-alias-foreground-disabled",
-    triggerUnselected: "text-refineui-alias-foreground-secondary",
+    triggerUnselected: "text-refineui-alias-foreground-tertiary",
 } as const;

@@ -1,0 +1,74 @@
+---
+title: Segmented Control
+description: Compact mutually exclusive choice with a sliding indicator
+---
+
+import SegmentedControlPreview from "../../../components/SegmentedControlPreview";
+
+# Segmented Control
+
+Compact mutually exclusive choice on a pill track. **Figma Web Kit** currently names this visual **Tabs** (`636:5371`); RefineUI ships it as **Segmented Control**. For page / section panels use [Tabs](/components/tabs/).
+
+## Install & import
+
+```tsx
+import { SegmentedControl, SegmentedControlItem } from "@refineui/react";
+import "@refineui/react/refineui.css";
+```
+
+## Basic usage
+
+Uncontrolled: **`defaultValue`**. Controlled: **`value`** + **`onValueChange`**. Pass **`aria-label`** (or `aria-labelledby`) on the group.
+
+```tsx
+<SegmentedControl defaultValue="day" aria-label="Period">
+  <SegmentedControlItem value="day">Day</SegmentedControlItem>
+  <SegmentedControlItem value="week">Week</SegmentedControlItem>
+  <SegmentedControlItem value="month">Month</SegmentedControlItem>
+</SegmentedControl>
+```
+
+## With adjacent content
+
+The control only reports the selected value. Render adjacent UI yourself, or use [Tabs](/components/tabs/) when you need `tabpanel`s.
+
+```tsx
+const [view, setView] = useState("overview");
+
+<SegmentedControl value={view} onValueChange={setView} aria-label="View">
+  <SegmentedControlItem value="overview">Overview</SegmentedControlItem>
+  <SegmentedControlItem value="analytics">Analytics</SegmentedControlItem>
+</SegmentedControl>
+{view === "overview" ? <p>Overview</p> : <p>Analytics</p>}
+```
+
+## Preview
+
+<div class="not-content">
+  <SegmentedControlPreview client:load />
+</div>
+
+## Props
+
+### `SegmentedControl`
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| `defaultValue` | `string` | Initial value (uncontrolled) |
+| `value` | `string` | Selected value (controlled) |
+| `onValueChange` | `(value: string) => void` | Called when selection changes |
+
+Also accepts `div` attributes (`aria-label`, `className`, …).
+
+### `SegmentedControlItem`
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| `value` | `string` | (Required) option id |
+| `disabled` | `boolean` | Disabled |
+
+## Accessibility
+
+- Root is `role="radiogroup"`; items are `role="radio"` with `aria-checked`.
+- Arrow keys / Home / End move focus and selection.
+- Provide an accessible name on the group (`aria-label` or `aria-labelledby`).

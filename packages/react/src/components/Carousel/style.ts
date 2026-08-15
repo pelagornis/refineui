@@ -17,7 +17,7 @@ export const carouselStyles = {
         "transition-transform duration-[var(--refineui-motion-duration-panel)] ease-[var(--refineui-motion-easing-emphasized)]",
     item: "box-border min-w-0 shrink-0 grow-0 basis-full",
     controls: "flex w-full items-center justify-center gap-refineui-size-medium",
-    /** Sliding-pill meter (Tabs-like), not a row of dots */
+    /** Sliding-pill meter (SegmentedControl-like), not a row of dots */
     indicators: clsx(
         "relative box-border flex h-refineui-size-medium min-w-0 flex-1 items-stretch overflow-hidden",
         "max-w-[12rem] rounded-refineui-circle bg-refineui-alias-background-brand-subtle",

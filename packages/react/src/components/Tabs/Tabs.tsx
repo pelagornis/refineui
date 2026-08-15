@@ -1,5 +1,5 @@
 import { clsx } from "clsx";
-import type { CSSProperties, KeyboardEvent } from "react";
+import type { CSSProperties, KeyboardEvent, Ref, RefObject } from "react";
 import {
     createContext,
     forwardRef,
@@ -15,6 +15,9 @@ import {
 import { tabsStyles } from "./style";
 import type { TabsContentProps, TabsListProps, TabsProps, TabsTriggerProps } from "./types";
 
+const TRIGGER_SELECTOR = '[data-refineui="tab"]';
+const TRIGGER_ENABLED_SELECTOR = `${TRIGGER_SELECTOR}:not([disabled])`;
+
 function slugTabValue(value: string): string {
     return value.replace(/[^a-zA-Z0-9_-]/g, "_");
 }
@@ -22,7 +25,7 @@ function slugTabValue(value: string): string {
 type TabsContextValue = {
     selectedValue: string;
     setSelectedValue: (next: string) => void;
-    tabListRef: React.RefObject<HTMLDivElement | null>;
+    tabListRef: RefObject<HTMLDivElement | null>;
     baseId: string;
 };
 
@@ -69,7 +72,7 @@ export function Tabs({
 
     return (
         <TabsContext.Provider value={ctx}>
-            <div data-refineui="tabs" data-variant="pill" className={className} {...props}>
+            <div data-refineui="tabs" className={clsx(tabsStyles.root, className)} {...props}>
                 {children}
             </div>
         </TabsContext.Provider>
@@ -93,9 +96,7 @@ export function TabsList({ className, children, ...props }: TabsListProps) {
     const updateIndicator = useCallback(() => {
         const list = tabListRef.current;
         if (!list) return;
-        const selected = list.querySelector<HTMLElement>(
-            '[data-refineui="tab"][data-selected="true"]',
-        );
+        const selected = list.querySelector<HTMLElement>(`${TRIGGER_SELECTOR}[data-selected="true"]`);
         if (!selected) {
             setIndicator((prev) => ({ ...prev, width: 0, ready: false }));
             return;
@@ -119,7 +120,7 @@ export function TabsList({ className, children, ...props }: TabsListProps) {
             updateIndicator();
         });
         ro.observe(list);
-        for (const tab of Array.from(list.querySelectorAll("[data-refineui='tab']"))) {
+        for (const tab of Array.from(list.querySelectorAll(TRIGGER_SELECTOR))) {
             ro.observe(tab);
         }
 
@@ -138,7 +139,8 @@ export function TabsList({ className, children, ...props }: TabsListProps) {
 
     return (
         <div
-            ref={tabListRef as React.Ref<HTMLDivElement>}
+            ref={tabListRef as Ref<HTMLDivElement>}
+            data-refineui="tabs-list"
             role="tablist"
             aria-orientation="horizontal"
             className={clsx(tabsStyles.list, className)}
@@ -166,21 +168,21 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(funct
     const tabId = `${ctx.baseId}-trigger-${safe}`;
     const panelId = `${ctx.baseId}-panel-${safe}`;
 
-    const focusNeighbor = useCallback(
+    const moveFocus = useCallback(
         (delta: number) => {
             const root = ctx.tabListRef.current;
             if (!root) return;
-            const arr = Array.from(
-                root.querySelectorAll<HTMLButtonElement>('[data-refineui="tab"]:not([disabled])'),
-            );
+            const arr = Array.from(root.querySelectorAll<HTMLButtonElement>(TRIGGER_ENABLED_SELECTOR));
             const n = arr.length;
             if (n === 0) return;
             const ix = arr.findIndex((b) => b.dataset.tabValue === value);
             if (ix < 0) return;
-            const next = (ix + delta + n) % n;
-            arr[next]?.focus();
+            const next = arr[(ix + delta + n) % n];
+            const nextValue = next?.dataset.tabValue;
+            next?.focus();
+            if (nextValue) ctx.setSelectedValue(nextValue);
         },
-        [ctx.tabListRef, value],
+        [ctx, value],
     );
 
     const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
@@ -190,25 +192,29 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(funct
             case "ArrowRight":
             case "ArrowDown":
                 e.preventDefault();
-                focusNeighbor(1);
+                moveFocus(1);
                 break;
             case "ArrowLeft":
             case "ArrowUp":
                 e.preventDefault();
-                focusNeighbor(-1);
+                moveFocus(-1);
                 break;
             case "Home": {
                 e.preventDefault();
-                const root = ctx.tabListRef.current;
-                const first = root?.querySelector<HTMLButtonElement>('[data-refineui="tab"]:not([disabled])');
+                const first = ctx.tabListRef.current?.querySelector<HTMLButtonElement>(TRIGGER_ENABLED_SELECTOR);
+                const nextValue = first?.dataset.tabValue;
                 first?.focus();
+                if (nextValue) ctx.setSelectedValue(nextValue);
                 break;
             }
             case "End": {
                 e.preventDefault();
-                const root = ctx.tabListRef.current;
-                const all = root?.querySelectorAll<HTMLButtonElement>('[data-refineui="tab"]:not([disabled])');
-                if (all?.length) all[all.length - 1]?.focus();
+                const all = ctx.tabListRef.current?.querySelectorAll<HTMLButtonElement>(TRIGGER_ENABLED_SELECTOR);
+                if (!all?.length) break;
+                const last = all[all.length - 1];
+                const nextValue = last?.dataset.tabValue;
+                last?.focus();
+                if (nextValue) ctx.setSelectedValue(nextValue);
                 break;
             }
             default:

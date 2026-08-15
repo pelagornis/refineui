@@ -1,35 +1,33 @@
 ---
 title: Tabs
-description: Pill tabs for switching panels
+description: Underline tabs for switching panels
 ---
 
-import TabsDemo from '../../../components/TabsDemo';
+import TabsPreview from "../../../components/TabsPreview";
 
 # Tabs
 
-Compose like Card / Radix: **`Tabs` → `TabsList` → `TabsTrigger`** and **`TabsContent`**.
-Pill track uses shared surface tokens; selected tab is a primary surface chip with light elevation.
+In-page view switching with **`tablist` / `tab` / `tabpanel`**. Token-based underline track — **Figma Web Kit `Tabs` (`636:5371`)** is the pill visual shipped as [Segmented Control](/components/segmented-control/).
+
+| Use | Component |
+| --- | --- |
+| Section panels under a full-width bar | **Tabs** |
+| Compact mutually exclusive choice | [Segmented Control](/components/segmented-control/) |
+| Site destinations + flyouts | [Navigation Menu](/components/navigation-menu/) |
 
 ## Install & import
 
 ```tsx
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-  TabsContent,
-} from "@refineui/react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@refineui/react";
 import "@refineui/react/refineui.css";
 ```
 
-Import alongside other RefineUI components from the **same package** (not a `@/components/ui/*` alias).
+## Basic usage
 
-## Basic usage (composed API)
-
-Same composition as shadcn `Tabs` · `TabsList` · `TabsTrigger` · `TabsContent`. Uncontrolled: **`defaultValue`**; controlled: **`value`** + **`onValueChange`**.
+Compose **`Tabs` → `TabsList` → `TabsTrigger`** and **`TabsContent`**. Uncontrolled: **`defaultValue`**; controlled: **`value`** + **`onValueChange`**.
 
 ```tsx
-<Tabs defaultValue="a" className="max-w-md">
+<Tabs defaultValue="a">
   <TabsList>
     <TabsTrigger value="a">First</TabsTrigger>
     <TabsTrigger value="b">Second</TabsTrigger>
@@ -43,54 +41,10 @@ Same composition as shadcn `Tabs` · `TabsList` · `TabsTrigger` · `TabsContent
 </Tabs>
 ```
 
-## With Card (panel per tab)
-
-Put a RefineUI **`Card`** inside each `TabsContent`. Below matches the docs site preview (`TabsDemo`).
-
-```tsx
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@refineui/react";
-
-export function TabsDemo() {
-  return (
-    <Tabs defaultValue="overview" className="w-full max-w-[400px]">
-      <TabsList>
-        <TabsTrigger value="overview">Overview</TabsTrigger>
-        <TabsTrigger value="analytics">Analytics</TabsTrigger>
-        <TabsTrigger value="reports">Reports</TabsTrigger>
-        <TabsTrigger value="settings">Settings</TabsTrigger>
-      </TabsList>
-      <TabsContent value="overview">
-        <Card>
-          <CardHeader>
-            <CardTitle>Overview</CardTitle>
-            <CardDescription>
-              View your key metrics and recent project activity.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="refineui-typo-body-4 text-refineui-alias-foreground-secondary">
-            You have 12 active projects and 3 pending tasks.
-          </CardContent>
-        </Card>
-      </TabsContent>
-    </Tabs>
-  );
-}
-```
-
 ## Preview
 
-<div class='not-content'>
-  <TabsDemo client:load />
+<div class="not-content">
+  <TabsPreview client:load />
 </div>
 
 ## Props
@@ -119,4 +73,4 @@ export function TabsDemo() {
 ## Accessibility
 
 - `role="tablist"` / `tab` / `tabpanel`, with `aria-controls` · `aria-labelledby`.
-- Arrow keys / Home / End move focus.
+- Arrow keys / Home / End move focus and selection.

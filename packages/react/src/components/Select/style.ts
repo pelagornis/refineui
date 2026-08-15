@@ -1,24 +1,33 @@
 import type { SelectSize } from "./types";
 import { clsx } from "clsx";
-import { formControlShellSizeClass } from "../../formControlSizes";
 import { componentTypographyTokens } from "../../tokens/componentTypographyTokens";
-import { componentTextClass } from "../../typography";
+import { componentTextClass, sizedComponentTextClass } from "../../typography";
 
 // Figma MCP — Web Kit `CxoaTfftpyh8ETDBamkkEK`:
 // Trigger `1116:1429`, Menu `1117:1177`, Section `1144:2756`.
+// Trigger chrome follows Navigation Menu (compact plate, hairline, open/hover).
 export const selectStyles = {
     root: "relative inline-block",
-    trigger:
-        "box-border inline-flex items-center justify-between gap-refineui-size-x-small overflow-hidden rounded-refineui-large border-refineui-thin border-refineui-alias-border-default bg-refineui-alias-background-primary px-refineui-size-medium py-refineui-size-small text-refineui-alias-foreground-primary outline-none",
-    triggerInner: "min-w-0 flex-1 text-left",
-    triggerOpen: "",
+    trigger: clsx(
+        "box-border inline-flex cursor-pointer items-center justify-between",
+        "gap-refineui-size-xxx-small rounded-refineui-large",
+        "border-refineui-hairline border-refineui-alias-border-default",
+        "bg-refineui-alias-background-primary px-refineui-size-medium py-refineui-size-x-small",
+        "text-refineui-alias-foreground-primary outline-none",
+        "transition-[color,background-color,border-color] duration-[var(--refineui-motion-duration-fast)]",
+    ),
+    triggerInner: "min-w-0 flex-1 overflow-hidden text-left",
+    triggerOpen: "text-refineui-alias-foreground-primary",
     triggerDisabled:
         "cursor-not-allowed border-refineui-alias-border-disabled bg-refineui-alias-background-surface-disabled text-refineui-alias-foreground-disabled",
     value: "min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-left",
     iconWrap: "inline-flex size-refineui-icon-xsmall shrink-0 items-center justify-center",
+    chevron:
+        "shrink-0 transition-transform duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",
+    chevronOpen: "rotate-180",
     positioner: "z-refineui-popup flex flex-col overflow-hidden",
     contentShell:
-        "box-border flex w-full flex-col overflow-hidden rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-x-small shadow-refineui-2light outline-none min-h-0",
+        "box-border flex w-full min-h-0 flex-col overflow-hidden rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xx-small shadow-refineui-2 outline-none",
     contentPopper: "h-auto max-h-[var(--refineui-select-content-available-height,100dvh)]",
     contentItemAligned: "max-h-full",
     viewportPopper:
@@ -31,13 +40,13 @@ export const selectStyles = {
     group: "flex flex-col",
     label: clsx(
         componentTextClass(componentTypographyTokens.select.label),
-        "px-refineui-size-small py-refineui-size-medium text-refineui-alias-foreground-primary",
+        "px-refineui-size-x-small py-refineui-size-x-small text-refineui-alias-foreground-tertiary",
     ),
     separator: "my-refineui-size-x-small h-px bg-refineui-alias-border-default",
 
     item: clsx(
         componentTextClass(componentTypographyTokens.select.item),
-        "relative mx-refineui-size-x-small flex cursor-pointer items-center gap-refineui-size-medium rounded-refineui-x-large border-refineui-none px-refineui-size-medium py-refineui-size-small text-refineui-alias-foreground-primary outline-none transition-colors data-[disabled]:cursor-not-allowed data-[disabled]:text-refineui-alias-foreground-disabled",
+        "relative flex cursor-pointer items-center gap-refineui-size-x-small rounded-refineui-large border-refineui-none bg-transparent p-refineui-size-x-small text-refineui-alias-foreground-primary outline-none transition-colors data-[disabled]:cursor-not-allowed data-[disabled]:text-refineui-alias-foreground-disabled",
     ),
     itemActive: "bg-refineui-alias-background-surface-hover",
     itemDisabled: "cursor-not-allowed text-refineui-alias-foreground-disabled",
@@ -45,4 +54,14 @@ export const selectStyles = {
     itemText: "min-w-0 flex-1 truncate",
 } as const;
 
-export const selectTriggerSizeClass: Record<SelectSize, string> = formControlShellSizeClass;
+const triggerMinHeight: Record<SelectSize, string> = {
+    sm: "min-h-refineui-button-min-height-sm",
+    md: "min-h-refineui-button-min-height-md",
+    lg: "min-h-refineui-button-min-height-lg",
+};
+
+export const selectTriggerSizeClass: Record<SelectSize, string> = {
+    sm: [triggerMinHeight.sm, sizedComponentTextClass(componentTypographyTokens.select.trigger, "sm")].join(" "),
+    md: [triggerMinHeight.md, sizedComponentTextClass(componentTypographyTokens.select.trigger, "md")].join(" "),
+    lg: [triggerMinHeight.lg, sizedComponentTextClass(componentTypographyTokens.select.trigger, "lg")].join(" "),
+};

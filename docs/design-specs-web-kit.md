@@ -521,7 +521,9 @@ control + error/hint** only.
 
 ## 10.1 Tabs — Web Kit `Tabs` `636:5371` · `Tabs / Item` `636:5372`
 
-(Same as `get_design_context` — code and docs treat this table as the single source of truth.)
+Web Kit still names this COMPONENT_SET **Tabs**. `packages/react` ships that **pill** visual as **`SegmentedControl`**. Code **`Tabs`** is a token-based underline + `tabpanel` composition (not a second Web Kit set).
+
+(Same as `get_design_context` — Figma values in this table are the visual source of truth.)
 
 | Property | MCP value |
 | --- | --- |
@@ -1061,12 +1063,12 @@ Type variants are distinguished in React via `data-variant` only.
   "tabs": {
     "container": "636:5371",
     "item": "636:5372",
+    "codeName": "SegmentedControl (pill). packages/react Tabs is underline + tabpanel composition.",
     "pill": {
       "bar": "alias.backgroundPrimaryActive strokeWidthThin alias.borderDefault padding sizeXSmall gap sizeMedium roundedLarge",
       "selected": "alias.backgroundPrimary shadow2Light roundedLarge body1 (dark contrast)",
       "disabled": "alias.foregroundDisabled; selected+disabled alias.backgroundSurfaceDisabled"
-    },
-    "underline": "borderBottom thick neutral200; selected thick primaryBlack (React extension)"
+    }
   },
   "toast": {
     "node": "548:655",

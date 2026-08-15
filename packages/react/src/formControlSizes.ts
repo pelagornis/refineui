@@ -1,4 +1,4 @@
-/** Shared sm / md / lg tiers for Input, Select trigger, SpinButton — keep in sync. */
+/** Shared sm / md / lg tiers for Input, SpinButton — keep in sync. */
 import { componentTypographyTokens, type ControlSize } from "./tokens/componentTypographyTokens";
 import { sizedComponentTextClass } from "./typography";
 
@@ -43,7 +43,7 @@ export const formControlInputSizeClass: Record<FormControlSize, string> = {
     lg: [minHeight.lg, radius.lg, padding.lg, typography.lg].join(" "),
 };
 
-/** Select trigger — fixed height + inset padding */
+/** Fixed-height field shell (SpinButton). Select trigger uses Navigation Menu density instead. */
 export const formControlShellSizeClass: Record<FormControlSize, string> = {
     sm: [fixedHeight.sm, radius.sm, padding.sm, typography.sm].join(" "),
     md: [fixedHeight.md, radius.md, padding.md, typography.md].join(" "),

@@ -11,7 +11,10 @@ import {
 } from "@refineui/react";
 import PreviewFrame from "./PreviewFrame";
 
-export default function TabsDemo() {
+/**
+ * Underline Tabs — page / section panels with a sliding brand indicator.
+ */
+export default function TabsPreview() {
     return (
         <PreviewFrame minHeight="420px">
             <Tabs defaultValue="overview" className="w-full max-w-[400px]">

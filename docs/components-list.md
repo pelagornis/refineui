@@ -31,7 +31,7 @@
 | 25 | Spin button | `components/SpinButton` | ✅ |
 | 26 | Spinner | `components/Spinner` | ✅ |
 | 27 | Switch | `components/Switch` | ✅ |
-| 28 | Tabs | `components/Tabs` | ✅ |
+| 28 | Tabs | `components/Tabs` | ✅ (token-based underline; Web Kit pill is Segmented Control) |
 | 29 | Tag | `components/Tag` | ✅ |
 | 30 | Textarea | `components/Textarea` | ✅ |
 | 31 | Toast | `components/Toast` | ✅ |
@@ -42,3 +42,5 @@
 | 37 | Input OTP | `components/InputOTP` | ✅ (token-based composition) |
 | 38 | Scroll Area | `components/ScrollArea` | ✅ (token-based composition) |
 | 39 | Search Field | `components/SearchField` | ✅ (token-based composition) |
+| 40 | Navigation Menu | `components/NavigationMenu` | ✅ (token-based composition) |
+| 41 | Segmented Control | `components/SegmentedControl` | ✅ (token-based composition) |

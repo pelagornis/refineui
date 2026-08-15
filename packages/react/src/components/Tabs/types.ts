@@ -16,4 +16,3 @@ export interface TabsTriggerProps extends Omit<ButtonHTMLAttributes<HTMLButtonEl
 export interface TabsContentProps extends HTMLAttributes<HTMLDivElement> {
     value: string;
 }
-

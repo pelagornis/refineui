@@ -150,7 +150,8 @@ Contracts in `packages/react/src/tokens/componentColorTokens.ts`, aligned with W
 | `Drawer` | `drawer.overlay`, `drawer.content.background`, `drawer.header.*`, `drawer.title.*`, `drawer.description.*`, `drawer.body.*`, `drawer.footer.*`, `drawer.close.icon` | Compound slots |
 | `Dropdown` | `dropdown.trigger.*`, `dropdown.menu.*` | Trigger vs menu |
 | `Menu` | `menu.panel.*`, `menu.popover.*`, `menu.list.*`, `menu.sectionToken.*`, `menu.dividerToken.*`, `menu.item.*` | Compound slots |
-| `Tabs` | `tabs.pill.*`, `tabs.underline.*` | Per variant |
+| `Tabs` | `tabs.*` | Underline track / sliding indicator |
+| `SegmentedControl` | `segmentedControl.*` | Pill track / sliding indicator |
 | `Accordion` | `accordion.item.border`, `accordion.trigger.*`, `accordion.content.*` | Item/trigger/content |
 | `Breadcrumb` | `breadcrumb.list.*`, `breadcrumb.link.*`, `breadcrumb.page.*`, `breadcrumb.separatorToken.*`, `breadcrumb.ellipsis`, `breadcrumb.ellipsisTrigger.*` | Compound slots |
 | `Pagination` | `pagination.navIcon.*`, `pagination.page.*` | Includes page item states |
@@ -170,7 +171,7 @@ These were structured in code first; if they work well, mirror the same structur
 | Compound components | Slot-level keys under `dialog.*`, `drawer.*`, `menu.*`, `breadcrumb.*`, `card.*`, `avatar.*` | Clarify sub-slot and state names in Web Kit |
 | Form controls | Split `input.*`, `textarea.*`, `select.*`, `checkbox.*`, `radio.*`, `switch.*`, `toggle.*` | Enough hover/focus/error/success/disabled tokens |
 | Feedback | Extended `alert.*`, `badge.*`, `chip.*`, `tag.*`, `toast.*`, `spinner.*`, `skeleton.*`, `progress.*` | Decide in Foundation whether status accents are palette vs alias |
-| Navigation | Extended `tabs.*`, `accordion.*`, `pagination.*`, `breadcrumb.*`, `menu.*`, `link.*`, `calendar.*` | Enough Aliases for hover, active, selected, disabled |
+| Navigation | Extended `tabs.*`, `segmentedControl.*`, `accordion.*`, `pagination.*`, `breadcrumb.*`, `menu.*`, `link.*`, `calendar.*` | Enough Aliases for hover, active, selected, disabled |
 | Overlay | Tidied `tooltip.*`, `popover.*`, `dialog.overlay`, `drawer.overlay` | Consider clearer Foundation aliases for overlay surfaces |
 | Avatar family | `avatar.shell.*`, `avatar.icon.*`, `avatar.status.*`, `avatars.count.*` | Decide Avatar color variants as Aliases vs palette wrappers |
 
@@ -182,7 +183,7 @@ These were structured in code first; if they work well, mirror the same structur
 | High | Model error/success/disabled/focus for `Label`, `Field`, `Input`, `Select`, `Textarea` as Variables | Forms are reused most |
 | High | Name sub-slots explicitly for `Dialog`, `Drawer`, `Menu`, `Breadcrumb`, `Card`, `Avatar` | Maps cleanly to compound tokens |
 | Medium | Rule whether accents for `Alert`, `Badge`, `Chip`, `Tag`, `Toast` are alias vs palette | Some palette wrappers mixed today |
-| Medium | Clarify selected/hover/active/disabled for `Tabs`, `Accordion`, `Pagination`, `Calendar` | Better interaction consistency |
+| Medium | Clarify selected/hover/active/disabled for `SegmentedControl`, `Accordion`, `Pagination`, `Calendar` | Better interaction consistency |
 | Medium | Sharpen roles among `surfacePopover`, `surfaceTooltip`, `surfaceOverlay`, `surfaceElevated`, `surfaceInverse` | Reduce overlap in overlay family |
 | Low | Decide whether Avatar color groups become semantic vs stay palette wrappers | Works either way; needs agreement |
 

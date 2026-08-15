@@ -39,6 +39,7 @@ const tags = [
   "Spinner",
   "Stepper",
   "Switch",
+  "SegmentedControl",
   "Tabs",
   "Tag",
   "Textarea",
