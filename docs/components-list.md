@@ -45,3 +45,6 @@
 | 40 | Navigation Menu | `components/NavigationMenu` | ✅ (token-based composition) |
 | 41 | Segmented Control | `components/SegmentedControl` | ✅ (token-based composition) |
 | 42 | Footer | `components/Footer` | ✅ (token-based composition) |
+| 43 | ProgressStepper | `components/ProgressStepper` | ✅ (token-based composition) |
+
+**Layout primitives** (not Web Kit) — `packages/react/src/components/Layout`, documented under `/layout/`: Stack, Grid, Container, Box (`Spacer` with Stack).

@@ -1,0 +1,51 @@
+---
+title: Grid
+description: Equal columns, span, or auto-fit min width
+sidebar:
+  order: 3
+---
+
+import GridPreview from "../../../components/layout/GridPreview";
+
+# Grid
+
+Two-dimensional layout. `columns` for equal tracks, `GridItem` `span` to merge cells, `minItem` to wrap by Foundation size.
+
+## Import
+
+```tsx
+import { Grid, GridItem } from "@refineui/react";
+```
+
+## Features
+
+<div class="not-content">
+  <GridPreview client:load />
+</div>
+
+**Equal columns** — `columns={3}` is `repeat(3, minmax(0, 1fr))`.
+
+**Span** — `GridItem span={2}` occupies two tracks. `rowSpan` does the same on rows (1–12).
+
+**Auto-fit** — `minItem="foundationSize2000"` fills the row, then wraps. Overrides `columns`.
+
+```tsx
+<Grid columns={3} gap="sizeMedium">
+  <Card>A</Card>
+  <Card>B</Card>
+  <Card>C</Card>
+</Grid>
+
+<Grid columns={4} gap="sizeSmall">
+  <GridItem span={2}>Wide</GridItem>
+  <Card>A</Card>
+  <Card>B</Card>
+</Grid>
+
+<Grid minItem="foundationSize2000" gap="sizeMedium">
+  <Card />
+  <Card />
+</Grid>
+```
+
+`columnGap` / `rowGap` override `gap` on one axis. `as` defaults to `div`.

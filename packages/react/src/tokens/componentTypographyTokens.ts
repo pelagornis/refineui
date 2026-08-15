@@ -110,6 +110,10 @@ export const componentTypographyTokens = {
         title: role("labelMd"),
         description: role("captionMd"),
     },
+    progressStepper: {
+        marker: role("captionSm"),
+        label: role("labelSm"),
+    },
 
     toast: {
         title: role("bodyMd"),

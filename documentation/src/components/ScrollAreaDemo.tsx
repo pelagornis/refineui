@@ -30,6 +30,7 @@ const tags = [
   "Pagination",
   "PopOver",
   "Progress",
+  "ProgressStepper",
   "Radio",
   "Resizable",
   "ScrollArea",

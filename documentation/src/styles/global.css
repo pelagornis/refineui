@@ -1,36 +1,178 @@
-/* Inter: Starlight `head` in `astro.config.mjs` — mid-file @import in `@pelagornis/page` base.css triggers PostCSS warnings → use `pelagornis-base.css` */
+/* Inter is loaded from Starlight `head` in `astro.config.mjs`. */
 /* Monorepo: relative import into tokens only (no package alias); external apps use `@import "@refineui/tokens/tailwind.css"` */
 @import "../../../packages/tokens/tailwind.css";
 @source "../../../packages/react/src/**/*.{tsx,ts}";
-@import "@pelagornis/page/styles/refineui-fonts-override.css";
+@source "../**/*.{tsx,ts}";
 @import "@refineui/web-icons/dist/fonts/refineui-system-icons.css";
-@import "@pelagornis/page/styles/theme.css";
-@import "@pelagornis/page/styles/components.css";
-@import "@pelagornis/page/styles/layout.css";
-@import "@pelagornis/page/styles/utilities.css";
-@import "@pelagornis/page/styles/header-icons.css";
 @import "@refineui/react/refineui.css";
+
+/**
+ * Starlight chrome ↔ RefineUI Foundation aliases.
+ * Unlayered so these beat `@layer starlight`. Alias values already switch on
+ * `[data-theme="dark"]` / `.dark` in `@refineui/tokens` CSS variables.
+ */
+:root,
+:root[data-theme="light"],
+:root[data-theme="dark"],
+::backdrop {
+  --sl-font: var(--refineui-typography-body-1-font-family);
+
+  /* Starlight inverts white/black by theme; aliases already invert. */
+  --sl-color-white: var(--refineui-color-alias-foreground-primary);
+  --sl-color-gray-1: var(--refineui-color-alias-foreground-primary);
+  --sl-color-gray-2: var(--refineui-color-alias-foreground-secondary);
+  --sl-color-gray-3: var(--refineui-color-alias-foreground-tertiary);
+  --sl-color-gray-4: var(--refineui-color-alias-border-hover);
+  --sl-color-gray-5: var(--refineui-color-alias-border-default);
+  --sl-color-gray-6: var(--refineui-color-alias-background-surface-hover);
+  --sl-color-gray-7: var(--refineui-color-alias-surface-sunken);
+  --sl-color-black: var(--refineui-color-alias-background-primary);
+
+  --sl-color-accent-low: var(--refineui-color-alias-background-info-subtle);
+  --sl-color-accent: var(--refineui-color-alias-foreground-link);
+  --sl-color-accent-high: var(--refineui-color-alias-foreground-link-hover);
+
+  --sl-color-text: var(--refineui-color-alias-foreground-secondary);
+  --sl-color-text-accent: var(--refineui-color-alias-foreground-link);
+  --sl-color-text-invert: var(--refineui-color-alias-foreground-on-brand);
+  --sl-color-bg: var(--refineui-color-alias-background-primary);
+  --sl-color-bg-nav: var(--refineui-color-alias-background-primary);
+  --sl-color-bg-sidebar: var(--refineui-color-alias-background-primary);
+  --sl-color-bg-inline-code: var(--refineui-color-alias-background-surface-hover);
+  --sl-color-bg-accent: var(--refineui-color-alias-background-brand);
+  --sl-color-hairline-light: var(--refineui-color-alias-border-subtle);
+  --sl-color-hairline: var(--refineui-color-alias-border-default);
+  --sl-color-hairline-shade: var(--refineui-color-alias-border-subtle);
+  --sl-color-backdrop-overlay: var(--refineui-color-alias-surface-overlay);
+
+  --sl-color-orange-low: var(--refineui-color-alias-background-warning-subtle);
+  --sl-color-orange: var(--refineui-color-alias-foreground-warning);
+  --sl-color-orange-high: var(--refineui-color-alias-foreground-warning);
+  --sl-color-green-low: var(--refineui-color-alias-background-success-subtle);
+  --sl-color-green: var(--refineui-color-alias-foreground-success);
+  --sl-color-green-high: var(--refineui-color-alias-foreground-success);
+  --sl-color-blue-low: var(--refineui-color-alias-background-info-subtle);
+  --sl-color-blue: var(--refineui-color-alias-foreground-info);
+  --sl-color-blue-high: var(--refineui-color-alias-foreground-info);
+  --sl-color-purple-low: var(--refineui-color-alias-background-discovery-subtle);
+  --sl-color-purple: var(--refineui-color-alias-foreground-discovery);
+  --sl-color-purple-high: var(--refineui-color-alias-foreground-discovery);
+  --sl-color-red-low: var(--refineui-color-alias-background-error-subtle);
+  --sl-color-red: var(--refineui-color-alias-foreground-error);
+  --sl-color-red-high: var(--refineui-color-alias-foreground-error);
+
+  --sl-shadow-sm: var(--refineui-elevation-2);
+  --sl-shadow-md: var(--refineui-elevation-8);
+  --sl-shadow-lg: var(--refineui-elevation-16);
+
+  --sl-text-2xs: var(--refineui-typography-caption-1-font-size);
+  --sl-text-xs: var(--refineui-typography-caption-1-font-size);
+  --sl-text-sm: var(--refineui-typography-body-2-font-size);
+  --sl-text-base: var(--refineui-typography-body-1-font-size);
+  --sl-text-lg: var(--refineui-typography-body-1-font-size);
+  --sl-text-xl: var(--refineui-typography-sub-title-1-font-size);
+  --sl-text-2xl: var(--refineui-typography-title-3-font-size);
+  --sl-text-3xl: var(--refineui-typography-heading-4-font-size);
+  --sl-text-4xl: var(--refineui-typography-heading-3-font-size);
+  --sl-text-5xl: var(--refineui-typography-heading-2-font-size);
+  --sl-text-6xl: var(--refineui-typography-heading-1-font-size);
+
+  --sl-text-h1: var(--sl-text-4xl);
+  --sl-text-h2: var(--sl-text-3xl);
+  --sl-text-h3: var(--sl-text-2xl);
+  --sl-text-h4: var(--sl-text-xl);
+  --sl-text-h5: var(--sl-text-lg);
+
+  --sl-nav-pad-x: var(--refineui-spacing-size-large);
+  --sl-nav-pad-y: var(--refineui-spacing-size-small);
+  --sl-sidebar-pad-x: var(--refineui-spacing-size-large);
+  --sl-content-pad-x: var(--refineui-spacing-size-large);
+}
+
+@media (min-width: 50em) {
+  :root {
+    --sl-nav-pad-x: var(--refineui-spacing-size-x-large);
+    --sl-text-h1: var(--sl-text-5xl);
+    --sl-text-h2: var(--sl-text-4xl);
+    --sl-text-h3: var(--sl-text-3xl);
+    --sl-text-h4: var(--sl-text-2xl);
+  }
+}
+
+@media (min-width: 72rem) {
+  :root {
+    --sl-content-pad-x: var(--refineui-spacing-size-x-large);
+  }
+}
 
 [data-refineui-preview] {
   width: 100%;
   min-width: 0;
   overflow-x: auto;
   box-sizing: border-box;
-  background: var(--refineui-color-neutral-100);
+  background: var(--refineui-color-alias-surface-sunken);
 }
 
-/* Preview background follows doc theme (Starlight data-theme) */
-[data-theme="dark"] [data-refineui-preview]:not([data-preview-variant="light"]) {
-  background: #1a1a1a;
-}
-[data-theme="light"] [data-refineui-preview]:not([data-preview-variant="dark"]) {
-  background: var(--refineui-color-neutral-100);
-}
-
-/* Forced via variant */
 [data-refineui-preview][data-preview-variant="dark"] {
-  background: #1a1a1a !important;
+  background: var(--refineui-color-neutral-900);
 }
+
 [data-refineui-preview][data-preview-variant="light"] {
-  background: var(--refineui-color-neutral-100) !important;
+  background: var(--refineui-color-neutral-100);
+}
+
+:root:has([data-refineui-catalog]),
+:root:has(.hero) {
+  --sl-content-width: 72rem;
+}
+
+.hero {
+  padding-block: var(--refineui-spacing-size-xxx-large);
+}
+
+.hero .copy {
+  gap: var(--refineui-spacing-size-large);
+}
+
+.hero .tagline {
+  color: var(--refineui-color-alias-foreground-secondary);
+}
+
+[data-refineui-home] {
+  margin-block-start: var(--refineui-spacing-size-xx-large);
+}
+
+[data-refineui-catalog-card] {
+  transition: border-color var(--refineui-motion-duration-fast) var(--refineui-motion-easing-standard);
+}
+
+[data-refineui-catalog-card]:hover,
+[data-refineui-catalog-card]:focus-within {
+  border-color: var(--refineui-color-alias-border-hover);
+}
+
+[data-refineui-catalog-preview] {
+  pointer-events: none;
+  user-select: none;
+}
+
+[data-refineui-catalog-label] {
+  border-top: var(--refineui-stroke-width-thin) solid var(--refineui-color-alias-border-subtle);
+}
+
+[data-refineui-catalog-link] {
+  color: var(--refineui-color-alias-foreground-primary);
+  text-decoration: none;
+}
+
+[data-refineui-catalog-link]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+[data-refineui-catalog-link]:focus-visible {
+  outline: var(--refineui-stroke-width-thick) solid var(--refineui-color-alias-border-focus);
+  outline-offset: var(--refineui-spacing-size-xx-small);
 }

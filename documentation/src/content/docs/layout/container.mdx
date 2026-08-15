@@ -1,0 +1,37 @@
+---
+title: Container
+description: Full-width column with horizontal padding
+sidebar:
+  order: 4
+---
+
+import ContainerPreview from "../../../components/layout/ContainerPreview";
+
+# Container
+
+Centers a full-width column and applies Foundation padding on the inline axis. There is no max-width token in Foundation yet.
+
+## Import
+
+```tsx
+import { Container } from "@refineui/react";
+```
+
+## Features
+
+<div class="not-content">
+  <ContainerPreview client:load />
+</div>
+
+The gray well is the parent. `Container` adds inset so page content does not sit on the edges.
+
+```tsx
+<Container padding="sizeXXLarge" as="main">
+  {children}
+</Container>
+```
+
+| Prop | Default |
+|------|---------|
+| `padding` | `sizeXXLarge` |
+| `as` | `div` |

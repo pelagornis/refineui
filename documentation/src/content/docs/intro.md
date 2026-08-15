@@ -62,7 +62,8 @@ export function Example() {
 ## Documentation structure
 
 - **Getting started** — this page
-- **Components** — API, examples, and live previews per component
+- **Layout** — [Stack, Grid, Container, Box](/layout/)
+- **Components** — API, examples, and live previews per Web Kit component
 - **Guides** — [Project structure](/guides/packages/), [CLI](/guides/cli/)
 
 ## Figma

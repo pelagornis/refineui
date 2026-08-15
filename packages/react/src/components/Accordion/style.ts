@@ -6,9 +6,9 @@ import type { AccordionSize } from "./context";
 export const accordionStyles = {
     root: "flex flex-col gap-refineui-size-x-small",
     itemOpen:
-        "overflow-hidden rounded-refineui-small bg-refineui-alias-background-primary-hover transition-[background-color] duration-[var(--refineui-motion-duration-fast)]",
+        "overflow-hidden rounded-refineui-x-large bg-refineui-alias-background-primary-hover transition-[background-color] duration-[var(--refineui-motion-duration-fast)]",
     triggerBase:
-        "flex min-h-refineui-control-touch-min w-full cursor-pointer items-center justify-between gap-refineui-size-medium rounded-refineui-small border-none bg-transparent px-refineui-size-medium py-refineui-size-x-small text-left text-refineui-alias-foreground-primary outline-none transition-[background-color,transform] duration-[var(--refineui-motion-duration-fast)]",
+        "flex min-h-refineui-control-touch-min w-full cursor-pointer items-center justify-between gap-refineui-size-medium rounded-refineui-x-large border-none bg-transparent px-refineui-size-medium py-refineui-size-x-small text-left text-refineui-alias-foreground-primary outline-none transition-[background-color,transform] duration-[var(--refineui-motion-duration-fast)]",
     triggerRow: "flex min-w-0 flex-1 items-center gap-refineui-size-medium",
     chevron:
         "shrink-0 transition-transform duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",

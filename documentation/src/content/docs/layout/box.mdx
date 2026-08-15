@@ -1,0 +1,50 @@
+---
+title: Box
+description: Padding, fill, radius, border
+sidebar:
+  order: 5
+---
+
+import BoxPreview from "../../../components/layout/BoxPreview";
+
+# Box
+
+A surface. Padding, semantic fill, radius, and border — all Foundation tokens.
+
+## Import
+
+```tsx
+import { Box } from "@refineui/react";
+```
+
+## Features
+
+<div class="not-content">
+  <BoxPreview client:load />
+</div>
+
+**Surface** — `padding` + `background` + `radius` + `border` on one node.
+
+**Fill** — `background` takes semantic `background*` / `surface*` names.
+
+```tsx
+<Box
+  padding="sizeXLarge"
+  background="backgroundPrimary"
+  radius="roundedXLarge"
+  border="strokeWidthThin"
+  borderColor="borderDefault"
+  as="section"
+>
+  {children}
+</Box>
+```
+
+| Prop | Tokens |
+|------|--------|
+| `padding` · `paddingX` · `paddingY` | `sizeNone` … `sizeXXXLarge` |
+| `background` | `background*` / `surface*` |
+| `radius` | `roundedNone` … `roundedCircle` |
+| `border` | `strokeWidthNone` … `strokeWidthThickest` |
+| `borderColor` | `border*` (`borderDefault` if only `border` is set) |
+| `as` | element (`div`) |

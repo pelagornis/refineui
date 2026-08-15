@@ -1,0 +1,53 @@
+---
+title: Stack
+description: One axis — column, row, wrap, Spacer
+sidebar:
+  order: 2
+---
+
+import StackPreview from "../../../components/layout/StackPreview";
+
+# Stack
+
+Flex on one axis. `gap` is a Foundation spacing key.
+
+## Import
+
+```tsx
+import { Spacer, Stack } from "@refineui/react";
+```
+
+## Features
+
+<div class="not-content">
+  <StackPreview client:load />
+</div>
+
+**Column** — default. Children stack vertically.
+
+**Row + Spacer** — `direction="row"` and `Spacer` (`flex: 1`) push the last child to the end.
+
+**Wrap** — `wrap` drops items to the next line instead of shrinking them.
+
+```tsx
+<Stack gap="sizeMedium">
+  <Button>Save</Button>
+  <Button variant="secondary">Cancel</Button>
+</Stack>
+
+<Stack direction="row" gap="sizeSmall" align="center">
+  <Text variant="labelMd">Title</Text>
+  <Spacer />
+  <Button size="sm">Edit</Button>
+</Stack>
+```
+
+| Prop | Values | Default |
+|------|--------|---------|
+| `direction` | `column` · `row` · `column-reverse` · `row-reverse` | `column` |
+| `gap` | `sizeNone` … `sizeXXXLarge` | `sizeNone` |
+| `align` | `start` · `center` · `end` · `stretch` · `baseline` | — |
+| `justify` | `start` · `center` · `end` · `between` · `around` · `evenly` | — |
+| `wrap` | `true` / `false` / `nowrap` / `wrap` / `wrap-reverse` | — |
+| `inline` | `boolean` | `false` |
+| `as` | element | `div` |

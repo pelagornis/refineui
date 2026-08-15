@@ -2,7 +2,6 @@ import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import starlight from "@astrojs/starlight";
 import tailwindcss from "@tailwindcss/vite";
-import pageplugin from "@pelagornis/page";
 
 export default defineConfig({
   vite: {
@@ -22,7 +21,6 @@ export default defineConfig({
   integrations: [
     react(),
     starlight({
-      plugins: [pageplugin()],
       head: [
         {
           tag: "meta",
@@ -59,6 +57,10 @@ export default defineConfig({
       customCss: ["./src/styles/global.css"],
       sidebar: [
         { label: "Getting started", slug: "intro" },
+        {
+          label: "Layout",
+          autogenerate: { directory: "layout" },
+        },
         {
           label: "Components",
           autogenerate: { directory: "components" },
