@@ -44,3 +44,4 @@
 | 39 | Search Field | `components/SearchField` | ✅ (token-based composition) |
 | 40 | Navigation Menu | `components/NavigationMenu` | ✅ (token-based composition) |
 | 41 | Segmented Control | `components/SegmentedControl` | ✅ (token-based composition) |
+| 42 | Footer | `components/Footer` | ✅ (token-based composition) |

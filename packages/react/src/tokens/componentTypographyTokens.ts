@@ -54,13 +54,13 @@ export const componentTypographyTokens = {
         link: role("captionLg"),
         contentLink: role("bodyMd"),
     },
-    /** Site footer — brand column + receding sitemap. */
+    /** Site footer — sitemap body; legal lockup matches the locale pill. */
     footer: {
-        brandName: role("titleSm"),
-        brandDescription: role("bodySm"),
-        groupLabel: role("bodyXs"),
-        link: role("bodySm"),
-        copyright: role("bodyXs"),
+        brandName: role("bodyMd"),
+        brandDescription: role("bodyXs"),
+        groupLabel: role("bodyMd"),
+        link: role("bodyMd"),
+        copyright: role("bodyMd"),
     },
     menu: {
         section: role("captionLg"),

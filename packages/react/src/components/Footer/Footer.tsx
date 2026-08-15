@@ -2,17 +2,18 @@ import { clsx } from "clsx";
 import { createContext, useContext } from "react";
 import { footerStyles } from "./style";
 import type {
-    FooterBottomProps,
     FooterBrandDescriptionProps,
     FooterBrandNameProps,
     FooterBrandProps,
-    FooterContentProps,
     FooterCopyrightProps,
+    FooterExploreProps,
     FooterGroupLabelProps,
     FooterGroupProps,
     FooterLinkProps,
     FooterLocaleProps,
     FooterLogoProps,
+    FooterMetaEndProps,
+    FooterMetaProps,
     FooterNavProps,
     FooterProps,
     FooterSocialProps,
@@ -33,15 +34,18 @@ export function Footer({ className, ...props }: FooterProps) {
     );
 }
 
-export function FooterContent({ className, ...props }: FooterContentProps) {
+export function FooterExplore({ className, ...props }: FooterExploreProps) {
     return (
         <div
-            data-refineui="footer-content"
-            className={clsx(footerStyles.content, className)}
+            data-refineui="footer-explore"
+            className={clsx(footerStyles.explore, className)}
             {...props}
         />
     );
 }
+
+/** Alias of `FooterExplore`. */
+export const FooterContent = FooterExplore;
 
 export function FooterBrand({ className, ...props }: FooterBrandProps) {
     return (
@@ -136,11 +140,24 @@ export function FooterLink({ className, ...props }: FooterLinkProps) {
     );
 }
 
-export function FooterBottom({ className, ...props }: FooterBottomProps) {
+export function FooterMeta({ className, ...props }: FooterMetaProps) {
     return (
         <div
-            data-refineui="footer-bottom"
-            className={clsx(footerStyles.bottom, className)}
+            data-refineui="footer-meta"
+            className={clsx(footerStyles.meta, className)}
+            {...props}
+        />
+    );
+}
+
+/** Alias of `FooterMeta`. */
+export const FooterBottom = FooterMeta;
+
+export function FooterMetaEnd({ className, ...props }: FooterMetaEndProps) {
+    return (
+        <div
+            data-refineui="footer-meta-end"
+            className={clsx(footerStyles.metaEnd, className)}
             {...props}
         />
     );

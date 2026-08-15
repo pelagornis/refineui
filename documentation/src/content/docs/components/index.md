@@ -31,7 +31,7 @@ The table below groups components **by purpose**. Click a name to open its docs.
 | Component | Description |
 |-----------|-------------|
 | [Breadcrumb](/components/breadcrumb/) | Path navigation |
-| [Footer](/components/footer/) | Site footer — brand, link columns, copyright |
+| [Footer](/components/footer/) | Site footer — sitemap, social, locale pill |
 | [Navigation Menu](/components/navigation-menu/) | Top nav with link triggers and panels |
 | [Tabs](/components/tabs/) | Underline tabs for switching panels |
 | [Stepper](/components/stepper/) | Multi-step progress rail |
