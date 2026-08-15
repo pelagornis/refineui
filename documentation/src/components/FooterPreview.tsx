@@ -120,7 +120,7 @@ export default function FooterPreview() {
                         </FooterLink>
                     </FooterSocial>
                     <FooterBrand>
-                        <FooterCopyright>RefineUI © 2026 Pelagornis</FooterCopyright>
+                        <FooterCopyright>Pelagornis © 2026</FooterCopyright>
                     </FooterBrand>
                     <FooterMetaEnd>
                         <FooterLocale>
