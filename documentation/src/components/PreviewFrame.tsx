@@ -4,6 +4,7 @@ import { Stack, Text } from "@refineui/react";
 type LookAlign = "center" | "start" | "stretch" | "fill";
 type LookTone = "sunken" | "surface" | "scrim";
 type LookSize = "hero" | "compact";
+type LookWidth = "default" | "wide";
 
 /** A visual specimen. Caption sits under the stage. */
 export function Look({
@@ -12,16 +13,25 @@ export function Look({
     align = "center",
     tone = "sunken",
     size = "hero",
+    width = "default",
 }: {
     children: ReactNode;
     caption?: string;
     align?: LookAlign;
     tone?: LookTone;
     size?: LookSize;
+    /** stretch child max-width. `wide` uses foundationSize5750 for page bars. */
+    width?: LookWidth;
 }) {
     return (
         <Stack gap="sizeSmall" data-refineui-look className="w-full min-w-0">
-            <div data-refineui-look-stage data-align={align} data-tone={tone} data-size={size}>
+            <div
+                data-refineui-look-stage
+                data-align={align}
+                data-tone={tone}
+                data-size={size}
+                data-width={width === "wide" ? "wide" : undefined}
+            >
                 {children}
             </div>
             {caption ? (

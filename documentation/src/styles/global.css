@@ -168,6 +168,10 @@
   min-width: 0;
 }
 
+[data-refineui-look-stage][data-align="stretch"][data-width="wide"] > * {
+  max-width: var(--refineui-size-foundation-size-5750);
+}
+
 [data-refineui-look-stage][data-size="compact"][data-align="stretch"] > * {
   max-width: none;
 }

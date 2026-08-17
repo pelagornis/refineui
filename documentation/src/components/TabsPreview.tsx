@@ -4,7 +4,7 @@ import { Look, Looks } from "./PreviewFrame";
 export default function TabsPreview() {
     return (
         <Looks>
-            <Look align="stretch">
+            <Look align="stretch" width="wide">
                 <Tabs defaultValue="overview" className="w-full">
                     <TabsList>
                         <TabsTrigger value="overview">Overview</TabsTrigger>
