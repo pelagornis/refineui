@@ -1,50 +1,32 @@
 ---
 title: Slider
-description: Range slider — sm / md rail thickness
+description: Pick a numeric value along a rail — volume, percent, or a bounded range.
 ---
 
 import SliderDemo from "../../../components/SliderDemo";
 
 # Slider
 
-Styled `type="range"` input. Use **`size`** for rail thickness (`sm` / `md`).
+Slider is a styled `type="range"` input. Use it when the value is easier to choose by dragging than by typing — volume, opacity, a percent.
 
-## Install & import
-
-```tsx
-import { Slider } from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Slider min={0} max={100} defaultValue={50} onChange={(v) => console.log(v)} aria-label="Volume" />
-```
-
-## Preview
+`size` changes rail thickness (`sm` / `md`). For an exact integer with steppers, use **[SpinButton](/components/spin-button/)**. For a read-only fill, use **[Progress](/components/progress/)**.
 
 <div class="not-content">
   <SliderDemo client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `min` | `number` | `0` | Minimum |
-| `max` | `number` | `100` | Maximum |
-| `step` | `number` | `1` | Step |
-| `value` | `number` | — | Controlled value |
-| `defaultValue` | `number` | — | Uncontrolled value |
-| `onChange` | `(value: number) => void` | — | Value change |
-| `size` | `"sm"` \| `"md"` | `"md"` | Rail thickness |
+### Slider
 
-## Examples
+| Prop | Default | Type |
+|------|---------|------|
+| `min` | `0` | `number` — Lower bound. |
+| `max` | `100` | `number` — Upper bound. |
+| `step` | `1` | `number` — Increment between values. |
+| `value` | — | `number` — Controlled value. |
+| `defaultValue` | — | `number` — Uncontrolled initial value. |
+| `onChange` | — | `(value: number) => void` — Called with the numeric value (not the native event). |
+| `size` | `"md"` | `"sm"` \| `"md"` — Rail thickness. |
 
-### Controlled
-
-```tsx
-const [pct, setPct] = useState(30);
-<Slider value={pct} onChange={setPct} min={0} max={100} />;
-```
+Also accepts native `input` attributes except `type`, native `onChange`, and `size` (`aria-label`, `disabled`, `className`, `style`).

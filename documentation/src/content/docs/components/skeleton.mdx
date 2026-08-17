@@ -1,50 +1,28 @@
 ---
 title: Skeleton
-description: Loading placeholder — rectangle / circle
+description: Placeholder shape shown while content is loading.
 ---
 
 import SkeletonPreview from "../../../components/SkeletonPreview";
 
 # Skeleton
 
-Placeholder while content loads. Solid fill with a soft **opacity pulse** (same idea as shadcn / MUI), using alias surface tokens — not a sliding shimmer.
+Skeleton is a placeholder for content that has not loaded yet. Use it to reserve layout so the page does not jump when real content arrives.
 
-## Install & import
-
-```tsx
-import { Skeleton } from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Skeleton width="100%" height={20} />
-<Skeleton shape="circle" width={40} />
-```
-
-## Preview
+It is a static shape with a soft opacity pulse — not a sliding shimmer. For an in-progress process with no layout to reserve, use **[Spinner](/components/spinner/)**. For determinate work as a bar, use **[Progress](/components/progress/)**.
 
 <div class="not-content">
   <SkeletonPreview client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `width` | `number` \| `string` | — | Width |
-| `height` | `number` \| `string` | — | Height |
-| `shape` | `"rectangle"` \| `"circle"` | `"rectangle"` | Circle is typical for avatars |
+### Skeleton
 
-## Examples
+| Prop | Default | Type |
+|------|---------|------|
+| `width` | — | `number` \| `string` — Width of the placeholder. Rectangles default to full width. On a circle, one dimension is used for both axes. |
+| `height` | — | `number` \| `string` — Height of the placeholder. Rectangles default to the skeleton line height. |
+| `shape` | `"rectangle"` | `"rectangle"` \| `"circle"` — Line or block versus avatar-style disc. |
 
-### Card list skeleton
-
-```tsx
-<div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-  <Skeleton height={16} width="60%" />
-  <Skeleton height={12} width="100%" />
-  <Skeleton height={12} width="90%" />
-</div>
-```
+Also accepts native `div` attributes (`className`, `style`).

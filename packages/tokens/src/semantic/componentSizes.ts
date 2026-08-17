@@ -31,6 +31,7 @@ export const componentSizeFoundationKeys = {
     popoverBeakInsetFromEndEdge: "foundationSize300",
     menuPanelWidth: "foundationSize2440",
     dropdownMenuWidth: "foundationSize2440",
+    sidebarWidth: "foundationSize2560",
     toastMinWidth: "foundationSize3250",
     toastMaxWidth: "foundationSize3250",
     dialogMaxWidth: "foundationSize6000",
@@ -106,6 +107,7 @@ export const componentSizes = {
     menuPanelWidth: fromFoundation("menuPanelWidth"),
     /** @deprecated Same as `menuPanelWidth` */
     dropdownMenuWidth: fromFoundation("dropdownMenuWidth"),
+    sidebarWidth: fromFoundation("sidebarWidth"),
     toastMinWidth: fromFoundation("toastMinWidth"),
     toastMaxWidth: fromFoundation("toastMaxWidth"),
     dialogMaxWidth: fromFoundation("dialogMaxWidth"),

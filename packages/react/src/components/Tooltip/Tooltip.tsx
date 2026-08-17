@@ -5,7 +5,7 @@ import { spacings } from "@refineui/tokens";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { getMergeableTriggerChild } from "@refineui/utilities/react";
-import { tooltipArrowStyle, tooltipPanelStyle, tooltipStyles } from "./style";
+import { tooltipArrowStyle, tooltipPanelDropShadow, tooltipPanelStyle, tooltipStyles } from "./style";
 import type { TooltipProps, TooltipTriggerMergeProps } from "./types";
 
 export function Tooltip({
@@ -14,12 +14,21 @@ export function Tooltip({
     position = "Bottom",
     align = "Start",
     delayMs = 120,
+    open: ctrlOpen,
+    defaultOpen = false,
+    onOpenChange,
     className,
     ...props
 }: TooltipProps) {
-    const [open, setOpen] = useState(false);
+    const [innerOpen, setInnerOpen] = useState(defaultOpen);
+    const open = ctrlOpen !== undefined ? ctrlOpen : innerOpen;
     const tooltipId = useId();
     const showTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    const setOpen = (next: boolean) => {
+        if (ctrlOpen === undefined) setInnerOpen(next);
+        onOpenChange?.(next);
+    };
 
     const bg = resolveColorTokenValue(componentColorTokens.tooltip.default.background);
     const fg = resolveColorTokenValue(componentColorTokens.tooltip.default.foreground);
@@ -111,6 +120,7 @@ export function Tooltip({
                         ...panelPos,
                         backgroundColor: bg,
                         color: fg,
+                        filter: tooltipPanelDropShadow,
                     }}
                 >
                     {content}

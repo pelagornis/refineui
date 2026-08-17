@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { spacings } from "@refineui/tokens";
+import { shadows, spacings, strokeWidths, type ShadowLevel } from "@refineui/tokens";
 import { clsx } from "clsx";
 import { componentTypographyTokens } from "../../tokens/componentTypographyTokens";
 import { componentTextClass } from "../../typography";
@@ -10,12 +10,31 @@ export const tooltipStyles = {
     fallbackTrigger: "inline-flex outline-none",
     panel: clsx(
         componentTextClass(componentTypographyTokens.tooltip),
-        "pointer-events-none absolute z-refineui-popup max-w-refineui-tooltip-max-width whitespace-nowrap rounded-refineui-medium px-refineui-size-medium py-refineui-size-small shadow-refineui-8light",
+        "pointer-events-none absolute z-refineui-popup max-w-refineui-tooltip-max-width whitespace-nowrap rounded-refineui-medium px-refineui-size-medium py-refineui-size-small",
     ),
 } as const;
 
 const gap = spacings.sizeXSmall;
 const edgeInset = spacings.sizeMedium;
+/** Tuck the CSS triangle into the panel so a hairline does not show at the join. */
+const arrowPanelOverlap = strokeWidths.strokeWidthThin;
+
+function arrowOutset(halfPx: number): string {
+    return `calc(-1 * ${halfPx}px + ${arrowPanelOverlap})`;
+}
+
+/** `ShadowLevel` layers include spread; `drop-shadow()` does not. */
+function dropShadowFromLayer(layer: string): string {
+    const [x, y, blur, , ...colorTokens] = layer.split(" ");
+    return `drop-shadow(${x} ${y} ${blur} ${colorTokens.join(" ")})`;
+}
+
+function dropShadowFromLevel(level: ShadowLevel): string {
+    return `${dropShadowFromLayer(level.key)} ${dropShadowFromLayer(level.ambient)}`;
+}
+
+/** Silhouette elevation so the arrow does not sit outside a rectangular box-shadow. */
+export const tooltipPanelDropShadow = dropShadowFromLevel(shadows.shadow8Light);
 
 /** Panel `absolute` offset — MCP position × align */
 export function tooltipPanelStyle(position: TooltipPosition, align: TooltipAlign): CSSProperties {
@@ -50,12 +69,13 @@ export function tooltipArrowStyle(
     bg: string,
     b: number,
 ): CSSProperties {
-    const baseBox: CSSProperties = { position: "absolute", width: 0, height: 0 };
+    const baseBox: CSSProperties = { position: "absolute", display: "block", width: 0, height: 0 };
+    const outset = arrowOutset(b);
 
     if (position === "Top") {
         const tri = {
             ...baseBox,
-            bottom: -b,
+            bottom: outset,
             borderLeft: `${b}px solid transparent`,
             borderRight: `${b}px solid transparent`,
             borderTop: `${b}px solid ${bg}`,
@@ -68,7 +88,7 @@ export function tooltipArrowStyle(
     if (position === "Bottom") {
         const tri = {
             ...baseBox,
-            top: -b,
+            top: outset,
             borderLeft: `${b}px solid transparent`,
             borderRight: `${b}px solid transparent`,
             borderBottom: `${b}px solid ${bg}`,
@@ -81,7 +101,7 @@ export function tooltipArrowStyle(
     if (position === "Left") {
         const tri = {
             ...baseBox,
-            right: -b,
+            right: outset,
             borderTop: `${b}px solid transparent`,
             borderBottom: `${b}px solid transparent`,
             borderLeft: `${b}px solid ${bg}`,
@@ -94,7 +114,7 @@ export function tooltipArrowStyle(
 
     const tri = {
         ...baseBox,
-        left: -b,
+        left: outset,
         borderTop: `${b}px solid transparent`,
         borderBottom: `${b}px solid transparent`,
         borderRight: `${b}px solid ${bg}`,

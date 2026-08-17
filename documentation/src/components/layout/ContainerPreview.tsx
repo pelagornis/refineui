@@ -1,11 +1,11 @@
 import { Box, Container, Stack } from "@refineui/react";
-import PreviewFrame from "../PreviewFrame";
-import { DemoBlock, DemoCanvas } from "./DemoBlock";
+import { Look, Looks } from "../PreviewFrame";
+import { DemoBlock } from "./DemoBlock";
 
 export default function ContainerPreview() {
     return (
-        <>
-            <PreviewFrame title="Default horizontal padding">
+        <Looks>
+            <Look align="stretch">
                 <Box background="backgroundSurfaceHover" radius="roundedXLarge" className="w-full">
                     <Container padding="sizeXXLarge">
                         <Stack gap="sizeSmall">
@@ -14,14 +14,7 @@ export default function ContainerPreview() {
                         </Stack>
                     </Container>
                 </Box>
-            </PreviewFrame>
-            <PreviewFrame title="Tighter padding">
-                <DemoCanvas>
-                    <Container padding="sizeMedium">
-                        <DemoBlock tone={2}>padding sizeMedium</DemoBlock>
-                    </Container>
-                </DemoCanvas>
-            </PreviewFrame>
-        </>
+            </Look>
+        </Looks>
     );
 }

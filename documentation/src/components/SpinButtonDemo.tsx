@@ -1,35 +1,15 @@
 import { useState } from "react";
-import { fontSizes, spacings } from "@refineui/tokens";
 import { SpinButton } from "@refineui/react";
-import PreviewFrame from "./PreviewFrame";
+import { Look, Looks } from "./PreviewFrame";
 
 export default function SpinButtonDemo() {
-  const [a, setA] = useState(5);
-  const [b, setB] = useState(2);
-  const [c, setC] = useState(12);
-  return (
-    <PreviewFrame>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: spacings.sizeLarge,
-          alignItems: "flex-start",
-        }}
-      >
-        <div>
-          <p style={{ margin: 0, marginBottom: spacings.sizeXXSmall, fontSize: fontSizes.fontSize300 }}>Medium</p>
-          <SpinButton className="w-auto" value={a} onChange={setA} min={0} max={10} step={1} size="md" />
-        </div>
-        <div>
-          <p style={{ margin: 0, marginBottom: spacings.sizeXXSmall, fontSize: fontSizes.fontSize300 }}>Small</p>
-          <SpinButton className="w-auto" value={b} onChange={setB} min={0} max={10} step={1} size="sm" />
-        </div>
-        <div>
-          <p style={{ margin: 0, marginBottom: spacings.sizeXXSmall, fontSize: fontSizes.fontSize300 }}>Large · disabled</p>
-          <SpinButton className="w-auto" value={c} onChange={setC} min={0} max={99} step={1} size="lg" disabled />
-        </div>
-      </div>
-    </PreviewFrame>
-  );
+    const [value, setValue] = useState(5);
+
+    return (
+        <Looks>
+            <Look align="stretch">
+                <SpinButton value={value} onChange={setValue} min={0} max={10} step={1} size="md" />
+            </Look>
+        </Looks>
+    );
 }

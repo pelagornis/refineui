@@ -1,50 +1,28 @@
 ---
 title: Switch
-description: Switch — same implementation as Toggle
+description: Instant on/off for a setting — on or off, nothing in between.
 ---
 
 import SwitchDemo from "../../../components/SwitchDemo";
 
 # Switch
 
-On/off switch. Web Kit COMPONENT_SET **Switch** `270:3057`. **`Toggle`** is the **same implementation** (`data-refineui="switch"`).
+Switch is an on/off control. Use it for a single setting that takes effect immediately — notifications, dark mode, a feature flag.
 
-## Install & import
-
-```tsx
-import { Switch } from "@refineui/react";
-// or the same component:
-// import { Toggle } from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-const [on, setOn] = useState(false);
-<Switch checked={on} onCheckedChange={setOn} aria-label="Notifications" />;
-```
-
-## Preview
+`Toggle` is the same implementation (`data-refineui="switch"`). For a labeled option that can sit beside others, use **[Checkbox](/components/checkbox/)**. For a mutually exclusive set, use **[Radio](/components/radio/)**.
 
 <div class="not-content">
   <SwitchDemo client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `checked` | `boolean` | On/off |
-| `onCheckedChange` | `(checked: boolean) => void` | Called when toggled |
-| `disabled` | `boolean` | Disabled (track and thumb colors) |
+### Switch
 
-Sets `role="switch"` and `aria-checked`. Other props from **`ButtonHTMLAttributes`** except `children`.
+| Prop | Default | Type |
+|------|---------|------|
+| `checked` | `false` | `boolean` — On (`true`) or off (`false`). |
+| `onCheckedChange` | — | `(checked: boolean) => void` — Called with the next value when toggled. |
+| `disabled` | — | `boolean` — Blocks interaction and uses disabled track and thumb colors. |
 
-## Examples
-
-### Default in a form
-
-```tsx
-<Switch defaultChecked aria-label="Dark mode" />
-```
+Sets `role="switch"` and `aria-checked`. Also accepts native `button` attributes except `children` (`aria-label`, `onClick`, `className`).

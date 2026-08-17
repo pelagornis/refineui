@@ -1,135 +1,79 @@
 ---
 title: Command
-description: Command palette — search, groups, keyboard navigation
+description: Searchable command list for quick actions and navigation.
 ---
 
 import CommandPreview from "../../../components/CommandPreview";
 
 # Command
 
-Composable **command palette** for quick actions and navigation. API shape follows common patterns (cmdk / shadcn `Command`). The query control is [Search Field](/components/search-field/); list chrome follows **Menu** + **Dialog** token language.
+Command is a composable command palette: search, groups, and keyboard selection. Use it for jump-to actions, settings search, or a list the user filters by typing.
 
-## Install & import
-
-```tsx
-import {
-  Button,
-  Command,
-  CommandDialog,
-  CommandEmpty,
-  CommandGroup,
-  CommandGroupHeading,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-  CommandShortcut,
-} from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage (inline)
-
-```tsx
-<Command label="Command menu">
-  <CommandInput placeholder="Type a command or search…" />
-  <CommandList>
-    <CommandEmpty>No results found.</CommandEmpty>
-    <CommandGroup>
-      <CommandGroupHeading>Suggestions</CommandGroupHeading>
-      <CommandItem value="calendar" onSelect={(v) => console.log(v)}>
-        Calendar
-        <CommandShortcut>⌘K</CommandShortcut>
-      </CommandItem>
-      <CommandItem value="emoji">Search Emoji</CommandItem>
-    </CommandGroup>
-    <CommandSeparator />
-    <CommandGroup>
-      <CommandGroupHeading>Settings</CommandGroupHeading>
-      <CommandItem value="profile">Profile</CommandItem>
-      <CommandItem value="settings" shortcut="⌘S">
-        Settings
-      </CommandItem>
-    </CommandGroup>
-  </CommandList>
-</Command>
-```
-
-## Command dialog (palette)
-
-`CommandDialog` wraps `Dialog` at **`size="lg"`** with zero panel padding so the command chrome fills the modal. Panel corners follow Dialog (`roundedXXLarge`).
-
-```tsx
-const [open, setOpen] = useState(false);
-
-<>
-  <Button type="button" onClick={() => setOpen(true)}>
-    Open
-  </Button>
-  <CommandDialog open={open} onOpenChange={setOpen}>
-    <CommandInput />
-    <CommandList>
-      <CommandEmpty>No results found.</CommandEmpty>
-      <CommandItem value="new-file" onSelect={() => setOpen(false)}>
-        New File
-      </CommandItem>
-    </CommandList>
-  </CommandDialog>
-</>;
-```
-
-## Preview
+The query control is **[Search Field](/components/search-field/)**. List chrome follows **[Menu](/components/menu/)**. `CommandDialog` wraps **[Dialog](/components/dialog/)** at `size="lg"` with no panel padding so the command chrome fills the modal.
 
 <div class="not-content">
   <CommandPreview client:load />
 </div>
 
-## Composition
+## Interface
 
-```
-Command | CommandDialog
-├── CommandInput  (= SearchField + Icon + Input + Clear)
-└── CommandList
-    ├── CommandEmpty
-    ├── CommandGroup
-    │   ├── CommandGroupHeading
-    │   └── CommandItem (+ optional CommandShortcut / startIcon)
-    └── CommandSeparator
-```
+### Command
 
-## Filtering
+| Prop | Default | Type |
+|------|---------|------|
+| `value` | — | `string` — Controlled search query. |
+| `defaultValue` | — | `string` — Uncontrolled initial query. |
+| `onValueChange` | — | `(search: string) => void` — Query change. |
+| `shouldFilter` | `true` | `boolean` — When `false`, items are not filtered locally. |
+| `filter` | substring match | `(value: string, search: string, keywords?: string[]) => number` — Score; `0` hides the item. |
+| `selectedValue` | — | `string` — Controlled highlighted item `value`. |
+| `defaultSelectedValue` | — | `string` — Uncontrolled initial highlight. |
+| `onSelectedValueChange` | — | `(value: string) => void` — Highlight change. |
+| `label` | `"Command menu"` | `string` — Accessible name (`aria-label`) for the root and input. |
 
-| Prop | Default | Description |
-|------|---------|-------------|
-| `shouldFilter` | `true` | Filter items with the built-in (or custom) score function |
-| `filter` | substring match | `(value, search, keywords?) => number` — `0` hides the item |
-| `value` / `onValueChange` | — | Controlled search query |
-| `selectedValue` / `onSelectedValueChange` | — | Controlled highlighted item |
+Also accepts native `div` attributes (`className`, `style`, `onKeyDown`).
 
-Set `shouldFilter={false}` when the parent already filters the item tree (async search, server results, etc.).
+### CommandDialog
 
-`CommandItem` accepts `keywords` for extra match strings and `forceMount` to keep an item visible while filtering.
+Extends **[Dialog](/components/dialog/)** (`open`, `defaultOpen`, `onOpenChange`, `size`).
 
-## Keyboard
+| Prop | Default | Type |
+|------|---------|------|
+| `size` | `"lg"` | `"lg"` \| `"sm"` — Dialog panel size. |
+| `commandProps` | — | `Omit<CommandProps, "children">` — Forwarded to the inner `Command`. |
 
-| Key | Action |
-|-----|--------|
-| `↑` / `↓` | Move highlight |
-| `Home` / `End` | First / last enabled item |
-| `Enter` | Activate highlighted item |
-| `Escape` | Close dialog (via `Dialog`) |
+### CommandInput
 
-## Subcomponents
+| Prop | Default | Type |
+|------|---------|------|
+| `placeholder` | `"Type a command or search…"` | `string` — Input placeholder. |
+| `startIcon` | search glyph | `ReactNode` — Leading icon in the search field. |
+| `disabled` | — | `boolean` — Disables the search field. |
 
-| Component | Description |
-|-----------|-------------|
-| `Command` | Context root — search, filter, selection, keyboard |
-| `CommandDialog` | `Dialog` + `Command` palette shell (`size` default `lg`) |
-| `CommandInput` | [Search Field](/components/search-field/) (`filled`) as combobox — icon + input + clear |
-| `CommandList` | Scrollable listbox |
-| `CommandEmpty` | Shown when the query has no visible items |
-| `CommandGroup` | Group container (hides when empty after filter) |
-| `CommandGroupHeading` | Group label |
-| `CommandItem` | Selectable option (`value`, `onSelect`, icons, shortcut) |
-| `CommandShortcut` | Trailing keyboard hint |
-| `CommandSeparator` | Horizontal divider |
+Omits native `value` / `onChange` / `size` — the query is owned by `Command`.
+
+### CommandItem
+
+| Prop | Default | Type |
+|------|---------|------|
+| `value` | — | `string` — Identity for filter, highlight, and `onSelect`. Required. |
+| `keywords` | — | `string[]` — Extra strings included in the default filter. |
+| `onSelect` | — | `(value: string) => void` — Click or Enter. |
+| `forceMount` | `false` | `boolean` — Keep mounted when filtered out. |
+| `startIcon` | — | `ReactNode` — Leading icon. |
+| `endIcon` | — | `ReactNode` — Trailing icon (with shortcut). |
+| `shortcut` | — | `ReactNode` — Trailing hint. `CommandShortcut` children are also collected. |
+| `disabled` | `false` | `boolean` — Visible but not activatable. |
+
+Also accepts native `button` attributes (`className`, `onClick`).
+
+### Parts
+
+| Part | Role |
+|------|------|
+| `CommandList` | Scrollable listbox. |
+| `CommandEmpty` | Shown when the query has no visible items. |
+| `CommandGroup` | Group; hides when empty after filter. |
+| `CommandGroupHeading` | Group label. |
+| `CommandSeparator` | Horizontal divider. |
+| `CommandShortcut` | Trailing keyboard hint as a child of `CommandItem`. |

@@ -1,53 +1,29 @@
 ---
 title: Checkbox
-description: Checkbox — default and circular variants
+description: Turn an option on or off — independently of other choices in the group.
 ---
 
 import CheckboxPreview from "../../../components/CheckboxPreview";
 
 # Checkbox
 
-Checkbox input. Follows Web Kit **Checkbox** `327:2539`. **`refineui.css`** adds hover, checked, and focus-visible styles.
+Checkbox lets the user turn a single option on or off. Use it for agreements, preferences, and lists where more than one item can be selected.
 
-## Install & import
-
-```tsx
-import { Checkbox } from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Checkbox name="agree" defaultChecked={false} aria-label="Accept terms" />
-```
-
-## Preview
+For a mutually exclusive set, use **[Radio](/components/radio/)**. For an immediate on/off with no label in the control itself, use **[Switch](/components/switch/)**.
 
 <div class="not-content">
   <CheckboxPreview client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `"default"` \| `"circular"` | `"default"` | Square vs circular |
-| `disabled` | `boolean` | — | Disabled |
+### Checkbox
 
-Other props from **`InputHTMLAttributes`** except `type` (`checked`, `defaultChecked`, `onChange`, `name`, etc.).
+| Prop | Default | Type |
+|------|---------|------|
+| `variant` | `"default"` | `"default"` \| `"circular"` — Square vs circular control. |
+| `label` | — | `string` — Primary name beside the control. |
+| `description` | — | `string` — Supporting line under the label. |
+| `disabled` | — | `boolean` — Blocks interaction. |
 
-## Examples
-
-### Controlled
-
-```tsx
-const [on, setOn] = useState(false);
-<Checkbox checked={on} onChange={(e) => setOn(e.target.checked)} />;
-```
-
-### Circular (radio-like appearance)
-
-```tsx
-<Checkbox variant="circular" aria-label="Enable notifications" />
-```
+Also accepts native `input` attributes except `type` (`checked`, `defaultChecked`, `onChange`, `name`, `id`, `aria-*`, `className`).

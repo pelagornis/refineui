@@ -1,74 +1,37 @@
 ---
 title: Segmented Control
-description: Compact mutually exclusive choice with a sliding indicator
+description: Compact mutually exclusive choice on a pill track with a sliding indicator.
 ---
 
 import SegmentedControlPreview from "../../../components/SegmentedControlPreview";
 
 # Segmented Control
 
-Compact mutually exclusive choice on a pill track. **Figma Web Kit** currently names this visual **Tabs** (`636:5371`); RefineUI ships it as **Segmented Control**. For page / section panels use [Tabs](/components/tabs/).
+Segmented Control is a compact mutually exclusive choice. Use it when a few options sit on one pill track — Day / Week / Month, or Overview / Analytics — and you only need the selected value.
 
-## Install & import
-
-```tsx
-import { SegmentedControl, SegmentedControlItem } from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-Uncontrolled: **`defaultValue`**. Controlled: **`value`** + **`onValueChange`**. Pass **`aria-label`** (or `aria-labelledby`) on the group.
-
-```tsx
-<SegmentedControl defaultValue="day" aria-label="Period">
-  <SegmentedControlItem value="day">Day</SegmentedControlItem>
-  <SegmentedControlItem value="week">Week</SegmentedControlItem>
-  <SegmentedControlItem value="month">Month</SegmentedControlItem>
-</SegmentedControl>
-```
-
-## With adjacent content
-
-The control only reports the selected value. Render adjacent UI yourself, or use [Tabs](/components/tabs/) when you need `tabpanel`s.
-
-```tsx
-const [view, setView] = useState("overview");
-
-<SegmentedControl value={view} onValueChange={setView} aria-label="View">
-  <SegmentedControlItem value="overview">Overview</SegmentedControlItem>
-  <SegmentedControlItem value="analytics">Analytics</SegmentedControlItem>
-</SegmentedControl>
-{view === "overview" ? <p>Overview</p> : <p>Analytics</p>}
-```
-
-## Preview
+The control reports selection. It does not own panels. For page or section panels with `tablist` / `tabpanel`, use **[Tabs](/components/tabs/)**. For site destinations with flyouts, use **[Navigation Menu](/components/navigation-menu/)**.
 
 <div class="not-content">
   <SegmentedControlPreview client:load />
 </div>
 
-## Props
+## Interface
 
-### `SegmentedControl`
+### SegmentedControl
 
-| Prop | Type | Description |
-| --- | --- | --- |
-| `defaultValue` | `string` | Initial value (uncontrolled) |
-| `value` | `string` | Selected value (controlled) |
-| `onValueChange` | `(value: string) => void` | Called when selection changes |
+| Prop | Default | Type |
+|------|---------|------|
+| `value` | — | `string` — Controlled selected value. Match this to a `SegmentedControlItem` `value`. |
+| `defaultValue` | `""` | `string` — Uncontrolled initial value. |
+| `onValueChange` | — | `(value: string) => void` — Called when selection changes. |
 
-Also accepts `div` attributes (`aria-label`, `className`, …).
+Also accepts native `div` attributes (`aria-label`, `className`, `style`).
 
-### `SegmentedControlItem`
+### SegmentedControlItem
 
-| Prop | Type | Description |
-| --- | --- | --- |
-| `value` | `string` | (Required) option id |
-| `disabled` | `boolean` | Disabled |
+| Prop | Default | Type |
+|------|---------|------|
+| `value` | — | `string` — Option identity. Required. |
+| `disabled` | `false` | `boolean` — Blocks activation. The item still shows its visual state. |
 
-## Accessibility
-
-- Root is `role="radiogroup"`; items are `role="radio"` with `aria-checked`.
-- Arrow keys / Home / End move focus and selection.
-- Provide an accessible name on the group (`aria-label` or `aria-labelledby`).
+Also accepts native `button` attributes (`className`, `aria-*`). Children are the visible label.

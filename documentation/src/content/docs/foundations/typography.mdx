@@ -1,0 +1,25 @@
+---
+title: Typography
+description: Semantic text roles on top of Foundation heading, title, body, and caption styles.
+sidebar:
+  order: 3
+---
+
+import { TypographyPreview } from "../../../components/foundation/TypographyPreview";
+
+# Typography
+
+Use `Text` with a **semantic role** (`headingMd`, `bodyMd`, `labelSm`). Each role aliases a Foundation preset in `typographys`. Do not pass `fontSize` or a raw Foundation key (`body2`) into product UI.
+
+<div class="not-content">
+  <TypographyPreview client:load />
+</div>
+
+```tsx
+<Text variant="headingMd" as="h2">
+  Section title
+</Text>
+<Text variant="bodyMd" as="p">
+  Body copy.
+</Text>
+```

@@ -1,73 +1,36 @@
 ---
 title: Label
-description: Accessible form label atom (shared with Field)
+description: Names a form control so the user knows what to enter.
 ---
 
 import LabelPreview from "../../../components/LabelPreview";
 
 # Label
 
-Styled native `<label>`. Web Kit **Label** `216:1681`. Default size **`md`** — same scale as [Field](/components/field/) / [Input](/components/input/).
+Label is a styled native `<label>`. Use it to name an input, select, or other control, and to associate that name with the control via `htmlFor`.
 
-`FieldLabel` / `FieldRequired` are thin wrappers around **`Label`** / **`LabelRequired`** so form shells and standalone labels share one atom.
-
-## Install & import
-
-```tsx
-import { Label, LabelRequired, Input } from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-Prefer composing `LabelRequired` (same pattern as Field):
-
-```tsx
-<>
-  <Label htmlFor="name">
-    Name
-    <LabelRequired />
-  </Label>
-  <Input id="name" name="name" />
-</>
-```
-
-`required` on `Label` still appends the same mark when you want a shorter form.
-
-## Preview
+`FieldLabel` and `FieldRequired` are the same atoms as `Label` and `LabelRequired`, so a standalone label and a [Field](/components/field/) shell stay in sync. For the full row (label, control, hint, error), prefer Field.
 
 <div class="not-content">
   <LabelPreview client:load />
 </div>
 
-## Props
+## Interface
 
-### `Label`
+### Label
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | Typography (`caption1` / `body2` / `body1`) |
-| `disabled` | `boolean` | `false` | Text `foregroundDisabled` |
-| `required` | `boolean` | `false` | Convenience — renders `LabelRequired` |
+| Prop | Default | Type |
+|------|---------|------|
+| `size` | `"md"` | `"sm"` \| `"md"` \| `"lg"` — Label type scale. |
+| `disabled` | `false` | `boolean` — Disabled label color. |
+| `required` | `false` | `boolean` — Appends `LabelRequired`. Prefer composing `<LabelRequired />`. |
 
-Also accepts **`LabelHTMLAttributes`** (`htmlFor`, `children`, `className`, …).
+Also accepts native `label` attributes (`htmlFor`, `children`, `className`).
 
-### `LabelRequired`
+### LabelRequired
 
-Decorative `*` (`aria-hidden`). Same atom as `FieldRequired`.
+| Prop | Default | Type |
+|------|---------|------|
+| `children` | `"*"` | `ReactNode` — Decorative required mark (`aria-hidden`). Same atom as `FieldRequired`. |
 
-## Examples
-
-### With Field
-
-```tsx
-<Field size="md">
-  <FieldLabel>
-    Email
-    <FieldRequired />
-  </FieldLabel>
-  <Input id="email" fullWidth />
-</Field>
-```
-
-`FieldLabel` inherits `Field`’s `size` unless you pass `size` on the label.
+Also accepts native `span` attributes (`className`).

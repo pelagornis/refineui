@@ -1,6 +1,6 @@
 ---
 title: Container
-description: Full-width column with horizontal padding
+description: A full-width column with horizontal Foundation padding.
 sidebar:
   order: 4
 ---
@@ -9,29 +9,17 @@ import ContainerPreview from "../../../components/layout/ContainerPreview";
 
 # Container
 
-Centers a full-width column and applies Foundation padding on the inline axis. There is no max-width token in Foundation yet.
+Container centers a full-width column and applies Foundation padding on the inline axis so page content does not sit on the viewport edges. There is no max-width token in Foundation yet — width follows the parent.
 
-## Import
-
-```tsx
-import { Container } from "@refineui/react";
-```
-
-## Features
+Use **[Box](/layout/box/)** when you need a surface (fill, radius, border), not page inset. Use **[Stack](/layout/stack/)** for the content inside.
 
 <div class="not-content">
   <ContainerPreview client:load />
 </div>
 
-The gray well is the parent. `Container` adds inset so page content does not sit on the edges.
+## Interface
 
-```tsx
-<Container padding="sizeXXLarge" as="main">
-  {children}
-</Container>
-```
-
-| Prop | Default |
-|------|---------|
-| `padding` | `sizeXXLarge` |
-| `as` | `div` |
+| Prop | Default | Type |
+|------|---------|------|
+| `padding` | `sizeXXLarge` | Foundation spacing key — Horizontal (inline) padding. |
+| `as` | `div` | Element type to render. |

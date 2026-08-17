@@ -1,113 +1,47 @@
 ---
 title: Stepper
-description: Multi-step progress rail — horizontal and vertical, token-composed
+description: Multi-step progress with a numbered indicator, title, and description.
 ---
 
 import StepperDemo from "../../../components/StepperDemo";
 
 # Stepper
 
-Visual progress across ordered steps. Built from existing Foundation tokens (circle indicator, progress-track connector, brand / surface colors, motion). Not a Web Kit primitive — same **token-based composition** approach as Carousel / Bubble.
+Stepper shows progress across ordered stages with a numbered indicator, title, and description. Use it when each stage needs that extra context — account setup, long wizards, settings flows.
 
-For a compact Progress track with markers on the rail, use **[ProgressStepper](/components/progress-stepper/)**.
-
-## Install & import
-
-```tsx
-import {
-  Stepper,
-  StepperList,
-  StepperItem,
-  StepperIndicator,
-  StepperContent,
-  StepperTitle,
-  StepperDescription,
-  StepperSeparator,
-} from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Stepper value={1} onValueChange={setStep} orientation="horizontal">
-  <StepperList>
-    <StepperItem value={0}>
-      <StepperIndicator>1</StepperIndicator>
-      <StepperContent>
-        <StepperTitle>Account</StepperTitle>
-        <StepperDescription>Profile & email</StepperDescription>
-      </StepperContent>
-    </StepperItem>
-    <StepperSeparator />
-    <StepperItem value={1}>
-      <StepperIndicator>2</StepperIndicator>
-      <StepperContent>
-        <StepperTitle>Plan</StepperTitle>
-        <StepperDescription>Billing cycle</StepperDescription>
-      </StepperContent>
-    </StepperItem>
-  </StepperList>
-</Stepper>
-```
-
-## Preview
+For a compact Progress track with markers on the rail (checkout headers, short wizards), use **[ProgressStepper](/components/progress-stepper/)** instead.
 
 <div class="not-content">
   <StepperDemo client:load />
 </div>
 
-## Composition
-
-```
-Stepper
-└── StepperList
-    ├── StepperItem
-    │   ├── StepperIndicator
-    │   └── StepperContent
-    │       ├── StepperTitle
-    │       └── StepperDescription
-    └── StepperSeparator
-```
-
-## States
-
-Each `StepperItem` derives `data-state` from its `value` vs the active step:
-
-| State | When | Visual |
-|-------|------|--------|
-| `complete` | `value < active` | Brand-filled indicator · brand connector after it |
-| `current` | `value === active` | Brand-subtle fill · scale + ring |
-| `upcoming` | `value > active` | Neutral outline · muted label |
-
-Pass a checkmark (e.g. `WebIcon` `checkmark`) as `StepperIndicator` children for completed steps — the indicator is a slot, not a convenience API.
-
-## Props
+## Interface
 
 ### Stepper
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `number` | — | Controlled active step |
-| `defaultValue` | `number` | `0` | Uncontrolled start |
-| `onValueChange` | `(value: number) => void` | — | Change callback; enables click / keyboard activation |
-| `orientation` | `"horizontal"` \| `"vertical"` | `"horizontal"` | Layout axis |
+| Prop | Default | Type |
+|------|---------|------|
+| `value` | — | `number` — Controlled active step. Match this to a `StepperItem` `value`. |
+| `defaultValue` | `0` | `number` — Uncontrolled initial step. |
+| `onValueChange` | — | `(value: number) => void` — Called when a step is activated. With this callback (or when uncontrolled), items are focusable and can be activated with click, Enter, or Space. |
+| `orientation` | `"horizontal"` | `"horizontal"` \| `"vertical"` — Layout axis. |
+
+Also accepts native `div` attributes (`className`, `style`, `aria-*`).
 
 ### StepperItem
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `number` | — | Step identity (required) |
-| `disabled` | `boolean` | `false` | Blocks activation |
+| Prop | Default | Type |
+|------|---------|------|
+| `value` | — | `number` — Step identity. Required. Compared with the stepper `value` to resolve state. |
+| `disabled` | `false` | `boolean` — Blocks activation. The step still shows its visual state. |
 
 ### Parts
 
 | Part | Role |
 |------|------|
-| `StepperList` | Ordered list (`ol`) |
-| `StepperIndicator` | 32px foundation circle |
-| `StepperContent` | Title + description column |
-| `StepperTitle` / `StepperDescription` | Label slots |
-| `StepperSeparator` | Connector; turns brand after a `complete` peer |
-
-Controlled without `onValueChange` is display-only. With `onValueChange` (or uncontrolled), steps are focusable and activatable via click / Enter / Space.
+| `StepperList` | Ordered list (`ol`). |
+| `StepperIndicator` | 32px circle. Render a number or icon as children. |
+| `StepperContent` | Title + description column. |
+| `StepperTitle` | Stage name. |
+| `StepperDescription` | Optional extra line. |
+| `StepperSeparator` | Connector between items. Turns brand after a `complete` peer. |

@@ -53,7 +53,7 @@ export function AlertActions({ className, ...props }: AlertActionsProps) {
 }
 
 export function AlertAction({ className, type = "button", ...props }: AlertActionProps) {
-    return <Button variant="primary" size="sm" type={type} className={className} {...props} />;
+    return <Button type={type} className={className} {...props} variant="primary" size="sm" />;
 }
 
 export function AlertClose({ className, type = "button", children, ...props }: AlertCloseProps) {

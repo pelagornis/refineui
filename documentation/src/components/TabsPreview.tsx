@@ -1,84 +1,39 @@
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-    Tabs,
-    TabsContent,
-    TabsList,
-    TabsTrigger,
-} from "@refineui/react";
-import PreviewFrame from "./PreviewFrame";
+import { Tabs, TabsContent, TabsList, TabsTrigger, Text } from "@refineui/react";
+import { Look, Looks } from "./PreviewFrame";
 
-/**
- * Underline Tabs — page / section panels with a sliding brand indicator.
- */
 export default function TabsPreview() {
     return (
-        <PreviewFrame minHeight="420px">
-            <Tabs defaultValue="overview" className="w-full max-w-[400px]">
-                <TabsList>
-                    <TabsTrigger value="overview">Overview</TabsTrigger>
-                    <TabsTrigger value="analytics">Analytics</TabsTrigger>
-                    <TabsTrigger value="reports">Reports</TabsTrigger>
-                    <TabsTrigger value="settings">Settings</TabsTrigger>
-                </TabsList>
-                <TabsContent value="overview">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Overview</CardTitle>
-                            <CardDescription>
-                                View your key metrics and recent project activity. Track progress across all your active
-                                projects.
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="refineui-typo-body-4 text-refineui-alias-foreground-secondary">
-                            You have 12 active projects and 3 pending tasks.
-                        </CardContent>
-                    </Card>
-                </TabsContent>
-                <TabsContent value="analytics">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Analytics</CardTitle>
-                            <CardDescription>
-                                Track performance and user engagement metrics. Monitor trends and identify growth
-                                opportunities.
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="refineui-typo-body-4 text-refineui-alias-foreground-secondary">
-                            Page views are up 25% compared to last month.
-                        </CardContent>
-                    </Card>
-                </TabsContent>
-                <TabsContent value="reports">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Reports</CardTitle>
-                            <CardDescription>
-                                Generate and download your detailed reports. Export data in multiple formats for analysis.
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="refineui-typo-body-4 text-refineui-alias-foreground-secondary">
-                            You have 5 reports ready and available to export.
-                        </CardContent>
-                    </Card>
-                </TabsContent>
-                <TabsContent value="settings">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Settings</CardTitle>
-                            <CardDescription>
-                                Manage your account preferences and options. Customize your experience to fit your needs.
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="refineui-typo-body-4 text-refineui-alias-foreground-secondary">
-                            Configure notifications, security, and themes.
-                        </CardContent>
-                    </Card>
-                </TabsContent>
-            </Tabs>
-        </PreviewFrame>
+        <Looks>
+            <Look align="stretch">
+                <Tabs defaultValue="overview" className="w-full">
+                    <TabsList>
+                        <TabsTrigger value="overview">Overview</TabsTrigger>
+                        <TabsTrigger value="analytics">Analytics</TabsTrigger>
+                        <TabsTrigger value="reports">Reports</TabsTrigger>
+                        <TabsTrigger value="settings">Settings</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="overview">
+                        <Text as="p" variant="bodyMd" className="m-0 text-refineui-alias-foreground-secondary">
+                            12 active projects
+                        </Text>
+                    </TabsContent>
+                    <TabsContent value="analytics">
+                        <Text as="p" variant="bodyMd" className="m-0 text-refineui-alias-foreground-secondary">
+                            Views up 25%
+                        </Text>
+                    </TabsContent>
+                    <TabsContent value="reports">
+                        <Text as="p" variant="bodyMd" className="m-0 text-refineui-alias-foreground-secondary">
+                            5 reports ready
+                        </Text>
+                    </TabsContent>
+                    <TabsContent value="settings">
+                        <Text as="p" variant="bodyMd" className="m-0 text-refineui-alias-foreground-secondary">
+                            Notifications and security
+                        </Text>
+                    </TabsContent>
+                </Tabs>
+            </Look>
+        </Looks>
     );
 }

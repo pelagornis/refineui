@@ -1,90 +1,42 @@
 ---
 title: Scroll Area
-description: Custom scrollbar viewport — hover or always, token-composed
+description: Overflow viewport with a thin custom scrollbar — hover or always.
 ---
 
 import ScrollAreaDemo from "../../../components/ScrollAreaDemo";
 
 # Scroll Area
 
-Overflow container with a thin custom scrollbar. Built from Foundation spacing, radius, surface, and motion tokens. Not a Web Kit primitive — same **token-based composition** approach as Carousel / Bubble / Stepper.
+Scroll Area is an overflow container with a thin custom scrollbar. Use it when a panel has a finite height and content that may grow past it — lists, long copy, or a nested table.
 
-## Install & import
-
-```tsx
-import {
-  ScrollArea,
-  ScrollAreaViewport,
-  ScrollAreaScrollbar,
-  ScrollAreaThumb,
-} from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<ScrollArea className="h-64">
-  <ScrollAreaViewport>
-    {/* long content */}
-  </ScrollAreaViewport>
-  <ScrollAreaScrollbar orientation="vertical">
-    <ScrollAreaThumb />
-  </ScrollAreaScrollbar>
-</ScrollArea>
-```
-
-Set a finite height (or max-height) on `ScrollArea` — the viewport fills the root and scrolls when content overflows.
-
-## Preview
+The viewport still scrolls with wheel, trackpad, and keyboard. The native bar is hidden; you compose a track and thumb. For split panes that change size, use **[Resizable](/components/resizable/)**. For a wide table, wrap **[Table](/components/table/)** in a fixed-height Scroll Area when you also need vertical overflow.
 
 <div class="not-content">
   <ScrollAreaDemo client:load />
 </div>
 
-## Composition
-
-```
-ScrollArea
-├── ScrollAreaViewport
-└── ScrollAreaScrollbar (orientation)
-    └── ScrollAreaThumb
-```
-
-Compose a second `ScrollAreaScrollbar` with `orientation="horizontal"` when both axes overflow.
-
-## Props
+## Interface
 
 ### ScrollArea
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `type` | `"hover"` \| `"always"` | `"hover"` | Show scrollbar on hover/focus/scroll, or always when overflow exists |
+| Prop | Default | Type |
+|------|---------|------|
+| `type` | `"hover"` | `"hover"` \| `"always"` — Show the scrollbar on hover, focus, or scroll, or always when overflow exists. |
+
+Also accepts native `div` attributes (`className`, `style`, `aria-*`).
 
 ### ScrollAreaScrollbar
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `orientation` | `"vertical"` \| `"horizontal"` | `"vertical"` | Scroll axis |
+| Prop | Default | Type |
+|------|---------|------|
+| `orientation` | `"vertical"` | `"vertical"` \| `"horizontal"` — Scroll axis. |
+
+Also accepts native `div` attributes.
 
 ### Parts
 
 | Part | Role |
 |------|------|
-| `ScrollAreaViewport` | Scrollable region (native overflow; native bar hidden) |
-| `ScrollAreaScrollbar` | Track; click jumps the thumb |
-| `ScrollAreaThumb` | Draggable thumb sized to the visible ratio |
-
-## Behavior
-
-- Native scrollbar is hidden; pointer wheel / trackpad / keyboard still scroll the viewport.
-- Outer rail is inset (`sizeXXXSmall`) with an inner **track** fill (`backgroundSurfaceSelected`, pill radius).
-- Rail thickness is spacing `sizeMedium` (10px) — track and thumb share the full width.
-- Thumb length/offset use px against that inner track (`clientSize / scrollSize`), floored at spacing `sizeXLarge`.
-- Thumb uses `borderStrong` → `foregroundSecondary` on hover / drag.
-- `type="hover"` fades the bar in on root hover, viewport focus, scroll, or thumb drag.
-
-## Accessibility
-
-- Viewport is focusable (`tabIndex={0}`) so keyboard users can scroll with arrow keys / Page Up·Down.
-- Prefer labeling long regions with `aria-label` / `aria-labelledby` on `ScrollArea` or the viewport when the purpose is not obvious from surrounding copy.
+| `ScrollAreaViewport` | Scrollable region. Native overflow; native bar hidden. Focusable. |
+| `ScrollAreaScrollbar` | Track. Click jumps the thumb. |
+| `ScrollAreaThumb` | Draggable thumb sized to the visible ratio. |

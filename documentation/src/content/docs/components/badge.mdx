@@ -1,49 +1,27 @@
 ---
 title: Badge
-description: Badge — label / number layout
+description: Short status or count next to a label, icon, or control.
 ---
 
 import BadgePreview from "../../../components/BadgePreview";
 
 # Badge
 
-Short status or count label. Web Kit **Badge** `270:3353` · **Badge Number** `276:515`. Hover and pressed states come from **`refineui.css`**.
+Badge is a compact label for status or a numeric count. Use it next to a heading, tab, avatar, or control when the extra signal should stay secondary to the main text.
 
-## Install & import
-
-```tsx
-import { Badge } from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Badge variant="default">New</Badge>
-<Badge layout="number" variant="danger">
-  9
-</Badge>
-```
-
-## Preview
+A `label` badge is a capsule for a word or two (`New`, `Beta`). A `number` badge is circular and is meant for a count. For a keyword or filter the user can remove, use **[Tag](/components/tag/)**.
 
 <div class="not-content">
   <BadgePreview client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `"default"` \| `"neutral"` \| `"outline"` \| `"success"` \| `"warning"` \| `"danger"` | — | Color pairing |
-| `layout` | `"label"` \| `"number"` | `"label"` | Capsule vs circular count |
+### Badge
 
-## Examples
+| Prop | Default | Type |
+|------|---------|------|
+| `variant` | `"default"` | `"default"` \| `"neutral"` \| `"outline"` \| `"success"` \| `"warning"` \| `"danger"` — Color pairing for the badge. |
+| `layout` | `"label"` | `"label"` \| `"number"` — Capsule text versus circular count. |
 
-### Count badge
-
-```tsx
-<Badge layout="number" variant="danger" aria-label="3 unread">
-  3
-</Badge>
-```
+Also accepts native `span` attributes (`className`, `style`, `aria-*`).

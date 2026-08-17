@@ -1,0 +1,32 @@
+---
+title: Elevation
+description: Light and dark shadow recipes from Foundation — cards, popovers, and floating surfaces.
+sidebar:
+  order: 6
+---
+
+import { ElevationPreview } from "../../../components/foundation/ElevationPreview";
+
+# Elevation
+
+Each step has two Foundation recipes: **Light** (`Elevation/Light/Shadow N`) and **Dark** (`Elevation/Dark/Shadow N`). CSS emits both, plus a theme-switching alias.
+
+| Use | CSS |
+|-----|-----|
+| Follows theme | `--refineui-elevation-8` |
+| Light only | `--refineui-elevation-8light` |
+| Dark only | `--refineui-elevation-8dark` |
+
+Prefer the bare variable in product UI. Use `*light` / `*dark` when the surface must stay in one mode.
+
+Both recipes are `primaryBlack`. Light is 5% / 4% opacity; Dark is 20% / 15%. On a dark canvas that Dark halo disappears — the boards below sit on `surfaceSunken` so the ramp is readable. In product dark UI, lift also comes from `surfaceElevated` vs `backgroundPrimary`.
+
+<div class="not-content">
+  <ElevationPreview client:load />
+</div>
+
+```css
+.panel {
+  box-shadow: var(--refineui-elevation-8);
+}
+```

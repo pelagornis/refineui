@@ -1,107 +1,40 @@
 ---
 title: Search Field
-description: Soft search bar — icon, query, and clear
+description: Type a query — leading icon, field, and clear when there is text.
 ---
 
 import SearchFieldPreview from "../../../components/SearchFieldPreview";
 
 # Search Field
 
-Composable search control. Soft plate matches **Input OTP** slots (`surfaceSelected`). One size: `control-height-md` (44px), `roundedXLarge`, horizontal padding `sizeLarge` (16px). Search glyph is regular `iconSizes.medium` (24px); clear is filled `iconSizes.small` (20px). No Web Kit COMPONENT_SET; visuals use **`@refineui/tokens`** only.
+Search Field is a composable search control: a leading icon, a query input, and an optional clear button. Use it for filtering a list, a command palette row, or a page search.
 
-Search is not a validated text field — no error / success chrome.
-
-## Install & import
-
-```tsx
-import {
-  SearchField,
-  SearchFieldClear,
-  SearchFieldIcon,
-  SearchFieldInput,
-} from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-const [query, setQuery] = useState("");
-
-<SearchField value={query} onValueChange={setQuery}>
-  <SearchFieldIcon />
-  <SearchFieldInput placeholder="Search" />
-  <SearchFieldClear />
-</SearchField>
-```
-
-## Preview
+It is not a validated text field — there is no error or success chrome. For that, use **[Input](/components/input/)** inside **[Field](/components/field/)**. The soft plate matches **[Input OTP](/components/input-otp/)** slots.
 
 <div class="not-content">
   <SearchFieldPreview client:load />
 </div>
 
-## Composition
-
-```
-SearchField
-├── SearchFieldIcon (optional — defaults to search glyph)
-├── SearchFieldInput
-└── SearchFieldClear (optional — shown when the query is not empty)
-```
-
-## Signature
-
-Same soft-plate states as [Input OTP](/components/input-otp/) slots (light mode):
-
-| State | Token | Light |
-| --- | --- | --- |
-| **Rest** | `backgroundSurfaceSelected` | neutral200 |
-| **Hover** | `backgroundSurfaceActive` | neutral150 |
-| **Focus** | `backgroundSurfaceSelected` + `borderDefault` | grey plate + thin border |
-| **Disabled** | `backgroundSurfaceDisabled` | neutral150 |
-
-Focus keeps the soft plate and only adds a thin `borderDefault` outline (same as OTP slots).
-
-## Props
+## Interface
 
 ### SearchField
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `string` | — | Controlled query |
-| `defaultValue` | `string` | `""` | Uncontrolled initial query |
-| `onValueChange` | `(value: string) => void` | — | Query callback |
-| `disabled` | `boolean` | `false` | Disables input and clear |
-| `appearance` | `"filled" \| "plain"` | `"filled"` | `filled` = sunken control; `plain` = flush (e.g. Command) |
-| `id` | `string` | — | Applied to the inner input |
-| `aria-label` | `string` | `"Search"` | Accessible name for the input |
+| Prop | Default | Type |
+|------|---------|------|
+| `value` | — | `string` — Controlled query. |
+| `defaultValue` | `""` | `string` — Uncontrolled initial query. |
+| `onValueChange` | — | `(value: string) => void` — Called when the query changes. |
+| `disabled` | `false` | `boolean` — Disables the input and clear. |
+| `appearance` | `"filled"` | `"filled"` \| `"plain"` — `filled` is a sunken control; `plain` is flush (for example Command). |
+| `id` | — | `string` — Applied to the inner input. |
+| `aria-label` | `"Search"` | `string` — Accessible name for the input. |
+
+Also accepts native `div` attributes except `onChange` and `defaultValue` (`className`, `style`).
 
 ### SearchFieldInput
 
-Extends native `<input>` attributes except `type` / `value` / `size` / `disabled` (those come from the root). Renders `type="search"`.
+Extends native `<input>` attributes except `type`, `value`, `defaultValue`, `size`, and `disabled` (those come from the root). Renders `type="search"`. `autoComplete` defaults to `"off"`; `enterKeyHint` defaults to `"search"`.
 
 ### SearchFieldIcon / SearchFieldClear
 
-Optional `children` replace the default search / dismiss glyphs.
-
-## Accessibility
-
-- Root `aria-label` defaults to `"Search"` and is forwarded to `SearchFieldInput`.
-- **Escape** clears a non-empty query and keeps focus in the field.
-- `SearchFieldClear` is `aria-label="Clear search"` and focuses the input after clearing.
-- Native browser search decorations are hidden; use `SearchFieldClear` instead.
-
-## Examples
-
-### Custom leading icon
-
-```tsx
-<SearchField>
-  <SearchFieldIcon>
-    <WebIcon name="filter" />
-  </SearchFieldIcon>
-  <SearchFieldInput placeholder="Filter" />
-  <SearchFieldClear />
-</SearchField>
-```
+Optional `children` replace the default search / dismiss glyphs. `SearchFieldClear` accepts native `button` attributes except `type` (`aria-label` defaults to `"Clear search"`).

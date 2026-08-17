@@ -1,0 +1,22 @@
+---
+title: Opacity
+description: Shared opacity steps and overlay helpers — disabled wash and backdrop scrim.
+sidebar:
+  order: 8
+---
+
+import { OpacityPreview } from "../../../components/foundation/OpacityPreview";
+
+# Opacity
+
+Disabled wash is `opacityDisabled`. Page dimmers use `surfaceOverlay` / `--refineui-overlay-backdrop` (see [Color](/foundations/color/)), not a custom alpha.
+
+<div class="not-content">
+  <OpacityPreview client:load />
+</div>
+
+```css
+.scrim {
+  background: var(--refineui-overlay-backdrop);
+}
+```

@@ -1,0 +1,22 @@
+---
+title: Z-index
+description: Stacking layers for content, overlays, popups, toasts, and debug.
+sidebar:
+  order: 9
+---
+
+import { ZIndexPreview } from "../../../components/foundation/ZIndexPreview";
+
+# Z-index
+
+Modal and drawer → `overlay`. Menu and popover → `popup`. Toast → `messages`. Do not invent `z-index: 9999`.
+
+<div class="not-content">
+  <ZIndexPreview client:load />
+</div>
+
+```css
+.menu {
+  z-index: var(--refineui-z-popup);
+}
+```

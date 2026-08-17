@@ -1,110 +1,34 @@
 ---
 title: Breadcrumb
-description: Path navigation — links and ellipsis
+description: Path from the home or parent of the current page.
 ---
 
 import BreadcrumbPreview from "../../../components/BreadcrumbPreview";
 
 # Breadcrumb
 
-Shows the path to the current location. Follows Web Kit **Breadcrumb** `283:688` (Figma: Caption1 Medium, `gap` sizeMedium, `py` sizeSmall, `/` separator, link tertiary · current primary).  
-Use the usual **composed component** pattern. For top-level site navigation with dropdown panels, use [Navigation Menu](/components/navigation-menu/).
+Breadcrumb shows where the current page sits in the hierarchy. Use it under the header so the user can step back toward home without using the browser back button.
 
-## Install & import
-
-```tsx
-import {
-  breadcrumbLinkClassName,
-  Breadcrumb,
-  BreadcrumbEllipsis,
-  BreadcrumbEllipsisTrigger,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-  Menu,
-  MenuItem,
-  MenuList,
-  MenuPopover,
-  MenuTrigger,
-} from "@refineui/react";
-```
-
-## Basic usage
-
-```tsx
-<Breadcrumb>
-  <BreadcrumbList>
-    <BreadcrumbItem>
-      <BreadcrumbLink href="/">Home</BreadcrumbLink>
-    </BreadcrumbItem>
-    <BreadcrumbSeparator />
-    <BreadcrumbItem>
-      <BreadcrumbLink href="/docs">Docs</BreadcrumbLink>
-    </BreadcrumbItem>
-    <BreadcrumbSeparator />
-    <BreadcrumbItem>
-      <BreadcrumbPage>Components</BreadcrumbPage>
-    </BreadcrumbItem>
-  </BreadcrumbList>
-</Breadcrumb>
-```
-
-## With Next.js `Link`
-
-`BreadcrumbLink` is a semantic `<a>`. In the App Router, pass **`breadcrumbLinkClassName`** to `Link` for the same Web Kit styles.
-
-```tsx
-import Link from "next/link";
-import { breadcrumbLinkClassName } from "@refineui/react";
-
-<Link href="/" className={breadcrumbLinkClassName}>
-  Home
-</Link>
-```
-
-## Preview
+Each previous step is a link; the last step is the current page. For top-level site destinations with flyouts, use **[Navigation Menu](/components/navigation-menu/)**. For a single in-copy URL, use **[Link](/components/link/)**.
 
 <div class="not-content">
   <BreadcrumbPreview client:load />
 </div>
 
-## Building blocks
+## Interface
 
-| Component | Role |
-|-----------|------|
-| `Breadcrumb` | Root `nav` (`data-refineui="breadcrumb"`) |
-| `BreadcrumbList` | `ol` list (flex·wrap) |
-| `BreadcrumbItem` | Segment `li` (default `overflow-clip` — see ellipsis note below) |
-| `BreadcrumbLink` | Previous-step link (`a`; Next.js uses `breadcrumbLinkClassName`) |
-| `BreadcrumbPage` | Current page (`aria-current="page"`) |
-| `BreadcrumbSeparator` | Separator `li` (default `/`) |
-| `BreadcrumbEllipsis` | ⋯ icon only (`span`, static) |
-| `BreadcrumbEllipsisTrigger` | Web Kit ellipsis `button` (`ref` pass-through) — use with `MenuTrigger` / Dropdown `trigger` |
+### Parts
 
-### Ellipsis + menu (Long)
+| Part | Role |
+|------|------|
+| `Breadcrumb` | Root `nav`. |
+| `BreadcrumbList` | Ordered list (`ol`). |
+| `BreadcrumbItem` | Segment (`li`). Defaults to clipping overflow — set `overflow-visible` on a menu cell. |
+| `BreadcrumbLink` | Previous-step link (`a`). |
+| `BreadcrumbPage` | Current page. |
+| `BreadcrumbSeparator` | Separator (`li`). Default `/`. |
+| `BreadcrumbEllipsis` | Static ⋯ (`span`). |
+| `BreadcrumbEllipsisTrigger` | ⋯ `button` for a menu trigger. Forwards `ref`. |
+| `breadcrumbLinkClassName` | Class string to style a custom `Link` like `BreadcrumbLink`. |
 
-Figma **Long** is link / ⋯ / link / link / current. **`BreadcrumbEllipsisTrigger`** (`button[data-refineui="breadcrumb-ellipsis"]`) matches `refineui.css` hover/focus. Wrapping with **`Button`** can misalign heights vs Web Kit tokens.
-
-**Menu panel:** Prefer the **`Menu`** compound API (Web Kit `633:4268`; see `MenuPreview`).
-
-**Important:** `BreadcrumbItem` defaults to **`overflow-clip`** per cell, so an **`absolute`** **`Menu`** panel can clip when expanding vertically. Add **`className="overflow-visible"`** on the ⋯ cell.
-
-**`Dropdown`** portals the menu to **`document`**, so it usually avoids this clipping.
-
-```tsx
-<BreadcrumbItem className="overflow-visible">
-  <Menu positioning={{ autoSize: true }}>
-    <MenuTrigger>
-      <BreadcrumbEllipsisTrigger aria-label="Path menu" />
-    </MenuTrigger>
-    <MenuPopover>
-      <MenuList className="w-refineui-menu-panel-width">
-        <MenuItem onClick={() => {}}>Docs</MenuItem>
-        <MenuItem onClick={() => {}}>Guide</MenuItem>
-      </MenuList>
-    </MenuPopover>
-  </Menu>
-</BreadcrumbItem>
-```
+Parts accept the matching native attributes (`nav`, `ol`, `li`, `a`, `span`, `button`).

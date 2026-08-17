@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Box, Text } from "@refineui/react";
+import { Text } from "@refineui/react";
 
 const tones = [
     "bg-refineui-alias-background-info-subtle text-refineui-alias-foreground-info",
@@ -29,18 +29,5 @@ export function DemoBlock({
         >
             <Text variant="labelMd">{children}</Text>
         </div>
-    );
-}
-
-export function DemoCanvas({ children }: { children: ReactNode }) {
-    return (
-        <Box
-            padding="sizeXLarge"
-            background="surfaceSunken"
-            radius="roundedXLarge"
-            className="w-full"
-        >
-            {children}
-        </Box>
     );
 }

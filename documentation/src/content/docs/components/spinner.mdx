@@ -1,45 +1,28 @@
 ---
 title: Spinner
-description: Loading spinner — sizes and label placement
+description: Indicates that a process is in progress.
 ---
 
 import SpinnerPreview from "../../../components/SpinnerPreview";
 
 # Spinner
 
-Indicates loading state. Follows Web Kit **Spinner** `550:3669` size scale.
+Spinner shows that work is happening and the duration is not known. Use it on a button, a panel, or a page while a request or job runs.
 
-## Install & import
-
-```tsx
-import { Spinner } from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Spinner size="md" />
-```
-
-## Preview
+For content that has a known layout but is not ready, use **[Skeleton](/components/skeleton/)**. For a known percent, use **[Progress](/components/progress/)**.
 
 <div class="not-content">
   <SpinnerPreview client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `size` | `"xs"` … `"xxl"` | `"md"` | Diameter and ring width |
-| `label` | `ReactNode` | — | Shown when set |
-| `labelPosition` | `"left"` \| `"right"` \| `"top"` \| `"bottom"` | `"right"` | Label placement |
+### Spinner
 
-## Examples
+| Prop | Default | Type |
+|------|---------|------|
+| `size` | `"md"` | `"xs"` \| `"sm"` \| `"md"` \| `"lg"` \| `"xl"` \| `"xxl"` — Diameter and ring width. |
+| `label` | — | `ReactNode` — Visible status copy. When set, shown beside or around the ring. |
+| `labelPosition` | `"right"` | `"left"` \| `"right"` \| `"top"` \| `"bottom"` — Placement of `label` relative to the ring. |
 
-### Label on top
-
-```tsx
-<Spinner size="lg" label="Loading" labelPosition="top" />
-```
+Also accepts native `div` attributes (`className`, `style`, `aria-*`). Children are not used.

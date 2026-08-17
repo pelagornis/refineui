@@ -1,66 +1,46 @@
 ---
 title: Field
-description: Label, control, hint, and error wrapper
+description: Label, control, hint, and error — the shell around a form control.
 ---
 
 import FieldPreview from "../../../components/FieldPreview";
 
 # Field
 
-Wraps a form field as **label + control + optional hint/error**. Matches Web Kit **Field** `525:1074`.
+Field wraps a form control as a label, the control itself, and optional hint or error copy. Use it whenever a field needs a name and supporting text in one stack.
 
-`FieldLabel` / `FieldRequired` reuse the [Label](/components/label/) atom (`Label` / `LabelRequired`) so size and required marks stay in sync.
-
-## Install & import
-
-```tsx
-import { Field, FieldError, FieldHint, FieldLabel, FieldRequired, Input } from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Field>
-  <FieldLabel>
-    Email
-    <FieldRequired />
-  </FieldLabel>
-  <Input id="email" name="email" type="email" fullWidth />
-  <FieldHint>Used for sign-in.</FieldHint>
-</Field>
-```
-
-## Preview
+`FieldLabel` and `FieldRequired` reuse **[Label](/components/label/)** (`Label` / `LabelRequired`) so size and required marks stay in sync. Place [Input](/components/input/), [Select](/components/select/), [Textarea](/components/textarea/), [Input OTP](/components/input-otp/), or another control as children. Child controls inherit Field `size` when they omit their own.
 
 <div class="not-content">
   <FieldPreview client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `size` | `"sm"` \| `"md"` \| `"lg"` | `"lg"` | Label typography (sm→caption1, md→body2, lg→body1). Child controls inherit when `size` is omitted. |
-| `children` | `ReactNode` | — | Slots (`FieldLabel`, `FieldHint`, `FieldError`, etc.) |
+### Field
 
-Place [Input](/components/input/), [Select](/components/select/), [Textarea](/components/textarea/), etc. as children.
+| Prop | Default | Type |
+|------|---------|------|
+| `size` | `"lg"` | `"sm"` \| `"md"` \| `"lg"` — Label type and inherited control size when children omit `size`. |
 
-## Examples
+Also accepts native `div` attributes (`className`, `children`, `style`).
 
-### Error state
+### FieldLabel
 
-```tsx
-<Field>
-  <FieldLabel>
-    Password
-    <FieldRequired />
-  </FieldLabel>
-  <Input id="pw" type="password" error fullWidth />
-  <FieldError>Include upper and lower case letters.</FieldError>
-</Field>
-```
+Same props as [Label](/components/label/). `size` defaults from the nearest Field.
 
-### Hint only (no label)
+### FieldRequired
 
-You can use `FieldHint` without `FieldLabel`. For screen readers, use `aria-label` on the control or a separate [Label](/components/label/).
+Same as `LabelRequired` — decorative `*` (`aria-hidden`).
+
+### FieldHint
+
+| Prop | Default | Type |
+|------|---------|------|
+| `children` | — | `ReactNode` — Helper copy under the control. |
+
+### FieldError
+
+| Prop | Default | Type |
+|------|---------|------|
+| `children` | — | `ReactNode` — Validation message. Renders with `role="alert"`. |

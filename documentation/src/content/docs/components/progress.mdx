@@ -1,53 +1,28 @@
 ---
 title: Progress
-description: Progress bar — sm / lg
+description: Continuous bar that shows how far a determinate task has gone.
 ---
 
 import ProgressPreview from "../../../components/ProgressPreview";
 
 # Progress
 
-Shows task progress. Follows Web Kit **Progress bar** `452:3994`.
+Progress is a determinate bar. Use it when you know how far work has gone and how far is left — an upload, a download, or a percent complete.
 
-For labeled steps on the same Progress track, use **[ProgressStepper](/components/progress-stepper/)**.
-
-## Install & import
-
-```tsx
-import { Progress } from "@refineui/react";
-```
-
-## Basic usage
-
-```tsx
-<Progress value={45} max={100} />
-```
-
-## Preview
+There are no named stages. For stages on a compact rail, use **[ProgressStepper](/components/progress-stepper/)**. For numbered stages with a title and description, use **[Stepper](/components/stepper/)**. For an unknown wait, use **[Spinner](/components/spinner/)**.
 
 <div class="not-content">
   <ProgressPreview client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `number` | (required) | Current value |
-| `max` | `number` | `100` | Maximum |
-| `size` | `"sm"` \| `"lg"` | `"sm"` | Track height (2px / 4px) |
+### Progress
 
-Fill color matches Web Kit: single `primaryBlack` tone.
+| Prop | Default | Type |
+|------|---------|------|
+| `value` | — | `number` — Current amount. Required. Mapped to fill width against `max`. |
+| `max` | `100` | `number` — Maximum amount. Used for fill percent and `aria-valuemax`. |
+| `size` | `"sm"` | `"sm"` \| `"lg"` — Track height. |
 
-## Examples
-
-### With a percentage label
-
-Layout the label outside the component.
-
-```tsx
-<div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-  <Progress value={72} style={{ flex: 1 }} />
-  <span>72%</span>
-</div>
-```
+Also accepts native `div` attributes (`className`, `style`, `aria-*`).

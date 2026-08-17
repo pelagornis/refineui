@@ -1,6 +1,6 @@
 ---
 title: Box
-description: Padding, fill, radius, border
+description: A surface — padding, fill, radius, and border from Foundation tokens.
 sidebar:
   order: 5
 ---
@@ -9,42 +9,23 @@ import BoxPreview from "../../../components/layout/BoxPreview";
 
 # Box
 
-A surface. Padding, semantic fill, radius, and border — all Foundation tokens.
+Box is a surface. Use it when a region needs padding, a semantic fill, radius, and an optional border — all Foundation tokens. It does not add layout on its own; put a **[Stack](/layout/stack/)** or **[Grid](/layout/grid/)** inside.
 
-## Import
-
-```tsx
-import { Box } from "@refineui/react";
-```
-
-## Features
+For page-level horizontal inset with no fill, use **[Container](/layout/container/)**.
 
 <div class="not-content">
   <BoxPreview client:load />
 </div>
 
-**Surface** — `padding` + `background` + `radius` + `border` on one node.
+## Interface
 
-**Fill** — `background` takes semantic `background*` / `surface*` names.
-
-```tsx
-<Box
-  padding="sizeXLarge"
-  background="backgroundPrimary"
-  radius="roundedXLarge"
-  border="strokeWidthThin"
-  borderColor="borderDefault"
-  as="section"
->
-  {children}
-</Box>
-```
-
-| Prop | Tokens |
-|------|--------|
-| `padding` · `paddingX` · `paddingY` | `sizeNone` … `sizeXXXLarge` |
-| `background` | `background*` / `surface*` |
-| `radius` | `roundedNone` … `roundedCircle` |
-| `border` | `strokeWidthNone` … `strokeWidthThickest` |
-| `borderColor` | `border*` (`borderDefault` if only `border` is set) |
-| `as` | element (`div`) |
+| Prop | Default | Type |
+|------|---------|------|
+| `padding` | — | Foundation spacing key — Padding on all sides. |
+| `paddingX` | — | Foundation spacing key — Inline padding. Overrides `padding` on that axis. |
+| `paddingY` | — | Foundation spacing key — Block padding. Overrides `padding` on that axis. |
+| `background` | — | Semantic `background*` / `surface*` color name. |
+| `radius` | — | Foundation radius key (`roundedNone` … `roundedCircle`). |
+| `border` | — | Foundation stroke width. When set without `borderColor`, color is `borderDefault`. |
+| `borderColor` | — | Semantic `border*` color name. |
+| `as` | `div` | Element type to render. |

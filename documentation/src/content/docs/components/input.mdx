@@ -1,71 +1,30 @@
 ---
 title: Input
-description: Single-line text input — size and validation state
+description: Single-line text field for names, emails, passwords, and short values.
 ---
 
 import InputPreview from "../../../components/InputPreview";
 
 # Input
 
-Single-line text field. Follows Web Kit **Input** `518:7373` and `docs/design-specs-web-kit.md` §2. Focus, placeholder, and disabled styles pair with **`refineui.css`** `[data-refineui="input"]` rules.
+Input is a single-line text field. Use it when the answer is a short string — an email, a name, a password, or a number.
 
-## Install & import
-
-```tsx
-import { Input } from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Input name="email" type="email" placeholder="name@example.com" autoComplete="email" />
-```
-
-## Preview
+Pair it with **[Label](/components/label/)** or wrap it in **[Field](/components/field/)** for a label, hint, and error message. For multi-line copy, use **[Textarea](/components/textarea/)**. For a query with an icon and clear, use **[Search Field](/components/search-field/)**. For a bounded integer with steppers, use **[SpinButton](/components/spin-button/)**.
 
 <div class="not-content">
   <InputPreview client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `size` | `"sm"` \| `"md"` \| `"lg"` | `"lg"` | Height, padding, radius, typography (not the HTML `size` attribute). Inherits from [Field](/components/field/) when wrapped and `size` is omitted. |
-| `error` | `boolean` | `false` | Error border |
-| `success` | `boolean` | `false` | Success border |
-| `fullWidth` | `boolean` | `false` | Full width |
-| `disabled` | `boolean` | — | Disabled background and border |
+### Input
 
-Also supports **`InputHTMLAttributes`** (`type`, `value`, `onChange`, `name`, `id`, `aria-*`, etc.).
+| Prop | Default | Type |
+|------|---------|------|
+| `size` | `"lg"` | `"sm"` \| `"md"` \| `"lg"` — Height, padding, radius, and type. Not the HTML `size` attribute. Inherits from [Field](/components/field/) when wrapped and `size` is omitted. |
+| `error` | `false` | `boolean` — Error border. Also sets `aria-invalid`. |
+| `success` | `false` | `boolean` — Success border. |
+| `fullWidth` | `false` | `boolean` — Stretch to the parent width. |
+| `disabled` | — | `boolean` — Disabled background and border. |
 
-## Examples
-
-### Password
-
-```tsx
-<Input type="password" placeholder="Password" autoComplete="current-password" />
-```
-
-### With validation copy (Field recommended)
-
-Use `error` for border only; place messages in [Field](/components/field/) error slot or adjacent text.
-
-```tsx
-<Input id="pw" type="password" error aria-invalid />
-<p role="alert">Use at least 8 characters.</p>
-```
-
-### Number
-
-```tsx
-<Input type="number" inputMode="numeric" min={0} />
-```
-
-For a search control with icon and clear, use [Search Field](/components/search-field/).
-
-## Accessibility
-
-- With `error`, also set `aria-invalid` when appropriate (implementation may wire this automatically).
-- Connect labels via [Label](/components/label/) or `<label htmlFor>`.
+Also accepts native `input` attributes (`type`, `value`, `onChange`, `name`, `id`, `placeholder`, `autoComplete`, `aria-*`, `className`).

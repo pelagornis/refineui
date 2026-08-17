@@ -1,71 +1,60 @@
 ---
 title: Menu
-description: Menu panel with nested submenus
+description: Action list with icons, shortcuts, descriptions, and nested panels.
 ---
 
 import MenuPreview from "../../../components/MenuPreview";
 
 # Menu
 
-Menu panel with a list of items. Matches Web Kit **Menu** `633:4268`. Use [Dropdown](/components/dropdown/) when you need a compact trigger menu; use **Menu** for the wider panel composition (icons, descriptions, shortcuts, nested menus). For site / app top destinations with flyout panels, use [Navigation Menu](/components/navigation-menu/).
+Menu is a wider action panel: sections, icons, descriptions, shortcuts, and nested submenus. Use it when a list of commands needs that extra row chrome.
 
-## Install & import
-
-```tsx
-import {
-  Button,
-  Menu,
-  MenuDivider,
-  MenuItem,
-  MenuList,
-  MenuPopover,
-  MenuSection,
-  MenuSub,
-  MenuSubContent,
-  MenuSubTrigger,
-  MenuTrigger,
-} from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Menu positioning={{ autoSize: true }}>
-  <MenuTrigger>
-    <Button>Toggle menu</Button>
-  </MenuTrigger>
-  <MenuPopover>
-    <MenuList>
-      <MenuSection>Edit</MenuSection>
-      <MenuItem shortcut="⌘C">Copy</MenuItem>
-      <MenuDivider />
-      <MenuSub>
-        <MenuSubTrigger>Preferences</MenuSubTrigger>
-        <MenuSubContent>
-          <MenuItem>General</MenuItem>
-          <MenuItem>Appearance</MenuItem>
-        </MenuSubContent>
-      </MenuSub>
-    </MenuList>
-  </MenuPopover>
-</Menu>
-```
-
-Chevron on `MenuSubTrigger` is built-in (Web Kit `endIcon`). Prefer `MenuSub` over a plain `MenuItem` with a chevron `endIcon` when the row opens a nested panel.
-
-## Preview
+For a compact trigger menu, use **[Dropdown](/components/dropdown/)**. For site or app destinations with flyout panels, use **[Navigation Menu](/components/navigation-menu/)**. For a searchable palette, use **[Command](/components/command/)**.
 
 <div class="not-content">
   <MenuPreview client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `positioning` | `{ autoSize?: boolean }` | Optional auto-width for the popover |
+### Menu
 
-Compound API: `MenuTrigger`, `MenuPopover`, `MenuList`, `MenuItem`, `MenuSub`, `MenuSubTrigger`, `MenuSubContent`, …
+| Prop | Default | Type |
+|------|---------|------|
+| `positioning` | — | `{ autoSize?: boolean }` — When `autoSize` is true, the popover width follows content. |
 
-`MenuItem` slots: `startIcon`, `description`, `shortcut`, `endIcon`.
+Also accepts native `div` attributes (`className`, `style`).
+
+### MenuItem
+
+| Prop | Default | Type |
+|------|---------|------|
+| `description` | — | `ReactNode` — Secondary line under the label. |
+| `shortcut` | — | `ReactNode` — Trailing key combo. |
+| `startIcon` | — | `ReactNode` — Leading icon slot. |
+| `endIcon` | — | `ReactNode` — Trailing icon slot (after shortcut). |
+| `state` | `"default"` | `"default"` \| `"hover"` \| `"pressed"` \| `"active"` \| `"disabled"` — Visual state. `disabled` also blocks activation. |
+| `disabled` | — | `boolean` — Blocks activation and closes. |
+
+Also accepts native `button` attributes (`onClick`, `className`).
+
+### MenuSubTrigger
+
+| Prop | Default | Type |
+|------|---------|------|
+| `description` | — | `ReactNode` — Secondary line under the label. |
+| `startIcon` | — | `ReactNode` — Leading icon slot. |
+| `state` | `"default"` | `"default"` \| `"hover"` \| `"pressed"` \| `"active"` \| `"disabled"` — Visual state. Open submenus resolve to `active`. |
+| `disabled` | — | `boolean` — Blocks opening the submenu. |
+
+### Parts
+
+| Part | Role |
+|------|------|
+| `MenuTrigger` | Toggles the popover. Merges onto a single child element when possible. |
+| `MenuPopover` | Portaled panel. |
+| `MenuList` | `role="menu"` list. |
+| `MenuSection` | Group heading. |
+| `MenuDivider` | Horizontal separator. |
+| `MenuSub` | Nested branch context. |
+| `MenuSubContent` | Portaled nested `role="menu"`. |

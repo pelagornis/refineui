@@ -1,52 +1,27 @@
 ---
 title: Link
-description: Text link — Web Kit Default
+description: Text link for in-page or outbound navigation.
 ---
 
 import LinkPreview from "../../../components/LinkPreview";
 
 # Link
 
-Styled `<a>` link. Web Kit **Link** `226:158` — color, underline, hover via **`refineui.css`** `[data-refineui="link"]`.
+Link is a styled `<a>` for navigation. Use it in running copy, breadcrumbs you compose yourself, or anywhere a URL is the primary action.
 
-## Install & import
-
-```tsx
-import { Link } from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Link href="/docs">Documentation</Link>
-<Link href="https://example.com" target="_blank" rel="noopener noreferrer">
-  External site
-</Link>
-```
-
-## Preview
+For a control that looks like a button, use **[Button](/components/button/)**. For a trail of pages, prefer **[Breadcrumb](/components/breadcrumb/)**.
 
 <div class="not-content">
   <LinkPreview client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `"default"` \| `"subtle"` | `"default"` | Emphasis level |
-| `showExternalIcon` | `boolean` | (auto) | With `target="_blank"`, external icon is shown by default |
-| `disabled` | `boolean` | `false` | `aria-disabled` and blocks clicks |
+### Link
 
-Uses **`AnchorHTMLAttributes`**: `href`, `children`, `className`, etc.
+| Prop | Default | Type |
+|------|---------|------|
+| `showExternalIcon` | auto for `target="_blank"` | `boolean` — Force the open icon on, or set `false` to hide it even for new windows. |
+| `disabled` | `false` | `boolean` — Marks the link non-interactive (`aria-disabled`, no pointer events). |
 
-## Examples
-
-### Hide new-window icon
-
-```tsx
-<Link href="https://…" target="_blank" showExternalIcon={false}>
-  Link
-</Link>
-```
+Also accepts native `a` attributes (`href`, `target`, `rel`, `className`, `children`).

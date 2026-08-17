@@ -1,93 +1,52 @@
 ---
 title: Alert
-description: Inline alert — variant, icon, actions
+description: Inline notice for a page or section, with optional actions.
 ---
 
 import AlertPreview from "../../../components/AlertPreview";
 
 # Alert
 
-Inline alert for page or section chrome. Follows Web Kit **Alert** `384:885` and `docs/design-specs-web-kit.md` §5.
+Alert is an inline notice in page or section chrome. Use it for status that should stay visible until the user acts or the condition changes — a saved confirmation, a warning, or an upgrade prompt.
 
-## Install & import
-
-```tsx
-import {
-  Alert,
-  AlertAction,
-  AlertActions,
-  AlertBody,
-  AlertClose,
-  AlertDescription,
-  AlertIcon,
-  AlertRow,
-  AlertTitle,
-} from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Alert className="max-w-md">
-  <AlertRow>
-    <AlertIcon name="checkmark" />
-    <AlertBody>
-      <AlertTitle>Payment successful</AlertTitle>
-      <AlertDescription>
-        Your payment of $29.99 has been processed.
-      </AlertDescription>
-    </AlertBody>
-  </AlertRow>
-</Alert>
-```
-
-## Preview
+It is not a modal. For a blocking decision, use **[Dialog](/components/dialog/)**. For feedback that should disappear on its own, use **[Toast](/components/toast/)**.
 
 <div class="not-content">
   <AlertPreview client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `variant` | `"default"` \| `"info"` \| `"success"` \| `"warning"` \| `"danger"` \| `"custom"` | Color context |
-| `className` | `string` | Extend root |
-| `...props` | `HTMLAttributes<HTMLDivElement>` | Root `<div>` props |
+### Alert
 
-## Examples
+| Prop | Default | Type |
+|------|---------|------|
+| `variant` | `"info"` | `"default"` \| `"info"` \| `"success"` \| `"warning"` \| `"danger"` \| `"custom"` — Color context for title, description, and default icon. |
 
-### Composed
+Also accepts native `div` attributes (`className`, `style`, `aria-*`).
 
-```tsx
-<Alert>
-  <AlertRow>
-    <AlertIcon name="info" />
-    <AlertBody>
-      <AlertTitle>New feature available</AlertTitle>
-      <AlertDescription>
-        We&apos;ve added dark mode support. You can enable it in account settings.
-      </AlertDescription>
-    </AlertBody>
-  </AlertRow>
-</Alert>
-```
+### AlertIcon
 
-### Close + actions
+| Prop | Default | Type |
+|------|---------|------|
+| `name` | variant default | `string` — Web Icon name when `children` are omitted. |
+| `children` | — | `ReactNode` — Custom leading node. Overrides `name`. |
 
-```tsx
-<Alert variant="success">
-  <AlertRow>
-    <AlertIcon name="checkmark" />
-    <AlertBody>
-      <AlertTitle>Saved</AlertTitle>
-      <AlertDescription>Your changes were applied.</AlertDescription>
-    </AlertBody>
-    <AlertClose onClick={() => {}} />
-  </AlertRow>
-  <AlertActions>
-    <AlertAction onClick={() => {}}>Undo</AlertAction>
-  </AlertActions>
-</Alert>
-```
+### AlertClose
+
+Native `button` attributes. Default: ghost icon **[Button](/components/button/)** with a dismiss icon and `aria-label="Close"`. You must handle dismiss in `onClick`.
+
+### AlertAction
+
+Native `button` attributes. Default: primary `sm` **[Button](/components/button/)**.
+
+### Parts
+
+| Part | Role |
+|------|------|
+| `AlertContent` | Inner column (applied automatically by `Alert`). |
+| `AlertRow` | Icon + body + optional close. |
+| `AlertBody` | Title and description column. |
+| `AlertTitle` | `h5` title. |
+| `AlertDescription` | Supporting copy. |
+| `AlertActions` | Trailing row of actions. |

@@ -1,88 +1,46 @@
 ---
 title: Pagination
-description: Previous / next / current page
+description: Move between numbered pages of a list.
 ---
 
 import PaginationDemo from "../../../components/PaginationDemo";
 
 # Pagination
 
-Use when changing pages of a list. Based on Web Kit **Pagination** `558:1989` · **Pagination / Item** `570:2332`.
+Pagination splits a long list into pages. Use it under a table or result list when the user needs to jump by number, not only scroll.
 
-## Install & import
-
-```tsx
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Pagination>
-  <PaginationContent>
-    <PaginationItem>
-      <PaginationPrevious type="button" />
-    </PaginationItem>
-    <PaginationItem>
-      <PaginationLink href="#">1</PaginationLink>
-    </PaginationItem>
-    <PaginationItem>
-      <PaginationLink href="#" isActive>
-        2
-      </PaginationLink>
-    </PaginationItem>
-    <PaginationItem>
-      <PaginationLink href="#">3</PaginationLink>
-    </PaginationItem>
-    <PaginationItem>
-      <PaginationEllipsis />
-    </PaginationItem>
-    <PaginationItem>
-      <PaginationNext type="button" />
-    </PaginationItem>
-  </PaginationContent>
-</Pagination>
-```
-
-## Preview
+Previous and next are buttons. Page numbers are links. For a linear wizard with named stages, use **[Stepper](/components/stepper/)** or **[ProgressStepper](/components/progress-stepper/)**. For in-page panels, use **[Tabs](/components/tabs/)**.
 
 <div class="not-content">
   <PaginationDemo client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `className` | `string` | Extend root container |
-| `...props` | `HTMLAttributes<HTMLElement>` | Root `<nav>` attributes |
+### Pagination
 
-`aria-label="Pagination"` is set on `<nav>`.
+Accepts native `nav` attributes (`className`, `style`, `aria-*`). `aria-label="Pagination"` is set on the root.
 
-### Composed pieces
+### PaginationLink
 
-| Component | Description |
-|-----------|-------------|
-| `PaginationContent` | List wrapper for page items |
-| `PaginationItem` | Item wrapper (`li`) |
-| `PaginationLink` | Page link (`isActive` supported) |
-| `PaginationPrevious` | Previous page button |
-| `PaginationNext` | Next page button |
-| `PaginationEllipsis` | Ellipsis item |
+| Prop | Default | Type |
+|------|---------|------|
+| `isActive` | `false` | `boolean` — Marks the current page (`aria-current="page"`). |
 
-## Examples
+Also accepts native `a` attributes (`href`, `className`, `children`).
 
-### With router links
+### PaginationPrevious / PaginationNext
 
-```tsx
-<PaginationLink href="/products?page=3">3</PaginationLink>
-```
+Native `button` attributes (`onClick`, `disabled`, `type`). `type` defaults to `"button"`. Chevrons and `aria-label` are built in.
+
+### Parts
+
+| Part | Role |
+|------|------|
+| `Pagination` | Root `nav` (`aria-label="Pagination"`). Same as `PaginationRoot`. |
+| `PaginationContent` | List (`ul`) of items. |
+| `PaginationItem` | Item wrapper (`li`). |
+| `PaginationLink` | Page number link. |
+| `PaginationPrevious` | Previous-page button. |
+| `PaginationNext` | Next-page button. |
+| `PaginationEllipsis` | Hidden-range placeholder (`span`). |

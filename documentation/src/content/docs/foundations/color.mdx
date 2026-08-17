@@ -1,0 +1,46 @@
+---
+title: Color
+description: Palette primitives and semantic aliases — backgrounds, foregrounds, borders, and surfaces.
+sidebar:
+  order: 2
+---
+
+import { ColorAliasPreview, ColorPalettePreview } from "../../../components/foundation/ColorPreview";
+
+# Color
+
+Paint UI with **aliases** (`foregroundPrimary`, `backgroundBrand`). The palette is the Foundation source those aliases point at for light and dark. Do not paste hex or `colors.neutral900` into product UI.
+
+`surfaceOverlay` is the modal scrim — Foundation RGBA, not a palette pair (`--refineui-color-alias-surface-overlay`).
+
+## Aliases
+
+Live CSS variables. Caption is `light / dark` palette keys.
+
+<div class="not-content">
+  <ColorAliasPreview client:load />
+</div>
+
+## Palette
+
+<div class="not-content">
+  <ColorPalettePreview client:load />
+</div>
+
+```tsx
+<Box
+  padding="sizeLarge"
+  background="backgroundSurface"
+  radius="roundedLarge"
+  border="strokeWidthThin"
+  borderColor="borderDefault"
+>
+  Surface
+</Box>
+```
+
+```tsx
+import { semanticColorCssVar } from "@refineui/utilities";
+
+<div style={{ color: semanticColorCssVar("foregroundPrimary") }} />
+```

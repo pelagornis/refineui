@@ -1,52 +1,30 @@
 ---
 title: Tag
-description: Tag / chip — same as Chip
+description: Compact keyword or filter chip, with an optional avatar or remove action.
 ---
 
 import TagDemo from "../../../components/TagDemo";
 
 # Tag
 
-Tag for filters, keywords, etc. The code export is **`Chip`**; **`Tag`** is the same component. Web Kit name: **Tag** `574:6578`.
+Tag is a chip for keywords, categories, and filters. Use it when the user needs to see (and often remove) a selected value without opening a full form field.
 
-## Install & import
-
-```tsx
-import { Tag, Chip } from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Tag>React</Tag>
-<Tag variant="outline" onRemove={() => {}}>
-  Removable
-</Tag>
-```
-
-## Preview
+`Tag` and `Chip` are the same component — either name is valid. For a non-interactive status or count, use **[Badge](/components/badge/)**.
 
 <div class="not-content">
   <TagDemo client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `variant` | `"default"` \| `"outline"` \| `"filled"` | Style |
-| `size` | `"sm"` \| `"md"` \| `"lg"` | Height 20 / 24 / 32 (default `md`) — below Button 28 / 36 / 48 |
-| `avatar` | `ReactNode` | Leading slot |
-| `onRemove` | `() => void` | Shows remove button when set |
-| `disabled` | `boolean` | Disabled |
+### Tag
 
-## Examples
+| Prop | Default | Type |
+|------|---------|------|
+| `variant` | `"default"` | `"default"` \| `"outline"` \| `"filled"` — Surface style. |
+| `size` | `"md"` | `"sm"` \| `"md"` \| `"lg"` — Height and typography. Smaller than Button. |
+| `avatar` | — | `ReactNode` — Optional leading slot (image or icon). |
+| `onRemove` | — | `() => void` — When set, shows a remove button and is called when it is activated. |
+| `disabled` | `false` | `boolean` — Blocks the remove button and disables pointer interaction. |
 
-### Avatar + remove
-
-```tsx
-<Tag avatar={<img src="…" alt="" width={16} height={16} />} onRemove={() => {}}>
-  User
-</Tag>
-```
+Also accepts native `span` attributes (`className`, `style`, `aria-*`).

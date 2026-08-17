@@ -4,7 +4,11 @@ import {
     AccordionItem,
     AccordionTrigger,
     Alert,
+    AlertAction,
+    AlertActions,
     AlertBody,
+    AlertClose,
+    AlertDescription,
     AlertIcon,
     AlertRow,
     AlertTitle,
@@ -13,6 +17,7 @@ import {
     AvatarIcon,
     AvatarText,
     Badge,
+    Box,
     Breadcrumb,
     BreadcrumbItem,
     BreadcrumbLink,
@@ -30,6 +35,7 @@ import {
     Carousel,
     CarouselContent,
     CarouselControls,
+    CarouselIndicators,
     CarouselItem,
     CarouselNext,
     CarouselPrevious,
@@ -103,6 +109,12 @@ import {
     Select,
     SelectTrigger,
     SelectValue,
+    Sidebar,
+    SidebarBrand,
+    SidebarContent,
+    SidebarHeader,
+    SidebarLink,
+    SidebarNav,
     Skeleton,
     Slider,
     SpinButton,
@@ -126,6 +138,7 @@ import {
     Tag,
     Text,
     Textarea,
+    Toast,
     Tooltip,
 } from "@refineui/react";
 import { CatalogCard, CatalogGrid } from "./CatalogCard";
@@ -159,8 +172,13 @@ export default function ComponentCatalog() {
                             <AlertIcon />
                             <AlertBody>
                                 <AlertTitle>New version available</AlertTitle>
+                                <AlertDescription>Update to get the latest components.</AlertDescription>
                             </AlertBody>
+                            <AlertClose type="button" />
                         </AlertRow>
+                        <AlertActions>
+                            <AlertAction type="button">Update</AlertAction>
+                        </AlertActions>
                     </Alert>
                 }
             />
@@ -241,7 +259,11 @@ export default function ComponentCatalog() {
             <CatalogCard
                 href="/components/calendar/"
                 name="Calendar"
-                preview={<Calendar value={new Date(2026, 7, 15)} onChange={noopDate} />}
+                preview={
+                    <div data-refineui-catalog-calendar>
+                        <Calendar value={new Date(2026, 7, 15)} onChange={noopDate} />
+                    </div>
+                }
             />
             <CatalogCard
                 href="/components/card/"
@@ -262,14 +284,31 @@ export default function ComponentCatalog() {
                     <Carousel className="w-full">
                         <CarouselContent>
                             <CarouselItem>
-                                <Text variant="titleSm">Overview</Text>
+                                <Box
+                                    padding="sizeLarge"
+                                    background="backgroundBrand"
+                                    className="flex min-h-refineui-foundation-size-2000 flex-col justify-end"
+                                >
+                                    <Text as="strong" variant="titleSm" className="text-refineui-alias-foreground-on-brand">
+                                        Overview
+                                    </Text>
+                                </Box>
                             </CarouselItem>
                             <CarouselItem>
-                                <Text variant="titleSm">Motion</Text>
+                                <Box
+                                    padding="sizeLarge"
+                                    background="backgroundBrand"
+                                    className="flex min-h-refineui-foundation-size-2000 flex-col justify-end"
+                                >
+                                    <Text as="strong" variant="titleSm" className="text-refineui-alias-foreground-on-brand">
+                                        Motion
+                                    </Text>
+                                </Box>
                             </CarouselItem>
                         </CarouselContent>
                         <CarouselControls>
                             <CarouselPrevious type="button" />
+                            <CarouselIndicators />
                             <CarouselNext type="button" />
                         </CarouselControls>
                     </Carousel>
@@ -591,6 +630,26 @@ export default function ComponentCatalog() {
                 }
             />
             <CatalogCard
+                href="/components/sidebar/"
+                name="Sidebar"
+                preview={
+                    <Sidebar className="h-full">
+                        <SidebarHeader>
+                            <SidebarBrand>RefineUI</SidebarBrand>
+                        </SidebarHeader>
+                        <SidebarContent>
+                            <SidebarNav>
+                                <SidebarLink href="#overview" active>
+                                    Overview
+                                </SidebarLink>
+                                <SidebarLink href="#components">Components</SidebarLink>
+                                <SidebarLink href="#tokens">Tokens</SidebarLink>
+                            </SidebarNav>
+                        </SidebarContent>
+                    </Sidebar>
+                }
+            />
+            <CatalogCard
                 href="/components/skeleton/"
                 name="Skeleton"
                 preview={
@@ -695,23 +754,28 @@ export default function ComponentCatalog() {
                 href="/components/toast/"
                 name="Toast"
                 preview={
-                    <Button type="button" variant="secondary">
-                        Show toast
-                    </Button>
+                    <div data-refineui-catalog-toast>
+                        <Toast variant="success" title="Done" message="Completed successfully." />
+                    </div>
                 }
             />
             <CatalogCard
                 href="/components/tooltip/"
                 name="Tooltip"
                 preview={
-                    <Tooltip
-                        trigger={
-                            <Button type="button" variant="secondary" size="sm">
-                                Hover
-                            </Button>
-                        }
-                        content="More detail"
-                    />
+                    <div data-refineui-catalog-tooltip>
+                        <Tooltip
+                            defaultOpen
+                            delayMs={0}
+                            align="Center"
+                            trigger={
+                                <Button type="button" variant="secondary">
+                                    Label
+                                </Button>
+                            }
+                            content="Tooltip"
+                        />
+                    </div>
                 }
             />
         </CatalogGrid>

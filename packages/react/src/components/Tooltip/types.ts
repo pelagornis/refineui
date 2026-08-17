@@ -12,6 +12,9 @@ export interface TooltipProps extends Omit<HTMLAttributes<HTMLDivElement>, "titl
     position?: TooltipPosition;
     align?: TooltipAlign;
     delayMs?: number;
+    open?: boolean;
+    defaultOpen?: boolean;
+    onOpenChange?: (open: boolean) => void;
 }
 
 /** Expected event signatures when merging trigger children (`cloneElement`) */

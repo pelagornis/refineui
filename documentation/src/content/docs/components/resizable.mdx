@@ -1,123 +1,56 @@
 ---
 title: Resizable
-description: Accessible resizable panel groups and layouts with keyboard support
+description: Drag- and keyboard-resizable panel groups for split layouts.
 ---
 
 import ResizableDemo from "../../../components/ResizableDemo";
 
 # Resizable
 
-Drag- and keyboard-resizable panel groups. Built from Foundation tokens (border, spacing, focus ring, motion). Not a Web Kit primitive — same **token-based composition** approach as Carousel / Bubble / Stepper.
+Resizable is a group of panels the user can drag or resize with the keyboard. Use it for split layouts — sidebar and main, or a nested editor with a preview — when the user should own the widths and heights.
 
-## Install & import
-
-```tsx
-import {
-  ResizablePanelGroup,
-  ResizablePanel,
-  ResizableHandle,
-} from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<ResizablePanelGroup orientation="horizontal">
-  <ResizablePanel defaultSize={40} minSize={20}>
-    Sidebar
-  </ResizablePanel>
-  <ResizableHandle withHandle />
-  <ResizablePanel defaultSize={60}>
-    Main
-  </ResizablePanel>
-</ResizablePanelGroup>
-```
-
-## Preview
+Each panel is a slot. Place `ResizableHandle` between adjacent panels as siblings. For overflow inside a pane, compose **[Scroll Area](/components/scroll-area/)**. For a sliding slide stage, use **[Carousel](/components/carousel/)** instead.
 
 <div class="not-content">
   <ResizableDemo client:load />
 </div>
 
-## Composition
-
-```
-ResizablePanelGroup
-├── ResizablePanel
-├── ResizableHandle
-└── ResizablePanel
-```
-
-Nest another `ResizablePanelGroup` inside a panel for mixed horizontal / vertical layouts.
-
-### Nested example
-
-```tsx
-<ResizablePanelGroup orientation="horizontal">
-  <ResizablePanel defaultSize={40} minSize={20}>
-    Left
-  </ResizablePanel>
-  <ResizableHandle withHandle />
-  <ResizablePanel defaultSize={60} minSize={30}>
-    <ResizablePanelGroup orientation="vertical">
-      <ResizablePanel defaultSize={45}>Top</ResizablePanel>
-      <ResizableHandle withHandle />
-      <ResizablePanel defaultSize={55}>Bottom</ResizablePanel>
-    </ResizablePanelGroup>
-  </ResizablePanel>
-</ResizablePanelGroup>
-```
-
-## Keyboard
-
-Focus the handle (`Tab`), then:
-
-| Key | Action |
-|-----|--------|
-| `←` / `→` | Resize horizontal groups |
-| `↑` / `↓` | Resize vertical groups |
-| `Shift` + arrow | Larger step (10%) |
-| `Home` / `End` | Jump to min / max for the leading panel |
-
-Handles expose `role="separator"` with `aria-orientation` and `aria-valuenow` / `min` / `max`.
-
-## Props
+## Interface
 
 ### ResizablePanelGroup
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | Layout axis |
-| `onLayout` | `(sizes: number[]) => void` | — | Panel sizes (%) after resize |
+| Prop | Default | Type |
+|------|---------|------|
+| `orientation` | `"horizontal"` | `"horizontal"` \| `"vertical"` — Layout axis. |
+| `onLayout` | — | `(sizes: number[]) => void` — Panel sizes (%) after a resize settles. |
+
+Also accepts native `div` attributes (`className`, `style`).
 
 ### ResizablePanel
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `defaultSize` | `number` | `50` | Initial size (%) |
-| `minSize` | `number` | `10` | Minimum size (%) |
-| `maxSize` | `number` | `100` | Maximum size (%) |
-| `size` | `number` | — | Controlled size (%) |
-| `onResize` | `(size: number) => void` | — | Fires while resizing |
+| Prop | Default | Type |
+|------|---------|------|
+| `defaultSize` | `50` | `number` — Initial size (%). |
+| `minSize` | `10` | `number` — Minimum size (%). |
+| `maxSize` | `100` | `number` — Maximum size (%). |
+| `size` | — | `number` — Controlled size (%). |
+| `onResize` | — | `(size: number) => void` — Fires while resizing. |
+
+Also accepts native `div` attributes.
 
 ### ResizableHandle
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `withHandle` | `boolean` | `false` | Show a short center bar on the separator |
-| `disabled` | `boolean` | `false` | Disable drag and keyboard |
+| Prop | Default | Type |
+|------|---------|------|
+| `withHandle` | `false` | `boolean` — Show a short center bar on the separator. |
+| `disabled` | `false` | `boolean` — Disable drag and keyboard. |
+
+Also accepts native `div` attributes.
 
 ### Parts
 
 | Part | Role |
 |------|------|
-| `ResizablePanelGroup` | Flex container; owns size state |
-| `ResizablePanel` | Flexible pane (`flex-grow` from size %) |
-| `ResizableHandle` | Focusable separator between adjacent panels |
-
-## Notes
-
-- Panel sizes are percentages of the group; defaults are normalized to sum to 100%.
-- Give the group (or a parent) an explicit height when using `orientation="vertical"`.
-- Place `ResizableHandle` **between** panels as siblings — adjacency is resolved from DOM order.
+| `ResizablePanelGroup` | Flex container; owns size state. |
+| `ResizablePanel` | Flexible pane (`flex-grow` from size %). |
+| `ResizableHandle` | Focusable separator between adjacent panels. |

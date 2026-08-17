@@ -1,58 +1,33 @@
 ---
 title: Calendar
-description: Date selection — single and range
+description: Month grid for picking a date or a date range.
 ---
 
 import CalendarPreview from "../../../components/CalendarPreview";
 
 # Calendar
 
-Pick dates from a month grid. Follows Web Kit **Calendar / Day** MCP `639:7052` and the Calendar section in `docs/design-specs-web-kit.md`.
+Calendar is a month grid for picking dates. Use it when the user chooses a day, or a start and end, from a visible calendar — booking, filters, or a date field overlay.
 
-## Install & import
-
-```tsx
-import { Calendar } from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage (single)
-
-```tsx
-const [d, setD] = useState(new Date());
-<Calendar mode="single" value={d} onChange={setD} />;
-```
-
-## Preview
+Single mode takes one `Date`. Range mode takes a start and an end. For typing a date without a grid, use **[Input](/components/input/)** (or a date field you compose). Calendar is not a date-time picker.
 
 <div class="not-content">
   <CalendarPreview client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `mode` | `"single"` \| `"range"` | Default `single` |
-| `value` | `Date` | Single selection |
-| `onChange` | `(date: Date) => void` | Single mode change |
-| `rangeStart` / `rangeEnd` | `Date` | Range mode |
-| `onRangeChange` | `(start, end) => void` | Range change |
-| `weekStartsOn` | `0` \| `1` | 0 = week starts Sunday |
-| `defaultMonth` | `Date` | Initial visible month |
+### Calendar
 
-## Examples
+| Prop | Default | Type |
+|------|---------|------|
+| `mode` | `"single"` | `"single"` \| `"range"` — One day, or a start and end. |
+| `value` | — | `Date` — Selected day in single mode. |
+| `onChange` | — | `(date: Date) => void` — Called when a day is picked in single mode. |
+| `rangeStart` | — | `Date` — Range start. |
+| `rangeEnd` | — | `Date` — Range end. |
+| `onRangeChange` | — | `(start: Date \| undefined, end: Date \| undefined) => void` — Called as the range is built. Either end may be `undefined` while the user is still picking. |
+| `weekStartsOn` | `0` | `0` \| `1` — `0` is Sunday; `1` is Monday. |
+| `defaultMonth` | — | `Date` — Initial visible month when no `value` or `rangeStart` is set. |
 
-### Range selection
-
-```tsx
-<Calendar
-  mode="range"
-  rangeStart={start}
-  rangeEnd={end}
-  onRangeChange={(s, e) => {
-    setStart(s);
-    setEnd(e);
-  }}
-/>
-```
+Also accepts native `div` attributes (`className`, `style`).

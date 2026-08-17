@@ -1,0 +1,52 @@
+---
+title: Sidebar
+description: Vertical app navigation — brand, grouped links, and a trailing slot.
+---
+
+import SidebarPreview from "../../../components/SidebarPreview";
+
+# Sidebar
+
+Sidebar is the complementary landmark for an app or docs shell. Use it when destinations live in a vertical list — grouped pages, settings, an account row — beside the main content.
+
+Each region is a slot. Put the lockup in `SidebarHeader`. Put destinations in `SidebarNav`. Put the account or settings row in `SidebarFooter`. For horizontal site destinations with flyout panels, use **[Navigation Menu](/components/navigation-menu/)**. For a user-owned split width, compose **[Resizable](/components/resizable/)**. For overflow inside the nav, compose **[Scroll Area](/components/scroll-area/)**.
+
+<div class="not-content">
+  <SidebarPreview client:load />
+</div>
+
+## Interface
+
+### Sidebar
+
+Accepts native `aside` attributes (`className`, `style`, `aria-*`).
+
+### SidebarNav
+
+| Prop | Default | Type |
+|------|---------|------|
+| `aria-label` | `"Sidebar"` | `string` — Landmark name. Override when multiple sidebars exist. |
+
+Also accepts native `nav` attributes.
+
+### SidebarLink
+
+| Prop | Default | Type |
+|------|---------|------|
+| `active` | `false` | `boolean` — Current page (`aria-current="page"`). |
+| `href` | — | `string` — Destination. |
+
+Also accepts native `<a>` attributes.
+
+### Parts
+
+| Part | Role |
+|------|------|
+| `SidebarHeader` | Top region — brand lockup. |
+| `SidebarBrand` | Lockup row (logo and/or name). |
+| `SidebarContent` | Scrollable middle region. |
+| `SidebarNav` | Destination list (`nav`). |
+| `SidebarGroup` | One labeled link cluster. |
+| `SidebarGroupLabel` | Group heading. |
+| `SidebarLink` | Sidebar `<a>`. Leading icons go in children. |
+| `SidebarFooter` | Bottom region — account or settings. |

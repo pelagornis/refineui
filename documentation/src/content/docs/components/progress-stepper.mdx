@@ -1,98 +1,43 @@
 ---
 title: ProgressStepper
-description: Compact progress rail with step markers — token-composed
+description: Progress bar and stepper in one — show how far a task has moved through ordered stages.
 ---
 
 import ProgressStepperPreview from "../../../components/ProgressStepperPreview";
 
 # ProgressStepper
 
-Compact step progress. Equal-width columns — first pip start, last pip end, others centered. Fill is **column center + half pip** (`calc(50% + pip/2)` when current is the middle of 3). **8px** pips sit in a **16px** rail. Not a Web Kit primitive — same **token-based composition** approach as Carousel / Bubble / Stepper.
+ProgressStepper combines a progress bar and a stepper. Use it when you want to show how far a task has moved through ordered stages, and what comes next, at a glance.
 
-Use **[Stepper](/components/stepper/)** when you need numbered 32px indicators plus title and description. Use **ProgressStepper** for tight headers (checkout, short wizards).
-
-## Install & import
-
-```tsx
-import {
-  ProgressStepper,
-  ProgressStepperList,
-  ProgressStepperItem,
-  ProgressStepperMarker,
-  ProgressStepperLabel,
-} from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<ProgressStepper value={1} onValueChange={setStep}>
-  <ProgressStepperList>
-    <ProgressStepperItem value={0}>
-      <ProgressStepperMarker />
-      <ProgressStepperLabel>Cart</ProgressStepperLabel>
-    </ProgressStepperItem>
-    <ProgressStepperItem value={1}>
-      <ProgressStepperMarker />
-      <ProgressStepperLabel>Shipping</ProgressStepperLabel>
-    </ProgressStepperItem>
-  </ProgressStepperList>
-</ProgressStepper>
-```
-
-## Preview
+A compact rail fits checkout headers, onboarding, and short wizards. For numbered 32px indicators with a title and description, use **[Stepper](/components/stepper/)** instead. For a percent-complete bar with no stages, use **[Progress](/components/progress/)**.
 
 <div class="not-content">
   <ProgressStepperPreview client:load />
 </div>
 
-## Composition
-
-```
-ProgressStepper
-└── ProgressStepperList
-    ├── track (built in — Progress fill between first and last marker)
-    └── ProgressStepperItem
-        ├── ProgressStepperMarker
-        └── ProgressStepperLabel
-```
-
-## States
-
-Each `ProgressStepperItem` derives `data-state` from its `value` vs the active step. Fill width is the current column center plus half the pip — last step is 100%.
-
-| State | When | Visual |
-|-------|------|--------|
-| `complete` | `value < active` | On-brand pip on the filled rail |
-| `current` | `value === active` | On-brand pip at the fill tip |
-| `upcoming` | `value > active` | Neutral pip on the empty rail · tertiary label |
-
-`ProgressStepperMarker` is a color pip. Do not put icons inside — it is too small.
-
-## Props
+## Interface
 
 ### ProgressStepper
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `number` | — | Controlled active step |
-| `defaultValue` | `number` | `0` | Uncontrolled start |
-| `onValueChange` | `(value: number) => void` | — | Change callback; enables click / keyboard activation |
+| Prop | Default | Type |
+|------|---------|------|
+| `value` | — | `number` — Controlled active step. Match this to a `ProgressStepperItem` `value`. |
+| `defaultValue` | `0` | `number` — Uncontrolled initial step. |
+| `onValueChange` | — | `(value: number) => void` — Called when a step is activated. With this callback (or when uncontrolled), items are focusable and can be activated with click, Enter, or Space. |
+
+Also accepts native `div` attributes (`className`, `style`, `aria-*`).
 
 ### ProgressStepperItem
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `number` | — | Step identity (required) |
-| `disabled` | `boolean` | `false` | Blocks activation |
+| Prop | Default | Type |
+|------|---------|------|
+| `value` | — | `number` — Step identity. Required. Compared with the stepper `value` to resolve state. |
+| `disabled` | `false` | `boolean` — Blocks activation. The step still shows its visual state. |
 
 ### Parts
 
 | Part | Role |
 |------|------|
-| `ProgressStepperList` | Ordered list plus the Progress track |
-| `ProgressStepperMarker` | 8px pip inside the 16px rail |
-| `ProgressStepperLabel` | Caption under the marker |
-
-Controlled without `onValueChange` is display-only. With `onValueChange` (or uncontrolled), steps are focusable and activatable via click / Enter / Space.
+| `ProgressStepperList` | Ordered list (`ol`) and the built-in progress track. |
+| `ProgressStepperMarker` | 8px color pip on the 16px rail. Render empty — do not pass icons. |
+| `ProgressStepperLabel` | Optional caption under the marker. First label starts at the leading pip; last label ends at the trailing pip. |

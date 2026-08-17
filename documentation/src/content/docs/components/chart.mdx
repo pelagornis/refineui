@@ -1,123 +1,80 @@
 ---
 title: Chart
-description: Composable bar and line charts — RefineUI tokens
+description: Composable bar and line charts with hover, selection, and an optional tooltip.
 ---
 
 import ChartPreview from "../../../components/ChartPreview";
 
 # Chart
 
-Composable SVG charts. Single-series charts do **not** need a legend — the Card title is enough (same as shadcn). Hover and click use `data-state` (`default` / `hover` / `selected`) plus an optional `ChartTooltip`.
+Chart is a composable SVG chart for a single series of numbers. Use it when you need bars or a line in a card — monthly revenue, active users — and a title already explains the series.
 
-## Install & import
-
-```tsx
-import {
-  Chart,
-  ChartAxisLabels,
-  ChartBars,
-  ChartBody,
-  ChartContent,
-  ChartGrid,
-  ChartLine,
-  ChartPlot,
-  ChartTooltip,
-  ChartYAxisLabels,
-} from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Chart>
-  <ChartBody>
-    <ChartYAxisLabels lines={5} values={[40, 65, 30, 80]} />
-    <ChartContent>
-      <ChartPlot aria-label="Monthly revenue">
-        <ChartGrid lines={5} values={[40, 65, 30, 80]} />
-        <ChartBars values={[40, 65, 30, 80]} seriesColor="brand" />
-        <ChartTooltip />
-      </ChartPlot>
-      <ChartAxisLabels labels={["Jan", "Feb", "Mar", "Apr"]} />
-    </ChartContent>
-  </ChartBody>
-</Chart>
-```
-
-## Preview
+Single-series charts do not need a legend; the card title is enough. Hover and click use `data-state` (`default` / `hover` / `selected`) plus an optional `ChartTooltip`. For tabular values the user must compare cell by cell, use **[Table](/components/table/)** instead.
 
 <div class="not-content">
   <ChartPreview client:load />
 </div>
 
-## States
+## Interface
 
-| State | How | Visual |
-| --- | --- | --- |
-| **Default** | Rest | Series fill / line |
-| **Hover** | Pointer over the plot | Tooltip follows the pointer; nearest bar/point highlights |
-| **Selected** | Click a band (click again to clear) | `data-state="selected"` stays after hover leaves |
+### ChartBars
 
-## Subcomponents
+| Prop | Default | Type |
+|------|---------|------|
+| `values` | — | `number[]` — Data points. Required. |
+| `max` | auto | `number` — Y scale maximum. Nice-rounded from `values` when omitted. |
+| `seriesColor` | `"brand"` | `"brand"` \| `"info"` \| `"success"` \| `"warning"` \| `"error"` \| `"discovery"` — Semantic series color. |
+| `showTrack` | `false` | `boolean` — Full-height track behind each bar. |
 
-| Component | Description |
-|-----------|-------------|
-| `Chart` | Root + hover/selected context |
-| `ChartBody` | Y-axis + plot grid |
-| `ChartContent` | Plot + X-axis column |
-| `ChartYAxisLabels` | Left Y-axis tick labels |
-| `ChartPlot` | Plot frame + SVG viewport |
-| `ChartGrid` | Horizontal grid lines |
-| `ChartBars` | Bar series |
-| `ChartLine` | Monotone line |
-| `ChartTooltip` | Hover value (place inside `ChartPlot`) |
-| `ChartAxisLabels` | X-axis category labels |
-| `ChartLegend` | Optional — only for multiple series |
+### ChartLine
 
-## Props
+| Prop | Default | Type |
+|------|---------|------|
+| `values` | — | `number[]` — Data points. Required. |
+| `max` | auto | `number` — Y scale maximum. Nice-rounded from `values` when omitted. |
+| `seriesColor` | `"brand"` | `"brand"` \| `"info"` \| `"success"` \| `"warning"` \| `"error"` \| `"discovery"` — Semantic series color. |
+| `showArea` | `false` | `boolean` — Area fill under the line. |
+| `showPoints` | `false` | `boolean` — Point markers on each value. Hover still shows the active point when this is `false`. |
 
-### `ChartBars` / `ChartLine`
+### ChartGrid / ChartYAxisLabels
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `values` | `number[]` | (required) | Data points |
-| `max` | `number` | auto | Y scale maximum (nice-rounded when omitted) |
-| `seriesColor` | `"brand"` \| `"info"` \| … | `"brand"` | Semantic series color |
+| Prop | Default | Type |
+|------|---------|------|
+| `lines` | `5` | `number` — Tick / grid line count (includes the baseline). |
+| `values` | — | `number[]` — Derive a nice Y scale when `max` is omitted. |
+| `max` | auto | `number` — Fixed Y scale. |
 
-`ChartBars` also accepts `showTrack` (`boolean`, default `false`).  
-`ChartLine` also accepts `showArea` (`boolean`, default `false`) and `showPoints` (`boolean`, default `false`).
+`ChartYAxisLabels` also accepts `formatTick?: (value: number) => string`.
 
-### `ChartGrid` / `ChartYAxisLabels`
+### ChartAxisLabels
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `lines` | `number` | `5` | Tick / grid line count |
-| `values` | `number[]` | — | Derive nice Y scale when `max` is omitted |
-| `max` | `number` | auto | Fixed Y scale |
+| Prop | Default | Type |
+|------|---------|------|
+| `labels` | — | `string[]` — Category labels. Required. |
+| `align` | `"bar"` | `"bar"` \| `"line"` — Center on bar bands or line points. |
 
-### `ChartAxisLabels`
+### ChartPlot
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `labels` | `string[]` | (required) | Category labels |
-| `align` | `"bar"` \| `"line"` | `"bar"` | Align to bar bands or line points |
+| Prop | Default | Type |
+|------|---------|------|
+| `aria-label` | — | `string` — Accessible name for the chart graphic (`role="img"`). |
 
-## Examples
+### ChartLegendItem
 
-### Line chart
+| Prop | Default | Type |
+|------|---------|------|
+| `seriesColor` | — | `"brand"` \| `"info"` \| `"success"` \| `"warning"` \| `"error"` \| `"discovery"` — Swatch color. Required. |
 
-```tsx
-<ChartPlot aria-label="Weekly active users">
-  <ChartGrid lines={5} values={[20, 45, 35, 60, 50, 72]} />
-  <ChartLine values={[20, 45, 35, 60, 50, 72]} seriesColor="info" />
-  <ChartTooltip />
-</ChartPlot>
-```
+### Parts
 
-Pass the same `values` (or `max`) to `ChartYAxisLabels`, `ChartGrid`, and the series so ticks stay aligned.
-
-## Accessibility
-
-- Set `aria-label` on `ChartPlot`.
-- `ChartYAxisLabels` is decorative (`aria-hidden`). `ChartTooltip` exposes the hovered value.
+| Part | Role |
+|------|------|
+| `Chart` | Root + hover / selected context. |
+| `ChartBody` | Y-axis + plot row. |
+| `ChartContent` | Plot + X-axis column. |
+| `ChartYAxisLabels` | Left Y-axis tick labels (`aria-hidden`). |
+| `ChartPlot` | Plot frame + SVG viewport. |
+| `ChartGrid` | Horizontal grid lines. |
+| `ChartTooltip` | Hover value. Place inside `ChartPlot`. |
+| `ChartLegend` | Optional list for multiple series. |
+| `ChartLegendItem` | One legend row + swatch. |

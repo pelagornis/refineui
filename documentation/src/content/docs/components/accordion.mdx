@@ -1,78 +1,45 @@
 ---
 title: Accordion
-description: Collapsible sections — multiple panels can be open
+description: Expand and collapse related sections so people can scan and open what they need.
 ---
 
 import AccordionPreview from "../../../components/AccordionPreview";
 
 # Accordion
 
-Expand and collapse multiple panels. Web Kit **Accordion** `54:146` — trigger typography follows **`size`** **sm / md / lg**.
+Accordion is a stack of collapsible sections. Use it for FAQs, settings groups, and help copy when showing everything at once would be too long.
 
-## Install & import
-
-```tsx
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Accordion
-  type="single"
-  collapsible
-  defaultValue="shipping"
-  className="max-w-lg"
->
-  <AccordionItem value="shipping">
-    <AccordionTrigger>What are your shipping options?</AccordionTrigger>
-    <AccordionContent>
-      We offer standard (5-7 days), express (2-3 days), and overnight shipping.
-    </AccordionContent>
-  </AccordionItem>
-  <AccordionItem value="returns">
-    <AccordionTrigger>What is your return policy?</AccordionTrigger>
-    <AccordionContent>
-      Returns accepted within 30 days. Items must be unused and in original packaging.
-    </AccordionContent>
-  </AccordionItem>
-</Accordion>
-```
-
-## Preview
+Each item has a trigger and a panel. `type="single"` keeps one panel open; `type="multiple"` allows several. For in-page view switching with a persistent bar, use **[Tabs](/components/tabs/)**.
 
 <div class="not-content">
   <AccordionPreview client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `type` | `"single"` \| `"multiple"` | `"single"` | Single vs multiple open items |
-| `collapsible` | `boolean` | `false` | In `single` mode, allow closing the open item |
-| `defaultValue` | `string` \| `string[]` | — | Initially open item(s) |
-| `value` | `string` \| `string[]` | — | Controlled value |
-| `onValueChange` | `(value) => void` | — | Change callback |
-| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | Trigger & content typography, icon size |
+### Accordion
 
-## Examples
+| Prop | Default | Type |
+|------|---------|------|
+| `type` | `"single"` | `"single"` \| `"multiple"` — One open panel versus several. |
+| `collapsible` | `false` | `boolean` — In `single` mode, allow closing the open item. |
+| `defaultValue` | — | `string` \| `string[]` — Uncontrolled initially open item(s). |
+| `value` | — | `string` \| `string[]` — Controlled open item(s). |
+| `onValueChange` | — | `(value: string \| string[] \| undefined) => void` — Called after open state changes. In `single` mode the value is the open id, or `undefined` when none are open. |
+| `size` | `"md"` | `"sm"` \| `"md"` \| `"lg"` — Trigger and content typography, and icon size. |
 
-### Icon
+Also accepts native `div` attributes (`className`, `style`, `aria-*`).
 
-Pass `icon` on `AccordionItem` to show an icon before the title.
+### AccordionItem
 
-```tsx
-<Accordion type="single" defaultValue="help">
-  <AccordionItem value="help" icon="info">
-    <AccordionTrigger>Help</AccordionTrigger>
-    <AccordionContent>Item content with a leading icon.</AccordionContent>
-  </AccordionItem>
-</Accordion>
-```
+| Prop | Default | Type |
+|------|---------|------|
+| `value` | — | `string` — Item identity. Required. Match this to Accordion `value` / `defaultValue`. |
+| `icon` | — | `string` — WebIcon name shown before the trigger label. |
+
+### Parts
+
+| Part | Role |
+|------|------|
+| `AccordionTrigger` | Button that toggles the item. Renders the chevron. |
+| `AccordionContent` | Collapsible panel. Hidden when closed (`pointer-events: none`). |

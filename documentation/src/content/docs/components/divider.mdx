@@ -1,56 +1,28 @@
 ---
 title: Divider
-description: Horizontal divider — default, content, icon
+description: Horizontal line that separates sections, with optional text or an icon.
 ---
 
 import DividerPreview from "../../../components/DividerPreview";
 
 # Divider
 
-**Horizontal** separator between content. Web Kit **Divider** `346:722`. **Vertical dividers are not supported.**
+Divider is a horizontal separator. Use it to split stacked content — a form from a footer, or two blocks in a column — when spacing alone is not enough.
 
-## Install & import
-
-```tsx
-import { Divider } from "@refineui/react";
-```
-
-## Layout
-
-| `layout` | Description |
-|----------|-------------|
-| `default` | Full-width 1px line |
-| `content` | Text in the middle (or per `align`) with lines on both sides |
-| `icon` | Icon slot in the middle with lines (`children` for icon, etc.) |
-
-For `content` and `icon`, `align` is `"center"` \| `"left"` \| `"right"` (horizontal alignment).
-
-## Basic usage
-
-```tsx
-<Divider />
-```
-
-## Preview
+It is horizontal only. There is no vertical divider. For in-page section switching, use **[Tabs](/components/tabs/)**. For chat or list grouping, prefer layout gap or **[Bubble](/components/bubble/)** grouping instead of a line.
 
 <div class="not-content">
   <DividerPreview client:load />
 </div>
 
-## Examples
+## Interface
 
-### Text in the middle
+### Divider
 
-```tsx
-<Divider layout="content" align="center">
-  or
-</Divider>
-```
+| Prop | Default | Type |
+|------|---------|------|
+| `layout` | `"default"` | `"default"` \| `"content"` \| `"icon"` — Full-width line, labeled line, or line with a built-in circle. |
+| `align` | `"center"` | `"center"` \| `"left"` \| `"right"` — Horizontal placement for `content` and `icon`. Ignored on `default`. |
+| `children` | — | `ReactNode` — Required for `layout="content"`. The text in the line. Not used for `icon`. |
 
-### Icon
-
-```tsx
-<Divider layout="icon" align="center">
-  <span aria-hidden>◎</span>
-</Divider>
-```
+Also accepts native `div` attributes (`className`, `style`, `aria-*`).

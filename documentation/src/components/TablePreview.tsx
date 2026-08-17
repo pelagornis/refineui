@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardHeaderMain,
   CardTitle,
+  Stack,
   Table,
   TableBody,
   TableCaption,
@@ -15,8 +16,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  Text,
 } from "@refineui/react";
-import PreviewFrame from "./PreviewFrame";
+import { Look, Looks } from "./PreviewFrame";
 
 const invoices = [
   {
@@ -59,71 +61,71 @@ export default function TablePreview() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   return (
-    <PreviewFrame minWidth="560px">
-      <Card variant="outlined">
-        <CardHeader className="border-b-refineui-thin border-refineui-alias-border-subtle">
-          <CardHeaderMain>
-            <div className="mb-refineui-size-xx-small flex items-center gap-refineui-size-x-small">
-              <Badge variant="neutral">Billing</Badge>
-              <span className="refineui-typo-caption-2 text-refineui-alias-foreground-tertiary">
-                Last 30 days
-              </span>
-            </div>
-            <CardTitle>Invoices</CardTitle>
-            <CardDescription>
-              Recent payments and outstanding balances. Click a row to select.
-            </CardDescription>
-          </CardHeaderMain>
-        </CardHeader>
-        <CardContent className="px-0 pb-refineui-size-medium pt-refineui-size-small">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Invoice</TableHead>
-                <TableHead>Customer</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Method</TableHead>
-                <TableHead className="text-right">Amount</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {invoices.map((row) => {
-                const selected = selectedId === row.id;
-                return (
-                  <TableRow
-                    key={row.id}
-                    data-state={selected ? "selected" : undefined}
-                    aria-selected={selected || undefined}
-                    className="cursor-pointer"
-                    onClick={() =>
-                      setSelectedId((prev) => (prev === row.id ? null : row.id))
-                    }
-                  >
-                    <TableCell className="font-medium">{row.id}</TableCell>
-                    <TableCell className="text-refineui-alias-foreground-secondary">
-                      {row.customer}
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant={statusVariant(row.status)}>{row.status}</Badge>
-                    </TableCell>
-                    <TableCell className="text-refineui-alias-foreground-secondary">
-                      {row.method}
-                    </TableCell>
-                    <TableCell className="text-right tabular-nums">{row.amount}</TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TableCell colSpan={4}>Total</TableCell>
-                <TableCell className="text-right tabular-nums">$2,624.50</TableCell>
-              </TableRow>
-            </TableFooter>
-            <TableCaption>Four invoices in this period.</TableCaption>
-          </Table>
-        </CardContent>
-      </Card>
-    </PreviewFrame>
+    <Looks>
+      <Look align="stretch">
+        <Card variant="outlined" className="w-full">
+          <CardHeader className="border-b-refineui-thin border-refineui-alias-border-subtle">
+            <CardHeaderMain>
+              <Stack direction="row" gap="sizeXSmall" align="center">
+                <Badge variant="neutral">Billing</Badge>
+                <Text variant="captionMd" className="text-refineui-alias-foreground-tertiary">
+                  Last 30 days
+                </Text>
+              </Stack>
+              <CardTitle>Invoices</CardTitle>
+              <CardDescription>Recent payments and outstanding balances.</CardDescription>
+            </CardHeaderMain>
+          </CardHeader>
+          <CardContent className="px-0 pb-refineui-size-medium pt-refineui-size-small">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Invoice</TableHead>
+                  <TableHead>Customer</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Method</TableHead>
+                  <TableHead className="text-right">Amount</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {invoices.map((row) => {
+                  const selected = selectedId === row.id;
+                  return (
+                    <TableRow
+                      key={row.id}
+                      data-state={selected ? "selected" : undefined}
+                      aria-selected={selected || undefined}
+                      className="cursor-pointer"
+                      onClick={() =>
+                        setSelectedId((prev) => (prev === row.id ? null : row.id))
+                      }
+                    >
+                      <TableCell className="font-medium">{row.id}</TableCell>
+                      <TableCell className="text-refineui-alias-foreground-secondary">
+                        {row.customer}
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant={statusVariant(row.status)}>{row.status}</Badge>
+                      </TableCell>
+                      <TableCell className="text-refineui-alias-foreground-secondary">
+                        {row.method}
+                      </TableCell>
+                      <TableCell className="text-right tabular-nums">{row.amount}</TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <TableCell colSpan={4}>Total</TableCell>
+                  <TableCell className="text-right tabular-nums">$2,624.50</TableCell>
+                </TableRow>
+              </TableFooter>
+              <TableCaption>Four invoices in this period.</TableCaption>
+            </Table>
+          </CardContent>
+        </Card>
+      </Look>
+    </Looks>
   );
 }

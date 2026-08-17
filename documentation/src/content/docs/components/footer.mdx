@@ -1,147 +1,49 @@
 ---
 title: Footer
-description: Site footer — sitemap, legal bar
+description: Site footer — sitemap columns, then a legal meta bar for social, lockup, and locale.
 ---
 
 import FooterPreview from "../../../components/FooterPreview";
 
 # Footer
 
-Site footer landmark for marketing and docs surfaces. **Figma Web Kit 미수록** — RefineUI token composition. Sitemap columns, then a three-zone meta bar: social icons, inline lockup (`Pelagornis © 2026`), locale pill.
+Footer is the site-wide landmark at the bottom of a page. Use it when you need a wrapping sitemap and a quiet legal bar — social links, a brand lockup, and a locale control.
 
-## Install & import
-
-```tsx
-import {
-  footerLinkClassName,
-  footerLocaleLinkClassName,
-  footerLocaleTriggerClassName,
-  footerSocialLinkClassName,
-  Footer,
-  FooterBrand,
-  FooterBrandDescription,
-  FooterBrandName,
-  FooterCopyright,
-  FooterExplore,
-  FooterGroup,
-  FooterGroupLabel,
-  FooterLink,
-  FooterLocale,
-  FooterLogo,
-  FooterMeta,
-  FooterMetaEnd,
-  FooterNav,
-  FooterSocial,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectPortal,
-  SelectTrigger,
-} from "@refineui/react";
-```
-
-## Basic usage
-
-`FooterExplore` holds the sitemap. `FooterMeta` is three zones: **`FooterSocial`** (icon links) · **`FooterBrand`** (one-line lockup) · **`FooterMetaEnd`** (locale pill).
-
-Put `Select` in `FooterLocale`. Pass **`footerLocaleTriggerClassName`** (and `style={{ minWidth: 0 }}`) so the trigger reads as a locale pill. Put the current language label in the trigger — `SelectValue` stays on `"Select..."` until the menu has opened once. Icon-only social links need `aria-label`.
-
-```tsx
-<Footer>
-  <FooterExplore>
-    <FooterNav>
-      <FooterGroup>
-        <FooterGroupLabel>Product</FooterGroupLabel>
-        <FooterLink href="/components">Components</FooterLink>
-        <FooterLink href="/tokens">Tokens</FooterLink>
-      </FooterGroup>
-      <FooterGroup>
-        <FooterGroupLabel>Resources</FooterGroupLabel>
-        <FooterLink href="/guides">Guides</FooterLink>
-        <FooterLink href="/changelog">Changelog</FooterLink>
-      </FooterGroup>
-    </FooterNav>
-  </FooterExplore>
-  <FooterMeta>
-    <FooterSocial>
-      <FooterLink href="https://github.com" aria-label="GitHub">
-        GitHub
-      </FooterLink>
-    </FooterSocial>
-    <FooterBrand>
-      <FooterCopyright>Pelagornis © 2026</FooterCopyright>
-    </FooterBrand>
-    <FooterMetaEnd>
-      <FooterLocale>
-        <Select size="sm" defaultValue="en">
-          <SelectTrigger
-            aria-label="Language"
-            className={footerLocaleTriggerClassName}
-            style={{ minWidth: 0 }}
-          >
-            English
-          </SelectTrigger>
-          <SelectPortal>
-            <SelectContent>
-              <SelectItem value="en">English</SelectItem>
-              <SelectItem value="ko">한국어</SelectItem>
-            </SelectContent>
-          </SelectPortal>
-        </Select>
-      </FooterLocale>
-    </FooterMetaEnd>
-  </FooterMeta>
-</Footer>
-```
-
-## Preview
+Put the sitemap in `FooterExplore`. Put social, lockup, and locale in `FooterMeta`. For in-page section links, use **[Tabs](/components/tabs/)** or **[Navigation Menu](/components/navigation-menu/)** instead.
 
 <div class="not-content">
   <FooterPreview client:load />
 </div>
 
-## Parts
+## Interface
 
-| Part | Slot | Role |
-|------|------|------|
-| Explore | `FooterExplore` | Upper region — wrapping sitemap |
-| Explore | `FooterNav` | Wrapping sitemap columns (`aria-label` default `"Footer"`) |
-| Explore | `FooterGroup` | One labeled link column |
-| Meta | `FooterMeta` | Lower bar — social · lockup · locale |
-| Meta | `FooterSocial` | Icon (or text) social links, start |
-| Meta | `FooterBrand` | Center lockup (`Brand © year`) |
-| Meta | `FooterCopyright` | Legal line |
-| Meta | `FooterMetaEnd` | End cluster — locale pill |
-| Meta | `FooterLocale` | Pill `Select` language control |
+### Footer
 
-`FooterContent` is an alias of `FooterExplore`. `FooterBottom` is an alias of `FooterMeta`.
+Accepts native `footer` attributes (`className`, `style`, `aria-*`).
 
-## Building blocks
+### FooterNav
 
-| Component | Role |
-|-----------|------|
-| `Footer` | Root `footer` (`data-refineui="footer"`) |
-| `FooterLogo` | Logo mark slot |
-| `FooterBrandName` | Product / brand name |
-| `FooterBrandDescription` | Short tagline |
-| `FooterGroupLabel` | Column heading |
-| `FooterLink` | Footer link (`a`; social density follows `FooterSocial`) |
+| Prop | Default | Type |
+|------|---------|------|
+| `aria-label` | `"Footer"` | `string` — Landmark name. Override when multiple footers exist. |
 
-## With Next.js `Link`
+Also accepts native `nav` attributes.
 
-`FooterLink` is a semantic `<a>`. Pass **`footerLinkClassName`** or **`footerSocialLinkClassName`** to App Router `Link`.
+### Parts
 
-```tsx
-import Link from "next/link";
-import { footerLinkClassName } from "@refineui/react";
-
-<Link href="/docs" className={footerLinkClassName}>
-  Docs
-</Link>
-```
-
-## Accessibility
-
-- Root is a `footer` landmark.
-- `FooterNav` is a `nav` with `aria-label` (override when multiple footers exist).
-- Locale `SelectTrigger` needs `aria-label="Language"`. Icon-only social links need `aria-label`.
+| Part | Role |
+|------|------|
+| `FooterExplore` | Upper region — wrapping sitemap. Alias: `FooterContent`. |
+| `FooterNav` | Sitemap columns (`nav`). |
+| `FooterGroup` | One labeled link column. |
+| `FooterGroupLabel` | Column heading. |
+| `FooterLink` | Footer `<a>`. Density follows `FooterSocial` / `FooterLocale`. |
+| `FooterMeta` | Lower bar — social · lockup · locale. Alias: `FooterBottom`. |
+| `FooterSocial` | Icon (or text) social links, start. |
+| `FooterBrand` | Center lockup. |
+| `FooterLogo` | Optional logo mark. |
+| `FooterBrandName` | Optional product / brand name. |
+| `FooterBrandDescription` | Optional tagline. |
+| `FooterCopyright` | Legal line. |
+| `FooterMetaEnd` | End cluster — locale pill. |
+| `FooterLocale` | Locale control slot (usually `Select`). |

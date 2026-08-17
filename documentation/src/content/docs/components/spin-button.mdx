@@ -1,54 +1,33 @@
 ---
 title: SpinButton
-description: Numeric spin input — Web Kit Spin Button
+description: Enter a number directly, or change it with up and down steppers.
 ---
 
 import SpinButtonDemo from "../../../components/SpinButtonDemo";
 
 # SpinButton
 
-Enter a number **directly** or change it with **up/down steppers**. Follows Web Kit **Spin Button** `561:2067` and the Spin Button section in `docs/design-specs-web-kit.md`.
+SpinButton is a numeric field with increment and decrement controls. Use it for quantity, a count, or any integer that is easier to bump than to type from scratch.
 
-## Install & import
-
-```tsx
-import { SpinButton } from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-Pass **`value`** and **`onChange`** as a controlled component.
-
-```tsx
-const [n, setN] = useState(0);
-<SpinButton value={n} onChange={setN} min={0} max={99} aria-label="Quantity" />;
-```
-
-## Preview
-
-The docs preview (`PreviewFrame` + `[data-refineui-preview]`) is **full width** of the content column, so with only the default `w-full` the spin button can stretch horizontally inside the gray box. The demo below uses **`className="w-auto"`** so the control keeps its intrinsic width. In your app, place it inside a **width-constrained parent** (form row, grid cell, etc.) and `w-full` will fill that slot.
+The value is always controlled: pass `value` and `onChange`. For a number typed on a single line without steppers, use **[Input](/components/input/)** with `type="number"`. For a value chosen by dragging, use **[Slider](/components/slider/)**.
 
 <div class="not-content">
   <SpinButtonDemo client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `value` | `number` | (required) | Current value |
-| `onChange` | `(value: number) => void` | (required) | Value change |
-| `min` | `number` | — | Minimum |
-| `max` | `number` | — | Maximum |
-| `step` | `number` | — | Step increment |
-| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | Field height and typography |
-| `disabled` | `boolean` | — | Disabled |
+### SpinButton
 
-## Examples
+| Prop | Default | Type |
+|------|---------|------|
+| `value` | — | `number` — Current value. Required. |
+| `onChange` | — | `(value: number) => void` — Called with the next numeric value. Required. |
+| `placeholder` | — | `string` — Shown in the value input when drafting an empty string. |
+| `min` | — | `number` — Lower bound. Clamps steps, Home, and typed commits. |
+| `max` | — | `number` — Upper bound. Clamps steps, End, and typed commits. |
+| `step` | `1` | `number` — Increment for the stepper and arrow keys. |
+| `size` | `"md"` | `"sm"` \| `"md"` \| `"lg"` — Field height and type, aligned with Input / Select. |
+| `disabled` | `false` | `boolean` — Disables typing and both steppers. |
 
-### Bounded range
-
-```tsx
-<SpinButton value={qty} onChange={setQty} min={1} max={10} step={1} />
-```
+Also accepts native `div` attributes except `onChange` (`aria-label`, `className`, `style`). Default `aria-label` is `"Spin button"`.

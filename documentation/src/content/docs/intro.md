@@ -1,47 +1,27 @@
 ---
-title: Introduction to RefineUI
-description: Pelagornis RefineUI Web Kit — design system React components
+title: Introduction
+description: RefineUI is the design system for Pelagornis products — tokens, layout, and components as one language.
 ---
 
-# Introduction to RefineUI
+# RefineUI
 
-**RefineUI** (`@refineui/react`) is a React component library aligned with the Figma **Pelagornis RefineUI Web Kit** and **Foundation** variables. Color, spacing, and typography follow **`@refineui/tokens`**, and interactions (hover, focus, etc.) are enhanced with **`refineui.css`**.
+RefineUI is the design system for Pelagornis products. Foundation variables become `@refineui/tokens`. UI is `@refineui/react`. The Web Kit you design against is the React you ship.
 
-## Features
-
-- **Web Kit parity** — Implementation matches Figma nodes and `docs/design-specs-web-kit.md` per component
-- **Tokens only** — Component styles use `@refineui/tokens` (`colors`, `spacings`, `typographys`, etc.)
-- **Accessibility** — ARIA and keyboard behavior for form controls, dialogs, toggles, and more
-- **Single CSS import** — `refineui.css` applies shared interaction styles for buttons, inputs, checkboxes, etc.
-
-## Requirements
-
-- **React** 18+
-- **react-dom** 18+ (when using components on the client)
-
-## Installation
-
-Example for apps outside this monorepo:
+## Install
 
 ```bash
 bun add @refineui/react @refineui/tokens
-# or
-pnpm add @refineui/react @refineui/tokens
-# or
-npm install @refineui/react @refineui/tokens
 ```
 
-## Stylesheet (required)
+## Stylesheet
 
-Interaction states (hover, active, focus-visible) and some default component behavior live in **global CSS**. Import once at your app entry.
+Import once at the app entry. Hover, active, and focus-visible live here.
 
 ```tsx
 import "@refineui/react/refineui.css";
 ```
 
-`Button`, `Input`, `Checkbox`, `Switch`, `Dropdown` items, etc. render without it, but you need this import for **design-system-aligned hover and focus** styles.
-
-## Basic usage
+## Example
 
 ```tsx
 import { Button, Input, Card } from "@refineui/react";
@@ -59,16 +39,10 @@ export function Example() {
 }
 ```
 
-## Documentation structure
+Requires React 18+ and react-dom 18+ on the client.
 
-- **Getting started** — this page
-- **Layout** — [Stack, Grid, Container, Box](/layout/)
-- **Components** — API, examples, and live previews per Web Kit component
-- **Guides** — [Project structure](/guides/packages/), [CLI](/guides/cli/)
+- [Foundations](/foundations/) — color, type, space, radius, elevation, motion
+- [Layout](/layout/) — Stack, Grid, Container, Box
+- [Components](/components/) — live looks and the API
 
-## Figma
-
-- [Foundation (variables & tokens)](https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundation?node-id=1-650)
-- [Web Kit (components)](https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?node-id=7-6)
-
-See **`docs/design-specs-web-kit.md`** in the repo for an implementation summary.
+[Foundation](https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundation?node-id=1-650) · [Web Kit](https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?node-id=0-1)

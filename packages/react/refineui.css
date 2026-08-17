@@ -187,6 +187,11 @@
   transform: scale(var(--refineui-motion-scale-press));
 }
 
+/* Alert — host radius `roundedXLarge` (Foundation). Do not rely on Tailwind `rounded-*`. */
+[data-refineui="alert"] {
+  border-radius: var(--refineui-radius-rounded-x-large);
+}
+
 /* Switch — Web Kit `270:3057` · color feedback (alias tokens only) */
 [data-refineui="switch"][data-checked="false"]:not(:disabled):hover:not(:active) {
   background-color: var(--refineui-color-alias-background-surface-selected) !important;
@@ -1334,6 +1339,37 @@ a[data-refineui="link"]:focus-visible {
   outline-offset: var(--refineui-focus-offset);
 }
 
+/* Sidebar — token-based composition (no Web Kit COMPONENT_SET) */
+[data-refineui="sidebar-link"] {
+  transition:
+    color var(--refineui-motion-duration-fast),
+    background-color var(--refineui-motion-duration-fast);
+}
+[data-refineui="sidebar-link"]:not([aria-disabled="true"]):hover:not(:active) {
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
+}
+[data-refineui="sidebar-link"][data-active] {
+  color: var(--refineui-color-alias-foreground-primary) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
+}
+[data-refineui="sidebar-link"][data-active]:hover:not(:active) {
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
+}
+[data-refineui="sidebar-link"]:not([aria-disabled="true"]):active {
+  color: var(--refineui-color-alias-foreground-primary) !important;
+  background-color: var(--refineui-color-alias-background-primary-active) !important;
+}
+[data-refineui="sidebar-link"]:focus-visible {
+  outline: 2px solid var(--refineui-focus-color);
+  outline-offset: var(--refineui-focus-offset);
+}
+[data-refineui="sidebar-link"][aria-disabled="true"] {
+  color: var(--refineui-color-alias-foreground-disabled) !important;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
 /* Navigation Menu — top-level hover plate; content rows = Menu item */
 [data-refineui="navigation-menu-trigger"],
 [data-refineui="navigation-menu-list"] > [data-refineui="navigation-menu-item"] > [data-refineui="navigation-menu-link"] {
@@ -1737,6 +1773,20 @@ a[data-refineui="link"]:focus-visible {
 [data-refineui="scroll-area"][data-scrolling] > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"],
 [data-refineui="scroll-area"][data-interacting] > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"],
 [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-active="true"] {
+  opacity: 1;
+}
+/**
+ * Select menu is focused while open and may auto-scroll to the selected item,
+ * so the shared hover ScrollArea would stay visible. Reveal on pointer hover
+ * (and thumb drag) only.
+ */
+[data-refineui="select-menu"] [data-refineui="scroll-area"]:focus-within > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"],
+[data-refineui="select-menu"] [data-refineui="scroll-area"][data-scrolling] > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"],
+[data-refineui="select-menu"] [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-active="true"] {
+  opacity: 0;
+}
+[data-refineui="select-menu"] [data-refineui="scroll-area"]:hover > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"],
+[data-refineui="select-menu"] [data-refineui="scroll-area"][data-interacting] > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"] {
   opacity: 1;
 }
 

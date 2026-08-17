@@ -1,0 +1,36 @@
+---
+title: Radius
+description: Corner radii and stroke widths from Foundation — use keys, not raw pixels.
+sidebar:
+  order: 5
+---
+
+import { RadiusPreview, StrokePreview } from "../../../components/foundation/RadiusPreview";
+
+# Radius
+
+Corners and strokes are Foundation keys on Box (`radius`, `border`). `roundedCircle` is the pill. Default UI stroke is `strokeWidthThin`.
+
+## Corners
+
+<div class="not-content">
+  <RadiusPreview client:load />
+</div>
+
+## Stroke
+
+<div class="not-content">
+  <StrokePreview client:load />
+</div>
+
+```tsx
+<Box
+  padding="sizeLarge"
+  radius="roundedXLarge"
+  border="strokeWidthThin"
+  borderColor="borderDefault"
+  background="backgroundSurface"
+>
+  Rounded surface
+</Box>
+```

@@ -1,52 +1,35 @@
 ---
 title: Radio
-description: Radio group — title and description
+description: Pick exactly one option from a set that shares the same name.
 ---
 
 import RadioPreview from "../../../components/RadioPreview";
 
 # Radio
 
-Single radio item. Web Kit **Radio** `397:1001` supports optional title and description. Use the **same `name`** on multiple radios so the browser groups them.
+Radio is a single option in a mutually exclusive group. Use several radios with the **same `name`** so the browser treats them as one field.
 
-## Install & import
-
-```tsx
-import { Radio } from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Radio name="plan" value="free" defaultChecked title="Free" />
-<Radio name="plan" value="pro" title="Pro" description="Billed monthly" />
-```
-
-## Preview
+For independent on/off choices, use **[Checkbox](/components/checkbox/)**. For an instant settings toggle, use **[Switch](/components/switch/)**.
 
 <div class="not-content">
   <RadioPreview client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `title` | `ReactNode` | Primary label |
-| `description` | `ReactNode` | Supporting caption |
-| `disabled` | `boolean` | Disabled |
+### Radio
 
-Uses **`InputHTMLAttributes`** except `type`: `value`, `checked`, `defaultChecked`, `onChange`, `name`, etc.
+| Prop | Default | Type |
+|------|---------|------|
+| `label` | — | `string` — Primary name beside the control. |
+| `description` | — | `string` — Supporting line under the label. |
+| `allowUncheck` | `true` | `boolean` — When `true`, clicking the selected radio clears it. |
+| `disabled` | — | `boolean` — Blocks interaction. |
 
-## Examples
+Also accepts native `input` attributes except `type` (`value`, `checked`, `defaultChecked`, `onChange`, `name`, `id`, `aria-*`, `className`).
 
-### Fieldset group label
+### RadioInput
 
-```tsx
-<fieldset>
-  <legend>Payment method</legend>
-  <Radio name="pay" value="card" label="Card" />
-  <Radio name="pay" value="bank" label="Bank transfer" />
-</fieldset>
-```
+Control-only radio (`type="radio"`). Use it when you compose the label yourself.
+
+Also accepts native `input` attributes except `type`.

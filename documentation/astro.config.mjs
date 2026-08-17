@@ -53,10 +53,14 @@ export default defineConfig({
         },
       ],
       title: "RefineUI",
-      description: "Pelagornis RefineUI Web Kit — design system component library",
+      description: "Design system for Pelagornis products — components, interaction, and style as one language.",
       customCss: ["./src/styles/global.css"],
       sidebar: [
-        { label: "Getting started", slug: "intro" },
+        { label: "Introduction", slug: "intro" },
+        {
+          label: "Foundations",
+          autogenerate: { directory: "foundations" },
+        },
         {
           label: "Layout",
           autogenerate: { directory: "layout" },
@@ -64,13 +68,6 @@ export default defineConfig({
         {
           label: "Components",
           autogenerate: { directory: "components" },
-        },
-        {
-          label: "Guides",
-          items: [
-            { label: "Project structure", slug: "guides/packages" },
-            { label: "CLI", slug: "guides/cli" },
-          ],
         },
       ],
       social: [{ icon: "github", label: "GitHub", href: "https://github.com/pelagornis/refineui" }],

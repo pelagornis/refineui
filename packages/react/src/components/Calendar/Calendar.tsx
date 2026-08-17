@@ -1,12 +1,26 @@
 import { clsx } from "clsx";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { iconSizes } from "@refineui/tokens";
 import { WebIcon } from "../../WebIcon";
 import { Button } from "../Button";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectPortal,
+    SelectTrigger,
+    SelectValue,
+} from "../Select";
 import { calendarStyles } from "./style";
 import type { CalendarProps } from "./types";
 
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const;
+const MONTH_COUNT = 12;
+/** Years listed before the earlier of the viewed year and the current year. */
+const YEAR_OPTIONS_BEFORE = 50;
+/** Years listed after the later of the viewed year and the current year. */
+const YEAR_OPTIONS_AFTER = 10;
 
 function startOfDay(d: Date) {
     return new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -31,6 +45,50 @@ function getWeekdayLabels(weekStartsOn: 0 | 1) {
 
 function formatMonthName(year: number, month: number) {
     return new Intl.DateTimeFormat("en-US", { month: "long" }).format(new Date(year, month, 1));
+}
+
+const MONTH_LABELS = Array.from({ length: MONTH_COUNT }, (_, monthIndex) =>
+    formatMonthName(2000, monthIndex),
+);
+
+function yearOptionsForView(viewYear: number): number[] {
+    const referenceYear = new Date().getFullYear();
+    const startYear = Math.min(viewYear, referenceYear) - YEAR_OPTIONS_BEFORE;
+    const endYear = Math.max(viewYear, referenceYear) + YEAR_OPTIONS_AFTER;
+    const years: number[] = [];
+    for (let yearOption = startYear; yearOption <= endYear; yearOption += 1) {
+        years.push(yearOption);
+    }
+    return years;
+}
+
+function CalendarCaptionSelect({
+    value,
+    placeholder,
+    ariaLabel,
+    header,
+    onValueChange,
+    children,
+}: {
+    value: string;
+    placeholder: string;
+    ariaLabel: string;
+    header: "caption-month" | "caption-year";
+    onValueChange: (value: string) => void;
+    children: ReactNode;
+}) {
+    return (
+        <Select value={value} onValueChange={onValueChange} aria-label={ariaLabel}>
+            <SelectTrigger data-calendar-header={header} className={calendarStyles.captionButton}>
+                <SelectValue placeholder={placeholder} />
+            </SelectTrigger>
+            <SelectPortal>
+                <SelectContent>
+                    <SelectGroup>{children}</SelectGroup>
+                </SelectContent>
+            </SelectPortal>
+        </Select>
+    );
 }
 
 type MonthOffset = -1 | 0 | 1;
@@ -296,28 +354,36 @@ export function Calendar({
                 >
                     <WebIcon name="chevron-left" size={iconSizes.small} color="currentColor" fallback="‹" />
                 </Button>
-                <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    layout="label"
-                    data-calendar-header="caption-month"
-                    aria-label={`Month: ${monthName}`}
-                    className={calendarStyles.captionButton}
+                <CalendarCaptionSelect
+                    value={String(month)}
+                    placeholder={monthName}
+                    ariaLabel={`Month: ${monthName}`}
+                    header="caption-month"
+                    onValueChange={(nextMonth) => {
+                        setView(new Date(year, Number.parseInt(nextMonth, 10), 1));
+                    }}
                 >
-                    {monthName}
-                </Button>
-                <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    layout="label"
-                    data-calendar-header="caption-year"
-                    aria-label={`Year: ${year}`}
-                    className={calendarStyles.captionButton}
+                    {MONTH_LABELS.map((label, monthIndex) => (
+                        <SelectItem key={label} value={String(monthIndex)}>
+                            {label}
+                        </SelectItem>
+                    ))}
+                </CalendarCaptionSelect>
+                <CalendarCaptionSelect
+                    value={String(year)}
+                    placeholder={String(year)}
+                    ariaLabel={`Year: ${year}`}
+                    header="caption-year"
+                    onValueChange={(nextYear) => {
+                        setView(new Date(Number.parseInt(nextYear, 10), month, 1));
+                    }}
                 >
-                    {String(year)}
-                </Button>
+                    {yearOptionsForView(year).map((yearOption) => (
+                        <SelectItem key={yearOption} value={String(yearOption)}>
+                            {String(yearOption)}
+                        </SelectItem>
+                    ))}
+                </CalendarCaptionSelect>
                 <Button
                     type="button"
                     variant="ghost"

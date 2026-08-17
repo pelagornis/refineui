@@ -1,6 +1,6 @@
 ---
 title: Avatars
-description: Web Kit Avatar Stack — Avatar · AvatarGroup
+description: Face, initials, or icon for a person or entity — alone or in a group.
 ---
 
 import AvatarsPreview from "../../../components/AvatarsPreview";
@@ -8,163 +8,50 @@ import AvatarStatusPreview from "../../../components/AvatarStatusPreview";
 
 # Avatars
 
-Aligned with Web Kit single **`Avatar`** (component set) and group **`Avatar` Stack** `69:3008` · **`Avatar` Spread** `69:3007`. Build overlap and rows with **`AvatarGroup`** and **`Avatar`**.
+Avatar shows a person or entity as a photo, initials, or icon. Use it next to a name, in a comment row, or stacked when several people share a space.
 
-### MCP (`get_design_context`) — maps to Web Kit `Avatar`
-
-Figma search/export names: **`Avatar`** / **`Avatar Stack`** / **`Avatar Spread`** / **`Avatar/Status`** (as of 2026-04). Stack frame `69:3008` has multiple rows; package **`AvatarSize`** nine steps (`xxxsmall` … `xxxlarge`) map to MCP `Avatar` **`size`** (XXXSmall … XXXLarge) and Foundation **`Global/Size/*`** (`foundationSizes`).
-
-**Figma `Avatar` (`56:254`) `Color` × `Layout`:** In plugin variants, **`Image`→Neutral only**; **`Icon`** and **`Initials`** share the **same 10 colors** (Blue … Yellow). The **`69:3008` Stack** frame is a group demo only—not the full single-`Avatar` color matrix.
-
-**Note:** Stack row variant names (`Size=Small`, etc.) may **differ** from the inner Figma `Avatar` **`size`** property names (per MCP export).
-
-| `AvatarSize` | Diameter (`Global/Size/*`) | Figma `Avatar` MCP `size` (example) | Stack overlap (`foundationSizes`) |
-|--------------|------------------------------|---------------------------------------|-----------------------------------|
-| `xxxsmall` | `160` → 16px | `XXXSmall` | `40` → 4px |
-| `xxsmall` | `200` | `XXSmall` | `40` |
-| `xsmall` | `240` | `XSmall` | `40` |
-| `small` | `280` | `Small` | `60` → 6px |
-| `medium` | `320` | `Medium` | `60` |
-| `large` | `360` | `Large` | `80` → 8px |
-| `xlarge` | `480` | `XLarge` | `100` → 10px |
-| `xxlarge` | `540` → 54px | `XXLarge` | `100` |
-| `xxxlarge` | `600` → 60px | `XXXLarge` | `120` → 12px |
-
-Values matching Foundation **`Global/Size/{n}`** flow to `--refineui-size-foundation-size-*` via **`foundationSizes`** in `packages/react`. **`Avatar/Status`** XXXLarge (14px) has no `Global/Size/140`, so use **`componentSizes.avatarStatusXxxlarge`**.
-
-| | MCP (`Avatar`) | `packages/react` |
-|---|----------------|------------------|
-| `color` | `Neutral` \| `Red` \| `Orange` | `neutral` \| `red` \| `orange` |
-| `layout` | `Icon` \| `Initials` \| `Image` | `icon` \| `initials` \| `image` |
-| `showStatus` | Per `Avatar/Status` diameter row | `showStatus` or `<AvatarBadge />` |
-| Orange initials typography | Body / Subtitle / Title per row | `xlarge`→subtitle-1, `xxlarge`→title-3, `xxxlarge`→title-2, else body-1 |
-| `selectAvater` | Selection ring (raster overlay) | **Not implemented** |
-
-**`Avatar` Spread** `69:3007`: Each row’s **`Size`** matches the Figma `size` on `Avatar` instances in that row. `avatarSpreadGap` maps per tier to `spacings` `sizeXSmall`–`sizeXLarge`.
-
-## Install & import
-
-```tsx
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarGroup,
-  AvatarIcon,
-  AvatarImage,
-  AvatarText,
-} from "@refineui/react";
-```
-
-## Basic usage
-
-Use Web Kit **`Avatar` `color` / `layout`** presets to compose stacks without long `className` strings.
-
-```tsx
-import {
-  Avatar,
-  AvatarGroup,
-  AvatarIcon,
-  AvatarImage,
-  AvatarText,
-} from "@refineui/react";
-
-export function AvatarStackExample() {
-  return (
-    <AvatarGroup size="md" layout="stack">
-      <Avatar size="md" showStatus>
-        <AvatarImage src="/avatar.jpg" alt="User" />
-      </Avatar>
-      <Avatar size="md" color="neutral">
-        <AvatarIcon name="person" />
-      </Avatar>
-      <Avatar size="md" color="orange" alt="Park Lee">
-        <AvatarText>PL</AvatarText>
-      </Avatar>
-      <Avatar size="md" color="red">
-        <AvatarIcon name="person" />
-      </Avatar>
-      <Avatar size="md">
-        <AvatarIcon name="more-horizontal" />
-      </Avatar>
-    </AvatarGroup>
-  );
-}
-```
-
-### Overflow split
-
-Pick a max count and `slice`—no extra utility required.
-
-```tsx
-import { Avatar, AvatarGroup, AvatarGroupCount } from "@refineui/react";
-
-const maxInline = 4;
-const inlineItems = names.slice(0, maxInline);
-const overflowItems = names.slice(maxInline);
-
-<AvatarGroup size="md" layout="stack">
-  {inlineItems.map((name) => (
-    <Avatar key={name} size="md" color="orange" alt={name} />
-  ))}
-  {overflowItems.length > 0 ? <AvatarGroupCount>+{overflowItems.length}</AvatarGroupCount> : null}
-</AvatarGroup>;
-```
-
-Inside `Avatar`, use `AvatarIcon` for system icons; omitting `size` applies glyph sizes for Web Kit Person slots per tier (32·36·56px).
-
-```tsx
-<Avatar size="md">
-  <AvatarFallback>
-    <AvatarIcon name="person" color="var(--refineui-color-primary-black)" />
-  </AvatarFallback>
-</Avatar>
-```
-
-Use `AvatarGroup` with `layout="spread"` for horizontal spacing (gaps match Web Kit **`Avatar` Spread** `69:3007`).
-
-```tsx
-<AvatarGroup size="md" layout="spread">
-  <Avatar size="md">…</Avatar>
-  <Avatar size="md">…</Avatar>
-</AvatarGroup>
-```
-
-## Preview
+`AvatarGroup` lays avatars in an overlap stack or a spaced row. Presence is an optional badge — online, away, unavailable, or offline. For a named chip with a leading photo, use **[Tag](/components/tag/)** instead.
 
 <div class="not-content">
   <AvatarsPreview client:load />
 </div>
 
-## Status Preview
+## Interface
 
-`Avatar/Status` `65:65` — attaches **bottom-right** on the avatar; diameter matches `avatarStatusDim`. Four variants: Online, Away, Unavailable, Offline. Like Figma: **Away uses a yellow crescent** (not a solid dot); **Unavailable is red circle + white horizontal bar**.
+### Avatar
 
-<div class="not-content">
-  <AvatarStatusPreview client:load />
-</div>
+| Prop | Default | Type |
+|------|---------|------|
+| `src` | — | `string` \| `null` — Image URL. `AvatarImage` `src` wins when that slot is present. |
+| `alt` | `""` | `string` — Accessible name and source for generated initials. |
+| `size` | `"md"` | `"3xs"` \| `"2xs"` \| `"xs"` \| `"sm"` \| `"md"` \| `"lg"` \| `"xl"` \| `"2xl"` \| `"3xl"` — Shell diameter. |
+| `color` | `"neutral"` | `"neutral"` \| `"blue"` \| `"green"` \| `"lime"` \| `"magenta"` \| `"orange"` \| `"purple"` \| `"red"` \| `"teal"` \| `"yellow"` — Shell color. Image layout stays neutral. |
+| `layout` | — | `"image"` \| `"icon"` \| `"initials"` — Forced layout. When omitted, inferred from slots and `src`. |
+| `showStatus` | `false` | `boolean` — Renders a status badge unless `AvatarBadge` is already a child. |
+| `status` | `"online"` | `"online"` \| `"away"` \| `"unavailable"` \| `"offline"` — Presence when `showStatus` is set. |
+| `innerClassName` | — | `string` — Class names for the inner circular shell. The outer wrapper uses `className`. |
 
-## Props
+Also accepts native `div` attributes (`className`, `style`, `aria-*`).
 
-**`className`** on `Avatar` applies to the **outer wrapper** for overlap/margin only. For inner shell background/border, use **`innerClassName`**.
+### AvatarGroup
 
-### `Avatar`
+| Prop | Default | Type |
+|------|---------|------|
+| `size` | `"md"` | Same as `Avatar` `size` — Overlap and spacing tier for children. |
+| `layout` | `"stack"` | `"stack"` \| `"spread"` — Overlapping row versus spaced row. |
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `src` | `string \| null` | — | Image URL (`AvatarImage` `src` wins when present) |
-| `alt` | `string` | `""` | Alt text / initials extraction |
-| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | 32·36·56px diameters — maps to Figma `Avatar` Stack rows and MCP sizes (see table above) |
-| `color` | `"neutral"` \| `"red"` \| `"orange"` | `"neutral"` | Web Kit `Avatar` `color` — shell and default icon tone |
-| `layout` | `"image"` \| `"icon"` \| `"initials"` | — | Auto when `AvatarImage` / `AvatarIcon` / `AvatarText` slots omitted |
-| `showStatus` | `boolean` | `false` | Web Kit `showStatus` — same as `AvatarBadge`; if `AvatarBadge` child exists, only that renders |
-| `status` | `"online"` \| `"away"` \| `"unavailable"` \| `"offline"` | `"online"` | When `showStatus` — matches Figma `Avatar/Status` |
-| `innerClassName` | `string` | — | **Inside** the circular mask — shell bg/border. Outer wrapper uses `className` |
+### AvatarBadge
 
-### `AvatarGroup`
+| Prop | Default | Type |
+|------|---------|------|
+| `status` | `"online"` | `"online"` \| `"away"` \| `"unavailable"` \| `"offline"` — Presence graphic. |
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | Overlap/spacing tier with child `Avatar`s |
-| `layout` | `"stack"` \| `"spread"` | `"stack"` | Overlap (stack) vs spaced row (spread) |
+### Parts
 
-Composed API: `AvatarImage`, `AvatarFallback`, `AvatarIcon`, `AvatarGroupCount`, `AvatarBadge`, etc.
+| Part | Role |
+|------|------|
+| `AvatarImage` | Image slot (`src`, `alt`). Rendered by Avatar, not as a standalone `img`. |
+| `AvatarFallback` | Custom fallback when you need more than initials or the default icon. |
+| `AvatarIcon` | System icon in the shell. Omit `size` to use the slot size for that tier. |
+| `AvatarText` | Initials (or other short text) in the shell. |
+| `AvatarGroupCount` | Overflow chip in a group (`+2`). |

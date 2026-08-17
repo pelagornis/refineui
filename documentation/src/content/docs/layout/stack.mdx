@@ -1,6 +1,6 @@
 ---
 title: Stack
-description: One axis — column, row, wrap, Spacer
+description: Place children on one axis — column, row, wrap, or Spacer.
 sidebar:
   order: 2
 ---
@@ -9,45 +9,28 @@ import StackPreview from "../../../components/layout/StackPreview";
 
 # Stack
 
-Flex on one axis. `gap` is a Foundation spacing key.
+Stack lays children out on a single axis. Use it for toolbars, form stacks, and header rows. `gap` is a Foundation spacing key — do not pass raw pixels.
 
-## Import
-
-```tsx
-import { Spacer, Stack } from "@refineui/react";
-```
-
-## Features
+For two-dimensional tracks, use **[Grid](/layout/grid/)**. For a padded page column, use **[Container](/layout/container/)**.
 
 <div class="not-content">
   <StackPreview client:load />
 </div>
 
-**Column** — default. Children stack vertically.
+## Interface
 
-**Row + Spacer** — `direction="row"` and `Spacer` (`flex: 1`) push the last child to the end.
+### Stack
 
-**Wrap** — `wrap` drops items to the next line instead of shrinking them.
+| Prop | Default | Type |
+|------|---------|------|
+| `direction` | `column` | `"column"` \| `"row"` \| `"column-reverse"` \| `"row-reverse"` — Axis of the stack. |
+| `gap` | `sizeNone` | Foundation spacing key (`sizeNone` … `sizeXXXLarge`) — Space between children. |
+| `align` | — | `"start"` \| `"center"` \| `"end"` \| `"stretch"` \| `"baseline"` — Cross-axis alignment. |
+| `justify` | — | `"start"` \| `"center"` \| `"end"` \| `"between"` \| `"around"` \| `"evenly"` — Main-axis distribution. |
+| `wrap` | — | `boolean` \| `"nowrap"` \| `"wrap"` \| `"wrap-reverse"` — Whether items wrap. `true` is `wrap`. |
+| `inline` | `false` | `boolean` — Use `inline-flex` instead of `flex`. |
+| `as` | `div` | Element type to render. |
 
-```tsx
-<Stack gap="sizeMedium">
-  <Button>Save</Button>
-  <Button variant="secondary">Cancel</Button>
-</Stack>
+### Spacer
 
-<Stack direction="row" gap="sizeSmall" align="center">
-  <Text variant="labelMd">Title</Text>
-  <Spacer />
-  <Button size="sm">Edit</Button>
-</Stack>
-```
-
-| Prop | Values | Default |
-|------|--------|---------|
-| `direction` | `column` · `row` · `column-reverse` · `row-reverse` | `column` |
-| `gap` | `sizeNone` … `sizeXXXLarge` | `sizeNone` |
-| `align` | `start` · `center` · `end` · `stretch` · `baseline` | — |
-| `justify` | `start` · `center` · `end` · `between` · `around` · `evenly` | — |
-| `wrap` | `true` / `false` / `nowrap` / `wrap` / `wrap-reverse` | — |
-| `inline` | `boolean` | `false` |
-| `as` | element | `div` |
+No extra props. Renders a growing empty flex child. Place it between items you want pushed apart.

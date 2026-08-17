@@ -1,21 +1,24 @@
-import { spacings } from "@refineui/tokens";
-import { Skeleton } from "@refineui/react";
-import PreviewFrame from "./PreviewFrame";
+import { foundationSizes } from "@refineui/tokens";
+import { Skeleton, Stack } from "@refineui/react";
+import { Look, Looks } from "./PreviewFrame";
 
 export default function SkeletonPreview() {
-  return (
-    <PreviewFrame>
-      <div style={{ maxWidth: "320px" }}>
-        <div style={{ display: "flex", gap: spacings.sizeMedium, marginBottom: spacings.sizeMedium }}>
-          <Skeleton width={40} height={40} shape="circle" />
-          <div style={{ flex: 1 }}>
-            <Skeleton height={16} style={{ marginBottom: spacings.sizeXSmall }} />
-            <Skeleton height={12} width="80%" />
-          </div>
-        </div>
-        <Skeleton height={100} style={{ marginBottom: spacings.sizeMedium }} />
-        <Skeleton height={20} />
-      </div>
-    </PreviewFrame>
-  );
+    return (
+        <Looks>
+            <Look>
+                <Stack gap="sizeXSmall" style={{ width: foundationSizes.foundationSize3200 }}>
+                    <Stack direction="row" gap="sizeMedium" align="center">
+                        <Skeleton shape="circle" width={foundationSizes.foundationSize400} />
+                        <Stack gap="sizeXSmall" className="min-w-0 flex-1">
+                            <Skeleton height={foundationSizes.foundationSize160} />
+                            <Skeleton
+                                height={foundationSizes.foundationSize120}
+                                width={foundationSizes.foundationSize2000}
+                            />
+                        </Stack>
+                    </Stack>
+                </Stack>
+            </Look>
+        </Looks>
+    );
 }

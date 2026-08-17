@@ -1,0 +1,27 @@
+---
+title: Motion
+description: Duration, easing, scale, and distance roles for interaction — not raw milliseconds in components.
+sidebar:
+  order: 7
+---
+
+import { MotionPreview } from "../../../components/foundation/MotionPreview";
+
+# Motion
+
+Use **roles** (`fast`, `press`, `panel`) — CSS `--refineui-motion-duration-fast`, `--refineui-motion-scale-press`. Do not write `150ms` or a one-off curve in a component. `refineui.css` already covers control hover and focus.
+
+<div class="not-content">
+  <MotionPreview client:load />
+</div>
+
+```css
+.control {
+  transition: transform var(--refineui-motion-duration-fast)
+    var(--refineui-motion-easing-standard);
+}
+
+.control[data-pressed] {
+  transform: scale(var(--refineui-motion-scale-press));
+}
+```

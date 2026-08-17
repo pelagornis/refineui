@@ -1,117 +1,29 @@
 ---
 title: Button
-description: Button — variant, size, global CSS interactions
+description: Starts an action — save, continue, open a panel, or close a dialog.
 ---
 
 import ButtonPreview from "../../../components/ButtonPreview";
 
 # Button
 
-Represents a clickable action. Follows Web Kit **Button** `79:3304` and `docs/design-specs-web-kit.md` §1. In Figma, combinations use **`Style`** (variant), **`Size`**, and **`Layout`** (label vs icon-only). Import **`@refineui/react/refineui.css`** for hover, active, and focus-visible styles.
-
-## Install & import
-
-```tsx
-import { Button } from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Button type="button" onClick={() => console.log("clicked")}>
-  Save
-</Button>
-```
-
-If `type` is omitted, it defaults to **`button`** (avoids accidental submits inside forms).
-
-## Preview
+Button is a clickable action — the main work on a screen, a supporting choice beside it, or a quiet text-level control in a toolbar.
 
 <div class="not-content">
   <ButtonPreview client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `"primary"` \| `"secondary"` \| `"outline"` \| `"ghost"` | `"primary"` | Matches Figma `Style` |
-| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | Min height, padding, typography (`Layout=Label`) or icon hit area (`Layout=Icon`) |
-| `layout` | `"label"` \| `"icon"` | `"label"` | Figma **`Layout`**: text (optional icons) vs **icon only** |
-| `fullWidth` | `boolean` | `false` | Full width |
-| `disabled` | `boolean` | — | Disabled |
+### Button
 
-Also supports **`ButtonHTMLAttributes`** (`onClick`, `type`, `aria-*`, `className`, etc.).
+| Prop | Default | Type |
+|------|---------|------|
+| `variant` | `"primary"` | `"primary"` \| `"secondary"` \| `"outline"` \| `"ghost"` — Visual style. Primary is the main action; ghost is text-level. |
+| `size` | `"md"` | `"sm"` \| `"md"` \| `"lg"` — Control height, padding, and type. With `layout="icon"`, the hit area is square. |
+| `layout` | `"label"` | `"label"` \| `"icon"` — Text (optional icons) vs icon-only. |
+| `fullWidth` | `false` | `boolean` — Stretch to the parent width. |
+| `type` | `"button"` | `"button"` \| `"submit"` \| `"reset"` — Native button type. Defaults to `button` so forms are not submitted accidentally. |
+| `disabled` | — | `boolean` — Blocks activation. |
 
-## Variants
-
-| Value | Use |
-|-------|-----|
-| `primary` | Primary action — dark fill |
-| `secondary` | Secondary — white fill + border |
-| `outline` | Lower emphasis — transparent + border |
-| `ghost` | Text-level — minimal chrome |
-
-## Sizes
-
-With `layout="label"` (default), row height, horizontal padding, and typography change by Size.
-
-| Value | Approx. min height |
-|-------|-------------------|
-| `sm` | 28px |
-| `md` | 36px |
-| `lg` | 48px |
-
-## Layout · icon only (`layout="icon"`)
-
-Figma **Button** `79:3304` includes **`Layout=Icon`**. Use when **`children`** are only icons (e.g. `WebIcon`) with **no text**.
-
-- **Hit area**: square per **Size** (`sm` 28×28, `md` 36×36, `lg` 48×48).
-- **Padding / radius**: Web Kit MCP — `sm` uses `sizeXSmall` (4px) + `roundedSmall`, `md` uses `sizeSmall` (6px) + `roundedMedium`, `lg` uses `sizeMedium` (10px) + `roundedLarge`. (MCP **Primary·Ghost** `Layout=Icon` has no border — implementation uses `border-0` so the label border does not shrink the inner box.)
-- **Icon glyph size (MCP slot)**: `sm` → `iconSizes.small` (20px), `md` → `iconSizes.medium` (24px), `lg` → `iconSizes.large` (28px).
-- **Accessibility**: when there is no visible label, provide **`aria-label`** (or `aria-labelledby`).
-
-`variant="ghost"` + `layout="icon"` + `size="sm"` matches the **Dialog** header close control (`393:1181`).
-
-### Dialog close example
-
-```tsx
-import { Button, WebIcon } from "@refineui/react";
-import { iconSizes } from "@refineui/tokens";
-
-<Button type="button" variant="ghost" size="sm" layout="icon" aria-label="Close" onClick={onClose}>
-  <WebIcon name="dismiss" size={iconSizes.small} color="currentColor" iconStyle="regular" aria-hidden />
-</Button>
-```
-
-## Examples
-
-### Text-style action
-
-```tsx
-<Button variant="ghost" type="button" onClick={openPanel}>
-  See more
-</Button>
-```
-
-### Full width
-
-```tsx
-<Button variant="primary" fullWidth type="submit">
-  Complete sign up
-</Button>
-```
-
-### Disabled
-
-```tsx
-<Button variant="primary" disabled>
-  Processing…
-</Button>
-```
-
-## Accessibility
-
-- Keyboard focus gets a **focus-visible** ring from `refineui.css`.
-- Use `aria-label` when there is no visible text label.
+Also accepts native `button` attributes (`onClick`, `aria-*`, `className`, `style`).

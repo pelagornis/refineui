@@ -1,100 +1,54 @@
 ---
 title: Toast
-description: Toast message cards
+description: Transient feedback cards stacked in a viewport.
 ---
 
 import ToastPreview from "../../../components/ToastPreview";
 
 # Toast
 
-Short feedback as a card matching **Web Kit Toast** `548:655` (width 325px, card padding `sizeLarge`, row gap `sizeMedium`, body column `sizeXSmall`, **shadow 4**, card radius **`roundedXLarge`**). `<Toaster />` renders a fixed viewport `<ol>` of `<li>` items; use **`position`** for `top-left` · `top-center` · `top-right` · `bottom-left` · `bottom-center` · `bottom-right` (default `top-center`). **Default stacking is collapsed like Sonner**; **hovering the `<ol>`** expands the stack vertically at even spacing.
+Toast is a short feedback card. Use it after an action succeeds, fails, or needs a brief undo — not for page-level status that should stay in the layout.
 
-## Install & import
-
-```tsx
-import { Toaster, toast, Button, Spinner, Avatar, AvatarImage } from "@refineui/react";
-```
-
-## Basic usage
-
-```tsx
-<Toaster position="top-center" />
-<Button
-  onClick={() =>
-    toast("Done", {
-      variant: "success",
-      description: "Copied to clipboard.",
-      action: { label: "Action", onClick: () => {} },
-    })
-  }
->
-  Show Toast
-</Button>
-```
-
-## Preview
+Mount **`<Toaster />`** once. Call **`toast()`** to push a card. For inline, persistent notices, use **[Alert](/components/alert/)**. For a blocking error the user must acknowledge, use **[Dialog](/components/dialog/)**.
 
 <div class="not-content">
   <ToastPreview client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `variant` | `"default"` \| `"success"` \| `"error"` \| `"warning"` | Figma **Type** — default icon/color; root gets `data-variant` |
-| `title` | `ReactNode` | Title |
-| `message` | `ReactNode` | Supporting text |
-| `icon` / `iconName` | `ReactNode` / `string` | **Toast / Icon** slot (`data-refineui="toast-icon"`); precedence: `icon` > `iconName` > variant default |
-| `action` | `ReactNode` or `{ label, onClick, variant? }` | Right-side button |
-| `stackState` | `"entering"` \| `"idle"` \| `"leaving"` | Set internally by `<Toaster>` only |
+### `toast(title, options?)`
 
-### `<Toaster />`
+| Prop | Default | Type |
+|------|---------|------|
+| `title` | — | `ReactNode` — First argument. Card title. |
+| `description` | — | `ReactNode` — Supporting text (`Toast` `message`). |
+| `variant` | `"default"` | `"default"` \| `"success"` \| `"error"` \| `"warning"` — Accent and default icon. |
+| `iconName` | — | `string` — Web Icon name when `icon` is omitted. |
+| `icon` | — | `ReactNode` — Leading slot. Overrides `iconName` and the variant default. |
+| `action` | — | `ReactNode` or `{ label: string; onClick?: () => void; variant?: "primary" \| "secondary" }` — Trailing control. |
+| `duration` | `4200` | `number` — Milliseconds before auto-dismiss. |
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `position` | `ToastPosition` | Default `top-center` — `top-left` \| `top-center` \| `top-right` \| `bottom-left` \| `bottom-center` \| `bottom-right` |
-| `maxToasts` | `number` | Max concurrent toasts (default 5) |
-| `className` | `string` | Extra class on root `<ol>` |
+Returns a `string` id for `dismissToast`.
 
-### Mobile
+### Toaster
 
-`refineui.css` uses **expanded stack** and **full scale** when **`(hover: none)` or `(pointer: coarse)`** instead of hover-expand, and `env(safe-area-inset-*)` for notches and home indicators. Below `max-width: 480px`, container inset, card padding, and row gap shrink via tokens; `Toaster` computes stack spacing with `sizeMedium`. For safe-area with notches, include `viewport-fit=cover` in your viewport meta tag.
+| Prop | Default | Type |
+|------|---------|------|
+| `position` | `"top-center"` | `"top-left"` \| `"top-center"` \| `"top-right"` \| `"bottom-left"` \| `"bottom-center"` \| `"bottom-right"` — Viewport corner or edge. |
+| `maxToasts` | `5` | `number` — Max concurrent cards. |
+| `className` | — | `string` — Extra class on the root `<ol>`. |
 
-## Examples
+### Toast
 
-### Secondary action
+| Prop | Default | Type |
+|------|---------|------|
+| `variant` | `"default"` | `"default"` \| `"success"` \| `"error"` \| `"warning"` — Same as `toast()` options. |
+| `title` | — | `ReactNode` — Title line. |
+| `message` | — | `ReactNode` — Supporting text. |
+| `iconName` | — | `string` — Icon name. Precedence: `icon` > `iconName` > variant default. |
+| `icon` | — | `ReactNode` — Leading slot. |
+| `action` | — | Same as `toast()` `action`. |
+| `stackState` | — | `"entering"` \| `"idle"` \| `"leaving"` — Set by `Toaster`. Do not set this yourself. |
 
-```tsx
-<Toast
-  title="Label"
-  message="Description"
-  action={{ label: "Secondary", variant: "secondary", onClick: () => {} }}
-/>
-```
-
-### Custom icon
-
-```tsx
-<Toast title="Mail" message="New message" iconName="mail" />
-```
-
-### Leading Spinner / Avatar (`toast` `icon` option)
-
-Pass `icon` in `toast()` options. Forward `Spinner`, `Avatar`, etc. from `@refineui/react` directly.
-
-```tsx
-toast("Syncing", {
-  description: "Processing…",
-  icon: <Spinner size="xs" />,
-});
-
-toast("New message", {
-  description: "From sender",
-  icon: (
-    <Avatar size="xs" layout="image" color="neutral" aria-hidden>
-      <AvatarImage src="https://example.com/photo.png" alt="" />
-    </Avatar>
-  ),
-});
-```
+Also accepts native `div` attributes (`className`, `style`).

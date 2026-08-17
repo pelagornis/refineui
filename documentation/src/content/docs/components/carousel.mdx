@@ -1,70 +1,39 @@
 ---
 title: Carousel
-description: Drag-friendly carousel with controls below the stage
+description: Horizontal slides with drag, with Previous, indicators, and Next below the stage.
 ---
 
 import CarouselDemo from "../../../components/CarouselDemo";
 
 # Carousel
 
-Horizontal slides using existing tokens. **Nav never overlays content** — put Previous / Indicators / Next inside **`CarouselControls`** under the stage. The viewport supports **pointer drag / swipe**.
+Carousel is a horizontal slide stage. Use it when a few full-width panels should move as a sequence — product shots, onboarding cards — and the user can drag, swipe, or step through them.
 
-## Install & import
-
-```tsx
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselControls,
-  CarouselPrevious,
-  CarouselNext,
-  CarouselIndicators,
-} from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Carousel loop>
-  <CarouselContent>
-    <CarouselItem>Slide 1</CarouselItem>
-    <CarouselItem>Slide 2</CarouselItem>
-  </CarouselContent>
-  <CarouselControls>
-    <CarouselPrevious />
-    <CarouselIndicators />
-    <CarouselNext />
-  </CarouselControls>
-</Carousel>
-```
-
-## Preview
+Nav never overlays the stage. Put Previous, Indicators, and Next inside `CarouselControls` under the content. For split panes the user resizes, use **[Resizable](/components/resizable/)**. For overflow without paging, use **[Scroll Area](/components/scroll-area/)**.
 
 <div class="not-content">
   <CarouselDemo client:load />
 </div>
 
-## Props
+## Interface
 
 ### Carousel
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `index` | `number` | — | Controlled index |
-| `defaultIndex` | `number` | `0` | Uncontrolled start |
-| `onIndexChange` | `(index: number) => void` | — | Change callback |
-| `loop` | `boolean` | `false` | Wrap at ends |
+| Prop | Default | Type |
+|------|---------|------|
+| `index` | — | `number` — Controlled slide index (0-based). |
+| `defaultIndex` | `0` | `number` — Uncontrolled start. |
+| `onIndexChange` | — | `(index: number) => void` — Called when the logical index changes. |
+| `loop` | `false` | `boolean` — Wrap from last to first and first to last. |
 
-Drag the stage or use **`Button`** outline icon prev/next. Indicators are a **sliding brand pill** in a track (not dots). With **`loop`**, first/last clones animate continuously, then snap invisibly so it feels infinite.
+Also accepts native `div` attributes (`className`, `style`). The root is focusable.
 
 ### Parts
 
 | Part | Role |
 |------|------|
-| `CarouselContent` | Stage + drag surface |
-| `CarouselItem` | Full-width slide |
-| `CarouselControls` | Bottom row for nav + indicator |
-| `CarouselPrevious` / `CarouselNext` | Outline icon `Button`s |
-| `CarouselIndicators` | Sliding brand pill in a track |
+| `CarouselContent` | Stage + drag surface. |
+| `CarouselItem` | Full-width slide. |
+| `CarouselControls` | Bottom row for nav and the indicator. |
+| `CarouselPrevious` / `CarouselNext` | Outline icon `Button`s. Native `button` attributes; `disabled` also follows the ends when `loop` is off. |
+| `CarouselIndicators` | Sliding brand pill in a track. |

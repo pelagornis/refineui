@@ -420,6 +420,26 @@ export {
     type NavigationMenuIndicatorProps,
 } from "./components/NavigationMenu";
 export {
+    Sidebar,
+    SidebarBrand,
+    SidebarContent,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarGroupLabel,
+    SidebarHeader,
+    SidebarLink,
+    SidebarNav,
+    type SidebarBrandProps,
+    type SidebarContentProps,
+    type SidebarFooterProps,
+    type SidebarGroupLabelProps,
+    type SidebarGroupProps,
+    type SidebarHeaderProps,
+    type SidebarLinkProps,
+    type SidebarNavProps,
+    type SidebarProps,
+} from "./components/Sidebar";
+export {
     Pagination,
     PaginationContent,
     PaginationEllipsis,

@@ -1,6 +1,6 @@
 ---
 title: Grid
-description: Equal columns, span, or auto-fit min width
+description: Two-dimensional layout — equal columns, span, or auto-fit by min width.
 sidebar:
   order: 3
 ---
@@ -9,43 +9,33 @@ import GridPreview from "../../../components/layout/GridPreview";
 
 # Grid
 
-Two-dimensional layout. `columns` for equal tracks, `GridItem` `span` to merge cells, `minItem` to wrap by Foundation size.
+Grid places children on two axes. Use equal `columns` for a fixed track count, `GridItem` `span` to merge cells, or `minItem` so tracks wrap by a Foundation size.
 
-## Import
-
-```tsx
-import { Grid, GridItem } from "@refineui/react";
-```
-
-## Features
+For a single row or column, use **[Stack](/layout/stack/)**.
 
 <div class="not-content">
   <GridPreview client:load />
 </div>
 
-**Equal columns** — `columns={3}` is `repeat(3, minmax(0, 1fr))`.
+## Interface
 
-**Span** — `GridItem span={2}` occupies two tracks. `rowSpan` does the same on rows (1–12).
+### Grid
 
-**Auto-fit** — `minItem="foundationSize2000"` fills the row, then wraps. Overrides `columns`.
+| Prop | Default | Type |
+|------|---------|------|
+| `columns` | — | `number` — Equal column tracks. Ignored when `minItem` is set. |
+| `minItem` | — | Foundation size name — Minimum track width; auto-fits and wraps. |
+| `gap` | — | Foundation spacing key — Row and column gap. |
+| `columnGap` | — | Foundation spacing key — Overrides `gap` on columns. |
+| `rowGap` | — | Foundation spacing key — Overrides `gap` on rows. |
+| `align` | — | `"start"` \| `"center"` \| `"end"` \| `"stretch"` \| `"baseline"` |
+| `justify` | — | `"start"` \| `"center"` \| `"end"` \| `"between"` \| `"around"` \| `"evenly"` |
+| `as` | `div` | Element type to render. |
 
-```tsx
-<Grid columns={3} gap="sizeMedium">
-  <Card>A</Card>
-  <Card>B</Card>
-  <Card>C</Card>
-</Grid>
+### GridItem
 
-<Grid columns={4} gap="sizeSmall">
-  <GridItem span={2}>Wide</GridItem>
-  <Card>A</Card>
-  <Card>B</Card>
-</Grid>
-
-<Grid minItem="foundationSize2000" gap="sizeMedium">
-  <Card />
-  <Card />
-</Grid>
-```
-
-`columnGap` / `rowGap` override `gap` on one axis. `as` defaults to `div`.
+| Prop | Default | Type |
+|------|---------|------|
+| `span` | — | `number` (1–12) — Column tracks to occupy. |
+| `rowSpan` | — | `number` (1–12) — Row tracks to occupy. |
+| `as` | `div` | Element type to render. |

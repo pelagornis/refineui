@@ -1,74 +1,77 @@
 ---
 title: Select
-description: Custom select — Figma Web Kit Select styling
+description: Choose one value from a list — with a field trigger and a menu.
 ---
 
 import SelectPreview from "../../../components/SelectPreview";
 
 # Select
 
-Figma Web Kit `Select` — trigger `1116:1429`, menu `1117:1177`, item COMPONENT_SET `1144:2411` (State nodes: Default `1144:2410`, Hover `1144:2417`, Pressed `1144:2429`, Selected `1144:2435`, Disabled `1144:2423`), section `1144:2756`. Because MCP `get_design_context` returns one node at a time, specify each variant node id for per-state specs.
+Select is a custom field that opens a menu of options. Use it when the user must pick one value from a known list — a country, a timezone, a plan.
 
-## Install & import
-
-```tsx
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectPortal,
-  SelectContent,
-  SelectItem,
-  SelectSection,
-} from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-Put `SelectContent` inside `SelectPortal` so the panel renders in a portal.
-
-```tsx
-<Select placeholder="Choose country" onValueChange={(next) => console.log(next)}>
-  <SelectTrigger>
-    <SelectValue placeholder="Select an option" />
-  </SelectTrigger>
-  <SelectPortal>
-    <SelectContent>
-      <SelectSection>Asia</SelectSection>
-      <SelectItem value="kr">Korea Standard Time</SelectItem>
-      <SelectItem value="jp">Japan Standard Time</SelectItem>
-    </SelectContent>
-  </SelectPortal>
-</Select>;
-```
-
-## Preview
+Put `SelectContent` inside `SelectPortal` so the panel renders in a portal. For a short mutually exclusive set that should stay visible, use **[Radio](/components/radio/)**. For a labeled form shell, wrap Select in **[Field](/components/field/)**.
 
 <div class="not-content">
   <SelectPreview client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `placeholder` | `string` | — | Label when nothing is selected |
-| `size` | `"sm"` \| `"md"` \| `"lg"` | `"md"` | Field height, padding, typography |
-| `fullWidth` | `boolean` | `false` | Full width |
-| `disabled` | `boolean` | `false` | Disabled |
-| `value` | `string` | — | Controlled value |
-| `defaultValue` | `string` | — | Uncontrolled initial value (`undefined` = empty) |
-| `open` | `boolean` | — | Controlled open state |
-| `onOpenChange` | `(open: boolean) => void` | — | Open state change |
-| `onValueChange` | `(value: string) => void` | — | Selection change |
+### Select
 
-## Composition
+| Prop | Default | Type |
+|------|---------|------|
+| `placeholder` | — | `string` — Label when nothing is selected. `SelectValue` can override this. |
+| `size` | `"md"` | `"sm"` \| `"md"` \| `"lg"` — Trigger height, padding, and type. Inherits from [Field](/components/field/) when omitted. |
+| `fullWidth` | `false` | `boolean` — Stretch the trigger to the parent width. |
+| `disabled` | `false` | `boolean` — Blocks opening and selection. |
+| `value` | — | `string` — Controlled selected value. |
+| `defaultValue` | `""` | `string` — Uncontrolled initial value. Empty string means nothing selected. |
+| `open` | — | `boolean` — Controlled open state. |
+| `onOpenChange` | — | `(open: boolean) => void` — Called when the menu opens or closes. |
+| `onValueChange` | — | `(value: string) => void` — Called when an item is selected. |
 
-- `SelectTrigger` — field trigger
-- `SelectValue` — current label / placeholder
-- `SelectPortal` — portals menu to `document.body` (or `container`)
-- `SelectContent` — menu panel
-- `SelectGroup` — group
-- `SelectSection` — section title
-- `SelectItem` — option
+Also accepts native `div` attributes except `onChange` and `defaultValue` (`className`, `style`, `aria-*`).
+
+### SelectItem
+
+| Prop | Default | Type |
+|------|---------|------|
+| `value` | — | `string` — Option identity. Required. |
+| `disabled` | — | `boolean` — Blocks selection of this item. |
+| `textValue` | — | `string` — Plain-text equivalent of the label when children are not a string. |
+
+### SelectValue
+
+| Prop | Default | Type |
+|------|---------|------|
+| `placeholder` | — | `string` — Shown when there is no selection. Falls back to Select `placeholder`, then `"Select..."`. |
+
+### SelectContent
+
+| Prop | Default | Type |
+|------|---------|------|
+| `position` | `"item-aligned"` | `"item-aligned"` \| `"popper"` — Menu placement. `popper` is a compact panel below or above the trigger. |
+| `container` | — | `HTMLElement \| null` — Portal target. Otherwise the nearest `SelectPortal` or `document.body`. |
+
+### SelectPortal
+
+| Prop | Default | Type |
+|------|---------|------|
+| `container` | — | `HTMLElement \| null` — Portal target for nested `SelectContent`. |
+
+### Parts
+
+| Part | Role |
+|------|------|
+| `SelectTrigger` | Combobox field that opens the menu. |
+| `SelectGroup` | Groups related items. |
+| `SelectSection` | Section title in the menu. |
+| `SelectIcon` | Optional icon slot; trigger already includes a chevron. |
+| `SelectViewport` | Scrollable region inside the menu. |
+| `SelectLabel` | Extra label inside the menu. |
+| `SelectSeparator` | Divider between groups. |
+| `SelectItemText` | Item label slot. |
+| `SelectItemIndicator` | Selected-item indicator slot. |
+| `SelectScrollUpButton` / `SelectScrollDownButton` | Scroll affordances in a long list. |
+| `SelectArrow` | Menu arrow. |

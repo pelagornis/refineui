@@ -1,159 +1,39 @@
 ---
 title: Table
-description: Semantic data table — composed header, body, and footer
+description: Semantic data table — header, body, and footer you compose yourself.
 ---
 
 import TablePreview from "../../../components/TablePreview";
 
 # Table
 
-Dense semantic table with a **RefineUI** signature — matching header/footer surface strips, inset rounded body rows on hover, and a quiet selected fill. Composition matches shadcn / Radix; visuals use **`@refineui/tokens`** only (no arbitrary px / hex).
+Table is a dense semantic table for rows of related data — invoices, members, logs. Use it when columns have meaning and the user may scan, compare, or select a row.
 
-The root is a padded scroll shell. Wrap in **`Card`** when you need a bordered panel.
-
-## Install & import
-
-```tsx
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableFooter,
-  TableRow,
-  TableHead,
-  TableCell,
-  TableCaption,
-} from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Table>
-  <TableCaption>Recent invoices</TableCaption>
-  <TableHeader>
-    <TableRow>
-      <TableHead>Invoice</TableHead>
-      <TableHead>Status</TableHead>
-      <TableHead>Amount</TableHead>
-    </TableRow>
-  </TableHeader>
-  <TableBody>
-    <TableRow>
-      <TableCell>INV001</TableCell>
-      <TableCell>Paid</TableCell>
-      <TableCell>$250.00</TableCell>
-    </TableRow>
-    <TableRow>
-      <TableCell>INV002</TableCell>
-      <TableCell>Pending</TableCell>
-      <TableCell>$150.00</TableCell>
-    </TableRow>
-  </TableBody>
-</Table>
-```
-
-## Preview
+Each part maps to a native table slot. There is no `columns` or `rows` convenience API. Wrap the table in **[Card](/components/card/)** when you need a bordered panel. For a long body, wrap it in **[Scroll Area](/components/scroll-area/)**; horizontal overflow is already built into `Table`.
 
 <div class="not-content">
   <TablePreview client:load />
 </div>
 
-## Composition
+## Interface
 
-```
-Table
-├── TableCaption (optional)
-├── TableHeader
-│   └── TableRow
-│       └── TableHead × n
-├── TableBody
-│   └── TableRow × n
-│       └── TableCell × n
-└── TableFooter (optional)
-    └── TableRow
-        └── TableCell × n
-```
+All parts extend the matching native HTML attributes (`TableHTMLAttributes`, `ThHTMLAttributes`, `TdHTMLAttributes`, and so on) plus optional `className`.
 
-`Table` wraps a native `<table>` in a padded `overflow-x-auto` shell. Put it inside `Card` (or any panel) for elevation / border.
+### TableHead
 
-## Signature
+| Prop | Default | Type |
+|------|---------|------|
+| `scope` | `"col"` | `ThHTMLAttributes["scope"]` — Column header by default. Pass `"row"` for a row header. |
 
-| Layer | Treatment |
-| --- | --- |
-| **Header** | Surface strip — same `surface-active` as footer, tertiary labels, subtle bottom hairline |
-| **Body rows** | Vertical rhythm via `border-spacing` (`sizeXXSmall`); no hard row rules |
-| **Hover** | Inset chip — `surface-hover` fill + rounded ends on first/last cell |
-| **Selected** | `surface-selected` fill (same token as Menu / Dropdown) |
-| **Footer** | Same `surface-active` strip as header, secondary emphasis |
+### Parts
 
-## Row states
-
-Handled in **`refineui.css`** for `tbody` rows:
-
-| State | How | Visual |
-| --- | --- | --- |
-| **Hover** | Default | Inset `surface-hover` chip |
-| **Selected** | `data-state="selected"` on `TableRow` | Inset `surface-selected` chip |
-
-```tsx
-<TableRow data-state="selected">
-  <TableCell>Highlighted row</TableCell>
-</TableRow>
-```
-
-## Tokens
-
-| Part | Typography | Spacing / size |
-| --- | --- | --- |
-| **Header cell** | `bodySm` | same size as body; tertiary + medium weight on `surface-active` strip |
-| **Body cell** | `bodySm` | `h` `control-height-md`, `px` `sizeMedium`, primary |
-| **Row rhythm** | — | `border-spacing-y` `sizeXXSmall`; inset radius `roundedLarge` |
-| **Caption** | `bodyXs` | bottom, tertiary |
-| **Shell** | — | horizontal `sizeSmall` padding so inset chips breathe |
-| **Footer** | `bodySm` (cell) | same strip as header, secondary text |
-
-## Props
-
-All parts extend the matching native HTML attributes (`TableHTMLAttributes`, `ThHTMLAttributes`, `TdHTMLAttributes`, etc.) plus optional `className`.
-
-| Component | Renders | Notes |
-| --- | --- | --- |
-| `Table` | `<div>` + `<table>` | Padded scroll shell; `forwardRef` on `<table>` |
-| `TableHeader` | `<thead>` | Surface-active strip + tertiary labels (CSS) |
-| `TableBody` | `<tbody>` | Inset hover / selected chips (CSS) |
-| `TableFooter` | `<tfoot>` | Same surface strip as header (CSS) |
-| `TableRow` | `<tr>` | `data-refineui="table-row"` |
-| `TableHead` | `<th>` | Default `scope="col"` |
-| `TableCell` | `<td>` | — |
-| `TableCaption` | `<caption>` | Tertiary caption style |
-
-## Accessibility
-
-- Use **`TableCaption`** when the table purpose is not obvious from surrounding context.
-- **`TableHead`** defaults to `scope="col"`; pass `scope="row"` for row headers.
-- For sortable or selectable tables, wire `aria-sort`, `aria-selected`, or row `tabIndex` in your app layer — the primitive does not add sort/filter APIs.
-
-## Examples
-
-### Footer totals
-
-```tsx
-<TableFooter>
-  <TableRow>
-    <TableCell colSpan={2}>Total</TableCell>
-    <TableCell>$400.00</TableCell>
-  </TableRow>
-</TableFooter>
-```
-
-### With Scroll Area (wide tables)
-
-Wrap `Table` in a fixed-height **`ScrollArea`** when vertical scrolling is needed; horizontal overflow is built into `Table`'s wrapper.
-
-```tsx
-<ScrollArea className="max-h-80">
-  <Table>{/* … */}</Table>
-</ScrollArea>
-```
+| Part | Renders | Role |
+|------|---------|------|
+| `Table` | `<div>` + `<table>` | Padded scroll shell. `forwardRef` on `<table>`. |
+| `TableHeader` | `<thead>` | Header strip. |
+| `TableBody` | `<tbody>` | Body rows — hover / selected chips. |
+| `TableFooter` | `<tfoot>` | Footer strip. |
+| `TableRow` | `<tr>` | Row. Set `data-state="selected"` to select. |
+| `TableHead` | `<th>` | Header cell. |
+| `TableCell` | `<td>` | Body or footer cell. |
+| `TableCaption` | `<caption>` | Accessible caption. |

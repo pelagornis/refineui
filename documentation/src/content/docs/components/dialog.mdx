@@ -1,99 +1,54 @@
 ---
 title: Dialog
-description: Modal dialog — composed API, focus trap, scrim
+description: Modal panel that holds attention until the task is done.
 ---
 
 import DialogDemo from "../../../components/DialogDemo";
 
 # Dialog
 
-Use **`Dialog`**, **`DialogTrigger`**, **`DialogContent`**, etc. as **composed** components. Follows Web Kit **Dialog** `393:1181` and the Dialog section in `docs/design-specs-web-kit.md`. Renders with **`createPortal`** to `document.body` (or `DialogContent` `container`) with a focus trap.
+Dialog is a modal panel with a scrim. Use it when the user must finish or dismiss a task before continuing — confirmations, short forms, or blocking messages.
 
-## Install & import
-
-```tsx
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-```tsx
-<Dialog>
-    <DialogTrigger type="button">Open</DialogTrigger>
-    <DialogContent>
-        <DialogHeader>
-            <DialogTitle>Title</DialogTitle>
-            <DialogDescription>Description paragraph.</DialogDescription>
-        </DialogHeader>
-        <p>More body copy</p>
-    </DialogContent>
-</Dialog>
-```
-
-## Controlled mode
-
-Control open state with `open` and `onOpenChange`.
-
-```tsx
-const [open, setOpen] = useState(false);
-
-<Dialog open={open} onOpenChange={setOpen}>
-    <DialogTrigger type="button">Open</DialogTrigger>
-    <DialogContent>...</DialogContent>
-</Dialog>;
-```
-
-For uncontrolled usage, pass `defaultOpen` only.
-
-## Preview
+It portals to `document.body` (or `DialogContent` `container`), traps focus, and closes on Escape or scrim click. For a side panel that does not cover the whole flow, use **[Drawer](/components/drawer/)**. For extra context next to a control, use **[Popover](/components/popover/)**. For a searchable action list inside a large dialog, use **[Command](/components/command/)**.
 
 <div class="not-content">
   <DialogDemo client:load />
 </div>
 
-## Subcomponents
+## Interface
 
-| Component | Description |
-|-----------|-------------|
-| `Dialog` | Context root. `size`, `open` / `onOpenChange`, `defaultOpen` |
-| `DialogTrigger` | Opens dialog — same props as Web Kit `Button` (`variant`, `size`, etc.) |
-| `DialogContent` | Scrim + panel portal. Optional `container` for portal root |
-| `DialogHeader` | Title region + close button (`showClose`, default `true`) |
-| `DialogTitle` | `h2`, wired to `aria-labelledby` |
-| `DialogDescription` | `p`, wired to `aria-describedby` |
-| `DialogClose` | Close control (included in header by default; can be used alone) |
+### Dialog
 
-## Props (`Dialog`)
+| Prop | Default | Type |
+|------|---------|------|
+| `open` | — | `boolean` — Controlled visibility. |
+| `defaultOpen` | — | `boolean` — Uncontrolled initial open. Omit for closed. |
+| `onOpenChange` | — | `(open: boolean) => void` — Called when the dialog requests open or close. |
+| `size` | `"lg"` | `"lg"` \| `"sm"` — Panel max width (`lg` 600px / `sm` 300px tokens). |
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `open` | `boolean` | — | Controlled visibility |
-| `onOpenChange` | `(open: boolean) => void` | — | Open state change |
-| `defaultOpen` | `boolean` | — | Uncontrolled initial open |
-| `size` | `"lg"` \| `"sm"` | `"lg"` | Panel width (Large 600px / Small 300px tokens) |
+### DialogContent
 
-`DialogContent` accepts standard div props and `container`, etc. `DialogTrigger` matches the `Button` API.
+| Prop | Default | Type |
+|------|---------|------|
+| `container` | `document.body` | `Element` \| `DocumentFragment` \| `null` — Portal root. |
+| `scrollable` | `true` | `boolean` — When `true`, children wrap in a hover **[ScrollArea](/components/scroll-area/)**. Set `false` when a child (for example Command) owns scrolling. |
 
-## Examples
+Also accepts native `div` attributes (`className`, `style`, `aria-*`).
 
-### Small confirmation
+### DialogHeader
 
-```tsx
-<Dialog size="sm">
-    <DialogTrigger type="button">Delete</DialogTrigger>
-    <DialogContent>
-        <DialogHeader>
-            <DialogTitle>Delete this item?</DialogTitle>
-            <DialogDescription>This action cannot be undone.</DialogDescription>
-        </DialogHeader>
-    </DialogContent>
-</Dialog>
-```
+| Prop | Default | Type |
+|------|---------|------|
+| `showClose` | `true` | `boolean` — Renders `DialogClose` in the header. |
+
+### DialogTrigger
+
+Same props as **[Button](/components/button/)** (`variant`, `size`, `type`, and so on). Click opens the dialog unless `preventDefault()` is called.
+
+### Parts
+
+| Part | Role |
+|------|------|
+| `DialogTitle` | `h2`, wired to `aria-labelledby`. |
+| `DialogDescription` | `p`, wired to `aria-describedby`. |
+| `DialogClose` | Ghost icon button that closes the dialog. Included in the header by default. |

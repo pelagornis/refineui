@@ -1,96 +1,55 @@
 ---
-title: PopOver
-description: Popover panel opened by click
+title: Popover
+description: Anchored panel that opens from a click, without blocking the rest of the page.
 ---
 
 import PopOverDemo from "../../../components/PopOverDemo";
 
-# PopOver
+# Popover
 
-Opens a panel when the trigger is clicked. Web Kit **PopOver** `553:5669` — **`placement`** (= Figma `position`), **`align`** (= Figma `Start` \| `Center` \| `End`); panel, border, and beak use MCP dimensions and color tokens.
+Popover is a panel that opens when its trigger is clicked. Use it for extra fields, a short explanation, or a small editor that should stay next to the control.
 
-## Install & import
-
-```tsx
-import { PopOver, Button } from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage (composed API)
-
-```tsx
-import {
-  Button,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@refineui/react";
-import "@refineui/react/refineui.css";
-
-export function Example() {
-  return (
-    <Popover>
-      <PopoverTrigger>
-        <Button variant="secondary">Open</Button>
-      </PopoverTrigger>
-      <PopoverContent placement="bottom" align="center">
-        <p>Additional description</p>
-      </PopoverContent>
-    </Popover>
-  );
-}
-```
-
-Default panel width follows Web Kit **`componentSizes.popoverPanelWidth`** (325px min). Override with **`PopoverContent`** `className` or `style` as needed (the Preview uses `width: componentSizes.popoverPanelWidth`).
-
-**`PopoverTrigger`** with a **single child** (e.g. `Button`) merges trigger behavior and a11y props onto that element. Plain text children are wrapped in an internal `button`.
-
-### Single-component API (optional)
-
-```tsx
-<PopOver
-  trigger={<Button variant="secondary">Info</Button>}
-  content={<p>Additional description</p>}
-  placement="bottom"
-/>
-```
-
-## Preview
+The page stays interactive behind it — no modal scrim. For a blocking task, use **[Dialog](/components/dialog/)**. For an action list with shortcuts and nested panels, use **[Menu](/components/menu/)** or **[Dropdown](/components/dropdown/)**. For hover-only helper text, use **[Tooltip](/components/tooltip/)**.
 
 <div class="not-content">
   <PopOverDemo client:load />
 </div>
 
-## Props
+## Interface
 
-### `Popover` (root)
+### Popover
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `open` | `boolean` | Controlled open |
-| `defaultOpen` | `boolean` | Uncontrolled initial open |
-| `onOpenChange` | `(open: boolean) => void` | Open state change |
+| Prop | Default | Type |
+|------|---------|------|
+| `open` | — | `boolean` — Controlled visibility. |
+| `defaultOpen` | `false` | `boolean` — Uncontrolled initial open. |
+| `onOpenChange` | — | `(open: boolean) => void` — Called when the panel opens or closes. |
 
-### `PopoverContent`
+Also accepts native `div` attributes (`className`, `style`, `aria-*`).
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `placement` | `"top"` \| `"bottom"` \| `"left"` \| `"right"` | `"bottom"` | Figma `position` |
-| `align` | `"start"` \| `"center"` \| `"end"` | `"center"` | Figma `align` |
+### PopoverContent
 
-### `PopOver` (single component · optional)
+| Prop | Default | Type |
+|------|---------|------|
+| `placement` | `"bottom"` | `"top"` \| `"bottom"` \| `"left"` \| `"right"` — Side of the trigger. |
+| `align` | `"center"` | `"start"` \| `"center"` \| `"end"` — Alignment along that side. |
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `trigger` | `ReactNode` | (required) | Click target |
-| `content` | `ReactNode` | (required) | Panel body |
-| `placement` | `"top"` \| `"bottom"` \| `"left"` \| `"right"` | `"bottom"` | |
-| `align` | `"start"` \| `"center"` \| `"end"` | `"center"` | |
+Also accepts native `div` attributes (`className`, `style`).
 
-## Examples
+### PopOver
 
-### Start-aligned panel
+| Prop | Default | Type |
+|------|---------|------|
+| `trigger` | — | `ReactNode` — Click target. Required. |
+| `content` | — | `ReactNode` — Panel body. Required. |
+| `placement` | `"bottom"` | `"top"` \| `"bottom"` \| `"left"` \| `"right"` — Same as `PopoverContent`. |
+| `align` | `"center"` | `"start"` \| `"center"` \| `"end"` — Same as `PopoverContent`. |
 
-```tsx
-<PopOver trigger={<Button variant="ghost">?</Button>} content="Help text" align="start" />
-```
+Also accepts native `div` attributes (`className`, `style`).
+
+### Parts
+
+| Part | Role |
+|------|------|
+| `PopoverTrigger` | Opens and closes the panel. Merges onto a single child element when possible. |
+| `PopoverContent` | Beak + floating panel (`role="dialog"`). |

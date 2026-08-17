@@ -1,4 +1,4 @@
-import { Badge, Button, Input, Stack, Text } from "@refineui/react";
+import { Badge, Box, Button, Grid, Input, Stack, Text } from "@refineui/react";
 import { DemoBlock } from "../layout/DemoBlock";
 import { CatalogCard, CatalogGrid } from "./CatalogCard";
 import ComponentCatalog from "./ComponentCatalog";
@@ -7,6 +7,18 @@ export default function DocsHome() {
     return (
         <Stack gap="sizeXXXLarge" data-refineui-home>
             <CatalogGrid>
+                <CatalogCard
+                    href="/foundations/"
+                    name="Foundations"
+                    preview={
+                        <Grid columns={4} gap="sizeXSmall">
+                            <Box background="backgroundBrand" radius="roundedSmall" className="size-refineui-foundation-size-400" />
+                            <Box background="backgroundInfo" radius="roundedSmall" className="size-refineui-foundation-size-400" />
+                            <Box background="backgroundSuccess" radius="roundedSmall" className="size-refineui-foundation-size-400" />
+                            <Box background="backgroundError" radius="roundedSmall" className="size-refineui-foundation-size-400" />
+                        </Grid>
+                    }
+                />
                 <CatalogCard
                     href="/components/"
                     name="Components"
@@ -33,15 +45,6 @@ export default function DocsHome() {
                     href="/intro/"
                     name="Get started"
                     preview={<Input placeholder="bun add @refineui/react" fullWidth />}
-                />
-                <CatalogCard
-                    href="/guides/packages/"
-                    name="Guides"
-                    preview={
-                        <Text variant="bodyMd" className="text-refineui-alias-foreground-secondary">
-                            Packages · CLI
-                        </Text>
-                    }
                 />
             </CatalogGrid>
             <Stack gap="sizeLarge">

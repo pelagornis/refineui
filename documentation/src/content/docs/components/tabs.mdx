@@ -1,76 +1,51 @@
 ---
 title: Tabs
-description: Underline tabs for switching panels
+description: Switch between in-page panels under a shared underline bar.
 ---
 
 import TabsPreview from "../../../components/TabsPreview";
 
 # Tabs
 
-In-page view switching with **`tablist` / `tab` / `tabpanel`**. Token-based underline track — **Figma Web Kit `Tabs` (`636:5371`)** is the pill visual shipped as [Segmented Control](/components/segmented-control/).
+Tabs switch views in the same page. Use them when each panel is equally important and the user should stay on one URL.
 
-| Use | Component |
-| --- | --- |
-| Section panels under a full-width bar | **Tabs** |
-| Compact mutually exclusive choice | [Segmented Control](/components/segmented-control/) |
-| Site destinations + flyouts | [Navigation Menu](/components/navigation-menu/) |
-
-## Install & import
-
-```tsx
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-Compose **`Tabs` → `TabsList` → `TabsTrigger`** and **`TabsContent`**. Uncontrolled: **`defaultValue`**; controlled: **`value`** + **`onValueChange`**.
-
-```tsx
-<Tabs defaultValue="a">
-  <TabsList>
-    <TabsTrigger value="a">First</TabsTrigger>
-    <TabsTrigger value="b">Second</TabsTrigger>
-  </TabsList>
-  <TabsContent value="a">
-    <p>Panel A</p>
-  </TabsContent>
-  <TabsContent value="b">
-    <p>Panel B</p>
-  </TabsContent>
-</Tabs>
-```
-
-## Preview
+The list is a `tablist` of `tab` buttons; each panel is a `tabpanel`. For a compact mutually exclusive choice that is not a page section, use **[Segmented Control](/components/segmented-control/)**. For site destinations and flyouts, use **[Navigation Menu](/components/navigation-menu/)**.
 
 <div class="not-content">
   <TabsPreview client:load />
 </div>
 
-## Props
+## Interface
 
-### `Tabs`
+### Tabs
 
-| Prop | Type | Description |
-| --- | --- | --- |
-| `defaultValue` | `string` | Initial value (uncontrolled) |
-| `value` | `string` | Selected value (controlled) |
-| `onValueChange` | `(value: string) => void` | Called when selection changes |
+| Prop | Default | Type |
+|------|---------|------|
+| `defaultValue` | `""` | `string` — Uncontrolled initial selected value. |
+| `value` | — | `string` — Controlled selected value. |
+| `onValueChange` | — | `(value: string) => void` — Called when selection changes. |
 
-### `TabsTrigger`
+Also accepts native `div` attributes (`className`, `style`, `aria-*`).
 
-| Prop | Type | Description |
-| --- | --- | --- |
-| `value` | `string` | (Required) id matching a panel |
-| `disabled` | `boolean` | Disabled |
+### TabsTrigger
 
-### `TabsContent`
+| Prop | Default | Type |
+|------|---------|------|
+| `value` | — | `string` — Tab identity. Required. Must match a `TabsContent` `value`. |
+| `disabled` | `false` | `boolean` — Removes the tab from keyboard selection. |
 
-| Prop | Type | Description |
-| --- | --- | --- |
-| `value` | `string` | (Required) Panel to show when selected |
+`children` is required (the visible label). Also accepts native `button` attributes except `type`.
 
-## Accessibility
+### TabsContent
 
-- `role="tablist"` / `tab` / `tabpanel`, with `aria-controls` · `aria-labelledby`.
-- Arrow keys / Home / End move focus and selection.
+| Prop | Default | Type |
+|------|---------|------|
+| `value` | — | `string` — Panel identity. Required. Shown when it matches the selected tab. |
+
+### Parts
+
+| Part | Role |
+|------|------|
+| `TabsList` | `tablist` and the sliding underline indicator. |
+| `TabsTrigger` | `tab` button. |
+| `TabsContent` | `tabpanel` for the matching value. |

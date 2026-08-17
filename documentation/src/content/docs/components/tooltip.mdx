@@ -1,73 +1,33 @@
 ---
 title: Tooltip
-description: MCP-aligned — position (Top/Bottom/Left/Right) × align (Start/Center/End)
+description: Short helper text on hover or focus.
 ---
 
 import TooltipDemo from "../../../components/TooltipDemo";
 
 # Tooltip
 
-Shows helper text on hover or focus. Web Kit **Tooltip** COMPONENT_SET `90:1686` — **`position`** and **`align`** use MCP names and **PascalCase** values.
+Tooltip shows a short hint next to a control on hover or focus. Use it to name an icon-only button, echo a shortcut, or clarify a truncated label.
 
-- **top/bottom** × **Start/Center/End**: horizontal alignment (Start=left, End=right) — e.g. Top-Start, Bottom-End  
-- **left/right** × **Start/Center/End**: vertical alignment (Start=top, End=bottom) — e.g. Left-Top (`Left`+`Start`), Right-Bottom (`Right`+`End`)
-
-Padding, `roundedMedium`, **body4**, **shadow8Light**, etc. use the same tokens as the design spec.
-
-## Install & import
-
-```tsx
-import { Tooltip, Button } from "@refineui/react";
-import "@refineui/react/refineui.css";
-```
-
-## Basic usage
-
-Defaults match MCP-generated components: **`position="Bottom"`**, **`align="Start"`**.
-
-```tsx
-<Tooltip trigger={<Button variant="secondary">Save</Button>} content="Save with ⌘S" />
-```
-
-A single line like above yields a Bottom-Start tooltip.
-
-## Preview
+It is not a place to put fields, links, or actions. For a click-opened panel, use **[Popover](/components/popover/)**. For a blocking explanation, use **[Dialog](/components/dialog/)**.
 
 <div class="not-content">
   <TooltipDemo client:load />
 </div>
 
-## Props
+## Interface
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `trigger` | `ReactNode` | (required) | Target element |
-| `content` | `ReactNode` | (required) | Tooltip body |
-| `position` | `"Top"` \| `"Bottom"` \| `"Left"` \| `"Right"` | `"Bottom"` | MCP `position` |
-| `align` | `"Start"` \| `"Center"` \| `"End"` | `"Start"` | MCP `align` |
-| `delayMs` | `number` | `120` | Delay before show (ms) |
+### Tooltip
 
-## Examples
+| Prop | Default | Type |
+|------|---------|------|
+| `trigger` | — | `ReactNode` — Target element. Required. |
+| `content` | — | `ReactNode` — Tooltip body. Required. |
+| `position` | `"Bottom"` | `"Top"` \| `"Bottom"` \| `"Left"` \| `"Right"` — Side of the trigger. |
+| `align` | `"Start"` | `"Start"` \| `"Center"` \| `"End"` — Alignment along that side. |
+| `delayMs` | `120` | `number` — Milliseconds before show. |
+| `open` | — | `boolean` — Controlled visibility. |
+| `defaultOpen` | `false` | `boolean` — Uncontrolled initial visibility. |
+| `onOpenChange` | — | `(open: boolean) => void` — Called when visibility changes. |
 
-### Top · Center
-
-```tsx
-<Tooltip
-  trigger={<Button variant="secondary">Help</Button>}
-  content="Description"
-  position="Top"
-  align="Center"
-/>
-```
-
-### Bottom · End
-
-```tsx
-<Tooltip trigger={<span>Link</span>} content="Description" position="Bottom" align="End" />
-```
-
-### Keyboard focus
-
-```tsx
-<Tooltip trigger={<Button variant="secondary">Focus me</Button>} content="Also shows when focused with Tab" />
-```
+Also accepts native `div` attributes (`className`, `style`).
