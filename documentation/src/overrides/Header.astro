@@ -1,0 +1,26 @@
+---
+import Search from "@astrojs/starlight/components/Search.astro";
+import config from "virtual:starlight/user-config";
+import { DocsHeaderBrand, DocsHeaderNav, DocsHeaderTools } from "./DocsHeader";
+
+const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
+const githubHref = Array.isArray(config.social)
+    ? config.social.find((entry) => entry.icon === "github")?.href
+    : undefined;
+const shouldRenderSearch =
+    Boolean(config.pagefind) ||
+    config.components.Search !== "@astrojs/starlight/components/Search.astro";
+---
+
+<div data-refineui-docs-header>
+    <div data-refineui-docs-header-start>
+        <DocsHeaderBrand title={siteTitle} titleHref={siteTitleHref} />
+        <DocsHeaderNav />
+    </div>
+    <div data-refineui-docs-header-end>
+        <div data-refineui-docs-search>
+            {shouldRenderSearch && <Search />}
+        </div>
+        <DocsHeaderTools client:load githubHref={githubHref} />
+    </div>
+</div>

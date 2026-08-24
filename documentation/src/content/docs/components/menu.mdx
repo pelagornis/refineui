@@ -1,60 +1,127 @@
 ---
 title: Menu
-description: Action list with icons, shortcuts, descriptions, and nested panels.
+description: Action menu dropdown with list items.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import MenuPreview from "../../../components/MenuPreview";
 
 # Menu
 
-Menu is a wider action panel: sections, icons, descriptions, shortcuts, and nested submenus. Use it when a list of commands needs that extra row chrome.
+Action menu dropdown with list items.
 
-For a compact trigger menu, use **[Dropdown](/components/dropdown/)**. For site or app destinations with flyout panels, use **[Navigation Menu](/components/navigation-menu/)**. For a searchable palette, use **[Command](/components/command/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <MenuPreview client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { Menu, MenuPopover, MenuList, MenuItem, MenuDivider, MenuSection } from "@refineui/react";
+
+<Menu>
+  <MenuPopover>
+    <MenuList>
+      <MenuItem onSelect={() => handleNew()}>
+        New File
+      </MenuItem>
+      <MenuItem onSelect={() => handleOpen()}>
+        Open
+      </MenuItem>
+      <MenuDivider />
+      <MenuItem state="disabled">
+        Save (disabled)
+      </MenuItem>
+    </MenuList>
+  </MenuPopover>
+</Menu>
+
+<Menu>
+  <MenuPopover>
+    <MenuList>
+      <MenuSection>
+        <MenuItem
+          startIcon={<Icon />}
+          endIcon={<Badge />}
+          description="Description text"
+          shortcut="⌘N"
+        >
+          Menu Item
+        </MenuItem>
+        <MenuSubTrigger>Submenu</MenuSubTrigger>
+        <MenuSubContent>
+          <MenuItem>Submenu Item</MenuItem>
+        </MenuSubContent>
+      </MenuSection>
+    </MenuList>
+  </MenuPopover>
+</Menu>
+```
+
+## API Reference
 
 ### Menu
 
-| Prop | Default | Type |
-|------|---------|------|
-| `positioning` | — | `{ autoSize?: boolean }` — When `autoSize` is true, the popover width follows content. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "positioning", default: "—", type: "MenuPositioning", description: "Positioning configuration." }
+    ]}
+  />
+</div>
+### MenuPopover
 
-Also accepts native `div` attributes (`className`, `style`).
+Popover container for the menu.
+
+### MenuList
+
+List container for menu items.
 
 ### MenuItem
 
-| Prop | Default | Type |
-|------|---------|------|
-| `description` | — | `ReactNode` — Secondary line under the label. |
-| `shortcut` | — | `ReactNode` — Trailing key combo. |
-| `startIcon` | — | `ReactNode` — Leading icon slot. |
-| `endIcon` | — | `ReactNode` — Trailing icon slot (after shortcut). |
-| `state` | `"default"` | `"default"` \| `"hover"` \| `"pressed"` \| `"active"` \| `"disabled"` — Visual state. `disabled` also blocks activation. |
-| `disabled` | — | `boolean` — Blocks activation and closes. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "description", default: "—", type: "ReactNode", description: "Secondary description text." },
+    { prop: "shortcut", default: "—", type: "ReactNode", description: "Keyboard shortcut hint." },
+    { prop: "startIcon", default: "—", type: "ReactNode", description: "Leading icon." },
+    { prop: "endIcon", default: "—", type: "ReactNode", description: "Trailing icon." },
+    { prop: "state", default: "\"default\"", type: "\"default\" | \"hover\" | \"pressed\" | \"active\" | \"disabled\"", description: "Visual state." }
+    ]}
+  />
+</div>
+### MenuSection
 
-Also accepts native `button` attributes (`onClick`, `className`).
+Groups related menu items.
+
+### MenuDivider
+
+Visual separator between items.
 
 ### MenuSubTrigger
 
-| Prop | Default | Type |
-|------|---------|------|
-| `description` | — | `ReactNode` — Secondary line under the label. |
-| `startIcon` | — | `ReactNode` — Leading icon slot. |
-| `state` | `"default"` | `"default"` \| `"hover"` \| `"pressed"` \| `"active"` \| `"disabled"` — Visual state. Open submenus resolve to `active`. |
-| `disabled` | — | `boolean` — Blocks opening the submenu. |
+Submenu trigger item (shows chevron).
 
-### Parts
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "description", default: "—", type: "ReactNode", description: "Secondary description text." },
+    { prop: "startIcon", default: "—", type: "ReactNode", description: "Leading icon." },
+    { prop: "state", default: "\"default\"", type: "\"default\" | \"hover\" | \"pressed\" | \"active\" | \"disabled\"", description: "Visual state." }
+    ]}
+  />
+</div>
+### MenuSubContent
 
-| Part | Role |
-|------|------|
-| `MenuTrigger` | Toggles the popover. Merges onto a single child element when possible. |
-| `MenuPopover` | Portaled panel. |
-| `MenuList` | `role="menu"` list. |
-| `MenuSection` | Group heading. |
-| `MenuDivider` | Horizontal separator. |
-| `MenuSub` | Nested branch context. |
-| `MenuSubContent` | Portaled nested `role="menu"`. |
+Submenu panel.
+

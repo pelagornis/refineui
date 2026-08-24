@@ -1,35 +1,63 @@
 ---
 title: Radio
-description: Pick exactly one option from a set that shares the same name.
+description: Single selection from a group of options.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import RadioPreview from "../../../components/RadioPreview";
 
 # Radio
 
-Radio is a single option in a mutually exclusive group. Use several radios with the **same `name`** so the browser treats them as one field.
+Single selection from a group of options.
 
-For independent on/off choices, use **[Checkbox](/components/checkbox/)**. For an instant settings toggle, use **[Switch](/components/switch/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <RadioPreview client:load />
 </div>
 
-## Interface
+## Installation
 
-### Radio
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `label` | — | `string` — Primary name beside the control. |
-| `description` | — | `string` — Supporting line under the label. |
-| `allowUncheck` | `true` | `boolean` — When `true`, clicking the selected radio clears it. |
-| `disabled` | — | `boolean` — Blocks interaction. |
+## Usage
 
-Also accepts native `input` attributes except `type` (`value`, `checked`, `defaultChecked`, `onChange`, `name`, `id`, `aria-*`, `className`).
+```tsx
+import { Radio } from "@refineui/react";
 
-### RadioInput
+<Radio name="plan" value="basic" label="Basic Plan" />
 
-Control-only radio (`type="radio"`). Use it when you compose the label yourself.
+<Radio
+  name="plan"
+  value="pro"
+  label="Pro Plan"
+  description="Includes advanced features"
+  checked={selectedPlan === "pro"}
+  onChange={(e) => setSelectedPlan(e.target.value)}
+/>
 
-Also accepts native `input` attributes except `type`.
+<Radio
+  name="plan"
+  value="enterprise"
+  label="Enterprise"
+  allowUncheck
+/>
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "label", default: "—", type: "string", description: "Radio button label text." },
+    { prop: "description", default: "—", type: "string", description: "Optional description below the label." },
+    { prop: "allowUncheck", default: "false", type: "boolean", description: "Allows unchecking a selected radio." },
+    { prop: "checked", default: "—", type: "boolean", description: "Controlled checked state." },
+    { prop: "value", default: "—", type: "string", description: "Value for form submission." },
+    { prop: "name", default: "—", type: "string", description: "Name for grouping radio buttons." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables interaction." }
+    ]}
+  />
+</div>

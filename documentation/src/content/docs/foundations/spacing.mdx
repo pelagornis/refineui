@@ -1,27 +1,53 @@
 ---
 title: Spacing
-description: T-shirt spacing, icon sizes, and Foundation layout steps used for gaps, padding, and dimensions.
-sidebar:
-  order: 4
+description: T-shirt spacing scale for gaps, padding, and margins.
 ---
 
+import { SpecTable } from "../../../docs-ui";
 import { IconSizePreview, SpacingPreview } from "../../../components/foundation/SpacingPreview";
 
 # Spacing
 
-Gaps and padding use `spacings` (`sizeSmall` is 8px). Component dimensions alias `foundationSizes` through `componentSizes`. Icon glyphs use `iconSizes`.
+Gaps and padding use `spacings`. Prefer these keys on `Stack`, `Box`, and layout props — not arbitrary pixels.
 
 ## Scale
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="Spacing scale"
+    columns={[
+      { key: "token", header: "Token", mono: true },
+      { key: "value", header: "Value", mono: true },
+    ]}
+    rows={[
+      { token: "sizeNone", value: "0" },
+      { token: "sizeXXXSmall", value: "2px" },
+      { token: "sizeXXSmall", value: "4px" },
+      { token: "sizeXSmall", value: "6px" },
+      { token: "sizeSmall", value: "8px" },
+      { token: "sizeMedium", value: "10px" },
+      { token: "sizeLarge", value: "16px" },
+      { token: "sizeXLarge", value: "20px" },
+      { token: "sizeXXLarge", value: "24px" },
+      { token: "sizeXXXLarge", value: "32px" },
+    ]}
+  />
+</div>
 
 <div class="not-content">
   <SpacingPreview client:load />
 </div>
 
-## Icon sizes
+## Icon glyph sizes
+
+Icon pixels are separate from spacing (`iconSizes`). Use them for `WebIcon` / glyph slots only.
 
 <div class="not-content">
   <IconSizePreview client:load />
 </div>
+
+## Usage
 
 ```tsx
 <Stack gap="sizeMedium">

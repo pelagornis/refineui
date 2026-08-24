@@ -1,30 +1,57 @@
 ---
 title: Tag
-description: Compact keyword or filter chip, with an optional avatar or remove action.
+description: Categorization tag or filter chip.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import TagDemo from "../../../components/TagDemo";
 
 # Tag
 
-Tag is a chip for keywords, categories, and filters. Use it when the user needs to see (and often remove) a selected value without opening a full form field.
+Categorization tag or filter chip.
 
-`Tag` and `Chip` are the same component — either name is valid. For a non-interactive status or count, use **[Badge](/components/badge/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <TagDemo client:load />
 </div>
 
-## Interface
+## Installation
 
-### Tag
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `variant` | `"default"` | `"default"` \| `"outline"` \| `"filled"` — Surface style. |
-| `size` | `"md"` | `"sm"` \| `"md"` \| `"lg"` — Height and typography. Smaller than Button. |
-| `avatar` | — | `ReactNode` — Optional leading slot (image or icon). |
-| `onRemove` | — | `() => void` — When set, shows a remove button and is called when it is activated. |
-| `disabled` | `false` | `boolean` — Blocks the remove button and disables pointer interaction. |
+## Usage
 
-Also accepts native `span` attributes (`className`, `style`, `aria-*`).
+```tsx
+import { Chip } from "@refineui/react";
+
+<Chip>Tag Label</Chip>
+
+<Chip variant="filled">Filled</Chip>
+
+<Chip variant="outline" size="sm">Small Tag</Chip>
+
+<Chip onRemove={() => handleRemove()}>
+  Removable
+</Chip>
+
+<Chip avatar={<Avatar src="/user.jpg" />}>
+  With Avatar
+</Chip>
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "variant", default: "\"default\"", type: "\"default\" | \"outline\" | \"filled\"", description: "Visual variant style." },
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "Chip size tier." },
+    { prop: "avatar", default: "—", type: "ReactNode", description: "Optional leading avatar element." },
+    { prop: "onRemove", default: "—", type: "() => void", description: "When provided, shows remove button." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables interaction." }
+    ]}
+  />
+</div>

@@ -1,19 +1,37 @@
 ---
 title: Opacity
-description: Shared opacity steps and overlay helpers — disabled wash and backdrop scrim.
-sidebar:
-  order: 8
+description: Shared opacity steps and overlay helpers.
 ---
 
+import { SpecTable } from "../../../docs-ui";
 import { OpacityPreview } from "../../../components/foundation/OpacityPreview";
 
 # Opacity
 
-Disabled wash is `opacityDisabled`. Page dimmers use `surfaceOverlay` / `--refineui-overlay-backdrop` (see [Color](/foundations/color/)), not a custom alpha.
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="Opacity tokens"
+    columns={[
+      { key: "token", header: "Token", mono: true },
+      { key: "value", header: "Value", mono: true },
+      { key: "use", header: "Use" },
+    ]}
+    rows={[
+      { token: "opacityFull", value: "1", use: "Default" },
+      { token: "opacityDisabled", value: "0.5", use: "Disabled wash" },
+      { token: "opacityGhostHover", value: "0.08", use: "Ghost hover wash (dark)" },
+    ]}
+  />
+</div>
+
+Page dimmers use `surfaceOverlay` / `--refineui-overlay-backdrop` (see [Color](/foundations/color/)), not a custom alpha.
 
 <div class="not-content">
   <OpacityPreview client:load />
 </div>
+
+## Usage
 
 ```css
 .scrim {

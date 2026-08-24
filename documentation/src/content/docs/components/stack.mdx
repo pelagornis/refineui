@@ -1,0 +1,55 @@
+---
+title: Stack
+description: One-axis flex layout with Foundation gap tokens.
+---
+
+import { PropSpec } from "../../../docs-ui";
+
+import StackPreview from "../../../components/layout/StackPreview";
+
+# Stack
+
+`Stack` lays out children in a row or column with a spacing-token `gap`. Default direction is `column`.
+
+<div class="not-content my-6">
+  <StackPreview client:load />
+</div>
+
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { Button, Stack } from "@refineui/react";
+
+<Stack gap="sizeMedium">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</Stack>
+
+<Stack direction="row" gap="sizeSmall" align="center" justify="between">
+  <Button type="button" variant="outline">Cancel</Button>
+  <Button type="button" variant="primary">Save</Button>
+</Stack>
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "as", default: "\"div\"", type: "ElementType", description: "Root element." },
+    { prop: "direction", default: "\"column\"", type: "\"row\" | \"column\" | \"row-reverse\" | \"column-reverse\"", description: "Flex direction." },
+    { prop: "gap", default: "\"sizeNone\"", type: "Spacing token", description: "Gap between children." },
+    { prop: "align", default: "—", type: "\"start\" | \"center\" | \"end\" | \"stretch\" | \"baseline\"", description: "Cross-axis alignment." },
+    { prop: "justify", default: "—", type: "\"start\" | \"center\" | \"end\" | \"between\" | \"around\" | \"evenly\"", description: "Main-axis justification." },
+    { prop: "wrap", default: "—", type: "boolean | wrap token", description: "Wrapping behavior." },
+    { prop: "inline", default: "false", type: "boolean", description: "Use `inline-flex`." }
+    ]}
+  />
+</div>

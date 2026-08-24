@@ -1,9 +1,6 @@
 ---
 title: Foundations
-description: Design tokens from Pelagornis RefineUI Foundation.
-sidebar:
-  label: Overview
-  order: 1
+description: Design tokens, layout principles, and iconography that every RefineUI surface is built on.
 tableOfContents: false
 ---
 
@@ -11,8 +8,16 @@ import FoundationCatalog from "../../../components/catalog/FoundationCatalog";
 
 # Foundations
 
-Variables from Pelagornis RefineUI Foundation, mirrored in `@refineui/tokens`. Product UI uses semantic roles — not raw palette hex or pixels.
+Foundations are the shared visual and interaction language for Pelagornis products. Product UI consumes **semantic tokens** from `@refineui/tokens` — not raw hex, arbitrary pixels, or one-off curves.
 
-<div class="not-content">
+<div class="not-content my-8">
   <FoundationCatalog client:load />
 </div>
+
+## Areas
+
+- **[Design tokens](/foundations/design-tokens/)** — Color, typography, spacing, sizing, radius, border, elevation, opacity, motion, and z-index.
+- **[Layout](/foundations/layout/)** — Spatial rhythm, containers, grids, alignment, and responsive rules.
+- **[Iconography](/foundations/iconography/)** — Glyph sizes, optical rules, and how icons sit next to text.
+
+Layout primitives you compose in React live under **[Components → Layout](/components/stack/)**.

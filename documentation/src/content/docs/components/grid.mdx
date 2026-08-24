@@ -1,0 +1,70 @@
+---
+title: Grid
+description: CSS grid with equal columns or Foundation min-item auto-fit.
+---
+
+import { PropSpec } from "../../../docs-ui";
+
+import GridPreview from "../../../components/layout/GridPreview";
+
+# Grid
+
+`Grid` places children in columns. Use fixed `columns`, or `minItem` with a Foundation size for fluid auto-fit grids.
+
+<div class="not-content my-6">
+  <GridPreview client:load />
+</div>
+
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { Grid, GridItem } from "@refineui/react";
+
+<Grid columns={3} gap="sizeMedium">
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+</Grid>
+
+<Grid minItem="foundationSize2560" gap="sizeLarge">
+  <GridItem>Card</GridItem>
+  <GridItem>Card</GridItem>
+</Grid>
+```
+
+## API Reference
+
+### Grid
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "as", default: "\"div\"", type: "ElementType", description: "Root element." },
+    { prop: "columns", default: "1", type: "number", description: "Equal column count (ignored when `minItem` is set)." },
+    { prop: "minItem", default: "—", type: "Foundation size name", description: "Auto-fit min track size." },
+    { prop: "gap", default: "\"sizeNone\"", type: "Spacing token", description: "Row and column gap." },
+    { prop: "columnGap", default: "—", type: "Spacing token", description: "Column gap override." },
+    { prop: "rowGap", default: "—", type: "Spacing token", description: "Row gap override." },
+    { prop: "align", default: "—", type: "Align token", description: "Items alignment." },
+    { prop: "justify", default: "—", type: "Justify token", description: "Content justification." }
+    ]}
+  />
+</div>
+### GridItem
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "span", default: "1", type: "number", description: "Column span." },
+    { prop: "rowSpan", default: "—", type: "number", description: "Row span." }
+    ]}
+  />
+</div>

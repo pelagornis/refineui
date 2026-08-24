@@ -1,0 +1,61 @@
+---
+title: Sizing
+description: Foundation layout steps, control heights, and icon dimensions.
+---
+
+import { SpecTable } from "../../../docs-ui";
+
+# Sizing
+
+Component dimensions alias **Foundation size steps** through `componentSizes` in `@refineui/tokens`. Do not hardcode control heights or icon boxes in React styles.
+
+## What to use
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="Sizing layers"
+    columns={[
+      { key: "layer", header: "Layer", mono: true },
+      { key: "purpose", header: "Purpose" },
+    ]}
+    rows={[
+      { layer: "foundationSizes", purpose: "Global size steps (source of truth in Foundation)" },
+      { layer: "componentSizes", purpose: "Web Kit dimension aliases → Foundation keys" },
+      { layer: "iconSizes", purpose: "Glyph sizes in px (xxsmall … xxlarge)" },
+    ]}
+  />
+</div>
+
+## Icon sizes
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="Icon sizes"
+    columns={[
+      { key: "token", header: "Token", mono: true },
+      { key: "px", header: "px", mono: true },
+    ]}
+    rows={[
+      { token: "xxsmall", px: "12" },
+      { token: "xsmall", px: "16" },
+      { token: "small", px: "20" },
+      { token: "medium", px: "24" },
+      { token: "large", px: "28" },
+      { token: "xlarge", px: "32" },
+      { token: "xxlarge", px: "48" },
+    ]}
+  />
+</div>
+
+## Examples
+
+Control heights (button, input) and overlay widths resolve as CSS variables such as `--refineui-size-button-min-height-md` and `--refineui-size-dialog-max-width`. Prefer component props (`size="md"`) over reading those vars in product CSS unless you are composing a custom chrome.
+
+```tsx
+import { iconSizes } from "@refineui/tokens";
+import { WebIcon } from "@refineui/react";
+
+<WebIcon name="search" size={iconSizes.small} />
+```

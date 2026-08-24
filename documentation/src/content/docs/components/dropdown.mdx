@@ -1,59 +1,94 @@
 ---
 title: Dropdown
-description: Compact menu from a trigger — groups, shortcuts, and submenus.
+description: Contextual action dropdown panel.
 ---
 
-import DropdownDemo from '../../../components/DropdownDemo';
+import { PropSpec } from "../../../docs-ui";
+
+import DropdownDemo from "../../../components/DropdownDemo";
 
 # Dropdown
 
-Dropdown is a compact action menu anchored to a trigger. Use it for account menus, overflow actions, and short grouped lists.
+Contextual action dropdown panel.
 
-While it is open, page scroll on `body` / `html` is locked. For a wider panel with icons and descriptions, use **[Menu](/components/menu/)**. For site destinations with flyouts, use **[Navigation Menu](/components/navigation-menu/)**. For type-to-filter commands, use **[Command](/components/command/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <DropdownDemo client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { Dropdown, DropdownTrigger, DropdownContent, DropdownItem, Button } from "@refineui/react";
+
+<Dropdown>
+  <DropdownTrigger>
+    <Button>Options</Button>
+  </DropdownTrigger>
+  <DropdownContent>
+    <DropdownItem onSelect={() => handleEdit()}>Edit</DropdownItem>
+    <DropdownItem onSelect={() => handleDelete()}>Delete</DropdownItem>
+    <DropdownItem disabled>Disabled</DropdownItem>
+  </DropdownContent>
+</Dropdown>
+
+<Dropdown>
+  <DropdownTrigger>
+    <Button>More</Button>
+  </DropdownTrigger>
+  <DropdownContent align="end" side="bottom">
+    <DropdownItem selected>Active Item</DropdownItem>
+    <DropdownSubTrigger>Submenu</DropdownSubTrigger>
+    <DropdownSubContent>
+      <DropdownItem>Submenu Item</DropdownItem>
+    </DropdownSubContent>
+  </DropdownContent>
+</Dropdown>
+```
+
+## API Reference
 
 ### Dropdown
 
-| Prop | Default | Type |
-|------|---------|------|
-| `open` | — | `boolean` — Controlled visibility. |
-| `defaultOpen` | `false` | `boolean` — Uncontrolled initial open. |
-| `onOpenChange` | — | `(open: boolean) => void` — Called when the menu opens or closes. |
+Root component (manages open state).
 
-Also accepts native `div` attributes (`className`, `style`).
+### DropdownTrigger
+
+Trigger element that opens the dropdown.
 
 ### DropdownContent
 
-| Prop | Default | Type |
-|------|---------|------|
-| `align` | `"start"` | `"start"` \| `"end"` \| `"center"` — Horizontal alignment to the trigger. |
-| `side` | `"auto"` | `"auto"` \| `"top"` \| `"bottom"` — Preferred side. `auto` flips to stay on screen. |
-| `sideOffset` | `sizeXXSmall` (4px) | `number` — Gap between trigger and panel, in pixels. |
-
-Also accepts native `div` attributes (`className`, `style`).
-
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "align", default: "\"start\"", type: "\"start\" | \"end\" | \"center\"", description: "Alignment relative to trigger." },
+    { prop: "side", default: "\"auto\"", type: "\"auto\" | \"top\" | \"bottom\"", description: "Preferred side." },
+    { prop: "sideOffset", default: "4", type: "number", description: "Gap between trigger and panel (pixels)." }
+    ]}
+  />
+</div>
 ### DropdownItem
 
-| Prop | Default | Type |
-|------|---------|------|
-| `selected` | `false` | `boolean` — Marks the row as the selected menuitem. |
-| `disabled` | — | `boolean` — Blocks activation. Native `button` disabled. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "selected", default: "false", type: "boolean", description: "Shows selected state." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables this item." }
+    ]}
+  />
+</div>
+### DropdownSubTrigger
 
-Also accepts native `button` attributes (`onClick`, `className`).
+Submenu trigger item (shows chevron).
 
-### Parts
+### DropdownSubContent
 
-| Part | Role |
-|------|------|
-| `DropdownTrigger` | Opens the menu. Merges onto a single child element when possible. |
-| `DropdownGroup` | `role="group"`. |
-| `DropdownLabel` | Group heading. |
-| `DropdownSeparator` | Horizontal divider. |
-| `DropdownShortcut` | Trailing shortcut text. |
-| `DropdownSub` / `DropdownSubTrigger` / `DropdownSubContent` | Nested submenu. |
-| `DropdownPortal` | Compatibility wrapper — renders children only. |
+Submenu panel.
+

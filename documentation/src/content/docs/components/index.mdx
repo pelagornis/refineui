@@ -1,18 +1,39 @@
 ---
 title: Components
-description: Every RefineUI component in one catalog.
-sidebar:
-  label: Overview
-  order: 1
+description: Live catalog of RefineUI React components, grouped by job.
 tableOfContents: false
 ---
 
 import ComponentCatalog from "../../../components/catalog/ComponentCatalog";
+import { SpecTable } from "../../../docs-ui";
 
 # Components
 
-Find a control by name or job, then open the page for a live look and the API.
+Browse every shipped control. Open a page for a live preview, usage, and the API.
+
+<div class="not-content my-8">
+  <ComponentCatalog client:load />
+</div>
+
+## Categories
 
 <div class="not-content">
-  <ComponentCatalog client:load />
+  <SpecTable
+    client:load
+    aria-label="Component categories"
+    columns={[
+      { key: "category", header: "Category", hrefKey: "href" },
+      { key: "role", header: "Role" },
+    ]}
+    rows={[
+      { category: "Actions", href: "/components/button/", role: "Buttons, toggles, segmented control" },
+      { category: "Forms", href: "/components/input/", role: "Inputs, selection, validation field" },
+      { category: "Navigation", href: "/components/tabs/", role: "Tabs, sidebar, menus, pagination" },
+      { category: "Feedback", href: "/components/toast/", role: "Alerts, progress, toasts, tooltips" },
+      { category: "Overlays", href: "/components/dialog/", role: "Dialog, drawer, popover, command" },
+      { category: "Data display", href: "/components/card/", role: "Card, table, chart, avatar, badge" },
+      { category: "Content", href: "/components/accordion/", role: "Accordion, divider, label, link" },
+      { category: "Layout", href: "/components/stack/", role: "Box, Stack, Grid, Container" },
+    ]}
+  />
 </div>

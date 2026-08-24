@@ -1,29 +1,51 @@
 ---
 title: Textarea
-description: Multi-line text field for bios, notes, and longer written answers.
+description: Multi-line text input field.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import TextareaPreview from "../../../components/TextareaPreview";
 
 # Textarea
 
-Textarea is a multi-line text field. Use it when the answer is more than a single line — a bio, a comment, or notes.
+Multi-line text input field.
 
-Validation chrome matches **[Input](/components/input/)**. Pair it with **[Label](/components/label/)** or wrap it in **[Field](/components/field/)** for a label, hint, and error. For one line, use Input instead.
-
-<div class="not-content">
+<div class="not-content my-6">
   <TextareaPreview client:load />
 </div>
 
-## Interface
+## Installation
 
-### Textarea
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `error` | `false` | `boolean` — Error border. Sets `aria-invalid`. |
-| `success` | `false` | `boolean` — Success border. |
-| `fullWidth` | `false` | `boolean` — Stretch to the parent width. |
-| `disabled` | — | `boolean` — Disabled background, border, and text. |
+## Usage
 
-Also accepts native `textarea` attributes (`rows`, `cols`, `value`, `onChange`, `maxLength`, `name`, `id`, `placeholder`, `aria-*`, `className`).
+```tsx
+import { Textarea } from "@refineui/react";
+
+<Textarea placeholder="Enter your comments..." rows={4} />
+
+<Textarea
+  error={hasError}
+  value={message}
+  onChange={(e) => setMessage(e.target.value)}
+  fullWidth
+/>
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "error", default: "false", type: "boolean", description: "Shows error state styling." },
+    { prop: "success", default: "false", type: "boolean", description: "Shows success state styling." },
+    { prop: "fullWidth", default: "false", type: "boolean", description: "Stretches to full parent width." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables interaction." }
+    ]}
+  />
+</div>

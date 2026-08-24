@@ -1,33 +1,58 @@
 ---
-title: SpinButton
-description: Enter a number directly, or change it with up and down steppers.
+title: Spin Button
+description: Numeric stepper input for incremental changes.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import SpinButtonDemo from "../../../components/SpinButtonDemo";
 
-# SpinButton
+# Spin Button
 
-SpinButton is a numeric field with increment and decrement controls. Use it for quantity, a count, or any integer that is easier to bump than to type from scratch.
+Numeric stepper input for incremental changes.
 
-The value is always controlled: pass `value` and `onChange`. For a number typed on a single line without steppers, use **[Input](/components/input/)** with `type="number"`. For a value chosen by dragging, use **[Slider](/components/slider/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <SpinButtonDemo client:load />
 </div>
 
-## Interface
+## Installation
 
-### SpinButton
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `value` | — | `number` — Current value. Required. |
-| `onChange` | — | `(value: number) => void` — Called with the next numeric value. Required. |
-| `placeholder` | — | `string` — Shown in the value input when drafting an empty string. |
-| `min` | — | `number` — Lower bound. Clamps steps, Home, and typed commits. |
-| `max` | — | `number` — Upper bound. Clamps steps, End, and typed commits. |
-| `step` | `1` | `number` — Increment for the stepper and arrow keys. |
-| `size` | `"md"` | `"sm"` \| `"md"` \| `"lg"` — Field height and type, aligned with Input / Select. |
-| `disabled` | `false` | `boolean` — Disables typing and both steppers. |
+## Usage
 
-Also accepts native `div` attributes except `onChange` (`aria-label`, `className`, `style`). Default `aria-label` is `"Spin button"`.
+```tsx
+import { SpinButton } from "@refineui/react";
+
+<SpinButton value={quantity} onChange={setQuantity} />
+
+<SpinButton
+  value={amount}
+  onChange={setAmount}
+  min={0}
+  max={100}
+  step={5}
+  placeholder="Enter amount"
+  size="lg"
+/>
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "number", description: "Controlled value (required)." },
+    { prop: "onChange", default: "—", type: "(value: number) => void", description: "Event handler when value changes (required)." },
+    { prop: "min", default: "—", type: "number", description: "Minimum allowed value." },
+    { prop: "max", default: "—", type: "number", description: "Maximum allowed value." },
+    { prop: "step", default: "1", type: "number", description: "Step increment." },
+    { prop: "placeholder", default: "—", type: "string", description: "Placeholder text." },
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "Control height tier." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables interaction." }
+    ]}
+  />
+</div>

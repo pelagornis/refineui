@@ -1,0 +1,79 @@
+---
+title: AI & Tools Integration
+description: Integrate RefineUI design tokens and React components with LLMs, Cursor AI, and code generation tools using llm.txt.
+---
+
+# AI & Tools Integration
+
+RefineUI provides machine-readable documentation and token specifications optimized for AI coding assistants like **Cursor**, **Claude Desktop**, **GitHub Copilot**, and **ChatGPT**.
+
+---
+
+## `llm.txt` Support
+
+RefineUI serves standardized [`/llm.txt`](/llm.txt) and [`/llms.txt`](/llms.txt) endpoints following the open `llmstxt` standard. These files provide AI tools with structured information about RefineUI's components, design tokens, and usage patterns.
+
+### Adding RefineUI to Cursor
+
+You can add RefineUI directly to your Cursor documentation context:
+
+1. Open **Cursor Settings** → **Features** → **Docs**
+2. Click **+ Add new doc**
+3. Enter `RefineUI` as the name and `https://refineui.dev/llm.txt` as the URL
+
+---
+
+## Prompt Guide for RefineUI
+
+When asking AI tools to build UIs with `@refineui/react`, use these guidelines:
+
+### System Prompt Snippet
+
+```text
+You are building web applications using @refineui/react and @refineui/tokens.
+- Always import components from "@refineui/react"
+- Always import the stylesheet "@refineui/react/refineui.css" at the app entrypoint
+- Prefer RefineUI components (Button, Input, Card, SearchField, Badge, Sidebar, Command) over custom HTML elements
+- Use semantic color tokens (bg-refineui-alias-background-primary, text-refineui-alias-foreground-primary)
+- Prefer RefineUI components for forms, navigation, feedback, and data display
+```
+
+### Quick Component Example
+
+```tsx
+import { Card, Button, SearchField, Badge } from "@refineui/react";
+import "@refineui/react/refineui.css";
+
+export function UserSearchCard() {
+  return (
+    <Card className="p-4 flex flex-col gap-3">
+      <div className="flex items-center justify-between">
+        <span className="font-semibold">Search System</span>
+        <Badge variant="brand">Active</Badge>
+      </div>
+      <SearchField placeholder="Search users or components..." />
+      <Button variant="primary">Search</Button>
+    </Card>
+  );
+}
+```
+
+---
+
+## Best Practices for AI-Assisted Development
+
+- **Reference components**: Ask for specific RefineUI components by name when implementing UI
+- **Specify components**: Request specific components by name (e.g., "Use Field and Input components for the form")
+- **Use design tokens**: Ask AI to use RefineUI's semantic tokens instead of hardcoded colors or sizes
+- **Accessibility**: Remind AI tools to maintain ARIA labels, keyboard navigation, and focus management
+
+---
+
+## Resources & Links
+
+- [`/llm.txt`](/llm.txt) — Plain text documentation summary for LLM context windows
+- [`/llms.txt`](/llms.txt) — Standard alias for AI agents
+- [Components](/components/) — Full component catalog with examples
+- [Foundations](/foundations/) — Design tokens and visual language
+- [Development](/development/) — Install, theme, and motion in code
+- [GitHub Repository](https://github.com/pelagornis/refineui) — Source code and issue tracker

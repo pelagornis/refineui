@@ -1,0 +1,50 @@
+---
+title: Border
+description: Stroke widths for outlines and dividers.
+---
+
+import { SpecTable } from "../../../docs-ui";
+import { StrokePreview } from "../../../components/foundation/RadiusPreview";
+
+# Border
+
+Stroke widths are Foundation keys. Default UI chrome uses `strokeWidthThin`. Border **color** comes from color aliases (`borderDefault`, `borderSubtle`, `borderFocus`), not from this scale.
+
+## Scale
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="Stroke width scale"
+    columns={[
+      { key: "token", header: "Token", mono: true },
+      { key: "value", header: "Value", mono: true },
+    ]}
+    rows={[
+      { token: "strokeWidthNone", value: "0" },
+      { token: "strokeWidthHairline", value: "0.5px" },
+      { token: "strokeWidthThin", value: "1px" },
+      { token: "strokeWidthThick", value: "2px" },
+      { token: "strokeWidthThicker", value: "4px" },
+      { token: "strokeWidthThickest", value: "6px" },
+    ]}
+  />
+</div>
+
+<div class="not-content">
+  <StrokePreview client:load />
+</div>
+
+## Usage
+
+```tsx
+<Box
+  border="strokeWidthThin"
+  borderColor="borderDefault"
+  radius="roundedLarge"
+  padding="sizeLarge"
+  background="backgroundSurface"
+>
+  Outlined surface
+</Box>
+```

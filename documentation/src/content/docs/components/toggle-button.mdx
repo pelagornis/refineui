@@ -1,0 +1,37 @@
+---
+title: Toggle
+description: Switches a two-state setting on or off.
+---
+
+import { PropSpec } from "../../../docs-ui";
+
+# Toggle
+
+Switches a two-state setting on or off.
+
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { Toggle } from "@refineui/react";
+
+<Toggle checked={isEnabled} onCheckedChange={setIsEnabled} />
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "checked", default: "—", type: "boolean", description: "Controlled checked state." },
+    { prop: "onCheckedChange", default: "—", type: "(checked: boolean) => void", description: "Event handler when checked state changes." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables interaction." }
+    ]}
+  />
+</div>

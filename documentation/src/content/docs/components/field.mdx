@@ -1,46 +1,69 @@
 ---
 title: Field
-description: Label, control, hint, and error — the shell around a form control.
+description: Form field container wrapping label, control, error, and helper text.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import FieldPreview from "../../../components/FieldPreview";
 
 # Field
 
-Field wraps a form control as a label, the control itself, and optional hint or error copy. Use it whenever a field needs a name and supporting text in one stack.
+Form field container wrapping label, control, error, and helper text.
 
-`FieldLabel` and `FieldRequired` reuse **[Label](/components/label/)** (`Label` / `LabelRequired`) so size and required marks stay in sync. Place [Input](/components/input/), [Select](/components/select/), [Textarea](/components/textarea/), [Input OTP](/components/input-otp/), or another control as children. Child controls inherit Field `size` when they omit their own.
-
-<div class="not-content">
+<div class="not-content my-6">
   <FieldPreview client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { Field, FieldLabel, FieldHint, FieldError, FieldRequired, Input } from "@refineui/react";
+
+<Field size="md">
+  <FieldLabel>Email address</FieldLabel>
+  <Input type="email" placeholder="you@example.com" />
+  <FieldHint>We'll never share your email.</FieldHint>
+</Field>
+
+<Field size="lg">
+  <FieldLabel>Password <FieldRequired /></FieldLabel>
+  <Input type="password" error={hasError} />
+  {hasError && <FieldError>Password is required</FieldError>}
+</Field>
+```
+
+## API Reference
 
 ### Field
 
-| Prop | Default | Type |
-|------|---------|------|
-| `size` | `"lg"` | `"sm"` \| `"md"` \| `"lg"` — Label type and inherited control size when children omit `size`. |
-
-Also accepts native `div` attributes (`className`, `children`, `style`).
-
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "Field size tier (affects label and messages)." }
+    ]}
+  />
+</div>
 ### FieldLabel
 
-Same props as [Label](/components/label/). `size` defaults from the nearest Field.
+Label element for the field. Accepts `size` prop (defaults from Field context).
 
 ### FieldRequired
 
-Same as `LabelRequired` — decorative `*` (`aria-hidden`).
+Visual required indicator (asterisk).
 
 ### FieldHint
 
-| Prop | Default | Type |
-|------|---------|------|
-| `children` | — | `ReactNode` — Helper copy under the control. |
+Helper text below the input.
 
 ### FieldError
 
-| Prop | Default | Type |
-|------|---------|------|
-| `children` | — | `ReactNode` — Validation message. Renders with `role="alert"`. |
+Error message below the input.
+

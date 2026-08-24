@@ -1,57 +1,57 @@
 ---
-title: Avatars
-description: Face, initials, or icon for a person or entity — alone or in a group.
+title: Avatar Group
+description: Grouped avatars for team/user lists.
 ---
 
+import { PropSpec } from "../../../docs-ui";
+
 import AvatarsPreview from "../../../components/AvatarsPreview";
-import AvatarStatusPreview from "../../../components/AvatarStatusPreview";
 
-# Avatars
+# Avatar Group
 
-Avatar shows a person or entity as a photo, initials, or icon. Use it next to a name, in a comment row, or stacked when several people share a space.
+Grouped avatars for team/user lists.
 
-`AvatarGroup` lays avatars in an overlap stack or a spaced row. Presence is an optional badge — online, away, unavailable, or offline. For a named chip with a leading photo, use **[Tag](/components/tag/)** instead.
-
-<div class="not-content">
+<div class="not-content my-6">
   <AvatarsPreview client:load />
 </div>
 
-## Interface
+## Installation
 
-### Avatar
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `src` | — | `string` \| `null` — Image URL. `AvatarImage` `src` wins when that slot is present. |
-| `alt` | `""` | `string` — Accessible name and source for generated initials. |
-| `size` | `"md"` | `"3xs"` \| `"2xs"` \| `"xs"` \| `"sm"` \| `"md"` \| `"lg"` \| `"xl"` \| `"2xl"` \| `"3xl"` — Shell diameter. |
-| `color` | `"neutral"` | `"neutral"` \| `"blue"` \| `"green"` \| `"lime"` \| `"magenta"` \| `"orange"` \| `"purple"` \| `"red"` \| `"teal"` \| `"yellow"` — Shell color. Image layout stays neutral. |
-| `layout` | — | `"image"` \| `"icon"` \| `"initials"` — Forced layout. When omitted, inferred from slots and `src`. |
-| `showStatus` | `false` | `boolean` — Renders a status badge unless `AvatarBadge` is already a child. |
-| `status` | `"online"` | `"online"` \| `"away"` \| `"unavailable"` \| `"offline"` — Presence when `showStatus` is set. |
-| `innerClassName` | — | `string` — Class names for the inner circular shell. The outer wrapper uses `className`. |
+## Usage
 
-Also accepts native `div` attributes (`className`, `style`, `aria-*`).
+```tsx
+import { Avatars } from "@refineui/react";
 
-### AvatarGroup
+<Avatars
+  avatars={[
+    { src: "/user1.jpg", alt: "User 1" },
+    { src: "/user2.jpg", alt: "User 2" },
+    { src: "/user3.jpg", alt: "User 3" }
+  ]}
+/>
 
-| Prop | Default | Type |
-|------|---------|------|
-| `size` | `"md"` | Same as `Avatar` `size` — Overlap and spacing tier for children. |
-| `layout` | `"stack"` | `"stack"` \| `"spread"` — Overlapping row versus spaced row. |
+<Avatars
+  avatars={teamMembers}
+  size="lg"
+  max={3}
+  layout="spread"
+/>
+```
 
-### AvatarBadge
+## API Reference
 
-| Prop | Default | Type |
-|------|---------|------|
-| `status` | `"online"` | `"online"` \| `"away"` \| `"unavailable"` \| `"offline"` — Presence graphic. |
-
-### Parts
-
-| Part | Role |
-|------|------|
-| `AvatarImage` | Image slot (`src`, `alt`). Rendered by Avatar, not as a standalone `img`. |
-| `AvatarFallback` | Custom fallback when you need more than initials or the default icon. |
-| `AvatarIcon` | System icon in the shell. Omit `size` to use the slot size for that tier. |
-| `AvatarText` | Initials (or other short text) in the shell. |
-| `AvatarGroupCount` | Overflow chip in a group (`+2`). |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "avatars", default: "—", type: "AvatarItem[]", description: "Array of avatar items (required). Each item has `src?`, `alt` properties." },
+    { prop: "size", default: "\"md\"", type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"", description: "Avatar size tier." },
+    { prop: "max", default: "—", type: "number", description: "Maximum avatars to display before showing count." },
+    { prop: "layout", default: "\"stack\"", type: "\"stack\" | \"spread\"", description: "Layout style: stacked or spread apart." }
+    ]}
+  />
+</div>

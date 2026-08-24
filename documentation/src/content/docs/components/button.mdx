@@ -3,27 +3,8 @@ title: Button
 description: Starts an action — save, continue, open a panel, or close a dialog.
 ---
 
-import ButtonPreview from "../../../components/ButtonPreview";
-
-# Button
-
-Button is a clickable action — the main work on a screen, a supporting choice beside it, or a quiet text-level control in a toolbar.
+import ButtonDocs from "../../../components/ButtonDocs";
 
 <div class="not-content">
-  <ButtonPreview client:load />
+  <ButtonDocs client:load />
 </div>
-
-## Interface
-
-### Button
-
-| Prop | Default | Type |
-|------|---------|------|
-| `variant` | `"primary"` | `"primary"` \| `"secondary"` \| `"outline"` \| `"ghost"` — Visual style. Primary is the main action; ghost is text-level. |
-| `size` | `"md"` | `"sm"` \| `"md"` \| `"lg"` — Control height, padding, and type. With `layout="icon"`, the hit area is square. |
-| `layout` | `"label"` | `"label"` \| `"icon"` — Text (optional icons) vs icon-only. |
-| `fullWidth` | `false` | `boolean` — Stretch to the parent width. |
-| `type` | `"button"` | `"button"` \| `"submit"` \| `"reset"` — Native button type. Defaults to `button` so forms are not submitted accidentally. |
-| `disabled` | — | `boolean` — Blocks activation. |
-
-Also accepts native `button` attributes (`onClick`, `aria-*`, `className`, `style`).

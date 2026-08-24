@@ -1,28 +1,49 @@
 ---
 title: Divider
-description: Horizontal line that separates sections, with optional text or an icon.
+description: Visual separator line between items.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import DividerPreview from "../../../components/DividerPreview";
 
 # Divider
 
-Divider is a horizontal separator. Use it to split stacked content — a form from a footer, or two blocks in a column — when spacing alone is not enough.
+Visual separator line between items.
 
-It is horizontal only. There is no vertical divider. For in-page section switching, use **[Tabs](/components/tabs/)**. For chat or list grouping, prefer layout gap or **[Bubble](/components/bubble/)** grouping instead of a line.
-
-<div class="not-content">
+<div class="not-content my-6">
   <DividerPreview client:load />
 </div>
 
-## Interface
+## Installation
 
-### Divider
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `layout` | `"default"` | `"default"` \| `"content"` \| `"icon"` — Full-width line, labeled line, or line with a built-in circle. |
-| `align` | `"center"` | `"center"` \| `"left"` \| `"right"` — Horizontal placement for `content` and `icon`. Ignored on `default`. |
-| `children` | — | `ReactNode` — Required for `layout="content"`. The text in the line. Not used for `icon`. |
+## Usage
 
-Also accepts native `div` attributes (`className`, `style`, `aria-*`).
+```tsx
+import { Divider } from "@refineui/react";
+
+<Divider />
+
+<Divider layout="content" align="center">
+  Or continue with
+</Divider>
+
+<Divider layout="icon" align="left" />
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "layout", default: "\"default\"", type: "\"default\" | \"content\" | \"icon\"", description: "Divider layout style." },
+    { prop: "align", default: "\"center\"", type: "\"center\" | \"left\" | \"right\"", description: "Alignment of content/icon (when layout is not default)." },
+    { prop: "children", default: "—", type: "ReactNode", description: "Content to display (required when layout is \"content\")." }
+    ]}
+  />
+</div>

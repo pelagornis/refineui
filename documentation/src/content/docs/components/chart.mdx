@@ -1,80 +1,176 @@
 ---
 title: Chart
-description: Composable bar and line charts with hover, selection, and an optional tooltip.
+description: Data visualization chart primitive.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import ChartPreview from "../../../components/ChartPreview";
 
 # Chart
 
-Chart is a composable SVG chart for a single series of numbers. Use it when you need bars or a line in a card — monthly revenue, active users — and a title already explains the series.
+Data visualization chart primitive.
 
-Single-series charts do not need a legend; the card title is enough. Hover and click use `data-state` (`default` / `hover` / `selected`) plus an optional `ChartTooltip`. For tabular values the user must compare cell by cell, use **[Table](/components/table/)** instead.
-
-<div class="not-content">
+<div class="not-content my-6">
   <ChartPreview client:load />
 </div>
 
-## Interface
+## Installation
 
-### ChartBars
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `values` | — | `number[]` — Data points. Required. |
-| `max` | auto | `number` — Y scale maximum. Nice-rounded from `values` when omitted. |
-| `seriesColor` | `"brand"` | `"brand"` \| `"info"` \| `"success"` \| `"warning"` \| `"error"` \| `"discovery"` — Semantic series color. |
-| `showTrack` | `false` | `boolean` — Full-height track behind each bar. |
+## Usage
 
-### ChartLine
+```tsx
+import {
+  Chart,
+  ChartBody,
+  ChartContent,
+  ChartPlot,
+  ChartGrid,
+  ChartBars,
+  ChartLine,
+  ChartYAxisLabels,
+  ChartAxisLabels,
+  ChartLegend,
+  ChartLegendItem
+} from "@refineui/react";
 
-| Prop | Default | Type |
-|------|---------|------|
-| `values` | — | `number[]` — Data points. Required. |
-| `max` | auto | `number` — Y scale maximum. Nice-rounded from `values` when omitted. |
-| `seriesColor` | `"brand"` | `"brand"` \| `"info"` \| `"success"` \| `"warning"` \| `"error"` \| `"discovery"` — Semantic series color. |
-| `showArea` | `false` | `boolean` — Area fill under the line. |
-| `showPoints` | `false` | `boolean` — Point markers on each value. Hover still shows the active point when this is `false`. |
+const data = [45, 52, 38, 65, 42, 80, 55];
+const labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-### ChartGrid / ChartYAxisLabels
+<Chart>
+  <ChartBody>
+    <ChartContent>
+      <ChartYAxisLabels values={data} />
+      <ChartPlot aria-label="Weekly sales chart">
+        <ChartGrid values={data} />
+        <ChartBars values={data} seriesColor="blue" />
+      </ChartPlot>
+      <ChartAxisLabels labels={labels} />
+    </ChartContent>
+  </ChartBody>
+  <ChartLegend>
+    <ChartLegendItem seriesColor="blue">Sales</ChartLegendItem>
+  </ChartLegend>
+</Chart>
 
-| Prop | Default | Type |
-|------|---------|------|
-| `lines` | `5` | `number` — Tick / grid line count (includes the baseline). |
-| `values` | — | `number[]` — Derive a nice Y scale when `max` is omitted. |
-| `max` | auto | `number` — Fixed Y scale. |
+<Chart>
+  <ChartBody>
+    <ChartContent>
+      <ChartPlot>
+        <ChartGrid values={data} lines={5} />
+        <ChartLine values={data} seriesColor="green" showArea showPoints />
+      </ChartPlot>
+    </ChartContent>
+  </ChartBody>
+</Chart>
+```
 
-`ChartYAxisLabels` also accepts `formatTick?: (value: number) => string`.
+## API Reference
 
-### ChartAxisLabels
+### Chart
 
-| Prop | Default | Type |
-|------|---------|------|
-| `labels` | — | `string[]` — Category labels. Required. |
-| `align` | `"bar"` | `"bar"` \| `"line"` — Center on bar bands or line points. |
+Root chart container.
+
+### ChartBody
+
+Main chart body section.
+
+### ChartContent
+
+Chart content wrapper.
 
 ### ChartPlot
 
-| Prop | Default | Type |
-|------|---------|------|
-| `aria-label` | — | `string` — Accessible name for the chart graphic (`role="img"`). |
+SVG plot area.
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "aria-label", default: "—", type: "string", description: "Accessible name for the chart." }
+    ]}
+  />
+</div>
+### ChartGrid
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "lines", default: "5", type: "number", description: "Horizontal grid line count (includes baseline)." },
+    { prop: "max", default: "—", type: "number", description: "Y scale maximum (auto-derived from values when omitted)." },
+    { prop: "values", default: "—", type: "number[]", description: "Source values for scale derivation." }
+    ]}
+  />
+</div>
+### ChartBars
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "values", default: "—", type: "number[]", description: "Bar values (required)." },
+    { prop: "max", default: "—", type: "number", description: "Y scale maximum." },
+    { prop: "seriesColor", default: "—", type: "ChartSeriesColor", description: "Series color key." },
+    { prop: "showTrack", default: "false", type: "boolean", description: "Shows full-height track behind each bar." }
+    ]}
+  />
+</div>
+### ChartLine
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "values", default: "—", type: "number[]", description: "Line values (required)." },
+    { prop: "max", default: "—", type: "number", description: "Y scale maximum." },
+    { prop: "seriesColor", default: "—", type: "ChartSeriesColor", description: "Series color key." },
+    { prop: "showArea", default: "false", type: "boolean", description: "Area fill under the line." },
+    { prop: "showPoints", default: "false", type: "boolean", description: "Point markers on each value." }
+    ]}
+  />
+</div>
+### ChartYAxisLabels
+
+Y-axis tick labels.
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "values", default: "—", type: "number[]", description: "Source values for scale." },
+    { prop: "formatTick", default: "—", type: "(value: number) => string", description: "Custom formatter." }
+    ]}
+  />
+</div>
+### ChartAxisLabels
+
+X-axis labels.
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "labels", default: "—", type: "string[]", description: "Label strings (required)." },
+    { prop: "align", default: "\"bar\"", type: "\"bar\" | \"line\"", description: "Alignment style." }
+    ]}
+  />
+</div>
+### ChartLegend
+
+Legend list container.
 
 ### ChartLegendItem
 
-| Prop | Default | Type |
-|------|---------|------|
-| `seriesColor` | — | `"brand"` \| `"info"` \| `"success"` \| `"warning"` \| `"error"` \| `"discovery"` — Swatch color. Required. |
-
-### Parts
-
-| Part | Role |
-|------|------|
-| `Chart` | Root + hover / selected context. |
-| `ChartBody` | Y-axis + plot row. |
-| `ChartContent` | Plot + X-axis column. |
-| `ChartYAxisLabels` | Left Y-axis tick labels (`aria-hidden`). |
-| `ChartPlot` | Plot frame + SVG viewport. |
-| `ChartGrid` | Horizontal grid lines. |
-| `ChartTooltip` | Hover value. Place inside `ChartPlot`. |
-| `ChartLegend` | Optional list for multiple series. |
-| `ChartLegendItem` | One legend row + swatch. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "seriesColor", default: "—", type: "ChartSeriesColor", description: "Series color key (required)." }
+    ]}
+  />
+</div>

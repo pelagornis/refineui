@@ -1,21 +1,47 @@
 ---
 title: Typography
 description: Semantic text roles on top of Foundation heading, title, body, and caption styles.
-sidebar:
-  order: 3
 ---
 
+import { SpecTable } from "../../../docs-ui";
 import { TypographyPreview } from "../../../components/foundation/TypographyPreview";
 
 # Typography
 
-Use `Text` with a **semantic role** (`headingMd`, `bodyMd`, `labelSm`). Each role aliases a Foundation preset in `typographys`. Do not pass `fontSize` or a raw Foundation key (`body2`) into product UI.
+Use `Text` with a **semantic role** (`headingMd`, `bodyMd`, `labelSm`). Each role aliases a Foundation preset in `typographys`. Do not pass raw `fontSize` or Foundation keys like `body2` in product UI.
+
+## Roles
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="Typography roles"
+    columns={[
+      { key: "family", header: "Role family" },
+      { key: "examples", header: "Examples", mono: true },
+      { key: "use", header: "Typical use" },
+    ]}
+    rows={[
+      { family: "Display", examples: "displayLg, displayMd, displaySm", use: "Marketing / hero" },
+      { family: "Heading", examples: "headingLg, headingMd, headingSm", use: "Page and section titles" },
+      { family: "Title", examples: "titleLg, titleMd, titleSm", use: "Card / dialog titles" },
+      { family: "Subtitle", examples: "subtitleLg, subtitleMd", use: "Emphasized secondary lines" },
+      { family: "Body", examples: "bodyLg … bodyXs", use: "Reading text" },
+      { family: "Label", examples: "labelLg, labelMd, labelSm", use: "Form and menu labels" },
+      { family: "Caption", examples: "captionLg … captionSm", use: "Metadata and helpers" },
+    ]}
+  />
+</div>
 
 <div class="not-content">
   <TypographyPreview client:load />
 </div>
 
+## Usage
+
 ```tsx
+import { Text } from "@refineui/react";
+
 <Text variant="headingMd" as="h2">
   Section title
 </Text>

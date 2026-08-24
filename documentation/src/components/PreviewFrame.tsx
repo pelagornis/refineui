@@ -1,76 +1,7 @@
 import type { ReactNode } from "react";
-import { Stack, Text } from "@refineui/react";
+import { Look, Looks, LookGrid, Cluster } from "../docs-ui";
 
-type LookAlign = "center" | "start" | "stretch" | "fill";
-type LookTone = "sunken" | "surface" | "scrim";
-type LookSize = "hero" | "compact";
-type LookWidth = "default" | "wide";
-
-/** A visual specimen. Caption sits under the stage. */
-export function Look({
-    children,
-    caption,
-    align = "center",
-    tone = "sunken",
-    size = "hero",
-    width = "default",
-}: {
-    children: ReactNode;
-    caption?: string;
-    align?: LookAlign;
-    tone?: LookTone;
-    size?: LookSize;
-    /** stretch child max-width. `wide` uses foundationSize5750 for page bars. */
-    width?: LookWidth;
-}) {
-    return (
-        <Stack gap="sizeSmall" data-refineui-look className="w-full min-w-0">
-            <div
-                data-refineui-look-stage
-                data-align={align}
-                data-tone={tone}
-                data-size={size}
-                data-width={width === "wide" ? "wide" : undefined}
-            >
-                {children}
-            </div>
-            {caption ? (
-                <Text variant="captionMd" className="m-0 text-refineui-alias-foreground-secondary">
-                    {caption}
-                </Text>
-            ) : null}
-        </Stack>
-    );
-}
-
-/** Vertical stack of looks on a component page. */
-export function Looks({ children }: { children: ReactNode }) {
-    return (
-        <div data-refineui-looks className="w-full min-w-0">
-            {children}
-        </div>
-    );
-}
-
-/** Two-up gallery of looks. */
-export function LookGrid({ children }: { children: ReactNode }) {
-    return <div data-refineui-look-grid>{children}</div>;
-}
-
-/** Cluster of live controls inside a look. */
-export function Cluster({
-    children,
-    align = "center",
-}: {
-    children: ReactNode;
-    align?: "center" | "start" | "stretch";
-}) {
-    return (
-        <div data-refineui-cluster data-align={align}>
-            {children}
-        </div>
-    );
-}
+export { Look, Looks, LookGrid, Cluster };
 
 interface PreviewFrameProps {
     children: ReactNode;
@@ -87,7 +18,7 @@ export default function PreviewFrame({ children, title, variant }: PreviewFrameP
         <Look
             caption={title}
             align="stretch"
-            tone={variant === "dark" ? "scrim" : "sunken"}
+            tone={variant === "dark" ? "scrim" : "surface"}
             size="compact"
         >
             {children}

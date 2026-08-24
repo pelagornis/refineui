@@ -1,19 +1,39 @@
 ---
 title: Motion
-description: Duration, easing, scale, and distance roles for interaction — not raw milliseconds in components.
-sidebar:
-  order: 7
+description: Duration, easing, scale, and distance roles for interaction.
 ---
 
+import { SpecTable } from "../../../docs-ui";
 import { MotionPreview } from "../../../components/foundation/MotionPreview";
 
 # Motion
 
-Use **roles** (`fast`, `press`, `panel`) — CSS `--refineui-motion-duration-fast`, `--refineui-motion-scale-press`. Do not write `150ms` or a one-off curve in a component. `refineui.css` already covers control hover and focus.
+Use **semantic roles** (`fast`, `press`, `panel`) — CSS `--refineui-motion-duration-fast`, `--refineui-motion-scale-press`. Do not write `150ms` or a one-off curve in a component. `refineui.css` already covers control hover and focus.
+
+## Roles (summary)
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="Motion role summary"
+    columns={[
+      { key: "kind", header: "Kind" },
+      { key: "examples", header: "Examples", mono: true },
+    ]}
+    rows={[
+      { kind: "Duration", examples: "instant, fast, normal, medium, slow, overlay, panel" },
+      { kind: "Easing", examples: "standard, emphasized, panel, content, easeOut" },
+      { kind: "Scale", examples: "enter, press, hoverGrow" },
+      { kind: "Distance", examples: "float (4px)" },
+    ]}
+  />
+</div>
 
 <div class="not-content">
   <MotionPreview client:load />
 </div>
+
+## Usage
 
 ```css
 .control {

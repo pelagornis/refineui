@@ -1,39 +1,101 @@
 ---
 title: Carousel
-description: Horizontal slides with drag, with Previous, indicators, and Next below the stage.
+description: Image or card slider carousel.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import CarouselDemo from "../../../components/CarouselDemo";
 
 # Carousel
 
-Carousel is a horizontal slide stage. Use it when a few full-width panels should move as a sequence — product shots, onboarding cards — and the user can drag, swipe, or step through them.
+Image or card slider carousel.
 
-Nav never overlays the stage. Put Previous, Indicators, and Next inside `CarouselControls` under the content. For split panes the user resizes, use **[Resizable](/components/resizable/)**. For overflow without paging, use **[Scroll Area](/components/scroll-area/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <CarouselDemo client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselControls,
+  CarouselPrevious,
+  CarouselNext,
+  CarouselIndicators
+} from "@refineui/react";
+
+<Carousel>
+  <CarouselContent>
+    <CarouselItem>
+      <img src="/slide1.jpg" alt="Slide 1" />
+    </CarouselItem>
+    <CarouselItem>
+      <img src="/slide2.jpg" alt="Slide 2" />
+    </CarouselItem>
+    <CarouselItem>
+      <img src="/slide3.jpg" alt="Slide 3" />
+    </CarouselItem>
+  </CarouselContent>
+  <CarouselControls>
+    <CarouselPrevious />
+    <CarouselNext />
+  </CarouselControls>
+  <CarouselIndicators />
+</Carousel>
+
+<Carousel
+  index={currentIndex}
+  onIndexChange={setCurrentIndex}
+  loop
+/>
+```
+
+## API Reference
 
 ### Carousel
 
-| Prop | Default | Type |
-|------|---------|------|
-| `index` | — | `number` — Controlled slide index (0-based). |
-| `defaultIndex` | `0` | `number` — Uncontrolled start. |
-| `onIndexChange` | — | `(index: number) => void` — Called when the logical index changes. |
-| `loop` | `false` | `boolean` — Wrap from last to first and first to last. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "index", default: "—", type: "number", description: "Controlled slide index (0-based)." },
+    { prop: "defaultIndex", default: "0", type: "number", description: "Uncontrolled initial index." },
+    { prop: "onIndexChange", default: "—", type: "(index: number) => void", description: "Event handler when slide changes." },
+    { prop: "loop", default: "false", type: "boolean", description: "Wrap from last to first / first to last." }
+    ]}
+  />
+</div>
+### CarouselContent
 
-Also accepts native `div` attributes (`className`, `style`). The root is focusable.
+Slides container.
 
-### Parts
+### CarouselItem
 
-| Part | Role |
-|------|------|
-| `CarouselContent` | Stage + drag surface. |
-| `CarouselItem` | Full-width slide. |
-| `CarouselControls` | Bottom row for nav and the indicator. |
-| `CarouselPrevious` / `CarouselNext` | Outline icon `Button`s. Native `button` attributes; `disabled` also follows the ends when `loop` is off. |
-| `CarouselIndicators` | Sliding brand pill in a track. |
+Individual slide.
+
+### CarouselControls
+
+Container for navigation buttons.
+
+### CarouselPrevious
+
+Previous slide button.
+
+### CarouselNext
+
+Next slide button.
+
+### CarouselIndicators
+
+Dot indicators for slides.
+

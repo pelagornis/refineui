@@ -1,56 +1,87 @@
 ---
 title: Resizable
-description: Drag- and keyboard-resizable panel groups for split layouts.
+description: Split panel layout with drag handles.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import ResizableDemo from "../../../components/ResizableDemo";
 
 # Resizable
 
-Resizable is a group of panels the user can drag or resize with the keyboard. Use it for split layouts — sidebar and main, or a nested editor with a preview — when the user should own the widths and heights.
+Split panel layout with drag handles.
 
-Each panel is a slot. Place `ResizableHandle` between adjacent panels as siblings. For overflow inside a pane, compose **[Scroll Area](/components/scroll-area/)**. For a sliding slide stage, use **[Carousel](/components/carousel/)** instead.
-
-<div class="not-content">
+<div class="not-content my-6">
   <ResizableDemo client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@refineui/react";
+
+<ResizablePanelGroup orientation="horizontal">
+  <ResizablePanel defaultSize={50} minSize={30}>
+    Left panel
+  </ResizablePanel>
+  <ResizableHandle />
+  <ResizablePanel defaultSize={50} minSize={30}>
+    Right panel
+  </ResizablePanel>
+</ResizablePanelGroup>
+
+<ResizablePanelGroup orientation="vertical" onLayout={(sizes) => console.log(sizes)}>
+  <ResizablePanel size={topPanelSize} onResize={setTopPanelSize}>
+    Top
+  </ResizablePanel>
+  <ResizableHandle withHandle />
+  <ResizablePanel>
+    Bottom
+  </ResizablePanel>
+</ResizablePanelGroup>
+```
+
+## API Reference
 
 ### ResizablePanelGroup
 
-| Prop | Default | Type |
-|------|---------|------|
-| `orientation` | `"horizontal"` | `"horizontal"` \| `"vertical"` — Layout axis. |
-| `onLayout` | — | `(sizes: number[]) => void` — Panel sizes (%) after a resize settles. |
-
-Also accepts native `div` attributes (`className`, `style`).
-
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "orientation", default: "\"horizontal\"", type: "\"horizontal\" | \"vertical\"", description: "Split direction." },
+    { prop: "onLayout", default: "—", type: "(sizes: number[]) => void", description: "Fires after resize with panel sizes (percentages summing to ~100)." }
+    ]}
+  />
+</div>
 ### ResizablePanel
 
-| Prop | Default | Type |
-|------|---------|------|
-| `defaultSize` | `50` | `number` — Initial size (%). |
-| `minSize` | `10` | `number` — Minimum size (%). |
-| `maxSize` | `100` | `number` — Maximum size (%). |
-| `size` | — | `number` — Controlled size (%). |
-| `onResize` | — | `(size: number) => void` — Fires while resizing. |
-
-Also accepts native `div` attributes.
-
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "defaultSize", default: "50", type: "number", description: "Initial size as percentage." },
+    { prop: "minSize", default: "10", type: "number", description: "Minimum size percentage." },
+    { prop: "maxSize", default: "100", type: "number", description: "Maximum size percentage." },
+    { prop: "size", default: "—", type: "number", description: "Controlled size percentage." },
+    { prop: "onResize", default: "—", type: "(size: number) => void", description: "Event handler when panel resizes." }
+    ]}
+  />
+</div>
 ### ResizableHandle
 
-| Prop | Default | Type |
-|------|---------|------|
-| `withHandle` | `false` | `boolean` — Show a short center bar on the separator. |
-| `disabled` | `false` | `boolean` — Disable drag and keyboard. |
-
-Also accepts native `div` attributes.
-
-### Parts
-
-| Part | Role |
-|------|------|
-| `ResizablePanelGroup` | Flex container; owns size state. |
-| `ResizablePanel` | Flexible pane (`flex-grow` from size %). |
-| `ResizableHandle` | Focusable separator between adjacent panels. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "withHandle", default: "false", type: "boolean", description: "Shows grip affordance on separator." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables resizing." }
+    ]}
+  />
+</div>

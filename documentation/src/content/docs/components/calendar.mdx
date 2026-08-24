@@ -1,33 +1,60 @@
 ---
 title: Calendar
-description: Month grid for picking a date or a date range.
+description: Date picker calendar grid component.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import CalendarPreview from "../../../components/CalendarPreview";
 
 # Calendar
 
-Calendar is a month grid for picking dates. Use it when the user chooses a day, or a start and end, from a visible calendar — booking, filters, or a date field overlay.
+Date picker calendar grid component.
 
-Single mode takes one `Date`. Range mode takes a start and an end. For typing a date without a grid, use **[Input](/components/input/)** (or a date field you compose). Calendar is not a date-time picker.
-
-<div class="not-content">
+<div class="not-content my-6">
   <CalendarPreview client:load />
 </div>
 
-## Interface
+## Installation
 
-### Calendar
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `mode` | `"single"` | `"single"` \| `"range"` — One day, or a start and end. |
-| `value` | — | `Date` — Selected day in single mode. |
-| `onChange` | — | `(date: Date) => void` — Called when a day is picked in single mode. |
-| `rangeStart` | — | `Date` — Range start. |
-| `rangeEnd` | — | `Date` — Range end. |
-| `onRangeChange` | — | `(start: Date \| undefined, end: Date \| undefined) => void` — Called as the range is built. Either end may be `undefined` while the user is still picking. |
-| `weekStartsOn` | `0` | `0` \| `1` — `0` is Sunday; `1` is Monday. |
-| `defaultMonth` | — | `Date` — Initial visible month when no `value` or `rangeStart` is set. |
+## Usage
 
-Also accepts native `div` attributes (`className`, `style`).
+```tsx
+import { Calendar } from "@refineui/react";
+
+<Calendar value={selectedDate} onChange={setSelectedDate} />
+
+<Calendar
+  mode="range"
+  rangeStart={startDate}
+  rangeEnd={endDate}
+  onRangeChange={(start, end) => {
+    setStartDate(start);
+    setEndDate(end);
+  }}
+/>
+
+<Calendar weekStartsOn={1} defaultMonth={new Date(2024, 0)} />
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "mode", default: "\"single\"", type: "\"single\" | \"range\"", description: "Selection mode." },
+    { prop: "value", default: "—", type: "Date", description: "Controlled selected date (single mode)." },
+    { prop: "onChange", default: "—", type: "(date: Date) => void", description: "Event handler when date changes (single mode)." },
+    { prop: "rangeStart", default: "—", type: "Date", description: "Controlled range start date (range mode)." },
+    { prop: "rangeEnd", default: "—", type: "Date", description: "Controlled range end date (range mode)." },
+    { prop: "onRangeChange", default: "—", type: "(start?: Date, end?: Date) => void", description: "Event handler when range changes (range mode)." },
+    { prop: "weekStartsOn", default: "0", type: "0 | 1", description: "First day of week: 0 (Sunday) or 1 (Monday)." },
+    { prop: "defaultMonth", default: "—", type: "Date", description: "Initially displayed month." }
+    ]}
+  />
+</div>

@@ -1,39 +1,99 @@
 ---
 title: Table
-description: Semantic data table — header, body, and footer you compose yourself.
+description: Data grid table for structured records.
 ---
 
 import TablePreview from "../../../components/TablePreview";
 
 # Table
 
-Table is a dense semantic table for rows of related data — invoices, members, logs. Use it when columns have meaning and the user may scan, compare, or select a row.
+Data grid table for structured records.
 
-Each part maps to a native table slot. There is no `columns` or `rows` convenience API. Wrap the table in **[Card](/components/card/)** when you need a bordered panel. For a long body, wrap it in **[Scroll Area](/components/scroll-area/)**; horizontal overflow is already built into `Table`.
-
-<div class="not-content">
+<div class="not-content my-6">
   <TablePreview client:load />
 </div>
 
-## Interface
+## Installation
 
-All parts extend the matching native HTML attributes (`TableHTMLAttributes`, `ThHTMLAttributes`, `TdHTMLAttributes`, and so on) plus optional `className`.
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableCaption
+} from "@refineui/react";
+
+<Table>
+  <TableCaption>Product inventory</TableCaption>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Product</TableHead>
+      <TableHead>Price</TableHead>
+      <TableHead>Stock</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>Widget A</TableCell>
+      <TableCell>$19.99</TableCell>
+      <TableCell>52</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Widget B</TableCell>
+      <TableCell>$29.99</TableCell>
+      <TableCell>12</TableCell>
+    </TableRow>
+  </TableBody>
+  <TableFooter>
+    <TableRow>
+      <TableCell colSpan={2}>Total Items</TableCell>
+      <TableCell>64</TableCell>
+    </TableRow>
+  </TableFooter>
+</Table>
+```
+
+## API Reference
+
+### Table
+
+Root table element.
+
+### TableHeader
+
+Table header section (`<thead>`).
+
+### TableBody
+
+Table body section (`<tbody>`).
+
+### TableFooter
+
+Table footer section (`<tfoot>`).
+
+### TableRow
+
+Table row (`<tr>`).
 
 ### TableHead
 
-| Prop | Default | Type |
-|------|---------|------|
-| `scope` | `"col"` | `ThHTMLAttributes["scope"]` — Column header by default. Pass `"row"` for a row header. |
+Header cell (`<th>`).
 
-### Parts
+### TableCell
 
-| Part | Renders | Role |
-|------|---------|------|
-| `Table` | `<div>` + `<table>` | Padded scroll shell. `forwardRef` on `<table>`. |
-| `TableHeader` | `<thead>` | Header strip. |
-| `TableBody` | `<tbody>` | Body rows — hover / selected chips. |
-| `TableFooter` | `<tfoot>` | Footer strip. |
-| `TableRow` | `<tr>` | Row. Set `data-state="selected"` to select. |
-| `TableHead` | `<th>` | Header cell. |
-| `TableCell` | `<td>` | Body or footer cell. |
-| `TableCaption` | `<caption>` | Accessible caption. |
+Data cell (`<td>`).
+
+### TableCaption
+
+Table caption for accessibility.
+

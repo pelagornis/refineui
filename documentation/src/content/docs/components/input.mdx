@@ -1,30 +1,54 @@
 ---
 title: Input
-description: Single-line text field for names, emails, passwords, and short values.
+description: Text input for single-line text entry.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import InputPreview from "../../../components/InputPreview";
 
 # Input
 
-Input is a single-line text field. Use it when the answer is a short string — an email, a name, a password, or a number.
+Text input for single-line text entry.
 
-Pair it with **[Label](/components/label/)** or wrap it in **[Field](/components/field/)** for a label, hint, and error message. For multi-line copy, use **[Textarea](/components/textarea/)**. For a query with an icon and clear, use **[Search Field](/components/search-field/)**. For a bounded integer with steppers, use **[SpinButton](/components/spin-button/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <InputPreview client:load />
 </div>
 
-## Interface
+## Installation
 
-### Input
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `size` | `"lg"` | `"sm"` \| `"md"` \| `"lg"` — Height, padding, radius, and type. Not the HTML `size` attribute. Inherits from [Field](/components/field/) when wrapped and `size` is omitted. |
-| `error` | `false` | `boolean` — Error border. Also sets `aria-invalid`. |
-| `success` | `false` | `boolean` — Success border. |
-| `fullWidth` | `false` | `boolean` — Stretch to the parent width. |
-| `disabled` | — | `boolean` — Disabled background and border. |
+## Usage
 
-Also accepts native `input` attributes (`type`, `value`, `onChange`, `name`, `id`, `placeholder`, `autoComplete`, `aria-*`, `className`).
+```tsx
+import { Input } from "@refineui/react";
+
+<Input placeholder="Enter your name" />
+
+<Input
+  size="lg"
+  error={hasError}
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+/>
+
+<Input fullWidth placeholder="Full width input" />
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "Input size tier." },
+    { prop: "error", default: "false", type: "boolean", description: "Shows error state styling." },
+    { prop: "success", default: "false", type: "boolean", description: "Shows success state styling." },
+    { prop: "fullWidth", default: "false", type: "boolean", description: "Stretches to full parent width." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables interaction." }
+    ]}
+  />
+</div>

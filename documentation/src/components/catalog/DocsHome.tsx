@@ -1,58 +1,61 @@
-import { Badge, Box, Button, Grid, Input, Stack, Text } from "@refineui/react";
-import { DemoBlock } from "../layout/DemoBlock";
-import { CatalogCard, CatalogGrid } from "./CatalogCard";
-import ComponentCatalog from "./ComponentCatalog";
+import { Link, Stack, Text } from "@refineui/react";
+
+const GATES = [
+    {
+        href: "/foundations/",
+        title: "Foundations",
+        description: "Tokens, type, space, motion — demonstrated live.",
+    },
+    {
+        href: "/components/",
+        title: "Components",
+        description: "Product components with preview, controls, and specs.",
+    },
+    {
+        href: "/development/",
+        title: "Development",
+        description: "Install, theme, and motion in code.",
+    },
+] as const;
 
 export default function DocsHome() {
     return (
-        <Stack gap="sizeXXXLarge" data-refineui-home>
-            <CatalogGrid>
-                <CatalogCard
-                    href="/foundations/"
-                    name="Foundations"
-                    preview={
-                        <Grid columns={4} gap="sizeXSmall">
-                            <Box background="backgroundBrand" radius="roundedSmall" className="size-refineui-foundation-size-400" />
-                            <Box background="backgroundInfo" radius="roundedSmall" className="size-refineui-foundation-size-400" />
-                            <Box background="backgroundSuccess" radius="roundedSmall" className="size-refineui-foundation-size-400" />
-                            <Box background="backgroundError" radius="roundedSmall" className="size-refineui-foundation-size-400" />
-                        </Grid>
-                    }
-                />
-                <CatalogCard
-                    href="/components/"
-                    name="Components"
-                    preview={
-                        <Stack direction="row" gap="sizeSmall" align="center">
-                            <Button type="button" variant="primary">
-                                Primary
-                            </Button>
-                            <Badge variant="success">Ready</Badge>
-                        </Stack>
-                    }
-                />
-                <CatalogCard
-                    href="/layout/"
-                    name="Layout"
-                    preview={
-                        <Stack gap="sizeSmall" className="w-full">
-                            <DemoBlock tone={0}>Stack</DemoBlock>
-                            <DemoBlock tone={1}>Grid</DemoBlock>
-                        </Stack>
-                    }
-                />
-                <CatalogCard
-                    href="/intro/"
-                    name="Get started"
-                    preview={<Input placeholder="bun add @refineui/react" fullWidth />}
-                />
-            </CatalogGrid>
-            <Stack gap="sizeLarge">
-                <Text as="h2" variant="headingSm" className="m-0">
-                    Components
-                </Text>
-                <ComponentCatalog />
+        <div data-refineui-home>
+            <Stack gap="sizeXXXLarge" data-refineui-home-copy>
+                <Stack gap="sizeLarge">
+                    <Text as="h1" id="_top" variant="displayLg" data-refineui-home-title className="m-0">
+                        RefineUI
+                    </Text>
+                    <Text as="p" variant="bodyLg" data-refineui-home-lead className="m-0">
+                        Precise, compact documentation of the design system — rendered with the same
+                        packages as product.
+                    </Text>
+                </Stack>
+                <Stack direction="row" align="center" gap="sizeLarge" wrap>
+                    <a href="/development/installation/" data-refineui-home-cta="primary">
+                        <Text as="span" variant="labelMd" className="text-inherit">
+                            Install
+                        </Text>
+                    </a>
+                    <Link href="/components/button/">Browse Button</Link>
+                </Stack>
             </Stack>
-        </Stack>
+            <Stack gap="sizeNone" data-refineui-home-gates>
+                {GATES.map((gate) => (
+                    <a key={gate.href} href={gate.href} data-refineui-home-gate>
+                        <Text as="span" variant="subtitleMd" className="m-0 text-refineui-alias-foreground-primary">
+                            {gate.title}
+                        </Text>
+                        <Text
+                            as="span"
+                            variant="bodyMd"
+                            className="m-0 text-refineui-alias-foreground-secondary"
+                        >
+                            {gate.description}
+                        </Text>
+                    </a>
+                ))}
+            </Stack>
+        </div>
     );
 }

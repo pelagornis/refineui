@@ -1,19 +1,37 @@
 ---
 title: Z-index
 description: Stacking layers for content, overlays, popups, toasts, and debug.
-sidebar:
-  order: 9
 ---
 
+import { TokenSpec } from "../../../docs-ui";
 import { ZIndexPreview } from "../../../components/foundation/ZIndexPreview";
 
 # Z-index
+
+<div class="not-content">
+  <TokenSpec
+    client:load
+    columns="pair"
+    aria-label="Z-index tokens"
+    rows={[
+      { token: "zIndexBackground", role: "Behind content" },
+      { token: "zIndexContent", role: "Default content" },
+      { token: "zIndexOverlay", role: "Modal / drawer scrim and panels" },
+      { token: "zIndexPopup / zIndexFloating", role: "Menus, popovers" },
+      { token: "zIndexMessages", role: "Toasts" },
+      { token: "zIndexPriority", role: "Critical chrome" },
+      { token: "zIndexDebug", role: "Dev overlays" },
+    ]}
+  />
+</div>
 
 Modal and drawer → `overlay`. Menu and popover → `popup`. Toast → `messages`. Do not invent `z-index: 9999`.
 
 <div class="not-content">
   <ZIndexPreview client:load />
 </div>
+
+## Usage
 
 ```css
 .menu {

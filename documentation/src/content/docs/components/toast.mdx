@@ -1,54 +1,85 @@
 ---
 title: Toast
-description: Transient feedback cards stacked in a viewport.
+description: Transient notification message overlay.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import ToastPreview from "../../../components/ToastPreview";
 
 # Toast
 
-Toast is a short feedback card. Use it after an action succeeds, fails, or needs a brief undo — not for page-level status that should stay in the layout.
+Transient notification message overlay.
 
-Mount **`<Toaster />`** once. Call **`toast()`** to push a card. For inline, persistent notices, use **[Alert](/components/alert/)**. For a blocking error the user must acknowledge, use **[Dialog](/components/dialog/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <ToastPreview client:load />
 </div>
 
-## Interface
+## Installation
 
-### `toast(title, options?)`
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `title` | — | `ReactNode` — First argument. Card title. |
-| `description` | — | `ReactNode` — Supporting text (`Toast` `message`). |
-| `variant` | `"default"` | `"default"` \| `"success"` \| `"error"` \| `"warning"` — Accent and default icon. |
-| `iconName` | — | `string` — Web Icon name when `icon` is omitted. |
-| `icon` | — | `ReactNode` — Leading slot. Overrides `iconName` and the variant default. |
-| `action` | — | `ReactNode` or `{ label: string; onClick?: () => void; variant?: "primary" \| "secondary" }` — Trailing control. |
-| `duration` | `4200` | `number` — Milliseconds before auto-dismiss. |
+## Usage
 
-Returns a `string` id for `dismissToast`.
+```tsx
+import { Toast, Toaster, toast } from "@refineui/react";
 
-### Toaster
+// Add Toaster to your app root
+<Toaster position="bottom-right" maxToasts={3} />
 
-| Prop | Default | Type |
-|------|---------|------|
-| `position` | `"top-center"` | `"top-left"` \| `"top-center"` \| `"top-right"` \| `"bottom-left"` \| `"bottom-center"` \| `"bottom-right"` — Viewport corner or edge. |
-| `maxToasts` | `5` | `number` — Max concurrent cards. |
-| `className` | — | `string` — Extra class on the root `<ol>`. |
+// Show a toast
+toast("Settings saved successfully", {
+  variant: "success",
+  duration: 3000,
+});
+
+toast("Upload failed", {
+  variant: "error",
+  action: {
+    label: "Retry",
+    onClick: () => retryUpload(),
+  },
+});
+```
+
+## API Reference
 
 ### Toast
 
-| Prop | Default | Type |
-|------|---------|------|
-| `variant` | `"default"` | `"default"` \| `"success"` \| `"error"` \| `"warning"` — Same as `toast()` options. |
-| `title` | — | `ReactNode` — Title line. |
-| `message` | — | `ReactNode` — Supporting text. |
-| `iconName` | — | `string` — Icon name. Precedence: `icon` > `iconName` > variant default. |
-| `icon` | — | `ReactNode` — Leading slot. |
-| `action` | — | Same as `toast()` `action`. |
-| `stackState` | — | `"entering"` \| `"idle"` \| `"leaving"` — Set by `Toaster`. Do not set this yourself. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "variant", default: "\"default\"", type: "\"default\" | \"success\" | \"error\" | \"warning\"", description: "Toast visual variant." },
+    { prop: "title", default: "—", type: "ReactNode", description: "Toast title." },
+    { prop: "message", default: "—", type: "ReactNode", description: "Toast message/description." },
+    { prop: "icon", default: "—", type: "ReactNode", description: "Custom icon element." },
+    { prop: "iconName", default: "—", type: "string", description: "Icon name (when not using icon)." },
+    { prop: "action", default: "—", type: "ReactNode | ToastAction", description: "Action button or custom element." }
+    ]}
+  />
+</div>
+### Toaster
 
-Also accepts native `div` attributes (`className`, `style`).
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "maxToasts", default: "3", type: "number", description: "Maximum simultaneous toasts." },
+    { prop: "position", default: "\"bottom-right\"", type: "\"top-left\" | \"top-center\" | \"top-right\" | \"bottom-left\" | \"bottom-center\" | \"bottom-right\"", description: "Toast stack position." }
+    ]}
+  />
+</div>
+### toast(title, options)
+
+Function to show a toast programmatically.
+
+**Options:**
+- `description?: ReactNode` — Toast description
+- `variant?: ToastVariant` — Visual variant
+- `icon?: ReactNode` — Custom icon
+- `action?: ToastAction` — Action button
+- `duration?: number` — Duration in milliseconds (default 5000)
+

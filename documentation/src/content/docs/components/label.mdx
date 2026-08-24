@@ -1,36 +1,62 @@
 ---
 title: Label
-description: Names a form control so the user knows what to enter.
+description: Text label control for form fields.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import LabelPreview from "../../../components/LabelPreview";
 
 # Label
 
-Label is a styled native `<label>`. Use it to name an input, select, or other control, and to associate that name with the control via `htmlFor`.
+Text label control for form fields.
 
-`FieldLabel` and `FieldRequired` are the same atoms as `Label` and `LabelRequired`, so a standalone label and a [Field](/components/field/) shell stay in sync. For the full row (label, control, hint, error), prefer Field.
-
-<div class="not-content">
+<div class="not-content my-6">
   <LabelPreview client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { Label, LabelRequired } from "@refineui/react";
+
+<Label htmlFor="email">Email address</Label>
+
+<Label htmlFor="password" required>
+  Password
+</Label>
+
+<Label size="lg" disabled>
+  Disabled Label
+</Label>
+
+<Label htmlFor="name">
+  Name <LabelRequired />
+</Label>
+```
+
+## API Reference
 
 ### Label
 
-| Prop | Default | Type |
-|------|---------|------|
-| `size` | `"md"` | `"sm"` \| `"md"` \| `"lg"` — Label type scale. |
-| `disabled` | `false` | `boolean` — Disabled label color. |
-| `required` | `false` | `boolean` — Appends `LabelRequired`. Prefer composing `<LabelRequired />`. |
-
-Also accepts native `label` attributes (`htmlFor`, `children`, `className`).
-
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "required", default: "false", type: "boolean", description: "Convenience prop that appends LabelRequired." },
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "Label size tier." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Shows disabled styling." },
+    { prop: "htmlFor", default: "—", type: "string", description: "Associates label with form control." }
+    ]}
+  />
+</div>
 ### LabelRequired
 
-| Prop | Default | Type |
-|------|---------|------|
-| `children` | `"*"` | `ReactNode` — Decorative required mark (`aria-hidden`). Same atom as `FieldRequired`. |
+Visual required indicator (asterisk). Use when composing labels manually.
 
-Also accepts native `span` attributes (`className`).

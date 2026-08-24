@@ -1,33 +1,55 @@
 ---
 title: Tooltip
-description: Short helper text on hover or focus.
+description: Contextual text popup on hover or focus.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import TooltipDemo from "../../../components/TooltipDemo";
 
 # Tooltip
 
-Tooltip shows a short hint next to a control on hover or focus. Use it to name an icon-only button, echo a shortcut, or clarify a truncated label.
+Contextual text popup on hover or focus.
 
-It is not a place to put fields, links, or actions. For a click-opened panel, use **[Popover](/components/popover/)**. For a blocking explanation, use **[Dialog](/components/dialog/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <TooltipDemo client:load />
 </div>
 
-## Interface
+## Installation
 
-### Tooltip
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `trigger` | — | `ReactNode` — Target element. Required. |
-| `content` | — | `ReactNode` — Tooltip body. Required. |
-| `position` | `"Bottom"` | `"Top"` \| `"Bottom"` \| `"Left"` \| `"Right"` — Side of the trigger. |
-| `align` | `"Start"` | `"Start"` \| `"Center"` \| `"End"` — Alignment along that side. |
-| `delayMs` | `120` | `number` — Milliseconds before show. |
-| `open` | — | `boolean` — Controlled visibility. |
-| `defaultOpen` | `false` | `boolean` — Uncontrolled initial visibility. |
-| `onOpenChange` | — | `(open: boolean) => void` — Called when visibility changes. |
+## Usage
 
-Also accepts native `div` attributes (`className`, `style`).
+```tsx
+import { Tooltip } from "@refineui/react";
+
+<Tooltip trigger={<Button>Hover me</Button>} content="Helpful tooltip text" />
+
+<Tooltip
+  trigger={<IconButton icon="info" />}
+  content="Extended information"
+  position="Top"
+  align="Center"
+/>
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "trigger", default: "—", type: "ReactNode", description: "Element that triggers the tooltip (required)." },
+    { prop: "content", default: "—", type: "ReactNode", description: "Tooltip content (required)." },
+    { prop: "position", default: "\"Top\"", type: "\"Top\" | \"Left\" | \"Bottom\" | \"Right\"", description: "Position relative to trigger." },
+    { prop: "align", default: "\"Center\"", type: "\"Start\" | \"Center\" | \"End\"", description: "Alignment along the edge." },
+    { prop: "delayMs", default: "700", type: "number", description: "Delay before showing (milliseconds)." },
+    { prop: "open", default: "—", type: "boolean", description: "Controlled open state." },
+    { prop: "defaultOpen", default: "—", type: "boolean", description: "Uncontrolled initial open state." },
+    { prop: "onOpenChange", default: "—", type: "(open: boolean) => void", description: "Event handler when open state changes." }
+    ]}
+  />
+</div>

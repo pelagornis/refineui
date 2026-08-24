@@ -1,0 +1,21 @@
+---
+import { DocsPagination } from "./DocsPagination";
+import { DocsSiteFooter } from "./DocsSiteFooter";
+
+const { pagination } = Astro.locals.starlightRoute;
+const prev = pagination.prev
+    ? { label: pagination.prev.label, href: pagination.prev.href }
+    : undefined;
+const next = pagination.next
+    ? { label: pagination.next.label, href: pagination.next.href }
+    : undefined;
+---
+
+<div data-refineui-docs-end>
+    <footer data-refineui-docs-footer>
+        <DocsPagination prev={prev} next={next} />
+    </footer>
+    <div class="not-content">
+        <DocsSiteFooter />
+    </div>
+</div>

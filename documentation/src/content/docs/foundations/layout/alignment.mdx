@@ -1,0 +1,19 @@
+---
+title: Alignment
+description: Main-axis and cross-axis alignment for stacks and grids.
+---
+
+# Alignment
+
+Alignment controls how children sit along the main and cross axes. In React, `Stack` and `Grid` expose `align` and `justify` mapped to Foundation-friendly values (`start`, `center`, `end`, `between`, …).
+
+## Rules
+
+- Align labels and controls to a shared start edge in forms.
+- Center only when the block is intentionally focal (empty states, dialogs).
+- Prefer `between` for toolbars (title left, actions right) instead of manual `margin-left: auto` on every child.
+
+## Related
+
+- [Stack](/components/stack/)
+- [Grid](/components/grid/)

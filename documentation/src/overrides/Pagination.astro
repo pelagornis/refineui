@@ -1,0 +1,13 @@
+---
+import { DocsPagination } from "./DocsPagination";
+
+const { pagination } = Astro.locals.starlightRoute;
+const prev = pagination.prev
+    ? { label: pagination.prev.label, href: pagination.prev.href }
+    : undefined;
+const next = pagination.next
+    ? { label: pagination.next.label, href: pagination.next.href }
+    : undefined;
+---
+
+<DocsPagination prev={prev} next={next} />

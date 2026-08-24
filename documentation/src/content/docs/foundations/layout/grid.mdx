@@ -1,0 +1,25 @@
+---
+title: Grid
+description: Multi-column layout with equal columns or auto-fit min sizes.
+---
+
+# Grid
+
+Use a grid when content is two-dimensional (cards, dashboards, galleries). In React, use [`Grid`](/components/grid/) with `columns` or `minItem` (Foundation size) and spacing-token gaps.
+
+## When to use
+
+- Repeating cards or tiles
+- Form fields in two columns on desktop
+- Dense data that still needs aligned columns
+
+## Rules
+
+- Gaps come from spacing tokens (`gap="sizeLarge"`).
+- Prefer `minItem` auto-fit for fluid card grids; fixed `columns` when the count is intentional.
+- Collapse to a single column on small viewports (see [Responsive](/foundations/layout/responsive/)).
+
+## Related
+
+- [Grid component](/components/grid/)
+- [Stack](/components/stack/) for one-axis lists

@@ -1,46 +1,75 @@
 ---
 title: Input OTP
-description: One-time password — one digit per cell, not a single merged field.
+description: One-time password code input field.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import InputOTPDemo from "../../../components/InputOTPDemo";
 
 # Input OTP
 
-Input OTP is a row of separate soft cells — one character each. Use it for a verification code from email or SMS.
+One-time password code input field.
 
-It is not a merged Input. For a single-line secret, use **[Input](/components/input/)** with `type="password"`. Wrap the group in **[Field](/components/field/)** when you need a label or `FieldError`. When `size` is omitted inside Field, cells inherit Field’s size.
-
-<div class="not-content">
+<div class="not-content my-6">
   <InputOTPDemo client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { InputOTP, InputOTPSlot } from "@refineui/react";
+
+<InputOTP maxLength={6} value={code} onValueChange={setCode}>
+  <InputOTPSlot index={0} />
+  <InputOTPSlot index={1} />
+  <InputOTPSlot index={2} />
+  <InputOTPSlot index={3} />
+  <InputOTPSlot index={4} />
+  <InputOTPSlot index={5} />
+</InputOTP>
+
+<InputOTP
+  maxLength={4}
+  pattern={/\d/}
+  size="lg"
+  aria-label="Enter verification code"
+/>
+```
+
+## API Reference
 
 ### InputOTP
 
-| Prop | Default | Type |
-|------|---------|------|
-| `maxLength` | — | `number` — Slot count. Required. Must match rendered `InputOTPSlot` indices. |
-| `value` | — | `string` — Controlled OTP string. |
-| `defaultValue` | `""` | `string` — Uncontrolled initial value. |
-| `onValueChange` | — | `(value: string) => void` — Called when the filtered value changes. |
-| `size` | `"lg"` | `"sm"` \| `"md"` \| `"lg"` — Cell size and digit type. Inherits from [Field](/components/field/) when omitted. |
-| `disabled` | `false` | `boolean` — Disables every slot. |
-| `pattern` | `/\d/` | `RegExp` — Per-character allowlist. Characters that fail are dropped. |
-| `inputMode` | `"numeric"` | HTML `inputMode` — Mobile keyboard hint, applied to each slot. |
-| `autoComplete` | `"one-time-code"` | HTML `autoComplete` — Applied to the first slot. |
-| `autoFocus` | `false` | `boolean` — Focuses the first slot on mount. |
-| `name` | — | `string` — Base `name` for slots (`name-0`, `name-1`, …). |
-| `id` | — | `string` — Applied to the first slot; later slots append `-{index}`. |
-| `aria-label` | `"One-time password"` | `string` — Accessible name for the group. |
-
-Also accepts native `div` attributes except `onChange` and `defaultValue` (`className`, `style`).
-
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "Controlled OTP string." },
+    { prop: "defaultValue", default: "—", type: "string", description: "Uncontrolled initial value." },
+    { prop: "onValueChange", default: "—", type: "(value: string) => void", description: "Event handler when value changes." },
+    { prop: "maxLength", default: "—", type: "number", description: "Number of slots (required)." },
+    { prop: "pattern", default: "/\\d/", type: "RegExp", description: "Per-character allowlist (default: digits only)." },
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "Control size tier." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables interaction." },
+    { prop: "autoFocus", default: "false", type: "boolean", description: "Auto-focus on mount." },
+    { prop: "aria-label", default: "—", type: "string", description: "Accessible name for the control." }
+    ]}
+  />
+</div>
 ### InputOTPSlot
 
-| Prop | Default | Type |
-|------|---------|------|
-| `index` | — | `number` — Zero-based slot index. Required. |
-
-Also accepts native `input` attributes except `type`, `value`, `defaultValue`, `maxLength`, `disabled`, `size`, and `children`.
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "index", default: "—", type: "number", description: "Zero-based slot index (required)." }
+    ]}
+  />
+</div>

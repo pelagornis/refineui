@@ -1,0 +1,21 @@
+---
+title: Theming
+description: Light and dark surfaces from semantic color aliases.
+---
+
+# Theming
+
+RefineUI themes resolve through semantic aliases (`--refineui-color-alias-*`). Toggle dark by setting `data-theme="dark"` (and optionally `.dark`) on the document root — the same path documentation uses.
+
+```html
+<html data-theme="light">
+<html data-theme="dark" class="dark">
+```
+
+## Rules
+
+- Consume **aliases** in UI (`background-brand`, `foreground-primary`), not raw palette steps
+- Component sizes stay linked to Foundation size steps
+- Do not invent theme-specific hex in product CSS
+
+See [Color](/foundations/color/) for the visual token map.

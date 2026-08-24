@@ -1,27 +1,55 @@
 ---
 title: Link
-description: Text link for in-page or outbound navigation.
+description: Interactive text hyperlink control.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import LinkPreview from "../../../components/LinkPreview";
 
 # Link
 
-Link is a styled `<a>` for navigation. Use it in running copy, breadcrumbs you compose yourself, or anywhere a URL is the primary action.
+Interactive text hyperlink control.
 
-For a control that looks like a button, use **[Button](/components/button/)**. For a trail of pages, prefer **[Breadcrumb](/components/breadcrumb/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <LinkPreview client:load />
 </div>
 
-## Interface
+## Installation
 
-### Link
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `showExternalIcon` | auto for `target="_blank"` | `boolean` — Force the open icon on, or set `false` to hide it even for new windows. |
-| `disabled` | `false` | `boolean` — Marks the link non-interactive (`aria-disabled`, no pointer events). |
+## Usage
 
-Also accepts native `a` attributes (`href`, `target`, `rel`, `className`, `children`).
+```tsx
+import { Link } from "@refineui/react";
+
+<Link href="/docs">Documentation</Link>
+
+<Link href="https://example.com" target="_blank">
+  External Link
+</Link>
+
+<Link href="https://example.com" showExternalIcon={false}>
+  No Icon
+</Link>
+
+<Link href="/disabled" disabled>
+  Disabled Link
+</Link>
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "showExternalIcon", default: "—", type: "boolean", description: "When true, shows external-link icon. Shown automatically for `target=\"_blank\"`. Set false to hide." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables link (sets `aria-disabled` and blocks pointer events)." },
+    { prop: "href", default: "—", type: "string", description: "Link destination URL." }
+    ]}
+  />
+</div>

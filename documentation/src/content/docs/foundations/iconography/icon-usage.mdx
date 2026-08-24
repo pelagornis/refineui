@@ -1,0 +1,48 @@
+---
+title: Icon usage
+description: When to use icons, how to pair them with text, and accessibility baselines.
+---
+
+import { SpecTable } from "../../../../docs-ui";
+
+# Icon usage
+
+## When to use
+
+- Reinforce a label (search field leading icon, button with prefix glyph)
+- Icon-only actions in dense toolbars (must have an accessible name)
+- Status or affordance cues next to text (external link, chevron)
+
+## When not to use
+
+- As the only way to convey critical meaning without a text label
+- Decorative clutter next to every heading
+
+## Pairing
+
+- Keep a token gap between icon and label (`sizeXXSmall` / `sizeXSmall`).
+- Vertically center icons with the text line; do not offset with magic pixels.
+- In buttons, prefer the component’s `layout="icon"` for icon-only, or children with `WebIcon` for label + icon.
+
+## Accessibility
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="Icon accessibility"
+    columns={[
+      { key: "case", header: "Case" },
+      { key: "requirement", header: "Requirement", mono: true },
+    ]}
+    rows={[
+      { case: "Decorative", requirement: "aria-hidden" },
+      { case: "Icon-only control", requirement: "aria-label (or visible text via sr-only)" },
+      { case: "Status", requirement: "Do not rely on color alone; pair with text or badge label" },
+    ]}
+  />
+</div>
+
+## Related
+
+- [Icons](/foundations/iconography/icons/)
+- [Button](/components/button/)

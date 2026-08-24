@@ -1,47 +1,53 @@
 ---
 title: Stepper
-description: Multi-step progress with a numbered indicator, title, and description.
+description: Step list for multi-step flows with indicators and titles.
 ---
 
 import StepperDemo from "../../../components/StepperDemo";
 
 # Stepper
 
-Stepper shows progress across ordered stages with a numbered indicator, title, and description. Use it when each stage needs that extra context — account setup, long wizards, settings flows.
+`Stepper` tracks progress through ordered steps. Use it for wizards and onboarding. For linear progress alone, prefer [Progress](/components/progress/) or [ProgressStepper](/components/progress-stepper/).
 
-For a compact Progress track with markers on the rail (checkout headers, short wizards), use **[ProgressStepper](/components/progress-stepper/)** instead.
-
-<div class="not-content">
+<div class="not-content my-6">
   <StepperDemo client:load />
 </div>
 
-## Interface
+## Installation
 
-### Stepper
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `value` | — | `number` — Controlled active step. Match this to a `StepperItem` `value`. |
-| `defaultValue` | `0` | `number` — Uncontrolled initial step. |
-| `onValueChange` | — | `(value: number) => void` — Called when a step is activated. With this callback (or when uncontrolled), items are focusable and can be activated with click, Enter, or Space. |
-| `orientation` | `"horizontal"` | `"horizontal"` \| `"vertical"` — Layout axis. |
+## Usage
 
-Also accepts native `div` attributes (`className`, `style`, `aria-*`).
+```tsx
+import {
+  Stepper,
+  StepperList,
+  StepperItem,
+  StepperIndicator,
+  StepperTitle,
+  StepperDescription,
+  StepperSeparator,
+} from "@refineui/react";
 
-### StepperItem
+<Stepper value={step} onValueChange={setStep}>
+  <StepperList>
+    <StepperItem value={0}>
+      <StepperIndicator>1</StepperIndicator>
+      <StepperTitle>Account</StepperTitle>
+      <StepperDescription>Profile & email</StepperDescription>
+    </StepperItem>
+    <StepperSeparator />
+    <StepperItem value={1}>
+      <StepperIndicator>2</StepperIndicator>
+      <StepperTitle>Plan</StepperTitle>
+    </StepperItem>
+  </StepperList>
+</Stepper>
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `value` | — | `number` — Step identity. Required. Compared with the stepper `value` to resolve state. |
-| `disabled` | `false` | `boolean` — Blocks activation. The step still shows its visual state. |
+## Related
 
-### Parts
-
-| Part | Role |
-|------|------|
-| `StepperList` | Ordered list (`ol`). |
-| `StepperIndicator` | 32px circle. Render a number or icon as children. |
-| `StepperContent` | Title + description column. |
-| `StepperTitle` | Stage name. |
-| `StepperDescription` | Optional extra line. |
-| `StepperSeparator` | Connector between items. Turns brand after a `complete` peer. |
+- [Progress stepper](/components/progress-stepper/)

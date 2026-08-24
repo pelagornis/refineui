@@ -1,29 +1,54 @@
 ---
 title: Checkbox
-description: Turn an option on or off — independently of other choices in the group.
+description: Binary selection control for forms.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import CheckboxPreview from "../../../components/CheckboxPreview";
 
 # Checkbox
 
-Checkbox lets the user turn a single option on or off. Use it for agreements, preferences, and lists where more than one item can be selected.
+Binary selection control for forms.
 
-For a mutually exclusive set, use **[Radio](/components/radio/)**. For an immediate on/off with no label in the control itself, use **[Switch](/components/switch/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <CheckboxPreview client:load />
 </div>
 
-## Interface
+## Installation
 
-### Checkbox
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `variant` | `"default"` | `"default"` \| `"circular"` — Square vs circular control. |
-| `label` | — | `string` — Primary name beside the control. |
-| `description` | — | `string` — Supporting line under the label. |
-| `disabled` | — | `boolean` — Blocks interaction. |
+## Usage
 
-Also accepts native `input` attributes except `type` (`checked`, `defaultChecked`, `onChange`, `name`, `id`, `aria-*`, `className`).
+```tsx
+import { Checkbox } from "@refineui/react";
+
+<Checkbox label="Accept terms and conditions" />
+
+<Checkbox
+  label="Enable notifications"
+  description="Receive updates about your account"
+  checked={notificationsEnabled}
+  onChange={(e) => setNotificationsEnabled(e.target.checked)}
+/>
+
+<Checkbox variant="circular" label="Circular variant" />
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "label", default: "—", type: "string", description: "Checkbox label text." },
+    { prop: "description", default: "—", type: "string", description: "Optional description below the label." },
+    { prop: "variant", default: "\"default\"", type: "\"default\" | \"circular\"", description: "Visual variant style." },
+    { prop: "checked", default: "—", type: "boolean", description: "Controlled checked state." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables interaction." }
+    ]}
+  />
+</div>

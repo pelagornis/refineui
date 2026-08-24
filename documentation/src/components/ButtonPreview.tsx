@@ -1,10 +1,11 @@
 import { Button } from "@refineui/react";
-import { Cluster, Look, Looks } from "./PreviewFrame";
+import { Cluster, Look, Looks } from "../docs-ui";
 
+/** Compact catalog specimen — full docs live in ButtonDocs. */
 export default function ButtonPreview() {
     return (
         <Looks>
-            <Look>
+            <Look size="compact">
                 <Cluster>
                     <Button variant="primary">Primary</Button>
                     <Button variant="secondary">Secondary</Button>

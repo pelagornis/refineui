@@ -1,37 +1,59 @@
 ---
 title: Segmented Control
-description: Compact mutually exclusive choice on a pill track with a sliding indicator.
+description: Linear set of mutually exclusive options.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import SegmentedControlPreview from "../../../components/SegmentedControlPreview";
 
 # Segmented Control
 
-Segmented Control is a compact mutually exclusive choice. Use it when a few options sit on one pill track — Day / Week / Month, or Overview / Analytics — and you only need the selected value.
+Linear set of mutually exclusive options.
 
-The control reports selection. It does not own panels. For page or section panels with `tablist` / `tabpanel`, use **[Tabs](/components/tabs/)**. For site destinations with flyouts, use **[Navigation Menu](/components/navigation-menu/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <SegmentedControlPreview client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { SegmentedControl, SegmentedControlItem } from "@refineui/react";
+
+<SegmentedControl value={view} onValueChange={setView}>
+  <SegmentedControlItem value="grid">Grid</SegmentedControlItem>
+  <SegmentedControlItem value="list">List</SegmentedControlItem>
+</SegmentedControl>
+```
+
+## API Reference
 
 ### SegmentedControl
 
-| Prop | Default | Type |
-|------|---------|------|
-| `value` | — | `string` — Controlled selected value. Match this to a `SegmentedControlItem` `value`. |
-| `defaultValue` | `""` | `string` — Uncontrolled initial value. |
-| `onValueChange` | — | `(value: string) => void` — Called when selection changes. |
-
-Also accepts native `div` attributes (`aria-label`, `className`, `style`).
-
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "Controlled selected value." },
+    { prop: "defaultValue", default: "—", type: "string", description: "Uncontrolled initial value." },
+    { prop: "onValueChange", default: "—", type: "(value: string) => void", description: "Event handler when selection changes." }
+    ]}
+  />
+</div>
 ### SegmentedControlItem
 
-| Prop | Default | Type |
-|------|---------|------|
-| `value` | — | `string` — Option identity. Required. |
-| `disabled` | `false` | `boolean` — Blocks activation. The item still shows its visual state. |
-
-Also accepts native `button` attributes (`className`, `aria-*`). Children are the visible label.
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "Unique value for this option (required)." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables this option." }
+    ]}
+  />
+</div>

@@ -1,29 +1,38 @@
 ---
 title: Elevation
-description: Light and dark shadow recipes from Foundation — cards, popovers, and floating surfaces.
-sidebar:
-  order: 6
+description: Light and dark shadow recipes for cards, popovers, and floating surfaces.
 ---
 
+import { SpecTable } from "../../../docs-ui";
 import { ElevationPreview } from "../../../components/foundation/ElevationPreview";
 
 # Elevation
 
-Each step has two Foundation recipes: **Light** (`Elevation/Light/Shadow N`) and **Dark** (`Elevation/Dark/Shadow N`). CSS emits both, plus a theme-switching alias.
+Each step has two Foundation recipes: **Light** and **Dark**. CSS emits both, plus a theme-switching alias.
 
-| Use | CSS |
-|-----|-----|
-| Follows theme | `--refineui-elevation-8` |
-| Light only | `--refineui-elevation-8light` |
-| Dark only | `--refineui-elevation-8dark` |
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="Elevation CSS variables"
+    columns={[
+      { key: "use", header: "Use" },
+      { key: "css", header: "CSS", mono: true },
+    ]}
+    rows={[
+      { use: "Follows theme", css: "--refineui-elevation-8" },
+      { use: "Light only", css: "--refineui-elevation-8light" },
+      { use: "Dark only", css: "--refineui-elevation-8dark" },
+    ]}
+  />
+</div>
 
-Prefer the bare variable in product UI. Use `*light` / `*dark` when the surface must stay in one mode.
-
-Both recipes are `primaryBlack`. Light is 5% / 4% opacity; Dark is 20% / 15%. On a dark canvas that Dark halo disappears — the boards below sit on `surfaceSunken` so the ramp is readable. In product dark UI, lift also comes from `surfaceElevated` vs `backgroundPrimary`.
+Prefer the bare variable in product UI. Use `*light` / `*dark` when a surface must stay in one mode.
 
 <div class="not-content">
   <ElevationPreview client:load />
 </div>
+
+## Usage
 
 ```css
 .panel {

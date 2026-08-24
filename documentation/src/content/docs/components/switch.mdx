@@ -1,28 +1,49 @@
 ---
 title: Switch
-description: Instant on/off for a setting — on or off, nothing in between.
+description: Immediate toggle switch for settings.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import SwitchDemo from "../../../components/SwitchDemo";
 
 # Switch
 
-Switch is an on/off control. Use it for a single setting that takes effect immediately — notifications, dark mode, a feature flag.
+Immediate toggle switch for settings.
 
-`Toggle` is the same implementation (`data-refineui="switch"`). For a labeled option that can sit beside others, use **[Checkbox](/components/checkbox/)**. For a mutually exclusive set, use **[Radio](/components/radio/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <SwitchDemo client:load />
 </div>
 
-## Interface
+## Installation
 
-### Switch
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `checked` | `false` | `boolean` — On (`true`) or off (`false`). |
-| `onCheckedChange` | — | `(checked: boolean) => void` — Called with the next value when toggled. |
-| `disabled` | — | `boolean` — Blocks interaction and uses disabled track and thumb colors. |
+## Usage
 
-Sets `role="switch"` and `aria-checked`. Also accepts native `button` attributes except `children` (`aria-label`, `onClick`, `className`).
+```tsx
+import { Switch } from "@refineui/react";
+
+<Switch checked={isEnabled} onCheckedChange={setIsEnabled} />
+
+<Switch
+  checked={darkMode}
+  onCheckedChange={setDarkMode}
+  aria-label="Toggle dark mode"
+/>
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "checked", default: "—", type: "boolean", description: "Controlled checked state." },
+    { prop: "onCheckedChange", default: "—", type: "(checked: boolean) => void", description: "Event handler when checked state changes." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables interaction." }
+    ]}
+  />
+</div>

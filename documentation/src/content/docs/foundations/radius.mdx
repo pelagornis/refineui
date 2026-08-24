@@ -1,27 +1,43 @@
 ---
 title: Radius
-description: Corner radii and stroke widths from Foundation — use keys, not raw pixels.
-sidebar:
-  order: 5
+description: Corner radii from Foundation — use keys, not raw pixels.
 ---
 
-import { RadiusPreview, StrokePreview } from "../../../components/foundation/RadiusPreview";
+import { SpecTable } from "../../../docs-ui";
+import { RadiusPreview } from "../../../components/foundation/RadiusPreview";
 
 # Radius
 
-Corners and strokes are Foundation keys on Box (`radius`, `border`). `roundedCircle` is the pill. Default UI stroke is `strokeWidthThin`.
+Corners are Foundation keys (`roundedLarge`, `roundedXXLarge`). `roundedCircle` is the pill / full round.
 
-## Corners
+## Scale
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="Radius scale"
+    columns={[
+      { key: "token", header: "Token", mono: true },
+      { key: "value", header: "Value", mono: true },
+    ]}
+    rows={[
+      { token: "roundedNone", value: "0" },
+      { token: "roundedXSmall", value: "2px" },
+      { token: "roundedSmall", value: "4px" },
+      { token: "roundedMedium", value: "6px" },
+      { token: "roundedLarge", value: "8px" },
+      { token: "roundedXLarge", value: "12px" },
+      { token: "roundedXXLarge", value: "16px" },
+      { token: "roundedCircle", value: "9999px" },
+    ]}
+  />
+</div>
 
 <div class="not-content">
   <RadiusPreview client:load />
 </div>
 
-## Stroke
-
-<div class="not-content">
-  <StrokePreview client:load />
-</div>
+## Usage
 
 ```tsx
 <Box

@@ -3,7 +3,9 @@ import { componentTypographyTokens } from "../../tokens/componentTypographyToken
 import { componentTextClass } from "../../typography";
 
 /**
- * Site footer — sitemap, then OpenAI-like meta: social icons | lockup | locale pill.
+ * Site footer — sitemap, then meta: social | lockup | locale.
+ * Brand stays centered even when social / locale slots are omitted
+ * (`md:grid-cols-[1fr_auto_1fr]` + explicit column starts).
  */
 export const footerStyles = {
     root: clsx(
@@ -13,8 +15,11 @@ export const footerStyles = {
         "px-refineui-size-xx-large py-refineui-size-xxx-large",
     ),
     explore: "flex w-full flex-col",
-    /** One-line lockup — sits in the meta middle. */
-    brand: "flex min-w-0 flex-row flex-wrap items-center justify-center gap-refineui-size-small",
+    /** One-line lockup — always meta center column. */
+    brand: clsx(
+        "flex min-w-0 flex-row flex-wrap items-center justify-center gap-refineui-size-small",
+        "md:col-start-2 md:justify-self-center",
+    ),
     logo: "flex shrink-0 items-center text-refineui-alias-foreground-primary",
     brandName: clsx(
         componentTextClass(componentTypographyTokens.footer.brandName),
@@ -40,11 +45,11 @@ export const footerStyles = {
         "transition-[color] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",
     ),
     meta: clsx(
-        "flex w-full flex-col items-center",
-        "gap-refineui-size-xx-large",
-        "md:flex-row md:items-center md:justify-between md:gap-refineui-size-x-large",
+        "grid w-full items-center gap-refineui-size-xx-large",
+        "grid-cols-1 justify-items-center",
+        "md:grid-cols-[1fr_auto_1fr] md:justify-items-stretch md:gap-refineui-size-x-large",
     ),
-    metaEnd: "flex shrink-0 items-center",
+    metaEnd: "flex shrink-0 items-center md:col-start-3 md:justify-self-end",
     locale: "flex shrink-0 items-center",
     localeLink: clsx(
         componentTextClass(componentTypographyTokens.footer.copyright),
@@ -64,7 +69,10 @@ export const footerStyles = {
         componentTextClass(componentTypographyTokens.footer.copyright),
         "m-0 text-refineui-alias-foreground-primary",
     ),
-    social: "flex flex-wrap items-center justify-center gap-refineui-size-large md:justify-start",
+    social: clsx(
+        "flex flex-wrap items-center justify-center gap-refineui-size-large",
+        "md:col-start-1 md:justify-self-start md:justify-start",
+    ),
     socialLink: clsx(
         "box-border inline-flex size-refineui-foundation-size-160 shrink-0 cursor-pointer items-center justify-center",
         "text-refineui-alias-foreground-tertiary no-underline outline-none",

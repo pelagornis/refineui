@@ -1,40 +1,69 @@
 ---
 title: Search Field
-description: Type a query — leading icon, field, and clear when there is text.
+description: Input control tuned for query entry with clear action.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import SearchFieldPreview from "../../../components/SearchFieldPreview";
 
 # Search Field
 
-Search Field is a composable search control: a leading icon, a query input, and an optional clear button. Use it for filtering a list, a command palette row, or a page search.
+Input control tuned for query entry with clear action.
 
-It is not a validated text field — there is no error or success chrome. For that, use **[Input](/components/input/)** inside **[Field](/components/field/)**. The soft plate matches **[Input OTP](/components/input-otp/)** slots.
-
-<div class="not-content">
+<div class="not-content my-6">
   <SearchFieldPreview client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { SearchField, SearchFieldIcon, SearchFieldInput, SearchFieldClear } from "@refineui/react";
+
+<SearchField value={query} onValueChange={setQuery} />
+
+<SearchField
+  value={searchTerm}
+  onValueChange={setSearchTerm}
+  appearance="filled"
+  aria-label="Search products"
+/>
+
+<SearchField appearance="plain" defaultValue="initial query" />
+```
+
+## API Reference
 
 ### SearchField
 
-| Prop | Default | Type |
-|------|---------|------|
-| `value` | — | `string` — Controlled query. |
-| `defaultValue` | `""` | `string` — Uncontrolled initial query. |
-| `onValueChange` | — | `(value: string) => void` — Called when the query changes. |
-| `disabled` | `false` | `boolean` — Disables the input and clear. |
-| `appearance` | `"filled"` | `"filled"` \| `"plain"` — `filled` is a sunken control; `plain` is flush (for example Command). |
-| `id` | — | `string` — Applied to the inner input. |
-| `aria-label` | `"Search"` | `string` — Accessible name for the input. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "Controlled query string." },
+    { prop: "defaultValue", default: "—", type: "string", description: "Uncontrolled initial query." },
+    { prop: "onValueChange", default: "—", type: "(value: string) => void", description: "Event handler when query changes." },
+    { prop: "appearance", default: "\"filled\"", type: "\"filled\" | \"plain\"", description: "Visual style: filled (standalone) or plain (for composed surfaces)." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables interaction." },
+    { prop: "aria-label", default: "—", type: "string", description: "Accessible name for the search input." }
+    ]}
+  />
+</div>
+### SearchFieldIcon
 
-Also accepts native `div` attributes except `onChange` and `defaultValue` (`className`, `style`).
+Search icon slot (defaults to search glyph).
 
 ### SearchFieldInput
 
-Extends native `<input>` attributes except `type`, `value`, `defaultValue`, `size`, and `disabled` (those come from the root). Renders `type="search"`. `autoComplete` defaults to `"off"`; `enterKeyHint` defaults to `"search"`.
+Input element.
 
-### SearchFieldIcon / SearchFieldClear
+### SearchFieldClear
 
-Optional `children` replace the default search / dismiss glyphs. `SearchFieldClear` accepts native `button` attributes except `type` (`aria-label` defaults to `"Clear search"`).
+Clear button (defaults to dismiss glyph).
+

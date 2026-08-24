@@ -1,68 +1,125 @@
 ---
 title: Drawer
-description: Side panel for filters, navigation, or extra context without leaving the page.
+description: Slide-over panel overlay from screen edge.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import DrawerDemo from "../../../components/DrawerDemo";
 
 # Drawer
 
-Drawer is a panel that slides in from the left or right. Use it for filters, navigation, or a detail sheet that should stay beside the page instead of blocking the center.
+Slide-over panel overlay from screen edge.
 
-Overlay drawers portal to the body, show a scrim, trap focus, and lock scroll. Inline drawers render in flow with no scrim. For a centered modal, use **[Dialog](/components/dialog/)**. For a compact anchored panel, use **[Popover](/components/popover/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <DrawerDemo client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import {
+  Drawer,
+  DrawerTrigger,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerDescription,
+  DrawerBody,
+  DrawerFooter,
+  DrawerClose,
+  Button
+} from "@refineui/react";
+
+<Drawer>
+  <DrawerTrigger asChild>
+    <Button>Open Drawer</Button>
+  </DrawerTrigger>
+  <DrawerContent>
+    <DrawerHeader>
+      <DrawerTitle>Settings</DrawerTitle>
+      <DrawerDescription>Adjust your preferences</DrawerDescription>
+    </DrawerHeader>
+    <DrawerBody>
+      {/* Drawer content */}
+    </DrawerBody>
+    <DrawerFooter>
+      <DrawerClose>Close</DrawerClose>
+    </DrawerFooter>
+  </DrawerContent>
+</Drawer>
+
+<Drawer type="inline" placement="left" size="md" showFooter>
+  {/* Drawer content */}
+</Drawer>
+```
+
+## API Reference
 
 ### Drawer
 
-| Prop | Default | Type |
-|------|---------|------|
-| `open` | — | `boolean` — Controlled visibility. |
-| `defaultOpen` | `false` (overlay) / `true` (inline) | `boolean` — Uncontrolled initial open. Inline defaults to open when this is omitted. |
-| `onOpenChange` | — | `(open: boolean) => void` — Called when the drawer requests open or close. |
-| `type` | `"overlay"` | `"overlay"` \| `"inline"` — Overlay portals with a scrim; inline stays in flow. |
-| `showFooter` | `true` | `boolean` — When `false`, `DrawerFooter` renders nothing. |
-| `placement` | `"right"` | `"left"` \| `"right"` — Edge the panel is anchored to. |
-| `size` | `"sm"` | `"sm"` \| `"md"` \| `"lg"` — Panel width tokens. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "open", default: "—", type: "boolean", description: "Controlled open state." },
+    { prop: "defaultOpen", default: "—", type: "boolean", description: "Uncontrolled initial open state." },
+    { prop: "onOpenChange", default: "—", type: "(open: boolean) => void", description: "Event handler when open state changes." },
+    { prop: "type", default: "\"overlay\"", type: "\"overlay\" | \"inline\"", description: "Drawer display type." },
+    { prop: "placement", default: "\"right\"", type: "\"left\" | \"right\"", description: "Side of the screen." },
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "Drawer width." },
+    { prop: "showFooter", default: "false", type: "boolean", description: "Shows footer section." }
+    ]}
+  />
+</div>
+### DrawerTrigger
+
+Trigger element (usually a Button).
 
 ### DrawerContent
 
-| Prop | Default | Type |
-|------|---------|------|
-| `container` | `document.body` | `Element` \| `DocumentFragment` \| `null` — Portal root for overlay. |
-| `type` | from `Drawer` | `"overlay"` \| `"inline"` — Overrides the root type. |
-| `showFooter` | from `Drawer` | `boolean` — Overrides the root footer flag. |
-| `placement` | from `Drawer` | `"left"` \| `"right"` — Overrides the root placement. |
-| `size` | from `Drawer` | `"sm"` \| `"md"` \| `"lg"` — Overrides the root size. |
-
-Also accepts native `div` attributes (`className`, `style`, `aria-*`).
+Drawer panel container.
 
 ### DrawerHeader
 
-| Prop | Default | Type |
-|------|---------|------|
-| `showClose` | `true` | `boolean` — Renders `DrawerClose` in the header. |
-| `actions` | — | `ReactNode` — Optional trailing controls before the close button. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "showClose", default: "true", type: "boolean", description: "Shows the close button." },
+    { prop: "actions", default: "—", type: "ReactNode", description: "Additional header actions." }
+    ]}
+  />
+</div>
+### DrawerTitle
+
+Drawer heading element.
+
+### DrawerDescription
+
+Drawer description text.
+
+### DrawerBody
+
+Scrollable content area.
 
 ### DrawerFooter
 
-| Prop | Default | Type |
-|------|---------|------|
-| `state` | from child count | `"icons"` \| `"single"` \| `"split"` — Footer layout. Omitted: 1 child → `single`, 2 → `split`, else `icons`. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "state", default: "—", type: "\"icons\" | \"single\" | \"split\"", description: "Footer button layout." }
+    ]}
+  />
+</div>
+### DrawerClose
 
-### DrawerTrigger
+Close button.
 
-Same props as **[Button](/components/button/)**. Click opens the drawer unless `preventDefault()` is called.
-
-### Parts
-
-| Part | Role |
-|------|------|
-| `DrawerTitle` | `h2`, wired to `aria-labelledby`. |
-| `DrawerDescription` | `p`, wired to `aria-describedby`. |
-| `DrawerBody` | Scrollable main region. |
-| `DrawerClose` | Closes the drawer. No children: dismiss icon. Children: labeled button (`outline` / `md` by default). |

@@ -1,28 +1,45 @@
 ---
 title: Spinner
-description: Indicates that a process is in progress.
+description: Loading indicator spinner for async actions.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import SpinnerPreview from "../../../components/SpinnerPreview";
 
 # Spinner
 
-Spinner shows that work is happening and the duration is not known. Use it on a button, a panel, or a page while a request or job runs.
+Loading indicator spinner for async actions.
 
-For content that has a known layout but is not ready, use **[Skeleton](/components/skeleton/)**. For a known percent, use **[Progress](/components/progress/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <SpinnerPreview client:load />
 </div>
 
-## Interface
+## Installation
 
-### Spinner
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `size` | `"md"` | `"xs"` \| `"sm"` \| `"md"` \| `"lg"` \| `"xl"` \| `"xxl"` — Diameter and ring width. |
-| `label` | — | `ReactNode` — Visible status copy. When set, shown beside or around the ring. |
-| `labelPosition` | `"right"` | `"left"` \| `"right"` \| `"top"` \| `"bottom"` — Placement of `label` relative to the ring. |
+## Usage
 
-Also accepts native `div` attributes (`className`, `style`, `aria-*`). Children are not used.
+```tsx
+import { Spinner } from "@refineui/react";
+
+<Spinner size="md" />
+
+<Spinner size="lg" label="Loading..." labelPosition="right" />
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "size", default: "—", type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\"", description: "Spinner size tier." },
+    { prop: "label", default: "—", type: "ReactNode", description: "Optional label text or element." },
+    { prop: "labelPosition", default: "—", type: "\"left\" | \"right\" | \"top\" | \"bottom\"", description: "Position of the label relative to spinner." }
+    ]}
+  />
+</div>

@@ -1,51 +1,89 @@
 ---
 title: Tabs
-description: Switch between in-page panels under a shared underline bar.
+description: Organizes content into separate view panes.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import TabsPreview from "../../../components/TabsPreview";
 
 # Tabs
 
-Tabs switch views in the same page. Use them when each panel is equally important and the user should stay on one URL.
+Organizes content into separate view panes.
 
-The list is a `tablist` of `tab` buttons; each panel is a `tabpanel`. For a compact mutually exclusive choice that is not a page section, use **[Segmented Control](/components/segmented-control/)**. For site destinations and flyouts, use **[Navigation Menu](/components/navigation-menu/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <TabsPreview client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@refineui/react";
+
+<Tabs defaultValue="overview">
+  <TabsList>
+    <TabsTrigger value="overview">Overview</TabsTrigger>
+    <TabsTrigger value="analytics">Analytics</TabsTrigger>
+    <TabsTrigger value="settings">Settings</TabsTrigger>
+  </TabsList>
+  <TabsContent value="overview">
+    <p>Overview content</p>
+  </TabsContent>
+  <TabsContent value="analytics">
+    <p>Analytics content</p>
+  </TabsContent>
+  <TabsContent value="settings">
+    <p>Settings content</p>
+  </TabsContent>
+</Tabs>
+
+<Tabs value={activeTab} onValueChange={setActiveTab}>
+  {/* Controlled tabs */}
+</Tabs>
+```
+
+## API Reference
 
 ### Tabs
 
-| Prop | Default | Type |
-|------|---------|------|
-| `defaultValue` | `""` | `string` — Uncontrolled initial selected value. |
-| `value` | — | `string` — Controlled selected value. |
-| `onValueChange` | — | `(value: string) => void` — Called when selection changes. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "Controlled active tab value." },
+    { prop: "defaultValue", default: "—", type: "string", description: "Uncontrolled initial active tab." },
+    { prop: "onValueChange", default: "—", type: "(value: string) => void", description: "Event handler when active tab changes." }
+    ]}
+  />
+</div>
+### TabsList
 
-Also accepts native `div` attributes (`className`, `style`, `aria-*`).
+Container for tab triggers.
 
 ### TabsTrigger
 
-| Prop | Default | Type |
-|------|---------|------|
-| `value` | — | `string` — Tab identity. Required. Must match a `TabsContent` `value`. |
-| `disabled` | `false` | `boolean` — Removes the tab from keyboard selection. |
-
-`children` is required (the visible label). Also accepts native `button` attributes except `type`.
-
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "Tab identifier (required)." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables this tab." }
+    ]}
+  />
+</div>
 ### TabsContent
 
-| Prop | Default | Type |
-|------|---------|------|
-| `value` | — | `string` — Panel identity. Required. Shown when it matches the selected tab. |
-
-### Parts
-
-| Part | Role |
-|------|------|
-| `TabsList` | `tablist` and the sliding underline indicator. |
-| `TabsTrigger` | `tab` button. |
-| `TabsContent` | `tabpanel` for the matching value. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "Associated tab value (required)." }
+    ]}
+  />
+</div>

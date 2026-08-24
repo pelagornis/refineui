@@ -1,40 +1,99 @@
 ---
 title: Card
-description: Surface for grouped content — header, body, and footer in one block.
+description: Container grouping related information.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import CardPreview from "../../../components/CardPreview";
 
 # Card
 
-Card is a container for related content. Use it when a title, supporting copy, and actions should read as one unit — a login panel, a feature summary, or a selectable option.
+Container grouping related information.
 
-The root is only the shell. Compose **`CardHeader`**, **`CardContent`**, and **`CardFooter`** inside it. Padding lives on those slots; the root spaces them with gap.
-
-<div class="not-content">
+<div class="not-content my-6">
   <CardPreview client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import {
+  Card,
+  CardHeader,
+  CardHeaderMain,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+  CardAction
+} from "@refineui/react";
+
+<Card>
+  <CardHeader>
+    <CardTitle>Card Title</CardTitle>
+    <CardDescription>Card description goes here.</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p>Card body content</p>
+  </CardContent>
+  <CardFooter>
+    <Button>Action</Button>
+  </CardFooter>
+</Card>
+
+<Card variant="outlined" interactive state="hover">
+  <CardContent>
+    Interactive card with outlined variant
+  </CardContent>
+</Card>
+```
+
+## API Reference
 
 ### Card
 
-| Prop | Default | Type |
-|------|---------|------|
-| `variant` | `"elevated"` | `"elevated"` \| `"outlined"` — Shadowed surface versus bordered surface. |
-| `interactive` | `false` | `boolean` — Enables hover and pressed interaction chrome. |
-| `state` | `"default"` | `"default"` \| `"hover"` \| `"pressed"` \| `"disabled"` — Forced visual state. `disabled` sets `aria-disabled`. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "variant", default: "\"elevated\"", type: "\"elevated\" | \"outlined\"", description: "Visual variant style." },
+    { prop: "interactive", default: "false", type: "boolean", description: "Enables hover/press interactions." },
+    { prop: "state", default: "\"default\"", type: "\"default\" | \"hover\" | \"pressed\" | \"disabled\"", description: "Visual state." }
+    ]}
+  />
+</div>
+### CardHeader
 
-Also accepts native `div` attributes (`className`, `style`, `onClick`, `aria-*`).
+Header layout section.
 
-### Parts
+### CardHeaderMain
 
-| Part | Role |
-|------|------|
-| `CardHeader` | Top row: title block and optional action. |
-| `CardHeaderMain` | Title and description column. |
-| `CardTitle` | Heading (`h3`). |
-| `CardDescription` | Supporting copy (`p`). |
-| `CardAction` | Trailing slot in the header (menus, sign-up, overflow). |
-| `CardContent` | Main body. |
-| `CardFooter` | Actions row. |
+Main header content wrapper.
+
+### CardTitle
+
+Title heading element.
+
+### CardDescription
+
+Secondary description text.
+
+### CardContent
+
+Main card body content.
+
+### CardFooter
+
+Footer section (typically for actions).
+
+### CardAction
+
+Action button in header.
+

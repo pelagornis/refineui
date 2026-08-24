@@ -1,0 +1,34 @@
+---
+title: Motion in code
+description: Prefer CSS transitions on motion tokens; use a runtime only when required.
+---
+
+# Motion in code
+
+Motion is a first-class design-system primitive.
+
+## Prefer CSS transitions
+
+Micro-interactions (hover, press, focus color) use semantic roles:
+
+```css
+.control {
+  transition:
+    transform var(--refineui-motion-duration-fast)
+      var(--refineui-motion-easing-ease-out),
+    background-color var(--refineui-motion-duration-fast)
+      var(--refineui-motion-easing-ease-out);
+}
+
+.control:active {
+  transform: scale(var(--refineui-motion-scale-press));
+}
+```
+
+## Motion runtime
+
+Use a runtime **only** when you need layout animation, enter/exit, shared-element, spring, or sequenced choreography (Dialog, Drawer, Accordion). Resolve duration from `semanticInteraction` / `motionMsToNumber` — never hard-code `150ms`.
+
+## Reduced motion
+
+Honor `prefers-reduced-motion: reduce` — collapse transforms and non-essential animation. Foundation pages: [Motion](/foundations/motion/).

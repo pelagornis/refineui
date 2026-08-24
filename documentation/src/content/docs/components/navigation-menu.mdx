@@ -1,57 +1,109 @@
 ---
 title: Navigation Menu
-description: Horizontal site navigation with link triggers and dropdown panels.
+description: Top-level responsive header navigation menu.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import NavigationMenuPreview from "../../../components/NavigationMenuPreview";
 
 # Navigation Menu
 
-Navigation Menu is horizontal site or app navigation. Use it when top destinations need flyout panels — products, docs, pricing — and a few plain links sit next to them.
+Top-level responsive header navigation menu.
 
-Each item is a slot: a trigger plus content, or a top-level link. For actions and nested command lists, use **[Menu](/components/menu/)**. For a vertical app nav, use **[Sidebar](/components/sidebar/)**. For a path trail, use **[Breadcrumb](/components/breadcrumb/)**. For in-page section panels, use **[Tabs](/components/tabs/)**. For a compact mode switch, use **[Segmented Control](/components/segmented-control/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <NavigationMenuPreview client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
+  NavigationMenuLink
+} from "@refineui/react";
+
+<NavigationMenu>
+  <NavigationMenuList>
+    <NavigationMenuItem>
+      <NavigationMenuLink href="/" active>
+        Home
+      </NavigationMenuLink>
+    </NavigationMenuItem>
+    <NavigationMenuItem>
+      <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+      <NavigationMenuContent>
+        <NavigationMenuLink href="/products/web">Web</NavigationMenuLink>
+        <NavigationMenuLink href="/products/mobile">Mobile</NavigationMenuLink>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
+    <NavigationMenuItem>
+      <NavigationMenuLink href="/about">About</NavigationMenuLink>
+    </NavigationMenuItem>
+  </NavigationMenuList>
+</NavigationMenu>
+```
+
+## API Reference
 
 ### NavigationMenu
 
-| Prop | Default | Type |
-|------|---------|------|
-| `value` | — | `string` — Controlled open item. `""` is closed. |
-| `defaultValue` | `""` | `string` — Uncontrolled initial open item. |
-| `onValueChange` | — | `(value: string) => void` — Called when the open item changes. |
-| `delayDuration` | semantic `duration.normal` | `number` — Hover-open delay in milliseconds. |
-| `skipDelayDuration` | semantic `duration.fast` | `number` — Delay when switching between open items, in milliseconds. |
-| `aria-label` | `"Main"` | `string` — Landmark name. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "Controlled open item value (empty string = closed)." },
+    { prop: "defaultValue", default: "—", type: "string", description: "Uncontrolled initial open item." },
+    { prop: "onValueChange", default: "—", type: "(value: string) => void", description: "Event handler when open item changes." },
+    { prop: "delayDuration", default: "—", type: "number", description: "Delay (ms) before opening on pointer enter." },
+    { prop: "skipDelayDuration", default: "—", type: "number", description: "Delay when moving between items while open." },
+    { prop: "aria-label", default: "\"Main\"", type: "string", description: "Accessible name for the navigation landmark." }
+    ]}
+  />
+</div>
+### NavigationMenuList
 
-Also accepts native `nav` attributes (`className`, `style`).
+List of navigation items.
 
 ### NavigationMenuItem
 
-| Prop | Default | Type |
-|------|---------|------|
-| `value` | auto-generated | `string` — Stable id for open state. Pass this when you control `value` on the root. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "Stable id for open state (auto-generated when omitted)." }
+    ]}
+  />
+</div>
+### NavigationMenuTrigger
 
-Also accepts native `li` attributes.
+Trigger button for dropdown content.
+
+### NavigationMenuContent
+
+Dropdown panel content.
 
 ### NavigationMenuLink
 
-| Prop | Default | Type |
-|------|---------|------|
-| `active` | `false` | `boolean` — Current page (`aria-current="page"`). |
-| `href` | — | `string` — Destination. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "active", default: "false", type: "boolean", description: "Marks the current page (`aria-current=\"page\"`)." }
+    ]}
+  />
+</div>
+### NavigationMenuIndicator
 
-Also accepts native `<a>` attributes. Top-level links use the same plate as triggers; links inside `NavigationMenuContent` use menu-row density.
+Active item indicator (visual underline).
 
-### Parts
-
-| Part | Role |
-|------|------|
-| `NavigationMenuList` | Top-level list (`ul`). |
-| `NavigationMenuTrigger` | Opens the panel. Chevron is built-in. Native `button` attributes. |
-| `NavigationMenuContent` | Flyout panel (`role="region"`). |
-| `NavigationMenuIndicator` | Optional underline under the open trigger. Render inside the list if you need it. |

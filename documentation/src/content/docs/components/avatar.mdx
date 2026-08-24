@@ -1,0 +1,92 @@
+---
+title: Avatar
+description: User image or initial representation.
+---
+
+import { PropSpec } from "../../../docs-ui";
+
+import AvatarsPreview from "../../../components/AvatarsPreview";
+
+# Avatar
+
+User image or initial representation.
+
+<div class="not-content my-6">
+  <AvatarsPreview client:load />
+</div>
+
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { Avatar, AvatarImage, AvatarFallback, AvatarBadge } from "@refineui/react";
+
+<Avatar>
+  <AvatarImage src="/user.jpg" alt="User Name" />
+  <AvatarFallback>UN</AvatarFallback>
+</Avatar>
+
+<Avatar size="lg" showStatus status="online">
+  <AvatarImage src="/avatar.jpg" alt="User" />
+  <AvatarFallback>U</AvatarFallback>
+  <AvatarBadge status="online" />
+</Avatar>
+
+<Avatar layout="icon" color="blue">
+  <AvatarIcon name="user" />
+</Avatar>
+
+<Avatar layout="initials" color="green">
+  <AvatarText>AB</AvatarText>
+</Avatar>
+```
+
+## API Reference
+
+### Avatar
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "src", default: "—", type: "string | null", description: "Image source URL." },
+    { prop: "alt", default: "—", type: "string", description: "Image alt text." },
+    { prop: "layout", default: "—", type: "\"image\" | \"icon\" | \"initials\"", description: "Avatar layout (inferred from children when omitted)." },
+    { prop: "size", default: "\"md\"", type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"", description: "Avatar size tier." },
+    { prop: "showStatus", default: "false", type: "boolean", description: "Shows presence status badge." },
+    { prop: "status", default: "—", type: "\"online\" | \"away\" | \"unavailable\" | \"offline\"", description: "Presence status." },
+    { prop: "color", default: "—", type: "AvatarColor", description: "Background color (for icon/initials)." }
+    ]}
+  />
+</div>
+### AvatarImage
+
+Image element.
+
+### AvatarFallback
+
+Fallback content when image fails to load.
+
+### AvatarBadge
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "status", default: "—", type: "\"online\" | \"away\" | \"unavailable\" | \"offline\"", description: "Presence status indicator." }
+    ]}
+  />
+</div>
+### AvatarText
+
+Text content for initials.
+
+### AvatarIcon
+
+Icon element for icon layout.
+

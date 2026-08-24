@@ -1,43 +1,79 @@
 ---
-title: ProgressStepper
-description: Progress bar and stepper in one — show how far a task has moved through ordered stages.
+title: Progress Stepper
+description: Multi-step process completion indicator.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import ProgressStepperPreview from "../../../components/ProgressStepperPreview";
 
-# ProgressStepper
+# Progress Stepper
 
-ProgressStepper combines a progress bar and a stepper. Use it when you want to show how far a task has moved through ordered stages, and what comes next, at a glance.
+Multi-step process completion indicator.
 
-A compact rail fits checkout headers, onboarding, and short wizards. For numbered 32px indicators with a title and description, use **[Stepper](/components/stepper/)** instead. For a percent-complete bar with no stages, use **[Progress](/components/progress/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <ProgressStepperPreview client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { ProgressStepper, ProgressStepperList, ProgressStepperItem, ProgressStepperMarker, ProgressStepperLabel } from "@refineui/react";
+
+<ProgressStepper value={currentStep} onValueChange={setCurrentStep}>
+  <ProgressStepperList>
+    <ProgressStepperItem value={1}>
+      <ProgressStepperMarker />
+      <ProgressStepperLabel>Account</ProgressStepperLabel>
+    </ProgressStepperItem>
+    <ProgressStepperItem value={2}>
+      <ProgressStepperMarker />
+      <ProgressStepperLabel>Profile</ProgressStepperLabel>
+    </ProgressStepperItem>
+    <ProgressStepperItem value={3}>
+      <ProgressStepperMarker />
+      <ProgressStepperLabel>Complete</ProgressStepperLabel>
+    </ProgressStepperItem>
+  </ProgressStepperList>
+</ProgressStepper>
+```
+
+## API Reference
 
 ### ProgressStepper
 
-| Prop | Default | Type |
-|------|---------|------|
-| `value` | — | `number` — Controlled active step. Match this to a `ProgressStepperItem` `value`. |
-| `defaultValue` | `0` | `number` — Uncontrolled initial step. |
-| `onValueChange` | — | `(value: number) => void` — Called when a step is activated. With this callback (or when uncontrolled), items are focusable and can be activated with click, Enter, or Space. |
-
-Also accepts native `div` attributes (`className`, `style`, `aria-*`).
-
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "number", description: "Controlled active step value." },
+    { prop: "defaultValue", default: "—", type: "number", description: "Uncontrolled initial step." },
+    { prop: "onValueChange", default: "—", type: "(value: number) => void", description: "Event handler when step changes." }
+    ]}
+  />
+</div>
 ### ProgressStepperItem
 
-| Prop | Default | Type |
-|------|---------|------|
-| `value` | — | `number` — Step identity. Required. Compared with the stepper `value` to resolve state. |
-| `disabled` | `false` | `boolean` — Blocks activation. The step still shows its visual state. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "number", description: "Step identity (required)." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables this step." }
+    ]}
+  />
+</div>
+### ProgressStepperMarker
 
-### Parts
+Step indicator (circle/checkmark).
 
-| Part | Role |
-|------|------|
-| `ProgressStepperList` | Ordered list (`ol`) and the built-in progress track. |
-| `ProgressStepperMarker` | 8px color pip on the 16px rail. Render empty — do not pass icons. |
-| `ProgressStepperLabel` | Optional caption under the marker. First label starts at the leading pip; last label ends at the trailing pip. |
+### ProgressStepperLabel
+
+Step label text.
+

@@ -1,0 +1,61 @@
+---
+title: Box
+description: Padding, semantic fill, radius, and border — the base layout surface.
+---
+
+import { PropSpec } from "../../../docs-ui";
+
+import BoxPreview from "../../../components/layout/BoxPreview";
+
+# Box
+
+`Box` applies Foundation spacing, color, radius, and stroke tokens to a single surface. Use it when you need a token-backed wrapper without inventing CSS.
+
+<div class="not-content my-6">
+  <BoxPreview client:load />
+</div>
+
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { Box } from "@refineui/react";
+
+<Box padding="sizeLarge" background="backgroundSurface" radius="roundedLarge">
+  Content
+</Box>
+
+<Box
+  as="section"
+  paddingX="sizeLarge"
+  paddingY="sizeSmall"
+  border="strokeWidthThin"
+  borderColor="borderDefault"
+  background="backgroundPrimary"
+>
+  Outlined section
+</Box>
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "as", default: "\"div\"", type: "ElementType", description: "Root element." },
+    { prop: "padding", default: "—", type: "Spacing token", description: "Padding on all sides." },
+    { prop: "paddingX", default: "—", type: "Spacing token", description: "Horizontal padding." },
+    { prop: "paddingY", default: "—", type: "Spacing token", description: "Vertical padding." },
+    { prop: "background", default: "—", type: "Background / surface alias", description: "Fill color." },
+    { prop: "radius", default: "—", type: "Radius token", description: "Corner radius." },
+    { prop: "border", default: "—", type: "Stroke token", description: "Border width." },
+    { prop: "borderColor", default: "—", type: "Border color alias", description: "Border color (defaults with `border`)." }
+    ]}
+  />
+</div>

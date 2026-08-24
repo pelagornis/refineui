@@ -1,55 +1,76 @@
 ---
 title: Popover
-description: Anchored panel that opens from a click, without blocking the rest of the page.
+description: Floating content panel relative to a trigger.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import PopOverDemo from "../../../components/PopOverDemo";
 
 # Popover
 
-Popover is a panel that opens when its trigger is clicked. Use it for extra fields, a short explanation, or a small editor that should stay next to the control.
+Floating content panel relative to a trigger.
 
-The page stays interactive behind it — no modal scrim. For a blocking task, use **[Dialog](/components/dialog/)**. For an action list with shortcuts and nested panels, use **[Menu](/components/menu/)** or **[Dropdown](/components/dropdown/)**. For hover-only helper text, use **[Tooltip](/components/tooltip/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <PopOverDemo client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { Popover, PopoverTrigger, PopoverContent, Button } from "@refineui/react";
+
+<Popover>
+  <PopoverTrigger>
+    <Button>Show Info</Button>
+  </PopoverTrigger>
+  <PopoverContent>
+    <p>Additional information here</p>
+  </PopoverContent>
+</Popover>
+
+<Popover open={isOpen} onOpenChange={setIsOpen}>
+  <PopoverTrigger>
+    <Button>Toggle</Button>
+  </PopoverTrigger>
+  <PopoverContent placement="top" align="center">
+    <p>Popover content</p>
+  </PopoverContent>
+</Popover>
+```
+
+## API Reference
 
 ### Popover
 
-| Prop | Default | Type |
-|------|---------|------|
-| `open` | — | `boolean` — Controlled visibility. |
-| `defaultOpen` | `false` | `boolean` — Uncontrolled initial open. |
-| `onOpenChange` | — | `(open: boolean) => void` — Called when the panel opens or closes. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "open", default: "—", type: "boolean", description: "Controlled open state." },
+    { prop: "defaultOpen", default: "—", type: "boolean", description: "Uncontrolled initial open state." },
+    { prop: "onOpenChange", default: "—", type: "(open: boolean) => void", description: "Event handler when open state changes." }
+    ]}
+  />
+</div>
+### PopoverTrigger
 
-Also accepts native `div` attributes (`className`, `style`, `aria-*`).
+Trigger element that opens the popover.
 
 ### PopoverContent
 
-| Prop | Default | Type |
-|------|---------|------|
-| `placement` | `"bottom"` | `"top"` \| `"bottom"` \| `"left"` \| `"right"` — Side of the trigger. |
-| `align` | `"center"` | `"start"` \| `"center"` \| `"end"` — Alignment along that side. |
-
-Also accepts native `div` attributes (`className`, `style`).
-
-### PopOver
-
-| Prop | Default | Type |
-|------|---------|------|
-| `trigger` | — | `ReactNode` — Click target. Required. |
-| `content` | — | `ReactNode` — Panel body. Required. |
-| `placement` | `"bottom"` | `"top"` \| `"bottom"` \| `"left"` \| `"right"` — Same as `PopoverContent`. |
-| `align` | `"center"` | `"start"` \| `"center"` \| `"end"` — Same as `PopoverContent`. |
-
-Also accepts native `div` attributes (`className`, `style`).
-
-### Parts
-
-| Part | Role |
-|------|------|
-| `PopoverTrigger` | Opens and closes the panel. Merges onto a single child element when possible. |
-| `PopoverContent` | Beak + floating panel (`role="dialog"`). |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "placement", default: "\"bottom\"", type: "\"top\" | \"bottom\" | \"left\" | \"right\"", description: "Position relative to trigger." },
+    { prop: "align", default: "\"center\"", type: "\"start\" | \"center\" | \"end\"", description: "Alignment along the edge." }
+    ]}
+  />
+</div>

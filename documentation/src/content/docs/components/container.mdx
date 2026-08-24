@@ -1,0 +1,47 @@
+---
+title: Container
+description: Centered page shell with token padding and full max width.
+---
+
+import { PropSpec } from "../../../docs-ui";
+
+import ContainerPreview from "../../../components/layout/ContainerPreview";
+
+# Container
+
+`Container` centers content horizontally with optional spacing-token padding. Use it as a page or section shell.
+
+<div class="not-content my-6">
+  <ContainerPreview client:load />
+</div>
+
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { Container, Stack, Text } from "@refineui/react";
+
+<Container padding="sizeXXLarge">
+  <Stack gap="sizeLarge">
+    <Text variant="headingMd" as="h1">Page title</Text>
+    <Text variant="bodyMd">Body</Text>
+  </Stack>
+</Container>
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "as", default: "\"div\"", type: "ElementType", description: "Root element." },
+    { prop: "padding", default: "—", type: "Spacing token", description: "Padding on all sides." }
+    ]}
+  />
+</div>

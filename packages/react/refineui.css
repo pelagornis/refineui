@@ -40,7 +40,11 @@
 
 /* Button & button-like */
 [data-refineui="button"] {
-  transition: opacity var(--refineui-motion-duration-fast), background-color var(--refineui-motion-duration-fast), border-color var(--refineui-motion-duration-fast), transform 0.1s;
+  transition:
+    opacity var(--refineui-motion-duration-fast),
+    background-color var(--refineui-motion-duration-fast),
+    border-color var(--refineui-motion-duration-fast),
+    transform var(--refineui-motion-duration-fast);
 }
 [data-refineui="switch"],
 [data-refineui="pagination"],
@@ -52,13 +56,20 @@
 [data-refineui="calendar-nav"],
 [data-refineui="chip-remove"],
 [data-refineui="search-field-clear"] {
-  transition: opacity var(--refineui-motion-duration-fast), background-color var(--refineui-motion-duration-fast), transform 0.1s;
+  transition:
+    opacity var(--refineui-motion-duration-fast),
+    background-color var(--refineui-motion-duration-fast),
+    transform var(--refineui-motion-duration-fast);
 }
 [data-refineui="dropdown-item"] {
-  transition: background-color var(--refineui-motion-duration-fast), transform 0.1s;
+  transition:
+    background-color var(--refineui-motion-duration-fast),
+    transform var(--refineui-motion-duration-fast);
 }
 [data-refineui="select-item"] {
-  transition: background-color var(--refineui-motion-duration-fast), transform 0.1s;
+  transition:
+    background-color var(--refineui-motion-duration-fast),
+    transform var(--refineui-motion-duration-fast);
 }
 /* Selected row (rest) — MCP: rest uses `surfaceSelected`; pressed uses `:active` below */
 [data-refineui="dropdown-item"][data-selected="true"]:not(:disabled) {
@@ -167,7 +178,11 @@
   }
 }
 [data-refineui="calendar-day"] {
-  transition: background-color var(--refineui-motion-duration-fast), border-color var(--refineui-motion-duration-fast), color var(--refineui-motion-duration-fast), transform 0.1s;
+  transition:
+    background-color var(--refineui-motion-duration-fast),
+    border-color var(--refineui-motion-duration-fast),
+    color var(--refineui-motion-duration-fast),
+    transform var(--refineui-motion-duration-fast);
 }
 [data-refineui="calendar-nav"]:hover,
 [data-refineui="chip-remove"]:hover {
@@ -1262,6 +1277,37 @@ a[data-refineui="link"]:focus-visible {
     minmax(var(--refineui-size-foundation-size-2000), 1fr)
   );
 }
+
+/**
+ * Meta row: social (start) | brand/copyright (center) | locale (end).
+ * Brand stays optically centered when locale (or social) is omitted.
+ */
+@media (min-width: 48rem) {
+  [data-refineui="footer-meta"] {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    justify-items: stretch;
+    gap: var(--refineui-spacing-size-x-large);
+  }
+
+  [data-refineui="footer-social"] {
+    grid-column: 1;
+    justify-self: start;
+    justify-content: flex-start;
+  }
+
+  [data-refineui="footer-brand"] {
+    grid-column: 2;
+    justify-self: center;
+  }
+
+  [data-refineui="footer-meta-end"] {
+    grid-column: 3;
+    justify-self: end;
+  }
+}
+
 [data-refineui="footer-link"]:hover:not([aria-disabled="true"]) {
   color: var(--refineui-color-alias-foreground-primary) !important;
 }

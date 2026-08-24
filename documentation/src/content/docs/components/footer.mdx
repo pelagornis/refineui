@@ -1,49 +1,52 @@
 ---
 title: Footer
-description: Site footer — sitemap columns, then a legal meta bar for social, lockup, and locale.
+description: Site footer with brand, navigation groups, locale, and social links.
 ---
 
 import FooterPreview from "../../../components/FooterPreview";
 
 # Footer
 
-Footer is the site-wide landmark at the bottom of a page. Use it when you need a wrapping sitemap and a quiet legal bar — social links, a brand lockup, and a locale control.
+`Footer` is a compound layout for marketing and app footers — brand, link groups, meta row, locale, and social icons.
 
-Put the sitemap in `FooterExplore`. Put social, lockup, and locale in `FooterMeta`. For in-page section links, use **[Tabs](/components/tabs/)** or **[Navigation Menu](/components/navigation-menu/)** instead.
-
-<div class="not-content">
+<div class="not-content my-6">
   <FooterPreview client:load />
 </div>
 
-## Interface
+## Installation
 
-### Footer
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-Accepts native `footer` attributes (`className`, `style`, `aria-*`).
+## Usage
 
-### FooterNav
+```tsx
+import {
+  Footer,
+  FooterBrand,
+  FooterNav,
+  FooterGroup,
+  FooterGroupLabel,
+  FooterLink,
+  FooterMeta,
+  FooterCopyright,
+} from "@refineui/react";
 
-| Prop | Default | Type |
-|------|---------|------|
-| `aria-label` | `"Footer"` | `string` — Landmark name. Override when multiple footers exist. |
+<Footer>
+  <FooterBrand>RefineUI</FooterBrand>
+  <FooterNav>
+    <FooterGroup>
+      <FooterGroupLabel>Product</FooterGroupLabel>
+      <FooterLink href="/components/">Components</FooterLink>
+    </FooterGroup>
+  </FooterNav>
+  <FooterMeta>
+    <FooterCopyright>© Pelagornis</FooterCopyright>
+  </FooterMeta>
+</Footer>
+```
 
-Also accepts native `nav` attributes.
+## Parts
 
-### Parts
-
-| Part | Role |
-|------|------|
-| `FooterExplore` | Upper region — wrapping sitemap. Alias: `FooterContent`. |
-| `FooterNav` | Sitemap columns (`nav`). |
-| `FooterGroup` | One labeled link column. |
-| `FooterGroupLabel` | Column heading. |
-| `FooterLink` | Footer `<a>`. Density follows `FooterSocial` / `FooterLocale`. |
-| `FooterMeta` | Lower bar — social · lockup · locale. Alias: `FooterBottom`. |
-| `FooterSocial` | Icon (or text) social links, start. |
-| `FooterBrand` | Center lockup. |
-| `FooterLogo` | Optional logo mark. |
-| `FooterBrandName` | Optional product / brand name. |
-| `FooterBrandDescription` | Optional tagline. |
-| `FooterCopyright` | Legal line. |
-| `FooterMetaEnd` | End cluster — locale pill. |
-| `FooterLocale` | Locale control slot (usually `Select`). |
+`FooterBrand`, `FooterNav`, `FooterGroup`, `FooterGroupLabel`, `FooterLink`, `FooterExplore`, `FooterSocial`, `FooterLocale`, `FooterMeta`, `FooterMetaEnd`, `FooterCopyright`.

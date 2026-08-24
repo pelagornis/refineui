@@ -1,28 +1,45 @@
 ---
 title: Skeleton
-description: Placeholder shape shown while content is loading.
+description: Placeholder animation during data fetching.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import SkeletonPreview from "../../../components/SkeletonPreview";
 
 # Skeleton
 
-Skeleton is a placeholder for content that has not loaded yet. Use it to reserve layout so the page does not jump when real content arrives.
+Placeholder animation during data fetching.
 
-It is a static shape with a soft opacity pulse — not a sliding shimmer. For an in-progress process with no layout to reserve, use **[Spinner](/components/spinner/)**. For determinate work as a bar, use **[Progress](/components/progress/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <SkeletonPreview client:load />
 </div>
 
-## Interface
+## Installation
 
-### Skeleton
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `width` | — | `number` \| `string` — Width of the placeholder. Rectangles default to full width. On a circle, one dimension is used for both axes. |
-| `height` | — | `number` \| `string` — Height of the placeholder. Rectangles default to the skeleton line height. |
-| `shape` | `"rectangle"` | `"rectangle"` \| `"circle"` — Line or block versus avatar-style disc. |
+## Usage
 
-Also accepts native `div` attributes (`className`, `style`).
+```tsx
+import { Skeleton } from "@refineui/react";
+
+<Skeleton width={200} height={20} />
+
+<Skeleton width="100%" height={100} shape="circle" />
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "width", default: "—", type: "number | string", description: "Skeleton width in pixels or CSS value." },
+    { prop: "height", default: "—", type: "number | string", description: "Skeleton height in pixels or CSS value." },
+    { prop: "shape", default: "\"rectangle\"", type: "\"rectangle\" | \"circle\"", description: "Shape of the skeleton." }
+    ]}
+  />
+</div>

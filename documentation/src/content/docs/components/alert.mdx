@@ -1,52 +1,72 @@
 ---
 title: Alert
-description: Inline notice for a page or section, with optional actions.
+description: Prominent message communicating status or warning.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import AlertPreview from "../../../components/AlertPreview";
 
 # Alert
 
-Alert is an inline notice in page or section chrome. Use it for status that should stay visible until the user acts or the condition changes — a saved confirmation, a warning, or an upgrade prompt.
+Prominent message communicating status or warning.
 
-It is not a modal. For a blocking decision, use **[Dialog](/components/dialog/)**. For feedback that should disappear on its own, use **[Toast](/components/toast/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <AlertPreview client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { Alert, AlertIcon, AlertContent, AlertTitle, AlertDescription } from "@refineui/react";
+
+<Alert variant="info">
+  <AlertIcon />
+  <AlertContent>
+    <AlertTitle>Information</AlertTitle>
+    <AlertDescription>Your changes have been saved.</AlertDescription>
+  </AlertContent>
+</Alert>
+```
+
+## API Reference
 
 ### Alert
 
-| Prop | Default | Type |
-|------|---------|------|
-| `variant` | `"info"` | `"default"` \| `"info"` \| `"success"` \| `"warning"` \| `"danger"` \| `"custom"` — Color context for title, description, and default icon. |
-
-Also accepts native `div` attributes (`className`, `style`, `aria-*`).
-
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "variant", default: "\"default\"", type: "\"default\" | \"info\" | \"success\" | \"warning\" | \"danger\" | \"custom\"", description: "Alert visual variant." }
+    ]}
+  />
+</div>
 ### AlertIcon
 
-| Prop | Default | Type |
-|------|---------|------|
-| `name` | variant default | `string` — Web Icon name when `children` are omitted. |
-| `children` | — | `ReactNode` — Custom leading node. Overrides `name`. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "name", default: "—", type: "string", description: "Icon name (when not using children)." },
+    { prop: "children", default: "—", type: "ReactNode", description: "Custom icon element." }
+    ]}
+  />
+</div>
+### AlertContent
 
-### AlertClose
+Container for alert content.
 
-Native `button` attributes. Default: ghost icon **[Button](/components/button/)** with a dismiss icon and `aria-label="Close"`. You must handle dismiss in `onClick`.
+### AlertTitle
 
-### AlertAction
+Alert heading element.
 
-Native `button` attributes. Default: primary `sm` **[Button](/components/button/)**.
+### AlertDescription
 
-### Parts
+Alert body text.
 
-| Part | Role |
-|------|------|
-| `AlertContent` | Inner column (applied automatically by `Alert`). |
-| `AlertRow` | Icon + body + optional close. |
-| `AlertBody` | Title and description column. |
-| `AlertTitle` | `h5` title. |
-| `AlertDescription` | Supporting copy. |
-| `AlertActions` | Trailing row of actions. |

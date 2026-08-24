@@ -1,46 +1,99 @@
 ---
 title: Pagination
-description: Move between numbered pages of a list.
+description: Navigation across multi-page datasets.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import PaginationDemo from "../../../components/PaginationDemo";
 
 # Pagination
 
-Pagination splits a long list into pages. Use it under a table or result list when the user needs to jump by number, not only scroll.
+Navigation across multi-page datasets.
 
-Previous and next are buttons. Page numbers are links. For a linear wizard with named stages, use **[Stepper](/components/stepper/)** or **[ProgressStepper](/components/progress-stepper/)**. For in-page panels, use **[Tabs](/components/tabs/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <PaginationDemo client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEllipsis
+} from "@refineui/react";
+
+<Pagination>
+  <PaginationContent>
+    <PaginationItem>
+      <PaginationPrevious href="#" />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#" isActive>1</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">2</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">3</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationEllipsis />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">10</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationNext href="#" />
+    </PaginationItem>
+  </PaginationContent>
+</Pagination>
+```
+
+## API Reference
 
 ### Pagination
 
-Accepts native `nav` attributes (`className`, `style`, `aria-*`). `aria-label="Pagination"` is set on the root.
+Root container (`<nav>` element).
+
+### PaginationContent
+
+List of pagination items.
+
+### PaginationItem
+
+List item wrapper.
 
 ### PaginationLink
 
-| Prop | Default | Type |
-|------|---------|------|
-| `isActive` | `false` | `boolean` — Marks the current page (`aria-current="page"`). |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "isActive", default: "false", type: "boolean", description: "Marks the current page." }
+    ]}
+  />
+</div>
+### PaginationPrevious
 
-Also accepts native `a` attributes (`href`, `className`, `children`).
+Previous page button.
 
-### PaginationPrevious / PaginationNext
+### PaginationNext
 
-Native `button` attributes (`onClick`, `disabled`, `type`). `type` defaults to `"button"`. Chevrons and `aria-label` are built in.
+Next page button.
 
-### Parts
+### PaginationEllipsis
 
-| Part | Role |
-|------|------|
-| `Pagination` | Root `nav` (`aria-label="Pagination"`). Same as `PaginationRoot`. |
-| `PaginationContent` | List (`ul`) of items. |
-| `PaginationItem` | Item wrapper (`li`). |
-| `PaginationLink` | Page number link. |
-| `PaginationPrevious` | Previous-page button. |
-| `PaginationNext` | Next-page button. |
-| `PaginationEllipsis` | Hidden-range placeholder (`span`). |
+Indicator for skipped pages.
+

@@ -1,0 +1,8 @@
+---
+const { title, description } = Astro.locals.starlightRoute.entry.data;
+---
+
+<div data-refineui-docs-pagehead>
+    <h1 id="_top">{title}</h1>
+    {description ? <p data-refineui-docs-lead>{description}</p> : null}
+</div>

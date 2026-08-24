@@ -1,0 +1,41 @@
+---
+title: Design tokens
+description: Semantic variables that power RefineUI — color, type, space, motion, and stacking.
+---
+
+import { SpecTable } from "../../../docs-ui";
+
+# Design tokens
+
+Tokens are the single source for visual values. Foundation variables in Figma map to `@refineui/tokens`, then to CSS variables and Tailwind utilities. Components and product UI should reference **semantic names**, not palette hex or raw `px`.
+
+## Categories
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="Token categories"
+    columns={[
+      { key: "category", header: "Category", hrefKey: "href" },
+      { key: "use", header: "Use for" },
+    ]}
+    rows={[
+      { category: "Color", href: "/foundations/color/", use: "Surfaces, text, borders, brand, status" },
+      { category: "Typography", href: "/foundations/typography/", use: "Text roles (headingMd, bodyMd, …)" },
+      { category: "Spacing", href: "/foundations/spacing/", use: "Gaps, padding, margins" },
+      { category: "Sizing", href: "/foundations/sizing/", use: "Control heights, icons, layout steps" },
+      { category: "Radius", href: "/foundations/radius/", use: "Corner radii" },
+      { category: "Border", href: "/foundations/border/", use: "Stroke widths" },
+      { category: "Elevation", href: "/foundations/elevation/", use: "Shadows / depth" },
+      { category: "Opacity", href: "/foundations/opacity/", use: "Disabled wash, overlay helpers" },
+      { category: "Motion", href: "/foundations/motion/", use: "Duration, easing, press scale" },
+      { category: "Z-index", href: "/foundations/z-index/", use: "Overlay stacking" },
+    ]}
+  />
+</div>
+
+## Rules
+
+1. Prefer semantic aliases (`backgroundSurface`, `sizeMedium`, `fast`) over Foundation primitives in product code.
+2. If a value is missing, update Foundation first, then `packages/tokens` — do not invent a one-off.
+3. Import `@refineui/react/refineui.css` once so control hover / focus motion stays consistent.

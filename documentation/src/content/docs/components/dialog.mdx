@@ -1,54 +1,113 @@
 ---
 title: Dialog
-description: Modal panel that holds attention until the task is done.
+description: Modal dialog window overlay for critical tasks.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import DialogDemo from "../../../components/DialogDemo";
 
 # Dialog
 
-Dialog is a modal panel with a scrim. Use it when the user must finish or dismiss a task before continuing — confirmations, short forms, or blocking messages.
+Modal dialog window overlay for critical tasks.
 
-It portals to `document.body` (or `DialogContent` `container`), traps focus, and closes on Escape or scrim click. For a side panel that does not cover the whole flow, use **[Drawer](/components/drawer/)**. For extra context next to a control, use **[Popover](/components/popover/)**. For a searchable action list inside a large dialog, use **[Command](/components/command/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <DialogDemo client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+  Button
+} from "@refineui/react";
+
+<Dialog>
+  <DialogTrigger asChild>
+    <Button>Open Dialog</Button>
+  </DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Confirm Action</DialogTitle>
+      <DialogDescription>
+        Are you sure you want to continue?
+      </DialogDescription>
+    </DialogHeader>
+    <DialogClose asChild>
+      <Button>Cancel</Button>
+    </DialogClose>
+  </DialogContent>
+</Dialog>
+
+<Dialog size="sm" open={isOpen} onOpenChange={setIsOpen}>
+  <DialogContent scrollable={false}>
+    {/* Content with custom scroll handling */}
+  </DialogContent>
+</Dialog>
+```
+
+## API Reference
 
 ### Dialog
 
-| Prop | Default | Type |
-|------|---------|------|
-| `open` | — | `boolean` — Controlled visibility. |
-| `defaultOpen` | — | `boolean` — Uncontrolled initial open. Omit for closed. |
-| `onOpenChange` | — | `(open: boolean) => void` — Called when the dialog requests open or close. |
-| `size` | `"lg"` | `"lg"` \| `"sm"` — Panel max width (`lg` 600px / `sm` 300px tokens). |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "open", default: "—", type: "boolean", description: "Controlled open state." },
+    { prop: "defaultOpen", default: "—", type: "boolean", description: "Uncontrolled initial open state." },
+    { prop: "onOpenChange", default: "—", type: "(open: boolean) => void", description: "Event handler when open state changes." },
+    { prop: "size", default: "\"lg\"", type: "\"lg\" | \"sm\"", description: "Dialog panel size: Large (600px) or Small (300px)." }
+    ]}
+  />
+</div>
+### DialogTrigger
+
+Trigger element (usually a Button).
 
 ### DialogContent
 
-| Prop | Default | Type |
-|------|---------|------|
-| `container` | `document.body` | `Element` \| `DocumentFragment` \| `null` — Portal root. |
-| `scrollable` | `true` | `boolean` — When `true`, children wrap in a hover **[ScrollArea](/components/scroll-area/)**. Set `false` when a child (for example Command) owns scrolling. |
-
-Also accepts native `div` attributes (`className`, `style`, `aria-*`).
-
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "scrollable", default: "true", type: "boolean", description: "When true, wraps children in ScrollArea. Set false for custom scroll handling." },
+    { prop: "container", default: "—", type: "Element | DocumentFragment | null", description: "Portal target." }
+    ]}
+  />
+</div>
 ### DialogHeader
 
-| Prop | Default | Type |
-|------|---------|------|
-| `showClose` | `true` | `boolean` — Renders `DialogClose` in the header. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "showClose", default: "true", type: "boolean", description: "Shows the close button." }
+    ]}
+  />
+</div>
+### DialogTitle
 
-### DialogTrigger
+Dialog heading element.
 
-Same props as **[Button](/components/button/)** (`variant`, `size`, `type`, and so on). Click opens the dialog unless `preventDefault()` is called.
+### DialogDescription
 
-### Parts
+Dialog description text.
 
-| Part | Role |
-|------|------|
-| `DialogTitle` | `h2`, wired to `aria-labelledby`. |
-| `DialogDescription` | `p`, wired to `aria-describedby`. |
-| `DialogClose` | Ghost icon button that closes the dialog. Included in the header by default. |
+### DialogClose
+
+Close button.
+

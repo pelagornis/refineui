@@ -1,21 +1,19 @@
 ---
 title: Color
 description: Palette primitives and semantic aliases — backgrounds, foregrounds, borders, and surfaces.
-sidebar:
-  order: 2
 ---
 
 import { ColorAliasPreview, ColorPalettePreview } from "../../../components/foundation/ColorPreview";
 
 # Color
 
-Paint UI with **aliases** (`foregroundPrimary`, `backgroundBrand`). The palette is the Foundation source those aliases point at for light and dark. Do not paste hex or `colors.neutral900` into product UI.
+Paint UI with **aliases** (`foregroundPrimary`, `backgroundBrand`, `borderDefault`). The palette is the Foundation source those aliases resolve to in light and dark. Do not paste hex or raw palette keys into product UI.
 
 `surfaceOverlay` is the modal scrim — Foundation RGBA, not a palette pair (`--refineui-color-alias-surface-overlay`).
 
 ## Aliases
 
-Live CSS variables. Caption is `light / dark` palette keys.
+Live CSS variables. Captions show `light / dark` palette keys.
 
 <div class="not-content">
   <ColorAliasPreview client:load />
@@ -26,6 +24,8 @@ Live CSS variables. Caption is `light / dark` palette keys.
 <div class="not-content">
   <ColorPalettePreview client:load />
 </div>
+
+## Usage
 
 ```tsx
 <Box

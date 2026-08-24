@@ -1,27 +1,50 @@
 ---
 title: Badge
-description: Short status or count next to a label, icon, or control.
+description: Status badge or numerical counter tag.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import BadgePreview from "../../../components/BadgePreview";
 
 # Badge
 
-Badge is a compact label for status or a numeric count. Use it next to a heading, tab, avatar, or control when the extra signal should stay secondary to the main text.
+Status badge or numerical counter tag.
 
-A `label` badge is a capsule for a word or two (`New`, `Beta`). A `number` badge is circular and is meant for a count. For a keyword or filter the user can remove, use **[Tag](/components/tag/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <BadgePreview client:load />
 </div>
 
-## Interface
+## Installation
 
-### Badge
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `variant` | `"default"` | `"default"` \| `"neutral"` \| `"outline"` \| `"success"` \| `"warning"` \| `"danger"` — Color pairing for the badge. |
-| `layout` | `"label"` | `"label"` \| `"number"` — Capsule text versus circular count. |
+## Usage
 
-Also accepts native `span` attributes (`className`, `style`, `aria-*`).
+```tsx
+import { Badge } from "@refineui/react";
+
+<Badge>New</Badge>
+
+<Badge variant="success">5</Badge>
+
+<Badge variant="warning" layout="number">12</Badge>
+
+<Badge variant="danger">Error</Badge>
+
+<Badge variant="outline">Draft</Badge>
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "variant", default: "\"default\"", type: "\"default\" | \"neutral\" | \"outline\" | \"success\" | \"warning\" | \"danger\"", description: "Visual variant style." },
+    { prop: "layout", default: "\"label\"", type: "\"label\" | \"number\"", description: "Layout type for label vs number display." }
+    ]}
+  />
+</div>

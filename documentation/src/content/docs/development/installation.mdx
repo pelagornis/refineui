@@ -1,0 +1,32 @@
+---
+title: Installation
+description: Add RefineUI packages and load Foundation CSS.
+---
+
+# Installation
+
+```bash
+bun add @refineui/react @refineui/tokens @refineui/web-icons
+```
+
+## CSS
+
+Load token CSS and component interaction styles once at the app root:
+
+```css
+@import "@refineui/tokens/tailwind.css";
+@import "@refineui/web-icons/dist/fonts/refineui-system-icons.css";
+@import "@refineui/react/refineui.css";
+```
+
+## First component
+
+```tsx
+import { Button } from "@refineui/react";
+
+export function App() {
+  return <Button variant="primary">Continue</Button>;
+}
+```
+
+Use the same imports in documentation previews — no parallel mock UI.

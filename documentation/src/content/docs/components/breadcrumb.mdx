@@ -1,34 +1,97 @@
 ---
 title: Breadcrumb
-description: Path from the home or parent of the current page.
+description: Hierarchical trail showing page location.
 ---
 
 import BreadcrumbPreview from "../../../components/BreadcrumbPreview";
 
 # Breadcrumb
 
-Breadcrumb shows where the current page sits in the hierarchy. Use it under the header so the user can step back toward home without using the browser back button.
+Hierarchical trail showing page location.
 
-Each previous step is a link; the last step is the current page. For top-level site destinations with flyouts, use **[Navigation Menu](/components/navigation-menu/)**. For a single in-copy URL, use **[Link](/components/link/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <BreadcrumbPreview client:load />
 </div>
 
-## Interface
+## Installation
 
-### Parts
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Part | Role |
-|------|------|
-| `Breadcrumb` | Root `nav`. |
-| `BreadcrumbList` | Ordered list (`ol`). |
-| `BreadcrumbItem` | Segment (`li`). Defaults to clipping overflow — set `overflow-visible` on a menu cell. |
-| `BreadcrumbLink` | Previous-step link (`a`). |
-| `BreadcrumbPage` | Current page. |
-| `BreadcrumbSeparator` | Separator (`li`). Default `/`. |
-| `BreadcrumbEllipsis` | Static ⋯ (`span`). |
-| `BreadcrumbEllipsisTrigger` | ⋯ `button` for a menu trigger. Forwards `ref`. |
-| `breadcrumbLinkClassName` | Class string to style a custom `Link` like `BreadcrumbLink`. |
+## Usage
 
-Parts accept the matching native attributes (`nav`, `ol`, `li`, `a`, `span`, `button`).
+```tsx
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  BreadcrumbEllipsis
+} from "@refineui/react";
+
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/">Home</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/docs">Docs</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbPage>Components</BreadcrumbPage>
+    </BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>
+
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/">Home</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbEllipsis />
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbPage>Current</BreadcrumbPage>
+    </BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>
+```
+
+## API Reference
+
+### Breadcrumb
+
+Root container (`<nav>` element).
+
+### BreadcrumbList
+
+Ordered list of breadcrumb items.
+
+### BreadcrumbItem
+
+List item wrapper.
+
+### BreadcrumbLink
+
+Link to a page.
+
+### BreadcrumbPage
+
+Current page (non-clickable).
+
+### BreadcrumbSeparator
+
+Visual separator between items.
+
+### BreadcrumbEllipsis
+
+Collapsed items indicator.
+

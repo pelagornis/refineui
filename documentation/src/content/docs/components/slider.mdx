@@ -1,32 +1,56 @@
 ---
 title: Slider
-description: Pick a numeric value along a rail — volume, percent, or a bounded range.
+description: Range selection control across a numeric scale.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import SliderDemo from "../../../components/SliderDemo";
 
 # Slider
 
-Slider is a styled `type="range"` input. Use it when the value is easier to choose by dragging than by typing — volume, opacity, a percent.
+Range selection control across a numeric scale.
 
-`size` changes rail thickness (`sm` / `md`). For an exact integer with steppers, use **[SpinButton](/components/spin-button/)**. For a read-only fill, use **[Progress](/components/progress/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <SliderDemo client:load />
 </div>
 
-## Interface
+## Installation
 
-### Slider
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `min` | `0` | `number` — Lower bound. |
-| `max` | `100` | `number` — Upper bound. |
-| `step` | `1` | `number` — Increment between values. |
-| `value` | — | `number` — Controlled value. |
-| `defaultValue` | — | `number` — Uncontrolled initial value. |
-| `onChange` | — | `(value: number) => void` — Called with the numeric value (not the native event). |
-| `size` | `"md"` | `"sm"` \| `"md"` — Rail thickness. |
+## Usage
 
-Also accepts native `input` attributes except `type`, native `onChange`, and `size` (`aria-label`, `disabled`, `className`, `style`).
+```tsx
+import { Slider } from "@refineui/react";
+
+<Slider min={0} max={100} value={volume} onChange={setVolume} />
+
+<Slider
+  min={0}
+  max={10}
+  step={1}
+  value={rating}
+  onChange={setRating}
+  size="md"
+/>
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "number", description: "Controlled value." },
+    { prop: "onChange", default: "—", type: "(value: number) => void", description: "Event handler when value changes." },
+    { prop: "min", default: "0", type: "number", description: "Minimum value." },
+    { prop: "max", default: "100", type: "number", description: "Maximum value." },
+    { prop: "step", default: "1", type: "number", description: "Step increment." },
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\"", description: "Rail thickness: sm (2px) or md (4px)." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables interaction." }
+    ]}
+  />
+</div>

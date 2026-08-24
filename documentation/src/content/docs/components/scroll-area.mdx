@@ -1,42 +1,77 @@
 ---
 title: Scroll Area
-description: Overflow viewport with a thin custom scrollbar — hover or always.
+description: Custom styled scrollbar container.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import ScrollAreaDemo from "../../../components/ScrollAreaDemo";
 
 # Scroll Area
 
-Scroll Area is an overflow container with a thin custom scrollbar. Use it when a panel has a finite height and content that may grow past it — lists, long copy, or a nested table.
+Custom styled scrollbar container.
 
-The viewport still scrolls with wheel, trackpad, and keyboard. The native bar is hidden; you compose a track and thumb. For split panes that change size, use **[Resizable](/components/resizable/)**. For a wide table, wrap **[Table](/components/table/)** in a fixed-height Scroll Area when you also need vertical overflow.
-
-<div class="not-content">
+<div class="not-content my-6">
   <ScrollAreaDemo client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { ScrollArea, ScrollAreaViewport, ScrollAreaScrollbar, ScrollAreaThumb } from "@refineui/react";
+
+<ScrollArea>
+  <div style={{ height: "400px" }}>
+    {/* Long content */}
+  </div>
+</ScrollArea>
+
+<ScrollArea type="always">
+  <ScrollAreaViewport>
+    {/* Custom viewport */}
+  </ScrollAreaViewport>
+  <ScrollAreaScrollbar orientation="vertical">
+    <ScrollAreaThumb />
+  </ScrollAreaScrollbar>
+  <ScrollAreaScrollbar orientation="horizontal">
+    <ScrollAreaThumb />
+  </ScrollAreaScrollbar>
+</ScrollArea>
+```
+
+## API Reference
 
 ### ScrollArea
 
-| Prop | Default | Type |
-|------|---------|------|
-| `type` | `"hover"` | `"hover"` \| `"always"` — Show the scrollbar on hover, focus, or scroll, or always when overflow exists. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "type", default: "\"hover\"", type: "\"hover\" | \"always\"", description: "When the custom scrollbar is visible." }
+    ]}
+  />
+</div>
+### ScrollAreaViewport
 
-Also accepts native `div` attributes (`className`, `style`, `aria-*`).
+Viewport container (scrollable area).
 
 ### ScrollAreaScrollbar
 
-| Prop | Default | Type |
-|------|---------|------|
-| `orientation` | `"vertical"` | `"vertical"` \| `"horizontal"` — Scroll axis. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "orientation", default: "\"vertical\"", type: "\"vertical\" | \"horizontal\"", description: "Scrollbar direction." }
+    ]}
+  />
+</div>
+### ScrollAreaThumb
 
-Also accepts native `div` attributes.
+Scrollbar thumb (draggable handle).
 
-### Parts
-
-| Part | Role |
-|------|------|
-| `ScrollAreaViewport` | Scrollable region. Native overflow; native bar hidden. Focusable. |
-| `ScrollAreaScrollbar` | Track. Click jumps the thumb. |
-| `ScrollAreaThumb` | Draggable thumb sized to the visible ratio. |

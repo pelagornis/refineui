@@ -1,77 +1,118 @@
 ---
 title: Select
-description: Choose one value from a list — with a field trigger and a menu.
+description: Dropdown select control for picking from a list.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import SelectPreview from "../../../components/SelectPreview";
 
 # Select
 
-Select is a custom field that opens a menu of options. Use it when the user must pick one value from a known list — a country, a timezone, a plan.
+Dropdown select control for picking from a list.
 
-Put `SelectContent` inside `SelectPortal` so the panel renders in a portal. For a short mutually exclusive set that should stay visible, use **[Radio](/components/radio/)**. For a labeled form shell, wrap Select in **[Field](/components/field/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <SelectPreview client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@refineui/react";
+
+<Select value={country} onValueChange={setCountry}>
+  <SelectTrigger>
+    <SelectValue placeholder="Select a country" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="us">United States</SelectItem>
+    <SelectItem value="ca">Canada</SelectItem>
+    <SelectItem value="uk">United Kingdom</SelectItem>
+  </SelectContent>
+</Select>
+
+<Select size="lg" fullWidth>
+  <SelectTrigger>
+    <SelectValue placeholder="Choose an option" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectGroup>
+      <SelectLabel>Fruits</SelectLabel>
+      <SelectItem value="apple">Apple</SelectItem>
+      <SelectItem value="banana">Banana</SelectItem>
+    </SelectGroup>
+    <SelectSeparator />
+    <SelectItem value="other">Other</SelectItem>
+  </SelectContent>
+</Select>
+```
+
+## API Reference
 
 ### Select
 
-| Prop | Default | Type |
-|------|---------|------|
-| `placeholder` | — | `string` — Label when nothing is selected. `SelectValue` can override this. |
-| `size` | `"md"` | `"sm"` \| `"md"` \| `"lg"` — Trigger height, padding, and type. Inherits from [Field](/components/field/) when omitted. |
-| `fullWidth` | `false` | `boolean` — Stretch the trigger to the parent width. |
-| `disabled` | `false` | `boolean` — Blocks opening and selection. |
-| `value` | — | `string` — Controlled selected value. |
-| `defaultValue` | `""` | `string` — Uncontrolled initial value. Empty string means nothing selected. |
-| `open` | — | `boolean` — Controlled open state. |
-| `onOpenChange` | — | `(open: boolean) => void` — Called when the menu opens or closes. |
-| `onValueChange` | — | `(value: string) => void` — Called when an item is selected. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "Controlled selected value." },
+    { prop: "defaultValue", default: "—", type: "string", description: "Uncontrolled initial value." },
+    { prop: "onValueChange", default: "—", type: "(value: string) => void", description: "Event handler when selection changes." },
+    { prop: "open", default: "—", type: "boolean", description: "Controlled open state." },
+    { prop: "onOpenChange", default: "—", type: "(open: boolean) => void", description: "Event handler when open state changes." },
+    { prop: "placeholder", default: "—", type: "string", description: "Placeholder text." },
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "Control height tier." },
+    { prop: "fullWidth", default: "false", type: "boolean", description: "Stretches to full parent width." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables interaction." }
+    ]}
+  />
+</div>
+### SelectTrigger
 
-Also accepts native `div` attributes except `onChange` and `defaultValue` (`className`, `style`, `aria-*`).
-
-### SelectItem
-
-| Prop | Default | Type |
-|------|---------|------|
-| `value` | — | `string` — Option identity. Required. |
-| `disabled` | — | `boolean` — Blocks selection of this item. |
-| `textValue` | — | `string` — Plain-text equivalent of the label when children are not a string. |
+Button that opens the dropdown.
 
 ### SelectValue
 
-| Prop | Default | Type |
-|------|---------|------|
-| `placeholder` | — | `string` — Shown when there is no selection. Falls back to Select `placeholder`, then `"Select..."`. |
+Displays selected value or placeholder.
 
 ### SelectContent
 
-| Prop | Default | Type |
-|------|---------|------|
-| `position` | `"item-aligned"` | `"item-aligned"` \| `"popper"` — Menu placement. `popper` is a compact panel below or above the trigger. |
-| `container` | — | `HTMLElement \| null` — Portal target. Otherwise the nearest `SelectPortal` or `document.body`. |
+Dropdown panel container.
 
-### SelectPortal
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "position", default: "\"item-aligned\"", type: "\"item-aligned\" | \"popper\"", description: "Positioning strategy." }
+    ]}
+  />
+</div>
+### SelectItem
 
-| Prop | Default | Type |
-|------|---------|------|
-| `container` | — | `HTMLElement \| null` — Portal target for nested `SelectContent`. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "Item value (required)." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables this item." }
+    ]}
+  />
+</div>
+### SelectGroup
 
-### Parts
+Groups related items.
 
-| Part | Role |
-|------|------|
-| `SelectTrigger` | Combobox field that opens the menu. |
-| `SelectGroup` | Groups related items. |
-| `SelectSection` | Section title in the menu. |
-| `SelectIcon` | Optional icon slot; trigger already includes a chevron. |
-| `SelectViewport` | Scrollable region inside the menu. |
-| `SelectLabel` | Extra label inside the menu. |
-| `SelectSeparator` | Divider between groups. |
-| `SelectItemText` | Item label slot. |
-| `SelectItemIndicator` | Selected-item indicator slot. |
-| `SelectScrollUpButton` / `SelectScrollDownButton` | Scroll affordances in a long list. |
-| `SelectArrow` | Menu arrow. |
+### SelectLabel
+
+Label for a group.
+
+### SelectSeparator
+
+Visual divider between items.
+

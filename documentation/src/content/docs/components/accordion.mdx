@@ -1,45 +1,87 @@
 ---
 title: Accordion
-description: Expand and collapse related sections so people can scan and open what they need.
+description: Collapsible content panels for dense info.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import AccordionPreview from "../../../components/AccordionPreview";
 
 # Accordion
 
-Accordion is a stack of collapsible sections. Use it for FAQs, settings groups, and help copy when showing everything at once would be too long.
+Collapsible content panels for dense info.
 
-Each item has a trigger and a panel. `type="single"` keeps one panel open; `type="multiple"` allows several. For in-page view switching with a persistent bar, use **[Tabs](/components/tabs/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <AccordionPreview client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@refineui/react";
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>What is RefineUI?</AccordionTrigger>
+    <AccordionContent>
+      RefineUI is a design system and component library.
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="item-2">
+    <AccordionTrigger>How do I install it?</AccordionTrigger>
+    <AccordionContent>
+      Run: bun add @refineui/react @refineui/tokens
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
+<Accordion type="multiple" defaultValue={["item-1", "item-2"]}>
+  {/* Multiple panels can be open */}
+</Accordion>
+
+<Accordion size="lg" value={openItem} onValueChange={setOpenItem}>
+  {/* Controlled accordion */}
+</Accordion>
+```
+
+## API Reference
 
 ### Accordion
 
-| Prop | Default | Type |
-|------|---------|------|
-| `type` | `"single"` | `"single"` \| `"multiple"` — One open panel versus several. |
-| `collapsible` | `false` | `boolean` — In `single` mode, allow closing the open item. |
-| `defaultValue` | — | `string` \| `string[]` — Uncontrolled initially open item(s). |
-| `value` | — | `string` \| `string[]` — Controlled open item(s). |
-| `onValueChange` | — | `(value: string \| string[] \| undefined) => void` — Called after open state changes. In `single` mode the value is the open id, or `undefined` when none are open. |
-| `size` | `"md"` | `"sm"` \| `"md"` \| `"lg"` — Trigger and content typography, and icon size. |
-
-Also accepts native `div` attributes (`className`, `style`, `aria-*`).
-
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "type", default: "\"single\"", type: "\"single\" | \"multiple\"", description: "Selection mode: single or multiple panels open." },
+    { prop: "collapsible", default: "false", type: "boolean", description: "Allows closing the last open panel (single mode)." },
+    { prop: "value", default: "—", type: "string | string[]", description: "Controlled open panel value(s)." },
+    { prop: "defaultValue", default: "—", type: "string | string[]", description: "Uncontrolled initial open panel(s)." },
+    { prop: "onValueChange", default: "—", type: "(value?: string | string[]) => void", description: "Event handler when open panels change." },
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "Size tier (affects typography)." }
+    ]}
+  />
+</div>
 ### AccordionItem
 
-| Prop | Default | Type |
-|------|---------|------|
-| `value` | — | `string` — Item identity. Required. Match this to Accordion `value` / `defaultValue`. |
-| `icon` | — | `string` — WebIcon name shown before the trigger label. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "Unique identifier for this item (required)." }
+    ]}
+  />
+</div>
+### AccordionTrigger
 
-### Parts
+Clickable header that toggles the panel.
 
-| Part | Role |
-|------|------|
-| `AccordionTrigger` | Button that toggles the item. Renders the chevron. |
-| `AccordionContent` | Collapsible panel. Hidden when closed (`pointer-events: none`). |
+### AccordionContent
+
+Collapsible content panel.
+

@@ -1,79 +1,138 @@
 ---
 title: Command
-description: Searchable command list for quick actions and navigation.
+description: Command palette interface with search.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import CommandPreview from "../../../components/CommandPreview";
 
 # Command
 
-Command is a composable command palette: search, groups, and keyboard selection. Use it for jump-to actions, settings search, or a list the user filters by typing.
+Command palette interface with search.
 
-The query control is **[Search Field](/components/search-field/)**. List chrome follows **[Menu](/components/menu/)**. `CommandDialog` wraps **[Dialog](/components/dialog/)** at `size="lg"` with no panel padding so the command chrome fills the modal.
-
-<div class="not-content">
+<div class="not-content my-6">
   <CommandPreview client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import {
+  Command,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandGroupHeading,
+  CommandItem,
+  CommandSeparator
+} from "@refineui/react";
+
+<Command>
+  <CommandInput placeholder="Search commands..." />
+  <CommandList>
+    <CommandEmpty>No results found.</CommandEmpty>
+    <CommandGroup>
+      <CommandGroupHeading>File</CommandGroupHeading>
+      <CommandItem value="new" onSelect={() => handleNew()}>
+        New File
+      </CommandItem>
+      <CommandItem value="open">Open</CommandItem>
+    </CommandGroup>
+    <CommandSeparator />
+    <CommandGroup>
+      <CommandGroupHeading>Edit</CommandGroupHeading>
+      <CommandItem value="copy">Copy</CommandItem>
+      <CommandItem value="paste">Paste</CommandItem>
+    </CommandGroup>
+  </CommandList>
+</Command>
+
+<CommandDialog open={isOpen} onOpenChange={setIsOpen}>
+  <Command>
+    {/* Command content */}
+  </Command>
+</CommandDialog>
+```
+
+## API Reference
 
 ### Command
 
-| Prop | Default | Type |
-|------|---------|------|
-| `value` | — | `string` — Controlled search query. |
-| `defaultValue` | — | `string` — Uncontrolled initial query. |
-| `onValueChange` | — | `(search: string) => void` — Query change. |
-| `shouldFilter` | `true` | `boolean` — When `false`, items are not filtered locally. |
-| `filter` | substring match | `(value: string, search: string, keywords?: string[]) => number` — Score; `0` hides the item. |
-| `selectedValue` | — | `string` — Controlled highlighted item `value`. |
-| `defaultSelectedValue` | — | `string` — Uncontrolled initial highlight. |
-| `onSelectedValueChange` | — | `(value: string) => void` — Highlight change. |
-| `label` | `"Command menu"` | `string` — Accessible name (`aria-label`) for the root and input. |
-
-Also accepts native `div` attributes (`className`, `style`, `onKeyDown`).
-
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "Controlled search query." },
+    { prop: "defaultValue", default: "—", type: "string", description: "Uncontrolled initial search query." },
+    { prop: "onValueChange", default: "—", type: "(search: string) => void", description: "Event handler when search changes." },
+    { prop: "shouldFilter", default: "true", type: "boolean", description: "When true, filters items by search text." },
+    { prop: "filter", default: "—", type: "CommandFilter", description: "Custom score function (return 0 to hide)." },
+    { prop: "selectedValue", default: "—", type: "string", description: "Controlled highlighted item value." },
+    { prop: "defaultSelectedValue", default: "—", type: "string", description: "Uncontrolled initial highlighted item." },
+    { prop: "onSelectedValueChange", default: "—", type: "(value: string) => void", description: "Event handler when highlighted item changes." },
+    { prop: "label", default: "—", type: "string", description: "Accessible name (`aria-label`)." }
+    ]}
+  />
+</div>
 ### CommandDialog
 
-Extends **[Dialog](/components/dialog/)** (`open`, `defaultOpen`, `onOpenChange`, `size`).
+Command in a Dialog overlay.
 
-| Prop | Default | Type |
-|------|---------|------|
-| `size` | `"lg"` | `"lg"` \| `"sm"` — Dialog panel size. |
-| `commandProps` | — | `Omit<CommandProps, "children">` — Forwarded to the inner `Command`. |
-
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "open", default: "—", type: "boolean", description: "Controlled open state." },
+    { prop: "onOpenChange", default: "—", type: "(open: boolean) => void", description: "Event handler when open state changes." },
+    { prop: "commandProps", default: "—", type: "CommandProps", description: "Props forwarded to inner Command." }
+    ]}
+  />
+</div>
 ### CommandInput
 
-| Prop | Default | Type |
-|------|---------|------|
-| `placeholder` | `"Type a command or search…"` | `string` — Input placeholder. |
-| `startIcon` | search glyph | `ReactNode` — Leading icon in the search field. |
-| `disabled` | — | `boolean` — Disables the search field. |
+Search input with optional `startIcon`.
 
-Omits native `value` / `onChange` / `size` — the query is owned by `Command`.
+### CommandList
+
+Scrollable list container.
+
+### CommandEmpty
+
+Shown when no items match.
+
+### CommandGroup
+
+Groups related items.
+
+### CommandGroupHeading
+
+Heading for a group.
+
+### CommandSeparator
+
+Visual divider.
 
 ### CommandItem
 
-| Prop | Default | Type |
-|------|---------|------|
-| `value` | — | `string` — Identity for filter, highlight, and `onSelect`. Required. |
-| `keywords` | — | `string[]` — Extra strings included in the default filter. |
-| `onSelect` | — | `(value: string) => void` — Click or Enter. |
-| `forceMount` | `false` | `boolean` — Keep mounted when filtered out. |
-| `startIcon` | — | `ReactNode` — Leading icon. |
-| `endIcon` | — | `ReactNode` — Trailing icon (with shortcut). |
-| `shortcut` | — | `ReactNode` — Trailing hint. `CommandShortcut` children are also collected. |
-| `disabled` | `false` | `boolean` — Visible but not activatable. |
-
-Also accepts native `button` attributes (`className`, `onClick`).
-
-### Parts
-
-| Part | Role |
-|------|------|
-| `CommandList` | Scrollable listbox. |
-| `CommandEmpty` | Shown when the query has no visible items. |
-| `CommandGroup` | Group; hides when empty after filter. |
-| `CommandGroupHeading` | Group label. |
-| `CommandSeparator` | Horizontal divider. |
-| `CommandShortcut` | Trailing keyboard hint as a child of `CommandItem`. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "Unique value for filtering and selection (required)." },
+    { prop: "keywords", default: "—", type: "string[]", description: "Extra strings for default filter." },
+    { prop: "onSelect", default: "—", type: "(value: string) => void", description: "Called when activated (click/Enter)." },
+    { prop: "forceMount", default: "false", type: "boolean", description: "Keep mounted when filtered out." },
+    { prop: "startIcon", default: "—", type: "ReactNode", description: "Leading icon." },
+    { prop: "endIcon", default: "—", type: "ReactNode", description: "Trailing icon." },
+    { prop: "shortcut", default: "—", type: "ReactNode", description: "Keyboard shortcut hint." }
+    ]}
+  />
+</div>

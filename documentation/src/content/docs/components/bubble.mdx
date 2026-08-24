@@ -1,41 +1,53 @@
 ---
 title: Bubble
-description: Message surface for chat text, quoted replies, and reactions.
+description: Chat-style message bubble for conversational UI.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import BubbleDemo from "../../../components/BubbleDemo";
 
 # Bubble
 
-Bubble is the message surface in a conversation. Use it for chat text, short structured replies, and emoji reactions. Avatars, display names, and timestamps belong in the row around the bubble — not inside `Bubble`.
+`Bubble` renders a message surface for chat and conversation layouts. Pair with `BubbleContent`, optional `BubbleReactions`, and `BubbleGroup` for stacked messages.
 
-Incoming messages usually sit at `align="start"`; outgoing at `align="end"`. For long copy that needs show more / show less, compose **[Accordion](/components/accordion/)** inside `BubbleContent`.
-
-<div class="not-content">
+<div class="not-content my-6">
   <BubbleDemo client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import { Bubble, BubbleContent, BubbleGroup } from "@refineui/react";
+
+<Bubble variant="muted" align="start">
+  <BubbleContent>Want to catch up later?</BubbleContent>
+</Bubble>
+
+<Bubble variant="default" align="end">
+  <BubbleContent>Sounds good.</BubbleContent>
+</Bubble>
+```
+
+## API Reference
 
 ### Bubble
 
-| Prop | Default | Type |
-|------|---------|------|
-| `variant` | `"default"` | `"default"` \| `"secondary"` \| `"muted"` \| `"tinted"` \| `"outline"` \| `"ghost"` \| `"destructive"` — Visual treatment. `ghost` is unframed. |
-| `align` | `"start"` | `"start"` \| `"end"` — Inline alignment in the column. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "variant", default: "—", type: "\"default\" | \"secondary\" | \"muted\" | \"tinted\" | \"outline\" | \"ghost\" | \"destructive\"", description: "Visual style." },
+    { prop: "align", default: "—", type: "\"start\" | \"end\"", description: "Message alignment." }
+    ]}
+  />
+</div>
+### BubbleContent / BubbleReactions / BubbleGroup
 
-Also accepts native `div` attributes (`className`, `style`, `aria-*`).
-
-### BubbleReactions
-
-| Prop | Default | Type |
-|------|---------|------|
-| `side` | `"bottom"` | `"top"` \| `"bottom"` — Edge of the bubble to attach to. |
-| `align` | opposite of `Bubble` | `"start"` \| `"end"` — Inline inset. Defaults toward the conversation center. |
-
-### Parts
-
-| Part | Role |
-|------|------|
-| `BubbleContent` | Message body. Inherits variant styles from `Bubble`. |
-| `BubbleGroup` | Stack of consecutive bubbles from the same sender. |
+Composition slots for body text, reactions, and stacked groups. See the preview for structure.

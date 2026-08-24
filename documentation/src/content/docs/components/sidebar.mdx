@@ -1,52 +1,110 @@
 ---
 title: Sidebar
-description: Vertical app navigation — brand, grouped links, and a trailing slot.
+description: Collapsible vertical navigation drawer/sidebar.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import SidebarPreview from "../../../components/SidebarPreview";
 
 # Sidebar
 
-Sidebar is the complementary landmark for an app or docs shell. Use it when destinations live in a vertical list — grouped pages, settings, an account row — beside the main content.
+Collapsible vertical navigation drawer/sidebar.
 
-Each region is a slot. Put the lockup in `SidebarHeader`. Put destinations in `SidebarNav`. Put the account or settings row in `SidebarFooter`. For horizontal site destinations with flyout panels, use **[Navigation Menu](/components/navigation-menu/)**. For a user-owned split width, compose **[Resizable](/components/resizable/)**. For overflow inside the nav, compose **[Scroll Area](/components/scroll-area/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <SidebarPreview client:load />
 </div>
 
-## Interface
+## Installation
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+## Usage
+
+```tsx
+import {
+  Sidebar,
+  SidebarHeader,
+  SidebarBrand,
+  SidebarContent,
+  SidebarNav,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarLink,
+  SidebarFooter
+} from "@refineui/react";
+
+<Sidebar>
+  <SidebarHeader>
+    <SidebarBrand>
+      <Logo />
+      My App
+    </SidebarBrand>
+  </SidebarHeader>
+  <SidebarContent>
+    <SidebarNav>
+      <SidebarGroup>
+        <SidebarGroupLabel>Main</SidebarGroupLabel>
+        <SidebarLink href="/" active>Dashboard</SidebarLink>
+        <SidebarLink href="/projects">Projects</SidebarLink>
+        <SidebarLink href="/tasks">Tasks</SidebarLink>
+      </SidebarGroup>
+      <SidebarGroup>
+        <SidebarGroupLabel>Settings</SidebarGroupLabel>
+        <SidebarLink href="/settings">Preferences</SidebarLink>
+        <SidebarLink href="/profile">Profile</SidebarLink>
+      </SidebarGroup>
+    </SidebarNav>
+  </SidebarContent>
+  <SidebarFooter>
+    <p>© 2024</p>
+  </SidebarFooter>
+</Sidebar>
+```
+
+## API Reference
 
 ### Sidebar
 
-Accepts native `aside` attributes (`className`, `style`, `aria-*`).
+Root sidebar container (`<aside>` element).
+
+### SidebarHeader
+
+Header section.
+
+### SidebarBrand
+
+Brand/logo area.
+
+### SidebarContent
+
+Main content area.
 
 ### SidebarNav
 
-| Prop | Default | Type |
-|------|---------|------|
-| `aria-label` | `"Sidebar"` | `string` — Landmark name. Override when multiple sidebars exist. |
+Navigation container (`<nav>` element).
 
-Also accepts native `nav` attributes.
+### SidebarGroup
+
+Groups related links.
+
+### SidebarGroupLabel
+
+Label for a group.
 
 ### SidebarLink
 
-| Prop | Default | Type |
-|------|---------|------|
-| `active` | `false` | `boolean` — Current page (`aria-current="page"`). |
-| `href` | — | `string` — Destination. |
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "active", default: "false", type: "boolean", description: "Marks the current page (`aria-current=\"page\"`)." }
+    ]}
+  />
+</div>
+### SidebarFooter
 
-Also accepts native `<a>` attributes.
+Footer section.
 
-### Parts
-
-| Part | Role |
-|------|------|
-| `SidebarHeader` | Top region — brand lockup. |
-| `SidebarBrand` | Lockup row (logo and/or name). |
-| `SidebarContent` | Scrollable middle region. |
-| `SidebarNav` | Destination list (`nav`). |
-| `SidebarGroup` | One labeled link cluster. |
-| `SidebarGroupLabel` | Group heading. |
-| `SidebarLink` | Sidebar `<a>`. Leading icons go in children. |
-| `SidebarFooter` | Bottom region — account or settings. |

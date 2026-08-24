@@ -1,28 +1,45 @@
 ---
 title: Progress
-description: Continuous bar that shows how far a determinate task has gone.
+description: Visual bar indicating completion percentage.
 ---
+
+import { PropSpec } from "../../../docs-ui";
 
 import ProgressPreview from "../../../components/ProgressPreview";
 
 # Progress
 
-Progress is a determinate bar. Use it when you know how far work has gone and how far is left — an upload, a download, or a percent complete.
+Visual bar indicating completion percentage.
 
-There are no named stages. For stages on a compact rail, use **[ProgressStepper](/components/progress-stepper/)**. For numbered stages with a title and description, use **[Stepper](/components/stepper/)**. For an unknown wait, use **[Spinner](/components/spinner/)**.
-
-<div class="not-content">
+<div class="not-content my-6">
   <ProgressPreview client:load />
 </div>
 
-## Interface
+## Installation
 
-### Progress
+```bash
+bun add @refineui/react @refineui/tokens
+```
 
-| Prop | Default | Type |
-|------|---------|------|
-| `value` | — | `number` — Current amount. Required. Mapped to fill width against `max`. |
-| `max` | `100` | `number` — Maximum amount. Used for fill percent and `aria-valuemax`. |
-| `size` | `"sm"` | `"sm"` \| `"lg"` — Track height. |
+## Usage
 
-Also accepts native `div` attributes (`className`, `style`, `aria-*`).
+```tsx
+import { Progress } from "@refineui/react";
+
+<Progress value={60} max={100} size="lg" />
+
+<Progress value={uploadedBytes} max={totalBytes} />
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "number", description: "Current progress value (required)." },
+    { prop: "max", default: "100", type: "number", description: "Maximum value." },
+    { prop: "size", default: "—", type: "\"sm\" | \"lg\"", description: "Bar thickness: Small (2px) or Large (4px)." }
+    ]}
+  />
+</div>

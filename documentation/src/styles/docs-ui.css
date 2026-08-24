@@ -1,0 +1,123 @@
+/**
+ * docs-ui — design-system documentation layer.
+ * Starlight supplies routing only; visuals use RefineUI tokens exclusively.
+ */
+
+[data-docs-ui="component-page"] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--refineui-spacing-size-xxx-large);
+}
+
+[data-docs-ui="section"] + [data-docs-ui="section"] {
+  padding-top: var(--refineui-spacing-size-xxx-large);
+  border-top: var(--refineui-stroke-width-thin) solid var(--refineui-color-alias-border-subtle);
+}
+
+[data-docs-ui="live-stage"] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--refineui-spacing-size-large);
+  align-items: stretch;
+}
+
+@media (min-width: 50rem) {
+  [data-docs-ui="live-stage"]:has([data-docs-ui="control-rail"]) {
+    grid-template-columns: minmax(0, 1fr) var(--refineui-size-foundation-size-2560);
+  }
+}
+
+[data-docs-ui="control-rail"] {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--refineui-spacing-size-large);
+  padding: var(--refineui-spacing-size-large);
+  border: var(--refineui-stroke-width-thin) solid var(--refineui-color-alias-border-subtle);
+  border-radius: var(--refineui-radius-rounded-large);
+  background: var(--refineui-color-alias-background-primary);
+}
+
+[data-docs-ui="control-group"] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--refineui-spacing-size-medium);
+}
+
+[data-docs-ui="control-switch"] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--refineui-spacing-size-medium);
+  min-height: var(--refineui-size-foundation-size-400);
+}
+
+[data-docs-ui="state-row"] {
+  display: grid;
+  grid-template-columns: var(--refineui-size-foundation-size-2000) minmax(0, 1fr);
+  gap: var(--refineui-spacing-size-medium);
+  align-items: center;
+}
+
+[data-docs-ui="do-dont"] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--refineui-spacing-size-large);
+}
+
+@media (min-width: 50rem) {
+  [data-docs-ui="do-dont"] {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+[data-docs-ui="do"],
+[data-docs-ui="dont"] {
+  padding: var(--refineui-spacing-size-large);
+  border: var(--refineui-stroke-width-thin) solid var(--refineui-color-alias-border-subtle);
+  border-radius: var(--refineui-radius-rounded-large);
+}
+
+[data-docs-ui="rule-list"] {
+  margin: 0;
+  padding-inline-start: var(--refineui-spacing-size-large);
+  display: flex;
+  flex-direction: column;
+  gap: var(--refineui-spacing-size-small);
+}
+
+[data-docs-ui="anatomy"] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--refineui-spacing-size-large);
+}
+
+[data-docs-ui="spec-table"] {
+  width: 100%;
+  min-width: 0;
+}
+
+[data-docs-ui="spec-table"] [data-refineui="table"] {
+  padding-inline: 0;
+  padding-bottom: 0;
+}
+
+[data-docs-ui="code"] {
+  margin: 0;
+  padding: var(--refineui-spacing-size-x-large);
+  overflow-x: auto;
+  border: var(--refineui-stroke-width-thin) solid var(--refineui-color-alias-border-default);
+  border-radius: var(--refineui-radius-rounded-large);
+  background: var(--refineui-color-alias-surface-sunken);
+  color: var(--refineui-color-alias-foreground-primary);
+  box-shadow: var(--refineui-elevation-2);
+  font-family: var(--refineui-docs-font-mono);
+  font-size: var(--refineui-typography-body-2-font-size);
+  font-weight: var(--refineui-typography-caption-2-font-weight);
+  line-height: var(--refineui-typography-body-1-line-height);
+}
+
+[data-docs-ui="code"] code {
+  font: inherit;
+  white-space: pre;
+}
