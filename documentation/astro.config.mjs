@@ -127,7 +127,7 @@ export default defineConfig({
             {
               label: 'Design Tokens',
               items: [
-                { label: 'Overview', slug: 'foundations/design-tokens' },
+                { label: 'Introduction', slug: 'foundations/design-tokens' },
                 { label: 'Color', slug: 'foundations/color' },
                 { label: 'Typography', slug: 'foundations/typography' },
                 { label: 'Spacing', slug: 'foundations/spacing' },
@@ -142,11 +142,21 @@ export default defineConfig({
             },
             {
               label: 'Layout',
-              autogenerate: { directory: 'foundations/layout' },
+              items: [
+                { label: 'Introduction', slug: 'foundations/layout' },
+                { label: 'Container', slug: 'foundations/layout/container' },
+                { label: 'Grid', slug: 'foundations/layout/grid' },
+                { label: 'Alignment', slug: 'foundations/layout/alignment' },
+                { label: 'Responsive', slug: 'foundations/layout/responsive' },
+              ],
             },
             {
               label: 'Iconography',
-              autogenerate: { directory: 'foundations/iconography' },
+              items: [
+                { label: 'Introduction', slug: 'foundations/iconography' },
+                { label: 'Icons', slug: 'foundations/iconography/icons' },
+                { label: 'Icon usage', slug: 'foundations/iconography/icon-usage' },
+              ],
             },
           ],
         },

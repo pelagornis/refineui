@@ -42,7 +42,7 @@ export function CatalogCard({
 
 export function CatalogGrid({ children }: { children: ReactNode }) {
     return (
-        <Grid data-refineui-catalog minItem="foundationSize3200" gap="sizeLarge">
+        <Grid data-docs-overview="components" data-refineui-catalog minItem="foundationSize3200" gap="sizeLarge">
             {children}
         </Grid>
     );

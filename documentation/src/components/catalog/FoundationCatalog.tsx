@@ -1,6 +1,24 @@
-import { Box, Stack, Text } from "@refineui/react";
+import { Box, Grid, Stack, Text } from "@refineui/react";
 
-const ITEMS = [
+const AREAS = [
+    {
+        href: "/foundations/design-tokens/",
+        name: "Design tokens",
+        hint: "Color, type, space, radius, motion, and stacking",
+    },
+    {
+        href: "/foundations/layout/",
+        name: "Layout",
+        hint: "Containers, grids, alignment, and responsive rules",
+    },
+    {
+        href: "/foundations/iconography/",
+        name: "Iconography",
+        hint: "Glyph sizes, pairing, and accessibility",
+    },
+] as const;
+
+const TOKENS = [
     { href: "/foundations/color/", name: "Color", hint: "Aliases and palette" },
     { href: "/foundations/typography/", name: "Typography", hint: "Semantic text roles" },
     { href: "/foundations/spacing/", name: "Spacing", hint: "Gaps and padding" },
@@ -15,35 +33,72 @@ const ITEMS = [
 
 export default function FoundationCatalog() {
     return (
-        <Box
-            data-refineui-foundation-index
-            background="backgroundSurface"
-            radius="roundedXLarge"
-            border="strokeWidthThin"
-            borderColor="borderDefault"
-            className="overflow-hidden"
-        >
-            {ITEMS.map((item) => (
-                <Stack
-                    key={item.href}
-                    as="article"
-                    className="relative"
-                    data-refineui-foundation-index-row
-                    direction="row"
-                    gap="sizeMedium"
-                    align="center"
-                    justify="between"
+        <Stack data-docs-overview="foundations" gap="sizeXXXLarge" className="w-full min-w-0">
+            <Grid minItem="foundationSize3200" gap="sizeLarge">
+                {AREAS.map((area) => (
+                    <Box
+                        key={area.href}
+                        as="article"
+                        data-refineui-foundation-area
+                        background="backgroundSurface"
+                        radius="roundedXLarge"
+                        border="strokeWidthThin"
+                        borderColor="borderDefault"
+                        padding="sizeXLarge"
+                        className="relative min-w-0"
+                    >
+                        <Stack gap="sizeSmall">
+                            <Text as="h3" variant="subtitleMd" className="m-0">
+                                <a href={area.href} data-refineui-catalog-link>
+                                    {area.name}
+                                </a>
+                            </Text>
+                            <Text variant="bodyMd" className="m-0 text-refineui-alias-foreground-secondary">
+                                {area.hint}
+                            </Text>
+                        </Stack>
+                    </Box>
+                ))}
+            </Grid>
+
+            <Stack gap="sizeLarge" className="w-full min-w-0">
+                <Text as="h2" variant="titleMd" className="m-0">
+                    Design token index
+                </Text>
+                <Box
+                    data-refineui-foundation-index
+                    background="backgroundSurface"
+                    radius="roundedXLarge"
+                    border="strokeWidthThin"
+                    borderColor="borderDefault"
+                    className="overflow-hidden"
                 >
-                    <Text as="h3" variant="subtitleMd" className="m-0">
-                        <a href={item.href} data-refineui-catalog-link>
-                            {item.name}
-                        </a>
-                    </Text>
-                    <Text variant="captionMd" className="m-0 text-refineui-alias-foreground-tertiary">
-                        {item.hint}
-                    </Text>
-                </Stack>
-            ))}
-        </Box>
+                    {TOKENS.map((item) => (
+                        <Stack
+                            key={item.href}
+                            as="article"
+                            className="relative"
+                            data-refineui-foundation-index-row
+                            direction="row"
+                            gap="sizeMedium"
+                            align="center"
+                            justify="between"
+                        >
+                            <Text as="h3" variant="subtitleMd" className="m-0">
+                                <a href={item.href} data-refineui-catalog-link>
+                                    {item.name}
+                                </a>
+                            </Text>
+                            <Text
+                                variant="captionMd"
+                                className="m-0 text-refineui-alias-foreground-tertiary"
+                            >
+                                {item.hint}
+                            </Text>
+                        </Stack>
+                    ))}
+                </Box>
+            </Stack>
+        </Stack>
     );
 }
