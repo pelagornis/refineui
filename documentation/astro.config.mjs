@@ -5,6 +5,16 @@ import tailwindcss from '@tailwindcss/vite';
 import { removeEmptyFrameHeaders } from './src/expressive-code/removeEmptyFrameHeaders.mjs';
 
 export default defineConfig({
+  redirects: {
+    '/intro': '/getting-started',
+    '/intro/': '/getting-started/',
+    '/introduction': '/getting-started',
+    '/introduction/': '/getting-started/',
+    '/foundations/layout/container': '/foundations/layout#container',
+    '/foundations/layout/container/': '/foundations/layout/#container',
+    '/foundations/layout/grid': '/foundations/layout#grid',
+    '/foundations/layout/grid/': '/foundations/layout/#grid',
+  },
   vite: {
     plugins: [tailwindcss()],
     ssr: {
@@ -114,14 +124,11 @@ export default defineConfig({
       },
       sidebar: [
         {
-          label: 'GET STARTED',
-          items: [
-            { label: 'Introduction', slug: 'introduction' },
-            { label: 'Getting Started', slug: 'intro' },
-          ],
+          label: 'Guides',
+          items: [{ label: 'Getting started', slug: 'getting-started' }],
         },
         {
-          label: 'FOUNDATIONS',
+          label: 'Foundations',
           items: [
             { label: 'Overview', slug: 'foundations' },
             {
@@ -142,13 +149,7 @@ export default defineConfig({
             },
             {
               label: 'Layout',
-              items: [
-                { label: 'Introduction', slug: 'foundations/layout' },
-                { label: 'Container', slug: 'foundations/layout/container' },
-                { label: 'Grid', slug: 'foundations/layout/grid' },
-                { label: 'Alignment', slug: 'foundations/layout/alignment' },
-                { label: 'Responsive', slug: 'foundations/layout/responsive' },
-              ],
+              slug: 'foundations/layout',
             },
             {
               label: 'Iconography',
@@ -161,7 +162,7 @@ export default defineConfig({
           ],
         },
         {
-          label: 'COMPONENTS',
+          label: 'Components',
           items: [
             { label: 'Overview', slug: 'components' },
             {
@@ -171,6 +172,42 @@ export default defineConfig({
                 { label: 'Button Group', slug: 'components/button-group' },
                 { label: 'Segmented Control', slug: 'components/segmented-control' },
                 { label: 'Toggle Button', slug: 'components/toggle-button' },
+              ],
+            },
+            {
+              label: 'Content',
+              items: [
+                { label: 'Accordion', slug: 'components/accordion' },
+                { label: 'Bubble', slug: 'components/bubble' },
+                { label: 'Divider', slug: 'components/divider' },
+                { label: 'Label', slug: 'components/label' },
+                { label: 'Link', slug: 'components/link' },
+              ],
+            },
+            {
+              label: 'Data Display',
+              items: [
+                { label: 'Avatar', slug: 'components/avatar' },
+                { label: 'Avatars', slug: 'components/avatars' },
+                { label: 'Badge', slug: 'components/badge' },
+                { label: 'Calendar', slug: 'components/calendar' },
+                { label: 'Card', slug: 'components/card' },
+                { label: 'Carousel', slug: 'components/carousel' },
+                { label: 'Chart', slug: 'components/chart' },
+                { label: 'Table', slug: 'components/table' },
+                { label: 'Tag', slug: 'components/tag' },
+              ],
+            },
+            {
+              label: 'Feedback',
+              items: [
+                { label: 'Alert', slug: 'components/alert' },
+                { label: 'Progress', slug: 'components/progress' },
+                { label: 'Progress Stepper', slug: 'components/progress-stepper' },
+                { label: 'Skeleton', slug: 'components/skeleton' },
+                { label: 'Spinner', slug: 'components/spinner' },
+                { label: 'Toast', slug: 'components/toast' },
+                { label: 'Tooltip', slug: 'components/tooltip' },
               ],
             },
             {
@@ -190,6 +227,17 @@ export default defineConfig({
               ],
             },
             {
+              label: 'Layout',
+              items: [
+                { label: 'Box', slug: 'components/box' },
+                { label: 'Container', slug: 'components/container' },
+                { label: 'Grid', slug: 'components/grid' },
+                { label: 'Resizable', slug: 'components/resizable' },
+                { label: 'Scroll Area', slug: 'components/scroll-area' },
+                { label: 'Stack', slug: 'components/stack' },
+              ],
+            },
+            {
               label: 'Navigation',
               items: [
                 { label: 'Breadcrumb', slug: 'components/breadcrumb' },
@@ -203,18 +251,6 @@ export default defineConfig({
               ],
             },
             {
-              label: 'Feedback',
-              items: [
-                { label: 'Alert', slug: 'components/alert' },
-                { label: 'Progress', slug: 'components/progress' },
-                { label: 'Progress Stepper', slug: 'components/progress-stepper' },
-                { label: 'Skeleton', slug: 'components/skeleton' },
-                { label: 'Spinner', slug: 'components/spinner' },
-                { label: 'Toast', slug: 'components/toast' },
-                { label: 'Tooltip', slug: 'components/tooltip' },
-              ],
-            },
-            {
               label: 'Overlays',
               items: [
                 { label: 'Command', slug: 'components/command' },
@@ -224,45 +260,10 @@ export default defineConfig({
                 { label: 'Popover', slug: 'components/popover' },
               ],
             },
-            {
-              label: 'Data Display',
-              items: [
-                { label: 'Avatar', slug: 'components/avatar' },
-                { label: 'Avatars', slug: 'components/avatars' },
-                { label: 'Badge', slug: 'components/badge' },
-                { label: 'Calendar', slug: 'components/calendar' },
-                { label: 'Card', slug: 'components/card' },
-                { label: 'Carousel', slug: 'components/carousel' },
-                { label: 'Chart', slug: 'components/chart' },
-                { label: 'Table', slug: 'components/table' },
-                { label: 'Tag', slug: 'components/tag' },
-              ],
-            },
-            {
-              label: 'Content',
-              items: [
-                { label: 'Accordion', slug: 'components/accordion' },
-                { label: 'Bubble', slug: 'components/bubble' },
-                { label: 'Divider', slug: 'components/divider' },
-                { label: 'Label', slug: 'components/label' },
-                { label: 'Link', slug: 'components/link' },
-              ],
-            },
-            {
-              label: 'Layout',
-              items: [
-                { label: 'Box', slug: 'components/box' },
-                { label: 'Container', slug: 'components/container' },
-                { label: 'Grid', slug: 'components/grid' },
-                { label: 'Resizable', slug: 'components/resizable' },
-                { label: 'Scroll Area', slug: 'components/scroll-area' },
-                { label: 'Stack', slug: 'components/stack' },
-              ],
-            },
           ],
         },
         {
-          label: 'DEVELOPMENT',
+          label: 'Development',
           items: [
             { label: 'Overview', slug: 'development' },
             { label: 'Installation', slug: 'development/installation' },

@@ -922,11 +922,21 @@
   right: 0;
   top: 0;
   bottom: auto;
+  display: flex;
+  justify-content: flex-start;
   overflow: visible;
   pointer-events: auto;
   transform: translateY(var(--refineui-toast-offset-collapsed, 0px));
   transition: transform var(--refineui-motion-duration-panel) var(--refineui-motion-easing-emphasized), height var(--refineui-motion-duration-panel) var(--refineui-motion-easing-emphasized);
   z-index: var(--refineui-toast-z-index, 100);
+}
+
+[data-refineui="toaster"][data-position$="-center"] [data-refineui="toast-item"] {
+  justify-content: center;
+}
+
+[data-refineui="toaster"][data-position$="-right"] [data-refineui="toast-item"] {
+  justify-content: flex-end;
 }
 
 /*
@@ -936,10 +946,18 @@
 [data-refineui="toaster"][data-position^="bottom"] [data-refineui="toast-item"] {
   top: auto;
   bottom: 0;
-  display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  align-items: flex-start;
   transform: translateY(calc(-1 * var(--refineui-toast-offset-collapsed, 0px)));
+}
+
+[data-refineui="toaster"][data-position="bottom-center"] [data-refineui="toast-item"] {
+  align-items: center;
+}
+
+[data-refineui="toaster"][data-position="bottom-right"] [data-refineui="toast-item"] {
+  align-items: flex-end;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -959,7 +977,8 @@
 [data-refineui="toast-scale-layer"] {
   --refineui-toast-stack-opacity-step: 0.12;
   position: relative;
-  width: 100%;
+  width: fit-content;
+  max-width: 100%;
   box-sizing: border-box;
   transform: scale(calc(1 - (var(--refineui-toast-stack-index, 0) * 0.018)));
   transform-origin: top center;
@@ -999,16 +1018,76 @@
   }
 }
 
-[data-refineui="toast"] {
-  position: relative;
-  width: 100%;
-  box-sizing: border-box;
-  touch-action: manipulation;
+[data-refineui="toaster"][data-position^="top"] {
+  --refineui-toast-slide-in-y: -100%;
+  --refineui-toast-slide-out-y: -100%;
 }
 
-[data-refineui="toast"][data-stack-state="entering"],
-[data-refineui="toast"][data-stack-state="leaving"] {
+[data-refineui="toaster"][data-position^="bottom"] {
+  --refineui-toast-slide-in-y: 100%;
+  --refineui-toast-slide-out-y: 100%;
+}
+
+[data-refineui="toast"] {
+  --refineui-toast-swipe-x: 0px;
+  --refineui-toast-swipe-y: 0px;
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  box-sizing: border-box;
+  touch-action: none;
+  cursor: grab;
+  transform: translate3d(var(--refineui-toast-swipe-x), var(--refineui-toast-swipe-y), 0);
+  transition:
+    border-color var(--refineui-motion-duration-medium) var(--refineui-motion-easing-emphasized),
+    opacity var(--refineui-motion-duration-medium) var(--refineui-motion-easing-emphasized),
+    transform var(--refineui-motion-duration-medium) var(--refineui-motion-easing-emphasized);
+  will-change: transform, opacity;
+  user-select: none;
+}
+
+[data-refineui="toast"][data-swiping="true"] {
+  cursor: grabbing;
+  transition: none;
+}
+
+[data-refineui="toast"][data-swipe-out="left"] {
+  --refineui-toast-swipe-x: -120%;
   opacity: 0;
+}
+
+[data-refineui="toast"][data-swipe-out="right"] {
+  --refineui-toast-swipe-x: 120%;
+  opacity: 0;
+}
+
+[data-refineui="toast"][data-swipe-out="top"] {
+  --refineui-toast-swipe-y: -120%;
+  opacity: 0;
+}
+
+[data-refineui="toast"][data-swipe-out="bottom"] {
+  --refineui-toast-swipe-y: 120%;
+  opacity: 0;
+}
+
+/* Enter: slide in from off-edge → rest. Leave (non-swipe): slide back out the same way. */
+[data-refineui="toast"][data-stack-state="entering"] {
+  opacity: 0;
+  transform: translate3d(
+    var(--refineui-toast-swipe-x, 0px),
+    var(--refineui-toast-slide-in-y, -100%),
+    0
+  );
+}
+
+[data-refineui="toast"][data-stack-state="leaving"]:not([data-swipe-out]) {
+  opacity: 0;
+  transform: translate3d(
+    var(--refineui-toast-swipe-x, 0px),
+    var(--refineui-toast-slide-out-y, -100%),
+    0
+  );
 }
 
 /* Toast — Web Kit `548:655` Focused: keep thin border width; emphasize with color only */
@@ -1019,8 +1098,14 @@
 @media (prefers-reduced-motion: reduce) {
   [data-refineui="toaster"],
   [data-refineui="toast-item"],
-  [data-refineui="toast-scale-layer"] {
+  [data-refineui="toast-scale-layer"],
+  [data-refineui="toast"] {
     transition-duration: var(--refineui-motion-duration-instant);
+  }
+
+  [data-refineui="toast"][data-stack-state="entering"],
+  [data-refineui="toast"][data-stack-state="leaving"]:not([data-swipe-out]) {
+    transform: none;
   }
 }
 

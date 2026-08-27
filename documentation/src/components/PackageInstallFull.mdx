@@ -1,0 +1,41 @@
+import PackageManagerPicker from "./PackageManagerPicker";
+
+{/* Full install (react + tokens + web-icons) for Getting Started pages. */}
+
+<div class="not-content" data-docs-package-manager>
+
+<PackageManagerPicker client:load />
+
+<div data-pm-panel="npm">
+
+```bash
+npm install @refineui/react @refineui/tokens @refineui/web-icons
+```
+
+</div>
+
+<div data-pm-panel="yarn" hidden>
+
+```bash
+yarn add @refineui/react @refineui/tokens @refineui/web-icons
+```
+
+</div>
+
+<div data-pm-panel="pnpm" hidden>
+
+```bash
+pnpm add @refineui/react @refineui/tokens @refineui/web-icons
+```
+
+</div>
+
+<div data-pm-panel="bun" hidden>
+
+```bash
+bun add @refineui/react @refineui/tokens @refineui/web-icons
+```
+
+</div>
+
+</div>

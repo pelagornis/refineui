@@ -326,32 +326,43 @@
 }
 
 [data-refineui-catalog-card] {
-  transition: border-color var(--refineui-motion-duration-fast) var(--refineui-motion-easing-standard);
-}
-
-[data-refineui-catalog-card]:hover,
-[data-refineui-catalog-card]:focus-within {
-  border-color: var(--refineui-color-alias-border-hover);
+  min-width: 0;
 }
 
 [data-refineui-catalog-preview] {
   pointer-events: none;
   user-select: none;
+  flex: none;
+  min-width: 0;
+}
+
+[data-refineui-catalog-preview] > * {
+  box-sizing: border-box;
+}
+
+/* Keep specimen content inside the fixed preview frame. */
+[data-refineui-catalog-preview] > * > * {
+  max-width: 100%;
+  max-height: 100%;
 }
 
 /**
- * Calendar with month/year Selects is wider than a catalog tile
- * (`foundationSize3200`). Scale to the calendar min-width token.
+ * Large previews (Calendar, etc.) must fit the fixed preview frame.
+ * Scale from layout size so the grid row height stays uniform.
  */
 [data-refineui-catalog-calendar] {
   display: flex;
   width: 100%;
+  height: 100%;
+  max-height: 100%;
+  align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 [data-refineui-catalog-calendar] [data-refineui="calendar"] {
   zoom: calc(
-    var(--refineui-size-foundation-size-2560) / var(--refineui-size-foundation-size-3200)
+    var(--refineui-size-foundation-size-2000) / var(--refineui-size-foundation-size-3200)
   );
 }
 
@@ -517,11 +528,6 @@
 /* Beat Starlight Page.astro `html:not([data-has-sidebar]) { 67.5rem }` (loads after user CSS). */
 html:not([data-has-sidebar]) {
   --sl-content-width: 45rem !important;
-}
-
-/* Foundations / Components overview — full main column for catalogs. */
-:root:has([data-docs-overview]) {
-  --sl-content-width: 100%;
 }
 
 [data-refineui-foundation-area] {
@@ -828,7 +834,10 @@ header.header {
   line-height: var(--refineui-typography-body-2-line-height);
 }
 
-.sl-markdown-content > h1:first-of-type {
+/* PageTitle already renders title; hide markdown H1 (Starlight may wrap it). */
+.sl-markdown-content > h1:first-of-type,
+.sl-markdown-content > .sl-heading-wrapper:first-child > :is(h1, h2, h3, h4, h5, h6),
+.sl-markdown-content > .sl-heading-wrapper.level-h1:first-child {
   display: none;
 }
 
@@ -984,6 +993,32 @@ details[open] > [data-refineui-docs-toc-summary] [data-refineui-docs-toc-caret] 
   gap: var(--refineui-spacing-size-small);
   padding: var(--refineui-spacing-size-medium);
   border-top: var(--refineui-stroke-width-thin) solid var(--refineui-color-alias-border-subtle);
+}
+
+/**
+ * Starlight’s markdown sibling rule (`margin-top: 1rem` between blocks) also
+ * hits sibling SegmentedControl items and inflates the track / indicator.
+ * Component previews use `.not-content`; keep a targeted reset as backup.
+ */
+.sl-markdown-content [data-refineui="segmented-control"] > * {
+  margin-top: 0;
+}
+
+[data-docs-package-manager] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--refineui-spacing-size-large);
+  width: 100%;
+  min-width: 0;
+  margin-block: var(--refineui-spacing-size-large);
+}
+
+[data-docs-package-manager] [data-pm-panel][hidden] {
+  display: none !important;
+}
+
+[data-docs-package-manager] [data-pm-panel] > .expressive-code {
+  margin-block: 0;
 }
 
 /**

@@ -122,8 +122,7 @@ export const componentTypographyTokens = {
     },
 
     toast: {
-        title: role("bodyMd"),
-        message: role("bodyXs"),
+        message: role("bodyMd"),
     },
     pagination: role("bodyLg"),
     chip: {

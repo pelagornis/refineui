@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Box, Grid, Text } from "@refineui/react";
+import { Box, Card, CardHeader, CardTitle, Grid } from "@refineui/react";
 
 export function CatalogCard({
     href,
@@ -11,38 +11,30 @@ export function CatalogCard({
     preview: ReactNode;
 }) {
     return (
-        <Box
-            as="article"
-            data-refineui-catalog-card
-            background="backgroundSurface"
-            radius="roundedXLarge"
-            border="strokeWidthThin"
-            borderColor="borderDefault"
-            className="relative h-full overflow-hidden"
-        >
+        <Card variant="outlined" interactive data-refineui-catalog-card className="relative">
             <div data-refineui-catalog-preview>
                 <Box
                     padding="sizeLarge"
                     background="surfaceSunken"
-                    className="flex min-h-refineui-foundation-size-2560 w-full items-center justify-center overflow-hidden"
+                    className="flex h-refineui-foundation-size-2560 w-full items-center justify-center overflow-hidden"
                 >
                     {preview}
                 </Box>
             </div>
-            <Box paddingX="sizeLarge" paddingY="sizeMedium" data-refineui-catalog-label>
-                <Text as="h3" variant="subtitleMd" className="m-0">
+            <CardHeader data-refineui-catalog-label>
+                <CardTitle>
                     <a href={href} data-refineui-catalog-link>
                         {name}
                     </a>
-                </Text>
-            </Box>
-        </Box>
+                </CardTitle>
+            </CardHeader>
+        </Card>
     );
 }
 
 export function CatalogGrid({ children }: { children: ReactNode }) {
     return (
-        <Grid data-docs-overview="components" data-refineui-catalog minItem="foundationSize3200" gap="sizeLarge">
+        <Grid data-refineui-catalog minItem="foundationSize3200" gap="sizeLarge">
             {children}
         </Grid>
     );

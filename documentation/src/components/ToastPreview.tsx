@@ -12,7 +12,6 @@ export default function ToastPreview() {
                     onClick={() =>
                         toast("Done", {
                             variant: "success",
-                            description: "Completed successfully.",
                         })
                     }
                 >

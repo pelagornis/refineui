@@ -550,7 +550,9 @@ export {
     type ToastProps,
     type ToastVariant,
     type ToastPosition,
+    type ToastSwipeDirection,
     type ToastOptions,
+    type ToastAction,
     type ToasterProps,
 } from "./components/Toast";
 export { Tooltip, type TooltipAlign, type TooltipPosition, type TooltipProps } from "./components/Tooltip";

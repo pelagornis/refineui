@@ -4,16 +4,12 @@ import { componentTextClass } from "../../typography";
 
 export const toastStyles = {
     card:
-        "box-border flex w-refineui-toast-max-width min-w-refineui-toast-min-width max-w-refineui-toast-max-width items-center gap-refineui-size-medium rounded-refineui-x-large border-refineui-thin border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-large shadow-refineui-4light transition-[border-color,opacity] duration-[var(--refineui-motion-duration-medium)] ease-[var(--refineui-motion-easing-ease-out)]",
+        "box-border flex w-fit max-w-refineui-toast-max-width cursor-grab items-center gap-refineui-size-small rounded-refineui-circle border-refineui-thin border-refineui-alias-border-default bg-refineui-alias-background-primary px-refineui-size-large py-refineui-size-small shadow-refineui-4light transition-[border-color,opacity,transform] duration-[var(--refineui-motion-duration-medium)] ease-[var(--refineui-motion-easing-emphasized)] select-none",
     iconWrap: "flex size-refineui-size-xx-large shrink-0 items-center justify-center self-center",
-    contentWrap: "flex min-h-px min-w-0 flex-1 flex-col gap-refineui-size-x-small",
-    title: clsx(
-        componentTextClass(componentTypographyTokens.toast.title),
-        "text-refineui-alias-foreground-primary",
-    ),
+    contentWrap: "flex min-h-px min-w-0 flex-1 items-center",
     message: clsx(
         componentTextClass(componentTypographyTokens.toast.message),
-        "text-refineui-alias-foreground-tertiary",
+        "text-refineui-alias-foreground-primary",
     ),
     actionButton: "shrink-0 whitespace-nowrap",
     toasterRoot: "refineui-toaster group",

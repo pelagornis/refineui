@@ -444,8 +444,7 @@ export const componentColorTokens = {
     toast: {
         background: semanticToken("backgroundPrimary"),
         border: semanticToken("borderDefault"),
-        title: semanticToken("foregroundPrimary"),
-        message: semanticToken("foregroundTertiary"),
+        message: semanticToken("foregroundPrimary"),
         accent: {
             default: semanticToken("foregroundPrimary"),
             success: semanticToken("foregroundSuccess"),

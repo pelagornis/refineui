@@ -10,6 +10,8 @@ export type ToastPosition =
     | "bottom-center"
     | "bottom-right";
 
+export type ToastSwipeDirection = "top" | "right" | "bottom" | "left";
+
 export type ToastAction =
     | ReactNode
     | {
@@ -18,9 +20,8 @@ export type ToastAction =
           variant?: "primary" | "secondary";
       };
 
-export interface ToastProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
+export interface ToastProps extends HTMLAttributes<HTMLDivElement> {
     variant?: ToastVariant;
-    title?: ReactNode;
     message?: ReactNode;
     iconName?: string;
     icon?: ReactNode;
@@ -29,7 +30,6 @@ export interface ToastProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"
 }
 
 export interface ToastOptions {
-    description?: ReactNode;
     variant?: ToastVariant;
     iconName?: string;
     icon?: ReactNode;
@@ -38,14 +38,16 @@ export interface ToastOptions {
 }
 
 export interface ToasterProps {
+    /** Max visible toasts. Default `1` (new toast replaces the previous). */
     maxToasts?: number;
     position?: ToastPosition;
+    /** Allowed swipe-to-dismiss directions. Defaults from `position`. */
+    swipeDirections?: ToastSwipeDirection[];
     className?: string;
 }
 
 export interface ToastRecord {
     id: string;
-    title?: ReactNode;
     message?: ReactNode;
     variant: ToastVariant;
     iconName?: string;
@@ -54,4 +56,3 @@ export interface ToastRecord {
     duration: number;
     phase: "entering" | "idle" | "leaving";
 }
-

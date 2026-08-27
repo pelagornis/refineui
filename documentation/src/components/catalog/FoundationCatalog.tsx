@@ -33,7 +33,7 @@ const TOKENS = [
 
 export default function FoundationCatalog() {
     return (
-        <Stack data-docs-overview="foundations" gap="sizeXXXLarge" className="w-full min-w-0">
+        <Stack gap="sizeXXXLarge" className="w-full min-w-0">
             <Grid minItem="foundationSize3200" gap="sizeLarge">
                 {AREAS.map((area) => (
                     <Box

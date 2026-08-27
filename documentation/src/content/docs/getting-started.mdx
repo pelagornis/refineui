@@ -1,0 +1,57 @@
+---
+title: Getting started
+description: Install RefineUI and learn the architecture — tokens, components, and AI-ready docs.
+---
+
+import PackageInstallFull from "../../components/PackageInstallFull.mdx";
+
+RefineUI is the unified design system for Pelagornis products. Foundation variables become `@refineui/tokens`. UI is `@refineui/react`. The Web Kit you design against is the React you ship.
+
+## Architecture
+
+- **[Foundations](/foundations/)** — Visual language, design tokens, layout, and iconography
+- **[Components](/components/)** — Actions, Forms, Navigation, Feedback, Overlays, Data Display, Content, Layout
+- **[Development](/development/)** — Installation, theming, and motion in product code
+- **[AI Integration](/ai-integration/)** — Cursor, Claude, Copilot via `llm.txt`
+
+## Install
+
+<PackageInstallFull />
+
+## Stylesheet
+
+Load token CSS and component interaction styles once at the app root:
+
+```css
+@import "@refineui/tokens/tailwind.css";
+@import "@refineui/web-icons/dist/fonts/refineui-system-icons.css";
+@import "@refineui/react/refineui.css";
+```
+
+Or in JS:
+
+```tsx
+import "@refineui/react/refineui.css";
+```
+
+## Example
+
+```tsx
+import { Button, Input, Card } from "@refineui/react";
+import "@refineui/react/refineui.css";
+
+export function Example() {
+  return (
+    <Card>
+      <Input placeholder="Email" />
+      <Button variant="primary">Continue</Button>
+    </Card>
+  );
+}
+```
+
+## Next
+
+- [Foundations](/foundations/) — tokens, layout, iconography
+- [Components](/components/) — interactive UI primitives
+- [Development / Installation](/development/installation/) — deeper setup notes

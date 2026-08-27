@@ -755,7 +755,7 @@ export default function ComponentCatalog() {
                 name="Toast"
                 preview={
                     <div data-refineui-catalog-toast>
-                        <Toast variant="success" title="Done" message="Completed successfully." />
+                        <Toast variant="success" message="Done" />
                     </div>
                 }
             />

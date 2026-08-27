@@ -1,0 +1,41 @@
+import PackageManagerPicker from "./PackageManagerPicker";
+
+{/* Shared install block — real fences keep Expressive Code copy. */}
+
+<div class="not-content" data-docs-package-manager>
+
+<PackageManagerPicker client:load />
+
+<div data-pm-panel="npm">
+
+```bash
+npm install @refineui/react @refineui/tokens
+```
+
+</div>
+
+<div data-pm-panel="yarn" hidden>
+
+```bash
+yarn add @refineui/react @refineui/tokens
+```
+
+</div>
+
+<div data-pm-panel="pnpm" hidden>
+
+```bash
+pnpm add @refineui/react @refineui/tokens
+```
+
+</div>
+
+<div data-pm-panel="bun" hidden>
+
+```bash
+bun add @refineui/react @refineui/tokens
+```
+
+</div>
+
+</div>

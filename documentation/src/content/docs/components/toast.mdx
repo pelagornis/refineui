@@ -6,10 +6,7 @@ description: Transient notification message overlay.
 import { PropSpec } from "../../../docs-ui";
 
 import ToastPreview from "../../../components/ToastPreview";
-
-# Toast
-
-Transient notification message overlay.
+import PackageInstall from "../../../components/PackageInstall.mdx";
 
 <div class="not-content my-6">
   <ToastPreview client:load />
@@ -17,19 +14,17 @@ Transient notification message overlay.
 
 ## Installation
 
-```bash
-bun add @refineui/react @refineui/tokens
-```
+<PackageInstall />
 
 ## Usage
 
 ```tsx
 import { Toast, Toaster, toast } from "@refineui/react";
 
-// Add Toaster to your app root
-<Toaster position="bottom-right" maxToasts={3} />
+// Add Toaster to your app root (one toast at a time by default)
+<Toaster position="top-center" />
 
-// Show a toast
+// Show a toast — replaces any currently visible toast
 toast("Settings saved successfully", {
   variant: "success",
   duration: 3000,
@@ -44,6 +39,8 @@ toast("Upload failed", {
 });
 ```
 
+Swipe or drag the toast toward an edge (based on `position`) to dismiss it early.
+
 ## API Reference
 
 ### Toast
@@ -53,8 +50,7 @@ toast("Upload failed", {
     client:load
     rows={[
     { prop: "variant", default: "\"default\"", type: "\"default\" | \"success\" | \"error\" | \"warning\"", description: "Toast visual variant." },
-    { prop: "title", default: "—", type: "ReactNode", description: "Toast title." },
-    { prop: "message", default: "—", type: "ReactNode", description: "Toast message/description." },
+    { prop: "message", default: "—", type: "ReactNode", description: "Toast message." },
     { prop: "icon", default: "—", type: "ReactNode", description: "Custom icon element." },
     { prop: "iconName", default: "—", type: "string", description: "Icon name (when not using icon)." },
     { prop: "action", default: "—", type: "ReactNode | ToastAction", description: "Action button or custom element." }
@@ -67,19 +63,18 @@ toast("Upload failed", {
   <PropSpec
     client:load
     rows={[
-    { prop: "maxToasts", default: "3", type: "number", description: "Maximum simultaneous toasts." },
-    { prop: "position", default: "\"bottom-right\"", type: "\"top-left\" | \"top-center\" | \"top-right\" | \"bottom-left\" | \"bottom-center\" | \"bottom-right\"", description: "Toast stack position." }
+    { prop: "maxToasts", default: "1", type: "number", description: "Maximum simultaneous toasts. Default replaces the previous toast." },
+    { prop: "position", default: "\"top-center\"", type: "\"top-left\" | \"top-center\" | \"top-right\" | \"bottom-left\" | \"bottom-center\" | \"bottom-right\"", description: "Toast position." },
+    { prop: "swipeDirections", default: "from position", type: "(\"top\" | \"right\" | \"bottom\" | \"left\")[]", description: "Allowed swipe-to-dismiss directions." }
     ]}
   />
 </div>
-### toast(title, options)
+### toast(message, options)
 
-Function to show a toast programmatically.
+Function to show a toast programmatically. A new call replaces the previous toast.
 
 **Options:**
-- `description?: ReactNode` — Toast description
 - `variant?: ToastVariant` — Visual variant
 - `icon?: ReactNode` — Custom icon
 - `action?: ToastAction` — Action button
-- `duration?: number` — Duration in milliseconds (default 5000)
-
+- `duration?: number` — Duration in milliseconds (default 4200)
