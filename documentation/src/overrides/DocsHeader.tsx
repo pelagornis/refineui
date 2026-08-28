@@ -1,69 +1,247 @@
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { iconSizes } from "@refineui/tokens";
-import { Text } from "@refineui/react";
+import {
+    Button,
+    CommandDialog,
+    CommandEmpty,
+    CommandGroup,
+    CommandGroupHeading,
+    CommandInput,
+    CommandItem,
+    CommandList,
+    NavigationMenu,
+    NavigationMenuContent,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger,
+    Stack,
+    Text,
+    WebIcon,
+} from "@refineui/react";
 import { DocsThemeSelect } from "./DocsThemeSelect";
+import {
+    DOCS_HEADER_NAV,
+    DOCS_SEARCH_ITEMS,
+    type DocsHeaderNavSection,
+    type DocsSearchItem,
+} from "./docsHeaderConfig";
 
-const NAV = [
-    { href: "/foundations", label: "Foundations" },
-    { href: "/components", label: "Components" },
-    { href: "/development", label: "Development" },
-] as const;
+export type DocsHeaderBrandProps = {
+    title: string;
+    titleHref: string;
+    /** Replace the default RefineUI mark. */
+    logo?: ReactNode;
+    /** Hide the wordmark next to the logo. */
+    hideTitle?: boolean;
+};
 
-export function DocsHeaderBrand({ title, titleHref }: { title: string; titleHref: string }) {
+export type DocsHeaderNavProps = {
+    currentPath?: string;
+    /** Override default header navigation sections. */
+    sections?: DocsHeaderNavSection[];
+};
+
+export type DocsHeaderSearchProps = {
+    /** Override command palette targets. */
+    items?: DocsSearchItem[];
+};
+
+function normalizePath(path: string): string {
+    if (path === "/") return "/";
+    return path.replace(/\/$/, "");
+}
+
+function isPathActive(href: string, currentPath: string): boolean {
+    const target = normalizePath(href);
+    const current = normalizePath(currentPath);
+    if (target === "/") return current === "/";
+    return current === target || current.startsWith(`${target}/`);
+}
+
+function sectionIsActive(section: DocsHeaderNavSection, currentPath: string): boolean {
+    return isPathActive(section.href, currentPath);
+}
+
+function RefineUILogoMark() {
     return (
-        <a href={titleHref} data-refineui-docs-brand className="flex items-center min-w-0 no-underline">
-            <Text as="span" variant="subtitleMd" className="text-refineui-alias-foreground-primary">
-                {title}
-            </Text>
-        </a>
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width={iconSizes.small}
+            height={iconSizes.small}
+            aria-hidden
+            data-refineui-docs-logo-mark
+        >
+            <path
+                fill="currentColor"
+                d="M12 2.25 4.5 7.125v9.75L12 21.75l7.5-4.875v-9.75L12 2.25Zm0 2.02 5.48 3.558v7.124L12 18.51l-5.48-3.558V7.828L12 4.27Z"
+            />
+            <path
+                fill="currentColor"
+                d="M12 8.25a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5Zm0 1.5a2.25 2.25 0 1 1 0 4.5 2.25 2.25 0 0 1 0-4.5Z"
+            />
+        </svg>
     );
 }
 
-export function DocsHeaderNav() {
+function NavLinkStack({ title, description }: { title: string; description?: string }) {
     return (
-        <nav data-refineui-docs-nav aria-label="Primary">
-            {NAV.map((item) => (
-                <a key={item.href} href={item.href} data-refineui-docs-nav-link>
-                    {item.label}
-                </a>
-            ))}
-        </nav>
-    );
-}
-
-export function DocsHeaderTools({ githubHref }: { githubHref?: string }) {
-    return (
-        <div data-refineui-docs-tools className="flex shrink-0 items-center gap-1">
-            {githubHref ? (
-                <a
-                    href={githubHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label="GitHub"
-                    data-refineui-docs-icon-link
-                >
-                    <GitHubMark />
-                </a>
+        <Stack as="span" gap="sizeXXXSmall" className="min-w-0 flex-1 px-refineui-size-xxx-small">
+            <span className="truncate">{title}</span>
+            {description ? (
+                <span className="truncate text-refineui-alias-foreground-tertiary refineui-typo-caption-1">
+                    {description}
+                </span>
             ) : null}
-            <div data-refineui-docs-theme>
-                <DocsThemeSelect />
-            </div>
+        </Stack>
+    );
+}
+
+function NavContentGrid({ children }: { children: ReactNode }) {
+    return (
+        <div className="grid w-full min-w-refineui-menu-panel-width grid-cols-2 gap-refineui-size-x-small">
+            {children}
         </div>
     );
 }
 
-function GitHubMark() {
+export function DocsHeaderBrand({ title, titleHref, logo, hideTitle = false }: DocsHeaderBrandProps) {
     return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 16 16"
-            width={iconSizes.xsmall}
-            height={iconSizes.xsmall}
-            aria-hidden
-        >
-            <path
-                fill="currentColor"
-                d="M8 1.3a6.665 6.665 0 0 1 6.667 6.667 6.68 6.68 0 0 1-4.542 6.325c-.333.067-.458-.142-.458-.316 0-.226.008-.942.008-1.834 0-.625-.208-1.025-.45-1.233 1.483-.167 3.042-.734 3.042-3.292a2.58 2.58 0 0 0-.684-1.792c.067-.166.3-.85-.066-1.766 0 0-.559-.184-1.834.683a6.2 6.2 0 0 0-1.666-.225c-.567 0-1.134.075-1.667.225-1.275-.858-1.833-.683-1.833-.683-.367.916-.134 1.6-.067 1.766a2.6 2.6 0 0 0-.683 1.792c0 2.55 1.55 3.125 3.033 3.292-.192.166-.367.458-.425.891-.383.175-1.342.459-1.942-.55-.125-.2-.5-.691-1.025-.683-.558.008-.225.317.009.442.283.158.608.75.683.941.133.376.567 1.092 2.242.784 0 .558.008 1.083.008 1.242 0 .174-.125.374-.458.316a6.66 6.66 0 0 1-4.559-6.325A6.665 6.665 0 0 1 8 1.3"
-            />
-        </svg>
+        <a href={titleHref} data-refineui-docs-brand className="flex items-center gap-refineui-size-x-small min-w-0 no-underline">
+            <span data-refineui-docs-logo className="text-refineui-alias-foreground-brand">
+                {logo ?? <RefineUILogoMark />}
+            </span>
+            {hideTitle ? null : (
+                <Text as="span" variant="subtitleMd" className="text-refineui-alias-foreground-primary">
+                    {title}
+                </Text>
+            )}
+        </a>
+    );
+}
+
+export function DocsHeaderNav({ currentPath = "/", sections = DOCS_HEADER_NAV }: DocsHeaderNavProps) {
+    const defaultOpen = useMemo(
+        () => sections.find((section) => sectionIsActive(section, currentPath))?.value ?? "",
+        [sections, currentPath],
+    );
+
+    return (
+        <div data-refineui-docs-nav>
+            <NavigationMenu defaultValue={defaultOpen} aria-label="Documentation">
+                <NavigationMenuList>
+                    {sections.map((section) => {
+                        const sectionActive = sectionIsActive(section, currentPath);
+                        return (
+                            <NavigationMenuItem key={section.value} value={section.value}>
+                                <NavigationMenuTrigger>{section.label}</NavigationMenuTrigger>
+                                <NavigationMenuContent>
+                                    <NavContentGrid>
+                                        <NavigationMenuLink href={section.href} active={sectionActive}>
+                                            <NavLinkStack title={`${section.label} overview`} description="Section home" />
+                                        </NavigationMenuLink>
+                                        {section.links.map((link) => (
+                                            <NavigationMenuLink
+                                                key={link.href}
+                                                href={link.href}
+                                                active={!link.external && isPathActive(link.href, currentPath)}
+                                                {...(link.external
+                                                    ? { target: "_blank", rel: "noreferrer" }
+                                                    : undefined)}
+                                            >
+                                                <NavLinkStack title={link.label} description={link.description} />
+                                            </NavigationMenuLink>
+                                        ))}
+                                    </NavContentGrid>
+                                </NavigationMenuContent>
+                            </NavigationMenuItem>
+                        );
+                    })}
+                </NavigationMenuList>
+            </NavigationMenu>
+        </div>
+    );
+}
+
+function navigateTo(href: string, external?: boolean) {
+    if (external) {
+        window.open(href, "_blank", "noreferrer");
+        return;
+    }
+    window.location.assign(href);
+}
+
+export function DocsHeaderSearch({ items = DOCS_SEARCH_ITEMS }: DocsHeaderSearchProps) {
+    const [open, setOpen] = useState(false);
+
+    const groups = useMemo(() => {
+        const map = new Map<string, DocsSearchItem[]>();
+        for (const item of items) {
+            const list = map.get(item.group) ?? [];
+            list.push(item);
+            map.set(item.group, list);
+        }
+        return Array.from(map.entries());
+    }, [items]);
+
+    useEffect(() => {
+        const onKeyDown = (event: KeyboardEvent) => {
+            if (event.key !== "k" || !(event.metaKey || event.ctrlKey)) return;
+            event.preventDefault();
+            setOpen(true);
+        };
+        document.addEventListener("keydown", onKeyDown);
+        return () => document.removeEventListener("keydown", onKeyDown);
+    }, []);
+
+    return (
+        <>
+            <Button
+                type="button"
+                layout="icon"
+                variant="ghost"
+                size="sm"
+                data-refineui-docs-search-trigger
+                aria-label="Search documentation (⌘K)"
+                onClick={() => setOpen(true)}
+            >
+                <WebIcon name="search" size={iconSizes.xsmall} color="currentColor" aria-hidden />
+            </Button>
+            <CommandDialog open={open} onOpenChange={setOpen} commandProps={{ label: "Search documentation" }}>
+                <CommandInput placeholder="Search pages…" />
+                <CommandList>
+                    <CommandEmpty>No results found.</CommandEmpty>
+                    {groups.map(([group, groupItems]) => (
+                        <CommandGroup key={group}>
+                            <CommandGroupHeading>{group}</CommandGroupHeading>
+                            {groupItems.map((item) => (
+                                <CommandItem
+                                    key={item.value}
+                                    value={item.value}
+                                    keywords={[item.label, item.group, ...(item.keywords ?? [])]}
+                                    onSelect={() => {
+                                        setOpen(false);
+                                        navigateTo(item.href, item.external);
+                                    }}
+                                >
+                                    {item.label}
+                                </CommandItem>
+                            ))}
+                        </CommandGroup>
+                    ))}
+                </CommandList>
+            </CommandDialog>
+        </>
+    );
+}
+
+export function DocsHeaderTools() {
+    return (
+        <div data-refineui-docs-tools className="flex shrink-0 items-center gap-refineui-size-xx-small">
+            <div data-refineui-docs-theme>
+                <DocsThemeSelect />
+            </div>
+        </div>
     );
 }

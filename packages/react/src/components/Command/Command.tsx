@@ -19,6 +19,7 @@ import {
 } from "react";
 import { iconSizes } from "@refineui/tokens";
 import { Dialog, DialogContent } from "../Dialog";
+import { ScrollAreaRegion } from "../ScrollArea/ScrollAreaRegion";
 import { SearchField, SearchFieldClear, SearchFieldIcon, SearchFieldInput } from "../SearchField";
 import { commandStyles } from "./style";
 import type {
@@ -345,12 +346,14 @@ export function CommandDialog({
     return (
         <Dialog size={size} {...dialogProps}>
             <DialogContent style={commandStyles.dialogContentPanel} scrollable={false}>
-                <Command
-                    {...commandProps}
-                    className={clsx(commandStyles.rootInDialog, commandProps?.className)}
-                >
-                    {children}
-                </Command>
+                <div className={commandStyles.dialogBody}>
+                    <Command
+                        {...commandProps}
+                        className={clsx(commandStyles.rootInDialog, commandProps?.className)}
+                    >
+                        {children}
+                    </Command>
+                </div>
             </DialogContent>
         </Dialog>
     );
@@ -396,13 +399,20 @@ export function CommandList({ className, children, ...props }: CommandListProps)
     const { listId } = useCommandContext("CommandList");
     return (
         <div
-            id={listId}
-            role="listbox"
             data-refineui="command-list"
-            className={clsx(commandStyles.list, className)}
-            {...props}
+            className={commandStyles.listShell}
+            style={commandStyles.listShellHeight}
         >
-            <div className={commandStyles.listInner}>{children}</div>
+            <ScrollAreaRegion
+                type="hover"
+                className={clsx(commandStyles.list, className)}
+                viewportClassName={commandStyles.listViewport}
+                {...props}
+            >
+                <div id={listId} role="listbox" className={commandStyles.listInner}>
+                    {children}
+                </div>
+            </ScrollAreaRegion>
         </div>
     );
 }

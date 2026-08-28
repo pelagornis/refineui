@@ -1921,6 +1921,17 @@ a[data-refineui="link"]:focus-visible {
   opacity: 1;
 }
 
+/* Command list — fixed height shell so ScrollArea viewport can scroll */
+[data-refineui="command-list"] {
+  height: min(60vh, var(--refineui-size-foundation-size-3200));
+  max-height: min(60vh, var(--refineui-size-foundation-size-3200));
+  overflow: hidden;
+}
+[data-refineui="command-list"] > [data-refineui="scroll-area"] {
+  height: 100%;
+  min-height: 0;
+}
+
 /* Chart — enter motion + hover / selected */
 [data-refineui="chart-bar"] {
   transform-box: fill-box;

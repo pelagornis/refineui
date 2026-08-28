@@ -1,6 +1,11 @@
 import { clsx } from "clsx";
+import type { CSSProperties } from "react";
+import { foundationSizes } from "@refineui/tokens";
 import { componentTypographyTokens } from "../../tokens/componentTypographyTokens";
 import { componentTextClass } from "../../typography";
+
+/** Same cap as Dropdown menus — explicit px so ScrollArea gets a real height. */
+const COMMAND_LIST_MAX_HEIGHT = `min(60vh, ${foundationSizes.foundationSize3200})`;
 
 export const commandStyles = {
     root: clsx(
@@ -10,14 +15,21 @@ export const commandStyles = {
         "shadow-refineui-2",
     ),
     /** Nested inside Dialog panel — Dialog already supplies radius / elevation */
-    rootInDialog: "rounded-none border-none shadow-none",
+    rootInDialog: "min-h-0 w-full flex-col overflow-hidden rounded-none border-none shadow-none",
     dialogContentPanel: {
         padding: 0,
         overflow: "hidden",
     } as const,
-    inputWrap: "p-refineui-size-medium",
-    /** Grow with content; scroll only when a parent (e.g. Dialog max-height) constrains the panel */
-    list: "min-h-0 flex-1 overflow-y-auto overflow-x-hidden outline-none",
+    dialogBody: "flex min-h-0 w-full flex-col overflow-hidden",
+    inputWrap: "shrink-0 p-refineui-size-medium",
+    /** Fixed list height — command palettes need an explicit cap (not content-sized flex). */
+    listShell: "box-border w-full overflow-hidden",
+    list: "h-full min-h-0 w-full",
+    listShellHeight: {
+        height: COMMAND_LIST_MAX_HEIGHT,
+        maxHeight: COMMAND_LIST_MAX_HEIGHT,
+    } satisfies CSSProperties,
+    listViewport: "outline-none",
     listInner:
         "flex flex-col gap-refineui-size-xxx-small px-refineui-size-medium py-refineui-size-small",
     empty: clsx(
