@@ -16,8 +16,8 @@ MUST NOT: Approve changes that add/remove/restructure packages/ — packages str
 2. Quality: single responsibility, no duplication, no magic values.
 3. Security: no secrets in code or logs; input validation required.
 4. Errors: failure cases, timeouts considered; error messages specific.
-5. Compatibility: no breaking API or behavior without documentation.
-6. Figma alignment: components match Web Kit spec; tokens from Foundation only.
+5. Compatibility: no breaking API or behavior without documentation updates.
+6. Design system: tokens only (no hardcoded px/hex); composable APIs; docs/previews updated when public API changes.
 
 ## Output format
 MUST: Summary in 1–2 sentences (Approve / Conditional approve / Request changes).

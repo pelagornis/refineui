@@ -24,6 +24,23 @@
 @media (min-width: 50rem) {
   [data-docs-ui="live-stage"]:has([data-docs-ui="control-rail"]) {
     grid-template-columns: minmax(0, 1fr) var(--refineui-size-foundation-size-2560);
+    align-items: stretch;
+  }
+
+  [data-docs-ui="live-stage"] > [data-docs-ui="look"] {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+  }
+
+  [data-docs-ui="live-stage"] > [data-docs-ui="look"] [data-refineui-look-stage] {
+    flex: 1 1 auto;
+    min-height: var(--refineui-size-foundation-size-2000);
+  }
+
+  [data-docs-ui="live-stage"] [data-docs-ui="control-rail"] {
+    height: 100%;
   }
 }
 
@@ -100,24 +117,4 @@
 [data-docs-ui="spec-table"] [data-refineui="table"] {
   padding-inline: 0;
   padding-bottom: 0;
-}
-
-[data-docs-ui="code"] {
-  margin: 0;
-  padding: var(--refineui-spacing-size-x-large);
-  overflow-x: auto;
-  border: var(--refineui-stroke-width-thin) solid var(--refineui-color-alias-border-default);
-  border-radius: var(--refineui-radius-rounded-large);
-  background: var(--refineui-color-alias-surface-sunken);
-  color: var(--refineui-color-alias-foreground-primary);
-  box-shadow: var(--refineui-elevation-2);
-  font-family: var(--refineui-docs-font-mono);
-  font-size: var(--refineui-typography-body-2-font-size);
-  font-weight: var(--refineui-typography-caption-2-font-weight);
-  line-height: var(--refineui-typography-body-1-line-height);
-}
-
-[data-docs-ui="code"] code {
-  font: inherit;
-  white-space: pre;
 }

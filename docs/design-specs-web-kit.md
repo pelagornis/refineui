@@ -1,14 +1,12 @@
-# Pelagornis RefineUI Web Kit — Design Specs (implementation reference)
+# RefineUI — Design specs (legacy reference)
 
-**Figma Web Kit:**
-https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?node-id=7-6  
-**Foundation:** https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundation?node-id=1-650
+> **Deprecated:** Prefer `packages/react`, `packages/tokens`, and https://refineui.dev as the source of truth.
+> This file is a historical implementation note. Values may drift from shipped code.
 
-> ⚠️ If Figma MCP authentication is required, pull specs directly from Figma with `get_design_context` / `get_variable_defs`.  
-> The values below are aligned with Figma Web Kit based on `packages/react` and `packages/tokens`.
+Implementation reference derived from `packages/react` and `packages/tokens`.
 
-**Full component audit tracker:** [web-kit-component-audit.md](web-kit-component-audit.md)  
-(Foundation → Web Kit rules, alphabetical checklist)
+**Component audit tracker:** [web-kit-component-audit.md](web-kit-component-audit.md)  
+**Live docs:** https://refineui.dev/components/
 
 ---
 
@@ -171,7 +169,7 @@ field rules.
 | Item              | `stack`                                                                                                                   | `spread`                                                                                                                                       |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Spacing**       | Adjacent tiles **overlap** — `componentSizes.avatarStackOverlapSm` / `Md` / `Lg` (6 / 8 / 10px). Same value on container `paddingRight` | `gap`: `sm` → `spacings.sizeMedium`(10px), `md` → `spacings.sizeLarge`(16px), `lg` → `spacings.sizeXLarge`(20px) — MCP Avater Spread `69:3007` |
-| **Tile border**   | Separation baked into Figma `Avater` vectors (Subtract etc.) — MCP `get_design_context` stack rows have **no wrapper `border`** | No border (horizontal gap only)                                                                                                           |
+| **Tile border**   | Avatar tile vectors handle separation — stack rows have **no wrapper `border`** | No border (horizontal gap only)                                                                                                           |
 | **+N overflow**   | White fill, `strokeWidthThin` + `neutral300`, type `sm`→caption2 / `md`→caption1 / `lg`→body2, `neutral600`               | same                                                                                                                                           |
 
 ---
@@ -523,7 +521,7 @@ control + error/hint** only.
 
 Web Kit still names this COMPONENT_SET **Tabs**. `packages/react` ships that **pill** visual as **`SegmentedControl`**. Code **`Tabs`** is a token-based underline + `tabpanel` composition (not a second Web Kit set).
 
-(Same as `get_design_context` — Figma values in this table are the visual source of truth.)
+(Aligned with shipped `Tabs` / `SegmentedControl` token values.)
 
 | Property | MCP value |
 | --- | --- |

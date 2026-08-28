@@ -316,6 +316,8 @@ export type SemanticInteractionTokens = {
         panel: string;
         accordionPanel: string;
         accordionContent: string;
+        toastEnter: string;
+        toastLeave: string;
         skeleton: string;
         spinner: string;
     };

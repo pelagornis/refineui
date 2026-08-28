@@ -10,7 +10,8 @@ import {
     type PointerEvent as ReactPointerEvent,
 } from "react";
 import { createPortal } from "react-dom";
-import { iconSizes, spacings } from "@refineui/tokens";
+import { iconSizes, semanticInteraction, spacings } from "@refineui/tokens";
+import { motionMsToNumber } from "@refineui/utilities/animation";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
@@ -29,8 +30,8 @@ import type {
 const useIsomorphicLayoutEffect = typeof document !== "undefined" ? useLayoutEffect : useEffect;
 
 const ENTER_MS = 20;
-/** Match `--refineui-motion-duration-medium` (200ms) + buffer for slide-out. */
-const LEAVE_MS = 260;
+/** Match `--refineui-motion-duration-toast-leave` + buffer for slide-out. */
+const LEAVE_MS = motionMsToNumber(semanticInteraction.duration.toastLeave) + 60;
 const DEFAULT_DURATION = 4200;
 /** Material-style: one toast at a time by default. */
 const DEFAULT_MAX_TOASTS = 1;

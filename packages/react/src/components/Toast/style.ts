@@ -4,7 +4,7 @@ import { componentTextClass } from "../../typography";
 
 export const toastStyles = {
     card:
-        "box-border flex w-fit max-w-refineui-toast-max-width cursor-grab items-center gap-refineui-size-small rounded-refineui-circle border-refineui-thin border-refineui-alias-border-default bg-refineui-alias-background-primary px-refineui-size-large py-refineui-size-small shadow-refineui-4light transition-[border-color,opacity,transform] duration-[var(--refineui-motion-duration-medium)] ease-[var(--refineui-motion-easing-emphasized)] select-none",
+        "box-border flex w-fit max-w-refineui-toast-max-width cursor-grab items-center gap-refineui-size-small rounded-refineui-circle border-refineui-thin border-refineui-alias-border-default bg-refineui-alias-background-primary px-refineui-size-large py-refineui-size-small shadow-refineui-4light select-none",
     iconWrap: "flex size-refineui-size-xx-large shrink-0 items-center justify-center self-center",
     contentWrap: "flex min-h-px min-w-0 flex-1 items-center",
     message: clsx(

@@ -13,6 +13,8 @@ const DURATION_ROLES = [
     "panel",
     "accordionPanel",
     "accordionContent",
+    "toastEnter",
+    "toastLeave",
     "skeleton",
     "spinner",
 ] as const;

@@ -11,7 +11,7 @@ alwaysApply: true
 
 ## Forbidden
 - Hardcoding hex/rgba or arbitrary px in component styles
-- Adding component variants, props, or APIs not in Figma Web Kit
+- Adding component variants, props, or APIs beyond existing RefineUI patterns without token + docs updates
 - Convenience prop APIs (title, description, items, actions, onClose)
 - Secrets, keys, or tokens in code, commits, or comments
 - Changing packages/ layout or restructuring monorepo packages

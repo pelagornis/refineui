@@ -16,7 +16,7 @@ MUST: Structure responses (steps, code blocks, file:line references).
 MUST: Naming must reveal intent. No magic numbers or strings — use constants or config.
 MUST: Keep existing indentation, quotes, naming, and directory structure. New code must follow existing patterns.
 MUST: Functions and classes have single responsibility. No repeated logic — extract to shared utils/components.
-MUST: Minimize dependencies. Respect pnpm-lock.yaml; do not change versions arbitrarily.
+MUST: Minimize dependencies. Respect bun.lock; do not change versions arbitrarily.
 
 ## Web — RefineUI (required)
 MUST: Follow React/TypeScript conventions. Monorepo packages: react, tokens, utilities, version.
@@ -36,6 +36,7 @@ MUST: Error messages must be specific enough to debug.
 ## Documentation and maintenance
 MUST: Comments explain "why" only. Document public APIs.
 MUST: Do not make breaking or behavior changes without checking call sites and compatibility.
+MUST: When changing public APIs, update documentation/src/content/docs and previews together.
 
 ## Collaboration and checks
 MUST: Before submitting — style match, error handling, no secrets, tests/validation, existing behavior preserved.

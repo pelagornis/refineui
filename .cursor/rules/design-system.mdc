@@ -1,0 +1,54 @@
+---
+alwaysApply: true
+---
+
+# Design system (code-first)
+
+**Source of truth:** `packages/tokens`, `packages/react`, and `documentation/`.
+
+## Architecture
+
+| Layer | Role | Location |
+|-------|------|----------|
+| **Primitive / Foundation** | Raw palette, spacing, radius, typography, motion, foundation sizes | `packages/tokens/src/global/*.ts` |
+| **Semantic** | Meaningful aliases (colors, motion roles, elevation, text roles) | `packages/tokens/src/semantic/*.ts` |
+| **Component tokens** | Per-component color / typography / size roles | `packages/react/src/tokens/*` |
+| **Components** | Shipped UI | `packages/react/src/components/*` |
+| **Docs** | Live previews, API reference, usage | `documentation/src/content/docs/` |
+
+## Token package layout (`packages/tokens/src/global/`)
+
+- `colors.ts` — palette primitives
+- `fonts.ts`, `typographys.ts` — font families, sizes, weights, line heights, type scale
+- `spacings.ts` — sizeNone ~ sizeXXXLarge
+- `foundationSizes.ts` — Global/Size steps (aliases for component dimensions)
+- `strokeWidths.ts`, `borderRadii.ts`, `shadows.ts`, `motion.ts`, `zIndex.ts`
+- `semantic/colors.ts` — `--refineui-color-alias-*` (light/dark)
+- `semantic/componentSizes.ts` — component dimension aliases → foundationSizes
+- `semantic/interaction.ts` — motion roles (duration, easing, scale)
+
+Build: `bun run build:tokens` → `dist/css-variables.css`, `dist/tailwind-theme.css`.
+
+## Component rules
+
+- **MUST**: Match existing component patterns in `packages/react` — read a sibling component before adding or changing APIs.
+- **MUST**: Use design tokens only for color, spacing, radius, stroke, typography, shadow, z-index, motion. See `tokens-in-components`.
+- **MUST**: Composable subcomponent APIs only — no convenience props (`title`, `description`, `items`, `actions`, `onClose`).
+- **MUST NOT**: Invent variants, props, or dimensions that are not reflected in tokens + an existing component pattern.
+- **RECOMMENDED**: Add or update `documentation/src/content/docs/components/*.mdx` and catalog previews when shipping components.
+
+## Docs & AI context
+
+- Site: https://refineui.dev
+- Foundations: `/foundations/*` (color, typography, spacing, layout, …)
+- Components: flat A–Z catalog under `/components/*`
+- Iconography: external — https://github.com/pelagornis/refineui-system-icons
+- LLM indexes: `documentation/public/llm.txt`, `llms.txt`
+
+## Stylesheet (product apps)
+
+```css
+@import "@refineui/tokens/tailwind.css";
+@import "@refineui/web-icons/dist/fonts/refineui-system-icons.css";
+@import "@refineui/react/refineui.css";
+```

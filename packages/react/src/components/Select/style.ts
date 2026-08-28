@@ -3,9 +3,7 @@ import { clsx } from "clsx";
 import { componentTypographyTokens } from "../../tokens/componentTypographyTokens";
 import { componentTextClass, sizedComponentTextClass } from "../../typography";
 
-// Figma MCP — Web Kit `CxoaTfftpyh8ETDBamkkEK`:
-// Trigger `1116:1429`, Menu `1117:1177`, Section `1144:2756`.
-// Trigger chrome follows Navigation Menu (compact plate, hairline, open/hover).
+// Select trigger/menu chrome — see Navigation Menu for compact plate patterns.
 export const selectStyles = {
     root: "relative inline-block",
     trigger: clsx(

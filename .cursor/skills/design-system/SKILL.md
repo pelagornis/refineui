@@ -1,23 +1,26 @@
 ---
 name: design-system
-description: UI/design/token work using Figma Foundation. Invoke for design token or component spec tasks.
+description: UI/design/token work from code and docs. Invoke for token or component tasks.
 allowed-tools: Read Write Grep Glob
 paths:
   - "packages/react/**"
   - "packages/tokens/**"
+  - "documentation/**"
 disable-model-invocation: true
 ---
 
-# Design System (Figma Foundation based)
+# Design system (code-first)
 
-Apply system-core + figma-foundation + tokens-in-components rules.
+Apply system-core + design-system + tokens-in-components rules.
 
-## Foundation (single source)
-- Figma: https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundation?node-id=1-650
-- Code: packages/tokens/src/global/*.ts
+## Where to look
+- Tokens: `packages/tokens/src/global/*.ts`, `packages/tokens/src/semantic/*.ts`, `packages/tokens/README.md`
+- Components: `packages/react/src/components/<Name>/`, `packages/react/src/tokens/`
+- Docs: `documentation/src/content/docs/foundations/`, `documentation/src/content/docs/components/`
+- Previews: `documentation/src/components/*Preview.tsx`, `documentation/src/components/catalog/`
 
 ## Rules
-MUST: Use color, spacing, typography, stroke, radius, shadow only from Foundation or @refineui/tokens.
-MUST: New components/styles match tokens defined in Foundation. Confirm before adding values not in Foundation.
-MUST NOT: Hardcode hex/rgba or px. Import tokens instead.
-MUST: When pulling design via Figma MCP pass the Foundation URL or the relevant node-id.
+MUST: Use color, spacing, typography, stroke, radius, shadow, motion only from @refineui/tokens or component token maps.
+MUST: New tokens extend foundationSizes → componentSizes; rebuild tokens before react.
+MUST: New/changed components follow composable API patterns and update docs + catalog previews.
+MUST NOT: Hardcode hex/rgba or arbitrary px in component styles.

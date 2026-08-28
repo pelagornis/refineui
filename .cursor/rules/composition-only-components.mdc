@@ -19,4 +19,4 @@ RefineUI component APIs are **composable only**.
 ## Migration
 - Remove legacy convenience APIs incrementally.
 - When removing, update `packages/react/src/index.ts`, each component `index.ts`, and docs previews/mdx together.
-- Validate with `@refineui/react` and `@refineui/documentation` builds after changes.
+- Validate with `bun run build` and `bun run docs:build` after changes.

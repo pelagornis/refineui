@@ -255,22 +255,6 @@ export default function ButtonDocs() {
                 />
             </DocSection>
 
-            <DocSection id="usage" title="Usage">
-                <Stack gap="sizeMedium">
-                    <Text variant="bodyMd" className="m-0 text-refineui-alias-foreground-secondary">
-                        Use one primary action per view. Prefer ghost or outline for secondary actions in
-                        dense toolbars.
-                    </Text>
-                    <pre data-docs-ui="code">
-                        <code>{`import { Button } from "@refineui/react";
-
-<Button variant="primary" size="md">
-  Continue
-</Button>`}</code>
-                    </pre>
-                </Stack>
-            </DocSection>
-
             <DocSection id="do-dont" title="Do / Don't">
                 <DoDont
                     doItems={[
@@ -284,18 +268,6 @@ export default function ButtonDocs() {
                         "Replace Button with a styled <div> for click targets.",
                     ]}
                 />
-            </DocSection>
-
-            <DocSection id="code" title="Code">
-                <pre data-docs-ui="code">
-                    <code>{`bun add @refineui/react @refineui/tokens
-
-import { Button } from "@refineui/react";
-
-<Button variant="primary" size="md">Save</Button>
-<Button variant="ghost" layout="icon" aria-label="Add">…</Button>
-<Button variant="outline" disabled>Unavailable</Button>`}</code>
-                </pre>
             </DocSection>
         </Stack>
     );

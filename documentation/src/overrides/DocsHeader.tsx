@@ -20,6 +20,7 @@ import {
     WebIcon,
 } from "@refineui/react";
 import { DocsThemeSelect } from "./DocsThemeSelect";
+import { RefineUILogo } from "../resources/logo";
 import {
     DOCS_HEADER_NAV,
     DOCS_SEARCH_ITEMS,
@@ -63,28 +64,6 @@ function sectionIsActive(section: DocsHeaderNavSection, currentPath: string): bo
     return isPathActive(section.href, currentPath);
 }
 
-function RefineUILogoMark() {
-    return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            width={iconSizes.small}
-            height={iconSizes.small}
-            aria-hidden
-            data-refineui-docs-logo-mark
-        >
-            <path
-                fill="currentColor"
-                d="M12 2.25 4.5 7.125v9.75L12 21.75l7.5-4.875v-9.75L12 2.25Zm0 2.02 5.48 3.558v7.124L12 18.51l-5.48-3.558V7.828L12 4.27Z"
-            />
-            <path
-                fill="currentColor"
-                d="M12 8.25a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5Zm0 1.5a2.25 2.25 0 1 1 0 4.5 2.25 2.25 0 0 1 0-4.5Z"
-            />
-        </svg>
-    );
-}
-
 function NavLinkStack({ title, description }: { title: string; description?: string }) {
     return (
         <Stack as="span" gap="sizeXXXSmall" className="min-w-0 flex-1 px-refineui-size-xxx-small">
@@ -109,8 +88,8 @@ function NavContentGrid({ children }: { children: ReactNode }) {
 export function DocsHeaderBrand({ title, titleHref, logo, hideTitle = false }: DocsHeaderBrandProps) {
     return (
         <a href={titleHref} data-refineui-docs-brand className="flex items-center gap-refineui-size-x-small min-w-0 no-underline">
-            <span data-refineui-docs-logo className="text-refineui-alias-foreground-brand">
-                {logo ?? <RefineUILogoMark />}
+            <span data-refineui-docs-logo className="text-refineui-alias-foreground-primary">
+                {logo ?? <RefineUILogo />}
             </span>
             {hideTitle ? null : (
                 <Text as="span" variant="subtitleMd" className="text-refineui-alias-foreground-primary">
@@ -122,20 +101,17 @@ export function DocsHeaderBrand({ title, titleHref, logo, hideTitle = false }: D
 }
 
 export function DocsHeaderNav({ currentPath = "/", sections = DOCS_HEADER_NAV }: DocsHeaderNavProps) {
-    const defaultOpen = useMemo(
-        () => sections.find((section) => sectionIsActive(section, currentPath))?.value ?? "",
-        [sections, currentPath],
-    );
-
     return (
         <div data-refineui-docs-nav>
-            <NavigationMenu defaultValue={defaultOpen} aria-label="Documentation">
+            <NavigationMenu aria-label="Documentation">
                 <NavigationMenuList>
                     {sections.map((section) => {
                         const sectionActive = sectionIsActive(section, currentPath);
                         return (
                             <NavigationMenuItem key={section.value} value={section.value}>
-                                <NavigationMenuTrigger>{section.label}</NavigationMenuTrigger>
+                                <NavigationMenuTrigger data-active={sectionActive || undefined}>
+                                    {section.label}
+                                </NavigationMenuTrigger>
                                 <NavigationMenuContent>
                                     <NavContentGrid>
                                         <NavigationMenuLink href={section.href} active={sectionActive}>

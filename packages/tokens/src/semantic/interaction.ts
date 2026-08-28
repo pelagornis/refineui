@@ -21,6 +21,8 @@ export const semanticInteraction: SemanticInteractionTokens = {
         panel: motion.duration.duration320,
         accordionPanel: motion.duration.duration380,
         accordionContent: motion.duration.duration260,
+        toastEnter: motion.duration.duration280,
+        toastLeave: motion.duration.duration200,
         skeleton: motion.duration.duration1500,
         spinner: motion.duration.duration800,
     },

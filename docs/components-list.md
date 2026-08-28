@@ -1,6 +1,6 @@
-# Pelagornis RefineUI Web Kit — Component List (32 + token compositions)
+# RefineUI — Component list
 
-**Figma:** https://www.figma.com/design/CxoaTfftpyh8ETDBamkkEK/Pelagornis-RefineUI-Web-Kit?node-id=36-82
+**Docs:** https://refineui.dev/components/
 
 | # | Component | Path | Status |
 |---|----------|------|------|

@@ -580,6 +580,10 @@ header.header {
   min-width: 0;
 }
 
+[data-refineui-docs-nav] [data-refineui="navigation-menu-trigger"][data-active]:not(:disabled):not([data-state="open"]) {
+  color: var(--refineui-color-alias-foreground-primary) !important;
+}
+
 @media (min-width: 72rem) {
   [data-refineui-docs-nav] {
     display: flex;

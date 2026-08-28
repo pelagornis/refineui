@@ -3,8 +3,51 @@ title: Button
 description: Starts an action — save, continue, open a panel, or close a dialog.
 ---
 
+import { PropSpec } from "../../../docs-ui";
+
 import ButtonDocs from "../../../components/ButtonDocs";
+import PackageInstall from "../../../components/PackageInstall.mdx";
 
 <div class="not-content">
   <ButtonDocs client:load />
+</div>
+
+## Installation
+
+<PackageInstall />
+
+## Usage
+
+Use one primary action per view. Prefer ghost or outline for secondary actions in dense toolbars.
+
+```tsx
+import { Button, WebIcon } from "@refineui/react";
+import { iconSizes } from "@refineui/tokens";
+
+<Button variant="primary" size="md">
+  Continue
+</Button>
+
+<Button variant="outline" disabled>
+  Unavailable
+</Button>
+
+<Button variant="ghost" layout="icon" aria-label="Add">
+  <WebIcon name="add" size={iconSizes.medium} color="currentColor" />
+</Button>
+```
+
+## API Reference
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+      { prop: "variant", default: "\"primary\"", type: "\"primary\" | \"secondary\" | \"outline\" | \"ghost\"", description: "Visual style." },
+      { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "Size tier." },
+      { prop: "layout", default: "\"label\"", type: "\"label\" | \"icon\"", description: "Label text or icon-only square target." },
+      { prop: "fullWidth", default: "false", type: "boolean", description: "Stretches to the parent width." },
+      { prop: "disabled", default: "false", type: "boolean", description: "Disables interaction." }
+    ]}
+  />
 </div>

@@ -14,7 +14,6 @@
     "paths": {
       "@refineui/codemod": ["packages/codemod"],
       "@refineui/react": ["packages/react"],
-      "@refineui/figma": ["packages/figma"],
       "@refineui/tokens": ["packages/tokens"],
       "@refineui/version": ["packages/version/src/index.ts"],
       "@refineui/utilities": ["packages/utilities"],

@@ -1,35 +1,24 @@
-import {
-    Avatar,
-    AvatarGroup,
-    AvatarIcon,
-    AvatarImage,
-    AvatarText,
-} from "@refineui/react";
+import { Avatars } from "@refineui/react";
 import { Look, Looks } from "./PreviewFrame";
 
 const portrait = "https://avatars.githubusercontent.com/u/108743931?s=200&v=4";
 
+const team = [
+    { src: portrait, alt: "Member 1" },
+    { src: portrait, alt: "Member 2" },
+    { src: portrait, alt: "Member 3" },
+    { src: portrait, alt: "Member 4" },
+    { src: portrait, alt: "Member 5" },
+];
+
 export default function AvatarsPreview() {
     return (
         <Looks>
-            <Look>
-                <AvatarGroup layout="stack">
-                    <Avatar>
-                        <AvatarImage src={portrait} alt="User" />
-                    </Avatar>
-                    <Avatar color="neutral">
-                        <AvatarIcon name="person" />
-                    </Avatar>
-                    <Avatar color="orange">
-                        <AvatarText>PL</AvatarText>
-                    </Avatar>
-                    <Avatar color="red">
-                        <AvatarIcon name="person" />
-                    </Avatar>
-                    <Avatar>
-                        <AvatarIcon name="more-horizontal" />
-                    </Avatar>
-                </AvatarGroup>
+            <Look caption="Stack">
+                <Avatars avatars={team} max={3} layout="stack" />
+            </Look>
+            <Look caption="Spread">
+                <Avatars avatars={team.slice(0, 4)} layout="spread" />
             </Look>
         </Looks>
     );

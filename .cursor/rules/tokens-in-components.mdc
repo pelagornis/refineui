@@ -1,21 +1,21 @@
 ---
 alwaysApply: false
-description: React components take design values only from @refineui/tokens (Foundation + componentSizes aliases)
+description: React components take design values only from @refineui/tokens and @refineui/react token maps
 globs: ["packages/react/**/*.{ts,tsx}"]
 ---
 
 # Tokens in components (`@refineui/react`)
 
-In Figma the flow is **Foundation → Web Kit**. Color·padding·spacing·radius are tied to Foundation; in code reference them only via `@refineui/tokens`.
+Color, padding, spacing, radius, motion, and dimensions come from `@refineui/tokens` and component token maps — never from ad-hoc literals.
 
-Component **scope and variants** must match **Web Kit Figma** — see `figma-foundation` rule.
+See `design-system` rule for package layout.
 
 ## MUST
-- **Color·spacing·radius·stroke·typography·shadow·z-index** come only from `@refineui/tokens`.
-- **Foundation `Global/Size/{n}`** via **`foundationSizes`**.
-- **Per–Web Kit dimensions** via **`componentSizes`** — aliases only (`componentSizeFoundationKeys` → Foundation). CSS uses `var(--refineui-size-foundation-size-*)`. **No raw `"Npx"`** in `componentSizes`; extend Foundation first.
-- **Icon glyphs** → `iconSizes`; **modal scrim** → `overlays`.
-- **No hardcoding**: no arbitrary `px`, `#hex`, or `rgb()` in component styles. (Exceptions: literal `0`, `minWidth: 0`, viewport units like `90vh`.)
+- **Color·spacing·radius·stroke·typography·shadow·z-index·motion** come only from `@refineui/tokens` or resolved component token refs.
+- **Foundation size scale** is referenced via **`foundationSizes`** / CSS `--refineui-size-foundation-size-*`.
+- **Component dimensions** come only from **`componentSizes`** (aliases of foundationSizes). **Icon glyphs** use **`iconSizes`**; modal scrim uses **`overlays`**.
+- **No hardcoding**: no arbitrary `px`, `#hex`, or `rgb()` in component styles. (Exceptions: literal `0`, `minWidth: 0`.)
+- When new dimensions are needed, extend `foundationSizes` then `componentSizes` in `packages/tokens` first.
 
 ## RECOMMENDED
-- In documentation Previews, prefer the same tokens and semantic colors.
+- Documentation previews use the same tokens and semantic alias utilities (`bg-refineui-alias-*`, `text-refineui-alias-*`).

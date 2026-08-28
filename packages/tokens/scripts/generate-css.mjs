@@ -172,6 +172,8 @@ function interactionMotionLines() {
         panel: "320",
         accordionPanel: "380",
         accordionContent: "260",
+        toastEnter: "280",
+        toastLeave: "200",
         skeleton: "1500",
         spinner: "800",
     };
