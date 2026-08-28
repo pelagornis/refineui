@@ -743,15 +743,7 @@ header.header {
   min-height: 0;
 }
 
-[data-refineui="sidebar-header"][data-docs-sidebar-toolbar] {
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  padding-block: var(--refineui-spacing-size-x-small);
-  padding-inline: var(--refineui-spacing-size-x-small);
-}
-
-[data-docs-sidebar-expand] {
+[data-docs-sidebar-toggle] {
   position: absolute;
   z-index: 1;
   inset-block-start: var(--refineui-spacing-size-x-small);
@@ -762,7 +754,7 @@ header.header {
   position: relative;
 }
 
-[data-docs-shell="desktop"][data-docs-sidebar-collapsed] [data-docs-shell-main] {
+[data-docs-shell="desktop"] [data-docs-shell-main] {
   padding-inline-start: var(--refineui-size-foundation-size-400);
 }
 

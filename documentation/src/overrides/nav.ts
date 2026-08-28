@@ -3,6 +3,7 @@ export type DocsNavLink = {
     label: string;
     href: string;
     isCurrent: boolean;
+    external?: boolean;
 };
 
 export type DocsNavGroup = {
@@ -29,6 +30,10 @@ type StarlightGroup = {
 
 type StarlightEntry = StarlightLink | StarlightGroup;
 
+function isExternalHref(href: string): boolean {
+    return /^https?:\/\//i.test(href);
+}
+
 function flattenLinks(entries: StarlightEntry[]): DocsNavLink[] {
     const links: DocsNavLink[] = [];
     for (const entry of entries) {
@@ -38,6 +43,7 @@ function flattenLinks(entries: StarlightEntry[]): DocsNavLink[] {
                 label: entry.label,
                 href: entry.href,
                 isCurrent: entry.isCurrent,
+                external: isExternalHref(entry.href),
             });
             continue;
         }
@@ -55,6 +61,7 @@ export function serializeNav(entries: StarlightEntry[]): DocsNavEntry[] {
                 label: entry.label,
                 href: entry.href,
                 isCurrent: entry.isCurrent,
+                external: isExternalHref(entry.href),
             };
         }
         const links = flattenLinks(entry.entries);

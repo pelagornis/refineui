@@ -139,6 +139,10 @@ import {
     Text,
     Textarea,
     Toast,
+    Tree,
+    TreeItem,
+    TreeItemContent,
+    TreeItemTrigger,
     Tooltip,
 } from "@refineui/react";
 import { CatalogCard, CatalogGrid } from "./CatalogCard";
@@ -776,6 +780,22 @@ export default function ComponentCatalog() {
                             content="Tooltip"
                         />
                     </div>
+                }
+            />
+            <CatalogCard
+                href="/components/tree/"
+                name="Tree"
+                preview={
+                    <Tree className="w-full" defaultExpanded={["app"]} defaultSelected="page">
+                        <TreeItem value="app">
+                            <TreeItemTrigger>app</TreeItemTrigger>
+                            <TreeItemContent>
+                                <TreeItem value="page">
+                                    <TreeItemTrigger>page.tsx</TreeItemTrigger>
+                                </TreeItem>
+                            </TreeItemContent>
+                        </TreeItem>
+                    </Tree>
                 }
             />
         </CatalogGrid>

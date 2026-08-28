@@ -124,6 +124,14 @@ export const componentTypographyTokens = {
     toast: {
         message: role("bodyMd"),
     },
+    /** Hierarchical tree — density matches sidebar / menu rows. */
+    tree: {
+        item: {
+            sm: role("bodySm"),
+            md: role("bodyMd"),
+            lg: role("bodyLg"),
+        },
+    },
     pagination: role("bodyLg"),
     chip: {
         sm: role("labelSm"),

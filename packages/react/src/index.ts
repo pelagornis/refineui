@@ -555,6 +555,17 @@ export {
     type ToastAction,
     type ToasterProps,
 } from "./components/Toast";
+export {
+    Tree,
+    TreeItem,
+    TreeItemContent,
+    TreeItemTrigger,
+    type TreeProps,
+    type TreeItemProps,
+    type TreeItemContentProps,
+    type TreeItemTriggerProps,
+    type TreeSize,
+} from "./components/Tree";
 export { Tooltip, type TooltipAlign, type TooltipPosition, type TooltipProps } from "./components/Tooltip";
 export {
     Chart,

@@ -1,0 +1,78 @@
+---
+title: Tree
+description: Expandable hierarchical list for files, folders, and nested navigation.
+---
+
+import { PropSpec } from "../../../docs-ui";
+
+import TreePreview from "../../../components/TreePreview";
+import PackageInstall from "../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <TreePreview client:load />
+</div>
+
+## Installation
+
+<PackageInstall />
+
+## Usage
+
+```tsx
+import { Tree, TreeItem, TreeItemContent, TreeItemTrigger } from "@refineui/react";
+
+<Tree defaultExpanded={["src"]} defaultSelected="button">
+  <TreeItem value="src">
+    <TreeItemTrigger>src</TreeItemTrigger>
+    <TreeItemContent>
+      <TreeItem value="button">
+        <TreeItemTrigger>Button.tsx</TreeItemTrigger>
+      </TreeItem>
+    </TreeItemContent>
+  </TreeItem>
+  <TreeItem value="package">
+    <TreeItemTrigger>package.json</TreeItemTrigger>
+  </TreeItem>
+</Tree>
+```
+
+Built from Foundation spacing, radius, color aliases, and typography tokens (same density as Sidebar / Menu). Chevron expands branches; row click selects. Arrow keys follow the WAI-ARIA tree pattern.
+
+## API Reference
+
+### Tree
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "Row typography size." },
+    { prop: "expanded", default: "—", type: "string[]", description: "Controlled expanded item values." },
+    { prop: "defaultExpanded", default: "—", type: "string[]", description: "Uncontrolled initial expanded values." },
+    { prop: "onExpandedChange", default: "—", type: "(value: string[]) => void", description: "Fires when expansion changes." },
+    { prop: "selected", default: "—", type: "string | null", description: "Controlled selected item value." },
+    { prop: "defaultSelected", default: "—", type: "string", description: "Uncontrolled initial selection." },
+    { prop: "onSelectedChange", default: "—", type: "(value: string | null) => void", description: "Fires when selection changes." }
+    ]}
+  />
+</div>
+
+### TreeItem
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "Unique identifier (required)." },
+    { prop: "disabled", default: "false", type: "boolean", description: "Disables selection and expansion." }
+    ]}
+  />
+</div>
+
+### TreeItemTrigger
+
+Focusable row label. Shows a chevron when the item has `TreeItemContent`.
+
+### TreeItemContent
+
+Nested `TreeItem` group. Mounted only while the parent is expanded.

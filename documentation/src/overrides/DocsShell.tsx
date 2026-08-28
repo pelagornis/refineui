@@ -157,6 +157,12 @@ function DocsDesktopShell({ title, titleHref, entries, githubHref, children }: S
         runPanelMotion(restoredSize.current, finishExpand);
     };
 
+    const toggleSidebar = () => {
+        if (animating) return;
+        if (collapsed) expandAnimated();
+        else collapseAnimated();
+    };
+
     const handleSidebarTransitionEnd = (event: TransitionEvent<HTMLDivElement>) => {
         if (!animating) return;
         if (event.propertyName !== "flex-grow") return;
@@ -212,7 +218,6 @@ function DocsDesktopShell({ title, titleHref, entries, githubHref, children }: S
                             title={title}
                             titleHref={titleHref}
                             entries={entries}
-                            onCollapse={collapseAnimated}
                             footer={
                                 githubHref ? (
                                     <SidebarFooter>
@@ -237,22 +242,22 @@ function DocsDesktopShell({ title, titleHref, entries, githubHref, children }: S
                 className="relative flex min-h-0 min-w-0"
                 style={panelMotionStyle}
             >
-                {collapsed && !animating ? (
+                {!animating ? (
                     <Button
                         type="button"
                         variant="ghost"
                         layout="icon"
                         size="sm"
-                        data-docs-sidebar-expand
-                        aria-label="Open sidebar"
-                        aria-expanded={false}
-                        onClick={expandAnimated}
+                        data-docs-sidebar-toggle
+                        aria-label={collapsed ? "Open sidebar" : "Close sidebar"}
+                        aria-expanded={!collapsed}
+                        onClick={toggleSidebar}
                     >
                         <WebIcon
-                            name="chevron-right"
+                            name={collapsed ? "chevron-right" : "chevron-left"}
                             size={iconSizes.small}
                             color="currentColor"
-                            fallback="›"
+                            fallback={collapsed ? "›" : "‹"}
                         />
                     </Button>
                 ) : null}

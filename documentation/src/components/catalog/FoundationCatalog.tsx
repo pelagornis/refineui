@@ -1,20 +1,25 @@
 import { Box, Grid, Stack, Text } from "@refineui/react";
 
+const ICONOGRAPHY_SITE = "https://github.com/pelagornis/refineui-system-icons";
+
 const AREAS = [
     {
         href: "/foundations/design-tokens/",
         name: "Design tokens",
         hint: "Color, type, space, radius, motion, and stacking",
+        external: false,
     },
     {
         href: "/foundations/layout/",
         name: "Layout",
         hint: "Containers, grids, alignment, and responsive rules",
+        external: false,
     },
     {
-        href: "/foundations/iconography/",
+        href: ICONOGRAPHY_SITE,
         name: "Iconography",
-        hint: "Glyph sizes, pairing, and accessibility",
+        hint: "System icons — opens refineui-system-icons",
+        external: true,
     },
 ] as const;
 
@@ -49,7 +54,13 @@ export default function FoundationCatalog() {
                     >
                         <Stack gap="sizeSmall">
                             <Text as="h3" variant="subtitleMd" className="m-0">
-                                <a href={area.href} data-refineui-catalog-link>
+                                <a
+                                    href={area.href}
+                                    data-refineui-catalog-link
+                                    {...(area.external
+                                        ? { target: "_blank", rel: "noreferrer" }
+                                        : {})}
+                                >
                                     {area.name}
                                 </a>
                             </Text>
