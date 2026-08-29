@@ -3,7 +3,7 @@ version: "1"
 project:
   name: refineui
   type: web-react
-  description: RefineUI — React/TypeScript design system monorepo (packages/react, packages/tokens, packages/utilities, documentation)
+  description: RefineUI — React/TypeScript design system monorepo (packages/react, packages/tokens, packages/utilities, docs)
 
 tools:
   claude_code: false
@@ -18,12 +18,12 @@ context:
     - "@refineui/tokens"
     - "@refineui/react"
     - "@refineui/web-icons"
-    - Astro + Starlight (documentation/)
+    - Astro + Starlight (docs/)
 
   summary: |
     RefineUI is a React/TypeScript design system monorepo.
     Packages: packages/react, packages/tokens, packages/utilities, packages/version.
-    Docs site: documentation/ (https://refineui.dev). Machine-readable index: /llm.txt.
+    Docs site: docs/ (https://refineui.dev). Machine-readable index: /llm.txt.
     Keep the packages/ layout unchanged. Follow existing exports, peer dependencies, and patterns.
     Treat code + docs as the source of truth.
     Respond in the user's chosen language. When referring to code, give path and line.
@@ -68,7 +68,7 @@ context:
         ## Documentation and maintenance
         MUST: Comments explain "why" only. Document public APIs.
         MUST: Do not make breaking or behavior changes without checking call sites and compatibility.
-        MUST: When changing public APIs, update documentation/src/content/docs and previews together.
+        MUST: When changing public APIs, update docs/src/content/docs and previews together.
 
         ## Collaboration and checks
         MUST: Before submitting — style match, error handling, no secrets, tests/validation, existing behavior preserved.
@@ -77,12 +77,12 @@ context:
         Only relax a rule when the user explicitly says so.
 
     - name: design-system
-      path: ["packages/react/**", "packages/tokens/**", "documentation/**"]
+      path: ["packages/react/**", "packages/tokens/**", "docs/**"]
       description: RefineUI design system — tokens, components, and docs (code-first)
       content: |
         # Design system (code-first)
 
-        **Source of truth:** `packages/tokens`, `packages/react`, and `documentation/`.
+        **Source of truth:** `packages/tokens`, `packages/react`, and `docs/`.
 
         ## Architecture
 
@@ -92,7 +92,7 @@ context:
         | **Semantic** | Meaningful aliases (colors, motion roles, elevation, text roles) | `packages/tokens/src/semantic/*.ts` |
         | **Component tokens** | Per-component color / typography / size roles | `packages/react/src/tokens/*` |
         | **Components** | Shipped UI | `packages/react/src/components/*` |
-        | **Docs** | Live previews, API reference, usage | `documentation/src/content/docs/` |
+        | **Docs** | Live previews, API reference, usage | `docs/src/content/docs/` |
 
         ## Token package layout (`packages/tokens/src/global/`)
 
@@ -113,7 +113,7 @@ context:
         - **MUST**: Use design tokens only for color, spacing, radius, stroke, typography, shadow, z-index, motion. See `tokens-in-components`.
         - **MUST**: Composable subcomponent APIs only — no convenience props (`title`, `description`, `items`, `actions`, `onClose`).
         - **MUST NOT**: Invent variants, props, or dimensions that are not reflected in tokens + an existing component pattern.
-        - **RECOMMENDED**: Add or update `documentation/src/content/docs/components/*.mdx` and catalog previews when shipping components.
+        - **RECOMMENDED**: Add or update `docs/src/content/docs/components/*.mdx` and catalog previews when shipping components.
 
         ## Docs & AI context
 
@@ -121,7 +121,7 @@ context:
         - Foundations: `/foundations/*` (color, typography, spacing, layout, …)
         - Components: flat A–Z catalog under `/components/*`
         - Iconography: external — https://github.com/pelagornis/refineui-system-icons
-        - LLM indexes: `documentation/public/llm.txt`, `llms.txt`
+        - LLM indexes: `docs/public/llm.txt`, `llms.txt`
 
         ## Stylesheet (product apps)
 
@@ -179,7 +179,7 @@ context:
         - Functional components + hooks
         - Define props with interface; avoid `any`
         - Match existing shipped components: same variants, composition model, and token usage as siblings in `packages/react/src/components/`
-        - Read `documentation/src/content/docs/components/<name>.mdx` and an existing implementation before adding APIs
+        - Read `docs/src/content/docs/components/<name>.mdx` and an existing implementation before adding APIs
         - Use @refineui/tokens and componentSizes/foundationSizes only — no hardcoded design values
         - Composable subcomponent API only — no convenience props
         - Consider a11y: semantics, ARIA, keyboard, focus
@@ -213,7 +213,7 @@ context:
       description: UI/design/token work from code and docs. Invoke for token or component tasks.
       allowed_tools: [Read, Write, Grep, Glob]
       auto_invoke: false
-      paths: ["packages/react/**", "packages/tokens/**", "documentation/**"]
+      paths: ["packages/react/**", "packages/tokens/**", "docs/**"]
       prompt: |
         # Design system (code-first)
 
@@ -222,8 +222,8 @@ context:
         ## Where to look
         - Tokens: `packages/tokens/src/global/*.ts`, `packages/tokens/src/semantic/*.ts`, `packages/tokens/README.md`
         - Components: `packages/react/src/components/<Name>/`, `packages/react/src/tokens/`
-        - Docs: `documentation/src/content/docs/foundations/`, `documentation/src/content/docs/components/`
-        - Previews: `documentation/src/components/*Preview.tsx`, `documentation/src/components/catalog/`
+        - Docs: `docs/src/content/docs/foundations/`, `docs/src/content/docs/components/`
+        - Previews: `docs/src/components/*Preview.tsx`, `docs/src/components/catalog/`
 
         ## Rules
         MUST: Use color, spacing, typography, stroke, radius, shadow, motion only from @refineui/tokens or component token maps.

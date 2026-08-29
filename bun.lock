@@ -9,8 +9,8 @@
         "vitest": "3.1.3",
       },
     },
-    "documentation": {
-      "name": "@refineui/documentation",
+    "docs": {
+      "name": "@refineui/docs",
       "version": "0.0.1",
       "dependencies": {
         "@astrojs/react": "^4.0.0",
@@ -347,7 +347,7 @@
 
     "@pagefind/windows-x64": ["@pagefind/windows-x64@1.5.2", "", { "os": "win32", "cpu": "x64" }, "sha512-Fa2Iyw7kaDRzGMfNYNUXNW2zbL5FQVDgSOcbDHdzBrDEdpqOqg8TcZ68F22ol6NJ9IGzvUdmeyZypLW5dyhqsg=="],
 
-    "@refineui/documentation": ["@refineui/documentation@workspace:documentation"],
+    "@refineui/docs": ["@refineui/docs@workspace:docs"],
 
     "@refineui/react": ["@refineui/react@workspace:packages/react"],
 

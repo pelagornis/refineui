@@ -36,7 +36,7 @@ MUST: Error messages must be specific enough to debug.
 ## Documentation and maintenance
 MUST: Comments explain "why" only. Document public APIs.
 MUST: Do not make breaking or behavior changes without checking call sites and compatibility.
-MUST: When changing public APIs, update documentation/src/content/docs and previews together.
+MUST: When changing public APIs, update docs/src/content/docs and previews together.
 
 ## Collaboration and checks
 MUST: Before submitting — style match, error handling, no secrets, tests/validation, existing behavior preserved.

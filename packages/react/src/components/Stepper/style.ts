@@ -4,14 +4,14 @@ import { componentTextClass } from "../../typography";
 
 /**
  * Stepper — multi-step progress rail.
- * Horizontal: stacked marker + label; connector spans between circle centers.
- * Vertical: left rail; connector overlaps opaque indicators.
+ * Markers share Calendar day cell selection language (`rounded-large`, brand fill).
+ * Connectors are straight rails between marker edges — not pill/circle tracks.
  */
 const INDICATOR_CENTER_OFFSET =
-    "calc((var(--refineui-size-foundation-size-320) - var(--refineui-size-progress-track-height-sm)) / 2)";
+    "calc((var(--refineui-size-calendar-day-size) - var(--refineui-size-progress-track-height-sm)) / 2)";
 
-/** Half of foundation 320 — inset so the rail meets the circle edge, not the center. */
-const INDICATOR_RADIUS = "var(--refineui-size-foundation-size-160)";
+/** Half of calendar day size — inset so the rail meets the cell edge, not the center. */
+const INDICATOR_HALF = "calc(var(--refineui-size-calendar-day-size) / 2)";
 
 /** Vertical rail tuck under the opaque indicator. */
 const CONNECTOR_OVERLAP = "var(--refineui-size-foundation-size-80)";
@@ -27,39 +27,37 @@ export const stepperStyles = {
         "relative z-[1] box-border flex min-w-0",
         "outline-none transition-opacity duration-[var(--refineui-motion-duration-fast)]",
     ),
-    /** Equal columns; marker centered above labels so the rail can meet the circles. */
+    /** Equal columns; marker centered above labels so the rail can meet the cells. */
     itemHorizontal: "flex-1 flex-col items-center gap-refineui-size-small",
     itemVertical: "w-full flex-row items-start gap-refineui-size-medium",
     itemInteractive: clsx(
         "cursor-pointer rounded-refineui-medium",
         "focus-visible:ring-2 focus-visible:ring-refineui-alias-border-focus focus-visible:ring-offset-2",
+        "hover:[&_[data-refineui=stepper-indicator][data-state=upcoming]]:bg-refineui-alias-background-primary-hover",
         "hover:[&_[data-refineui=stepper-indicator][data-state=upcoming]]:border-refineui-alias-border-strong",
-        "hover:[&_[data-refineui=stepper-indicator][data-state=upcoming]]:bg-refineui-alias-background-surface-hover",
+        "hover:[&_[data-refineui=stepper-indicator][data-state=upcoming]]:text-refineui-alias-foreground-primary-hover",
         "hover:[&_[data-refineui=stepper-title][data-state=upcoming]]:text-refineui-alias-foreground-primary",
     ),
     itemDisabled: "cursor-not-allowed opacity-50",
 
     indicator: clsx(
         componentTextClass(componentTypographyTokens.stepper.indicator),
-        "relative z-[1] box-border inline-flex size-refineui-foundation-size-320 shrink-0",
-        "items-center justify-center overflow-hidden rounded-refineui-circle",
-        "border-refineui-thin font-medium",
-        "transition-[background-color,border-color,color,box-shadow]",
+        "relative z-[1] box-border inline-flex size-refineui-calendar-day-size shrink-0",
+        "min-h-refineui-calendar-day-size min-w-refineui-calendar-day-size",
+        "items-center justify-center overflow-hidden rounded-refineui-large border-refineui-thin p-0",
+        "font-medium",
+        "transition-[background-color,border-color,color]",
         "duration-[var(--refineui-motion-duration-medium)]",
         "ease-[var(--refineui-motion-easing-emphasized)]",
     ),
     indicatorComplete: clsx(
-        "border-refineui-alias-background-brand bg-refineui-alias-background-brand",
-        "text-refineui-alias-foreground-on-brand shadow-refineui-2",
+        "border-refineui-alias-background-brand bg-refineui-alias-background-brand text-refineui-alias-foreground-inversed",
     ),
     indicatorCurrent: clsx(
-        "border-refineui-alias-background-brand bg-refineui-alias-background-brand-subtle",
-        "text-refineui-alias-foreground-brand shadow-refineui-2",
-        "ring-2 ring-refineui-alias-background-brand-subtle",
+        "border-refineui-alias-background-brand bg-refineui-alias-background-brand text-refineui-alias-foreground-inversed",
     ),
     indicatorUpcoming: clsx(
-        "border-refineui-alias-border-default bg-refineui-alias-background-primary",
-        "text-refineui-alias-foreground-secondary",
+        "border-refineui-alias-border-default bg-transparent text-refineui-alias-foreground-secondary",
     ),
 
     content: "flex min-w-0 flex-col gap-refineui-size-xxx-small",
@@ -82,27 +80,27 @@ export const stepperStyles = {
     descriptionCurrent: "text-refineui-alias-foreground-secondary",
     descriptionUpcoming: "text-refineui-alias-foreground-tertiary",
 
-    /** Flex slot between equal columns — track + animated fill. */
+    /** Flex slot between equal columns — straight track + animated fill. */
     separator: "pointer-events-none relative z-0 box-border list-none",
     separatorHorizontal: clsx(
         "min-w-[var(--refineui-size-foundation-size-240)] flex-1 self-start",
-        "h-[var(--refineui-size-foundation-size-320)]",
+        "h-refineui-calendar-day-size",
     ),
     separatorVertical: clsx(
-        "w-[var(--refineui-size-foundation-size-320)] shrink-0 self-start",
+        "w-refineui-calendar-day-size shrink-0 self-start",
         "min-h-[var(--refineui-size-foundation-size-400)]",
     ),
 
     /**
      * Equal flex item + separator widths → `-50%` reaches the adjacent column center;
-     * inset by indicator radius so the stroke meets the circle edge.
+     * inset by half the marker size so the stroke meets the cell edge.
      */
-    separatorRail: "absolute overflow-hidden rounded-refineui-circle",
+    separatorRail: "absolute overflow-hidden",
     separatorRailHorizontal: clsx(
         "h-refineui-progress-track-height-sm",
         "top-[var(--refineui-stepper-indicator-center)]",
-        "left-[calc(-50%+var(--refineui-stepper-indicator-radius))]",
-        "right-[calc(-50%+var(--refineui-stepper-indicator-radius))]",
+        "left-[calc(-50%+var(--refineui-stepper-indicator-half))]",
+        "right-[calc(-50%+var(--refineui-stepper-indicator-half))]",
     ),
     separatorRailVertical: clsx(
         "w-refineui-progress-track-height-sm",
@@ -111,10 +109,10 @@ export const stepperStyles = {
         "bottom-[calc(-1*var(--refineui-stepper-connector-overlap))]",
     ),
 
-    separatorTrack: "absolute inset-0 rounded-refineui-circle bg-refineui-alias-border-default",
+    separatorTrack: "absolute inset-0 bg-refineui-alias-border-default",
 
     separatorFill: clsx(
-        "absolute inset-0 rounded-refineui-circle bg-refineui-alias-background-brand",
+        "absolute inset-0 bg-refineui-alias-background-brand",
         "transition-transform duration-[var(--refineui-motion-duration-panel)]",
         "ease-[var(--refineui-motion-easing-emphasized)]",
         "motion-reduce:transition-none",
@@ -125,6 +123,6 @@ export const stepperStyles = {
 
 export const stepperConnectorVars = {
     ["--refineui-stepper-indicator-center" as string]: INDICATOR_CENTER_OFFSET,
-    ["--refineui-stepper-indicator-radius" as string]: INDICATOR_RADIUS,
+    ["--refineui-stepper-indicator-half" as string]: INDICATOR_HALF,
     ["--refineui-stepper-connector-overlap" as string]: CONNECTOR_OVERLAP,
 } as const;

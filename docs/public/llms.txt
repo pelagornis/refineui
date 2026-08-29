@@ -1,0 +1,99 @@
+# RefineUI
+
+> Pelagornis design system: `@refineui/tokens` (Foundation variables) and `@refineui/react` (Web Kit components). Docs use real package output, not mockups.
+
+Install: `bun add @refineui/react @refineui/tokens`. Load `@refineui/tokens/tailwind.css`, `@refineui/web-icons/dist/fonts/refineui-system-icons.css`, and `@refineui/react/refineui.css` at the app root.
+
+## Guides
+
+- [Getting started](https://refineui.dev/getting-started/): Architecture, install, stylesheet, first example
+- [AI integration](https://refineui.dev/ai-integration/): llm.txt, Cursor docs, prompt patterns
+
+## Foundations
+
+- [Overview](https://refineui.dev/foundations/): Visual language and token model
+- [Design tokens](https://refineui.dev/foundations/design-tokens/): Semantic token introduction
+- [Color](https://refineui.dev/foundations/color/): Palette and alias colors
+- [Typography](https://refineui.dev/foundations/typography/): Type scale and roles
+- [Spacing](https://refineui.dev/foundations/spacing/): Padding and gap scale
+- [Sizing](https://refineui.dev/foundations/sizing/): Dimension tokens
+- [Radius](https://refineui.dev/foundations/radius/): Corner radius
+- [Border](https://refineui.dev/foundations/border/): Stroke widths and borders
+- [Elevation](https://refineui.dev/foundations/elevation/): Shadows and depth
+- [Opacity](https://refineui.dev/foundations/opacity/): Opacity and overlays
+- [Motion](https://refineui.dev/foundations/motion/): Duration, easing, distance
+- [Z-index](https://refineui.dev/foundations/z-index/): Layering scale
+- [Layout](https://refineui.dev/foundations/layout/): Container, grid, alignment, responsive layout
+- [Iconography](https://github.com/pelagornis/refineui-system-icons): System icons (external repo)
+
+## Components
+
+- [Overview](https://refineui.dev/components/): Catalog and live previews
+- [Accordion](https://refineui.dev/components/accordion/)
+- [Alert](https://refineui.dev/components/alert/)
+- [Avatar](https://refineui.dev/components/avatar/)
+- [Avatars](https://refineui.dev/components/avatars/)
+- [Badge](https://refineui.dev/components/badge/)
+- [Box](https://refineui.dev/components/box/)
+- [Breadcrumb](https://refineui.dev/components/breadcrumb/)
+- [Bubble](https://refineui.dev/components/bubble/)
+- [Button](https://refineui.dev/components/button/)
+- [Button Group](https://refineui.dev/components/button-group/)
+- [Calendar](https://refineui.dev/components/calendar/)
+- [Card](https://refineui.dev/components/card/)
+- [Carousel](https://refineui.dev/components/carousel/)
+- [Chart](https://refineui.dev/components/chart/)
+- [Checkbox](https://refineui.dev/components/checkbox/)
+- [Command](https://refineui.dev/components/command/): Command palette with search
+- [Container](https://refineui.dev/components/container/)
+- [Dialog](https://refineui.dev/components/dialog/)
+- [Divider](https://refineui.dev/components/divider/)
+- [Drawer](https://refineui.dev/components/drawer/)
+- [Dropdown](https://refineui.dev/components/dropdown/)
+- [Field](https://refineui.dev/components/field/)
+- [Footer](https://refineui.dev/components/footer/)
+- [Grid](https://refineui.dev/components/grid/)
+- [Input](https://refineui.dev/components/input/)
+- [Input OTP](https://refineui.dev/components/input-otp/)
+- [Label](https://refineui.dev/components/label/)
+- [Link](https://refineui.dev/components/link/)
+- [Menu](https://refineui.dev/components/menu/)
+- [Navigation Menu](https://refineui.dev/components/navigation-menu/)
+- [Pagination](https://refineui.dev/components/pagination/)
+- [Popover](https://refineui.dev/components/popover/)
+- [Progress](https://refineui.dev/components/progress/)
+- [Progress Stepper](https://refineui.dev/components/progress-stepper/)
+- [Radio](https://refineui.dev/components/radio/)
+- [Resizable](https://refineui.dev/components/resizable/)
+- [Scroll Area](https://refineui.dev/components/scroll-area/)
+- [Search Field](https://refineui.dev/components/search-field/)
+- [Segmented Control](https://refineui.dev/components/segmented-control/)
+- [Select](https://refineui.dev/components/select/)
+- [Sidebar](https://refineui.dev/components/sidebar/)
+- [Skeleton](https://refineui.dev/components/skeleton/)
+- [Slider](https://refineui.dev/components/slider/)
+- [Spin Button](https://refineui.dev/components/spin-button/)
+- [Spinner](https://refineui.dev/components/spinner/)
+- [Stack](https://refineui.dev/components/stack/)
+- [Stepper](https://refineui.dev/components/stepper/)
+- [Switch](https://refineui.dev/components/switch/)
+- [Table](https://refineui.dev/components/table/)
+- [Tabs](https://refineui.dev/components/tabs/)
+- [Tag](https://refineui.dev/components/tag/)
+- [Textarea](https://refineui.dev/components/textarea/)
+- [Toast](https://refineui.dev/components/toast/)
+- [Toggle Button](https://refineui.dev/components/toggle-button/)
+- [Tooltip](https://refineui.dev/components/tooltip/)
+- [Tree](https://refineui.dev/components/tree/)
+
+## Development
+
+- [Overview](https://refineui.dev/development/): Build with RefineUI in product code
+- [Installation](https://refineui.dev/development/installation/): Packages, Tailwind, project setup
+- [Theming](https://refineui.dev/development/theming/): Light/dark and semantic aliases
+- [Motion](https://refineui.dev/development/motion/): Motion roles in components
+
+## Optional
+
+- [llm.txt](https://refineui.dev/llm.txt): Expanded plain-text reference for LLM context windows
+- [GitHub](https://github.com/pelagornis/refineui): Source code and issue tracker

@@ -1,0 +1,135 @@
+# RefineUI Design System & Component Library
+
+> RefineUI is Pelagornis's unified design system. Foundation variables ship as `@refineui/tokens`; UI ships as `@refineui/react`. Docs render real components — not mockups.
+
+## Installation & Setup
+
+```bash
+bun add @refineui/react @refineui/tokens
+# or
+npm install @refineui/react @refineui/tokens
+```
+
+Stylesheet (app root):
+
+```css
+@import "@refineui/tokens/tailwind.css";
+@import "@refineui/web-icons/dist/fonts/refineui-system-icons.css";
+@import "@refineui/react/refineui.css";
+```
+
+Or in JS:
+
+```tsx
+import "@refineui/react/refineui.css";
+```
+
+## Packages
+
+- `@refineui/react` — Accessible React components (Tailwind + design tokens)
+- `@refineui/tokens` — Color, typography, spacing, sizing, radius, elevation, motion, z-index
+- `@refineui/utilities` — Helpers and layout algorithms
+- `@refineui/web-icons` — RefineUI System Icons font (used by `WebIcon`)
+
+## Guides
+
+- [Getting started](/getting-started/): Architecture, install, stylesheet, first example
+- [AI integration](/ai-integration/): `llm.txt`, Cursor docs, prompt patterns
+
+## Foundations
+
+- [Overview](/foundations/): Visual language and token model
+- [Design tokens](/foundations/design-tokens/): Semantic token introduction
+- [Color](/foundations/color/): Palette and alias colors
+- [Typography](/foundations/typography/): Type scale and roles
+- [Spacing](/foundations/spacing/): Padding and gap scale
+- [Sizing](/foundations/sizing/): Dimension tokens
+- [Radius](/foundations/radius/): Corner radius
+- [Border](/foundations/border/): Stroke widths and borders
+- [Elevation](/foundations/elevation/): Shadows and depth
+- [Opacity](/foundations/opacity/): Opacity and overlays
+- [Motion](/foundations/motion/): Duration, easing, distance
+- [Z-index](/foundations/z-index/): Layering scale
+- [Layout](/foundations/layout/): Container, grid, alignment, responsive layout
+- [Iconography](https://github.com/pelagornis/refineui-system-icons): System icons (external repo)
+
+## Components
+
+Alphabetical catalog — full docs at [/components/](/components/).
+
+- [Accordion](/components/accordion/)
+- [Alert](/components/alert/)
+- [Avatar](/components/avatar/)
+- [Avatars](/components/avatars/)
+- [Badge](/components/badge/)
+- [Box](/components/box/)
+- [Breadcrumb](/components/breadcrumb/)
+- [Bubble](/components/bubble/)
+- [Button](/components/button/)
+- [Button Group](/components/button-group/)
+- [Calendar](/components/calendar/)
+- [Card](/components/card/)
+- [Carousel](/components/carousel/)
+- [Chart](/components/chart/)
+- [Checkbox](/components/checkbox/)
+- [Command](/components/command/): Command palette with search and keyboard navigation
+- [Container](/components/container/)
+- [Dialog](/components/dialog/)
+- [Divider](/components/divider/)
+- [Drawer](/components/drawer/)
+- [Dropdown](/components/dropdown/)
+- [Field](/components/field/)
+- [Footer](/components/footer/)
+- [Grid](/components/grid/)
+- [Input](/components/input/)
+- [Input OTP](/components/input-otp/)
+- [Label](/components/label/)
+- [Link](/components/link/)
+- [Menu](/components/menu/)
+- [Navigation Menu](/components/navigation-menu/)
+- [Pagination](/components/pagination/)
+- [Popover](/components/popover/)
+- [Progress](/components/progress/)
+- [Progress Stepper](/components/progress-stepper/)
+- [Radio](/components/radio/)
+- [Resizable](/components/resizable/)
+- [Scroll Area](/components/scroll-area/)
+- [Search Field](/components/search-field/)
+- [Segmented Control](/components/segmented-control/)
+- [Select](/components/select/)
+- [Sidebar](/components/sidebar/)
+- [Skeleton](/components/skeleton/)
+- [Slider](/components/slider/)
+- [Spin Button](/components/spin-button/)
+- [Spinner](/components/spinner/)
+- [Stack](/components/stack/)
+- [Stepper](/components/stepper/)
+- [Switch](/components/switch/)
+- [Table](/components/table/)
+- [Tabs](/components/tabs/)
+- [Tag](/components/tag/)
+- [Textarea](/components/textarea/)
+- [Toast](/components/toast/)
+- [Toggle Button](/components/toggle-button/)
+- [Tooltip](/components/tooltip/)
+- [Tree](/components/tree/)
+
+## Development
+
+- [Overview](/development/): Build with RefineUI in product code
+- [Installation](/development/installation/): Packages, Tailwind, and project setup
+- [Theming](/development/theming/): Light/dark and semantic aliases
+- [Motion](/development/motion/): Motion roles in components
+
+## AI & machine-readable docs
+
+- [/llms.txt](/llms.txt) — Curated link index (llmstxt.org format)
+- [/llm.txt](/llm.txt) — This file (expanded reference)
+- [GitHub](https://github.com/pelagornis/refineui) — Source and issues
+
+## Usage notes for LLMs
+
+- Import components from `@refineui/react` only; do not invent parallel APIs
+- Use design tokens (`bg-refineui-alias-*`, `text-refineui-alias-*`, spacing/radius utilities) — no arbitrary px or hex in component styles
+- Match Web Kit component scope; do not add variants or convenience props not in Figma Web Kit
+- Prefer composition (`Field` + `Input`, `Command` + `CommandDialog`, `Sidebar` + `SidebarLink`) over raw HTML for forms, navigation, and feedback

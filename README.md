@@ -63,7 +63,7 @@ export function Example() {
 packages/react       @refineui/react
 packages/tokens      @refineui/tokens
 packages/utilities   @refineui/utilities
-documentation/       Astro + Starlight docs site
+docs/                Astro + Starlight docs site
 ```
 
 ## Develop

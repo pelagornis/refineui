@@ -4,7 +4,7 @@ alwaysApply: true
 
 # Design system (code-first)
 
-**Source of truth:** `packages/tokens`, `packages/react`, and `documentation/`.
+**Source of truth:** `packages/tokens`, `packages/react`, and `docs/`.
 
 ## Architecture
 
@@ -14,7 +14,7 @@ alwaysApply: true
 | **Semantic** | Meaningful aliases (colors, motion roles, elevation, text roles) | `packages/tokens/src/semantic/*.ts` |
 | **Component tokens** | Per-component color / typography / size roles | `packages/react/src/tokens/*` |
 | **Components** | Shipped UI | `packages/react/src/components/*` |
-| **Docs** | Live previews, API reference, usage | `documentation/src/content/docs/` |
+| **Docs** | Live previews, API reference, usage | `docs/src/content/docs/` |
 
 ## Token package layout (`packages/tokens/src/global/`)
 
@@ -35,7 +35,7 @@ Build: `bun run build:tokens` → `dist/css-variables.css`, `dist/tailwind-theme
 - **MUST**: Use design tokens only for color, spacing, radius, stroke, typography, shadow, z-index, motion. See `tokens-in-components`.
 - **MUST**: Composable subcomponent APIs only — no convenience props (`title`, `description`, `items`, `actions`, `onClose`).
 - **MUST NOT**: Invent variants, props, or dimensions that are not reflected in tokens + an existing component pattern.
-- **RECOMMENDED**: Add or update `documentation/src/content/docs/components/*.mdx` and catalog previews when shipping components.
+- **RECOMMENDED**: Add or update `docs/src/content/docs/components/*.mdx` and catalog previews when shipping components.
 
 ## Docs & AI context
 
@@ -43,7 +43,7 @@ Build: `bun run build:tokens` → `dist/css-variables.css`, `dist/tailwind-theme
 - Foundations: `/foundations/*` (color, typography, spacing, layout, …)
 - Components: flat A–Z catalog under `/components/*`
 - Iconography: external — https://github.com/pelagornis/refineui-system-icons
-- LLM indexes: `documentation/public/llm.txt`, `llms.txt`
+- LLM indexes: `docs/public/llm.txt`, `llms.txt`
 
 ## Stylesheet (product apps)
 

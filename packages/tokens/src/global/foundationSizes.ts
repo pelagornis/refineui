@@ -37,6 +37,7 @@ export const foundationSizes = {
     foundationSize3000: "300px",
     foundationSize3200: "320px",
     foundationSize3250: "325px",
+    foundationSize4500: "450px",
     foundationSize5750: "575px",
     foundationSize6000: "600px",
     foundationSize8500: "850px",

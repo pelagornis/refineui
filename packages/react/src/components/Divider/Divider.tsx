@@ -29,7 +29,7 @@ function DividerCircleGlyph() {
     );
 }
 
-/** Web Kit `Divider` `346:722` — layout default · content · icon; align center · left · right (horizontal). See design-specs-web-kit.md §8. */
+/** Divider — layout default · content · icon; align center · left · right (horizontal). */
 export function Divider(props: DividerProps) {
     const p = props as Omit<HTMLAttributes<HTMLDivElement>, "children"> & {
         layout?: "default" | "content" | "icon";

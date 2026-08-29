@@ -356,6 +356,13 @@
   color: var(--refineui-color-alias-foreground-primary) !important;
 }
 /* Selected / Day — selection uses fixed rest only; no hover/pressed background (Web Kit) */
+/* Stepper — markers share Calendar day cell selection; upcoming uses primary hover/active */
+[data-refineui="stepper-item"]:not([data-disabled="true"])
+  [data-refineui="stepper-indicator"][data-state="upcoming"]:active {
+  background-color: var(--refineui-color-alias-background-primary-active) !important;
+  border-color: var(--refineui-color-alias-border-strong) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
+}
 /* Pagination — Web Kit `558:1989` · `Pagination / Item` `570:2332` */
 [data-refineui="pagination"]:not([data-ellipsis="true"]):not(:disabled):not(:focus):hover {
   background-color: var(--refineui-color-alias-background-surface-hover) !important;
