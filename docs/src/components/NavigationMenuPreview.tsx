@@ -21,8 +21,8 @@ function ContentGrid({ children }: { children: ReactNode }) {
 function LinkStack({ title, description }: { title: string; description: string }) {
     return (
         <Stack as="span" gap="sizeXXXSmall" className="min-w-0 flex-1 px-refineui-size-xxx-small">
-            <span className="truncate">{title}</span>
-            <span className="truncate text-refineui-alias-foreground-tertiary refineui-typo-caption-1">
+            <span className="truncate refineui-typo-body-2">{title}</span>
+            <span className="truncate text-refineui-alias-foreground-tertiary refineui-typo-body-4">
                 {description}
             </span>
         </Stack>

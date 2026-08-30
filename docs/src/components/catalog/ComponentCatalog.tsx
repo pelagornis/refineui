@@ -4,10 +4,7 @@ import {
     AccordionItem,
     AccordionTrigger,
     Alert,
-    AlertAction,
-    AlertActions,
     AlertBody,
-    AlertClose,
     AlertDescription,
     AlertIcon,
     AlertRow,
@@ -15,6 +12,7 @@ import {
     Avatar,
     AvatarGroup,
     AvatarIcon,
+    AvatarImage,
     AvatarText,
     Badge,
     Box,
@@ -52,29 +50,27 @@ import {
     CommandInput,
     CommandItem,
     CommandList,
+    Container,
     Dialog,
     DialogTrigger,
     Divider,
     Drawer,
     DrawerTrigger,
-    Dropdown,
-    DropdownTrigger,
     Field,
     FieldHint,
     FieldLabel,
     Footer,
     FooterCopyright,
     FooterMeta,
+    Grid,
     Input,
     InputOTP,
     InputOTPSlot,
     Label,
     Link,
-    Menu,
+    MenuDivider,
     MenuItem,
     MenuList,
-    MenuPopover,
-    MenuTrigger,
     NavigationMenu,
     NavigationMenuItem,
     NavigationMenuList,
@@ -85,8 +81,6 @@ import {
     PaginationLink,
     PaginationNext,
     PaginationPrevious,
-    Popover,
-    PopoverTrigger,
     Progress,
     ProgressStepper,
     ProgressStepperItem,
@@ -124,6 +118,7 @@ import {
     StepperIndicator,
     StepperItem,
     StepperList,
+    StepperSeparator,
     StepperTitle,
     Switch,
     Table,
@@ -145,16 +140,53 @@ import {
     TreeItemTrigger,
     Tooltip,
 } from "@refineui/react";
+import { DemoBlock } from "../layout/DemoBlock";
+import { CatalogDropdownPreview, CatalogPopoverPreview } from "./catalogOverlayPreviews";
 import { CatalogCard, CatalogGrid } from "./CatalogCard";
+import { chartValues, noopDate, noopNumber, noopString, portraitSrc } from "./catalogConstants";
 
-const noopNumber = (_value: number) => undefined;
-const noopString = (_value: string) => undefined;
-const noopDate = (_date: Date) => undefined;
-const chartValues = [186, 305, 237, 273, 209, 214];
+const scrollAreaItems = [
+    "Accordion",
+    "Alert",
+    "Avatar",
+    "Badge",
+    "Button",
+    "Calendar",
+    "Card",
+    "Carousel",
+    "Chart",
+    "Checkbox",
+    "Command",
+    "Dialog",
+    "Divider",
+    "Drawer",
+    "Dropdown",
+    "Field",
+    "Footer",
+    "Grid",
+    "Input",
+    "Link",
+    "Menu",
+    "Pagination",
+    "Popover",
+    "Progress",
+    "Radio",
+    "Select",
+    "Sidebar",
+    "Slider",
+    "Stepper",
+    "Switch",
+    "Table",
+    "Tabs",
+    "Tag",
+    "Toast",
+    "Tooltip",
+    "Tree",
+] as const;
 
 export default function ComponentCatalog() {
     return (
-        <CatalogGrid>
+        <CatalogGrid data-refineui-catalog-overview>
             <CatalogCard
                 href="/components/accordion/"
                 name="Accordion"
@@ -175,15 +207,20 @@ export default function ComponentCatalog() {
                         <AlertRow>
                             <AlertIcon />
                             <AlertBody>
-                                <AlertTitle>New version available</AlertTitle>
-                                <AlertDescription>Update to get the latest components.</AlertDescription>
+                                <AlertTitle>Update available</AlertTitle>
+                                <AlertDescription>Get the latest components.</AlertDescription>
                             </AlertBody>
-                            <AlertClose type="button" />
                         </AlertRow>
-                        <AlertActions>
-                            <AlertAction type="button">Update</AlertAction>
-                        </AlertActions>
                     </Alert>
+                }
+            />
+            <CatalogCard
+                href="/components/avatar/"
+                name="Avatar"
+                preview={
+                    <Avatar size="lg">
+                        <AvatarImage src={portraitSrc} alt="User" />
+                    </Avatar>
                 }
             />
             <CatalogCard
@@ -214,6 +251,22 @@ export default function ComponentCatalog() {
                             3
                         </Badge>
                     </Stack>
+                }
+            />
+            <CatalogCard
+                href="/components/box/"
+                name="Box"
+                preview={
+                    <Box
+                        padding="sizeMedium"
+                        background="backgroundPrimary"
+                        radius="roundedLarge"
+                        border="strokeWidthThin"
+                        borderColor="borderDefault"
+                        className="w-refineui-foundation-size-3250 max-w-full"
+                    >
+                        <DemoBlock tone={0}>Inset content</DemoBlock>
+                    </Box>
                 }
             />
             <CatalogCard
@@ -263,8 +316,9 @@ export default function ComponentCatalog() {
             <CatalogCard
                 href="/components/calendar/"
                 name="Calendar"
+                fill
                 preview={
-                    <div data-refineui-catalog-calendar>
+                    <div data-refineui-catalog-frame data-refineui-catalog-calendar>
                         <Calendar value={new Date(2026, 7, 15)} onChange={noopDate} />
                     </div>
                 }
@@ -273,8 +327,8 @@ export default function ComponentCatalog() {
                 href="/components/card/"
                 name="Card"
                 preview={
-                    <div data-refineui-catalog-card-specimen className="flex h-full w-full items-center justify-center">
-                        <Card variant="outlined" className="h-auto w-full">
+                    <div data-refineui-catalog-card-specimen>
+                        <Card variant="outlined">
                             <CardHeader>
                                 <CardTitle>Project</CardTitle>
                                 <CardDescription>Surface for grouped content.</CardDescription>
@@ -286,15 +340,16 @@ export default function ComponentCatalog() {
             <CatalogCard
                 href="/components/carousel/"
                 name="Carousel"
+                fill
                 preview={
-                    <div data-refineui-catalog-carousel className="h-full min-h-0 w-full">
+                    <div data-refineui-catalog-frame data-refineui-catalog-carousel>
                         <Carousel className="h-full min-h-0 w-full">
                             <CarouselContent>
                                 <CarouselItem>
                                     <Box
-                                        padding="sizeLarge"
+                                        padding="sizeMedium"
                                         background="backgroundBrand"
-                                        className="flex h-full min-h-0 flex-col justify-end"
+                                        className="flex h-full min-h-0 w-full flex-col justify-end"
                                     >
                                         <Text as="strong" variant="titleSm" className="text-refineui-alias-foreground-on-brand">
                                             Overview
@@ -303,9 +358,9 @@ export default function ComponentCatalog() {
                                 </CarouselItem>
                                 <CarouselItem>
                                     <Box
-                                        padding="sizeLarge"
+                                        padding="sizeMedium"
                                         background="backgroundBrand"
-                                        className="flex h-full min-h-0 flex-col justify-end"
+                                        className="flex h-full min-h-0 w-full flex-col justify-end"
                                     >
                                         <Text as="strong" variant="titleSm" className="text-refineui-alias-foreground-on-brand">
                                             Motion
@@ -325,8 +380,10 @@ export default function ComponentCatalog() {
             <CatalogCard
                 href="/components/chart/"
                 name="Chart"
+                fill
                 preview={
-                    <Chart className="h-refineui-foundation-size-2000 w-full">
+                    <div data-refineui-catalog-frame className="w-full">
+                        <Chart className="h-full min-h-0 w-full">
                         <ChartBody>
                             <ChartContent>
                                 <ChartPlot aria-label="Revenue">
@@ -336,6 +393,7 @@ export default function ComponentCatalog() {
                             </ChartContent>
                         </ChartBody>
                     </Chart>
+                    </div>
                 }
             />
             <CatalogCard
@@ -352,16 +410,35 @@ export default function ComponentCatalog() {
                 href="/components/command/"
                 name="Command"
                 preview={
-                    <Command className="w-full">
-                        <CommandInput placeholder="Search commands…" />
-                        <CommandList>
-                            <CommandGroup>
-                                <CommandGroupHeading>Suggestions</CommandGroupHeading>
-                                <CommandItem value="calendar">Calendar</CommandItem>
-                                <CommandItem value="search">Search</CommandItem>
-                            </CommandGroup>
-                        </CommandList>
-                    </Command>
+                    <div data-refineui-catalog-command className="w-refineui-foundation-size-3250 max-w-full">
+                        <Command className="w-full">
+                            <CommandInput placeholder="Search commands…" />
+                            <CommandList>
+                                <CommandGroup>
+                                    <CommandGroupHeading>Suggestions</CommandGroupHeading>
+                                    <CommandItem value="calendar">Calendar</CommandItem>
+                                    <CommandItem value="search">Search</CommandItem>
+                                    <CommandItem value="settings">Settings</CommandItem>
+                                </CommandGroup>
+                            </CommandList>
+                        </Command>
+                    </div>
+                }
+            />
+            <CatalogCard
+                href="/components/container/"
+                name="Container"
+                preview={
+                    <div data-refineui-catalog-layout>
+                        <Box background="backgroundSurfaceHover" radius="roundedLarge" className="w-full">
+                            <Container padding="sizeMedium">
+                                <Stack gap="sizeSmall">
+                                    <DemoBlock tone={0}>Full width</DemoBlock>
+                                    <DemoBlock tone={1}>Centered column</DemoBlock>
+                                </Stack>
+                            </Container>
+                        </Box>
+                    </div>
                 }
             />
             <CatalogCard
@@ -396,15 +473,7 @@ export default function ComponentCatalog() {
             <CatalogCard
                 href="/components/dropdown/"
                 name="Dropdown"
-                preview={
-                    <Dropdown>
-                        <DropdownTrigger>
-                            <Button type="button" variant="secondary">
-                                Account
-                            </Button>
-                        </DropdownTrigger>
-                    </Dropdown>
-                }
+                preview={<CatalogDropdownPreview />}
             />
             <CatalogCard
                 href="/components/field/"
@@ -426,6 +495,22 @@ export default function ComponentCatalog() {
                             <FooterCopyright>© RefineUI</FooterCopyright>
                         </FooterMeta>
                     </Footer>
+                }
+            />
+            <CatalogCard
+                href="/components/grid/"
+                name="Grid"
+                preview={
+                    <div data-refineui-catalog-layout>
+                        <Grid columns={3} gap="sizeSmall" className="w-full">
+                            <DemoBlock tone={0}>1</DemoBlock>
+                            <DemoBlock tone={1}>2</DemoBlock>
+                            <DemoBlock tone={2}>3</DemoBlock>
+                            <DemoBlock tone={3}>4</DemoBlock>
+                            <DemoBlock tone={0}>5</DemoBlock>
+                            <DemoBlock tone={1}>6</DemoBlock>
+                        </Grid>
+                    </div>
                 }
             />
             <CatalogCard
@@ -462,19 +547,19 @@ export default function ComponentCatalog() {
                 href="/components/menu/"
                 name="Menu"
                 preview={
-                    <Menu>
-                        <MenuTrigger>
-                            <Button type="button" variant="secondary">
+                    <div data-refineui-catalog-overlay data-refineui-catalog-overlay-centered className="w-full">
+                        <Stack gap="sizeSmall" className="w-refineui-foundation-size-3250 max-w-full items-center">
+                            <Button type="button" variant="secondary" size="sm">
                                 Open menu
                             </Button>
-                        </MenuTrigger>
-                        <MenuPopover>
-                            <MenuList>
+                            <MenuList className="w-full">
                                 <MenuItem>New</MenuItem>
-                                <MenuItem>Open…</MenuItem>
+                                <MenuItem state="active">Open…</MenuItem>
+                                <MenuDivider />
+                                <MenuItem>Copy</MenuItem>
                             </MenuList>
-                        </MenuPopover>
-                    </Menu>
+                        </Stack>
+                    </div>
                 }
             />
             <CatalogCard
@@ -517,19 +602,7 @@ export default function ComponentCatalog() {
                     </Pagination>
                 }
             />
-            <CatalogCard
-                href="/components/popover/"
-                name="PopOver"
-                preview={
-                    <Popover>
-                        <PopoverTrigger>
-                            <Button type="button" variant="secondary">
-                                Dimensions
-                            </Button>
-                        </PopoverTrigger>
-                    </Popover>
-                }
-            />
+            <CatalogCard href="/components/popover/" name="PopOver" preview={<CatalogPopoverPreview />} />
             <CatalogCard href="/components/progress/" name="Progress" preview={<Progress value={60} className="w-full" />} />
             <CatalogCard
                 href="/components/progress-stepper/"
@@ -566,44 +639,55 @@ export default function ComponentCatalog() {
             <CatalogCard
                 href="/components/resizable/"
                 name="Resizable"
+                fill
                 preview={
-                    <ResizablePanelGroup
-                        orientation="horizontal"
-                        className="h-refineui-foundation-size-2000 w-full overflow-hidden rounded-refineui-large border-refineui-thin border-refineui-alias-border-default"
-                    >
+                    <div data-refineui-catalog-frame>
+                        <ResizablePanelGroup
+                            orientation="horizontal"
+                            className="h-full min-h-0 w-full overflow-hidden rounded-refineui-large border-refineui-thin border-refineui-alias-border-default"
+                        >
                         <ResizablePanel defaultSize={40}>
-                            <Stack align="center" justify="center" className="h-full">
-                                <Text variant="captionMd">A</Text>
-                            </Stack>
+                            <DemoBlock tone={0} className="h-full">
+                                A
+                            </DemoBlock>
                         </ResizablePanel>
                         <ResizableHandle />
                         <ResizablePanel defaultSize={60}>
-                            <Stack align="center" justify="center" className="h-full">
-                                <Text variant="captionMd">B</Text>
-                            </Stack>
+                            <DemoBlock tone={1} className="h-full">
+                                B
+                            </DemoBlock>
                         </ResizablePanel>
                     </ResizablePanelGroup>
+                    </div>
                 }
             />
             <CatalogCard
                 href="/components/scroll-area/"
                 name="Scroll Area"
+                fill
                 preview={
-                    <ScrollArea className="h-refineui-foundation-size-2000 w-full">
-                        <ScrollAreaViewport>
-                            <Stack gap="sizeSmall" className="p-refineui-size-small">
-                                <Text variant="bodySm">Accordion</Text>
-                                <Text variant="bodySm">Alert</Text>
-                                <Text variant="bodySm">Avatar</Text>
-                                <Text variant="bodySm">Badge</Text>
-                                <Text variant="bodySm">Button</Text>
-                                <Text variant="bodySm">Card</Text>
-                            </Stack>
-                        </ScrollAreaViewport>
-                        <ScrollAreaScrollbar orientation="vertical">
-                            <ScrollAreaThumb />
-                        </ScrollAreaScrollbar>
-                    </ScrollArea>
+                    <div data-refineui-catalog-frame data-refineui-catalog-scroll-area>
+                        <ScrollArea type="always" className="h-full min-h-0 w-full">
+                            <ScrollAreaViewport>
+                                <Stack as="ul" className="m-0 list-none p-0">
+                                    {scrollAreaItems.map((name) => (
+                                        <Box
+                                            key={name}
+                                            as="li"
+                                            paddingX="sizeMedium"
+                                            paddingY="sizeSmall"
+                                            className="border-b-refineui-thin border-refineui-alias-border-default"
+                                        >
+                                            <Text variant="bodySm">{name}</Text>
+                                        </Box>
+                                    ))}
+                                </Stack>
+                            </ScrollAreaViewport>
+                            <ScrollAreaScrollbar orientation="vertical">
+                                <ScrollAreaThumb />
+                            </ScrollAreaScrollbar>
+                        </ScrollArea>
+                    </div>
                 }
             />
             <CatalogCard
@@ -640,21 +724,28 @@ export default function ComponentCatalog() {
             <CatalogCard
                 href="/components/sidebar/"
                 name="Sidebar"
+                fill
                 preview={
-                    <Sidebar className="h-full">
-                        <SidebarHeader>
-                            <SidebarBrand>RefineUI</SidebarBrand>
-                        </SidebarHeader>
-                        <SidebarContent>
-                            <SidebarNav>
-                                <SidebarLink href="#overview" active>
-                                    Overview
-                                </SidebarLink>
-                                <SidebarLink href="#components">Components</SidebarLink>
-                                <SidebarLink href="#tokens">Tokens</SidebarLink>
-                            </SidebarNav>
-                        </SidebarContent>
-                    </Sidebar>
+                    <div
+                        data-refineui-catalog-frame
+                        data-refineui-catalog-sidebar
+                        className="overflow-hidden rounded-refineui-large border-refineui-thin border-refineui-alias-border-default"
+                    >
+                        <Sidebar className="h-full min-h-0">
+                            <SidebarHeader>
+                                <SidebarBrand>RefineUI</SidebarBrand>
+                            </SidebarHeader>
+                            <SidebarContent>
+                                <SidebarNav>
+                                    <SidebarLink href="#overview" active>
+                                        Overview
+                                    </SidebarLink>
+                                    <SidebarLink href="#components">Components</SidebarLink>
+                                    <SidebarLink href="#tokens">Tokens</SidebarLink>
+                                </SidebarNav>
+                            </SidebarContent>
+                        </Sidebar>
+                    </div>
                 }
             />
             <CatalogCard
@@ -684,10 +775,23 @@ export default function ComponentCatalog() {
             />
             <CatalogCard
                 href="/components/spin-button/"
-                name="SpinButton"
+                name="Spin Button"
                 preview={<SpinButton value={5} onChange={noopNumber} min={0} max={10} />}
             />
             <CatalogCard href="/components/spinner/" name="Spinner" preview={<Spinner size="lg" />} />
+            <CatalogCard
+                href="/components/stack/"
+                name="Stack"
+                preview={
+                    <div data-refineui-catalog-layout className="w-refineui-foundation-size-3250 max-w-full">
+                        <Stack gap="sizeSmall" className="w-full">
+                            <DemoBlock tone={0}>One</DemoBlock>
+                            <DemoBlock tone={1}>Two</DemoBlock>
+                            <DemoBlock tone={2}>Three</DemoBlock>
+                        </Stack>
+                    </div>
+                }
+            />
             <CatalogCard
                 href="/components/stepper/"
                 name="Stepper"
@@ -698,15 +802,30 @@ export default function ComponentCatalog() {
                                 <StepperIndicator>1</StepperIndicator>
                                 <StepperTitle>Account</StepperTitle>
                             </StepperItem>
+                            <StepperSeparator />
                             <StepperItem value={1}>
                                 <StepperIndicator>2</StepperIndicator>
                                 <StepperTitle>Plan</StepperTitle>
+                            </StepperItem>
+                            <StepperSeparator />
+                            <StepperItem value={2}>
+                                <StepperIndicator>3</StepperIndicator>
+                                <StepperTitle>Pay</StepperTitle>
                             </StepperItem>
                         </StepperList>
                     </Stepper>
                 }
             />
-            <CatalogCard href="/components/switch/" name="Switch" preview={<Switch defaultChecked />} />
+            <CatalogCard
+                href="/components/switch/"
+                name="Switch"
+                preview={
+                    <Stack direction="row" gap="sizeSmall" align="center">
+                        <Switch checked aria-label="Notifications" />
+                        <Text variant="bodySm">On</Text>
+                    </Stack>
+                }
+            />
             <CatalogCard
                 href="/components/table/"
                 name="Table"

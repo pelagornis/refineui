@@ -69,7 +69,7 @@ function NavLinkStack({ title, description }: { title: string; description?: str
         <Stack as="span" gap="sizeXXXSmall" className="min-w-0 flex-1 px-refineui-size-xxx-small">
             <span className="truncate">{title}</span>
             {description ? (
-                <span className="truncate text-refineui-alias-foreground-tertiary refineui-typo-caption-1">
+                <span className="truncate text-refineui-alias-foreground-tertiary refineui-typo-body-4">
                     {description}
                 </span>
             ) : null}
@@ -107,6 +107,17 @@ export function DocsHeaderNav({ currentPath = "/", sections = DOCS_HEADER_NAV }:
                 <NavigationMenuList>
                     {sections.map((section) => {
                         const sectionActive = sectionIsActive(section, currentPath);
+
+                        if (section.links.length === 0) {
+                            return (
+                                <NavigationMenuItem key={section.value} value={section.value}>
+                                    <NavigationMenuLink href={section.href} active={sectionActive}>
+                                        {section.label}
+                                    </NavigationMenuLink>
+                                </NavigationMenuItem>
+                            );
+                        }
+
                         return (
                             <NavigationMenuItem key={section.value} value={section.value}>
                                 <NavigationMenuTrigger data-active={sectionActive || undefined}>
@@ -114,9 +125,6 @@ export function DocsHeaderNav({ currentPath = "/", sections = DOCS_HEADER_NAV }:
                                 </NavigationMenuTrigger>
                                 <NavigationMenuContent>
                                     <NavContentGrid>
-                                        <NavigationMenuLink href={section.href} active={sectionActive}>
-                                            <NavLinkStack title={`${section.label} overview`} description="Section home" />
-                                        </NavigationMenuLink>
                                         {section.links.map((link) => (
                                             <NavigationMenuLink
                                                 key={link.href}

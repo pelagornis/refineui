@@ -38,7 +38,7 @@ const TOKENS = [
 
 export default function FoundationCatalog() {
     return (
-        <Stack gap="sizeXXXLarge" className="w-full min-w-0">
+        <Stack gap="sizeXXXLarge" data-refineui-foundation-catalog className="w-full min-w-0">
             <Grid minItem="foundationSize3200" gap="sizeLarge">
                 {AREAS.map((area) => (
                     <Box

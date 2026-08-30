@@ -6,24 +6,34 @@ export function CatalogCard({
     name,
     preview,
     external = false,
+    fill = false,
 }: {
     href: string;
     name: string;
     preview: ReactNode;
     external?: boolean;
+    /** Stretch preview to the full canvas (sidebar, carousel, chart, …). */
+    fill?: boolean;
 }) {
     return (
-        <Card variant="outlined" interactive data-refineui-catalog-card className="relative">
-            <div data-refineui-catalog-preview>
+        <Card variant="outlined" interactive data-refineui-catalog-card className="relative flex h-full min-h-0 flex-col">
+            <div data-refineui-catalog-preview className="flex min-h-0 flex-1 flex-col">
                 <Box
                     data-refineui-catalog-preview-canvas
-                    padding="sizeLarge"
-                    className="flex h-refineui-foundation-size-2560 w-full flex-col items-stretch justify-center overflow-hidden"
+                    padding="sizeMedium"
+                    background="backgroundPrimary"
+                    className="flex h-refineui-foundation-size-3000 w-full shrink-0 items-center justify-center overflow-hidden"
                 >
-                    {preview}
+                    <div
+                        data-refineui-catalog-preview-stage
+                        data-fill={fill ? "" : undefined}
+                        className="w-full max-w-full min-w-0"
+                    >
+                        {preview}
+                    </div>
                 </Box>
             </div>
-            <CardHeader data-refineui-catalog-label>
+            <CardHeader data-refineui-catalog-label className="shrink-0">
                 <CardTitle>
                     <a
                         href={href}
@@ -38,9 +48,14 @@ export function CatalogCard({
     );
 }
 
-export function CatalogGrid({ children }: { children: ReactNode }) {
+export function CatalogGrid({
+    children,
+    ...props
+}: {
+    children: ReactNode;
+} & React.ComponentProps<typeof Grid>) {
     return (
-        <Grid data-refineui-catalog minItem="foundationSize3200" gap="sizeLarge">
+        <Grid data-refineui-catalog minItem="foundationSize3200" gap="sizeLarge" {...props}>
             {children}
         </Grid>
     );

@@ -1,26 +1,32 @@
 import { Box, Grid, Link, Stack, Text } from "@refineui/react";
 import { HeroBackdrop } from "../../resources/home";
+import { HomeFeaturedComponents } from "./HomeFeaturedComponents";
 import { HomeHeroHeadline } from "./HomeHeroHeadline";
-import { HomeShowcaseTiles } from "./HomeShowcaseTiles";
 import { HomeStage } from "./HomeStage";
 
 const PATHWAYS = [
     {
         href: "/foundations/",
-        title: "Design",
-        description: "Tokens, type, space, and motion — live on the page.",
-        cta: "Foundations",
+        title: "Foundations",
+        description: "Color, type, space, motion, and elevation tokens.",
+        cta: "Browse foundations",
+    },
+    {
+        href: "/components/",
+        title: "Components",
+        description: "Live React specimens grouped by layout, forms, navigation, and data.",
+        cta: "Component overview",
     },
     {
         href: "/development/installation/",
         title: "Develop",
-        description: "Install, theme, and ship RefineUI in React.",
+        description: "Install packages, theme apps, and align motion with product.",
         cta: "Installation",
     },
 ] as const;
 
 const EXPLORE = [
-    { href: "/components/button/", title: "Button docs", tag: "Component" },
+    { href: "/components/button/", title: "Button", tag: "Component" },
     { href: "/foundations/design-tokens/", title: "Design tokens", tag: "Foundation" },
     { href: "/ai-integration/", title: "AI integration", tag: "Guide" },
     { href: "/llm.txt", title: "llm.txt", tag: "Resource", external: true },
@@ -109,15 +115,20 @@ export default function DocsHome() {
             </Stack>
 
             <Stack gap="sizeLarge" className="w-full min-w-0">
-                <Stack gap="sizeXSmall">
-                    <Text as="h2" variant="titleMd" className="m-0">
-                        Components
-                    </Text>
-                    <Text as="p" variant="bodyMd" className="m-0 text-refineui-alias-foreground-secondary">
-                        Live specimens from @refineui/react — not screenshots.
-                    </Text>
+                <Stack direction="row" align="end" justify="between" gap="sizeMedium" wrap>
+                    <Stack gap="sizeXSmall">
+                        <Text as="h2" variant="titleMd" className="m-0">
+                            Featured components
+                        </Text>
+                        <Text as="p" variant="bodyMd" className="m-0 text-refineui-alias-foreground-secondary">
+                            Live specimens from @refineui/react — not screenshots.
+                        </Text>
+                    </Stack>
+                    <Link href="/components/" className="shrink-0">
+                        View all
+                    </Link>
                 </Stack>
-                <HomeShowcaseTiles />
+                <HomeFeaturedComponents />
             </Stack>
 
             <Stack gap="sizeLarge" className="w-full min-w-0">

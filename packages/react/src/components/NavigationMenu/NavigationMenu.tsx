@@ -488,6 +488,7 @@ export function NavigationMenuLink({
             {...props}
         >
             {children}
+            {!inContent ? <span aria-hidden className={navigationMenuStyles.linkChevronSpacer} /> : null}
         </a>
     );
 }

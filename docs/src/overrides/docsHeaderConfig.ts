@@ -9,6 +9,7 @@ export type DocsHeaderNavSection = {
     value: string;
     label: string;
     href: string;
+    /** When empty, the label is a direct link to `href` (no dropdown). */
     links: DocsHeaderNavLink[];
 };
 
@@ -67,6 +68,12 @@ export const DOCS_HEADER_NAV: DocsHeaderNavSection[] = [
             { label: "Theming", href: "/development/theming/", description: "Light and dark modes" },
             { label: "Motion", href: "/development/motion/", description: "Duration and easing" },
         ],
+    },
+    {
+        value: "ai-tools",
+        label: "AI & Tools",
+        href: "/ai-integration/",
+        links: [],
     },
 ];
 
@@ -146,5 +153,5 @@ export const DOCS_SEARCH_ITEMS: DocsSearchItem[] = [
     { value: "installation", label: "Installation", href: "/development/installation/", group: "Development" },
     { value: "theming", label: "Theming", href: "/development/theming/", group: "Development" },
     { value: "motion-dev", label: "Motion", href: "/development/motion/", group: "Development" },
-    { value: "ai-integration", label: "AI integration", href: "/ai-integration/", group: "Guides" },
+    { value: "ai-integration", label: "AI & Tools", href: "/ai-integration/", group: "Guides" },
 ];
