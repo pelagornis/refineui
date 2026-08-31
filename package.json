@@ -8,6 +8,8 @@
     "build:utilities": "node scripts/ws.mjs @refineui/utilities build",
     "build:tokens": "node scripts/ws.mjs @refineui/tokens build",
     "build:react": "node scripts/ws.mjs @refineui/react build",
+    "build:mcp": "node scripts/ws.mjs @refineui/mcp build",
+    "build:doctor": "node scripts/ws.mjs @refineui/doctor build",
     "docs": "node scripts/ws.mjs @refineui/docs dev",
     "docs:build": "node scripts/ws.mjs @refineui/utilities build && node scripts/ws.mjs @refineui/tokens build && node scripts/ws.mjs @refineui/react build && node scripts/ws.mjs @refineui/docs build"
   },

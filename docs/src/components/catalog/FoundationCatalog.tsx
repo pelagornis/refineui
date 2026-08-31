@@ -1,4 +1,5 @@
 import { Box, Grid, Stack, Text } from "@refineui/react";
+import { withBase } from "../../lib/docs-path";
 
 const ICONOGRAPHY_SITE = "https://github.com/pelagornis/refineui-system-icons";
 
@@ -36,6 +37,10 @@ const TOKENS = [
     { href: "/foundations/z-index/", name: "Z-index", hint: "Stacking layers" },
 ] as const;
 
+function docsHref(href: string): string {
+    return /^https?:\/\//.test(href) ? href : withBase(href);
+}
+
 export default function FoundationCatalog() {
     return (
         <Stack gap="sizeXXXLarge" data-refineui-foundation-catalog className="w-full min-w-0">
@@ -55,7 +60,7 @@ export default function FoundationCatalog() {
                         <Stack gap="sizeSmall">
                             <Text as="h3" variant="subtitleMd" className="m-0">
                                 <a
-                                    href={area.href}
+                                    href={docsHref(area.href)}
                                     data-refineui-catalog-link
                                     {...(area.external
                                         ? { target: "_blank", rel: "noreferrer" }
@@ -96,7 +101,7 @@ export default function FoundationCatalog() {
                             justify="between"
                         >
                             <Text as="h3" variant="subtitleMd" className="m-0">
-                                <a href={item.href} data-refineui-catalog-link>
+                                <a href={docsHref(item.href)} data-refineui-catalog-link>
                                     {item.name}
                                 </a>
                             </Text>

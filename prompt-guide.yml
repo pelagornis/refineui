@@ -23,7 +23,7 @@ context:
   summary: |
     RefineUI is a React/TypeScript design system monorepo.
     Packages: packages/react, packages/tokens, packages/utilities, packages/version.
-    Docs site: docs/ (https://refineui.dev). Machine-readable index: /llm.txt.
+    Docs site: docs/ (https://design.pelagornis.com/refineui). Machine-readable index: /llm.txt.
     Keep the packages/ layout unchanged. Follow existing exports, peer dependencies, and patterns.
     Treat code + docs as the source of truth.
     Respond in the user's chosen language. When referring to code, give path and line.
@@ -117,7 +117,7 @@ context:
 
         ## Docs & AI context
 
-        - Site: https://refineui.dev
+        - Site: https://design.pelagornis.com/refineui
         - Foundations: `/foundations/*` (color, typography, spacing, layout, …)
         - Components: flat A–Z catalog under `/components/*`
         - Iconography: external — https://github.com/pelagornis/refineui-system-icons

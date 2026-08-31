@@ -1,0 +1,40 @@
+{
+  "name": "@refineui/doctor",
+  "version": "0.1.0",
+  "description": "Read-only RefineUI workspace diagnostics — setup, tokens, and composition contracts",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pelagornis/refineui",
+    "directory": "packages/doctor"
+  },
+  "bin": {
+    "refineui-doctor": "./lib/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js"
+    }
+  },
+  "files": [
+    "lib",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup src/cli.ts src/index.ts --format esm --dts --clean --out-dir lib",
+    "doctor": "node lib/cli.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

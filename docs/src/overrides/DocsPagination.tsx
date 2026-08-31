@@ -1,5 +1,6 @@
 import { iconSizes } from "@refineui/tokens";
 import { Stack, Text, WebIcon } from "@refineui/react";
+import { withBase } from "../lib/docs-path";
 
 function PagerLink({
     href,
@@ -13,7 +14,7 @@ function PagerLink({
     const isPrev = direction === "prev";
 
     return (
-        <a href={href} data-refineui-docs-pager data-direction={direction}>
+        <a href={withBase(href)} data-refineui-docs-pager data-direction={direction}>
             <WebIcon
                 name={isPrev ? "chevron-left" : "chevron-right"}
                 size={iconSizes.medium}

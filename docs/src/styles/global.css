@@ -253,23 +253,88 @@
 [data-refineui-home-hero-inner] {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--refineui-size-foundation-size-800);
-  align-items: start;
-}
-
-@media (min-width: 56rem) {
-  [data-refineui-home-hero-inner] {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-    gap: var(--refineui-size-foundation-size-600);
-    align-items: center;
-  }
+  width: 100%;
+  min-width: 0;
 }
 
 [data-refineui-home-hero-copy] {
   animation: refineui-home-rise var(--refineui-motion-duration-panel) var(--refineui-motion-easing-standard)
     both;
+}
+
+[data-refineui-home-hero-frame] {
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--refineui-spacing-size-xxx-small) var(--refineui-spacing-size-large)
+    var(--refineui-spacing-size-medium);
+  animation: refineui-home-rise var(--refineui-motion-duration-panel) var(--refineui-motion-easing-standard)
+    80ms both;
+}
+
+[data-refineui-home-hero-video] {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--refineui-radius-rounded-x-large);
+  overflow: hidden;
+  background: var(--refineui-color-alias-background-secondary);
+  transform: translateZ(0);
+}
+
+[data-refineui-home-hero-video-surface] {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  overflow: hidden;
+  line-height: 0;
+  transform: translateZ(0);
+  background: var(--refineui-color-alias-background-secondary);
+}
+
+[data-refineui-home-hero-video-fallback] {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  align-items: stretch;
+  padding: var(--refineui-spacing-size-medium);
+  box-sizing: border-box;
+  background: var(--refineui-color-alias-background-primary);
+}
+
+[data-refineui-home-hero-video-fallback] [data-refineui-home-stage] {
+  box-shadow: none;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+[data-refineui-home-hero-video-control] {
+  position: absolute;
+  z-index: 10;
+  right: var(--refineui-spacing-size-medium);
+  bottom: var(--refineui-spacing-size-medium);
+  transition:
+    opacity var(--refineui-motion-duration-normal) var(--refineui-motion-easing-standard),
+    visibility var(--refineui-motion-duration-normal) var(--refineui-motion-easing-standard);
+}
+
+[data-refineui-home-hero-video-toggle] {
+  border-radius: var(--refineui-radius-rounded-circle) !important;
+  background-color: color-mix(
+    in srgb,
+    var(--refineui-color-alias-background-primary) 72%,
+    transparent
+  ) !important;
+  backdrop-filter: blur(var(--refineui-size-foundation-size-50));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-refineui-home-hero-copy],
+  [data-refineui-home-hero-frame] {
+    animation: none;
+  }
 }
 
 @keyframes refineui-home-rise {
@@ -293,12 +358,6 @@
 
 [data-refineui-home-lead] {
   max-width: var(--refineui-size-foundation-size-5750);
-}
-
-[data-refineui-home-hero-stage] {
-  width: 100%;
-  animation: refineui-home-rise var(--refineui-motion-duration-panel) var(--refineui-motion-easing-standard)
-    80ms both;
 }
 
 [data-refineui-home-stage] {
@@ -330,20 +389,13 @@
   background-color: var(--refineui-color-alias-background-brand-hover);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  [data-refineui-home-hero-copy],
-  [data-refineui-home-hero-stage] {
-    animation: none;
-  }
-}
-
 /* Splash landing — no docs rail. */
 :root:has(.hero) .hero {
   display: none;
 }
 
 :root:has(.hero) .sidebar-pane,
-:root:has(.hero) starlight-menu-button,
+:root:has(.hero) [data-refineui-docs-menu-toggle],
 :root:has(.hero) [data-refineui-docs-pagination] {
   display: none;
 }
@@ -790,18 +842,18 @@ header.header {
 }
 
 [data-refineui-docs-header] {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  display: flex;
   align-items: center;
-  gap: var(--refineui-spacing-size-large);
+  justify-content: space-between;
+  gap: var(--refineui-spacing-size-medium);
   width: 100%;
   height: 100%;
   min-width: 0;
 }
 
 [data-refineui-docs-brand] {
-  flex-shrink: 0;
-  justify-self: start;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 [data-refineui-docs-logo] {
@@ -812,7 +864,6 @@ header.header {
 
 [data-refineui-docs-nav] {
   display: none;
-  justify-self: center;
   min-width: 0;
 }
 
@@ -822,17 +873,56 @@ header.header {
 }
 
 @media (min-width: 72rem) {
+  [data-refineui-docs-header] {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    justify-content: initial;
+    gap: var(--refineui-spacing-size-large);
+  }
+
+  [data-refineui-docs-brand] {
+    flex-shrink: 0;
+    justify-self: start;
+  }
+
   [data-refineui-docs-nav] {
     display: flex;
+    justify-self: center;
+    grid-column: 2;
+  }
+
+  [data-refineui-docs-header-end] {
+    justify-self: end;
+    grid-column: 3;
   }
 }
 
 [data-refineui-docs-header-end] {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
-  justify-self: end;
   min-width: 0;
   gap: var(--refineui-spacing-size-xx-small);
+}
+
+[data-refineui-docs-menu-toggle] {
+  display: inline-flex;
+}
+
+@media (min-width: 50rem) {
+  [data-refineui-docs-menu-toggle] {
+    display: none;
+  }
+}
+
+body[data-mobile-menu-expanded] {
+  overflow: hidden;
+}
+
+@media (min-width: 50rem) {
+  body[data-mobile-menu-expanded] {
+    overflow: auto;
+  }
 }
 
 [data-refineui-docs-end] {
@@ -1038,19 +1128,6 @@ header.header {
 .sl-markdown-content :is(h2, h3, h4, h5, h6) {
   color: var(--refineui-color-alias-foreground-primary);
   font-weight: var(--refineui-typography-title-3-font-weight);
-}
-
-starlight-menu-button button {
-  border-radius: var(--refineui-radius-rounded-large);
-  background: var(--refineui-color-alias-background-primary);
-  color: var(--refineui-color-alias-foreground-primary);
-  box-shadow: var(--refineui-elevation-2);
-}
-
-:root[data-theme="light"] starlight-menu-button button,
-:root[data-theme="light"] starlight-menu-button[aria-expanded="true"] button {
-  background: var(--refineui-color-alias-background-primary);
-  color: var(--refineui-color-alias-foreground-primary);
 }
 
 .right-sidebar {

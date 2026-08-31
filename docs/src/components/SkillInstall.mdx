@@ -1,0 +1,39 @@
+import PackageManagerPicker from "./PackageManagerPicker";
+
+<div class="not-content" data-docs-package-manager>
+
+<PackageManagerPicker client:load />
+
+<div data-pm-panel="npm">
+
+```bash
+npx skills add https://github.com/pelagornis/refineui --skill refineui
+```
+
+</div>
+
+<div data-pm-panel="yarn" hidden>
+
+```bash
+yarn dlx skills add https://github.com/pelagornis/refineui --skill refineui
+```
+
+</div>
+
+<div data-pm-panel="pnpm" hidden>
+
+```bash
+pnpm dlx skills add https://github.com/pelagornis/refineui --skill refineui
+```
+
+</div>
+
+<div data-pm-panel="bun" hidden>
+
+```bash
+bun x skills add https://github.com/pelagornis/refineui --skill refineui
+```
+
+</div>
+
+</div>

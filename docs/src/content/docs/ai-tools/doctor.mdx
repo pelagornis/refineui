@@ -1,0 +1,83 @@
+---
+title: Doctor
+description: Read-only RefineUI workspace diagnostics — setup, tokens, composition contracts, and import conventions.
+---
+
+import DoctorInstall from "../../../components/DoctorInstall.mdx";
+
+**RefineUI Doctor** inspects projects that use `@refineui/*` and reports setup gaps, token contract violations, and component API misuse — without modifying your code. It follows the same idea as [SEED Doctor](https://seed-design.io/ai-integration/skill/doctor), scoped to RefineUI's React + token architecture.
+
+## What it checks
+
+| Rule | Category | Description |
+|------|----------|-------------|
+| `package-setup` | setup | App projects declare `@refineui/react` and `@refineui/tokens` |
+| `stylesheet-setup` | setup | Global CSS imports tokens, icons, and `refineui.css` |
+| `foundation-contract` | foundations | No hardcoded hex/rgba or arbitrary px in component styles |
+| `composition-api` | components | No convenience props (`title`, `description`, …) on RefineUI components |
+| `component-imports` | components | Import from `@refineui/react` root only |
+
+Diagnostics are **read-only**. Doctor writes a YAML report; it does not install packages or edit files unless you ask an agent to fix findings separately.
+
+## Install
+
+<DoctorInstall />
+
+## CLI
+
+```bash
+refineui-doctor
+refineui-doctor ./apps/web
+refineui-doctor --workspace packages/my-app --output ./doctor-report.yaml
+refineui-doctor --category setup --category foundations
+```
+
+Exit code `1` when error-severity findings exist.
+
+## Skill workflow
+
+Install the RefineUI skill, then ask in natural language:
+
+```
+RefineUI 잘 쓰고 있나 봐줘
+셋업만 진단해줘
+이 모노레포의 RefineUI 워크스페이스를 전부 진단해줘
+```
+
+The skill loads [doctor rules](https://github.com/pelagornis/refineui/tree/main/skills/refineui/rules) and routes to live docs via [llm.txt](/llm.txt) — it does not duplicate documentation.
+
+## MCP
+
+When `@refineui/mcp` is configured, agents can call **`run_doctor`** with an optional project path and workspace name. The tool returns JSON matching the YAML schema.
+
+## Report format
+
+Schema v2 YAML written to a temp directory or `--output`:
+
+```yaml
+schemaVersion: 2
+meta:
+  target: /path/to/project
+  projectKinds: [app]
+  refineui:
+    declared:
+      "@refineui/react": "^0.x"
+summary:
+  error: 0
+  warn: 1
+  info: 0
+checks: [...]
+findings: [...]
+```
+
+Each finding includes `remediation` text suitable for agent-guided fixes.
+
+## vs Skill vs MCP
+
+| | Doctor CLI | Skill | MCP `run_doctor` |
+|---|------------|-------|------------------|
+| **Runs locally** | Yes | Agent follows rules | Yes |
+| **Best for** | CI / scripts | Natural language requests | Agent automation |
+| **Output** | YAML file | Conversation + optional YAML | JSON |
+
+Use **Skill** for interactive diagnosis, **CLI** for repeatable checks, **MCP** when the agent should run diagnostics programmatically.

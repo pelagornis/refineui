@@ -1,0 +1,83 @@
+---
+title: MCP
+description: Model Context Protocol server — search RefineUI docs, fetch component pages, and read design rules from AI tools.
+---
+
+import McpInstall from "../../../components/McpInstall.mdx";
+
+**`@refineui/mcp`** is a stdio MCP server for Cursor, Claude Desktop, VS Code, and other MCP hosts. It embeds a build-time index of this documentation site so agents can query pages without pasting all of `llm.txt` into context.
+
+## Install
+
+<McpInstall />
+
+## Cursor configuration
+
+Add to `.cursor/mcp.json` (or **Cursor Settings → MCP**):
+
+```json
+{
+  "mcpServers": {
+    "refineui": {
+      "command": "bunx",
+      "args": ["@refineui/mcp"]
+    }
+  }
+}
+```
+
+### Monorepo contributors
+
+From the RefineUI repository root (after `bun run build:mcp`):
+
+```json
+{
+  "mcpServers": {
+    "refineui": {
+      "command": "node",
+      "args": ["packages/mcp/lib/server.js"]
+    }
+  }
+}
+```
+
+Example config: [`.mcp.json`](https://github.com/pelagornis/refineui/blob/main/.mcp.json) in the repo root.
+
+## Tools
+
+| Tool | Purpose |
+|------|---------|
+| `search_docs` | Keyword search across documentation |
+| `get_doc_page` | Fetch a page by slug (`components/button`, …) |
+| `list_components` | All component doc pages |
+| `list_foundations` | Foundation / token doc pages |
+| `get_llm_index` | Full `llm.txt` content |
+| `get_design_rules` | Condensed design-system rules |
+| `list_tokens` | Token categories and semantic text roles |
+| `get_index_meta` | Index generation timestamp and page count |
+| `run_doctor` | Read-only workspace diagnostics (setup, tokens, composition) |
+
+## Resources
+
+| URI | Content |
+|-----|---------|
+| `refineui://llm.txt` | Machine-readable docs index |
+| `refineui://design-rules` | Agent codegen rules |
+
+## vs llms.txt vs Skill
+
+| | llms.txt | Skill | MCP |
+|---|----------|-------|-----|
+| **Format** | Static text file | Agent instructions | Live tools + resources |
+| **Best for** | Cursor Docs, simple context | Routing + rules in any agent | Dynamic search & page fetch |
+| **Updates** | Deploy with site | `skills add` from GitHub | npm package / rebuild index |
+
+Use all three together: **Skill** for behavior, **MCP** for lookup, **llms.txt** as the canonical index URL.
+
+## Development
+
+```bash
+bun run build:mcp
+```
+
+Package: [`packages/mcp`](https://github.com/pelagornis/refineui/tree/main/packages/mcp)

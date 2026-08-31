@@ -22,7 +22,7 @@ function applyTheme(theme: DocsTheme) {
 }
 
 function ThemeGlyph({ theme }: { theme: DocsTheme }) {
-    const size = iconSizes.xsmall;
+    const size = iconSizes.small;
     const name = theme === "dark" ? "moon" : "weather-sunny";
     return <WebIcon name={name} size={size} color="currentColor" />;
 }
@@ -43,7 +43,7 @@ export function DocsThemeSelect() {
         <Button
             layout="icon"
             variant="ghost"
-            size="sm"
+            size="md"
             aria-label={`Theme: ${label}. Switch to ${nextTheme === "light" ? "light" : "dark"}.`}
             onClick={() => {
                 setTheme(nextTheme);

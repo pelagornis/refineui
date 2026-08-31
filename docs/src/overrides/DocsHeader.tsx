@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { iconSizes } from "@refineui/tokens";
 import {
     Button,
@@ -27,6 +27,7 @@ import {
     type DocsHeaderNavSection,
     type DocsSearchItem,
 } from "./docsHeaderConfig";
+import { stripBase, withBase } from "../lib/docs-path";
 
 export type DocsHeaderBrandProps = {
     title: string;
@@ -49,8 +50,13 @@ export type DocsHeaderSearchProps = {
 };
 
 function normalizePath(path: string): string {
-    if (path === "/") return "/";
-    return path.replace(/\/$/, "");
+    const stripped = stripBase(path);
+    if (stripped === "/") return "/";
+    return stripped.replace(/\/$/, "");
+}
+
+function resolveHref(href: string, external?: boolean): string {
+    return external ? href : withBase(href);
 }
 
 function isPathActive(href: string, currentPath: string): boolean {
@@ -111,7 +117,7 @@ export function DocsHeaderNav({ currentPath = "/", sections = DOCS_HEADER_NAV }:
                         if (section.links.length === 0) {
                             return (
                                 <NavigationMenuItem key={section.value} value={section.value}>
-                                    <NavigationMenuLink href={section.href} active={sectionActive}>
+                                    <NavigationMenuLink href={resolveHref(section.href)} active={sectionActive}>
                                         {section.label}
                                     </NavigationMenuLink>
                                 </NavigationMenuItem>
@@ -128,7 +134,7 @@ export function DocsHeaderNav({ currentPath = "/", sections = DOCS_HEADER_NAV }:
                                         {section.links.map((link) => (
                                             <NavigationMenuLink
                                                 key={link.href}
-                                                href={link.href}
+                                                href={resolveHref(link.href, link.external)}
                                                 active={!link.external && isPathActive(link.href, currentPath)}
                                                 {...(link.external
                                                     ? { target: "_blank", rel: "noreferrer" }
@@ -185,12 +191,12 @@ export function DocsHeaderSearch({ items = DOCS_SEARCH_ITEMS }: DocsHeaderSearch
                 type="button"
                 layout="icon"
                 variant="ghost"
-                size="sm"
+                size="md"
                 data-refineui-docs-search-trigger
                 aria-label="Search documentation (⌘K)"
                 onClick={() => setOpen(true)}
             >
-                <WebIcon name="search" size={iconSizes.xsmall} color="currentColor" aria-hidden />
+                <WebIcon name="search" size={iconSizes.small} color="currentColor" aria-hidden />
             </Button>
             <CommandDialog open={open} onOpenChange={setOpen} commandProps={{ label: "Search documentation" }}>
                 <CommandInput placeholder="Search pages…" />
@@ -206,7 +212,7 @@ export function DocsHeaderSearch({ items = DOCS_SEARCH_ITEMS }: DocsHeaderSearch
                                     keywords={[item.label, item.group, ...(item.keywords ?? [])]}
                                     onSelect={() => {
                                         setOpen(false);
-                                        navigateTo(item.href, item.external);
+                                        navigateTo(resolveHref(item.href, item.external), item.external);
                                     }}
                                 >
                                     {item.label}
@@ -227,5 +233,65 @@ export function DocsHeaderTools() {
                 <DocsThemeSelect />
             </div>
         </div>
+    );
+}
+
+const MOBILE_MENU_MQ = "(max-width: 49.99rem)";
+
+export function DocsMobileMenuToggle() {
+    const [expanded, setExpanded] = useState(false);
+    const buttonRef = useRef<HTMLButtonElement>(null);
+
+    useEffect(() => {
+        document.body.toggleAttribute("data-mobile-menu-expanded", expanded);
+        return () => document.body.removeAttribute("data-mobile-menu-expanded");
+    }, [expanded]);
+
+    useEffect(() => {
+        const media = window.matchMedia(MOBILE_MENU_MQ);
+        const onChange = () => {
+            if (!media.matches) setExpanded(false);
+        };
+        media.addEventListener("change", onChange);
+        return () => media.removeEventListener("change", onChange);
+    }, []);
+
+    useEffect(() => {
+        const nav = document.querySelector("[data-docs-mobile-sidebar]");
+        const onKeyUp = (event: KeyboardEvent) => {
+            if (event.code !== "Escape") return;
+            setExpanded(false);
+            buttonRef.current?.focus();
+        };
+        nav?.addEventListener("keyup", onKeyUp);
+        return () => nav?.removeEventListener("keyup", onKeyUp);
+    }, []);
+
+    useEffect(() => {
+        const close = () => setExpanded(false);
+        document.addEventListener("astro:page-load", close);
+        return () => document.removeEventListener("astro:page-load", close);
+    }, []);
+
+    return (
+        <Button
+            ref={buttonRef}
+            type="button"
+            layout="icon"
+            variant="ghost"
+            size="md"
+            data-refineui-docs-menu-toggle
+            aria-expanded={expanded}
+            aria-controls="starlight__sidebar"
+            aria-label={expanded ? "Close menu" : "Menu"}
+            onClick={() => setExpanded((open) => !open)}
+        >
+            <WebIcon
+                name={expanded ? "dismiss" : "navigation"}
+                size={iconSizes.small}
+                color="currentColor"
+                aria-hidden
+            />
+        </Button>
     );
 }

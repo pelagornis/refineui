@@ -1,8 +1,8 @@
 # RefineUI
 
-Design system for Pelagornis products. Foundation variables ship as `@refineui/tokens`. Components ship as `@refineui/react`. Docs: [refineui.dev](https://refineui.dev).
+Design system for Pelagornis products. Foundation variables ship as `@refineui/tokens`. Components ship as `@refineui/react`. Docs: [design.pelagornis.com/refineui](https://design.pelagornis.com/refineui/).
 
-**Docs:** [refineui.dev](https://refineui.dev) · **AI context:** [`/llm.txt`](https://refineui.dev/llm.txt) · **Icons:** [refineui-system-icons](https://github.com/pelagornis/refineui-system-icons)
+**Docs:** [design.pelagornis.com/refineui](https://design.pelagornis.com/refineui/) · **AI context:** [`llm.txt`](https://design.pelagornis.com/refineui/llm.txt) · **Icons:** [refineui-system-icons](https://github.com/pelagornis/refineui-system-icons)
 
 ## Install
 
@@ -79,13 +79,13 @@ bun run docs:build     # build packages + static docs
 
 | Section | Topics |
 | --- | --- |
-| [Getting started](https://refineui.dev/getting-started/) | Install, architecture, first example |
-| [Foundations](https://refineui.dev/foundations/) | Design tokens, layout, visual language |
-| [Components](https://refineui.dev/components/) | Full component catalog with live previews |
-| [Development](https://refineui.dev/development/) | Installation, theming, motion |
-| [AI integration](https://refineui.dev/ai-integration/) | Cursor / Copilot via `llm.txt` |
+| [Getting started](https://design.pelagornis.com/refineui/getting-started/) | Install, architecture, first example |
+| [Foundations](https://design.pelagornis.com/refineui/foundations/) | Design tokens, layout, visual language |
+| [Components](https://design.pelagornis.com/refineui/components/) | Full component catalog with live previews |
+| [Development](https://design.pelagornis.com/refineui/development/) | Installation, theming, motion |
+| [AI & Tools](https://design.pelagornis.com/refineui/ai-tools/) | llms.txt, Skill, MCP |
 
-Machine-readable indexes: [`llm.txt`](https://refineui.dev/llm.txt) · [`llms.txt`](https://refineui.dev/llms.txt)
+Machine-readable indexes: [`llm.txt`](https://design.pelagornis.com/refineui/llm.txt) · [`llms.txt`](https://design.pelagornis.com/refineui/llms.txt)
 
 ## License
 

@@ -72,8 +72,14 @@ export const DOCS_HEADER_NAV: DocsHeaderNavSection[] = [
     {
         value: "ai-tools",
         label: "AI & Tools",
-        href: "/ai-integration/",
-        links: [],
+        href: "/ai-tools/",
+        links: [
+            { label: "Overview", href: "/ai-tools/", description: "LLM indexes and agent tooling" },
+            { label: "llms.txt", href: "/llms.txt", description: "Curated documentation index" },
+            { label: "Skill", href: "/ai-tools/skill/", description: "refineui agent skill" },
+            { label: "Doctor", href: "/ai-tools/doctor/", description: "RefineUI workspace diagnostics" },
+            { label: "MCP", href: "/ai-tools/mcp/", description: "@refineui/mcp server" },
+        ],
     },
 ];
 
@@ -153,5 +159,9 @@ export const DOCS_SEARCH_ITEMS: DocsSearchItem[] = [
     { value: "installation", label: "Installation", href: "/development/installation/", group: "Development" },
     { value: "theming", label: "Theming", href: "/development/theming/", group: "Development" },
     { value: "motion-dev", label: "Motion", href: "/development/motion/", group: "Development" },
-    { value: "ai-integration", label: "AI & Tools", href: "/ai-integration/", group: "Guides" },
+    { value: "ai-tools", label: "AI & Tools overview", href: "/ai-tools/", group: "AI & Tools" },
+    { value: "llms-txt", label: "llms.txt", href: "/llms.txt", group: "AI & Tools" },
+    { value: "refineui-skill", label: "Skill", href: "/ai-tools/skill/", group: "AI & Tools" },
+    { value: "refineui-doctor", label: "Doctor", href: "/ai-tools/doctor/", group: "AI & Tools" },
+    { value: "refineui-mcp", label: "MCP", href: "/ai-tools/mcp/", group: "AI & Tools" },
 ];

@@ -1,7 +1,13 @@
 ---
-import { DocsHeaderBrand, DocsHeaderNav, DocsHeaderSearch, DocsHeaderTools } from "./DocsHeader";
+import {
+    DocsHeaderBrand,
+    DocsHeaderNav,
+    DocsHeaderSearch,
+    DocsHeaderTools,
+    DocsMobileMenuToggle,
+} from "./DocsHeader";
 
-const { siteTitle, siteTitleHref } = Astro.locals.starlightRoute;
+const { siteTitle, siteTitleHref, hasSidebar } = Astro.locals.starlightRoute;
 const currentPath = Astro.url.pathname;
 ---
 
@@ -11,5 +17,6 @@ const currentPath = Astro.url.pathname;
     <div data-refineui-docs-header-end>
         <DocsHeaderSearch client:load />
         <DocsHeaderTools client:load />
+        {hasSidebar ? <DocsMobileMenuToggle client:load /> : null}
     </div>
 </div>

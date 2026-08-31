@@ -11,6 +11,11 @@ import {
     FooterNav,
     FooterSocial,
 } from "@refineui/react";
+import { withBase } from "../lib/docs-path";
+
+function siteHref(path: string) {
+    return withBase(path);
+}
 
 function SocialIcon({ children }: { children: ReactNode }) {
     return (
@@ -27,23 +32,23 @@ export function DocsSiteFooter() {
                 <FooterNav>
                     <FooterGroup>
                         <FooterGroupLabel>Docs</FooterGroupLabel>
-                        <FooterLink href="/foundations">Foundations</FooterLink>
-                        <FooterLink href="/components">Components</FooterLink>
-                        <FooterLink href="/development">Development</FooterLink>
+                        <FooterLink href={siteHref("/foundations")}>Foundations</FooterLink>
+                        <FooterLink href={siteHref("/components")}>Components</FooterLink>
+                        <FooterLink href={siteHref("/development")}>Development</FooterLink>
                     </FooterGroup>
                     <FooterGroup>
                         <FooterGroupLabel>Development</FooterGroupLabel>
-                        <FooterLink href="/development/installation">Installation</FooterLink>
-                        <FooterLink href="/development/theming">Theming</FooterLink>
-                        <FooterLink href="/development/motion">Motion</FooterLink>
-                        <FooterLink href="/ai-integration">AI Integration</FooterLink>
+                        <FooterLink href={siteHref("/development/installation")}>Installation</FooterLink>
+                        <FooterLink href={siteHref("/development/theming")}>Theming</FooterLink>
+                        <FooterLink href={siteHref("/development/motion")}>Motion</FooterLink>
+                        <FooterLink href={siteHref("/ai-tools")}>AI & Tools</FooterLink>
                     </FooterGroup>
                     <FooterGroup>
                         <FooterGroupLabel>Components</FooterGroupLabel>
-                        <FooterLink href="/components/button">Button</FooterLink>
-                        <FooterLink href="/components/input">Input</FooterLink>
-                        <FooterLink href="/components/dialog">Dialog</FooterLink>
-                        <FooterLink href="/components/sidebar">Sidebar</FooterLink>
+                        <FooterLink href={siteHref("/components/button")}>Button</FooterLink>
+                        <FooterLink href={siteHref("/components/input")}>Input</FooterLink>
+                        <FooterLink href={siteHref("/components/dialog")}>Dialog</FooterLink>
+                        <FooterLink href={siteHref("/components/sidebar")}>Sidebar</FooterLink>
                     </FooterGroup>
                     <FooterGroup>
                         <FooterGroupLabel>Resources</FooterGroupLabel>

@@ -12,6 +12,7 @@ import {
     SidebarNav,
 } from "@refineui/react";
 import type { DocsNavEntry } from "./nav";
+import { withBase } from "../lib/docs-path";
 
 export function DocsSidebar({
     entries,
@@ -22,6 +23,8 @@ export function DocsSidebar({
     entries: DocsNavEntry[];
     footer?: ReactNode;
 }) {
+    const hrefFor = (href: string, external?: boolean) => (external ? href : withBase(href));
+
     return (
         <Sidebar data-refineui-docs-sidebar>
             <SidebarContent style={{ overflow: "hidden" }}>
@@ -32,7 +35,7 @@ export function DocsSidebar({
                                 entry.type === "link" ? (
                                     <SidebarLink
                                         key={entry.href}
-                                        href={entry.href}
+                                        href={hrefFor(entry.href, entry.external)}
                                         active={entry.isCurrent}
                                         {...(entry.external
                                             ? { target: "_blank", rel: "noreferrer" }
@@ -46,7 +49,7 @@ export function DocsSidebar({
                                         {entry.entries.map((link) => (
                                             <SidebarLink
                                                 key={link.href}
-                                                href={link.href}
+                                                href={hrefFor(link.href, link.external)}
                                                 active={link.isCurrent}
                                                 {...(link.external
                                                     ? { target: "_blank", rel: "noreferrer" }

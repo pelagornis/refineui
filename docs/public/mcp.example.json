@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "refineui": {
+      "command": "bunx",
+      "args": ["@refineui/mcp"]
+    }
+  }
+}

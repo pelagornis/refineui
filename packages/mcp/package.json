@@ -1,0 +1,48 @@
+{
+  "name": "@refineui/mcp",
+  "version": "0.1.0",
+  "description": "MCP server for RefineUI docs, components, and design-system rules",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pelagornis/refineui",
+    "directory": "packages/mcp"
+  },
+  "bin": {
+    "refineui-mcp": "./lib/server.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js"
+    }
+  },
+  "files": [
+    "lib",
+    "README.md"
+  ],
+  "scripts": {
+    "build:index": "node scripts/build-docs-index.mjs",
+    "build": "node scripts/build-docs-index.mjs && tsup src/server.ts src/index.ts --format esm --dts --clean --out-dir lib",
+    "start": "node lib/server.js",
+    "dev": "bun run build:index && bun src/server.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.0.0",
+    "@refineui/doctor": "workspace:*",
+    "@refineui/tokens": "workspace:*",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,8 +1,9 @@
 import { Box, Grid, Link, Stack, Text } from "@refineui/react";
+import { withBase } from "../../lib/docs-path";
 import { HeroBackdrop } from "../../resources/home";
 import { HomeFeaturedComponents } from "./HomeFeaturedComponents";
 import { HomeHeroHeadline } from "./HomeHeroHeadline";
-import { HomeStage } from "./HomeStage";
+import { HomeHeroVideo } from "./HomeHeroVideo";
 
 const PATHWAYS = [
     {
@@ -28,7 +29,7 @@ const PATHWAYS = [
 const EXPLORE = [
     { href: "/components/button/", title: "Button", tag: "Component" },
     { href: "/foundations/design-tokens/", title: "Design tokens", tag: "Foundation" },
-    { href: "/ai-integration/", title: "AI integration", tag: "Guide" },
+    { href: "/ai-tools/", title: "AI & Tools", tag: "Guide" },
     { href: "/llm.txt", title: "llm.txt", tag: "Resource", external: true },
     {
         href: "https://github.com/pelagornis/refineui-system-icons",
@@ -39,12 +40,16 @@ const EXPLORE = [
     { href: "/development/motion/", title: "Motion roles", tag: "Development" },
 ] as const;
 
+function docsHref(href: string): string {
+    return /^https?:\/\//.test(href) ? href : withBase(href);
+}
+
 export default function DocsHome() {
     return (
         <Stack gap="sizeXXXLarge" data-refineui-home className="w-full min-w-0">
             <section data-refineui-home-hero className="relative isolate">
                 <HeroBackdrop />
-                <div data-refineui-home-hero-inner>
+                <Stack gap="sizeXXLarge" data-refineui-home-hero-inner className="relative min-w-0">
                     <Stack gap="sizeXXLarge" data-refineui-home-hero-copy className="min-w-0">
                         <Stack gap="sizeLarge">
                             <HomeHeroHeadline />
@@ -59,16 +64,14 @@ export default function DocsHome() {
                             </Text>
                         </Stack>
                         <Stack direction="row" align="center" gap="sizeMedium" wrap>
-                            <a href="/development/installation/" data-refineui-home-cta="primary">
+                            <a href={docsHref("/development/installation/")} data-refineui-home-cta="primary">
                                 Get started
                             </a>
-                            <Link href="/components/">Browse components</Link>
+                            <Link href={docsHref("/components/")}>Browse components</Link>
                         </Stack>
                     </Stack>
-                    <div data-refineui-home-hero-stage className="min-w-0">
-                        <HomeStage />
-                    </div>
-                </div>
+                    <HomeHeroVideo />
+                </Stack>
             </section>
 
             <Stack gap="sizeLarge" className="w-full min-w-0">
@@ -90,7 +93,7 @@ export default function DocsHome() {
                         >
                             <Stack gap="sizeSmall">
                                 <Text as="h3" variant="subtitleMd" className="m-0">
-                                    <a href={path.href} data-refineui-catalog-link>
+                                    <a href={docsHref(path.href)} data-refineui-catalog-link>
                                         {path.title}
                                     </a>
                                 </Text>
@@ -124,7 +127,7 @@ export default function DocsHome() {
                             Live specimens from @refineui/react — not screenshots.
                         </Text>
                     </Stack>
-                    <Link href="/components/" className="shrink-0">
+                    <Link href={docsHref("/components/")} className="shrink-0">
                         View all
                     </Link>
                 </Stack>
@@ -156,7 +159,7 @@ export default function DocsHome() {
                         >
                             <Text as="h3" variant="subtitleMd" className="m-0 min-w-0">
                                 <a
-                                    href={item.href}
+                                    href={docsHref(item.href)}
                                     data-refineui-catalog-link
                                     {...("external" in item && item.external
                                         ? { target: "_blank", rel: "noreferrer" }

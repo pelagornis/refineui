@@ -1,0 +1,113 @@
+---
+title: Skill
+description: RefineUI agent skill — routes AI assistants to official docs, llm.txt, and design rules without duplicating content.
+---
+
+import SkillInstall from "../../../components/SkillInstall.mdx";
+
+The **`refineui`** skill teaches AI agents how to work in RefineUI projects: classify requests, read the live doc index, follow token and composition rules, and optionally use `@refineui/mcp`.
+
+## SKILL.md
+
+`SKILL.md` is the skill entry point. Agents read it first on any RefineUI-related task. It does not list components or tokens — it defines **how** to route to official docs and what constraints apply when writing code.
+
+### Frontmatter
+
+```yaml
+---
+name: refineui
+description: RefineUI design-system guide for AI agents…
+user-invocable: true
+argument-hint: "[question or topic]"
+---
+```
+
+| Field | Purpose |
+|-------|---------|
+| `name` | Skill identifier (`refineui`) |
+| `description` | When hosts should load this skill |
+| `user-invocable` | Users can invoke it directly (e.g. `/refineui`) |
+| `argument-hint` | Optional topic passed with the invocation |
+
+### Sections
+
+| Section | What it tells the agent |
+|---------|-------------------------|
+| **1. Classify the request** | Foundations vs components vs setup vs MCP vs health check — and whether to read the project first |
+| **2. Documentation routing** | Start from `llm.txt` / `llms.txt`, open leaf pages on design.pelagornis.com/refineui; use MCP when available |
+| **3. Code-writing contract** | `@refineui/react` imports, composable APIs, tokens-only styling, a11y |
+| **4. Monorepo contributors** | Paths inside this repository (`packages/tokens`, `packages/react`, docs) |
+| **5. MCP** | When and how to use `@refineui/mcp` tools |
+| **6. Doctor** | Read-only diagnostics before suggesting fixes |
+| **7. Response principles** | Cite URLs, separate guidance from edits, no invented APIs |
+
+Deeper detail lives in `references/` and `rules/` — `SKILL.md` links to them instead of duplicating content.
+
+Source: [skills/refineui/SKILL.md](https://github.com/pelagornis/refineui/blob/main/skills/refineui/SKILL.md)
+
+## What it does
+
+| Layer | Role |
+|-------|------|
+| **Doc routing** | Start from `llm.txt` / `llms.txt`, open leaf pages on design.pelagornis.com/refineui |
+| **Codegen rules** | Tokens-only styling, composable APIs, no invented props |
+| **Monorepo hints** | Where tokens, components, and docs live in this repository |
+| **MCP pointer** | When to use `@refineui/mcp` tools |
+| **Doctor** | Read-only setup & contract diagnostics |
+
+The skill does **not** embed component lists or token tables — those stay in official docs so they never go stale.
+
+## Installation
+
+<SkillInstall />
+
+## File structure
+
+```
+skills/refineui/
+├── SKILL.md                      # Entry — request classification & doc routing
+├── references/
+│   ├── design-rules.md           # Token + composition contract (summary)
+│   ├── doctor.md                 # Doctor workflow & report schema
+│   └── mcp.md                    # @refineui/mcp setup & tools
+└── rules/                        # Doctor rule definitions (read-only diagnostics)
+    ├── package-setup.md
+    ├── stylesheet-setup.md
+    ├── foundation-contract.md
+    ├── composition-api.md
+    └── component-imports.md
+```
+
+| File | When the agent reads it |
+|------|-------------------------|
+| `SKILL.md` | Any RefineUI-related question — routes to docs or references |
+| `references/design-rules.md` | Writing or reviewing UI code |
+| `references/doctor.md` | Health check / "using RefineUI correctly?" requests |
+| `references/mcp.md` | MCP host setup or tool selection |
+| `rules/*.md` | Doctor diagnostics (manual or with `refineui-doctor` CLI) |
+
+## Documentation routing
+
+Agents should **fetch the index on each task**, not rely on memorized slugs:
+
+1. Read `https://design.pelagornis.com/refineui/llms.txt` or `https://design.pelagornis.com/refineui/llm.txt`
+2. Follow links to Foundations, Components, or Development leaf pages
+3. For code generation, combine component docs with [Installation](/development/installation/) and [Theming](/development/theming/)
+
+If MCP is configured, prefer `search_docs` and `get_doc_page` from `@refineui/mcp`.
+
+## Request classification
+
+| Request | Action |
+|---------|--------|
+| Token / color / spacing meaning | Foundations docs only |
+| Component API or example | Component doc + optional MCP `get_doc_page` |
+| App setup / CSS import | Development docs + inspect `package.json` |
+| "RefineUI 잘 쓰고 있나?" / setup audit | [Doctor](/ai-tools/doctor/) + `references/doctor.md` or MCP `run_doctor` |
+| "List all components" | `llm.txt` or MCP `list_components` |
+
+## Monorepo (this repository)
+
+Contributors already have `.cursor/rules/` for design-system constraints. The skill complements those rules for **downstream apps** and agents without repo checkout.
+
+Install the skill in consumer projects; in this monorepo it is available at `skills/refineui/` for review and `skills add` distribution.

@@ -1,5 +1,4 @@
 ---
-import MobileMenuToggle from "virtual:starlight/components/MobileMenuToggle";
 import config from "virtual:starlight/user-config";
 import { DocsShell } from "./DocsShell";
 import { DocsSidebar } from "./DocsSidebar";
@@ -21,7 +20,6 @@ const githubHref = Array.isArray(config.social)
                 data-docs-mobile-sidebar
                 aria-label={Astro.locals.t("sidebarNav.accessibleLabel")}
             >
-                <MobileMenuToggle />
                 <div id="starlight__sidebar" class="sidebar-pane">
                     <div class="sidebar-content sl-flex">
                         <DocsSidebar client:load title={siteTitle} titleHref={siteTitleHref} entries={entries} />
@@ -69,12 +67,6 @@ const githubHref = Array.isArray(config.social)
             background-color: var(--sl-color-bg-nav);
         }
 
-        :global([data-has-sidebar]) .header {
-            padding-inline-end: calc(
-                var(--sl-nav-gap) + var(--sl-nav-pad-x) + var(--sl-menu-button-size)
-            );
-        }
-
         .sidebar-pane {
             visibility: var(--sl-sidebar-visibility, hidden);
             position: fixed;
@@ -86,7 +78,7 @@ const githubHref = Array.isArray(config.social)
             overflow-y: auto;
         }
 
-        :global([aria-expanded="true"]) ~ .sidebar-pane {
+        :global(body[data-mobile-menu-expanded]) [data-docs-mobile-sidebar] .sidebar-pane {
             --sl-sidebar-visibility: visible;
         }
 
@@ -106,18 +98,13 @@ const githubHref = Array.isArray(config.social)
         }
 
         @media (min-width: 50rem) {
-            :global([data-has-sidebar]) .header {
-                padding-inline-end: var(--sl-nav-pad-x);
-            }
-
             /* Desktop TOC is in-flow (right rail) — do not reserve mobile TOC height. */
             .main-frame {
                 padding-top: var(--sl-nav-height);
             }
 
             /* Desktop: RefineUI DocsShell owns the rail — hide Starlight fixed pane. */
-            :global([data-docs-page="with-sidebar"]) .sidebar,
-            :global([data-docs-page="with-sidebar"]) starlight-menu-button {
+            :global([data-docs-page="with-sidebar"]) .sidebar {
                 display: none;
             }
 

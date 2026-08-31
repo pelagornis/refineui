@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "refineui": {
+      "command": "node",
+      "args": ["packages/mcp/lib/server.js"]
+    }
+  }
+}

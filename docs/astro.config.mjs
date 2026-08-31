@@ -12,6 +12,14 @@ const monorepoRoot = fileURLToPath(new URL('..', import.meta.url));
 const ICONOGRAPHY_SITE = 'https://github.com/pelagornis/refineui-system-icons';
 
 export default defineConfig({
+  site: 'https://design.pelagornis.com',
+  base: '/refineui',
+  redirects: {
+    '/ai-integration': '/ai-tools',
+    '/ai-integration/': '/ai-tools/',
+    '/ai-tools/llms-txt': '/llms.txt',
+    '/ai-tools/llms-txt/': '/llms.txt',
+  },
   vite: {
     plugins: [tailwindcss()],
     resolve: {
@@ -231,7 +239,16 @@ export default defineConfig({
             { label: 'Motion', slug: 'development/motion' },
           ],
         },
-        { label: 'AI & Tools', slug: 'ai-integration' },
+        {
+          label: 'AI & Tools',
+          items: [
+            { label: 'Overview', slug: 'ai-tools' },
+            { label: 'llms.txt', link: '/llms.txt' },
+            { label: 'Skill', slug: 'ai-tools/skill' },
+            { label: 'Doctor', slug: 'ai-tools/doctor' },
+            { label: 'MCP', slug: 'ai-tools/mcp' },
+          ],
+        },
       ],
       social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/pelagornis/refineui' }],
     }),

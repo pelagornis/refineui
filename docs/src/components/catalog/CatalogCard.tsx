@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { Box, Card, CardHeader, CardTitle, Grid } from "@refineui/react";
+import { withBase } from "../../lib/docs-path";
 
 export function CatalogCard({
     href,
@@ -36,7 +37,7 @@ export function CatalogCard({
             <CardHeader data-refineui-catalog-label className="shrink-0">
                 <CardTitle>
                     <a
-                        href={href}
+                        href={external ? href : withBase(href)}
                         data-refineui-catalog-link
                         {...(external ? { target: "_blank", rel: "noreferrer" } : undefined)}
                     >
