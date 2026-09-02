@@ -8,7 +8,7 @@ export const selectStyles = {
     root: "relative inline-block",
     trigger: clsx(
         "box-border inline-flex cursor-pointer items-center justify-between",
-        "gap-refineui-size-xxx-small rounded-refineui-large",
+        "gap-refineui-size-x-small rounded-refineui-large",
         "border-refineui-hairline border-refineui-alias-border-default",
         "bg-refineui-alias-background-primary px-refineui-size-medium py-refineui-size-x-small",
         "text-refineui-alias-foreground-primary outline-none",

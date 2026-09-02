@@ -4,7 +4,7 @@ import { componentTextClass } from "../../typography";
 
 const topLevelItem = clsx(
     componentTextClass(componentTypographyTokens.navigationMenu.trigger),
-    "box-border inline-flex cursor-pointer items-center justify-center gap-refineui-size-xxx-small",
+    "box-border inline-flex cursor-pointer items-center justify-center gap-refineui-size-x-small",
     "rounded-refineui-large border-none bg-transparent px-refineui-size-medium py-refineui-size-x-small",
     "text-refineui-alias-foreground-tertiary outline-none leading-none",
     "transition-[color,background-color] duration-[var(--refineui-motion-duration-fast)]",
@@ -45,7 +45,7 @@ export const navigationMenuStyles = {
     /** Dense row inside a content panel — same density as Menu item. */
     linkInContent: clsx(
         componentTextClass(componentTypographyTokens.navigationMenu.contentLink),
-        "box-border flex w-full cursor-pointer items-center",
+        "box-border flex w-full cursor-pointer items-center gap-refineui-size-x-small",
         "rounded-refineui-large border-none bg-transparent p-refineui-size-x-small text-left no-underline outline-none",
         "text-refineui-alias-foreground-primary",
         "transition-[background-color,color] duration-[var(--refineui-motion-duration-fast)]",
