@@ -21,7 +21,7 @@ export function HomeHeroHeadline() {
             return;
         }
 
-        const timer = window.setInterval(advance, 3000);
+        const timer = window.setInterval(advance, 3600);
         return () => window.clearInterval(timer);
     }, [paused, advance]);
 
@@ -61,9 +61,16 @@ export function HomeHeroHeadline() {
                     onFocus={() => setPaused(true)}
                     onBlur={() => setPaused(false)}
                 >
-                    <span key={word} data-refineui-home-title-word-text>
-                        {word}
-                    </span>
+                    {ROTATING_WORDS.map((candidate, candidateIndex) => (
+                        <span
+                            key={candidate}
+                            data-refineui-home-title-word-text
+                            data-active={candidateIndex === index ? "" : undefined}
+                            aria-hidden={candidateIndex === index ? undefined : true}
+                        >
+                            {candidate}
+                        </span>
+                    ))}
                 </button>{" "}
                 to React. Documentation rendered with the same packages as product — precise,
                 token-driven, and interactive.

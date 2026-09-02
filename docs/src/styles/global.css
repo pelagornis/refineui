@@ -227,12 +227,17 @@
 [data-refineui-home-hero] {
   --refineui-home-pointer-x: 0.5;
   --refineui-home-pointer-y: 0.5;
+  --refineui-home-gradient-cycle: calc(var(--refineui-motion-duration-spinner) * 5);
+  --refineui-home-mesh-cycle: calc(var(--refineui-motion-duration-spinner) * 7);
+  --refineui-home-glow-cycle-a: calc(var(--refineui-motion-duration-skeleton) * 2);
+  --refineui-home-glow-cycle-b: calc(var(--refineui-motion-duration-skeleton) * 2.5);
+  --refineui-home-glow-cycle-c: calc(var(--refineui-motion-duration-skeleton) * 3);
   position: relative;
   isolation: isolate;
   overflow: hidden;
   border-radius: var(--refineui-radius-rounded-x-large);
   border: var(--refineui-stroke-width-thin) solid var(--refineui-color-alias-border-subtle);
-  background: var(--refineui-color-alias-background-secondary);
+  background: var(--refineui-color-alias-background-primary);
 }
 
 [data-refineui-home-backdrop] {
@@ -243,18 +248,62 @@
   pointer-events: none;
 }
 
-[data-refineui-home-gradient] {
+[data-refineui-home-gradient="flow"] {
   position: absolute;
-  inset: -45%;
-  background: linear-gradient(
-    115deg,
-    color-mix(in srgb, var(--refineui-color-alias-background-brand) 22%, transparent),
-    color-mix(in srgb, var(--refineui-color-alias-background-discovery-subtle) 48%, transparent),
-    color-mix(in srgb, var(--refineui-color-alias-background-info-subtle) 42%, transparent),
-    color-mix(in srgb, var(--refineui-color-alias-background-brand) 22%, transparent)
+  inset: -60%;
+  background-image: linear-gradient(
+    125deg,
+    var(--refineui-color-alias-background-primary),
+    var(--refineui-color-alias-background-brand-subtle),
+    var(--refineui-color-alias-surface-sunken),
+    color-mix(
+      in srgb,
+      var(--refineui-color-alias-background-brand) 20%,
+      var(--refineui-color-alias-background-brand-subtle)
+    ),
+    var(--refineui-color-alias-background-primary)
   );
-  background-size: 220% 220%;
-  animation: refineui-home-gradient-shift 20s ease-in-out infinite;
+  background-size: 450% 450%;
+  background-position: 0% 50%;
+  will-change: background-position;
+  animation: refineui-home-gradient-flow var(--refineui-home-gradient-cycle)
+    var(--refineui-motion-easing-ease-in-out) infinite;
+}
+
+[data-refineui-home-gradient="mesh"] {
+  position: absolute;
+  inset: -50%;
+  background-image:
+    radial-gradient(
+      ellipse at 28% 28%,
+      var(--refineui-color-alias-background-brand-subtle),
+      var(--refineui-color-alias-background-primary) 64%
+    ),
+    radial-gradient(
+      ellipse at 78% 68%,
+      var(--refineui-color-alias-surface-sunken),
+      var(--refineui-color-alias-background-primary) 64%
+    ),
+    radial-gradient(
+      ellipse at 52% 48%,
+      color-mix(
+        in srgb,
+        var(--refineui-color-alias-background-brand) 14%,
+        var(--refineui-color-alias-background-surface-selected)
+      ),
+      var(--refineui-color-alias-background-primary) 68%
+    );
+  background-size:
+    200% 200%,
+    220% 220%,
+    210% 210%;
+  background-position:
+    0% 20%,
+    100% 80%,
+    50% 50%;
+  will-change: background-position;
+  animation: refineui-home-gradient-mesh var(--refineui-home-mesh-cycle)
+    var(--refineui-motion-easing-ease-in-out) infinite;
 }
 
 [data-refineui-home-glow-wrap] {
@@ -268,8 +317,8 @@
   width: min(52%, var(--refineui-size-foundation-size-3200));
   aspect-ratio: 1;
   transform: translate(
-    calc((var(--refineui-home-pointer-x) - 0.5) * var(--refineui-size-foundation-size-240)),
-    calc((var(--refineui-home-pointer-y) - 0.5) * var(--refineui-size-foundation-size-200))
+    calc((var(--refineui-home-pointer-x) - 0.5) * var(--refineui-size-foundation-size-280)),
+    calc((var(--refineui-home-pointer-y) - 0.5) * var(--refineui-size-foundation-size-240))
   );
 }
 
@@ -279,8 +328,8 @@
   width: min(48%, var(--refineui-size-foundation-size-2560));
   aspect-ratio: 1;
   transform: translate(
-    calc((var(--refineui-home-pointer-x) - 0.5) * var(--refineui-size-foundation-size-320)),
-    calc((var(--refineui-home-pointer-y) - 0.5) * var(--refineui-size-foundation-size-240))
+    calc((var(--refineui-home-pointer-x) - 0.5) * var(--refineui-size-foundation-size-360)),
+    calc((var(--refineui-home-pointer-y) - 0.5) * var(--refineui-size-foundation-size-280))
   );
 }
 
@@ -290,8 +339,8 @@
   width: min(56%, var(--refineui-size-foundation-size-3200));
   aspect-ratio: 1;
   transform: translate(
-    calc((var(--refineui-home-pointer-x) - 0.5) * var(--refineui-size-foundation-size-200)),
-    calc((var(--refineui-home-pointer-y) - 0.5) * var(--refineui-size-foundation-size-320))
+    calc((var(--refineui-home-pointer-x) - 0.5) * var(--refineui-size-foundation-size-240)),
+    calc((var(--refineui-home-pointer-y) - 0.5) * var(--refineui-size-foundation-size-360))
   );
 }
 
@@ -300,35 +349,60 @@
   width: 100%;
   height: 100%;
   border-radius: var(--refineui-radius-rounded-circle);
-  filter: blur(var(--refineui-size-foundation-size-800));
-  opacity: 0.85;
+  filter: blur(var(--refineui-size-foundation-size-400));
 }
 
 [data-refineui-home-glow="primary"] {
-  background: color-mix(in srgb, var(--refineui-color-alias-background-brand) 32%, transparent);
-  animation: refineui-home-glow-drift-a 22s ease-in-out infinite;
+  background: var(--refineui-color-alias-background-brand-subtle);
+  animation: refineui-home-glow-drift-a var(--refineui-home-glow-cycle-a)
+    var(--refineui-motion-easing-ease-in-out) infinite;
 }
 
 [data-refineui-home-glow="secondary"] {
-  background: color-mix(in srgb, var(--refineui-color-alias-background-discovery-subtle) 76%, transparent);
-  animation: refineui-home-glow-drift-b 26s ease-in-out infinite;
+  background: var(--refineui-color-alias-surface-sunken);
+  animation: refineui-home-glow-drift-b var(--refineui-home-glow-cycle-b)
+    var(--refineui-motion-easing-ease-in-out) infinite;
 }
 
 [data-refineui-home-glow="tertiary"] {
-  background: color-mix(in srgb, var(--refineui-color-alias-background-info-subtle) 72%, transparent);
-  animation: refineui-home-glow-drift-c 30s ease-in-out infinite;
+  background: color-mix(
+    in srgb,
+    var(--refineui-color-alias-background-brand) 22%,
+    var(--refineui-color-alias-background-brand-subtle)
+  );
+  animation: refineui-home-glow-drift-c var(--refineui-home-glow-cycle-c)
+    var(--refineui-motion-easing-ease-in-out) infinite;
 }
 
-@keyframes refineui-home-gradient-shift {
+@keyframes refineui-home-gradient-flow {
   0%,
   100% {
-    transform: translate(0, 0) rotate(0deg);
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes refineui-home-gradient-mesh {
+  0%,
+  100% {
+    background-position:
+      0% 20%,
+      100% 80%,
+      50% 50%;
   }
   33% {
-    transform: translate(-6%, 4%) rotate(2deg);
+    background-position:
+      85% 5%,
+      15% 95%,
+      95% 35%;
   }
   66% {
-    transform: translate(5%, -5%) rotate(-2deg);
+    background-position:
+      35% 95%,
+      65% 5%,
+      5% 75%;
   }
 }
 
@@ -338,7 +412,8 @@
     transform: translate(0, 0) scale(1);
   }
   50% {
-    transform: translate(8%, 6%) scale(1.08);
+    transform: translate(var(--refineui-size-foundation-size-200), var(--refineui-size-foundation-size-160))
+      scale(var(--refineui-motion-scale-hover-grow));
   }
 }
 
@@ -348,7 +423,11 @@
     transform: translate(0, 0) scale(1);
   }
   50% {
-    transform: translate(-10%, 8%) scale(1.1);
+    transform: translate(
+        calc(var(--refineui-size-foundation-size-240) * -1),
+        var(--refineui-size-foundation-size-200)
+      )
+      scale(var(--refineui-motion-scale-hover-grow));
   }
 }
 
@@ -358,7 +437,8 @@
     transform: translate(0, 0) scale(1);
   }
   50% {
-    transform: translate(6%, -10%) scale(1.06);
+    transform: translate(var(--refineui-size-foundation-size-160), calc(var(--refineui-size-foundation-size-240) * -1))
+      scale(var(--refineui-motion-scale-hover-grow));
   }
 }
 
@@ -398,7 +478,7 @@
   aspect-ratio: 16 / 9;
   border-radius: var(--refineui-radius-rounded-x-large);
   overflow: hidden;
-  background: var(--refineui-color-alias-background-secondary);
+  background: var(--refineui-color-alias-background-primary);
   transform: translateZ(0);
 }
 
@@ -409,7 +489,7 @@
   overflow: hidden;
   line-height: 0;
   transform: translateZ(0);
-  background: var(--refineui-color-alias-background-secondary);
+  background: var(--refineui-color-alias-background-primary);
 }
 
 [data-refineui-home-hero-video-fallback] {
@@ -504,32 +584,27 @@
 }
 
 [data-refineui-home-title-word] {
-  display: inline;
+  display: inline-grid;
+  vertical-align: -0.06em;
+  text-align: center;
   margin: 0;
   padding: 0;
   border: none;
   background: none;
-  font: inherit;
-  letter-spacing: inherit;
-  line-height: inherit;
+  font-family: var(--refineui-text-subtitle-lg-font-family);
+  font-size: var(--refineui-text-subtitle-lg-font-size);
+  font-weight: var(--refineui-text-subtitle-lg-font-weight);
+  line-height: var(--refineui-text-subtitle-lg-line-height);
+  letter-spacing: -0.02em;
   color: var(--refineui-color-alias-foreground-primary);
   cursor: pointer;
-  text-decoration: underline;
-  text-decoration-color: color-mix(
-    in srgb,
-    var(--refineui-color-alias-foreground-link) 40%,
-    transparent
-  );
-  text-underline-offset: 0.12em;
-  transition:
-    color var(--refineui-motion-duration-fast) var(--refineui-motion-easing-standard),
-    text-decoration-color var(--refineui-motion-duration-fast) var(--refineui-motion-easing-standard);
+  text-decoration: none;
+  transition: color var(--refineui-motion-duration-fast) var(--refineui-motion-easing-standard);
 }
 
 [data-refineui-home-title-word]:hover,
 [data-refineui-home-title-word]:focus-visible {
-  color: var(--refineui-color-alias-foreground-link);
-  text-decoration-color: var(--refineui-color-alias-foreground-link);
+  color: var(--refineui-color-alias-foreground-primary-hover);
 }
 
 [data-refineui-home-title-word]:focus-visible {
@@ -539,25 +614,29 @@
 }
 
 [data-refineui-home-title-word-text] {
-  display: inline-block;
-  animation: refineui-home-title-word-in var(--refineui-motion-duration-panel)
-    var(--refineui-motion-easing-standard) both;
+  grid-area: 1 / 1;
+  opacity: 0;
+  pointer-events: none;
 }
 
-@keyframes refineui-home-title-word-in {
+[data-refineui-home-title-word-text][data-active] {
+  animation: refineui-home-title-word-active var(--refineui-motion-duration-normal)
+    var(--refineui-motion-easing-emphasized) both;
+}
+
+@keyframes refineui-home-title-word-active {
   from {
     opacity: 0;
-    transform: translateY(0.12em);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-refineui-home-title-word-text] {
+  [data-refineui-home-title-word-text][data-active] {
     animation: none;
+    opacity: 1;
   }
 }
 

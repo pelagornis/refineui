@@ -1,8 +1,9 @@
-/** Animated gradient mesh inside the hero banner. */
+/** Token-driven animated gradient mesh inside the hero banner. */
 export function HeroBackdrop() {
     return (
         <div data-refineui-home-backdrop aria-hidden>
-            <div data-refineui-home-gradient />
+            <div data-refineui-home-gradient="flow" />
+            <div data-refineui-home-gradient="mesh" />
             <div data-refineui-home-glow-wrap="primary">
                 <span data-refineui-home-glow="primary" />
             </div>

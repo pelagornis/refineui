@@ -6,12 +6,11 @@ import type { ScrollAreaOrientation } from "./types";
 export const SCROLL_AREA_THUMB_MIN_PX = Number.parseFloat(spacings.sizeXLarge);
 
 /**
- * ScrollArea — overlay scrollbar with a padded track.
- * Outer rail: padding + track fill. Inner track: geometry reference for the thumb.
- * Critical sizes live in `refineui.css`.
+ * ScrollArea — grid layout with an inset scrollbar rail beside the viewport.
+ * Grid placement, gap, and rail sizing live in `refineui.css`.
  */
 export const scrollAreaStyles = {
-    root: "relative box-border min-h-0 min-w-0 overflow-hidden outline-none",
+    root: "box-border min-h-0 min-w-0 overflow-hidden outline-none",
 
     viewport: clsx(
         "size-full min-h-0 min-w-0 rounded-[inherit]",
@@ -21,13 +20,13 @@ export const scrollAreaStyles = {
     ),
 
     scrollbar: clsx(
-        "absolute z-refineui-content box-border touch-none select-none",
+        "z-refineui-content box-border touch-none select-none",
         "transition-opacity duration-[var(--refineui-motion-duration-fast)]",
         "ease-[var(--refineui-motion-easing-ease-out)]",
     ),
 
-    scrollbarVertical: "inset-y-0 right-0",
-    scrollbarHorizontal: "inset-x-0 bottom-0",
+    scrollbarVertical: "",
+    scrollbarHorizontal: "",
 
     /** Inner rail — thumb is absolutely positioned here (padding lives on the outer scrollbar). */
     track: "relative size-full min-h-0 min-w-0 overflow-hidden rounded-refineui-circle",
