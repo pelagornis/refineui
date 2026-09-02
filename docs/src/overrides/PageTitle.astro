@@ -1,8 +1,14 @@
 ---
+import DocsBreadcrumb from "../components/DocsBreadcrumb";
+import { buildDocsBreadcrumbTrail } from "../lib/docs-breadcrumb";
+
 const { title, description } = Astro.locals.starlightRoute.entry.data;
+const pageId = Astro.locals.starlightRoute.id;
+const breadcrumbItems = buildDocsBreadcrumbTrail(pageId, title);
 ---
 
 <div data-refineui-docs-pagehead>
+    {breadcrumbItems ? <DocsBreadcrumb client:load items={breadcrumbItems} /> : null}
     <h1 id="_top">{title}</h1>
     {description ? <p data-refineui-docs-lead>{description}</p> : null}
 </div>

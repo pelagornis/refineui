@@ -1343,16 +1343,22 @@ a[data-refineui="link"]:focus-visible {
 }
 
 /* Breadcrumb — Web Kit `283:688` (Figma Breadcrumb / BreadcrumbItem) */
-[data-refineui="breadcrumb-link"] {
+[data-refineui="breadcrumb-link"],
+[data-refineui="breadcrumb-ellipsis"] {
+  box-sizing: border-box;
+  min-height: var(--refineui-size-button-min-height-sm);
+  border-radius: var(--refineui-radius-rounded-large);
   transition:
     color var(--refineui-motion-duration-fast),
     background-color var(--refineui-motion-duration-fast);
 }
-[data-refineui="breadcrumb-link"]:hover {
-  color: var(--refineui-color-alias-foreground-secondary) !important;
-}
-[data-refineui="breadcrumb-link"][data-current]:hover {
+[data-refineui="breadcrumb-link"]:hover:not(:active) {
   color: var(--refineui-color-alias-foreground-primary-hover) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
+}
+[data-refineui="breadcrumb-link"][data-current]:hover:not(:active) {
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
 [data-refineui="breadcrumb-link"]:active,
 [data-refineui="breadcrumb-link"][data-state="pressed"] {
@@ -1658,20 +1664,16 @@ a[data-refineui="link"]:focus-visible {
 
 /* Breadcrumb ellipsis — Web Kit pressed (BreadcrumbItem Ellipsis, same tone as links) */
 [data-refineui="breadcrumb-ellipsis"] {
-  box-sizing: border-box;
   margin: 0;
-  padding: 0;
   border: none;
   background: transparent;
   font: inherit;
   color: inherit;
   appearance: none;
-  transition:
-    color var(--refineui-motion-duration-fast),
-    background-color var(--refineui-motion-duration-fast);
 }
-[data-refineui="breadcrumb-ellipsis"]:hover {
-  color: var(--refineui-color-alias-foreground-secondary) !important;
+[data-refineui="breadcrumb-ellipsis"]:hover:not(:active) {
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
 [data-refineui="breadcrumb-ellipsis"]:active,
 [data-refineui="breadcrumb-ellipsis"][data-state="pressed"] {
