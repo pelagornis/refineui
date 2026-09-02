@@ -12,8 +12,7 @@ const monorepoRoot = fileURLToPath(new URL('..', import.meta.url));
 const ICONOGRAPHY_SITE = 'https://github.com/pelagornis/refineui-system-icons';
 
 export default defineConfig({
-  site: 'https://design.pelagornis.com',
-  base: '/refineui',
+  site: 'https://ui.pelagornis.com',
   redirects: {
     '/ai-integration': '/ai-tools',
     '/ai-integration/': '/ai-tools/',

@@ -26,8 +26,8 @@ export const DESIGN_RULES = `# RefineUI design-system rules (for AI assistants)
 \`\`\`
 
 ## Docs
-- Site: https://design.pelagornis.com/refineui
-- Machine-readable index: https://design.pelagornis.com/refineui/llm.txt
+- Site: https://ui.pelagornis.com
+- Machine-readable index: https://ui.pelagornis.com/llm.txt
 - Foundations: /foundations/* — tokens and layout
 - Components: /components/* — flat A–Z catalog
 `;

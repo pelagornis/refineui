@@ -159,7 +159,7 @@ function createServer() {
             jsonResult({
                 globalCategories: listTokenCategories(),
                 semanticTextRoles: listSemanticTextRoles(),
-                docs: "https://design.pelagornis.com/refineui/foundations/design-tokens/",
+                docs: "https://ui.pelagornis.com/foundations/design-tokens/",
             }),
     );
 

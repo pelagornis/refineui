@@ -1,6 +1,6 @@
 # RefineUI Doctor
 
-Read-only diagnostics for RefineUI workspaces. Inspired by [SEED Doctor](https://seed-design.io/ai-integration/skill/doctor), adapted for RefineUI's token-first React design system.
+Read-only diagnostics for RefineUI workspaces.
 
 Doctor finds workspaces that use `@refineui/*` packages and runs applicable health checks. It does **not** modify code or install packages. Results are written as schema v2 YAML to a temp directory (or `--output`).
 
@@ -19,10 +19,10 @@ There is no Quick/Deep mode — run all applicable rules unless the user scopes 
 
 Do **not** copy doc content into rules. At runtime, read:
 
-- **Index:** `https://design.pelagornis.com/refineui/llm.txt`
-- **Installation:** `https://design.pelagornis.com/refineui/development/installation/`
-- **Theming / stylesheets:** `https://design.pelagornis.com/refineui/development/theming/`
-- **Doctor page:** `https://design.pelagornis.com/refineui/ai-tools/doctor/`
+- **Index:** `https://ui.pelagornis.com/llm.txt`
+- **Installation:** `https://ui.pelagornis.com/development/installation/`
+- **Theming / stylesheets:** `https://ui.pelagornis.com/development/theming/`
+- **Doctor page:** `https://ui.pelagornis.com/ai-tools/doctor/`
 
 Use `references` in findings to cite URLs actually read. If an index fetch fails, mark affected checks `not-verified` — do not guess.
 

@@ -64,7 +64,7 @@ Options:
   --json                Print JSON to stdout instead of summary
   -h, --help            Show help
 
-Docs: https://design.pelagornis.com/refineui/ai-tools/doctor/
+Docs: https://ui.pelagornis.com/ai-tools/doctor/
 `);
 }
 

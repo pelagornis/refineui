@@ -116,8 +116,8 @@ function relPath(root, filePath) {
 
 // src/rules/package-setup.ts
 var REFS = [
-  "https://design.pelagornis.com/refineui/development/installation/",
-  "https://design.pelagornis.com/refineui/llms.txt"
+  "https://ui.pelagornis.com/development/installation/",
+  "https://ui.pelagornis.com/llms.txt"
 ];
 var packageSetupRule = {
   id: "package-setup",
@@ -183,8 +183,8 @@ var packageSetupRule = {
 import fs2 from "fs";
 import path2 from "path";
 var REFS2 = [
-  "https://design.pelagornis.com/refineui/development/theming/",
-  "https://design.pelagornis.com/refineui/llms.txt"
+  "https://ui.pelagornis.com/development/theming/",
+  "https://ui.pelagornis.com/llms.txt"
 ];
 var REQUIRED_IMPORTS = [
   "@refineui/tokens/tailwind.css",
@@ -273,8 +273,8 @@ var stylesheetSetupRule = {
 
 // src/rules/foundation-contract.ts
 var REFS3 = [
-  "https://design.pelagornis.com/refineui/foundations/",
-  "https://design.pelagornis.com/refineui/llms.txt"
+  "https://ui.pelagornis.com/foundations/",
+  "https://ui.pelagornis.com/llms.txt"
 ];
 var HEX_PATTERN = /#[0-9a-fA-F]{3,8}\b/;
 var RGBA_PATTERN = /rgba?\(\s*\d+/;
@@ -369,8 +369,8 @@ var foundationContractRule = {
 
 // src/rules/composition-api.ts
 var REFS4 = [
-  "https://design.pelagornis.com/refineui/components/",
-  "https://design.pelagornis.com/refineui/llm.txt"
+  "https://ui.pelagornis.com/components/",
+  "https://ui.pelagornis.com/llm.txt"
 ];
 var CONVENIENCE_PROPS = ["title", "description", "items", "actions", "onClose"];
 function extractRefineuiImports(content) {
@@ -454,8 +454,8 @@ var compositionApiRule = {
 
 // src/rules/component-imports.ts
 var REFS5 = [
-  "https://design.pelagornis.com/refineui/development/installation/",
-  "https://design.pelagornis.com/refineui/llms.txt"
+  "https://ui.pelagornis.com/development/installation/",
+  "https://ui.pelagornis.com/llms.txt"
 ];
 var SHALLOW_IMPORT_PATTERN = /from\s+["']@refineui\/react\/(?:src\/|components\/)/;
 var LEGACY_IMPORT_PATTERN = /from\s+["']refineui["']/;
@@ -526,10 +526,10 @@ var ALL_RULES = [
   componentImportsRule
 ];
 var DOCS = {
-  index: "https://design.pelagornis.com/refineui/llms.txt",
-  installation: "https://design.pelagornis.com/refineui/development/installation/",
-  theming: "https://design.pelagornis.com/refineui/development/theming/",
-  doctor: "https://design.pelagornis.com/refineui/ai-tools/doctor/"
+  index: "https://ui.pelagornis.com/llms.txt",
+  installation: "https://ui.pelagornis.com/development/installation/",
+  theming: "https://ui.pelagornis.com/development/theming/",
+  doctor: "https://ui.pelagornis.com/ai-tools/doctor/"
 };
 function summarize(findings) {
   return findings.reduce(
@@ -558,7 +558,7 @@ function validateReport(report) {
   }
 }
 function runDoctor(targetRoot, workspace, options) {
-  const ctx = { docsBase: "https://design.pelagornis.com/refineui", workspace };
+  const ctx = { docsBase: "https://ui.pelagornis.com", workspace };
   const rules = options?.categories?.length ? ALL_RULES.filter((r) => options.categories?.includes(r.category)) : ALL_RULES;
   const results = rules.map((rule) => rule.run(ctx));
   const checks = results.map((r) => r.check);

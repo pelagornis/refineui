@@ -4,8 +4,8 @@ import type { DoctorRule, DoctorFinding } from "../types.js";
 import { relPath } from "../discover.js";
 
 const REFS = [
-    "https://design.pelagornis.com/refineui/development/theming/",
-    "https://design.pelagornis.com/refineui/llms.txt",
+    "https://ui.pelagornis.com/development/theming/",
+    "https://ui.pelagornis.com/llms.txt",
 ];
 
 const REQUIRED_IMPORTS = [

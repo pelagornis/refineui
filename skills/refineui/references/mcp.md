@@ -1,8 +1,8 @@
 # MCP (`@refineui/mcp`)
 
-Docs: `https://design.pelagornis.com/refineui/ai-tools/mcp/`
+Docs: `https://ui.pelagornis.com/ai-tools/mcp/`
 
-## Cursor (published package)
+## Published package
 
 ```json
 {

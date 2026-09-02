@@ -34,107 +34,107 @@ import "@refineui/react/refineui.css";
 
 ## Guides
 
-- [Getting started](https://design.pelagornis.com/refineui/getting-started/): Architecture, install, stylesheet, first example
+- [Getting started](https://ui.pelagornis.com/getting-started/): Architecture, install, stylesheet, first example
 
 ## AI & Tools
 
-- [Overview](https://design.pelagornis.com/refineui/ai-tools/): LLM indexes, Skill, Doctor, and MCP
-- [Skill](https://design.pelagornis.com/refineui/ai-tools/skill/): `refineui` agent skill for Cursor and other agents
-- [Doctor](https://design.pelagornis.com/refineui/ai-tools/doctor/): Read-only workspace diagnostics
-- [MCP](https://design.pelagornis.com/refineui/ai-tools/mcp/): `@refineui/mcp` documentation server
-- [/llms.txt](https://design.pelagornis.com/refineui/llms.txt): Curated link index (llmstxt.org)
-- [/llm.txt](https://design.pelagornis.com/refineui/llm.txt): Expanded plain-text reference
+- [Overview](https://ui.pelagornis.com/ai-tools/): LLM indexes, Skill, Doctor, and MCP
+- [Skill](https://ui.pelagornis.com/ai-tools/skill/): `refineui` agent skill for doc routing and codegen rules
+- [Doctor](https://ui.pelagornis.com/ai-tools/doctor/): Read-only workspace diagnostics
+- [MCP](https://ui.pelagornis.com/ai-tools/mcp/): `@refineui/mcp` documentation server
+- [/llms.txt](https://ui.pelagornis.com/llms.txt): Curated link index (llmstxt.org)
+- [/llm.txt](https://ui.pelagornis.com/llm.txt): Expanded plain-text reference
 
 ## Foundations
 
-- [Overview](https://design.pelagornis.com/refineui/foundations/): Visual language and token model
-- [Design tokens](https://design.pelagornis.com/refineui/foundations/design-tokens/): Semantic token introduction
-- [Color](https://design.pelagornis.com/refineui/foundations/color/): Palette and alias colors
-- [Typography](https://design.pelagornis.com/refineui/foundations/typography/): Type scale and roles
-- [Spacing](https://design.pelagornis.com/refineui/foundations/spacing/): Padding and gap scale
-- [Sizing](https://design.pelagornis.com/refineui/foundations/sizing/): Dimension tokens
-- [Radius](https://design.pelagornis.com/refineui/foundations/radius/): Corner radius
-- [Border](https://design.pelagornis.com/refineui/foundations/border/): Stroke widths and borders
-- [Elevation](https://design.pelagornis.com/refineui/foundations/elevation/): Shadows and depth
-- [Opacity](https://design.pelagornis.com/refineui/foundations/opacity/): Opacity and overlays
-- [Motion](https://design.pelagornis.com/refineui/foundations/motion/): Duration, easing, distance
-- [Z-index](https://design.pelagornis.com/refineui/foundations/z-index/): Layering scale
-- [Layout](https://design.pelagornis.com/refineui/foundations/layout/): Container, grid, alignment, responsive layout
+- [Overview](https://ui.pelagornis.com/foundations/): Visual language and token model
+- [Design tokens](https://ui.pelagornis.com/foundations/design-tokens/): Semantic token introduction
+- [Color](https://ui.pelagornis.com/foundations/color/): Palette and alias colors
+- [Typography](https://ui.pelagornis.com/foundations/typography/): Type scale and roles
+- [Spacing](https://ui.pelagornis.com/foundations/spacing/): Padding and gap scale
+- [Sizing](https://ui.pelagornis.com/foundations/sizing/): Dimension tokens
+- [Radius](https://ui.pelagornis.com/foundations/radius/): Corner radius
+- [Border](https://ui.pelagornis.com/foundations/border/): Stroke widths and borders
+- [Elevation](https://ui.pelagornis.com/foundations/elevation/): Shadows and depth
+- [Opacity](https://ui.pelagornis.com/foundations/opacity/): Opacity and overlays
+- [Motion](https://ui.pelagornis.com/foundations/motion/): Duration, easing, distance
+- [Z-index](https://ui.pelagornis.com/foundations/z-index/): Layering scale
+- [Layout](https://ui.pelagornis.com/foundations/layout/): Container, grid, alignment, responsive layout
 - [Iconography](https://github.com/pelagornis/refineui-system-icons): System icons (external repo)
 
 ## Components
 
-Alphabetical catalog — full docs at [/components/](https://design.pelagornis.com/refineui/components/).
+Alphabetical catalog — full docs at [/components/](https://ui.pelagornis.com/components/).
 
-- [Accordion](https://design.pelagornis.com/refineui/components/accordion/)
-- [Alert](https://design.pelagornis.com/refineui/components/alert/)
-- [Avatar](https://design.pelagornis.com/refineui/components/avatar/)
-- [Avatars](https://design.pelagornis.com/refineui/components/avatars/)
-- [Badge](https://design.pelagornis.com/refineui/components/badge/)
-- [Box](https://design.pelagornis.com/refineui/components/box/)
-- [Breadcrumb](https://design.pelagornis.com/refineui/components/breadcrumb/)
-- [Bubble](https://design.pelagornis.com/refineui/components/bubble/)
-- [Button](https://design.pelagornis.com/refineui/components/button/)
-- [Button Group](https://design.pelagornis.com/refineui/components/button-group/)
-- [Calendar](https://design.pelagornis.com/refineui/components/calendar/)
-- [Card](https://design.pelagornis.com/refineui/components/card/)
-- [Carousel](https://design.pelagornis.com/refineui/components/carousel/)
-- [Chart](https://design.pelagornis.com/refineui/components/chart/)
-- [Checkbox](https://design.pelagornis.com/refineui/components/checkbox/)
-- [Command](https://design.pelagornis.com/refineui/components/command/): Command palette with search and keyboard navigation
-- [Container](https://design.pelagornis.com/refineui/components/container/)
-- [Dialog](https://design.pelagornis.com/refineui/components/dialog/)
-- [Divider](https://design.pelagornis.com/refineui/components/divider/)
-- [Drawer](https://design.pelagornis.com/refineui/components/drawer/)
-- [Dropdown](https://design.pelagornis.com/refineui/components/dropdown/)
-- [Field](https://design.pelagornis.com/refineui/components/field/)
-- [Footer](https://design.pelagornis.com/refineui/components/footer/)
-- [Grid](https://design.pelagornis.com/refineui/components/grid/)
-- [Input](https://design.pelagornis.com/refineui/components/input/)
-- [Input OTP](https://design.pelagornis.com/refineui/components/input-otp/)
-- [Label](https://design.pelagornis.com/refineui/components/label/)
-- [Link](https://design.pelagornis.com/refineui/components/link/)
-- [Menu](https://design.pelagornis.com/refineui/components/menu/)
-- [Navigation Menu](https://design.pelagornis.com/refineui/components/navigation-menu/)
-- [Pagination](https://design.pelagornis.com/refineui/components/pagination/)
-- [Popover](https://design.pelagornis.com/refineui/components/popover/)
-- [Progress](https://design.pelagornis.com/refineui/components/progress/)
-- [Progress Stepper](https://design.pelagornis.com/refineui/components/progress-stepper/)
-- [Radio](https://design.pelagornis.com/refineui/components/radio/)
-- [Resizable](https://design.pelagornis.com/refineui/components/resizable/)
-- [Scroll Area](https://design.pelagornis.com/refineui/components/scroll-area/)
-- [Search Field](https://design.pelagornis.com/refineui/components/search-field/)
-- [Segmented Control](https://design.pelagornis.com/refineui/components/segmented-control/)
-- [Select](https://design.pelagornis.com/refineui/components/select/)
-- [Sidebar](https://design.pelagornis.com/refineui/components/sidebar/)
-- [Skeleton](https://design.pelagornis.com/refineui/components/skeleton/)
-- [Slider](https://design.pelagornis.com/refineui/components/slider/)
-- [Spin Button](https://design.pelagornis.com/refineui/components/spin-button/)
-- [Spinner](https://design.pelagornis.com/refineui/components/spinner/)
-- [Stack](https://design.pelagornis.com/refineui/components/stack/)
-- [Stepper](https://design.pelagornis.com/refineui/components/stepper/)
-- [Switch](https://design.pelagornis.com/refineui/components/switch/)
-- [Table](https://design.pelagornis.com/refineui/components/table/)
-- [Tabs](https://design.pelagornis.com/refineui/components/tabs/)
-- [Tag](https://design.pelagornis.com/refineui/components/tag/)
-- [Textarea](https://design.pelagornis.com/refineui/components/textarea/)
-- [Toast](https://design.pelagornis.com/refineui/components/toast/)
-- [Toggle Button](https://design.pelagornis.com/refineui/components/toggle-button/)
-- [Tooltip](https://design.pelagornis.com/refineui/components/tooltip/)
-- [Tree](https://design.pelagornis.com/refineui/components/tree/)
+- [Accordion](https://ui.pelagornis.com/components/accordion/)
+- [Alert](https://ui.pelagornis.com/components/alert/)
+- [Avatar](https://ui.pelagornis.com/components/avatar/)
+- [Avatars](https://ui.pelagornis.com/components/avatars/)
+- [Badge](https://ui.pelagornis.com/components/badge/)
+- [Box](https://ui.pelagornis.com/components/box/)
+- [Breadcrumb](https://ui.pelagornis.com/components/breadcrumb/)
+- [Bubble](https://ui.pelagornis.com/components/bubble/)
+- [Button](https://ui.pelagornis.com/components/button/)
+- [Button Group](https://ui.pelagornis.com/components/button-group/)
+- [Calendar](https://ui.pelagornis.com/components/calendar/)
+- [Card](https://ui.pelagornis.com/components/card/)
+- [Carousel](https://ui.pelagornis.com/components/carousel/)
+- [Chart](https://ui.pelagornis.com/components/chart/)
+- [Checkbox](https://ui.pelagornis.com/components/checkbox/)
+- [Command](https://ui.pelagornis.com/components/command/): Command palette with search and keyboard navigation
+- [Container](https://ui.pelagornis.com/components/container/)
+- [Dialog](https://ui.pelagornis.com/components/dialog/)
+- [Divider](https://ui.pelagornis.com/components/divider/)
+- [Drawer](https://ui.pelagornis.com/components/drawer/)
+- [Dropdown](https://ui.pelagornis.com/components/dropdown/)
+- [Field](https://ui.pelagornis.com/components/field/)
+- [Footer](https://ui.pelagornis.com/components/footer/)
+- [Grid](https://ui.pelagornis.com/components/grid/)
+- [Input](https://ui.pelagornis.com/components/input/)
+- [Input OTP](https://ui.pelagornis.com/components/input-otp/)
+- [Label](https://ui.pelagornis.com/components/label/)
+- [Link](https://ui.pelagornis.com/components/link/)
+- [Menu](https://ui.pelagornis.com/components/menu/)
+- [Navigation Menu](https://ui.pelagornis.com/components/navigation-menu/)
+- [Pagination](https://ui.pelagornis.com/components/pagination/)
+- [Popover](https://ui.pelagornis.com/components/popover/)
+- [Progress](https://ui.pelagornis.com/components/progress/)
+- [Progress Stepper](https://ui.pelagornis.com/components/progress-stepper/)
+- [Radio](https://ui.pelagornis.com/components/radio/)
+- [Resizable](https://ui.pelagornis.com/components/resizable/)
+- [Scroll Area](https://ui.pelagornis.com/components/scroll-area/)
+- [Search Field](https://ui.pelagornis.com/components/search-field/)
+- [Segmented Control](https://ui.pelagornis.com/components/segmented-control/)
+- [Select](https://ui.pelagornis.com/components/select/)
+- [Sidebar](https://ui.pelagornis.com/components/sidebar/)
+- [Skeleton](https://ui.pelagornis.com/components/skeleton/)
+- [Slider](https://ui.pelagornis.com/components/slider/)
+- [Spin Button](https://ui.pelagornis.com/components/spin-button/)
+- [Spinner](https://ui.pelagornis.com/components/spinner/)
+- [Stack](https://ui.pelagornis.com/components/stack/)
+- [Stepper](https://ui.pelagornis.com/components/stepper/)
+- [Switch](https://ui.pelagornis.com/components/switch/)
+- [Table](https://ui.pelagornis.com/components/table/)
+- [Tabs](https://ui.pelagornis.com/components/tabs/)
+- [Tag](https://ui.pelagornis.com/components/tag/)
+- [Textarea](https://ui.pelagornis.com/components/textarea/)
+- [Toast](https://ui.pelagornis.com/components/toast/)
+- [Toggle Button](https://ui.pelagornis.com/components/toggle-button/)
+- [Tooltip](https://ui.pelagornis.com/components/tooltip/)
+- [Tree](https://ui.pelagornis.com/components/tree/)
 
 ## Development
 
-- [Overview](https://design.pelagornis.com/refineui/development/): Build with RefineUI in product code
-- [Installation](https://design.pelagornis.com/refineui/development/installation/): Packages, Tailwind, and project setup
-- [Theming](https://design.pelagornis.com/refineui/development/theming/): Light/dark and semantic aliases
-- [Motion](https://design.pelagornis.com/refineui/development/motion/): Motion roles in components
+- [Overview](https://ui.pelagornis.com/development/): Build with RefineUI in product code
+- [Installation](https://ui.pelagornis.com/development/installation/): Packages, Tailwind, and project setup
+- [Theming](https://ui.pelagornis.com/development/theming/): Light/dark and semantic aliases
+- [Motion](https://ui.pelagornis.com/development/motion/): Motion roles in components
 
 ## AI & machine-readable docs
 
-- [/llms.txt](https://design.pelagornis.com/refineui/llms.txt) — Curated link index (llmstxt.org format)
-- [/llm.txt](https://design.pelagornis.com/refineui/llm.txt) — Expanded reference for LLM context windows
-- [AI & Tools](https://design.pelagornis.com/refineui/ai-tools/) — Overview, llms.txt viewer, Skill, Doctor, MCP
+- [/llms.txt](https://ui.pelagornis.com/llms.txt) — Curated link index (llmstxt.org format)
+- [/llm.txt](https://ui.pelagornis.com/llm.txt) — Expanded reference for LLM context windows
+- [AI & Tools](https://ui.pelagornis.com/ai-tools/) — Overview, llms.txt viewer, Skill, Doctor, MCP
 - `@refineui/mcp` — MCP server (`search_docs`, `get_doc_page`, `list_components`, …)
 - [GitHub](https://github.com/pelagornis/refineui) — Source and issues
 

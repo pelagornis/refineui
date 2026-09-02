@@ -1,6 +1,6 @@
 # @refineui/doctor
 
-Read-only diagnostics for RefineUI app and library workspaces. Inspired by [SEED Doctor](https://seed-design.io/ai-integration/skill/doctor), adapted for RefineUI's token-first React design system.
+Read-only diagnostics for RefineUI app and library workspaces.
 
 ## Install
 
@@ -35,4 +35,4 @@ Exit code `1` when error-severity findings exist.
 
 YAML report (schema v2) written to a temp directory or `--output` path. Use with the RefineUI Skill for agent-guided remediation.
 
-Docs: https://design.pelagornis.com/refineui/ai-tools/doctor/
+Docs: https://ui.pelagornis.com/ai-tools/doctor/

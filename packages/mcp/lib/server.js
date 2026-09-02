@@ -8,7 +8,7 @@ import {
   listTokenCategories,
   normalizeSlug,
   searchDocs
-} from "./chunk-GYE3U3ZE.js";
+} from "./chunk-ME2OZXIM.js";
 
 // src/server.ts
 import { McpServer } from "@modelcontextprotocol/server";
@@ -143,7 +143,7 @@ function createServer() {
     async () => jsonResult({
       globalCategories: listTokenCategories(),
       semanticTextRoles: listSemanticTextRoles(),
-      docs: "https://design.pelagornis.com/refineui/foundations/design-tokens/"
+      docs: "https://ui.pelagornis.com/foundations/design-tokens/"
     })
   );
   server.registerTool(

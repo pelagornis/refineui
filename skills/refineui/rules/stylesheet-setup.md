@@ -35,8 +35,8 @@ Read current installation/theming docs — do not hardcode paths that differ fro
 
 ## References
 
-- https://design.pelagornis.com/refineui/development/theming/
-- https://design.pelagornis.com/refineui/development/installation/
+- https://ui.pelagornis.com/development/theming/
+- https://ui.pelagornis.com/development/installation/
 
 ## Remediation template
 

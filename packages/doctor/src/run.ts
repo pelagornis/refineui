@@ -14,10 +14,10 @@ const ALL_RULES = [
 ];
 
 const DOCS = {
-    index: "https://design.pelagornis.com/refineui/llms.txt",
-    installation: "https://design.pelagornis.com/refineui/development/installation/",
-    theming: "https://design.pelagornis.com/refineui/development/theming/",
-    doctor: "https://design.pelagornis.com/refineui/ai-tools/doctor/",
+    index: "https://ui.pelagornis.com/llms.txt",
+    installation: "https://ui.pelagornis.com/development/installation/",
+    theming: "https://ui.pelagornis.com/development/theming/",
+    doctor: "https://ui.pelagornis.com/ai-tools/doctor/",
 };
 
 function summarize(findings: DoctorFinding[]) {
@@ -53,7 +53,7 @@ export function runDoctor(
     workspace: WorkspaceTarget,
     options?: { categories?: string[] },
 ): DoctorReport {
-    const ctx = { docsBase: "https://design.pelagornis.com/refineui", workspace };
+    const ctx = { docsBase: "https://ui.pelagornis.com", workspace };
     const rules = options?.categories?.length
         ? ALL_RULES.filter((r) => options.categories?.includes(r.category))
         : ALL_RULES;

@@ -18,8 +18,8 @@ Do **not** infer whether a semantic token choice is "correct" — only flag cont
 
 ## References
 
-- https://design.pelagornis.com/refineui/foundations/
-- https://design.pelagornis.com/refineui/foundations/design-tokens/
+- https://ui.pelagornis.com/foundations/
+- https://ui.pelagornis.com/foundations/design-tokens/
 
 ## Remediation template
 

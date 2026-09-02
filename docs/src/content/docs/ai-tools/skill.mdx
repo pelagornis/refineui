@@ -34,7 +34,7 @@ argument-hint: "[question or topic]"
 | Section | What it tells the agent |
 |---------|-------------------------|
 | **1. Classify the request** | Foundations vs components vs setup vs MCP vs health check — and whether to read the project first |
-| **2. Documentation routing** | Start from `llm.txt` / `llms.txt`, open leaf pages on design.pelagornis.com/refineui; use MCP when available |
+| **2. Documentation routing** | Start from `llm.txt` / `llms.txt`, open leaf pages on ui.pelagornis.com; use MCP when available |
 | **3. Code-writing contract** | `@refineui/react` imports, composable APIs, tokens-only styling, a11y |
 | **4. Monorepo contributors** | Paths inside this repository (`packages/tokens`, `packages/react`, docs) |
 | **5. MCP** | When and how to use `@refineui/mcp` tools |
@@ -49,7 +49,7 @@ Source: [skills/refineui/SKILL.md](https://github.com/pelagornis/refineui/blob/m
 
 | Layer | Role |
 |-------|------|
-| **Doc routing** | Start from `llm.txt` / `llms.txt`, open leaf pages on design.pelagornis.com/refineui |
+| **Doc routing** | Start from `llm.txt` / `llms.txt`, open leaf pages on ui.pelagornis.com |
 | **Codegen rules** | Tokens-only styling, composable APIs, no invented props |
 | **Monorepo hints** | Where tokens, components, and docs live in this repository |
 | **MCP pointer** | When to use `@refineui/mcp` tools |
@@ -90,7 +90,7 @@ skills/refineui/
 
 Agents should **fetch the index on each task**, not rely on memorized slugs:
 
-1. Read `https://design.pelagornis.com/refineui/llms.txt` or `https://design.pelagornis.com/refineui/llm.txt`
+1. Read `https://ui.pelagornis.com/llms.txt` or `https://ui.pelagornis.com/llm.txt`
 2. Follow links to Foundations, Components, or Development leaf pages
 3. For code generation, combine component docs with [Installation](/development/installation/) and [Theming](/development/theming/)
 
@@ -108,6 +108,4 @@ If MCP is configured, prefer `search_docs` and `get_doc_page` from `@refineui/mc
 
 ## Monorepo (this repository)
 
-Contributors already have `.cursor/rules/` for design-system constraints. The skill complements those rules for **downstream apps** and agents without repo checkout.
-
-Install the skill in consumer projects; in this monorepo it is available at `skills/refineui/` for review and `skills add` distribution.
+In this monorepo, source lives under `packages/tokens`, `packages/react`, and `docs/`. Install the skill in consumer projects; here it is available at `skills/refineui/` for review and `skills add` distribution.

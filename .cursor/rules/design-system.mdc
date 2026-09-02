@@ -39,7 +39,7 @@ Build: `bun run build:tokens` → `dist/css-variables.css`, `dist/tailwind-theme
 
 ## Docs & AI context
 
-- Site: https://design.pelagornis.com/refineui/
+- Site: https://ui.pelagornis.com/
 - Foundations: `/foundations/*` (color, typography, spacing, layout, …)
 - Components: flat A–Z catalog under `/components/*`
 - Iconography: external — https://github.com/pelagornis/refineui-system-icons

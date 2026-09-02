@@ -25,8 +25,8 @@ Verify app projects declare required RefineUI packages. Category: `setup`.
 
 ## References
 
-- https://design.pelagornis.com/refineui/development/installation/
-- https://design.pelagornis.com/refineui/llm.txt
+- https://ui.pelagornis.com/development/installation/
+- https://ui.pelagornis.com/llm.txt
 
 ## Remediation template
 

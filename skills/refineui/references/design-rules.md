@@ -1,7 +1,7 @@
 # Design rules (summary)
 
-Full foundations: `https://design.pelagornis.com/refineui/foundations/`  
-Component catalog: `https://design.pelagornis.com/refineui/components/`
+Full foundations: `https://ui.pelagornis.com/foundations/`  
+Component catalog: `https://ui.pelagornis.com/components/`
 
 ## MUST
 
@@ -26,5 +26,5 @@ Component catalog: `https://design.pelagornis.com/refineui/components/`
 
 ## Docs index for LLMs
 
-- `https://design.pelagornis.com/refineui/llm.txt`
-- `https://design.pelagornis.com/refineui/llms.txt`
+- `https://ui.pelagornis.com/llm.txt`
+- `https://ui.pelagornis.com/llms.txt`

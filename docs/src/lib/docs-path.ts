@@ -1,4 +1,4 @@
-/** Astro `base` prefix for docs deployed under /refineui (import.meta.env.BASE_URL). */
+/** Astro `base` prefix when docs are not served from domain root (`import.meta.env.BASE_URL`). */
 const DOCS_BASE = import.meta.env.BASE_URL;
 
 function docsBasePath(): string {

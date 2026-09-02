@@ -20,8 +20,8 @@ Scan `.tsx` files for JSX passing forbidden props to PascalCase components (like
 
 ## References
 
-- https://design.pelagornis.com/refineui/components/
-- https://design.pelagornis.com/refineui/llm.txt
+- https://ui.pelagornis.com/components/
+- https://ui.pelagornis.com/llm.txt
 
 ## Remediation template
 

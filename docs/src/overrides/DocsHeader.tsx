@@ -287,7 +287,7 @@ export function DocsMobileMenuToggle() {
             onClick={() => setExpanded((open) => !open)}
         >
             <WebIcon
-                name={expanded ? "dismiss" : "navigation"}
+                name={expanded ? "dismiss" : "text-align-justify"}
                 size={iconSizes.small}
                 color="currentColor"
                 aria-hidden

@@ -17,7 +17,7 @@ import { Button, Field, Input } from "@refineui/react";
 
 ## References
 
-- https://design.pelagornis.com/refineui/development/installation/
+- https://ui.pelagornis.com/development/installation/
 
 ## Remediation template
 

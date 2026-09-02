@@ -22,7 +22,7 @@ RefineUI ships as `@refineui/tokens` (Foundation + semantic variables) and `@ref
 | **Component spec & usage** | Button variants, Field + Input composition, Sidebar API | No (read docs); yes if checking existing code |
 | **Product setup** | Install, stylesheet, Tailwind, theming | Yes — `package.json`, app entry CSS |
 | **Docs / discovery** | "What components exist?", search by keyword | No — use index below |
-| **MCP & tooling** | Cursor MCP, `@refineui/mcp` tools | No — read [MCP doc](https://design.pelagornis.com/refineui/ai-tools/mcp/) |
+| **MCP & tooling** | `@refineui/mcp` tools | No — read [MCP doc](https://ui.pelagornis.com/ai-tools/mcp/) |
 | **Health check** | "RefineUI 잘 쓰고 있나?", setup audit | Yes — read-only Doctor first |
 
 If the user only asks for design/token meaning, open Foundations docs — do not infer from memory.
@@ -31,9 +31,9 @@ If the user only asks for design/token meaning, open Foundations docs — do not
 
 Do **not** memorize paths or invent APIs. Start from:
 
-- **Full index:** `https://design.pelagornis.com/refineui/llm.txt` (expanded) or `https://design.pelagornis.com/refineui/llms.txt` (curated)
-- **Site:** `https://design.pelagornis.com/refineui`
-- **AI & Tools hub:** `https://design.pelagornis.com/refineui/ai-tools/`
+- **Full index:** `https://ui.pelagornis.com/llm.txt` (expanded) or `https://ui.pelagornis.com/llms.txt` (curated)
+- **Site:** `https://ui.pelagornis.com`
+- **AI & Tools hub:** `https://ui.pelagornis.com/ai-tools/`
 
 ### Routing order
 
@@ -63,7 +63,6 @@ When the workspace **is** the RefineUI repo:
 - Tokens: `packages/tokens/src/global/`, `packages/tokens/src/semantic/`
 - Components: `packages/react/src/components/<Name>/`
 - Docs: `docs/src/content/docs/`
-- Agent rules: `.cursor/rules/` (design-system, tokens-in-components, composition-only-components)
 
 Run `bun run build:tokens` before `@refineui/react` when tokens change.
 
@@ -80,7 +79,7 @@ For "using RefineUI correctly?" or setup audit requests, run **read-only** diagn
 3. Present findings by severity; cite doc URLs in `references`.
 4. **Do not auto-fix** unless the user asks — use each finding's `remediation` as the fix brief.
 
-Docs: https://design.pelagornis.com/refineui/ai-tools/doctor/
+Docs: https://ui.pelagornis.com/ai-tools/doctor/
 
 ## 7. Response principles
 

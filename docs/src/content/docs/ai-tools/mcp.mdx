@@ -5,15 +5,15 @@ description: Model Context Protocol server — search RefineUI docs, fetch compo
 
 import McpInstall from "../../../components/McpInstall.mdx";
 
-**`@refineui/mcp`** is a stdio MCP server for Cursor, Claude Desktop, VS Code, and other MCP hosts. It embeds a build-time index of this documentation site so agents can query pages without pasting all of `llm.txt` into context.
+**`@refineui/mcp`** is a stdio MCP server for editors and agents that support the Model Context Protocol. It embeds a build-time index of this documentation site so agents can query pages without pasting all of `llm.txt` into context.
 
 ## Install
 
 <McpInstall />
 
-## Cursor configuration
+## MCP configuration
 
-Add to `.cursor/mcp.json` (or **Cursor Settings → MCP**):
+Add to your MCP host config (see [mcp.example.json](/mcp.example.json)):
 
 ```json
 {
@@ -26,9 +26,7 @@ Add to `.cursor/mcp.json` (or **Cursor Settings → MCP**):
 }
 ```
 
-### Monorepo contributors
-
-From the RefineUI repository root (after `bun run build:mcp`):
+Example for monorepo contributors (after `bun run build:mcp`):
 
 ```json
 {
@@ -40,8 +38,6 @@ From the RefineUI repository root (after `bun run build:mcp`):
   }
 }
 ```
-
-Example config: [`.mcp.json`](https://github.com/pelagornis/refineui/blob/main/.mcp.json) in the repo root.
 
 ## Tools
 
@@ -69,7 +65,7 @@ Example config: [`.mcp.json`](https://github.com/pelagornis/refineui/blob/main/.
 | | llms.txt | Skill | MCP |
 |---|----------|-------|-----|
 | **Format** | Static text file | Agent instructions | Live tools + resources |
-| **Best for** | Cursor Docs, simple context | Routing + rules in any agent | Dynamic search & page fetch |
+| **Best for** | Static index, simple context | Routing + rules in any agent | Dynamic search & page fetch |
 | **Updates** | Deploy with site | `skills add` from GitHub | npm package / rebuild index |
 
 Use all three together: **Skill** for behavior, **MCP** for lookup, **llms.txt** as the canonical index URL.

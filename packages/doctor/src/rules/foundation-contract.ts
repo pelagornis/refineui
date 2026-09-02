@@ -2,8 +2,8 @@ import type { DoctorRule, DoctorFinding } from "../types.js";
 import { readFileLines, relPath } from "../discover.js";
 
 const REFS = [
-    "https://design.pelagornis.com/refineui/foundations/",
-    "https://design.pelagornis.com/refineui/llms.txt",
+    "https://ui.pelagornis.com/foundations/",
+    "https://ui.pelagornis.com/llms.txt",
 ];
 
 const HEX_PATTERN = /#[0-9a-fA-F]{3,8}\b/;

@@ -8,7 +8,7 @@ import {
   reportToSummary,
   reportToYaml,
   runDoctor
-} from "./chunk-TNSY5G2T.js";
+} from "./chunk-XY76HBQ4.js";
 export {
   ALL_RULES,
   DOCS,

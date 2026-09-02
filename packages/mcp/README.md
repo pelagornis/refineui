@@ -1,6 +1,6 @@
 # @refineui/mcp
 
-MCP server for [RefineUI](https://design.pelagornis.com/refineui) — search docs, fetch component pages, read design rules, and browse token categories from AI tools (Cursor, Claude Desktop, VS Code, …).
+MCP server for [RefineUI](https://ui.pelagornis.com) — search docs, fetch component pages, read design rules, and browse token categories from MCP-compatible agents.
 
 ## Install
 
@@ -10,9 +10,9 @@ bun add -d @refineui/mcp
 npm install -D @refineui/mcp
 ```
 
-## Cursor / Claude Desktop
+## MCP configuration
 
-Add to your MCP config (`.cursor/mcp.json` or Claude Desktop settings):
+Add to your MCP host config:
 
 ```json
 {

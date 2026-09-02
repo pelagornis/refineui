@@ -2,8 +2,8 @@ import type { DoctorRule, DoctorFinding } from "../types.js";
 import { readFileLines, relPath } from "../discover.js";
 
 const REFS = [
-    "https://design.pelagornis.com/refineui/components/",
-    "https://design.pelagornis.com/refineui/llm.txt",
+    "https://ui.pelagornis.com/components/",
+    "https://ui.pelagornis.com/llm.txt",
 ];
 
 const CONVENIENCE_PROPS = ["title", "description", "items", "actions", "onClose"] as const;
