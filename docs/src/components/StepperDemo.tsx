@@ -1,5 +1,4 @@
 import { Fragment, useState } from "react";
-import { iconSizes } from "@refineui/tokens";
 import {
   Stepper,
   StepperContent,
@@ -9,7 +8,6 @@ import {
   StepperList,
   StepperSeparator,
   StepperTitle,
-  WebIcon,
 } from "@refineui/react";
 import { Look, Looks } from "./PreviewFrame";
 
@@ -19,23 +17,8 @@ const steps = [
   { value: 2, title: "Review", description: "Confirm details" },
 ] as const;
 
-function StepGlyph({ index, active }: { index: number; active: number }) {
-  if (index < active) {
-    return (
-      <WebIcon
-        name="checkmark"
-        size={iconSizes.xsmall}
-        color="currentColor"
-        iconStyle="filled"
-        fallback="✓"
-      />
-    );
-  }
-  return <span>{index + 1}</span>;
-}
-
 export default function StepperDemo() {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(2);
 
   return (
     <Looks>
@@ -45,9 +28,7 @@ export default function StepperDemo() {
             {steps.map((step, index) => (
               <Fragment key={step.value}>
                 <StepperItem value={step.value}>
-                  <StepperIndicator>
-                    <StepGlyph index={index} active={value} />
-                  </StepperIndicator>
+                  <StepperIndicator>{index + 1}</StepperIndicator>
                   <StepperContent>
                     <StepperTitle>{step.title}</StepperTitle>
                     <StepperDescription>{step.description}</StepperDescription>

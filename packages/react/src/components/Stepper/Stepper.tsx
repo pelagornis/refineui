@@ -1,5 +1,7 @@
 import { clsx } from "clsx";
+import { iconSizes } from "@refineui/tokens";
 import type { KeyboardEvent } from "react";
+import { WebIcon } from "../../WebIcon";
 import {
     createContext,
     useCallback,
@@ -229,6 +231,20 @@ export function StepperIndicator({ className, children, ...props }: StepperIndic
               ? stepperStyles.indicatorCurrent
               : stepperStyles.indicatorUpcoming;
 
+  const content =
+        state === "upcoming" ? (
+            children
+        ) : (
+            <WebIcon
+                name="checkmark"
+                size={iconSizes.xsmall}
+                color="currentColor"
+                iconStyle="filled"
+                fallback="✓"
+                className="items-center justify-center"
+            />
+        );
+
     return (
         <span
             data-refineui="stepper-indicator"
@@ -237,7 +253,7 @@ export function StepperIndicator({ className, children, ...props }: StepperIndic
             className={clsx(stepperStyles.indicator, stateClass, className)}
             {...props}
         >
-            {children}
+            {content}
         </span>
     );
 }
