@@ -101,6 +101,8 @@ const githubHref = Array.isArray(config.social)
             /* Desktop TOC is in-flow (right rail) — do not reserve mobile TOC height. */
             .main-frame {
                 padding-top: var(--sl-nav-height);
+                height: calc(100vh - var(--sl-nav-height));
+                min-height: calc(100vh - var(--sl-nav-height));
             }
 
             /* Desktop: RefineUI DocsShell owns the rail — hide Starlight fixed pane. */

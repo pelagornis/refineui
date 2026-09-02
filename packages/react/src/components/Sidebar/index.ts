@@ -9,6 +9,14 @@ export {
     SidebarLink,
     SidebarNav,
 } from "./Sidebar";
+export {
+    SidebarPeek,
+    SidebarPeekEdge,
+    SidebarPeekInset,
+    SidebarPeekPanel,
+    SidebarPeekPin,
+    useSidebarPeek,
+} from "./SidebarPeek";
 export type {
     SidebarBrandProps,
     SidebarContentProps,
@@ -19,4 +27,10 @@ export type {
     SidebarLinkProps,
     SidebarNavProps,
     SidebarProps,
+    SidebarPeekEdgeProps,
+    SidebarPeekInsetProps,
+    SidebarPeekMode,
+    SidebarPeekPanelProps,
+    SidebarPeekPinProps,
+    SidebarPeekProps,
 } from "./types";

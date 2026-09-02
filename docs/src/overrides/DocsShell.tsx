@@ -13,6 +13,11 @@ import {
     ScrollAreaViewport,
     SidebarFooter,
     SidebarLink,
+    SidebarPeek,
+    SidebarPeekEdge,
+    SidebarPeekInset,
+    SidebarPeekPanel,
+    SidebarPeekPin,
     WebIcon,
 } from "@refineui/react";
 import { DocsSidebar } from "./DocsSidebar";
@@ -67,6 +72,67 @@ function DocsMainScroll({ children }: { children?: ReactNode }) {
                 <ScrollAreaThumb />
             </ScrollAreaScrollbar>
         </ScrollArea>
+    );
+}
+
+function DocsShellSidebar({
+    title,
+    titleHref,
+    entries,
+    githubHref,
+}: Pick<ShellProps, "title" | "titleHref" | "entries" | "githubHref">) {
+    return (
+        <DocsSidebar
+            title={title}
+            titleHref={titleHref}
+            entries={entries}
+            footer={
+                githubHref ? (
+                    <SidebarFooter>
+                        <SidebarLink href={githubHref} target="_blank" rel="noreferrer">
+                            GitHub
+                        </SidebarLink>
+                    </SidebarFooter>
+                ) : null
+            }
+        />
+    );
+}
+
+function DocsShellMain({
+    animating,
+    collapsed,
+    onToggle,
+    children,
+}: {
+    animating: boolean;
+    collapsed: boolean;
+    onToggle: () => void;
+    children?: ReactNode;
+}) {
+    return (
+        <SidebarPeekInset>
+            {!animating ? (
+                <Button
+                    type="button"
+                    variant="ghost"
+                    layout="icon"
+                    size="sm"
+                    data-docs-sidebar-toggle
+                    aria-label={collapsed ? "Open sidebar" : "Close sidebar"}
+                    aria-expanded={!collapsed}
+                    onClick={onToggle}
+                >
+                    <WebIcon
+                        name={collapsed ? "chevron-right" : "chevron-left"}
+                        size={iconSizes.small}
+                        color="currentColor"
+                        fallback={collapsed ? "›" : "‹"}
+                    />
+                </Button>
+            ) : null}
+            <DocsMainScroll>{children}</DocsMainScroll>
+        </SidebarPeekInset>
     );
 }
 
@@ -183,87 +249,98 @@ function DocsDesktopShell({ title, titleHref, entries, githubHref, children }: S
         : undefined;
 
     const railOpen = !collapsed || animating;
+    const peekEligible = collapsed && !animating;
+
+    const sidebarBlock = (
+        <DocsShellSidebar
+            title={title}
+            titleHref={titleHref}
+            entries={entries}
+            githubHref={githubHref}
+        />
+    );
 
     return (
-        <ResizablePanelGroup
-            orientation="horizontal"
-            data-docs-shell="desktop"
-            data-docs-sidebar-collapsed={collapsed && !animating ? "" : undefined}
-            data-docs-shell-animating={animating ? "" : undefined}
-            className="relative w-full min-h-0"
-            onLayout={(sizes) => {
-                if (animating || collapsed) return;
-                const next = sizes[0];
-                if (next == null) return;
-                if (next <= COLLAPSE_AT) {
-                    collapseInstant();
-                    return;
-                }
-                setSidebarSize(next);
-                persistSize(next);
-            }}
+        <SidebarPeek
+            enabled={peekEligible}
+            widthPercent={restoredSize.current}
+            mode="contained"
+            onPin={expandAnimated}
+            className="relative h-full w-full min-h-0"
         >
-            <ResizablePanel
-                size={sidebarSize}
-                minSize={0}
-                maxSize={collapsed && !animating ? 0 : MAX_SIDEBAR}
-                className="flex min-h-0 overflow-hidden"
-                style={panelMotionStyle}
-                onTransitionEnd={handleSidebarTransitionEnd}
-                aria-hidden={collapsed && !animating}
+            <ResizablePanelGroup
+                orientation="horizontal"
+                data-docs-shell="desktop"
+                data-docs-sidebar-collapsed={collapsed && !animating ? "" : undefined}
+                data-docs-shell-animating={animating ? "" : undefined}
+                className="relative h-full w-full min-h-0"
+                onLayout={(sizes) => {
+                    if (animating || collapsed) return;
+                    const next = sizes[0];
+                    if (next == null) return;
+                    if (next <= COLLAPSE_AT) {
+                        collapseInstant();
+                        return;
+                    }
+                    setSidebarSize(next);
+                    persistSize(next);
+                }}
             >
-                {railOpen ? (
-                    <div data-docs-shell-sidebar className="flex h-full min-h-0 w-full">
-                        <DocsSidebar
-                            title={title}
-                            titleHref={titleHref}
-                            entries={entries}
-                            footer={
-                                githubHref ? (
-                                    <SidebarFooter>
-                                        <SidebarLink
-                                            href={githubHref}
-                                            target="_blank"
-                                            rel="noreferrer"
-                                        >
-                                            GitHub
-                                        </SidebarLink>
-                                    </SidebarFooter>
-                                ) : null
-                            }
-                        />
-                    </div>
-                ) : null}
-            </ResizablePanel>
-            {railOpen ? <ResizableHandle withHandle disabled={animating} /> : null}
-            <ResizablePanel
-                size={100 - sidebarSize}
-                minSize={collapsed && !animating ? 100 : 50}
-                className="relative flex min-h-0 min-w-0"
-                style={panelMotionStyle}
-            >
-                {!animating ? (
-                    <Button
-                        type="button"
-                        variant="ghost"
-                        layout="icon"
-                        size="sm"
-                        data-docs-sidebar-toggle
-                        aria-label={collapsed ? "Open sidebar" : "Close sidebar"}
-                        aria-expanded={!collapsed}
-                        onClick={toggleSidebar}
+                <ResizablePanel
+                    size={sidebarSize}
+                    minSize={0}
+                    maxSize={collapsed && !animating ? 0 : MAX_SIDEBAR}
+                    className="flex min-h-0 overflow-hidden"
+                    style={panelMotionStyle}
+                    onTransitionEnd={handleSidebarTransitionEnd}
+                    aria-hidden={collapsed && !animating}
+                >
+                    {railOpen ? (
+                        <div data-docs-shell-sidebar className="flex h-full min-h-0 w-full">
+                            {sidebarBlock}
+                        </div>
+                    ) : null}
+                </ResizablePanel>
+                {railOpen ? <ResizableHandle withHandle disabled={animating} /> : null}
+                <ResizablePanel
+                    size={100 - sidebarSize}
+                    minSize={collapsed && !animating ? 100 : 50}
+                    className="relative flex min-h-0 min-w-0"
+                    style={panelMotionStyle}
+                >
+                    <DocsShellMain
+                        animating={animating}
+                        collapsed={collapsed}
+                        onToggle={toggleSidebar}
                     >
-                        <WebIcon
-                            name={collapsed ? "chevron-right" : "chevron-left"}
-                            size={iconSizes.small}
-                            color="currentColor"
-                            fallback={collapsed ? "›" : "‹"}
-                        />
-                    </Button>
-                ) : null}
-                <DocsMainScroll>{children}</DocsMainScroll>
-            </ResizablePanel>
-        </ResizablePanelGroup>
+                        {children}
+                    </DocsShellMain>
+                    <SidebarPeekEdge />
+                    <SidebarPeekPanel>
+                        <SidebarPeekPin>
+                            <Button
+                                type="button"
+                                variant="ghost"
+                                layout="icon"
+                                size="sm"
+                                aria-label="Pin sidebar open"
+                                onClick={expandAnimated}
+                            >
+                                <WebIcon
+                                    name="chevron-right"
+                                    size={iconSizes.small}
+                                    color="currentColor"
+                                    fallback="›"
+                                />
+                            </Button>
+                        </SidebarPeekPin>
+                        <div data-docs-shell-sidebar className="flex min-h-0 w-full flex-1">
+                            {sidebarBlock}
+                        </div>
+                    </SidebarPeekPanel>
+                </ResizablePanel>
+            </ResizablePanelGroup>
+        </SidebarPeek>
     );
 }
 

@@ -1,28 +1,11 @@
 ---
 title: AI & Tools
-description: LLM indexes, agent skill, and MCP server for building with RefineUI in AI-assisted workflows.
+description: Machine-readable indexes, agent skill, Doctor diagnostics, and MCP server for RefineUI.
 tableOfContents: false
 ---
 
-RefineUI docs are built for **humans and agents** — live components, token-backed CSS, and machine-readable indexes.
+import AiToolsCatalog from "../../../components/catalog/AiToolsCatalog";
 
-## Guides
-
-- [llms.txt](/llms.txt) — Curated documentation index ([llm.txt](/llm.txt) expanded)
-- [Skill](/ai-tools/skill/) — `refineui` agent skill (doc routing + codegen rules)
-- [Doctor](/ai-tools/doctor/) — Read-only workspace diagnostics (setup, tokens, composition)
-- [MCP](/ai-tools/mcp/) — `@refineui/mcp` server for MCP-compatible agents
-
-## Quick links
-
-| Resource | URL |
-|----------|-----|
-| Curated index | [/llms.txt](/llms.txt) |
-| Expanded index | [/llm.txt](/llm.txt) |
-| GitHub | [pelagornis/refineui](https://github.com/pelagornis/refineui) |
-
-## Principles
-
-1. **Docs are the source of truth** — skills and MCP search them; they do not replace them.
-2. **Real packages** — examples use `@refineui/react`, not mock HTML.
-3. **Tokens only** — agents must not invent hex, px, or props outside documented APIs.
+<div class="not-content">
+  <AiToolsCatalog client:load />
+</div>

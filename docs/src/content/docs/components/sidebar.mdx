@@ -103,3 +103,20 @@ Label for a group.
 
 Footer section.
 
+### Sidebar peek (collapsed hover)
+
+Composable flyout when the docked sidebar is collapsed — edge hover reveals a floating panel over the main area (content does not reflow).
+
+```tsx
+<SidebarPeek enabled={collapsed} widthPercent={28} mode="contained" onPin={expand}>
+  <SidebarPeekEdge />
+  <SidebarPeekPanel>
+    <SidebarPeekPin>{/* pin control */}</SidebarPeekPin>
+    <Sidebar>...</Sidebar>
+  </SidebarPeekPanel>
+  <SidebarPeekInset>{/* main + toggle */}</SidebarPeekInset>
+</SidebarPeek>
+```
+
+Use `mode="viewport"` with `--refineui-sidebar-peek-viewport-offset` when the peek layer should align below a fixed app header.
+
