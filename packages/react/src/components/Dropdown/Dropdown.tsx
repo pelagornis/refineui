@@ -630,7 +630,7 @@ export function DropdownSubTrigger({
             tabIndex={-1}
             className={clsx(
                 dropdownStyles.item,
-                open && !isDisabled && "bg-refineui-alias-background-surface-hover",
+                open && !isDisabled && "bg-refineui-alias-background-primary-hover",
                 isDisabled && "cursor-not-allowed text-refineui-alias-foreground-disabled",
                 className,
             )}

@@ -18,9 +18,12 @@ export function TreeItemTrigger({ className, children, onClick, onKeyDown, ...pr
     if (!tree || !item) throw new Error("TreeItemTrigger must be used within TreeItem.");
 
     const iconSize = treeIconSize[tree.size];
-    /** Depth indent on content only — selection / hover paint the full row width. */
+    /** One tree column = icon slot + label gap (matches Select item indicator stride). */
+    const depthIndent =
+        "calc(var(--refineui-spacing-size-large) + var(--refineui-spacing-size-x-small))";
     const mainStyle = {
-        paddingInlineStart: `calc(var(--refineui-spacing-size-large) * ${item.depth})`,
+        paddingInlineStart:
+            item.depth > 0 ? `calc(${depthIndent} * ${item.depth})` : undefined,
     };
 
     useEffect(() => {
@@ -110,6 +113,8 @@ export function TreeItemTrigger({ className, children, onClick, onKeyDown, ...pr
             ref={setRowRef}
             id={item.triggerId}
             data-refineui="tree-item-trigger"
+            data-selected={item.selected ? "true" : undefined}
+            data-disabled={item.disabled ? "true" : undefined}
             tabIndex={item.disabled ? -1 : 0}
             onClick={onRowClick}
             onKeyDown={onRowKeyDown}

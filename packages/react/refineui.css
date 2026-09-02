@@ -50,6 +50,7 @@
 [data-refineui="pagination"],
 [data-refineui="accordion-trigger"],
 [data-refineui="menu-item"],
+[data-refineui="tree-item-trigger"],
 [data-refineui="command-item"],
 [data-refineui="segmented-control-item"],
 [data-refineui="tab"],
@@ -71,54 +72,52 @@
     background-color var(--refineui-motion-duration-fast),
     transform var(--refineui-motion-duration-fast);
 }
-/* Selected row (rest) — MCP: rest uses `surfaceSelected`; pressed uses `:active` below */
+/* List rows — Sidebar link plate (primary hover / active) */
 [data-refineui="dropdown-item"][data-selected="true"]:not(:disabled) {
-  background-color: var(--refineui-color-alias-background-surface-selected) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
 [data-refineui="dropdown-item"][data-state="selected"]:not(:disabled) {
-  background-color: var(--refineui-color-alias-background-surface-selected) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
 [data-refineui="select-item"][data-selected="true"]:not([aria-disabled="true"]) {
-  background-color: var(--refineui-color-alias-background-surface-selected) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
   border-color: transparent;
 }
-/* Dropdown / Menu / Item — Web Kit `503:2985`: hover `surfaceHover`, pressed `surfaceActive` */
-[data-refineui="dropdown-item"]:not(:disabled):not(:active):hover,
+[data-refineui="dropdown-item"]:not(:disabled):hover:not(:active),
 [data-refineui="dropdown-menu"] [data-refineui="dropdown-item"]:not(:disabled):focus {
-  background-color: var(--refineui-color-alias-background-surface-hover) !important;
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
-/* Select / Menu / Item — `1144:2411`: div options ignore `:disabled` → use `aria-disabled` */
-[data-refineui="select-item"]:not([aria-disabled="true"]):not(:active):hover,
+[data-refineui="select-item"]:not([aria-disabled="true"]):hover:not(:active),
 [data-refineui="select-menu"] [data-refineui="select-item"]:not([aria-disabled="true"]):not(:active):focus {
-  background-color: var(--refineui-color-alias-background-surface-hover) !important;
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
-[data-refineui="dropdown-item"]:not(:disabled):active {
-  background-color: var(--refineui-color-alias-background-surface-active) !important;
-}
+[data-refineui="dropdown-item"]:not(:disabled):active,
 [data-refineui="dropdown-item"][data-state="pressed"]:not(:disabled),
 [data-refineui="dropdown-item"][data-state="pressed"]:not(:disabled):hover,
 [data-refineui="dropdown-item"][data-selected="true"]:not(:disabled):active {
-  background-color: var(--refineui-color-alias-background-surface-active) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
+  background-color: var(--refineui-color-alias-background-primary-active) !important;
 }
-[data-refineui="select-item"]:not([aria-disabled="true"]):active {
-  background-color: var(--refineui-color-alias-background-surface-active) !important;
-}
+[data-refineui="select-item"]:not([aria-disabled="true"]):active,
 [data-refineui="select-item"][data-selected="true"]:not([aria-disabled="true"]):active,
-[data-refineui="select-item"][data-state="pressed"]:not([aria-disabled="true"]) {
-  background-color: var(--refineui-color-alias-background-surface-active) !important;
-}
-[data-refineui="select-item"][data-state="hover"]:not([aria-disabled="true"]) {
-  background-color: var(--refineui-color-alias-background-surface-hover) !important;
-}
-[data-refineui="select-item"][data-state="pressed"]:not([aria-disabled="true"]) {
-  background-color: var(--refineui-color-alias-background-surface-active) !important;
-}
+[data-refineui="select-item"][data-state="pressed"]:not([aria-disabled="true"]),
 [data-refineui="select-item"][data-state="pressed"]:not([aria-disabled="true"]):hover,
 [data-refineui="select-item"][data-state="pressed"][data-selected="true"]:not([aria-disabled="true"]) {
-  background-color: var(--refineui-color-alias-background-surface-active) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
+  background-color: var(--refineui-color-alias-background-primary-active) !important;
+}
+[data-refineui="select-item"][data-state="hover"]:not([aria-disabled="true"]) {
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
 [data-refineui="select-item"][data-state="selected"]:not([aria-disabled="true"]) {
-  background-color: var(--refineui-color-alias-background-surface-selected) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
   border-color: transparent;
 }
 [data-refineui="select-item"][data-selected="true"]:focus-visible,
@@ -183,6 +182,24 @@
     border-color var(--refineui-motion-duration-fast),
     color var(--refineui-motion-duration-fast),
     transform var(--refineui-motion-duration-fast);
+}
+/* Calendar caption selects — ghost plate (header chrome, not form-field outline) */
+[data-refineui="calendar"] [data-refineui="select-trigger"][data-calendar-header] {
+  border: none !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+[data-refineui="calendar"] [data-refineui="select-trigger"][data-calendar-header]:not(:disabled):hover:not(:active),
+[data-refineui="calendar"] [data-refineui="select-trigger"][data-calendar-header][data-state="open"]:not(:disabled) {
+  border-color: transparent !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
+}
+[data-refineui="calendar"] [data-refineui="select-trigger"][data-calendar-header]:not(:disabled):active,
+[data-refineui="calendar"] [data-refineui="select-trigger"][data-calendar-header][data-state="open"]:not(:disabled):active {
+  border-color: transparent !important;
+  background-color: var(--refineui-color-alias-background-primary-active) !important;
+  color: var(--refineui-color-alias-foreground-primary) !important;
 }
 [data-refineui="calendar-nav"]:hover,
 [data-refineui="chip-remove"]:hover {
@@ -498,47 +515,80 @@
   box-shadow: none;
 }
 
-/* Menu / Item — MCP state tokens (hover / pressed / active / disabled) */
-[data-refineui="menu-item"][data-state="hover"] {
-  background-color: var(--refineui-color-alias-background-surface-hover) !important;
+/* Tree / Item — Sidebar link plate (see list rows above) */
+[data-refineui="tree-item-trigger"] {
+  border-radius: var(--refineui-radius-rounded-large);
+  transition:
+    color var(--refineui-motion-duration-fast),
+    background-color var(--refineui-motion-duration-fast);
+}
+[data-refineui="tree-item-trigger"]:not([data-disabled="true"]):hover:not(:active) {
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
+}
+[data-refineui="tree-item-trigger"][data-selected="true"] {
   color: var(--refineui-color-alias-foreground-primary) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
+}
+[data-refineui="tree-item-trigger"][data-selected="true"]:hover:not(:active) {
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
+}
+[data-refineui="tree-item-trigger"]:not([data-disabled="true"]):active,
+[data-refineui="tree-item-trigger"][data-selected="true"]:active {
+  color: var(--refineui-color-alias-foreground-primary) !important;
+  background-color: var(--refineui-color-alias-background-primary-active) !important;
+}
+[data-refineui="tree-item-trigger"]:not([data-disabled="true"]):focus-visible {
+  outline: 2px solid var(--refineui-focus-color);
+  outline-offset: var(--refineui-focus-offset);
+}
+[data-refineui="tree-item-trigger"][data-disabled="true"] {
+  color: var(--refineui-color-alias-foreground-disabled) !important;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* Menu / Item — Sidebar link plate */
+[data-refineui="menu-item"][data-state="hover"] {
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
 [data-refineui="menu-item"][data-state="pressed"] {
-  background-color: var(--refineui-color-alias-background-surface-active) !important;
   color: var(--refineui-color-alias-foreground-primary) !important;
+  background-color: var(--refineui-color-alias-background-primary-active) !important;
 }
 [data-refineui="menu-item"][data-state="active"] {
-  background-color: var(--refineui-color-alias-background-surface-selected) !important;
   color: var(--refineui-color-alias-foreground-primary) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
 [data-refineui="menu-item"][data-state="disabled"] {
-  background-color: var(--refineui-color-alias-background-surface) !important;
+  background-color: transparent !important;
   color: var(--refineui-color-alias-foreground-disabled) !important;
 }
 [data-refineui="menu-item"][data-state="default"]:not(:disabled):hover {
-  background-color: var(--refineui-color-alias-background-surface-hover) !important;
-  color: var(--refineui-color-alias-foreground-primary) !important;
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
 [data-refineui="menu-item"][data-state="default"]:not(:disabled):active {
-  background-color: var(--refineui-color-alias-background-surface-active) !important;
   color: var(--refineui-color-alias-foreground-primary) !important;
+  background-color: var(--refineui-color-alias-background-primary-active) !important;
 }
 
-/* Command / Item — same surface tokens as Menu */
+/* Command / Item — Sidebar link plate */
 [data-refineui="command-item"][data-state="hover"],
 [data-refineui="command-item"][data-selected="true"]:not(:disabled):not(:active) {
-  background-color: var(--refineui-color-alias-background-surface-hover) !important;
-  color: var(--refineui-color-alias-foreground-primary) !important;
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
 [data-refineui="command-item"][data-state="pressed"],
 [data-refineui="command-item"][data-state="active"]:not(:disabled):active,
 [data-refineui="command-item"][data-selected="true"]:not(:disabled):active {
-  background-color: var(--refineui-color-alias-background-surface-active) !important;
   color: var(--refineui-color-alias-foreground-primary) !important;
+  background-color: var(--refineui-color-alias-background-primary-active) !important;
 }
 [data-refineui="command-item"][data-state="active"]:not(:disabled):not(:active) {
-  background-color: var(--refineui-color-alias-background-surface-hover) !important;
   color: var(--refineui-color-alias-foreground-primary) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
 [data-refineui="command-item"][data-state="disabled"],
 [data-refineui="command-item"]:disabled {
@@ -546,13 +596,13 @@
   color: var(--refineui-color-alias-foreground-disabled) !important;
 }
 [data-refineui="command-item"][data-state="default"]:not(:disabled):hover {
-  background-color: var(--refineui-color-alias-background-surface-hover) !important;
-  color: var(--refineui-color-alias-foreground-primary) !important;
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
 [data-refineui="command-item"][data-state="default"]:not(:disabled):active,
 [data-refineui="command-item"]:not(:disabled):active {
-  background-color: var(--refineui-color-alias-background-surface-active) !important;
   color: var(--refineui-color-alias-foreground-primary) !important;
+  background-color: var(--refineui-color-alias-background-primary-active) !important;
 }
 
 @keyframes refineui-menu-popover-enter {
@@ -1642,14 +1692,14 @@ a[data-refineui="link"]:focus-visible {
 [data-refineui="navigation-menu-indicator"] {
   display: none !important;
 }
-/* Content links: Menu / Item surface tokens */
+/* Content links: Sidebar link plate */
 [data-refineui="navigation-menu-content"] [data-refineui="navigation-menu-link"]:not([aria-disabled="true"]):hover:not(:active) {
-  background-color: var(--refineui-color-alias-background-surface-hover) !important;
-  color: var(--refineui-color-alias-foreground-primary) !important;
+  color: var(--refineui-color-alias-foreground-primary-hover) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
 [data-refineui="navigation-menu-content"] [data-refineui="navigation-menu-link"]:not([aria-disabled="true"]):active {
-  background-color: var(--refineui-color-alias-background-surface-active) !important;
   color: var(--refineui-color-alias-foreground-primary) !important;
+  background-color: var(--refineui-color-alias-background-primary-active) !important;
 }
 [data-refineui="navigation-menu-content"][data-state="open"] {
   opacity: 1;

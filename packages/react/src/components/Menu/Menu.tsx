@@ -515,7 +515,7 @@ export function MenuSubTrigger({
             className={clsx(
                 menuStyles.itemBase,
                 isDisabled ? menuStyles.itemDisabled : menuStyles.itemEnabled,
-                open && !isDisabled && "bg-refineui-alias-background-surface-hover",
+                open && !isDisabled && "bg-refineui-alias-background-primary-hover",
                 className,
             )}
             onPointerEnter={(event) => {

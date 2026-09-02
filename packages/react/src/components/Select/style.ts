@@ -35,7 +35,7 @@ export const selectStyles = {
     scrollAreaRootPopper: "relative flex max-h-full min-h-0 flex-col",
     scrollAreaRootItemAligned: "relative flex h-full min-h-0 flex-1 flex-col",
 
-    group: "flex flex-col",
+    group: "flex flex-col gap-px",
     label: clsx(
         componentTextClass(componentTypographyTokens.select.label),
         "px-refineui-size-x-small py-refineui-size-x-small text-refineui-alias-foreground-tertiary",
@@ -46,7 +46,7 @@ export const selectStyles = {
         componentTextClass(componentTypographyTokens.select.item),
         "relative flex cursor-pointer items-center gap-refineui-size-x-small rounded-refineui-large border-refineui-none bg-transparent p-refineui-size-x-small text-refineui-alias-foreground-primary outline-none transition-colors data-[disabled]:cursor-not-allowed data-[disabled]:text-refineui-alias-foreground-disabled",
     ),
-    itemActive: "bg-refineui-alias-background-surface-hover",
+    itemActive: "bg-refineui-alias-background-primary-hover",
     itemDisabled: "cursor-not-allowed text-refineui-alias-foreground-disabled",
     itemIndicator: "inline-flex size-refineui-icon-xsmall shrink-0 items-center justify-center",
     itemText: "min-w-0 flex-1 truncate",
