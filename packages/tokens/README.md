@@ -8,21 +8,24 @@ Design tokens for RefineUI — TypeScript source of truth plus generated CSS.
 bun run build   # or pnpm build — builds utilities → tokens → react
 ```
 
-`@refineui/tokens` `build` runs `tsup` then `scripts/generate-css.mjs`, writing:
+`@refineui/tokens` `build` runs `tsup` then `scripts/generate-css.mjs` and `scripts/generate-spec.mjs`, writing:
 
 | File | Contents |
 |------|----------|
-| `dist/css-variables.css` | `:root` + dark semantic colors, motion, theme elevation, foundation sizes |
+| `dist/css-variables.css` | `:root` + dark semantic colors, motion, theme elevation, foundation sizes, focus ring, reduced-motion overrides |
 | `dist/tailwind-theme.css` | Tailwind v4 `@theme` |
 | `dist/refineui-typography.css` | `@utility refineui-typo-*` |
+| `dist/spec/*.json` | Machine-readable token spec for Docs / MCP / Doctor |
 
-`@refineui/react` build appends Web Kit `componentSizes` into those CSS files.
+`@refineui/react` build appends component recipes spec to `dist/spec/`.
 
 ## Layers
 
 1. **Primitive / Foundation** (`src/global`) — palette, spacing, radius, shadows, foundation sizes, opacities, icon sizes, **`typographys`**, **`motion`** (raw duration / easing / scale / distance steps)
 2. **Semantic** (`src/semantic`) — color aliases, **`semanticInteraction`** (motion roles → Foundation steps), elevation pairs, **`SEMANTIC_TEXT`** (bodyMd, labelSm, … → Foundation keys)
-3. **Component** — colors/sizes/typography role maps in `@refineui/react` (`componentColorTokens`, `componentTypographyTokens`)
+3. **Component** — colors/sizes/typography/state role maps in `@refineui/react` (`componentColorTokens`, `componentTypographyTokens`)
+4. **Recipe** — `packages/react/src/recipes/` (base, variants, compoundVariants; slot recipes for Alert/Dialog/…)
+5. **Interaction** — `refineui.css` + `data-state` contract
 
 ### Motion flow
 

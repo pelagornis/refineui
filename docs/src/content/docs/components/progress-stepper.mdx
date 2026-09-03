@@ -2,6 +2,8 @@
 title: Progress Stepper
 description: Multi-step process completion indicator.
 ---
+import { SpecRenderer } from "../../../components/spec";
+
 
 import { PropSpec } from "../../../docs-ui";
 
@@ -10,6 +12,13 @@ import PackageInstall from "../../../components/PackageInstall.mdx";
 
 <div class="not-content my-6">
   <ProgressStepperPreview client:load />
+</div>
+
+
+## Contract
+
+<div class="not-content">
+  <SpecRenderer client:load component="progress-stepper" />
 </div>
 
 ## Installation

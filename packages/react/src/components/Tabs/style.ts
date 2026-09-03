@@ -10,11 +10,11 @@ export const tabsStyles = {
     root: "flex w-full min-w-0 flex-col gap-refineui-size-medium",
     list: clsx(
         "relative flex w-full min-w-0 flex-nowrap items-stretch overflow-x-auto",
-        "after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0",
+        "after:pointer-events-none after:absolute after:inset-inline-0 after:bottom-0",
         "after:h-(--refineui-stroke-width-thin) after:bg-refineui-alias-border-default",
     ),
     indicator: clsx(
-        "pointer-events-none absolute bottom-0 left-0 z-[1] block",
+        "pointer-events-none absolute bottom-0 start-0 z-[1] block",
         "h-(--refineui-stroke-width-thick) bg-refineui-alias-background-brand",
         "will-change-[transform,width]",
     ),

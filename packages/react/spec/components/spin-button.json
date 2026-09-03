@@ -1,0 +1,45 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "spin-button",
+  "version": 1,
+  "export": "SpinButton",
+  "anatomy": {
+    "root": "spinbutton",
+    "step": "spinbutton-step"
+  },
+  "attributes": {
+    "data-refineui": "spinbutton"
+  },
+  "variants": {
+    "size": [
+      "sm",
+      "md",
+      "lg"
+    ]
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "accessibility": {
+    "spinbutton": {
+      "element": "div",
+      "role": "spinbutton"
+    }
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

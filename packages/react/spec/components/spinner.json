@@ -1,0 +1,35 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "spinner",
+  "version": 1,
+  "export": "Spinner",
+  "anatomy": {
+    "root": "spinner"
+  },
+  "attributes": {
+    "data-refineui": "spinner"
+  },
+  "variants": {
+    "size": [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+      "xxl"
+    ]
+  },
+  "accessibility": {
+    "spinner": {
+      "element": "div",
+      "role": "status"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  },
+  "tokens": {
+    "visual": "spinner"
+  }
+}

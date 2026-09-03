@@ -15,10 +15,10 @@ export const dropdownStyles = {
     ),
     item: clsx(
         componentTextClass(componentTypographyTokens.dropdown.item),
-        "flex w-full cursor-pointer items-center justify-between gap-refineui-size-x-small rounded-refineui-large border-none bg-transparent p-refineui-size-x-small text-left text-refineui-alias-foreground-primary outline-none disabled:cursor-not-allowed disabled:text-refineui-alias-foreground-disabled",
+        "flex w-full cursor-pointer items-center justify-between gap-refineui-size-x-small rounded-refineui-large border-none bg-transparent p-refineui-size-x-small text-start text-refineui-alias-foreground-primary outline-none disabled:cursor-not-allowed disabled:text-refineui-alias-foreground-disabled",
     ),
     shortcut: clsx(
         componentTextClass(componentTypographyTokens.dropdown.shortcut),
-        "ml-auto shrink-0 tracking-wide text-refineui-alias-foreground-tertiary",
+        "ms-auto shrink-0 tracking-wide text-refineui-alias-foreground-tertiary",
     ),
 } as const;

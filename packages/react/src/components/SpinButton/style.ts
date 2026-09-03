@@ -10,7 +10,7 @@ export const spinButtonStyles = {
     bgDisabled: "bg-refineui-alias-background-surface-disabled",
     bgDefault: "bg-refineui-alias-background-primary",
     value:
-        "flex min-w-0 flex-[1_1_auto] items-center pl-refineui-spin-field-padding-inline-start pr-refineui-size-x-small",
+        "flex min-w-0 flex-[1_1_auto] items-center ps-refineui-spin-field-padding-inline-start pe-refineui-size-x-small",
     valueInput: "w-full border-none bg-transparent p-0 outline-none placeholder:text-refineui-alias-foreground-placeholder",
     valueTextDisabled: "text-refineui-alias-foreground-disabled",
     valueTextDefault: "text-refineui-alias-foreground-primary",

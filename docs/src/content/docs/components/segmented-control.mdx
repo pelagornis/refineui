@@ -2,6 +2,8 @@
 title: Segmented Control
 description: Linear set of mutually exclusive options.
 ---
+import { SpecRenderer, TokenInspector } from "../../../components/spec";
+
 
 import { PropSpec } from "../../../docs-ui";
 
@@ -10,6 +12,19 @@ import PackageInstall from "../../../components/PackageInstall.mdx";
 
 <div class="not-content my-6">
   <SegmentedControlPreview client:load />
+</div>
+
+
+## Contract
+
+<div class="not-content">
+  <SpecRenderer client:load component="segmented-control" />
+</div>
+
+## Tokens
+
+<div class="not-content">
+  <TokenInspector client:load component="segmented-control" />
 </div>
 
 ## Installation

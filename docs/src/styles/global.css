@@ -952,10 +952,6 @@ main:has([data-refineui-home]) [data-refineui-docs-pagehead] {
   border: var(--refineui-stroke-width-thin) solid var(--refineui-color-alias-border-subtle);
 }
 
-[data-refineui-elevation-docs] {
-  overflow: visible;
-}
-
 [data-refineui-elevation-stage] {
   display: flex;
   flex-direction: column;
@@ -963,16 +959,9 @@ main:has([data-refineui-home]) [data-refineui-docs-pagehead] {
   padding: calc(var(--refineui-size-foundation-size-800) + var(--refineui-spacing-size-medium));
   overflow-x: auto;
   overflow-y: visible;
-  color: var(--refineui-color-primary-black);
-  background: var(--refineui-color-neutral-150);
+  background: var(--refineui-color-alias-surface-sunken);
   border-radius: var(--refineui-radius-rounded-xx-large);
   border: var(--refineui-stroke-width-thin) solid var(--refineui-color-alias-border-subtle);
-}
-
-[data-refineui-elevation-lane] {
-  display: flex;
-  flex-direction: column;
-  gap: var(--refineui-spacing-size-medium);
 }
 
 [data-refineui-elevation-row] {
@@ -997,7 +986,7 @@ main:has([data-refineui-home]) [data-refineui-docs-pagehead] {
   width: var(--refineui-size-foundation-size-800);
   height: var(--refineui-size-foundation-size-800);
   border-radius: var(--refineui-radius-rounded-large);
-  background: var(--refineui-color-neutral-white);
+  background: var(--refineui-color-alias-background-primary);
 }
 
 [data-refineui-token-row] {

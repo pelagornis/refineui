@@ -2,6 +2,8 @@
 title: Footer
 description: Site footer with brand, navigation groups, locale, and social links.
 ---
+import { SpecRenderer } from "../../../components/spec";
+
 
 import FooterPreview from "../../../components/FooterPreview";
 import PackageInstall from "../../../components/PackageInstall.mdx";
@@ -10,6 +12,13 @@ import PackageInstall from "../../../components/PackageInstall.mdx";
 
 <div class="not-content my-6">
   <FooterPreview client:load />
+</div>
+
+
+## Contract
+
+<div class="not-content">
+  <SpecRenderer client:load component="footer" />
 </div>
 
 ## Installation

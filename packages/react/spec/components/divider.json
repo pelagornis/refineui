@@ -1,0 +1,29 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "divider",
+  "version": 1,
+  "export": "Divider",
+  "anatomy": {
+    "root": "divider"
+  },
+  "attributes": {
+    "data-refineui": "divider"
+  },
+  "variants": {
+    "layout": [
+      "default",
+      "content",
+      "icon"
+    ]
+  },
+  "accessibility": {
+    "divider": {
+      "element": "div",
+      "role": "separator"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

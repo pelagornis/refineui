@@ -3,6 +3,7 @@ import { serveStdio } from "@modelcontextprotocol/server/stdio";
 import { z } from "zod";
 import { discoverWorkspaces, runDoctor, reportToSummary } from "@refineui/doctor";
 import { DESIGN_RULES } from "./design-rules.js";
+import { getComponentRecipe, getComponentSpec, getTokenSpecIndex, inspectToken, listComponentSpecs } from "./token-spec.js";
 import {
     getDocPage,
     getIndexMeta,
@@ -189,7 +190,16 @@ function createServer() {
                     .optional()
                     .describe("Monorepo workspace relative path, e.g. apps/web or docs"),
                 categories: z
-                    .array(z.enum(["setup", "compatibility", "foundations", "components", "library"]))
+                    .array(
+                        z.enum([
+                            "setup",
+                            "compatibility",
+                            "foundations",
+                            "components",
+                            "library",
+                            "accessibility",
+                        ]),
+                    )
                     .optional()
                     .describe("Optional rule categories to run"),
             }),
@@ -224,6 +234,66 @@ function createServer() {
                 })),
             });
         },
+    );
+
+    server.registerTool(
+        "inspect_token",
+        {
+            title: "Inspect RefineUI token",
+            description:
+                "Trace a semantic or component token through the dependency graph (foundation → semantic → component). Requires built token spec.",
+            inputSchema: z.object({
+                name: z
+                    .string()
+                    .describe("Token name, e.g. backgroundBrand, button.primary.background, or button"),
+            }),
+        },
+        async ({ name }) => jsonResult(inspectToken(name)),
+    );
+
+    server.registerTool(
+        "get_component_spec",
+        {
+            title: "Get RefineUI component spec",
+            description:
+                "Return the Component Spec contract (anatomy, states, accessibility, keyboard) — Contract Layer source of truth.",
+            inputSchema: z.object({
+                name: z.string().describe("Component id or name, e.g. button, accordion, dialog"),
+            }),
+        },
+        async ({ name }) => jsonResult(getComponentSpec(name)),
+    );
+
+    server.registerTool(
+        "list_component_specs",
+        {
+            title: "List RefineUI component specs",
+            description: "Return manifest.json — all components with spec paths and data-refineui identities.",
+            inputSchema: z.object({}),
+        },
+        async () => jsonResult(listComponentSpecs()),
+    );
+
+    server.registerTool(
+        "get_component_recipe",
+        {
+            title: "Get component recipe reference",
+            description: "Return recipe id from Component Spec — visual mapping only, not the contract.",
+            inputSchema: z.object({
+                name: z.string().describe("Component id, e.g. button or accordion"),
+            }),
+        },
+        async ({ name }) => jsonResult(getComponentRecipe(name)),
+    );
+
+    server.registerTool(
+        "get_token_spec",
+        {
+            title: "Get spec index",
+            description: "Return Contract Layer index (component spec + token trace manifests).",
+            inputSchema: z.object({}),
+        },
+        async () => jsonResult(getTokenSpecIndex() ?? { error: "Spec not built. Run build:tokens and build:react." }),
     );
 
     return server;

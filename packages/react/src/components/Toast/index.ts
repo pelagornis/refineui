@@ -7,7 +7,6 @@ export {
 export type {
     ToastProps,
     ToastVariant,
-    ToastPosition,
     ToastSwipeDirection,
     ToastAction,
     ToastOptions,

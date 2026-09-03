@@ -14,22 +14,22 @@ export const popoverStyles = {
 
 export function popoverFloatingClasses(placement: PopoverPlacement, align: PopoverAlign): string {
     if (placement === "bottom") {
-        if (align === "center") return "top-full left-1/2 -translate-x-1/2";
-        if (align === "start") return "top-full left-0";
-        return "top-full right-0";
+        if (align === "center") return "top-full start-1/2 -translate-x-1/2";
+        if (align === "start") return "top-full start-0";
+        return "top-full end-0";
     }
     if (placement === "top") {
-        if (align === "center") return "bottom-full left-1/2 -translate-x-1/2";
-        if (align === "start") return "bottom-full left-0";
-        return "bottom-full right-0";
+        if (align === "center") return "bottom-full start-1/2 -translate-x-1/2";
+        if (align === "start") return "bottom-full start-0";
+        return "bottom-full end-0";
     }
     if (placement === "left") {
-        if (align === "center") return "right-full top-1/2 -translate-y-1/2";
-        if (align === "start") return "right-full top-0";
-        return "right-full bottom-0";
+        if (align === "center") return "end-full top-1/2 -translate-y-1/2";
+        if (align === "start") return "end-full top-0";
+        return "end-full bottom-0";
     }
-    if (align === "center") return "left-full top-1/2 -translate-y-1/2";
-    if (align === "start") return "left-full top-0";
-    return "left-full bottom-0";
+    if (align === "center") return "start-full top-1/2 -translate-y-1/2";
+    if (align === "start") return "start-full top-0";
+    return "start-full bottom-0";
 }
 

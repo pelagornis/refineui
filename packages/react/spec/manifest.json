@@ -1,0 +1,686 @@
+{
+  "schemaVersion": 1,
+  "contractLayer": "component-spec",
+  "contractLayerVersion": "1.1",
+  "status": "catalog",
+  "description": "Machine-readable manifest of RefineUI Web Kit components and their contract specs.",
+  "components": [
+    {
+      "name": "Accordion",
+      "id": "accordion",
+      "spec": "./components/accordion.json",
+      "export": "Accordion",
+      "dataRefineui": [
+        "accordion",
+        "accordion-content",
+        "accordion-item",
+        "accordion-panel",
+        "accordion-trigger"
+      ],
+      "recipe": "accordion"
+    },
+    {
+      "name": "Alert",
+      "id": "alert",
+      "spec": "./components/alert.json",
+      "export": "Alert",
+      "dataRefineui": [
+        "alert",
+        "alert-actions",
+        "alert-body",
+        "alert-content",
+        "alert-description",
+        "alert-icon",
+        "alert-row",
+        "alert-title"
+      ],
+      "recipe": "alert"
+    },
+    {
+      "name": "Avatar",
+      "id": "avatar",
+      "spec": "./components/avatar.json",
+      "export": "Avatar",
+      "dataRefineui": [
+        "avatar"
+      ]
+    },
+    {
+      "name": "Avatars",
+      "id": "avatars",
+      "spec": "./components/avatars.json",
+      "export": "Avatars",
+      "dataRefineui": [
+        "avatars"
+      ]
+    },
+    {
+      "name": "Badge",
+      "id": "badge",
+      "spec": "./components/badge.json",
+      "export": "Badge",
+      "dataRefineui": [
+        "badge"
+      ]
+    },
+    {
+      "name": "Box",
+      "id": "box",
+      "spec": "./components/box.json",
+      "export": "Box",
+      "dataRefineui": [
+        "box"
+      ]
+    },
+    {
+      "name": "Breadcrumb",
+      "id": "breadcrumb",
+      "spec": "./components/breadcrumb.json",
+      "export": "Breadcrumb",
+      "dataRefineui": [
+        "breadcrumb",
+        "breadcrumb-ellipsis",
+        "breadcrumb-link",
+        "breadcrumb-page"
+      ]
+    },
+    {
+      "name": "Bubble",
+      "id": "bubble",
+      "spec": "./components/bubble.json",
+      "export": "Bubble",
+      "dataRefineui": [
+        "bubble",
+        "bubble-content",
+        "bubble-group",
+        "bubble-reactions",
+        "bubble-surface"
+      ]
+    },
+    {
+      "name": "Button",
+      "id": "button",
+      "spec": "./components/button.json",
+      "export": "Button",
+      "dataRefineui": [
+        "button"
+      ],
+      "recipe": "button"
+    },
+    {
+      "name": "Calendar",
+      "id": "calendar",
+      "spec": "./components/calendar.json",
+      "export": "Calendar",
+      "dataRefineui": [
+        "calendar",
+        "calendar-day"
+      ]
+    },
+    {
+      "name": "Card",
+      "id": "card",
+      "spec": "./components/card.json",
+      "export": "Card",
+      "dataRefineui": [
+        "card",
+        "card-action",
+        "card-content",
+        "card-description",
+        "card-footer",
+        "card-header",
+        "card-header-main",
+        "card-title"
+      ]
+    },
+    {
+      "name": "Carousel",
+      "id": "carousel",
+      "spec": "./components/carousel.json",
+      "export": "Carousel",
+      "dataRefineui": [
+        "carousel",
+        "carousel-controls",
+        "carousel-indicator",
+        "carousel-indicator-hits",
+        "carousel-indicator-thumb",
+        "carousel-indicators",
+        "carousel-item",
+        "carousel-nav",
+        "carousel-track",
+        "carousel-viewport"
+      ]
+    },
+    {
+      "name": "Chart",
+      "id": "chart",
+      "spec": "./components/chart.json",
+      "export": "Chart",
+      "dataRefineui": [
+        "chart",
+        "chart-axis-labels",
+        "chart-bar",
+        "chart-bar-track",
+        "chart-bars",
+        "chart-body",
+        "chart-content",
+        "chart-grid",
+        "chart-hit-area",
+        "chart-legend",
+        "chart-legend-item",
+        "chart-line",
+        "chart-line-area",
+        "chart-line-stroke",
+        "chart-plot",
+        "chart-plot-frame",
+        "chart-point",
+        "chart-tooltip",
+        "chart-y-axis"
+      ]
+    },
+    {
+      "name": "Checkbox",
+      "id": "checkbox",
+      "spec": "./components/checkbox.json",
+      "export": "Checkbox",
+      "dataRefineui": [
+        "checkbox"
+      ]
+    },
+    {
+      "name": "Chip",
+      "id": "chip",
+      "spec": "./components/chip.json",
+      "export": "Chip",
+      "dataRefineui": [
+        "chip",
+        "chip-remove"
+      ]
+    },
+    {
+      "name": "Command",
+      "id": "command",
+      "spec": "./components/command.json",
+      "export": "Command",
+      "dataRefineui": [
+        "command",
+        "command-empty",
+        "command-group",
+        "command-group-heading",
+        "command-input",
+        "command-item",
+        "command-list",
+        "command-separator",
+        "command-shortcut"
+      ]
+    },
+    {
+      "name": "Container",
+      "id": "container",
+      "spec": "./components/container.json",
+      "export": "Container",
+      "dataRefineui": [
+        "container"
+      ]
+    },
+    {
+      "name": "Dialog",
+      "id": "dialog",
+      "spec": "./components/dialog.json",
+      "export": "Dialog",
+      "dataRefineui": [
+        "dialog"
+      ],
+      "recipe": "dialog"
+    },
+    {
+      "name": "Divider",
+      "id": "divider",
+      "spec": "./components/divider.json",
+      "export": "Divider",
+      "dataRefineui": [
+        "divider"
+      ]
+    },
+    {
+      "name": "Drawer",
+      "id": "drawer",
+      "spec": "./components/drawer.json",
+      "export": "Drawer",
+      "dataRefineui": [
+        "drawer"
+      ]
+    },
+    {
+      "name": "Dropdown",
+      "id": "dropdown",
+      "spec": "./components/dropdown.json",
+      "export": "Dropdown",
+      "dataRefineui": [
+        "dropdown-item",
+        "dropdown-menu",
+        "dropdown-menu-group",
+        "dropdown-menu-label",
+        "dropdown-menu-root",
+        "dropdown-menu-separator",
+        "dropdown-menu-shortcut"
+      ]
+    },
+    {
+      "name": "Field",
+      "id": "field",
+      "spec": "./components/field.json",
+      "export": "Field",
+      "dataRefineui": [
+        "field",
+        "field-error",
+        "field-hint"
+      ]
+    },
+    {
+      "name": "Footer",
+      "id": "footer",
+      "spec": "./components/footer.json",
+      "export": "Footer",
+      "dataRefineui": [
+        "footer",
+        "footer-brand",
+        "footer-brand-description",
+        "footer-brand-name",
+        "footer-copyright",
+        "footer-explore",
+        "footer-group",
+        "footer-group-label",
+        "footer-link",
+        "footer-locale",
+        "footer-logo",
+        "footer-meta",
+        "footer-meta-end",
+        "footer-nav",
+        "footer-social"
+      ]
+    },
+    {
+      "name": "Grid",
+      "id": "grid",
+      "spec": "./components/grid.json",
+      "export": "Grid",
+      "dataRefineui": [
+        "grid",
+        "grid-item"
+      ]
+    },
+    {
+      "name": "Input",
+      "id": "input",
+      "spec": "./components/input.json",
+      "export": "Input",
+      "dataRefineui": [
+        "input"
+      ]
+    },
+    {
+      "name": "InputOTP",
+      "id": "input-otp",
+      "spec": "./components/input-otp.json",
+      "export": "InputOTP",
+      "dataRefineui": [
+        "input-otp",
+        "input-otp-slot"
+      ]
+    },
+    {
+      "name": "Label",
+      "id": "label",
+      "spec": "./components/label.json",
+      "export": "Label",
+      "dataRefineui": [
+        "label",
+        "label-required"
+      ]
+    },
+    {
+      "name": "Link",
+      "id": "link",
+      "spec": "./components/link.json",
+      "export": "Link",
+      "dataRefineui": [
+        "link"
+      ]
+    },
+    {
+      "name": "Menu",
+      "id": "menu",
+      "spec": "./components/menu.json",
+      "export": "Menu",
+      "dataRefineui": [
+        "menu",
+        "menu-divider",
+        "menu-item",
+        "menu-popover",
+        "menu-root",
+        "menu-section"
+      ]
+    },
+    {
+      "name": "NavigationMenu",
+      "id": "navigation-menu",
+      "spec": "./components/navigation-menu.json",
+      "export": "NavigationMenu",
+      "dataRefineui": [
+        "navigation-menu",
+        "navigation-menu-content",
+        "navigation-menu-content-panel",
+        "navigation-menu-indicator",
+        "navigation-menu-item",
+        "navigation-menu-link",
+        "navigation-menu-list",
+        "navigation-menu-trigger"
+      ]
+    },
+    {
+      "name": "Pagination",
+      "id": "pagination",
+      "spec": "./components/pagination.json",
+      "export": "Pagination",
+      "dataRefineui": [
+        "pagination"
+      ]
+    },
+    {
+      "name": "PopOver",
+      "id": "popover",
+      "spec": "./components/popover.json",
+      "export": "PopOver",
+      "dataRefineui": [
+        "popover",
+        "popover-root"
+      ]
+    },
+    {
+      "name": "Progress",
+      "id": "progress",
+      "spec": "./components/progress.json",
+      "export": "Progress",
+      "dataRefineui": [
+        "progress"
+      ]
+    },
+    {
+      "name": "ProgressStepper",
+      "id": "progress-stepper",
+      "spec": "./components/progress-stepper.json",
+      "export": "ProgressStepper",
+      "dataRefineui": [
+        "progress-stepper",
+        "progress-stepper-fill",
+        "progress-stepper-item",
+        "progress-stepper-label",
+        "progress-stepper-list",
+        "progress-stepper-list-wrap",
+        "progress-stepper-marker",
+        "progress-stepper-track"
+      ]
+    },
+    {
+      "name": "Radio",
+      "id": "radio",
+      "spec": "./components/radio.json",
+      "export": "Radio",
+      "dataRefineui": [
+        "radio"
+      ]
+    },
+    {
+      "name": "Resizable",
+      "id": "resizable",
+      "spec": "./components/resizable.json",
+      "export": "Resizable",
+      "dataRefineui": [
+        "resizable-handle",
+        "resizable-panel",
+        "resizable-panel-group"
+      ]
+    },
+    {
+      "name": "ScrollArea",
+      "id": "scroll-area",
+      "spec": "./components/scroll-area.json",
+      "export": "ScrollArea",
+      "dataRefineui": [
+        "scroll-area",
+        "scroll-area-scrollbar",
+        "scroll-area-thumb",
+        "scroll-area-track",
+        "scroll-area-viewport"
+      ]
+    },
+    {
+      "name": "SearchField",
+      "id": "search-field",
+      "spec": "./components/search-field.json",
+      "export": "SearchField",
+      "dataRefineui": [
+        "search-field",
+        "search-field-clear",
+        "search-field-icon",
+        "search-field-input"
+      ]
+    },
+    {
+      "name": "SegmentedControl",
+      "id": "segmented-control",
+      "spec": "./components/segmented-control.json",
+      "export": "SegmentedControl",
+      "dataRefineui": [
+        "segmented-control",
+        "segmented-control-indicator",
+        "segmented-control-item"
+      ]
+    },
+    {
+      "name": "Select",
+      "id": "select",
+      "spec": "./components/select.json",
+      "export": "Select",
+      "dataRefineui": [
+        "select-item",
+        "select-menu",
+        "select-trigger"
+      ]
+    },
+    {
+      "name": "Sidebar",
+      "id": "sidebar",
+      "spec": "./components/sidebar.json",
+      "export": "Sidebar",
+      "dataRefineui": [
+        "sidebar",
+        "sidebar-brand",
+        "sidebar-content",
+        "sidebar-footer",
+        "sidebar-group",
+        "sidebar-group-label",
+        "sidebar-header",
+        "sidebar-link",
+        "sidebar-nav",
+        "sidebar-peek",
+        "sidebar-peek-edge",
+        "sidebar-peek-inset",
+        "sidebar-peek-panel",
+        "sidebar-peek-pin",
+        "sidebar-peek-surface"
+      ]
+    },
+    {
+      "name": "Skeleton",
+      "id": "skeleton",
+      "spec": "./components/skeleton.json",
+      "export": "Skeleton",
+      "dataRefineui": [
+        "skeleton"
+      ]
+    },
+    {
+      "name": "Slider",
+      "id": "slider",
+      "spec": "./components/slider.json",
+      "export": "Slider",
+      "dataRefineui": [
+        "slider"
+      ]
+    },
+    {
+      "name": "Spacer",
+      "id": "spacer",
+      "spec": "./components/spacer.json",
+      "export": "Spacer",
+      "dataRefineui": [
+        "spacer"
+      ]
+    },
+    {
+      "name": "SpinButton",
+      "id": "spin-button",
+      "spec": "./components/spin-button.json",
+      "export": "SpinButton",
+      "dataRefineui": [
+        "spinbutton",
+        "spinbutton-step"
+      ]
+    },
+    {
+      "name": "Spinner",
+      "id": "spinner",
+      "spec": "./components/spinner.json",
+      "export": "Spinner",
+      "dataRefineui": [
+        "spinner"
+      ]
+    },
+    {
+      "name": "Stack",
+      "id": "stack",
+      "spec": "./components/stack.json",
+      "export": "Stack",
+      "dataRefineui": [
+        "stack"
+      ]
+    },
+    {
+      "name": "Stepper",
+      "id": "stepper",
+      "spec": "./components/stepper.json",
+      "export": "Stepper",
+      "dataRefineui": [
+        "stepper",
+        "stepper-content",
+        "stepper-description",
+        "stepper-indicator",
+        "stepper-item",
+        "stepper-list",
+        "stepper-separator",
+        "stepper-separator-fill",
+        "stepper-separator-rail",
+        "stepper-separator-track",
+        "stepper-title"
+      ]
+    },
+    {
+      "name": "Switch",
+      "id": "switch",
+      "spec": "./components/switch.json",
+      "export": "Switch",
+      "dataRefineui": [
+        "switch"
+      ]
+    },
+    {
+      "name": "Table",
+      "id": "table",
+      "spec": "./components/table.json",
+      "export": "Table",
+      "dataRefineui": [
+        "table",
+        "table-row"
+      ]
+    },
+    {
+      "name": "Tabs",
+      "id": "tabs",
+      "spec": "./components/tabs.json",
+      "export": "Tabs",
+      "dataRefineui": [
+        "tab",
+        "tabs",
+        "tabs-indicator",
+        "tabs-list"
+      ]
+    },
+    {
+      "name": "Tag",
+      "id": "tag",
+      "spec": "./components/tag.json",
+      "export": "Tag",
+      "dataRefineui": [
+        "chip",
+        "chip-remove"
+      ]
+    },
+    {
+      "name": "Text",
+      "id": "text",
+      "spec": "./components/text.json",
+      "export": "Text",
+      "dataRefineui": [
+        "text"
+      ]
+    },
+    {
+      "name": "Textarea",
+      "id": "textarea",
+      "spec": "./components/textarea.json",
+      "export": "Textarea",
+      "dataRefineui": [
+        "textarea"
+      ]
+    },
+    {
+      "name": "Toast",
+      "id": "toast",
+      "spec": "./components/toast.json",
+      "export": "Toast",
+      "dataRefineui": [
+        "toast",
+        "toast-icon",
+        "toast-item",
+        "toast-scale-layer",
+        "toaster"
+      ]
+    },
+    {
+      "name": "Tooltip",
+      "id": "tooltip",
+      "spec": "./components/tooltip.json",
+      "export": "Tooltip",
+      "dataRefineui": [
+        "tooltip"
+      ]
+    },
+    {
+      "name": "Tree",
+      "id": "tree",
+      "spec": "./components/tree.json",
+      "export": "Tree",
+      "dataRefineui": [
+        "tree",
+        "tree-item",
+        "tree-item-chevron",
+        "tree-item-content",
+        "tree-item-main",
+        "tree-item-panel",
+        "tree-item-trigger"
+      ]
+    }
+  ]
+}

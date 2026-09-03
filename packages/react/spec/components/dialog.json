@@ -1,0 +1,95 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "dialog",
+  "version": 1,
+  "export": "Dialog",
+  "anatomy": {
+    "root": "dialog",
+    "scrim": "presentation",
+    "panel": "panel",
+    "header": "header",
+    "title": "title",
+    "description": "description",
+    "body": "content",
+    "close": "close"
+  },
+  "variants": {
+    "size": [
+      "sm",
+      "lg"
+    ]
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "component": {
+      "data-state": [
+        "open",
+        "closed"
+      ]
+    },
+    "environment": [
+      "forced-colors",
+      "dir",
+      "prefers-contrast"
+    ]
+  },
+  "attributes": {
+    "data-refineui": "dialog"
+  },
+  "dom": {
+    "dialog": {
+      "states": {
+        "component": {
+          "data-state": [
+            "open",
+            "closed"
+          ]
+        }
+      }
+    }
+  },
+  "accessibility": {
+    "dialog": {
+      "element": "div",
+      "role": "dialog",
+      "requiredAttributes": {
+        "aria-modal": {
+          "required": true,
+          "type": "boolean"
+        },
+        "aria-labelledby": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "labeling": {
+        "labelledBy": "title",
+        "describedBy": "optional"
+      }
+    }
+  },
+  "keyboard": {
+    "Escape": "close"
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    },
+    "behavior": {
+      "trap": true,
+      "initial": "first-focusable",
+      "return": "trigger"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  },
+  "tokens": {
+    "visual": "dialog"
+  },
+  "recipe": "dialog"
+}

@@ -12,7 +12,21 @@ import { paletteColorToken, semanticColorToken } from "@refineui/utilities/color
 
 const semanticToken = (name: SemanticColorName) => semanticColorToken(name);
 const paletteToken = (name: keyof PaletteColors) => paletteColorToken(String(name));
-// TODO: callsite rename migration in this file
+
+const buttonPrimaryColorTokens = {
+    appearance: {
+        background: semanticToken("backgroundBrand"),
+        foreground: semanticToken("foregroundOnBrand"),
+    },
+    states: {
+        hover: { background: semanticToken("backgroundBrandHover") },
+        pressed: { background: semanticToken("backgroundBrandActive") },
+        disabled: {
+            background: semanticToken("backgroundBrandDisabled"),
+            foreground: semanticToken("foregroundDisabled"),
+        },
+    },
+} as const;
 
 export const componentColorTokens = {
     webIcon: {
@@ -24,12 +38,13 @@ export const componentColorTokens = {
     },
     button: {
         primary: {
-            background: semanticToken("backgroundBrand"),
-            foreground: semanticToken("foregroundOnBrand"),
-            hoverBackground: semanticToken("backgroundBrandHover"),
-            activeBackground: semanticToken("backgroundBrandActive"),
-            disabledBackground: semanticToken("backgroundBrandDisabled"),
-            disabledForeground: semanticToken("foregroundDisabled"),
+            ...buttonPrimaryColorTokens.appearance,
+            hoverBackground: buttonPrimaryColorTokens.states.hover.background,
+            activeBackground: buttonPrimaryColorTokens.states.pressed.background,
+            disabledBackground: buttonPrimaryColorTokens.states.disabled.background,
+            disabledForeground: buttonPrimaryColorTokens.states.disabled.foreground,
+            appearance: buttonPrimaryColorTokens.appearance,
+            states: buttonPrimaryColorTokens.states,
         },
         secondary: {
             background: semanticToken("backgroundPrimary"),
@@ -442,8 +457,7 @@ export const componentColorTokens = {
         },
     },
     toast: {
-        background: semanticToken("backgroundPrimary"),
-        border: semanticToken("borderDefault"),
+        background: semanticToken("surfacePopover"),
         message: semanticToken("foregroundPrimary"),
         accent: {
             default: semanticToken("foregroundPrimary"),

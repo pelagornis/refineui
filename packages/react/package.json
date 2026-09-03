@@ -17,10 +17,11 @@
   },
   "files": [
     "dist",
+    "spec",
     "refineui.css"
   ],
   "scripts": {
-    "build": "node ../../scripts/ws.mjs @refineui/utilities build && node ../../scripts/ws.mjs @refineui/tokens build && tsup && node scripts/generate-refineui-css.mjs",
+    "build": "node ../../scripts/ws.mjs @refineui/utilities build && node ../../scripts/ws.mjs @refineui/tokens build && tsup && node scripts/generate-refineui-css.mjs && node scripts/generate-component-spec.mjs",
     "dev": "tsup --watch"
   },
   "dependencies": {

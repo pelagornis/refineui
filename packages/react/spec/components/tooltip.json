@@ -1,0 +1,31 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "tooltip",
+  "version": 1,
+  "export": "Tooltip",
+  "anatomy": {
+    "root": "tooltip"
+  },
+  "attributes": {
+    "data-refineui": "tooltip"
+  },
+  "states": {
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "accessibility": {
+    "tooltip": {
+      "element": "div",
+      "role": "tooltip"
+    }
+  },
+  "keyboard": {
+    "Escape": "close"
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

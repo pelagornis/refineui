@@ -1,0 +1,126 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "accordion",
+  "version": 1,
+  "export": "Accordion",
+  "anatomy": {
+    "root": "accordion",
+    "item": "accordion-item",
+    "trigger": "accordion-trigger",
+    "panel": "accordion-panel",
+    "content": "accordion-content"
+  },
+  "variants": {
+    "size": [
+      "sm",
+      "md",
+      "lg"
+    ],
+    "type": [
+      "single",
+      "multiple"
+    ]
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "component": {
+      "data-state": [
+        "open",
+        "closed"
+      ]
+    },
+    "environment": [
+      "forced-colors",
+      "dir",
+      "prefers-contrast"
+    ]
+  },
+  "attributes": {
+    "data-refineui": "accordion"
+  },
+  "dom": {
+    "accordion-item": {
+      "states": {
+        "component": {
+          "data-state": [
+            "open",
+            "closed"
+          ]
+        }
+      }
+    },
+    "accordion-trigger": {
+      "states": {
+        "pseudo": [
+          "focus-visible"
+        ]
+      }
+    }
+  },
+  "accessibility": {
+    "accordion-trigger": {
+      "element": "button",
+      "role": "button",
+      "requiredAttributes": {
+        "aria-expanded": {
+          "required": true,
+          "type": "boolean"
+        },
+        "aria-controls": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "relationships": [
+        {
+          "attribute": "aria-controls",
+          "target": "accordion-panel",
+          "targetAttribute": "id",
+          "required": true
+        }
+      ]
+    },
+    "accordion-panel": {
+      "role": "region",
+      "requiredAttributes": {
+        "aria-labelledby": {
+          "required": true,
+          "type": "string"
+        }
+      },
+      "relationships": [
+        {
+          "attribute": "aria-labelledby",
+          "target": "accordion-trigger",
+          "targetAttribute": "id",
+          "required": true
+        }
+      ]
+    }
+  },
+  "keyboard": {
+    "ArrowDown": "next-trigger",
+    "ArrowUp": "previous-trigger",
+    "Home": "first-trigger",
+    "End": "last-trigger"
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    },
+    "behavior": {
+      "roving": false
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  },
+  "recipe": "accordion",
+  "tokens": {
+    "visual": "accordion"
+  }
+}

@@ -2,6 +2,8 @@
 title: Box
 description: Padding, semantic fill, radius, and border — the base layout surface.
 ---
+import { SpecRenderer } from "../../../components/spec";
+
 
 import { PropSpec } from "../../../docs-ui";
 
@@ -12,6 +14,13 @@ import PackageInstall from "../../../components/PackageInstall.mdx";
 
 <div class="not-content my-6">
   <BoxPreview client:load />
+</div>
+
+
+## Contract
+
+<div class="not-content">
+  <SpecRenderer client:load component="box" />
 </div>
 
 ## Installation

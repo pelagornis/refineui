@@ -1,12 +1,12 @@
 ---
 title: Elevation
-description: Light and dark shadow recipes for cards, popovers, and floating surfaces.
+description: Shadow recipes for cards, popovers, and floating surfaces.
 ---
 
 import { SpecTable } from "../../../docs-ui";
 import { ElevationPreview } from "../../../components/foundation/ElevationPreview";
 
-Each step has two Foundation recipes: **Light** and **Dark**. CSS emits both, plus a theme-switching alias.
+Each elevation step (`--refineui-elevation-N`) automatically switches between light and dark values based on the active theme. Use the bare variable — explicit `*light` / `*dark` suffixes are only needed when a surface must stay in one mode regardless of theme.
 
 <div class="not-content">
   <SpecTable
@@ -17,14 +17,12 @@ Each step has two Foundation recipes: **Light** and **Dark**. CSS emits both, pl
       { key: "css", header: "CSS", mono: true },
     ]}
     rows={[
-      { use: "Follows theme", css: "--refineui-elevation-8" },
-      { use: "Light only", css: "--refineui-elevation-8light" },
-      { use: "Dark only", css: "--refineui-elevation-8dark" },
+      { use: "Theme-aware (recommended)", css: "--refineui-elevation-8" },
+      { use: "Force light", css: "--refineui-elevation-8light" },
+      { use: "Force dark", css: "--refineui-elevation-8dark" },
     ]}
   />
 </div>
-
-Prefer the bare variable in product UI. Use `*light` / `*dark` when a surface must stay in one mode.
 
 <div class="not-content">
   <ElevationPreview client:load />

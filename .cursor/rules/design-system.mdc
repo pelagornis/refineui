@@ -8,13 +8,57 @@ alwaysApply: true
 
 ## Architecture
 
+```
+Figma
+  ↓
+Foundation / Global          packages/tokens/src/global/
+  ↓
+Semantic / Alias             packages/tokens/src/semantic/
+  ↓
+Semantic / Alias             packages/tokens/src/semantic/
+  ↓
+        ┌──────────────────────┴──────────────────────┐
+        ▼                                              ▼
+Component Tokens (visual)              Component Spec (Contract Layer)
+packages/react/src/tokens/             packages/react/spec/
+        │                                              │
+        └──────────────────────┬──────────────────────┘
+                               ↓
+Recipe (visual mapping)        packages/react/src/recipes/
+  ↓
+React Components             packages/react/src/components/
+  ↓
+State / Interaction          data-refineui + refineui.css (:hover, :focus-visible, data-state)
+  ↓
+Web Kit
+```
+
+Parallel outputs from token source:
+
+```
+Token Source → CSS / Tailwind / TS / dist/spec/*.json
+Component Spec → Doctor · MCP · Docs
+```
+
 | Layer | Role | Location |
 |-------|------|----------|
 | **Primitive / Foundation** | Raw palette, spacing, radius, typography, motion, foundation sizes | `packages/tokens/src/global/*.ts` |
-| **Semantic** | Meaningful aliases (colors, motion roles, elevation, text roles) | `packages/tokens/src/semantic/*.ts` |
-| **Component tokens** | Per-component color / typography / size roles | `packages/react/src/tokens/*` |
+| **Semantic** | Meaningful aliases (colors, motion roles, elevation, text roles, focus) | `packages/tokens/src/semantic/*.ts` |
+| **Theme / Context** | Per-context resolution (light/dark today; extensible via `ThemeContextKey`) | `semantic/colors.ts`, CSS `[data-theme="dark"]` |
+| **Component Spec (Contract Layer)** | Behavior/DOM contracts — anatomy, states, a11y, keyboard, focus, layout (catalog v1.1) | `packages/react/spec/` → `dist/spec/` |
+| **Component tokens** | Per-component visual language (appearance/state) | `packages/react/src/tokens/*` |
+| **Recipes** | Visual mapping only — references Component Spec | `packages/react/src/recipes/*` |
 | **Components** | Shipped UI | `packages/react/src/components/*` |
+| **State contract** | pseudo / component / availability / environment | `packages/react/src/contracts/state/` |
 | **Docs** | Live previews, API reference, usage | `docs/src/content/docs/` |
+
+## Dependency direction
+
+```
+tokens → utilities → react → docs
+```
+
+`@refineui/tokens` must not depend on `@refineui/utilities`. Component tokens must not reference Foundation directly — use semantic aliases (`componentSizes` → `foundationSizes`).
 
 ## Token package layout (`packages/tokens/src/global/`)
 
@@ -24,18 +68,75 @@ alwaysApply: true
 - `foundationSizes.ts` — Global/Size steps (aliases for component dimensions)
 - `strokeWidths.ts`, `borderRadii.ts`, `shadows.ts`, `motion.ts`, `zIndex.ts`
 - `semantic/colors.ts` — `--refineui-color-alias-*` (light/dark)
+- `semantic/focus.ts` — focus ring (`:focus-visible` contract)
 - `semantic/componentSizes.ts` — component dimension aliases → foundationSizes
 - `semantic/interaction.ts` — motion roles (duration, easing, scale)
 
-Build: `bun run build:tokens` → `dist/css-variables.css`, `dist/tailwind-theme.css`.
+Build: `bun run build:tokens` → `dist/spec/trace-v2.json`, `token-graph.json`.  
+`bun run build:react` → copies `spec/`, generates `token-trace-v2.json`, `contract-index.json`.
+
+## Contract Layer
+
+**Status: catalog (v1.1)** — see `packages/react/spec/README.md`.
+
+- **Source:** `packages/react/spec/manifest.json` + `components/*.json`
+- **Doctor:** validates **declared** contracts only (not full WCAG / runtime proof)
+- **MCP:** `get_component_spec`, `list_component_specs`, `inspect_token`
+- **Docs:** SpecRenderer for all catalog specs; ComponentPreview / TokenInspector still deep pilots
+
+### Spec fields (v1)
+
+`anatomy` · `variants` · `states` · `dom` · `accessibility` · `keyboard` · `focus` · `layout` · `tokens` · `recipe`
+
+### Doctor contract rules (v1)
+
+`component-state-contract` · `accessibility-contract` · `keyboard-contract` · `focus-contract` · `environment-contract` · `layout-contract` · `state-contract` · `motion-contract`
+
+### Coverage
+
+| Surface | Scope |
+|---------|--------|
+| Spec JSON + SpecRenderer | All components in `manifest.json` |
+| Deep a11y / keyboard / focus / environment / layout | Interactive catalog (Doctor-validated) |
+| SlotRecipe | alert, accordion, dialog, segmented-control |
+| defineRecipe | button, badge, toast, chip |
+| TokenInspector | alert, button, accordion, dialog, badge, toast, tabs, chip, tag, segmented-control, switch, checkbox, select, spinner |
+| ComponentPreview | alert, button, accordion, dialog, badge, switch, checkbox, tabs, select, toast, spinner, chip, tag, segmented-control |
+
+### Next
+
+1. Remaining TokenInspectors for other `componentColorTokens` (input, radio, link, …)
+2. Convert Tooltip physical `left`/`right` panel styles to logical insets where safe
+
+### Intentional physical
+
+See `packages/react/spec/README.md` — PopOver/Resizable centering `-translate-x-1/2`, Tooltip MCP map, Chart tick centering, Drawer/Nav measured transforms. Switch thumb uses CSS `translateX` + `[dir="rtl"]` flip.
+
+## Component token shape
+
+Prefer explicit **appearance** + **states** (hover, pressed, disabled) over flat `*Hover` keys. Pilot: `button.primary`.
 
 ## Component rules
 
 - **MUST**: Match existing component patterns in `packages/react` — read a sibling component before adding or changing APIs.
 - **MUST**: Use design tokens only for color, spacing, radius, stroke, typography, shadow, z-index, motion. See `tokens-in-components`.
 - **MUST**: Composable subcomponent APIs only — no convenience props (`title`, `description`, `items`, `actions`, `onClose`).
+- **MUST**: Root elements use `data-refineui`; component states use `data-state` (CSS pseudo states stay in `refineui.css`).
 - **MUST NOT**: Invent variants, props, or dimensions that are not reflected in tokens + an existing component pattern.
 - **RECOMMENDED**: Add or update `docs/src/content/docs/components/*.mdx` and catalog previews when shipping components.
+- **RECOMMENDED**: Define recipes in `packages/react/src/recipes/`; re-export from `style.ts` until migration completes.
+
+## SlotRecipe v1 (visual only)
+
+Canonical API — `defineSlotRecipe({ slots, base, variants, compoundVariants, defaultVariants })`.
+
+| Layer | Owns |
+|-------|------|
+| **Component Spec** | anatomy, variants, states, accessibility, keyboard, focus, `recipe` ref |
+| **SlotRecipe** | slots, base, variants, compoundVariants — Tailwind/class strings via semantic aliases |
+| **Component tokens** | `componentColorTokens.*` — trace source for recipe color choices |
+
+Pilot: `alert.recipe.ts` → `Alert/style.ts` re-export → `resolveAlertSlotClasses()`. Recipe must not re-declare a11y/keyboard/focus.
 
 ## Docs & AI context
 
@@ -44,6 +145,7 @@ Build: `bun run build:tokens` → `dist/css-variables.css`, `dist/tailwind-theme
 - Components: flat A–Z catalog under `/components/*`
 - Iconography: external — https://github.com/pelagornis/refineui-system-icons
 - LLM indexes: `docs/public/llm.txt`, `llms.txt`
+- Token spec: `packages/tokens/dist/spec/` (MCP: `inspect_token`, `get_token_spec`)
 
 ## Stylesheet (product apps)
 
@@ -52,3 +154,11 @@ Build: `bun run build:tokens` → `dist/css-variables.css`, `dist/tailwind-theme
 @import "@refineui/web-icons/dist/fonts/refineui-system-icons.css";
 @import "@refineui/react/refineui.css";
 ```
+
+## Accessibility contracts
+
+- Focus: `:focus-visible` + `--refineui-focus-ring-*` (not `:focus` alone)
+- Motion: `prefers-reduced-motion` collapses duration/scale roles in token CSS
+- Forced colors: `@media (forced-colors: active)` + system colors (`Highlight`, `CanvasText`, `ButtonBorder`) for Spec `states.environment`
+- Layout / RTL: Spec `layout.direction=logical` + `layout.rtl` — prefer `ps`/`pe`/`ms`/`me`/`text-start` over physical left/right
+- Doctor: `component-state-contract`, `accessibility-contract`, `keyboard-contract`, `focus-contract`, `environment-contract`, `layout-contract`, `state-contract`, `motion-contract`

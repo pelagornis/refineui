@@ -2,6 +2,8 @@
 title: Stepper
 description: Step list for multi-step flows with indicators and titles.
 ---
+import { SpecRenderer } from "../../../components/spec";
+
 
 import StepperDemo from "../../../components/StepperDemo";
 import PackageInstall from "../../../components/PackageInstall.mdx";
@@ -10,6 +12,13 @@ import PackageInstall from "../../../components/PackageInstall.mdx";
 
 <div class="not-content my-6">
   <StepperDemo client:load />
+</div>
+
+
+## Contract
+
+<div class="not-content">
+  <SpecRenderer client:load component="stepper" />
 </div>
 
 ## Installation

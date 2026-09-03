@@ -1,0 +1,42 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "popover",
+  "version": 1,
+  "export": "PopOver",
+  "anatomy": {
+    "root": "popover-root"
+  },
+  "attributes": {
+    "data-refineui": "popover"
+  },
+  "states": {
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "accessibility": {
+    "popover": {
+      "element": "div",
+      "role": "dialog"
+    }
+  },
+  "keyboard": {
+    "Escape": "close"
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    },
+    "behavior": {
+      "trap": true,
+      "initial": "first-focusable",
+      "return": "trigger"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

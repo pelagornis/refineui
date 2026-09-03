@@ -4,7 +4,7 @@ import {
   reportToSummary,
   reportToYaml,
   runDoctor
-} from "./chunk-XY76HBQ4.js";
+} from "./chunk-BLUTUNSC.js";
 
 // src/cli.ts
 import fs from "fs";

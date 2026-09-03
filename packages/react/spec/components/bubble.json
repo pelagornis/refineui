@@ -1,0 +1,31 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "bubble",
+  "version": 1,
+  "export": "Bubble",
+  "anatomy": {
+    "root": "bubble",
+    "content": "bubble-content",
+    "group": "bubble-group",
+    "reactions": "bubble-reactions",
+    "surface": "bubble-surface"
+  },
+  "attributes": {
+    "data-refineui": "bubble"
+  },
+  "variants": {
+    "variant": [
+      "default",
+      "secondary",
+      "muted",
+      "tinted",
+      "outline",
+      "ghost",
+      "destructive"
+    ]
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

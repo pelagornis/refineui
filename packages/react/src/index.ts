@@ -561,7 +561,6 @@ export {
     dismissToast,
     type ToastProps,
     type ToastVariant,
-    type ToastPosition,
     type ToastSwipeDirection,
     type ToastOptions,
     type ToastAction,

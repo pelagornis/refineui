@@ -1,4 +1,4 @@
-type DoctorCategory = "setup" | "compatibility" | "foundations" | "components" | "library";
+type DoctorCategory = "setup" | "compatibility" | "foundations" | "components" | "library" | "accessibility";
 type CheckStatus = "pass" | "fail" | "not-applicable" | "not-verified";
 type FindingSeverity = "error" | "warn" | "info";
 type ProjectKind = "app" | "library";

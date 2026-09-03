@@ -1,0 +1,65 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "carousel",
+  "version": 1,
+  "export": "Carousel",
+  "anatomy": {
+    "root": "carousel",
+    "controls": "carousel-controls",
+    "indicator": "carousel-indicator",
+    "indicator_hits": "carousel-indicator-hits",
+    "indicator_thumb": "carousel-indicator-thumb",
+    "indicators": "carousel-indicators",
+    "item": "carousel-item",
+    "nav": "carousel-nav",
+    "track": "carousel-track",
+    "viewport": "carousel-viewport"
+  },
+  "attributes": {
+    "data-refineui": "carousel"
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "accessibility": {
+    "carousel": {
+      "element": "div"
+    },
+    "carousel-item": {
+      "element": "div",
+      "role": "group"
+    },
+    "carousel-indicator": {
+      "element": "button",
+      "role": "tab",
+      "requiredAttributes": {
+        "aria-selected": {
+          "required": true,
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "keyboard": {
+    "ArrowRight": "next-trigger",
+    "ArrowLeft": "previous-trigger",
+    "Home": "first-trigger",
+    "End": "last-trigger"
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

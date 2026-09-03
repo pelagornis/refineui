@@ -3,6 +3,37 @@
  * Starlight supplies routing only; visuals use RefineUI tokens exclusively.
  */
 
+[data-docs-ui="token-inspector"] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--refineui-spacing-size-xxx-large);
+}
+
+[data-docs-ui="token-inspector"] [data-docs-ui="section"] + [data-docs-ui="section"] {
+  padding-top: var(--refineui-spacing-size-xxx-large);
+  border-top: var(--refineui-stroke-width-thin) solid var(--refineui-color-alias-border-subtle);
+}
+
+[data-docs-ui="token-inspector-preview"] {
+  width: 100%;
+  min-width: 0;
+}
+
+[data-docs-ui="token-inspector"] [data-docs-ui="control-group"] {
+  max-width: var(--refineui-size-foundation-size-2560);
+}
+
+[data-docs-ui="spec-renderer"] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--refineui-spacing-size-xxx-large);
+}
+
+[data-docs-ui="spec-renderer"] [data-docs-ui="section"] + [data-docs-ui="section"] {
+  padding-top: var(--refineui-spacing-size-xxx-large);
+  border-top: var(--refineui-stroke-width-thin) solid var(--refineui-color-alias-border-subtle);
+}
+
 [data-docs-ui="component-page"] {
   display: flex;
   flex-direction: column;

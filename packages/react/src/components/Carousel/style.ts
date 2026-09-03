@@ -24,7 +24,7 @@ export const carouselStyles = {
         "p-refineui-size-xxx-small",
     ),
     indicatorThumb: clsx(
-        "pointer-events-none absolute top-refineui-size-xxx-small bottom-refineui-size-xxx-small left-refineui-size-xxx-small z-0",
+        "pointer-events-none absolute top-refineui-size-xxx-small bottom-refineui-size-xxx-small start-refineui-size-xxx-small z-0",
         "rounded-refineui-circle bg-refineui-alias-background-brand shadow-refineui-2",
         "transition-transform duration-[var(--refineui-motion-duration-medium)] ease-[var(--refineui-motion-easing-emphasized)]",
     ),

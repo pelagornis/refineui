@@ -2,14 +2,6 @@ import type { HTMLAttributes, ReactNode } from "react";
 
 export type ToastVariant = "default" | "success" | "error" | "warning";
 
-export type ToastPosition =
-    | "top-left"
-    | "top-center"
-    | "top-right"
-    | "bottom-left"
-    | "bottom-center"
-    | "bottom-right";
-
 export type ToastSwipeDirection = "top" | "right" | "bottom" | "left";
 
 export type ToastAction =
@@ -40,8 +32,7 @@ export interface ToastOptions {
 export interface ToasterProps {
     /** Max visible toasts. Default `1` (new toast replaces the previous). */
     maxToasts?: number;
-    position?: ToastPosition;
-    /** Allowed swipe-to-dismiss directions. Defaults from `position`. */
+    /** Allowed swipe-to-dismiss directions. Default `["top"]` (fixed top-center placement). */
     swipeDirections?: ToastSwipeDirection[];
     className?: string;
 }

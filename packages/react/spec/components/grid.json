@@ -1,0 +1,17 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "grid",
+  "version": 1,
+  "export": "Grid",
+  "anatomy": {
+    "root": "grid",
+    "item": "grid-item"
+  },
+  "attributes": {
+    "data-refineui": "grid"
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

@@ -3,13 +3,23 @@ title: Alert
 description: Prominent message communicating status or warning.
 ---
 
-import { PropSpec } from "../../../docs-ui";
-
-import AlertPreview from "../../../components/AlertPreview";
+import { ComponentPreview, SpecRenderer, TokenInspector } from "../../../components/spec";
 import PackageInstall from "../../../components/PackageInstall.mdx";
 
 <div class="not-content my-6">
-  <AlertPreview client:load />
+  <ComponentPreview client:load component="alert" variant="info" />
+</div>
+
+## Contract
+
+<div class="not-content">
+  <SpecRenderer client:load component="alert" />
+</div>
+
+## Tokens
+
+<div class="not-content">
+  <TokenInspector client:load component="alert" variant="info" />
 </div>
 
 ## Installation
@@ -19,49 +29,33 @@ import PackageInstall from "../../../components/PackageInstall.mdx";
 ## Usage
 
 ```tsx
-import { Alert, AlertIcon, AlertContent, AlertTitle, AlertDescription } from "@refineui/react";
+import {
+  Alert,
+  AlertIcon,
+  AlertRow,
+  AlertBody,
+  AlertTitle,
+  AlertDescription,
+  AlertClose,
+  AlertActions,
+  AlertAction,
+} from "@refineui/react";
 
-<Alert variant="info">
-  <AlertIcon />
-  <AlertContent>
-    <AlertTitle>Information</AlertTitle>
-    <AlertDescription>Your changes have been saved.</AlertDescription>
-  </AlertContent>
+<Alert variant="warning">
+  <AlertRow>
+    <AlertIcon />
+    <AlertBody>
+      <AlertTitle>Warning</AlertTitle>
+      <AlertDescription>Review before continuing.</AlertDescription>
+    </AlertBody>
+    <AlertClose type="button" />
+  </AlertRow>
+  <AlertActions>
+    <AlertAction type="button">Review</AlertAction>
+  </AlertActions>
 </Alert>
 ```
 
-## API Reference
+Contract source: `packages/react/spec/components/alert.json` — rendered by SpecRenderer above.
 
-### Alert
-
-<div class="not-content">
-  <PropSpec
-    client:load
-    rows={[
-    { prop: "variant", default: "\"default\"", type: "\"default\" | \"info\" | \"success\" | \"warning\" | \"danger\" | \"custom\"", description: "Alert visual variant." }
-    ]}
-  />
-</div>
-### AlertIcon
-
-<div class="not-content">
-  <PropSpec
-    client:load
-    rows={[
-    { prop: "name", default: "—", type: "string", description: "Icon name (when not using children)." },
-    { prop: "children", default: "—", type: "ReactNode", description: "Custom icon element." }
-    ]}
-  />
-</div>
-### AlertContent
-
-Container for alert content.
-
-### AlertTitle
-
-Alert heading element.
-
-### AlertDescription
-
-Alert body text.
-
+Token trace source: `packages/react/dist/spec/token-trace-v2.json` + `packages/tokens/dist/spec/trace-v2.json`.

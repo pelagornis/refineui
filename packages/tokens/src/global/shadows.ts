@@ -1,25 +1,28 @@
-import { hexToRgba } from "@refineui/utilities";
+import { hexToRgba } from "../internal/color";
 import type { ShadowLevel, ShadowColorTokens, ShadowTokens, SemanticShadowElevationName } from "../types";
 import { colors } from "./colors";
 
-/** Shadow base color — Foundation node-id=1-5785, primaryBlack */
-const SHADOW_BASE = colors.primaryBlack;
+/** Shadow base colors — Foundation node-id=1-5785 */
+const SHADOW_BASE_LIGHT = colors.primaryBlack;
+// Dark theme에서 `primaryBlack`(#212121)이 `neutral-900`(#1A1A1A)보다 약간 밝아서
+// shadow가 배경과 구분이 약해질 수 있습니다. dark shadow는 더 깊은 black에서 시작합니다.
+const SHADOW_BASE_DARK = colors.neutralBlack;
 
 /**
  * Shadow color — Figma `Global/Shadows/Key *` · `Ambient *` (lighter → darker ramp).
  * Elevation usually pairs Key light + Ambient light (light theme) / Key dark + Ambient dark (dark theme).
  */
 export const shadowColors: ShadowColorTokens = {
-    shadowColorKeyLighter: hexToRgba(SHADOW_BASE, 0.02),
-    shadowColorKeyLight: hexToRgba(SHADOW_BASE, 0.05),
-    shadowColorKey: hexToRgba(SHADOW_BASE, 0.08),
-    shadowColorKeyDark: hexToRgba(SHADOW_BASE, 0.2),
-    shadowColorKeyDarker: hexToRgba(SHADOW_BASE, 0.3),
-    shadowColorAmbientLighter: hexToRgba(SHADOW_BASE, 0.02),
-    shadowColorAmbientLight: hexToRgba(SHADOW_BASE, 0.04),
-    shadowColorAmbient: hexToRgba(SHADOW_BASE, 0.06),
-    shadowColorAmbientDark: hexToRgba(SHADOW_BASE, 0.15),
-    shadowColorAmbientDarker: hexToRgba(SHADOW_BASE, 0.25),
+    shadowColorKeyLighter: hexToRgba(SHADOW_BASE_LIGHT, 0.02),
+    shadowColorKeyLight: hexToRgba(SHADOW_BASE_LIGHT, 0.05),
+    shadowColorKey: hexToRgba(SHADOW_BASE_LIGHT, 0.08),
+    shadowColorKeyDark: hexToRgba(SHADOW_BASE_DARK, 0.2),
+    shadowColorKeyDarker: hexToRgba(SHADOW_BASE_DARK, 0.3),
+    shadowColorAmbientLighter: hexToRgba(SHADOW_BASE_LIGHT, 0.02),
+    shadowColorAmbientLight: hexToRgba(SHADOW_BASE_LIGHT, 0.04),
+    shadowColorAmbient: hexToRgba(SHADOW_BASE_LIGHT, 0.06),
+    shadowColorAmbientDark: hexToRgba(SHADOW_BASE_DARK, 0.15),
+    shadowColorAmbientDarker: hexToRgba(SHADOW_BASE_DARK, 0.25),
 };
 
 /** Per-level dimensions (x y blur spread) — Figma Shadow 2 / 4 / … */

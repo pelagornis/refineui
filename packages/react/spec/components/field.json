@@ -1,0 +1,31 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "field",
+  "version": 1,
+  "export": "Field",
+  "anatomy": {
+    "root": "field",
+    "error": "field-error",
+    "hint": "field-hint"
+  },
+  "attributes": {
+    "data-refineui": "field"
+  },
+  "variants": {
+    "size": [
+      "sm",
+      "md",
+      "lg"
+    ]
+  },
+  "accessibility": {
+    "field-error": {
+      "element": "div",
+      "role": "alert"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

@@ -3,7 +3,6 @@
   "compilerOptions": {
     "outDir": "dist",
     "paths": {
-      "@refineui/utilities": ["packages/utilities/lib/index.d.ts"]
     }
   },
   "include": ["src"]

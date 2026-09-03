@@ -2,6 +2,8 @@
 title: Container
 description: Centered page shell with token padding and full max width.
 ---
+import { SpecRenderer } from "../../../components/spec";
+
 
 import { PropSpec } from "../../../docs-ui";
 
@@ -12,6 +14,13 @@ import PackageInstall from "../../../components/PackageInstall.mdx";
 
 <div class="not-content my-6">
   <ContainerPreview client:load />
+</div>
+
+
+## Contract
+
+<div class="not-content">
+  <SpecRenderer client:load component="container" />
 </div>
 
 ## Installation

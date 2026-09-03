@@ -1,0 +1,28 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "progress",
+  "version": 1,
+  "export": "Progress",
+  "anatomy": {
+    "root": "progress"
+  },
+  "attributes": {
+    "data-refineui": "progress"
+  },
+  "variants": {
+    "size": [
+      "sm",
+      "lg"
+    ]
+  },
+  "accessibility": {
+    "progress": {
+      "element": "div",
+      "role": "progressbar"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

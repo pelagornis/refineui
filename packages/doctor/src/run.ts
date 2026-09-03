@@ -4,6 +4,14 @@ import { stylesheetSetupRule } from "./rules/stylesheet-setup.js";
 import { foundationContractRule } from "./rules/foundation-contract.js";
 import { compositionApiRule } from "./rules/composition-api.js";
 import { componentImportsRule } from "./rules/component-imports.js";
+import { accessibilityContractRule } from "./rules/accessibility-contract.js";
+import { keyboardContractRule } from "./rules/keyboard-contract.js";
+import { focusContractRule } from "./rules/focus-contract.js";
+import { environmentContractRule } from "./rules/environment-contract.js";
+import { layoutContractRule } from "./rules/layout-contract.js";
+import { componentStateContractRule } from "./rules/component-state-contract.js";
+import { motionContractRule } from "./rules/motion-contract.js";
+import { stateContractRule } from "./rules/state-contract.js";
 
 const ALL_RULES = [
     packageSetupRule,
@@ -11,6 +19,14 @@ const ALL_RULES = [
     foundationContractRule,
     compositionApiRule,
     componentImportsRule,
+    componentStateContractRule,
+    accessibilityContractRule,
+    keyboardContractRule,
+    focusContractRule,
+    environmentContractRule,
+    layoutContractRule,
+    stateContractRule,
+    motionContractRule,
 ];
 
 const DOCS = {

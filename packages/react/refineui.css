@@ -242,6 +242,17 @@
   outline-offset: var(--refineui-spacing-size-xxx-small);
 }
 
+/* Thumb travel — logical: flip translateX under dir=rtl */
+[data-refineui="switch"] > span {
+  transform: translateX(0);
+}
+[data-refineui="switch"][data-checked="true"] > span {
+  transform: translateX(var(--refineui-size-switch-thumb));
+}
+[dir="rtl"] [data-refineui="switch"][data-checked="true"] > span {
+  transform: translateX(calc(-1 * var(--refineui-size-switch-thumb)));
+}
+
 /* Table — header rail · inset rows · selected matches Menu/Dropdown (no brand mark) */
 [data-refineui="table"] table {
   border-collapse: separate;
@@ -255,13 +266,13 @@
 }
 [data-refineui="table"] thead th:first-child,
 [data-refineui="table"] tfoot td:first-child {
-  border-top-left-radius: var(--refineui-radius-rounded-large);
-  border-bottom-left-radius: var(--refineui-radius-rounded-large);
+  border-start-start-radius: var(--refineui-radius-rounded-large);
+  border-end-start-radius: var(--refineui-radius-rounded-large);
 }
 [data-refineui="table"] thead th:last-child,
 [data-refineui="table"] tfoot td:last-child {
-  border-top-right-radius: var(--refineui-radius-rounded-large);
-  border-bottom-right-radius: var(--refineui-radius-rounded-large);
+  border-start-end-radius: var(--refineui-radius-rounded-large);
+  border-end-end-radius: var(--refineui-radius-rounded-large);
 }
 
 /* Header labels — quieter than body, same strip as footer */
@@ -282,12 +293,12 @@
   background-color: var(--refineui-color-alias-background-surface-hover);
 }
 [data-refineui="table"] tbody [data-refineui="table-row"]:not([data-state="selected"]):hover > *:first-child {
-  border-top-left-radius: var(--refineui-radius-rounded-large);
-  border-bottom-left-radius: var(--refineui-radius-rounded-large);
+  border-start-start-radius: var(--refineui-radius-rounded-large);
+  border-end-start-radius: var(--refineui-radius-rounded-large);
 }
 [data-refineui="table"] tbody [data-refineui="table-row"]:not([data-state="selected"]):hover > *:last-child {
-  border-top-right-radius: var(--refineui-radius-rounded-large);
-  border-bottom-right-radius: var(--refineui-radius-rounded-large);
+  border-start-end-radius: var(--refineui-radius-rounded-large);
+  border-end-end-radius: var(--refineui-radius-rounded-large);
 }
 
 /* Selected — Menu / Dropdown `surfaceSelected`, no leading brand bar */
@@ -295,12 +306,12 @@
   background-color: var(--refineui-color-alias-background-surface-selected);
 }
 [data-refineui="table"] tbody [data-refineui="table-row"][data-state="selected"] > *:first-child {
-  border-top-left-radius: var(--refineui-radius-rounded-large);
-  border-bottom-left-radius: var(--refineui-radius-rounded-large);
+  border-start-start-radius: var(--refineui-radius-rounded-large);
+  border-end-start-radius: var(--refineui-radius-rounded-large);
 }
 [data-refineui="table"] tbody [data-refineui="table-row"][data-state="selected"] > *:last-child {
-  border-top-right-radius: var(--refineui-radius-rounded-large);
-  border-bottom-right-radius: var(--refineui-radius-rounded-large);
+  border-start-end-radius: var(--refineui-radius-rounded-large);
+  border-end-end-radius: var(--refineui-radius-rounded-large);
 }
 
 /* Segmented Control — sliding brand indicator */
@@ -877,10 +888,15 @@
 /* Toast — Sonner-like `<ol>/<li>` stack + expand full vertical stack on `ol` hover (card spec Web Kit `548:655`) */
 [data-refineui="toaster"] {
   --refineui-toaster-inset: var(--refineui-spacing-size-large);
+  --refineui-toaster-inset-top: calc(
+    var(--refineui-spacing-size-xxx-large) + var(--refineui-spacing-size-large)
+  );
   --refineui-toaster-safe-top: env(safe-area-inset-top, 0px);
   --refineui-toaster-safe-right: env(safe-area-inset-right, 0px);
   --refineui-toaster-safe-bottom: env(safe-area-inset-bottom, 0px);
   --refineui-toaster-safe-left: env(safe-area-inset-left, 0px);
+  --refineui-toast-slide-in-y: -100%;
+  --refineui-toast-slide-out-y: -100%;
   position: fixed;
   /* fixed width uses viewport; notch sides via env + inset */
   width: min(
@@ -890,10 +906,13 @@
     var(--refineui-size-toast-max-width)
   );
   max-width: var(--refineui-size-toast-max-width);
+  inset-inline: 0;
+  top: calc(var(--refineui-toaster-inset-top) + var(--refineui-toaster-safe-top));
+  margin-inline: auto;
   z-index: var(--refineui-z-messages);
   box-sizing: border-box;
   list-style: none;
-  margin: 0;
+  margin-block: 0;
   padding: 0;
   pointer-events: none;
   /* avoid zero height when children are `position:absolute` — hover hit area from collapsed/expanded stack height */
@@ -904,55 +923,8 @@
 @media (max-width: 480px) {
   [data-refineui="toaster"] {
     --refineui-toaster-inset: var(--refineui-spacing-size-medium);
+    --refineui-toaster-inset-top: var(--refineui-spacing-size-xxx-large);
   }
-}
-
-[data-refineui="toaster"][data-position="top-left"] {
-  left: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-left));
-  right: auto;
-  top: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-top));
-  bottom: auto;
-  transform: none;
-}
-
-[data-refineui="toaster"][data-position="top-center"] {
-  left: 50%;
-  right: auto;
-  top: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-top));
-  bottom: auto;
-  transform: translateX(-50%);
-}
-
-[data-refineui="toaster"][data-position="top-right"] {
-  left: auto;
-  right: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-right));
-  top: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-top));
-  bottom: auto;
-  transform: none;
-}
-
-[data-refineui="toaster"][data-position="bottom-left"] {
-  left: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-left));
-  right: auto;
-  top: auto;
-  bottom: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-bottom));
-  transform: none;
-}
-
-[data-refineui="toaster"][data-position="bottom-center"] {
-  left: 50%;
-  right: auto;
-  top: auto;
-  bottom: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-bottom));
-  transform: translateX(-50%);
-}
-
-[data-refineui="toaster"][data-position="bottom-right"] {
-  left: auto;
-  right: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-right));
-  top: auto;
-  bottom: calc(var(--refineui-toaster-inset) + var(--refineui-toaster-safe-bottom));
-  transform: none;
 }
 
 /*
@@ -975,12 +947,11 @@
 
 [data-refineui="toast-item"] {
   position: absolute;
-  left: 0;
-  right: 0;
+  inset-inline: 0;
   top: 0;
   bottom: auto;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   overflow: visible;
   pointer-events: auto;
   transform: translateY(var(--refineui-toast-offset-collapsed, 0px));
@@ -988,42 +959,9 @@
   z-index: var(--refineui-toast-z-index, 100);
 }
 
-[data-refineui="toaster"][data-position$="-center"] [data-refineui="toast-item"] {
-  justify-content: center;
-}
-
-[data-refineui="toaster"][data-position$="-right"] [data-refineui="toast-item"] {
-  justify-content: flex-end;
-}
-
-/*
- * Bottom anchor: collapsed `li` height stacks cards, but block flow is top→bottom so long bodies overflow
- * downward and overlap front toasts. `flex-end` pins cards to the slot bottom so overflow goes upward.
- */
-[data-refineui="toaster"][data-position^="bottom"] [data-refineui="toast-item"] {
-  top: auto;
-  bottom: 0;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  transform: translateY(calc(-1 * var(--refineui-toast-offset-collapsed, 0px)));
-}
-
-[data-refineui="toaster"][data-position="bottom-center"] [data-refineui="toast-item"] {
-  align-items: center;
-}
-
-[data-refineui="toaster"][data-position="bottom-right"] [data-refineui="toast-item"] {
-  align-items: flex-end;
-}
-
 @media (hover: hover) and (pointer: fine) {
   [data-refineui="toaster"]:hover [data-refineui="toast-item"] {
     transform: translateY(var(--refineui-toast-offset-expanded, 0px));
-  }
-
-  [data-refineui="toaster"][data-position^="bottom"]:hover [data-refineui="toast-item"] {
-    transform: translateY(calc(-1 * var(--refineui-toast-offset-expanded, 0px)));
   }
 }
 
@@ -1043,11 +981,6 @@
   transition: transform var(--refineui-motion-duration-panel) var(--refineui-motion-easing-emphasized), opacity var(--refineui-motion-duration-slow) var(--refineui-motion-easing-ease-in-out);
 }
 
-[data-refineui="toaster"][data-position^="bottom"] [data-refineui="toast-scale-layer"] {
-  transform-origin: bottom center;
-  flex-shrink: 0;
-}
-
 @media (hover: hover) and (pointer: fine) {
   [data-refineui="toaster"]:hover [data-refineui="toast-scale-layer"] {
     transform: scale(1);
@@ -1065,24 +998,10 @@
     transform: translateY(var(--refineui-toast-offset-expanded, 0px));
   }
 
-  [data-refineui="toaster"][data-position^="bottom"] [data-refineui="toast-item"] {
-    transform: translateY(calc(-1 * var(--refineui-toast-offset-expanded, 0px)));
-  }
-
   [data-refineui="toaster"] [data-refineui="toast-scale-layer"] {
     transform: scale(1);
     opacity: 1;
   }
-}
-
-[data-refineui="toaster"][data-position^="top"] {
-  --refineui-toast-slide-in-y: -100%;
-  --refineui-toast-slide-out-y: -100%;
-}
-
-[data-refineui="toaster"][data-position^="bottom"] {
-  --refineui-toast-slide-in-y: 100%;
-  --refineui-toast-slide-out-y: 100%;
 }
 
 [data-refineui="toast"] {
@@ -1094,15 +1013,46 @@
   width: fit-content;
   max-width: 100%;
   box-sizing: border-box;
+  background-color: color-mix(
+    in srgb,
+    var(--refineui-color-alias-surface-popover) 82%,
+    transparent
+  );
+  backdrop-filter: blur(var(--refineui-spacing-size-xxx-large));
+  -webkit-backdrop-filter: blur(var(--refineui-spacing-size-xxx-large));
+  box-shadow: var(--refineui-elevation-8);
   touch-action: none;
   cursor: grab;
   transform: translate3d(var(--refineui-toast-swipe-x), var(--refineui-toast-swipe-y), 0);
   transition:
-    border-color var(--refineui-motion-duration-medium) var(--refineui-motion-easing-emphasized),
     opacity var(--refineui-toast-motion-duration) var(--refineui-toast-motion-easing),
     transform var(--refineui-toast-motion-duration) var(--refineui-toast-motion-easing);
   will-change: transform, opacity;
   user-select: none;
+}
+
+[data-refineui="toast-icon"] {
+  color: var(--refineui-color-alias-foreground-primary);
+}
+
+[data-refineui="toast"][data-variant="success"] [data-refineui="toast-icon"] {
+  color: var(--refineui-color-alias-foreground-success);
+}
+
+[data-refineui="toast"][data-variant="error"] [data-refineui="toast-icon"] {
+  color: var(--refineui-color-alias-foreground-error);
+}
+
+[data-refineui="toast"][data-variant="warning"] [data-refineui="toast-icon"] {
+  color: var(--refineui-color-alias-foreground-warning);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  [data-refineui="toast"] {
+    background-color: var(--refineui-color-alias-surface-popover);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
 [data-refineui="toast"][data-swiping="true"] {
@@ -1154,11 +1104,6 @@
 [data-refineui="toast"][data-swipe-out] {
   --refineui-toast-motion-duration: var(--refineui-motion-duration-toast-leave);
   --refineui-toast-motion-easing: var(--refineui-motion-easing-standard);
-}
-
-/* Toast — Web Kit `548:655` Focused: keep thin border width; emphasize with color only */
-[data-refineui="toast"]:focus-within {
-  border-color: var(--refineui-color-alias-border-strong) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2332,3 +2277,149 @@ a[data-refineui="link"]:focus-visible {
     opacity: 1;
   }
 }
+
+/*
+ * Environment — Forced colors (Windows High Contrast / forced-colors: active)
+ * Declared in Component Spec: states.environment includes "forced-colors"
+ * System colors only — theme semantic aliases are remapped/unreliable here.
+ */
+@media (forced-colors: active) {
+  [data-refineui="button"]:focus-visible,
+  [data-refineui="accordion-trigger"]:focus-visible,
+  [data-refineui="select-trigger"]:focus-visible,
+  [data-refineui="navigation-menu-trigger"]:focus-visible,
+  [data-refineui="tree-item-trigger"]:focus-visible,
+  [data-refineui="tab"]:focus-visible,
+  [data-refineui="switch"]:focus-visible,
+  [data-refineui="link"]:focus-visible,
+  [data-refineui="pagination"]:focus-visible,
+  [data-refineui="chip-remove"]:focus-visible,
+  [data-refineui="carousel"]:focus-visible,
+  [data-refineui="carousel-nav"]:focus-visible,
+  [data-refineui="segmented-control-item"]:focus-visible,
+  [data-refineui="menu-item"]:focus-visible,
+  [data-refineui="dropdown-item"]:focus-visible,
+  [data-refineui="command-item"]:focus-visible,
+  [data-refineui="calendar-day"]:focus-visible,
+  [data-refineui="sidebar-link"]:focus-visible,
+  [data-refineui="breadcrumb-link"]:focus-visible,
+  [data-refineui="footer-link"]:focus-visible,
+  [data-refineui="search-field-clear"]:focus-visible,
+  [data-refineui="spinbutton-step"]:focus-visible,
+  [data-refineui="radio"]:focus-visible,
+  [data-refineui="slider"]:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: var(--refineui-focus-offset);
+  }
+
+  [data-refineui="button"],
+  [data-refineui="select-trigger"],
+  [data-refineui="chip"],
+  [data-refineui="segmented-control"],
+  [data-refineui="segmented-control-item"],
+  [data-refineui="tab"],
+  [data-refineui="switch"],
+  [data-refineui="breadcrumb"],
+  [data-refineui="calendar"],
+  [data-refineui="checkbox"],
+  [data-refineui="footer"],
+  [data-refineui="progress-stepper"],
+  [data-refineui="scroll-area"],
+  [data-refineui="search-field"],
+  [data-refineui="sidebar"],
+  [data-refineui="spinbutton"],
+  [data-refineui="stepper"],
+  [data-refineui="popover"],
+  [data-refineui="badge"],
+  [data-refineui="input"],
+  [data-refineui="textarea"],
+  [data-refineui="toast"],
+  [data-refineui="link"] {
+    border-color: ButtonBorder;
+  }
+
+  [data-refineui="alert"],
+  [data-refineui="card"],
+  [data-refineui="toast"],
+  [data-refineui="popover"],
+  [data-refineui="drawer"],
+  [data-refineui="tooltip"],
+  [data-refineui="menu"],
+  [data-refineui="dropdown-menu"],
+  [data-refineui="select-menu"],
+  [data-refineui="command"],
+  [data-refineui="dialog"] {
+    border-color: CanvasText;
+  }
+
+  [data-refineui="toast"] {
+    background-color: Canvas;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  [data-refineui="toast-icon"] {
+    color: ButtonText;
+    forced-color-adjust: none;
+  }
+
+  [data-refineui="dialog"],
+  [data-refineui="drawer"],
+  [data-refineui="popover"] {
+    border: var(--refineui-stroke-width-thin) solid CanvasText;
+  }
+
+  [data-refineui="popover"]:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: var(--refineui-focus-offset);
+  }
+}
+
+/*
+ * Environment — Prefers contrast
+ * Declared in Component Spec: states.environment includes "prefers-contrast"
+ * Strengthen borders for interactive surfaces; theme aliases stay valid here.
+ */
+@media (prefers-contrast: more) {
+  [data-refineui="button"],
+  [data-refineui="select-trigger"],
+  [data-refineui="accordion-trigger"],
+  [data-refineui="dialog"],
+  [data-refineui="drawer"],
+  [data-refineui="alert"],
+  [data-refineui="input"],
+  [data-refineui="textarea"],
+  [data-refineui="checkbox"],
+  [data-refineui="radio"],
+  [data-refineui="switch"],
+  [data-refineui="tab"],
+  [data-refineui="badge"],
+  [data-refineui="toast"],
+  [data-refineui="chip"],
+  [data-refineui="segmented-control"],
+  [data-refineui="segmented-control-item"] {
+    border-width: var(--refineui-stroke-width-thick);
+  }
+
+  [data-refineui="toast"] {
+    border-style: solid;
+    border-color: var(--refineui-color-alias-border-default);
+    background-color: var(--refineui-color-alias-surface-popover);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  [data-refineui="link"],
+  [data-refineui="breadcrumb-link"],
+  [data-refineui="sidebar-link"] {
+    text-decoration-thickness: from-font;
+    text-underline-offset: 0.12em;
+  }
+}
+
+/*
+ * Layout — RTL
+ * Spec: layout.direction=logical, layout.rtl=true (+ states.environment "dir")
+ * Components use logical Tailwind / CSS properties; document dir="rtl" flips automatically.
+ * Doctor layout-contract rejects physical left/right utilities in pilot components.
+ */

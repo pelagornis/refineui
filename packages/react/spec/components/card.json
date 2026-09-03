@@ -1,0 +1,57 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "card",
+  "version": 1,
+  "export": "Card",
+  "anatomy": {
+    "root": "card",
+    "action": "card-action",
+    "content": "card-content",
+    "description": "card-description",
+    "footer": "card-footer",
+    "header": "card-header",
+    "header_main": "card-header-main",
+    "title": "card-title"
+  },
+  "attributes": {
+    "data-refineui": "card"
+  },
+  "variants": {
+    "variant": [
+      "elevated",
+      "outlined"
+    ]
+  },
+  "states": {
+    "component": {
+      "data-state": [
+        "default",
+        "hover",
+        "pressed",
+        "disabled"
+      ]
+    },
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "dom": {
+    "card": {
+      "states": {
+        "component": {
+          "data-state": [
+            "default",
+            "hover",
+            "pressed",
+            "disabled"
+          ]
+        }
+      }
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

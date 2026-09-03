@@ -1,0 +1,40 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "breadcrumb",
+  "version": 1,
+  "export": "Breadcrumb",
+  "anatomy": {
+    "root": "breadcrumb",
+    "ellipsis": "breadcrumb-ellipsis",
+    "link": "breadcrumb-link",
+    "page": "breadcrumb-page"
+  },
+  "attributes": {
+    "data-refineui": "breadcrumb"
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "accessibility": {
+    "breadcrumb-page": {
+      "element": "div",
+      "role": "link"
+    }
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

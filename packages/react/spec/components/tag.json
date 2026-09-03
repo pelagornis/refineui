@@ -1,0 +1,65 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "tag",
+  "version": 1,
+  "export": "Tag",
+  "anatomy": {
+    "root": "chip",
+    "remove": "chip-remove"
+  },
+  "attributes": {
+    "data-refineui": "chip"
+  },
+  "variants": {
+    "variant": [
+      "default",
+      "outline",
+      "filled"
+    ],
+    "size": [
+      "sm",
+      "md",
+      "lg"
+    ]
+  },
+  "recipe": "chip",
+  "tokens": {
+    "visual": "chip"
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "environment": [
+      "forced-colors",
+      "dir",
+      "prefers-contrast"
+    ]
+  },
+  "accessibility": {
+    "chip-remove": {
+      "element": "button",
+      "native": true
+    }
+  },
+  "keyboard": {
+    "Enter": {
+      "action": "activate",
+      "native": true
+    },
+    "Space": {
+      "action": "activate",
+      "native": true
+    }
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

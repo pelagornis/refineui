@@ -27,7 +27,7 @@ export const resizableStyles = {
      * Horizontal group → vertical bar; vertical group → horizontal bar.
      */
     grip: clsx(
-        "pointer-events-none absolute left-1/2 top-1/2 z-[1] -translate-x-1/2 -translate-y-1/2",
+        "pointer-events-none absolute start-1/2 top-1/2 z-[1] -translate-x-1/2 -translate-y-1/2",
         "rounded-refineui-circle bg-refineui-alias-border-default",
         "transition-colors duration-[var(--refineui-motion-duration-fast)]",
         "group-hover/handle:bg-refineui-alias-border-strong",

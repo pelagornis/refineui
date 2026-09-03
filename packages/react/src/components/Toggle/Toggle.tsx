@@ -1,5 +1,4 @@
 import { clsx } from "clsx";
-import { componentSizes } from "../../componentSizes";
 import { toggleStyles } from "./style";
 import type { ToggleProps } from "./types";
 
@@ -40,12 +39,7 @@ export function Toggle({
             disabled={disabled}
             {...props}
         >
-            <span
-                className={clsx(toggleStyles.thumb, thumbClass)}
-                style={{
-                    transform: checked ? `translateX(${componentSizes.switchThumb})` : "translateX(0)",
-                }}
-            />
+            <span className={clsx(toggleStyles.thumb, thumbClass)} />
         </button>
     );
 }

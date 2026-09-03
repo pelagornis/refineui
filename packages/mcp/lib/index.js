@@ -8,7 +8,7 @@ import {
   listTokenCategories,
   normalizeSlug,
   searchDocs
-} from "./chunk-ME2OZXIM.js";
+} from "./chunk-J6MSGISG.js";
 export {
   DESIGN_RULES,
   getDocPage,

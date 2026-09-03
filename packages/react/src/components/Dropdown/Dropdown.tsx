@@ -664,7 +664,7 @@ export function DropdownSubTrigger({
                 size={iconSizes.small}
                 color="currentColor"
                 aria-hidden
-                className="ml-auto shrink-0"
+                className="ms-auto shrink-0"
             />
         </button>
     );

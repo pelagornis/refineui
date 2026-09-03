@@ -1,0 +1,67 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "segmented-control",
+  "version": 1,
+  "export": "SegmentedControl",
+  "anatomy": {
+    "root": "segmented-control",
+    "indicator": "segmented-control-indicator",
+    "item": "segmented-control-item"
+  },
+  "attributes": {
+    "data-refineui": "segmented-control"
+  },
+  "recipe": "segmented-control",
+  "tokens": {
+    "visual": "segmentedControl"
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "environment": [
+      "forced-colors",
+      "dir",
+      "prefers-contrast"
+    ]
+  },
+  "accessibility": {
+    "segmented-control": {
+      "element": "div",
+      "role": "radiogroup"
+    },
+    "segmented-control-item": {
+      "element": "button",
+      "role": "radio",
+      "requiredAttributes": {
+        "aria-checked": {
+          "required": true,
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "keyboard": {
+    "Enter": {
+      "action": "activate",
+      "native": true
+    },
+    "Space": {
+      "action": "activate",
+      "native": true
+    }
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    },
+    "behavior": {
+      "roving": true
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "drawer",
+  "version": 1,
+  "export": "Drawer",
+  "anatomy": {
+    "root": "drawer"
+  },
+  "attributes": {
+    "data-refineui": "drawer"
+  },
+  "variants": {
+    "type": [
+      "overlay",
+      "inline"
+    ],
+    "size": [
+      "sm",
+      "md",
+      "lg"
+    ]
+  },
+  "states": {
+    "component": {
+      "data-state": [
+        "open",
+        "closed"
+      ]
+    },
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "dom": {
+    "drawer": {
+      "states": {
+        "component": {
+          "data-state": [
+            "open",
+            "closed"
+          ]
+        }
+      }
+    }
+  },
+  "accessibility": {
+    "drawer": {
+      "element": "div",
+      "role": "dialog"
+    }
+  },
+  "keyboard": {
+    "Escape": "close"
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    },
+    "behavior": {
+      "trap": true,
+      "initial": "first-focusable",
+      "return": "trigger"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

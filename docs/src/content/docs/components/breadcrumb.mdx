@@ -2,12 +2,21 @@
 title: Breadcrumb
 description: Hierarchical trail showing page location.
 ---
+import { SpecRenderer } from "../../../components/spec";
+
 
 import BreadcrumbPreview from "../../../components/BreadcrumbPreview";
 import PackageInstall from "../../../components/PackageInstall.mdx";
 
 <div class="not-content my-6">
   <BreadcrumbPreview client:load />
+</div>
+
+
+## Contract
+
+<div class="not-content">
+  <SpecRenderer client:load component="breadcrumb" />
 </div>
 
 ## Installation

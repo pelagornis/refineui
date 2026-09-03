@@ -1,0 +1,62 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "stepper",
+  "version": 1,
+  "export": "Stepper",
+  "anatomy": {
+    "root": "stepper",
+    "content": "stepper-content",
+    "description": "stepper-description",
+    "indicator": "stepper-indicator",
+    "item": "stepper-item",
+    "list": "stepper-list",
+    "separator": "stepper-separator",
+    "separator_fill": "stepper-separator-fill",
+    "separator_rail": "stepper-separator-rail",
+    "separator_track": "stepper-separator-track",
+    "title": "stepper-title"
+  },
+  "attributes": {
+    "data-refineui": "stepper"
+  },
+  "states": {
+    "component": {
+      "data-state": [
+        "complete",
+        "current",
+        "upcoming"
+      ]
+    },
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "dom": {
+    "stepper-item": {
+      "states": {
+        "component": {
+          "data-state": [
+            "complete",
+            "current",
+            "upcoming"
+          ]
+        }
+      }
+    }
+  },
+  "keyboard": {
+    "Enter": {
+      "action": "activate",
+      "native": true
+    },
+    "Space": {
+      "action": "activate",
+      "native": true
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "table",
+  "version": 1,
+  "export": "Table",
+  "anatomy": {
+    "root": "table",
+    "row": "table-row"
+  },
+  "attributes": {
+    "data-refineui": "table"
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "badge",
+  "version": 1,
+  "export": "Badge",
+  "anatomy": {
+    "root": "badge"
+  },
+  "attributes": {
+    "data-refineui": "badge"
+  },
+  "variants": {
+    "variant": [
+      "default",
+      "neutral",
+      "outline",
+      "success",
+      "warning",
+      "danger"
+    ],
+    "layout": [
+      "label",
+      "number"
+    ]
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  },
+  "recipe": "badge",
+  "tokens": {
+    "visual": "badge"
+  },
+  "states": {
+    "environment": [
+      "forced-colors",
+      "dir",
+      "prefers-contrast"
+    ]
+  }
+}

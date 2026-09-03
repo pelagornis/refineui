@@ -1,0 +1,34 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "chart",
+  "version": 1,
+  "export": "Chart",
+  "anatomy": {
+    "root": "chart",
+    "axis_labels": "chart-axis-labels",
+    "bar": "chart-bar",
+    "bar_track": "chart-bar-track",
+    "bars": "chart-bars",
+    "body": "chart-body",
+    "content": "chart-content",
+    "grid": "chart-grid",
+    "hit_area": "chart-hit-area",
+    "legend": "chart-legend",
+    "legend_item": "chart-legend-item",
+    "line": "chart-line",
+    "line_area": "chart-line-area",
+    "line_stroke": "chart-line-stroke",
+    "plot": "chart-plot",
+    "plot_frame": "chart-plot-frame",
+    "point": "chart-point",
+    "tooltip": "chart-tooltip",
+    "y_axis": "chart-y-axis"
+  },
+  "attributes": {
+    "data-refineui": "chart"
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

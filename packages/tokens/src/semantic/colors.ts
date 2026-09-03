@@ -6,7 +6,7 @@
  *
  * Pair map typing follows `SemanticPalettePairsOf<PaletteColors>` in `types.ts`.
  */
-import { paletteColorCssVar } from "@refineui/utilities";
+import { paletteColorCssVar } from "../internal/color";
 import type {
     PaletteColors,
     SemanticColorModePair,

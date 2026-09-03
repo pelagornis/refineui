@@ -1,0 +1,77 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "tabs",
+  "version": 1,
+  "export": "Tabs",
+  "anatomy": {
+    "root": "tabs",
+    "tab": "tab",
+    "indicator": "tabs-indicator",
+    "list": "tabs-list"
+  },
+  "attributes": {
+    "data-refineui": "tabs"
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "environment": [
+      "forced-colors",
+      "dir",
+      "prefers-contrast"
+    ]
+  },
+  "accessibility": {
+    "tabs-list": {
+      "element": "div",
+      "role": "tablist"
+    },
+    "tab": {
+      "element": "button",
+      "role": "tab",
+      "requiredAttributes": {
+        "aria-selected": {
+          "required": true,
+          "type": "boolean"
+        },
+        "aria-controls": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    }
+  },
+  "keyboard": {
+    "ArrowRight": "next-trigger",
+    "ArrowDown": "next-trigger",
+    "ArrowLeft": "previous-trigger",
+    "ArrowUp": "previous-trigger",
+    "Home": "first-trigger",
+    "End": "last-trigger",
+    "Enter": {
+      "action": "activate",
+      "native": true
+    },
+    "Space": {
+      "action": "activate",
+      "native": true
+    }
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    },
+    "behavior": {
+      "roving": true
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  },
+  "tokens": {
+    "visual": "tabs"
+  }
+}

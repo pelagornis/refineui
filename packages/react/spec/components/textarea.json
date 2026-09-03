@@ -1,0 +1,22 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "textarea",
+  "version": 1,
+  "export": "Textarea",
+  "anatomy": {
+    "root": "textarea"
+  },
+  "attributes": {
+    "data-refineui": "textarea"
+  },
+  "accessibility": {
+    "textarea": {
+      "element": "input",
+      "native": true
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

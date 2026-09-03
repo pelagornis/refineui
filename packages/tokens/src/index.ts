@@ -3,6 +3,8 @@ export { colors } from "./global/colors";
 export { semanticColors, SEMANTIC_COLOR_ROWS, SEMANTIC_PALETTE_PAIRS, surfaceOverlayRgba } from "./semantic/colors";
 export type { SemanticColorName, SemanticPaletteName } from "./semantic/colors";
 export { semanticInteraction } from "./semantic/interaction";
+export { semanticFocus, SEMANTIC_FOCUS_PAIRS, type SemanticFocusName } from "./semantic/focus";
+export type { ThemeContextKey, SemanticThemeMap, TokenMeta, TokenStatus } from "./types";
 export { semanticShadows } from "./semantic/shadows";
 export { SEMANTIC_TEXT, type FoundationTypographyName, type SemanticTextName } from "./semantic/text";
 export {

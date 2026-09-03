@@ -1,0 +1,43 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "slider",
+  "version": 1,
+  "export": "Slider",
+  "anatomy": {
+    "root": "slider"
+  },
+  "attributes": {
+    "data-refineui": "slider"
+  },
+  "variants": {
+    "size": [
+      "sm",
+      "md"
+    ]
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "accessibility": {
+    "slider": {
+      "element": "input",
+      "native": true
+    }
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

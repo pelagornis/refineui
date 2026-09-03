@@ -1,0 +1,16 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "text",
+  "version": 1,
+  "export": "Text",
+  "anatomy": {
+    "root": "text"
+  },
+  "attributes": {
+    "data-refineui": "text"
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "box",
+  "version": 1,
+  "export": "Box",
+  "anatomy": {
+    "root": "box"
+  },
+  "attributes": {
+    "data-refineui": "box"
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

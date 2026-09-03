@@ -3,13 +3,24 @@ title: Accordion
 description: Collapsible content panels for dense info.
 ---
 
-import { PropSpec } from "../../../docs-ui";
-
-import AccordionPreview from "../../../components/AccordionPreview";
+import { ComponentPreview, SpecRenderer, TokenInspector } from "../../../components/spec";
 import PackageInstall from "../../../components/PackageInstall.mdx";
 
 <div class="not-content my-6">
-  <AccordionPreview client:load />
+  <ComponentPreview client:load component="accordion" />
+</div>
+
+## Contract
+
+<div class="not-content">
+  <SpecRenderer client:load component="accordion" />
+</div>
+
+
+## Tokens
+
+<div class="not-content">
+  <TokenInspector client:load component="accordion" />
 </div>
 
 ## Installation
@@ -45,38 +56,4 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@r
 </Accordion>
 ```
 
-## API Reference
-
-### Accordion
-
-<div class="not-content">
-  <PropSpec
-    client:load
-    rows={[
-    { prop: "type", default: "\"single\"", type: "\"single\" | \"multiple\"", description: "Selection mode: single or multiple panels open." },
-    { prop: "collapsible", default: "false", type: "boolean", description: "Allows closing the last open panel (single mode)." },
-    { prop: "value", default: "—", type: "string | string[]", description: "Controlled open panel value(s)." },
-    { prop: "defaultValue", default: "—", type: "string | string[]", description: "Uncontrolled initial open panel(s)." },
-    { prop: "onValueChange", default: "—", type: "(value?: string | string[]) => void", description: "Event handler when open panels change." },
-    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "Size tier (affects typography)." }
-    ]}
-  />
-</div>
-### AccordionItem
-
-<div class="not-content">
-  <PropSpec
-    client:load
-    rows={[
-    { prop: "value", default: "—", type: "string", description: "Unique identifier for this item (required)." }
-    ]}
-  />
-</div>
-### AccordionTrigger
-
-Clickable header that toggles the panel.
-
-### AccordionContent
-
-Collapsible content panel.
-
+Contract source: `packages/react/spec/components/accordion.json` — rendered by SpecRenderer above.

@@ -122,7 +122,7 @@ export const componentTypographyTokens = {
     },
 
     toast: {
-        message: role("bodyMd"),
+        message: role("bodyLg"),
     },
     /** Hierarchical tree — density matches sidebar / menu rows. */
     tree: {

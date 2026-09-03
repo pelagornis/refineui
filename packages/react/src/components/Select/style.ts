@@ -14,11 +14,11 @@ export const selectStyles = {
         "text-refineui-alias-foreground-primary outline-none",
         "transition-[color,background-color,border-color] duration-[var(--refineui-motion-duration-fast)]",
     ),
-    triggerInner: "min-w-0 flex-1 overflow-hidden text-left",
+    triggerInner: "min-w-0 flex-1 overflow-hidden text-start",
     triggerOpen: "text-refineui-alias-foreground-primary",
     triggerDisabled:
         "cursor-not-allowed border-refineui-alias-border-disabled bg-refineui-alias-background-surface-disabled text-refineui-alias-foreground-disabled",
-    value: "min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-left",
+    value: "min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-start",
     iconWrap: "inline-flex size-refineui-icon-xsmall shrink-0 items-center justify-center",
     chevron:
         "shrink-0 transition-transform duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",

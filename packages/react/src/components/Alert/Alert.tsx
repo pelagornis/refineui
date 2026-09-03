@@ -3,7 +3,7 @@ import { iconSizes } from "@refineui/tokens";
 import { WebIcon } from "../../WebIcon";
 import { Button } from "../Button";
 import { AlertContext, useAlertVariant } from "./context";
-import { alertStyles, variantIconNames, variantTitleClass } from "./style";
+import { alertVariantIcons, resolveAlertSlotClasses } from "./style";
 import type {
     AlertActionProps,
     AlertActionsProps,
@@ -17,16 +17,11 @@ import type {
 
 export function AlertIcon({ className, name, children, ...props }: AlertIconProps) {
     const variant = useAlertVariant();
-    const iconToneClass = variantTitleClass[variant];
-    const iconName = name ?? variantIconNames[variant];
+    const iconName = name ?? alertVariantIcons[variant];
     return (
         <div
-            data-refineui="alert-icon-slot"
-            className={clsx(
-                alertStyles.iconSlot,
-                iconToneClass,
-                className,
-            )}
+            data-refineui="alert-icon"
+            className={clsx(resolveAlertSlotClasses("icon", variant), className)}
             {...props}
         >
             {children ?? (
@@ -37,28 +32,74 @@ export function AlertIcon({ className, name, children, ...props }: AlertIconProp
 }
 
 export function AlertContent({ className, ...props }: AlertContentProps) {
-    return <div className={clsx(alertStyles.contentCol, className)} {...props} />;
+    const variant = useAlertVariant();
+    return (
+        <div
+            data-refineui="alert-content"
+            className={clsx(resolveAlertSlotClasses("content", variant), className)}
+            {...props}
+        />
+    );
 }
 
 export function AlertRow({ className, ...props }: AlertRowProps) {
-    return <div className={clsx(alertStyles.row, className)} {...props} />;
+    const variant = useAlertVariant();
+    return (
+        <div
+            data-refineui="alert-row"
+            className={clsx(resolveAlertSlotClasses("row", variant), className)}
+            {...props}
+        />
+    );
 }
 
 export function AlertBody({ className, ...props }: AlertBodyProps) {
-    return <div className={clsx(alertStyles.bodyCol, className)} {...props} />;
+    const variant = useAlertVariant();
+    return (
+        <div
+            data-refineui="alert-body"
+            className={clsx(resolveAlertSlotClasses("body", variant), className)}
+            {...props}
+        />
+    );
 }
 
 export function AlertActions({ className, ...props }: AlertActionsProps) {
-    return <div className={clsx(alertStyles.actionRow, className)} {...props} />;
+    const variant = useAlertVariant();
+    return (
+        <div
+            data-refineui="alert-actions"
+            className={clsx(resolveAlertSlotClasses("actions", variant), className)}
+            {...props}
+        />
+    );
 }
 
 export function AlertAction({ className, type = "button", ...props }: AlertActionProps) {
-    return <Button type={type} className={className} {...props} variant="primary" size="sm" />;
+    const variant = useAlertVariant();
+    return (
+        <Button
+            type={type}
+            className={clsx(resolveAlertSlotClasses("action", variant), className)}
+            {...props}
+            variant="primary"
+            size="sm"
+        />
+    );
 }
 
 export function AlertClose({ className, type = "button", children, ...props }: AlertCloseProps) {
+    const variant = useAlertVariant();
     return (
-        <Button type={type} variant="ghost" size="sm" layout="icon" aria-label="Close" className={className} {...props}>
+        <Button
+            type={type}
+            variant="ghost"
+            size="sm"
+            layout="icon"
+            aria-label="Close"
+            className={clsx(resolveAlertSlotClasses("close", variant), className)}
+            {...props}
+        >
             {children ?? (
                 <WebIcon
                     name="dismiss"
@@ -73,19 +114,17 @@ export function AlertClose({ className, type = "button", children, ...props }: A
     );
 }
 
-export function Alert({ variant = "info", className, ...props }: AlertProps) {
+export function Alert({ variant = "info", className, children, ...props }: AlertProps) {
     return (
         <AlertContext.Provider value={variant}>
             <div
                 data-refineui="alert"
+                data-variant={variant}
                 role="alert"
-                className={clsx(
-                    alertStyles.root,
-                    className,
-                )}
+                className={clsx(resolveAlertSlotClasses("root", variant), className)}
                 {...props}
             >
-                <AlertContent>{props.children}</AlertContent>
+                <AlertContent>{children}</AlertContent>
             </div>
         </AlertContext.Provider>
     );

@@ -1,0 +1,74 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "navigation-menu",
+  "version": 1,
+  "export": "NavigationMenu",
+  "anatomy": {
+    "root": "navigation-menu",
+    "content": "navigation-menu-content",
+    "content_panel": "navigation-menu-content-panel",
+    "indicator": "navigation-menu-indicator",
+    "item": "navigation-menu-item",
+    "link": "navigation-menu-link",
+    "list": "navigation-menu-list",
+    "trigger": "navigation-menu-trigger"
+  },
+  "attributes": {
+    "data-refineui": "navigation-menu"
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "component": {
+      "data-state": [
+        "open",
+        "closed"
+      ]
+    },
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "accessibility": {
+    "navigation-menu-trigger": {
+      "element": "button",
+      "requiredAttributes": {
+        "aria-expanded": {
+          "required": true,
+          "type": "boolean"
+        },
+        "aria-controls": {
+          "required": true,
+          "type": "string"
+        }
+      }
+    },
+    "navigation-menu-content": {
+      "element": "div",
+      "role": "region"
+    }
+  },
+  "keyboard": {
+    "Escape": "close",
+    "Enter": {
+      "action": "activate",
+      "native": true
+    },
+    "Space": {
+      "action": "activate",
+      "native": true
+    }
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

@@ -12,14 +12,11 @@ import {
 import { createPortal } from "react-dom";
 import { iconSizes, semanticInteraction, spacings } from "@refineui/tokens";
 import { motionMsToNumber } from "@refineui/utilities/animation";
-import { resolveColorTokenValue } from "@refineui/utilities/color";
-import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
 import { Button } from "../Button";
 import { toastStyles } from "./style";
 import type {
     ToastOptions,
-    ToastPosition,
     ToastProps,
     ToastRecord,
     ToastSwipeDirection,
@@ -116,12 +113,7 @@ function computeStackLayout(records: ToastRecord[], items: Record<string, HTMLLI
     return { naturalHeights, front, collapsedOffsets, expandedOffsets, collapsedBottom, expandedBottom, slotHeight };
 }
 
-function defaultSwipeDirections(position: ToastPosition): ToastSwipeDirection[] {
-    const vertical: ToastSwipeDirection = position.startsWith("top") ? "top" : "bottom";
-    if (position.endsWith("left")) return [vertical, "left"];
-    if (position.endsWith("right")) return [vertical, "right"];
-    return [vertical];
-}
+const DEFAULT_SWIPE_DIRECTIONS: ToastSwipeDirection[] = ["top"];
 
 let toastState: ToastRecord[] = [];
 const toastListeners = new Set<(records: ToastRecord[]) => void>();
@@ -241,13 +233,6 @@ function subscribeToasts(listener: (records: ToastRecord[]) => void) {
     };
 }
 
-const variantAccents: Record<ToastVariant, string> = {
-    default: resolveColorTokenValue(componentColorTokens.toast.accent.default),
-    success: resolveColorTokenValue(componentColorTokens.toast.accent.success),
-    error: resolveColorTokenValue(componentColorTokens.toast.accent.error),
-    warning: resolveColorTokenValue(componentColorTokens.toast.accent.warning),
-};
-
 const variantIconNames: Record<ToastVariant, string> = {
     default: "info",
     success: "checkmark",
@@ -267,9 +252,16 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(props
     const ariaLive =
         variant === "error" ? undefined : variant === "warning" ? ("assertive" as const) : ("polite" as const);
 
-    const accent = variantAccents[variant];
     const resolvedIconName = iconName ?? variantIconNames[variant];
-    const iconContent = icon ?? <WebIcon name={resolvedIconName} size={iconSizes.medium} color={accent} />;
+    const iconContent =
+        icon ?? (
+            <WebIcon
+                name={resolvedIconName}
+                size={iconSizes.medium}
+                color="currentColor"
+                iconStyle="filled"
+            />
+        );
 
     const isPrimaryAction =
         !action || typeof action !== "object" || !("variant" in action) || action.variant === "primary";
@@ -443,12 +435,18 @@ function SwipeableToast({ record, index, swipeDirections, onSwipeStart, onSwipeE
 
 export function Toaster({
     maxToasts = DEFAULT_MAX_TOASTS,
-    position = "top-center",
     swipeDirections,
     className,
 }: ToasterProps) {
     const toasterKeyRef = useRef(Symbol("refineui-toaster"));
-    const [isPortalOwner, setIsPortalOwner] = useState(false);
+    const isPortalOwner = useSyncExternalStore(
+        (onStoreChange) => {
+            toasterOwnerListeners.add(onStoreChange);
+            return () => toasterOwnerListeners.delete(onStoreChange);
+        },
+        () => activeToasterKey === toasterKeyRef.current,
+        () => false,
+    );
     const [records, setRecords] = useState<ToastRecord[]>([]);
     const timerMapRef = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
     const pausedRef = useRef<Set<string>>(new Set());
@@ -456,40 +454,21 @@ export function Toaster({
     const itemRefs = useRef<Record<string, HTMLLIElement | null>>({});
     const [layoutTick, setLayoutTick] = useState(0);
     const stackGapPx = useToastStackGapPx();
-    const resolvedSwipe = swipeDirections ?? defaultSwipeDirections(position);
+    const resolvedSwipe = swipeDirections ?? DEFAULT_SWIPE_DIRECTIONS;
 
     useIsomorphicLayoutEffect(() => {
         const key = toasterKeyRef.current;
-        // Latest mount wins — avoids duplicate portals (docs HMR / remount) that look like a stuck toast behind.
+        // Latest mount wins — avoids duplicate portals (docs HMR / remount).
         activeToasterKey = key;
-        setIsPortalOwner(true);
         notifyToasterOwners();
 
-        const onOwnerChange = () => {
-            setIsPortalOwner(activeToasterKey === key);
-        };
-        toasterOwnerListeners.add(onOwnerChange);
-
         return () => {
-            toasterOwnerListeners.delete(onOwnerChange);
             if (activeToasterKey === key) {
                 activeToasterKey = null;
                 notifyToasterOwners();
             }
         };
     }, []);
-
-    useIsomorphicLayoutEffect(() => {
-        if (!isPortalOwner) return;
-        const root = rootRef.current;
-        if (!root) return;
-        // Drop orphaned toaster portals left by HMR / remounts.
-        for (const el of Array.from(document.querySelectorAll('[data-refineui="toaster"]'))) {
-            if (el !== root) {
-                el.remove();
-            }
-        }
-    }, [isPortalOwner]);
 
     useEffect(() => {
         if (!isPortalOwner) return;
@@ -597,7 +576,6 @@ export function Toaster({
             dir="ltr"
             tabIndex={-1}
             data-refineui="toaster"
-            data-position={position}
             className={clsx(toastStyles.toasterRoot, className)}
             style={{
                 ["--refineui-toast-gap" as string]: `${stackGapPx}px`,

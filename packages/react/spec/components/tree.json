@@ -1,0 +1,80 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "tree",
+  "version": 1,
+  "export": "Tree",
+  "anatomy": {
+    "root": "tree",
+    "item": "tree-item",
+    "item_chevron": "tree-item-chevron",
+    "item_content": "tree-item-content",
+    "item_main": "tree-item-main",
+    "item_panel": "tree-item-panel",
+    "item_trigger": "tree-item-trigger"
+  },
+  "attributes": {
+    "data-refineui": "tree"
+  },
+  "variants": {
+    "size": [
+      "sm",
+      "md",
+      "lg"
+    ]
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "accessibility": {
+    "tree": {
+      "element": "div",
+      "role": "tree"
+    },
+    "tree-item": {
+      "element": "div",
+      "role": "treeitem",
+      "requiredAttributes": {
+        "aria-selected": {
+          "required": true,
+          "type": "boolean"
+        }
+      }
+    },
+    "tree-item-trigger": {
+      "element": "button"
+    }
+  },
+  "keyboard": {
+    "ArrowDown": "next-trigger",
+    "ArrowUp": "previous-trigger",
+    "Home": "first-trigger",
+    "End": "last-trigger",
+    "Enter": {
+      "action": "activate",
+      "native": true
+    },
+    "Space": {
+      "action": "activate",
+      "native": true
+    }
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    },
+    "behavior": {
+      "roving": true
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

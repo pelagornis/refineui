@@ -1,0 +1,203 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ui.pelagornis.com/schemas/component-spec.schema.json",
+  "title": "RefineUI Component Spec",
+  "description": "Behavior and DOM contract for a RefineUI component — not implementation documentation.",
+  "type": "object",
+  "required": ["component", "version"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "component": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "version": { "type": "integer", "const": 1 },
+    "export": { "type": "string" },
+    "anatomy": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "variants": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "states": {
+      "type": "object",
+      "properties": {
+        "pseudo": { "type": "array", "items": { "type": "string" } },
+        "component": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "availability": { "type": "array", "items": { "type": "string" } },
+        "environment": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "prefers-reduced-motion",
+              "forced-colors",
+              "prefers-contrast",
+              "prefers-color-scheme",
+              "pointer",
+              "viewport",
+              "dir"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "attributes": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "dom": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "states": { "$ref": "#/properties/states" }
+        }
+      }
+    },
+    "accessibility": {
+      "type": "object",
+      "description": "Slot-keyed accessibility contracts (data-refineui → contract)",
+      "additionalProperties": { "$ref": "#/definitions/accessibilitySlot" }
+    },
+    "keyboard": {
+      "type": "object",
+      "description": "Keyboard bindings — key name to action contract",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "activate",
+              "close",
+              "next-trigger",
+              "previous-trigger",
+              "first-trigger",
+              "last-trigger"
+            ]
+          },
+          { "$ref": "#/definitions/keyboardBinding" }
+        ]
+      }
+    },
+    "focus": {
+      "type": "object",
+      "properties": {
+        "visual": { "$ref": "#/definitions/focusVisual" },
+        "behavior": { "$ref": "#/definitions/focusBehavior" }
+      },
+      "additionalProperties": false
+    },
+    "layout": {
+      "type": "object",
+      "description": "Directionality / RTL contract — logical properties preferred",
+      "properties": {
+        "direction": { "enum": ["logical", "physical"] },
+        "rtl": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "tokens": {
+      "type": "object",
+      "properties": {
+        "visual": { "type": "string" }
+      }
+    },
+    "recipe": { "type": "string" }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "accessibilityAttribute": {
+      "type": "object",
+      "required": ["required"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "type": { "enum": ["boolean", "string", "token"] }
+      },
+      "additionalProperties": false
+    },
+    "accessibilityRelationship": {
+      "type": "object",
+      "required": ["attribute", "target", "required"],
+      "properties": {
+        "attribute": {
+          "enum": ["aria-controls", "aria-labelledby", "aria-describedby"]
+        },
+        "target": { "type": "string" },
+        "targetAttribute": { "enum": ["id"] },
+        "required": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "accessibilitySlot": {
+      "type": "object",
+      "properties": {
+        "element": { "enum": ["button", "div", "input"] },
+        "role": { "type": "string" },
+        "native": { "type": "boolean" },
+        "requiredAttributes": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/definitions/accessibilityAttribute" }
+        },
+        "relationships": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/accessibilityRelationship" }
+        },
+        "labeling": {
+          "type": "object",
+          "properties": {
+            "accessibleName": { "enum": ["required", "optional"] },
+            "labelledBy": { "type": "string" },
+            "describedBy": { "type": "string" }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "keyboardBinding": {
+      "type": "object",
+      "required": ["action"],
+      "properties": {
+        "action": {
+          "enum": [
+            "activate",
+            "close",
+            "next-trigger",
+            "previous-trigger",
+            "first-trigger",
+            "last-trigger"
+          ]
+        },
+        "native": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "focusVisual": {
+      "type": "object",
+      "required": ["required", "selector"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "selector": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "focusBehavior": {
+      "type": "object",
+      "properties": {
+        "trap": { "type": "boolean" },
+        "initial": { "type": "string" },
+        "return": { "type": "string" },
+        "roving": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

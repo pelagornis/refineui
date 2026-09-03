@@ -2,6 +2,8 @@
 title: Grid
 description: CSS grid with equal columns or Foundation min-item auto-fit.
 ---
+import { SpecRenderer } from "../../../components/spec";
+
 
 import { PropSpec } from "../../../docs-ui";
 
@@ -12,6 +14,13 @@ import PackageInstall from "../../../components/PackageInstall.mdx";
 
 <div class="not-content my-6">
   <GridPreview client:load />
+</div>
+
+
+## Contract
+
+<div class="not-content">
+  <SpecRenderer client:load component="grid" />
 </div>
 
 ## Installation

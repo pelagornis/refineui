@@ -1,0 +1,41 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "pagination",
+  "version": 1,
+  "export": "Pagination",
+  "anatomy": {
+    "root": "pagination"
+  },
+  "attributes": {
+    "data-refineui": "pagination"
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "keyboard": {
+    "Enter": {
+      "action": "activate",
+      "native": true
+    },
+    "Space": {
+      "action": "activate",
+      "native": true
+    }
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

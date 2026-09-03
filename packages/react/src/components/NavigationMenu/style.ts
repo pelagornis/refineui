@@ -31,7 +31,7 @@ export const navigationMenuStyles = {
     linkChevronSpacer: clsx(chevron, "inline-block size-refineui-icon-xsmall shrink-0 pointer-events-none invisible"),
     content: clsx(
         /** Flush under trigger so pointer does not leave the item while moving into the panel. */
-        "absolute left-0 top-full z-refineui-messages pt-refineui-size-xx-small",
+        "absolute start-0 top-full z-refineui-messages pt-refineui-size-xx-small",
         "box-border min-w-refineui-menu-panel-width",
         "outline-none",
     ),
@@ -46,7 +46,7 @@ export const navigationMenuStyles = {
     linkInContent: clsx(
         componentTextClass(componentTypographyTokens.navigationMenu.contentLink),
         "box-border flex w-full cursor-pointer items-center gap-refineui-size-x-small",
-        "rounded-refineui-large border-none bg-transparent p-refineui-size-x-small text-left no-underline outline-none",
+        "rounded-refineui-large border-none bg-transparent p-refineui-size-x-small text-start no-underline outline-none",
         "text-refineui-alias-foreground-primary",
         "transition-[background-color,color] duration-[var(--refineui-motion-duration-fast)]",
     ),

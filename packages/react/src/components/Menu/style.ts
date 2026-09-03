@@ -22,7 +22,7 @@ export const menuStyles = {
     dividerWrap: "flex w-full items-center px-refineui-size-x-small py-refineui-size-xxx-small",
     dividerLine: "h-px w-full shrink-0 bg-refineui-alias-border-default",
     itemBase:
-        "block w-full rounded-refineui-large border-none bg-transparent p-refineui-size-x-small text-left outline-none",
+        "block w-full rounded-refineui-large border-none bg-transparent p-refineui-size-x-small text-start outline-none",
     itemDisabled: "cursor-not-allowed text-refineui-alias-foreground-disabled",
     itemEnabled: "cursor-pointer text-refineui-alias-foreground-primary",
     row: "flex items-center gap-refineui-size-x-small",

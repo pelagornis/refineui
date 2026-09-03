@@ -1,0 +1,71 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "alert",
+  "version": 1,
+  "export": "Alert",
+  "anatomy": {
+    "root": "alert",
+    "icon": "alert-icon",
+    "content": "alert-content",
+    "row": "alert-row",
+    "body": "alert-body",
+    "title": "alert-title",
+    "description": "alert-description",
+    "actions": "alert-actions",
+    "action": "alert-action",
+    "close": "alert-close"
+  },
+  "variants": {
+    "variant": [
+      "default",
+      "info",
+      "success",
+      "warning",
+      "danger",
+      "custom"
+    ]
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "environment": [
+      "forced-colors",
+      "dir",
+      "prefers-contrast"
+    ]
+  },
+  "attributes": {
+    "data-refineui": "alert",
+    "data-variant": "variant"
+  },
+  "dom": {
+    "alert": {
+      "states": {
+        "pseudo": [
+          "focus-visible"
+        ]
+      }
+    }
+  },
+  "accessibility": {
+    "alert": {
+      "element": "div",
+      "role": "alert"
+    }
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  },
+  "tokens": {
+    "visual": "alert"
+  },
+  "recipe": "alert"
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "footer",
+  "version": 1,
+  "export": "Footer",
+  "anatomy": {
+    "root": "footer",
+    "brand": "footer-brand",
+    "brand_description": "footer-brand-description",
+    "brand_name": "footer-brand-name",
+    "copyright": "footer-copyright",
+    "explore": "footer-explore",
+    "group": "footer-group",
+    "group_label": "footer-group-label",
+    "link": "footer-link",
+    "locale": "footer-locale",
+    "logo": "footer-logo",
+    "meta": "footer-meta",
+    "meta_end": "footer-meta-end",
+    "nav": "footer-nav",
+    "social": "footer-social"
+  },
+  "attributes": {
+    "data-refineui": "footer"
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

@@ -8,10 +8,10 @@ export const chartStyles = {
     plotColumn: "contents",
     plotFrame: "relative col-start-2 row-start-1 min-w-0",
     plot: "block h-auto w-full min-w-0 aspect-[5/2] overflow-visible",
-    yAxis: "relative col-start-1 row-start-1 min-w-refineui-foundation-size-400 pr-refineui-size-x-small",
+    yAxis: "relative col-start-1 row-start-1 min-w-refineui-foundation-size-400 pe-refineui-size-x-small",
     yAxisTick: clsx(
         componentTextClass(componentTypographyTokens.chart.axisLabel),
-        "absolute right-0 -translate-y-1/2 whitespace-nowrap text-right tabular-nums text-refineui-alias-foreground-tertiary",
+        "absolute end-0 -translate-y-1/2 whitespace-nowrap text-end tabular-nums text-refineui-alias-foreground-tertiary",
     ),
     xAxis: "relative col-start-2 row-start-2 mt-refineui-size-small h-refineui-foundation-size-240",
     xAxisLabel: clsx(

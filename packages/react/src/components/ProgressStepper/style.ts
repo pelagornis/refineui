@@ -20,7 +20,7 @@ export const progressStepperStyles = {
     listWrap: "relative w-full overflow-visible",
 
     track: clsx(
-        "pointer-events-none absolute left-0 right-0 top-0 z-0 w-full overflow-hidden rounded-refineui-circle",
+        "pointer-events-none absolute start-0 end-0 top-0 z-0 w-full overflow-hidden rounded-refineui-circle",
         "h-[var(--refineui-progress-stepper-track)]",
         "bg-refineui-alias-background-brand-subtle",
     ),

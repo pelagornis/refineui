@@ -1,0 +1,61 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "progress-stepper",
+  "version": 1,
+  "export": "ProgressStepper",
+  "anatomy": {
+    "root": "progress-stepper",
+    "fill": "progress-stepper-fill",
+    "item": "progress-stepper-item",
+    "label": "progress-stepper-label",
+    "list": "progress-stepper-list",
+    "list_wrap": "progress-stepper-list-wrap",
+    "marker": "progress-stepper-marker",
+    "track": "progress-stepper-track"
+  },
+  "attributes": {
+    "data-refineui": "progress-stepper"
+  },
+  "states": {
+    "component": {
+      "data-state": [
+        "complete",
+        "current",
+        "upcoming"
+      ]
+    },
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "dom": {
+    "progress-stepper-item": {
+      "states": {
+        "component": {
+          "data-state": [
+            "complete",
+            "current",
+            "upcoming"
+          ]
+        }
+      }
+    }
+  },
+  "accessibility": {
+    "progress-stepper-track": {
+      "element": "div",
+      "role": "progressbar"
+    }
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

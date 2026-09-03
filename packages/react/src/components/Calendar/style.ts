@@ -14,8 +14,8 @@ export const calendarStyles = {
     dayDefault: "rounded-refineui-large bg-transparent text-refineui-alias-foreground-primary",
     dayOtherMonthDefault: "rounded-refineui-large bg-transparent text-refineui-alias-foreground-disabled",
     dayWrapEndpoint: "box-border flex size-refineui-calendar-day-size items-center justify-center bg-refineui-alias-background-primary-hover",
-    dayWrapEndpointStart: "rounded-l-refineui-large",
-    dayWrapEndpointEnd: "rounded-r-refineui-large",
+    dayWrapEndpointStart: "rounded-s-refineui-large",
+    dayWrapEndpointEnd: "rounded-e-refineui-large",
     root:
         "box-border flex w-fit min-w-refineui-calendar-min-width flex-col gap-refineui-size-none rounded-refineui-large bg-refineui-alias-background-primary p-refineui-size-x-large",
     header: "flex w-full min-w-0 items-center justify-between pb-refineui-size-large",

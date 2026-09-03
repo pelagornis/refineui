@@ -5,12 +5,12 @@ export default function ToastPreview() {
     return (
         <Looks>
             <Look>
-                <Toaster position="top-center" />
+                <Toaster />
                 <Button
                     type="button"
                     variant="primary"
                     onClick={() =>
-                        toast("Done", {
+                        toast("Saved successfully", {
                             variant: "success",
                         })
                     }

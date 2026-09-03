@@ -2,6 +2,8 @@
 title: Toast
 description: Transient notification message overlay.
 ---
+import { SpecRenderer, TokenInspector } from "../../../components/spec";
+
 
 import { PropSpec } from "../../../docs-ui";
 
@@ -10,6 +12,20 @@ import PackageInstall from "../../../components/PackageInstall.mdx";
 
 <div class="not-content my-6">
   <ToastPreview client:load />
+</div>
+
+
+## Contract
+
+<div class="not-content">
+  <SpecRenderer client:load component="toast" />
+</div>
+
+
+## Tokens
+
+<div class="not-content">
+  <TokenInspector client:load component="toast" />
 </div>
 
 ## Installation
@@ -22,7 +38,7 @@ import PackageInstall from "../../../components/PackageInstall.mdx";
 import { Toast, Toaster, toast } from "@refineui/react";
 
 // Add Toaster to your app root (one toast at a time by default)
-<Toaster position="top-center" />
+<Toaster />
 
 // Show a toast — replaces any currently visible toast
 toast("Settings saved successfully", {
@@ -39,7 +55,7 @@ toast("Upload failed", {
 });
 ```
 
-Swipe or drag the toast toward an edge (based on `position`) to dismiss it early.
+Swipe or drag the toast upward to dismiss it early.
 
 ## API Reference
 
@@ -64,8 +80,7 @@ Swipe or drag the toast toward an edge (based on `position`) to dismiss it early
     client:load
     rows={[
     { prop: "maxToasts", default: "1", type: "number", description: "Maximum simultaneous toasts. Default replaces the previous toast." },
-    { prop: "position", default: "\"top-center\"", type: "\"top-left\" | \"top-center\" | \"top-right\" | \"bottom-left\" | \"bottom-center\" | \"bottom-right\"", description: "Toast position." },
-    { prop: "swipeDirections", default: "from position", type: "(\"top\" | \"right\" | \"bottom\" | \"left\")[]", description: "Allowed swipe-to-dismiss directions." }
+    { prop: "swipeDirections", default: "[\"top\"]", type: "(\"top\" | \"right\" | \"bottom\" | \"left\")[]", description: "Allowed swipe-to-dismiss directions." }
     ]}
   />
 </div>

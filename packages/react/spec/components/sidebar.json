@@ -1,0 +1,45 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "sidebar",
+  "version": 1,
+  "export": "Sidebar",
+  "anatomy": {
+    "root": "sidebar",
+    "brand": "sidebar-brand",
+    "content": "sidebar-content",
+    "footer": "sidebar-footer",
+    "group": "sidebar-group",
+    "group_label": "sidebar-group-label",
+    "header": "sidebar-header",
+    "link": "sidebar-link",
+    "nav": "sidebar-nav",
+    "peek": "sidebar-peek",
+    "peek_edge": "sidebar-peek-edge",
+    "peek_inset": "sidebar-peek-inset",
+    "peek_panel": "sidebar-peek-panel",
+    "peek_pin": "sidebar-peek-pin",
+    "peek_surface": "sidebar-peek-surface"
+  },
+  "attributes": {
+    "data-refineui": "sidebar"
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

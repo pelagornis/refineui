@@ -1,0 +1,29 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "avatars",
+  "version": 1,
+  "export": "Avatars",
+  "anatomy": {
+    "root": "avatars"
+  },
+  "attributes": {
+    "data-refineui": "avatars"
+  },
+  "variants": {
+    "size": [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl"
+    ],
+    "layout": [
+      "stack",
+      "spread"
+    ]
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

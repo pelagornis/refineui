@@ -3,13 +3,24 @@ title: Dialog
 description: Modal dialog window overlay for critical tasks.
 ---
 
-import { PropSpec } from "../../../docs-ui";
-
-import DialogDemo from "../../../components/DialogDemo";
+import { ComponentPreview, SpecRenderer, TokenInspector } from "../../../components/spec";
 import PackageInstall from "../../../components/PackageInstall.mdx";
 
 <div class="not-content my-6">
-  <DialogDemo client:load />
+  <ComponentPreview client:load component="dialog" variant="lg" />
+</div>
+
+## Contract
+
+<div class="not-content">
+  <SpecRenderer client:load component="dialog" />
+</div>
+
+
+## Tokens
+
+<div class="not-content">
+  <TokenInspector client:load component="dialog" />
 </div>
 
 ## Installation
@@ -27,7 +38,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogClose,
-  Button
+  Button,
 } from "@refineui/react";
 
 <Dialog>
@@ -54,55 +65,4 @@ import {
 </Dialog>
 ```
 
-## API Reference
-
-### Dialog
-
-<div class="not-content">
-  <PropSpec
-    client:load
-    rows={[
-    { prop: "open", default: "—", type: "boolean", description: "Controlled open state." },
-    { prop: "defaultOpen", default: "—", type: "boolean", description: "Uncontrolled initial open state." },
-    { prop: "onOpenChange", default: "—", type: "(open: boolean) => void", description: "Event handler when open state changes." },
-    { prop: "size", default: "\"lg\"", type: "\"lg\" | \"sm\"", description: "Dialog panel size: Large (600px) or Small (300px)." }
-    ]}
-  />
-</div>
-### DialogTrigger
-
-Trigger element (usually a Button).
-
-### DialogContent
-
-<div class="not-content">
-  <PropSpec
-    client:load
-    rows={[
-    { prop: "scrollable", default: "true", type: "boolean", description: "When true, wraps children in ScrollArea. Set false for custom scroll handling." },
-    { prop: "container", default: "—", type: "Element | DocumentFragment | null", description: "Portal target." }
-    ]}
-  />
-</div>
-### DialogHeader
-
-<div class="not-content">
-  <PropSpec
-    client:load
-    rows={[
-    { prop: "showClose", default: "true", type: "boolean", description: "Shows the close button." }
-    ]}
-  />
-</div>
-### DialogTitle
-
-Dialog heading element.
-
-### DialogDescription
-
-Dialog description text.
-
-### DialogClose
-
-Close button.
-
+Contract source: `packages/react/spec/components/dialog.json` — rendered by SpecRenderer above.

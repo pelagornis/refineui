@@ -7,7 +7,7 @@ export const labelStyles = {
     base: "mb-refineui-size-xx-small block",
     disabled: "text-refineui-alias-foreground-disabled",
     enabled: "text-refineui-alias-foreground-primary",
-    required: "ml-refineui-size-xxx-small text-refineui-alias-foreground-error",
+    required: "ms-refineui-size-xxx-small text-refineui-alias-foreground-error",
 } as const;
 
 export const labelSizeTypo: Record<NonNullable<LabelProps["size"]>, string> = {

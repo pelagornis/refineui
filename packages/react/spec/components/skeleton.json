@@ -1,0 +1,21 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "skeleton",
+  "version": 1,
+  "export": "Skeleton",
+  "anatomy": {
+    "root": "skeleton"
+  },
+  "attributes": {
+    "data-refineui": "skeleton"
+  },
+  "accessibility": {
+    "skeleton": {
+      "element": "div"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

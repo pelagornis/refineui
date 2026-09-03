@@ -1,0 +1,16 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "spacer",
+  "version": 1,
+  "export": "Spacer",
+  "anatomy": {
+    "root": "spacer"
+  },
+  "attributes": {
+    "data-refineui": "spacer"
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

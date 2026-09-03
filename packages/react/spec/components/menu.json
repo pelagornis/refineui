@@ -1,0 +1,67 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "menu",
+  "version": 1,
+  "export": "Menu",
+  "anatomy": {
+    "root": "menu-root",
+    "divider": "menu-divider",
+    "item": "menu-item",
+    "popover": "menu-popover",
+    "section": "menu-section"
+  },
+  "attributes": {
+    "data-refineui": "menu"
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "component": {
+      "data-state": [
+        "open",
+        "closed",
+        "default",
+        "hover",
+        "pressed",
+        "active",
+        "disabled"
+      ]
+    },
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "accessibility": {
+    "menu": {
+      "element": "div",
+      "role": "menu"
+    },
+    "menu-item": {
+      "element": "div",
+      "role": "menuitem"
+    }
+  },
+  "keyboard": {
+    "Escape": "close",
+    "Enter": {
+      "action": "activate",
+      "native": true
+    },
+    "Space": {
+      "action": "activate",
+      "native": true
+    }
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

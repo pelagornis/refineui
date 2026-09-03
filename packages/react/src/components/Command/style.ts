@@ -46,13 +46,13 @@ export const commandStyles = {
     itemBase: clsx(
         componentTextClass(componentTypographyTokens.command.item),
         "flex w-full items-center gap-refineui-size-x-small rounded-refineui-large border-none bg-transparent",
-        "px-refineui-size-x-small py-refineui-size-small text-left outline-none",
+        "px-refineui-size-x-small py-refineui-size-small text-start outline-none",
     ),
     itemDisabled: "cursor-not-allowed text-refineui-alias-foreground-disabled",
     itemEnabled: "cursor-pointer text-refineui-alias-foreground-primary",
     iconWrap: "inline-flex shrink-0 items-center justify-center text-current [&>span]:leading-none",
-    label: "min-w-0 flex-1 truncate text-left",
-    rightWrap: "ml-auto flex shrink-0 items-center gap-refineui-size-x-small",
+    label: "min-w-0 flex-1 truncate text-start",
+    rightWrap: "ms-auto flex shrink-0 items-center gap-refineui-size-x-small",
     shortcut: clsx(
         componentTextClass(componentTypographyTokens.command.shortcut),
         "shrink-0 tracking-wide text-refineui-alias-foreground-tertiary",

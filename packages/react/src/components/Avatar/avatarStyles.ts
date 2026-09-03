@@ -242,15 +242,15 @@ export const avatarGroupCountTypo = buildSemanticTextClassMap(
 );
 
 export const avatarStatusPosition: Record<NormalizedAvatarSize, string> = {
-    xxxsmall: "bottom-0 right-0",
-    xxsmall: "bottom-0 right-0",
-    xsmall: "bottom-px right-px",
-    small: "bottom-px right-px",
-    medium: "bottom-px right-px",
-    large: "bottom-px right-px",
-    xlarge: "bottom-px right-px",
-    xxlarge: "bottom-0 right-0",
-    xxxlarge: "bottom-[-2px] right-[-2px]",
+    xxxsmall: "bottom-0 end-0",
+    xxsmall: "bottom-0 end-0",
+    xsmall: "bottom-px end-px",
+    small: "bottom-px end-px",
+    medium: "bottom-px end-px",
+    large: "bottom-px end-px",
+    xlarge: "bottom-px end-px",
+    xxlarge: "bottom-0 end-0",
+    xxxlarge: "bottom-[-2px] end-[-2px]",
 };
 
 export const avatarStatusDim: Record<NormalizedAvatarSize, string> = {

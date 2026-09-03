@@ -3,7 +3,8 @@ export type DoctorCategory =
     | "compatibility"
     | "foundations"
     | "components"
-    | "library";
+    | "library"
+    | "accessibility";
 
 export type CheckStatus = "pass" | "fail" | "not-applicable" | "not-verified";
 

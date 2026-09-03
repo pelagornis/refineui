@@ -1,0 +1,16 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "container",
+  "version": 1,
+  "export": "Container",
+  "anatomy": {
+    "root": "container"
+  },
+  "attributes": {
+    "data-refineui": "container"
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

@@ -186,8 +186,9 @@ export function DialogContent({ className, style, container, scrollable = true, 
     const root = (
         <div
             data-refineui="dialog"
+            data-state={open ? "open" : "closed"}
             role="dialog"
-            aria-modal="true"
+            aria-modal={true}
             aria-labelledby={hasTitle ? titleId : undefined}
             aria-describedby={hasDescription ? descriptionId : undefined}
             className={clsx(

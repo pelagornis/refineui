@@ -3,13 +3,23 @@ title: Button
 description: Starts an action — save, continue, open a panel, or close a dialog.
 ---
 
-import { PropSpec } from "../../../docs-ui";
-
-import ButtonDocs from "../../../components/ButtonDocs";
+import { ComponentPreview, SpecRenderer, TokenInspector } from "../../../components/spec";
 import PackageInstall from "../../../components/PackageInstall.mdx";
 
+<div class="not-content my-6">
+  <ComponentPreview client:load component="button" variant="primary" />
+</div>
+
+## Contract
+
 <div class="not-content">
-  <ButtonDocs client:load />
+  <SpecRenderer client:load component="button" />
+</div>
+
+## Tokens
+
+<div class="not-content">
+  <TokenInspector client:load component="button" variant="primary" />
 </div>
 
 ## Installation
@@ -37,17 +47,4 @@ import { iconSizes } from "@refineui/tokens";
 </Button>
 ```
 
-## API Reference
-
-<div class="not-content">
-  <PropSpec
-    client:load
-    rows={[
-      { prop: "variant", default: "\"primary\"", type: "\"primary\" | \"secondary\" | \"outline\" | \"ghost\"", description: "Visual style." },
-      { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "Size tier." },
-      { prop: "layout", default: "\"label\"", type: "\"label\" | \"icon\"", description: "Label text or icon-only square target." },
-      { prop: "fullWidth", default: "false", type: "boolean", description: "Stretches to the parent width." },
-      { prop: "disabled", default: "false", type: "boolean", description: "Disables interaction." }
-    ]}
-  />
-</div>
+Contract source: `packages/react/spec/components/button.json` — rendered by SpecRenderer above.

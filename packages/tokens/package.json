@@ -11,10 +11,9 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsup && node scripts/generate-css.mjs"
+    "build": "tsup && node scripts/generate-css.mjs && node scripts/generate-spec.mjs"
   },
   "dependencies": {
-    "@refineui/utilities": "workspace:*",
     "@swc/helpers": "^0.5.1"
   },
   "devDependencies": {

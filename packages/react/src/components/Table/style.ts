@@ -11,7 +11,7 @@ export const tableStyles = {
         "relative box-border w-full overflow-x-auto",
         "px-refineui-size-small pb-refineui-size-small",
     ),
-    table: "w-full caption-bottom border-separate text-left",
+    table: "w-full caption-bottom border-separate text-start",
     header: "",
     body: "",
     footer: "",

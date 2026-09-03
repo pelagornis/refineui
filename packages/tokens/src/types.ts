@@ -1,5 +1,41 @@
-/** Foundation Alias/Color — Light/Dark CSS values (`var(--refineui-color-*)`, etc.) */
-export type SemanticColorModePair = { light: string; dark: string };
+/**
+ * Theme / context keys supported today and reserved for future extension.
+ * CSS currently emits `light` + `dark`; additional keys map to attribute selectors when adopted.
+ */
+export type ThemeContextKey =
+    | "light"
+    | "dark"
+    | "highContrast"
+    | "forcedColors"
+    | "brand";
+
+/** Foundation Alias/Color — per-theme CSS values (`var(--refineui-color-*)`, etc.) */
+export type SemanticColorModePair = Readonly<{
+    light: string;
+    dark: string;
+}>;
+
+/**
+ * Extensible theme map — `light`/`dark` required; other contexts optional until CSS adopts them.
+ *
+ * @example
+ * { light: "primaryBlack", dark: "primaryGray", highContrast: "primaryWhite" }
+ */
+export type SemanticThemeMap<TValue extends string = string> = Readonly<
+    Partial<Record<ThemeContextKey, TValue>> & Pick<Record<ThemeContextKey, TValue>, "light" | "dark">
+>;
+
+/** Token lifecycle for spec / MCP / Doctor metadata. */
+export type TokenStatus = "experimental" | "stable" | "deprecated" | "internal";
+
+/** Minimal token metadata for generated spec and AI tooling. */
+export type TokenMeta = Readonly<{
+    description?: string;
+    category: string;
+    status?: TokenStatus;
+    deprecated?: boolean;
+    references?: readonly string[];
+}>;
 
 /**
  * Design tokens for Palettet Color

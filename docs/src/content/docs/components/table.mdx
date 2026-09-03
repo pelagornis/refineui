@@ -2,12 +2,21 @@
 title: Table
 description: Data grid table for structured records.
 ---
+import { SpecRenderer } from "../../../components/spec";
+
 
 import TablePreview from "../../../components/TablePreview";
 import PackageInstall from "../../../components/PackageInstall.mdx";
 
 <div class="not-content my-6">
   <TablePreview client:load />
+</div>
+
+
+## Contract
+
+<div class="not-content">
+  <SpecRenderer client:load component="table" />
 </div>
 
 ## Installation

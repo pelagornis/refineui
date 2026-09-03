@@ -1,0 +1,50 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "scroll-area",
+  "version": 1,
+  "export": "ScrollArea",
+  "anatomy": {
+    "root": "scroll-area",
+    "scrollbar": "scroll-area-scrollbar",
+    "thumb": "scroll-area-thumb",
+    "track": "scroll-area-track",
+    "viewport": "scroll-area-viewport"
+  },
+  "attributes": {
+    "data-refineui": "scroll-area"
+  },
+  "variants": {
+    "type": [
+      "hover",
+      "always"
+    ]
+  },
+  "states": {
+    "component": {
+      "data-state": [
+        "visible",
+        "hidden"
+      ]
+    },
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "dom": {
+    "scroll-area-scrollbar": {
+      "states": {
+        "component": {
+          "data-state": [
+            "visible",
+            "hidden"
+          ]
+        }
+      }
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

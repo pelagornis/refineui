@@ -1,0 +1,107 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "select",
+  "version": 1,
+  "export": "Select",
+  "anatomy": {
+    "root": "select-trigger",
+    "select_item": "select-item",
+    "select_menu": "select-menu"
+  },
+  "attributes": {
+    "data-refineui": "select-trigger"
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "component": {
+      "data-state": [
+        "open",
+        "closed",
+        "pressed",
+        "selected"
+      ]
+    },
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "dom": {
+    "select-trigger": {
+      "states": {
+        "component": {
+          "data-state": [
+            "open",
+            "closed"
+          ]
+        }
+      }
+    },
+    "select-item": {
+      "states": {
+        "component": {
+          "data-state": [
+            "pressed",
+            "selected"
+          ]
+        }
+      }
+    }
+  },
+  "accessibility": {
+    "select-trigger": {
+      "element": "button",
+      "role": "combobox",
+      "requiredAttributes": {
+        "aria-expanded": {
+          "required": true,
+          "type": "boolean"
+        }
+      }
+    },
+    "select-menu": {
+      "element": "div",
+      "role": "listbox"
+    },
+    "select-item": {
+      "element": "div",
+      "role": "option",
+      "requiredAttributes": {
+        "aria-selected": {
+          "required": true,
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "keyboard": {
+    "Escape": "close",
+    "ArrowDown": "next-trigger",
+    "ArrowUp": "previous-trigger",
+    "Home": "first-trigger",
+    "End": "last-trigger",
+    "Enter": {
+      "action": "activate",
+      "native": true
+    },
+    "Space": {
+      "action": "activate",
+      "native": true
+    }
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  },
+  "tokens": {
+    "visual": "select"
+  }
+}

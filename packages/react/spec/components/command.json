@@ -1,0 +1,65 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "command",
+  "version": 1,
+  "export": "Command",
+  "anatomy": {
+    "root": "command",
+    "empty": "command-empty",
+    "group": "command-group",
+    "group_heading": "command-group-heading",
+    "input": "command-input",
+    "item": "command-item",
+    "list": "command-list",
+    "separator": "command-separator",
+    "shortcut": "command-shortcut"
+  },
+  "attributes": {
+    "data-refineui": "command"
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "component": {
+      "data-state": [
+        "disabled",
+        "active",
+        "default"
+      ]
+    },
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "accessibility": {
+    "command-item": {
+      "element": "div",
+      "role": "option",
+      "requiredAttributes": {
+        "aria-selected": {
+          "required": true,
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "keyboard": {
+    "ArrowDown": "next-trigger",
+    "ArrowUp": "previous-trigger",
+    "Home": "first-trigger",
+    "End": "last-trigger",
+    "Enter": "activate"
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

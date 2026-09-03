@@ -2,6 +2,8 @@
 title: Select
 description: Dropdown select control for picking from a list.
 ---
+import { SpecRenderer, TokenInspector } from "../../../components/spec";
+
 
 import { PropSpec } from "../../../docs-ui";
 
@@ -10,6 +12,19 @@ import PackageInstall from "../../../components/PackageInstall.mdx";
 
 <div class="not-content my-6">
   <SelectPreview client:load />
+</div>
+
+
+## Contract
+
+<div class="not-content">
+  <SpecRenderer client:load component="select" />
+</div>
+
+## Tokens
+
+<div class="not-content">
+  <TokenInspector client:load component="select" />
 </div>
 
 ## Installation

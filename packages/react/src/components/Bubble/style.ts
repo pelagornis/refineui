@@ -60,8 +60,8 @@ export const bubbleReactionsSideClass: Record<BubbleReactionsSide, string> = {
 
 /** Inset from the inline edge — not the corner vertex. */
 export const bubbleReactionsAlignClass: Record<BubbleAlign, string> = {
-    start: "left-refineui-size-medium",
-    end: "right-refineui-size-medium",
+    start: "start-refineui-size-medium",
+    end: "end-refineui-size-medium",
 };
 
 export const bubbleContentVariantClass: Record<BubbleVariant, string> = {

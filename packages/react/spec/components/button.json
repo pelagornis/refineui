@@ -1,0 +1,104 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "button",
+  "version": 1,
+  "export": "Button",
+  "anatomy": {
+    "root": "button",
+    "icon": "optional",
+    "label": "required"
+  },
+  "variants": {
+    "variant": [
+      "primary",
+      "secondary",
+      "outline",
+      "ghost"
+    ],
+    "size": [
+      "sm",
+      "md",
+      "lg"
+    ],
+    "layout": [
+      "label",
+      "icon"
+    ]
+  },
+  "states": {
+    "pseudo": [
+      "hover",
+      "active",
+      "focus-visible"
+    ],
+    "availability": [
+      "disabled",
+      "aria-disabled",
+      "data-inactive"
+    ],
+    "component": {
+      "data-state": [
+        "loading"
+      ]
+    },
+    "environment": [
+      "forced-colors",
+      "dir",
+      "prefers-contrast"
+    ]
+  },
+  "attributes": {
+    "data-refineui": "button"
+  },
+  "dom": {
+    "button": {
+      "states": {
+        "pseudo": [
+          "hover",
+          "active",
+          "focus-visible"
+        ],
+        "availability": [
+          "disabled",
+          "aria-disabled",
+          "data-inactive"
+        ],
+        "component": {
+          "data-state": [
+            "loading"
+          ]
+        }
+      }
+    }
+  },
+  "accessibility": {
+    "button": {
+      "element": "button",
+      "native": true
+    }
+  },
+  "keyboard": {
+    "Enter": {
+      "action": "activate",
+      "native": true
+    },
+    "Space": {
+      "action": "activate",
+      "native": true
+    }
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  },
+  "tokens": {
+    "visual": "button"
+  },
+  "recipe": "button"
+}

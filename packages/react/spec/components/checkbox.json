@@ -1,0 +1,38 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "checkbox",
+  "version": 1,
+  "export": "Checkbox",
+  "anatomy": {
+    "root": "checkbox"
+  },
+  "attributes": {
+    "data-refineui": "checkbox"
+  },
+  "variants": {
+    "variant": [
+      "default",
+      "circular"
+    ]
+  },
+  "states": {
+    "environment": [
+      "forced-colors",
+      "dir",
+      "prefers-contrast"
+    ]
+  },
+  "keyboard": {
+    "Space": {
+      "action": "activate",
+      "native": true
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  },
+  "tokens": {
+    "visual": "checkbox"
+  }
+}

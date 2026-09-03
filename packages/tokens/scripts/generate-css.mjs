@@ -32,6 +32,7 @@ const {
     toBoxShadow,
     typographys,
     SEMANTIC_TEXT,
+    semanticFocus,
     zIndex,
 } = await import(tokensDist);
 
@@ -219,6 +220,52 @@ function interactionMotionLines() {
     return root;
 }
 
+/** Focus ring — semantic contract for `:focus-visible` (not `:focus`). */
+function focusRingLines() {
+    const { ring } = semanticFocus;
+    return [
+        `  --refineui-focus-ring-color: ${ring.color.light};`,
+        `  --refineui-focus-ring-width: ${ring.width};`,
+        `  --refineui-focus-ring-offset: ${ring.offset};`,
+        `  --refineui-focus-ring-style: ${ring.style};`,
+        /* Legacy aliases consumed by refineui.css */
+        `  --refineui-focus-color: var(--refineui-focus-ring-color);`,
+        `  --refineui-focus-offset: var(--refineui-focus-ring-offset);`,
+    ];
+}
+
+function focusRingDarkLines() {
+    return [`  --refineui-focus-ring-color: ${semanticFocus.ring.color.dark};`];
+}
+
+/** Collapse motion roles when user prefers reduced motion. */
+function reducedMotionLines() {
+    const roles = [
+        "instant",
+        "fast",
+        "normal",
+        "medium",
+        "slow",
+        "overlay",
+        "panel",
+        "accordion-panel",
+        "accordion-content",
+        "toast-enter",
+        "toast-leave",
+        "skeleton",
+        "spinner",
+    ];
+    const lines = roles.map(
+        (role) =>
+            `    --refineui-motion-duration-${role}: var(--refineui-foundation-motion-duration-0);`,
+    );
+    lines.push(`    --refineui-motion-scale-press: 1;`);
+    lines.push(`    --refineui-motion-scale-enter: 1;`);
+    lines.push(`    --refineui-motion-scale-hover-grow: 1;`);
+    lines.push(`    --refineui-motion-distance-float: 0px;`);
+    return lines;
+}
+
 function opacityEntries() {
     return Object.entries(opacities).map(([k, v]) => {
         const rest = k.replace(/^opacity/, "");
@@ -353,6 +400,8 @@ const rootInner = [
     ...Object.entries(semanticColors).map(
         ([k, v]) => `  --refineui-color-alias-${toKebab(k)}: ${v.light};`,
     ),
+    "  /* Focus ring — :focus-visible contract */",
+    ...focusRingLines(),
 ];
 
 const darkInner = [
@@ -361,12 +410,14 @@ const darkInner = [
     ),
     "  /* Theme-aware elevation */",
     ...elevDark,
+    "  /* Focus ring — dark */",
+    ...focusRingDarkLines(),
 ];
 
 const cssDest = join(tokensDistDir, "css-variables.css");
 writeFileSync(
     cssDest,
-    `:root {\n${rootInner.join("\n")}\n}\n\n[data-theme="dark"], .dark {\n${darkInner.join("\n")}\n}\n`,
+    `:root {\n${rootInner.join("\n")}\n}\n\n[data-theme="dark"], .dark {\n${darkInner.join("\n")}\n}\n\n@media (prefers-reduced-motion: reduce) {\n  :root {\n${reducedMotionLines().join("\n")}\n  }\n}\n`,
     "utf8",
 );
 console.log("Wrote", cssDest);

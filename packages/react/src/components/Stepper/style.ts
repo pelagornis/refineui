@@ -99,12 +99,12 @@ export const stepperStyles = {
     separatorRailHorizontal: clsx(
         "h-refineui-progress-track-height-sm",
         "top-[var(--refineui-stepper-indicator-center)]",
-        "left-[calc(-50%+var(--refineui-stepper-indicator-half))]",
-        "right-[calc(-50%+var(--refineui-stepper-indicator-half))]",
+        "start-[calc(-50%+var(--refineui-stepper-indicator-half))]",
+        "end-[calc(-50%+var(--refineui-stepper-indicator-half))]",
     ),
     separatorRailVertical: clsx(
         "w-refineui-progress-track-height-sm",
-        "left-[var(--refineui-stepper-indicator-center)]",
+        "start-[var(--refineui-stepper-indicator-center)]",
         "top-[calc(-1*var(--refineui-stepper-connector-overlap))]",
         "bottom-[calc(-1*var(--refineui-stepper-connector-overlap))]",
     ),

@@ -1,0 +1,16 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "stack",
+  "version": 1,
+  "export": "Stack",
+  "anatomy": {
+    "root": "stack"
+  },
+  "attributes": {
+    "data-refineui": "stack"
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "label",
+  "version": 1,
+  "export": "Label",
+  "anatomy": {
+    "root": "label",
+    "required": "label-required"
+  },
+  "attributes": {
+    "data-refineui": "label"
+  },
+  "variants": {
+    "size": [
+      "sm",
+      "md",
+      "lg"
+    ]
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

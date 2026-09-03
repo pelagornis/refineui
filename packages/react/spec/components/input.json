@@ -1,0 +1,36 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "input",
+  "version": 1,
+  "export": "Input",
+  "anatomy": {
+    "root": "input"
+  },
+  "attributes": {
+    "data-refineui": "input"
+  },
+  "variants": {
+    "size": [
+      "sm",
+      "md",
+      "lg"
+    ]
+  },
+  "accessibility": {
+    "input": {
+      "element": "input",
+      "native": true
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  },
+  "states": {
+    "environment": [
+      "forced-colors",
+      "dir",
+      "prefers-contrast"
+    ]
+  }
+}
