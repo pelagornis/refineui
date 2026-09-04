@@ -87,6 +87,15 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 
 Button that opens the dropdown.
 
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "appearance", default: "\"filled\"", type: "\"filled\" | \"plain\"", description: "Field chrome vs flush trigger for composed surfaces (Footer locale, Calendar caption)." }
+    ]}
+  />
+</div>
+
 ### SelectValue
 
 Displays selected value or placeholder.

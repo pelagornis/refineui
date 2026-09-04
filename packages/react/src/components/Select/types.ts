@@ -2,6 +2,12 @@ import type { HTMLAttributes, ReactNode } from "react";
 
 export type SelectSize = "sm" | "md" | "lg";
 
+/**
+ * `filled` — standalone field chrome (border + surface).
+ * `plain` — flush trigger for composed surfaces (Footer locale, Calendar caption).
+ */
+export type SelectTriggerAppearance = "filled" | "plain";
+
 export interface SelectOption {
     value: string;
     label: ReactNode;
@@ -24,6 +30,12 @@ export interface SelectProps extends Omit<HTMLAttributes<HTMLDivElement>, "onCha
 
 export interface SelectTriggerProps extends HTMLAttributes<HTMLButtonElement> {
     children?: ReactNode;
+    /**
+     * `filled` — default field chrome.
+     * `plain` — no field chrome; compose visuals via `className` / parent recipe.
+     * @default "filled"
+     */
+    appearance?: SelectTriggerAppearance;
 }
 
 export interface SelectValueProps extends HTMLAttributes<HTMLSpanElement> {

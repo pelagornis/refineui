@@ -79,8 +79,11 @@ function CalendarCaptionSelect({
 }) {
     return (
         <Select value={value} onValueChange={onValueChange} aria-label={ariaLabel} size="sm">
-            <SelectTrigger data-calendar-header={header} className={calendarStyles.captionButton}>
-                <SelectValue placeholder={placeholder} />
+            <SelectTrigger
+                appearance="plain"
+                data-calendar-header={header}
+                className={calendarStyles.captionButton}
+            >                <SelectValue placeholder={placeholder} />
             </SelectTrigger>
             <SelectPortal>
                 <SelectContent>

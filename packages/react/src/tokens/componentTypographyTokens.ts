@@ -54,7 +54,7 @@ export const componentTypographyTokens = {
         link: role("captionLg"),
         contentLink: role("bodyMd"),
     },
-    /** Site footer — sitemap body; legal lockup matches the locale pill. */
+    /** Site footer — sitemap body; locale trigger uses Button sm typography. */
     footer: {
         brandName: role("bodyMd"),
         brandDescription: role("bodyXs"),

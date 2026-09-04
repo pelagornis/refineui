@@ -36,6 +36,7 @@ export type {
     SelectSectionProps,
     SelectSeparatorProps,
     SelectSize,
+    SelectTriggerAppearance,
     SelectTriggerProps,
     SelectValueProps,
     SelectViewportProps,

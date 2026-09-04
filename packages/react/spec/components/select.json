@@ -11,6 +11,12 @@
   "attributes": {
     "data-refineui": "select-trigger"
   },
+  "variants": {
+    "appearance": [
+      "filled",
+      "plain"
+    ]
+  },
   "states": {
     "pseudo": [
       "focus-visible"

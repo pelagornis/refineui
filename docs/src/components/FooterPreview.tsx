@@ -124,6 +124,7 @@ export default function FooterPreview() {
                             <FooterLocale>
                                 <Select size="sm" value={locale} onValueChange={setLocale}>
                                     <SelectTrigger
+                                        appearance="plain"
                                         aria-label="Language"
                                         className={`${footerLocaleTriggerClassName} min-w-0`}
                                     >

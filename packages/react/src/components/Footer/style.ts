@@ -1,6 +1,11 @@
 import { clsx } from "clsx";
 import { componentTypographyTokens } from "../../tokens/componentTypographyTokens";
 import { componentTextClass } from "../../typography";
+import {
+    buttonLabelSizeClass,
+    buttonStyles,
+    buttonVariantClass,
+} from "../../recipes/button.recipe";
 
 /**
  * Site footer — sitemap, then meta: social | lockup | locale.
@@ -57,13 +62,12 @@ export const footerStyles = {
         "text-refineui-alias-foreground-tertiary no-underline outline-none",
         "transition-[color] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",
     ),
+    /** Select trigger chrome — Button `outline` / `sm` recipe (plain Select). */
     localeTrigger: clsx(
-        componentTextClass(componentTypographyTokens.footer.copyright),
-        "box-border inline-flex w-fit shrink-0 cursor-pointer items-center justify-center",
-        "min-h-refineui-foundation-size-400",
-        "gap-refineui-size-small rounded-refineui-circle border-refineui-none",
-        "bg-refineui-alias-background-surface-hover px-refineui-size-x-large py-refineui-size-small shadow-none",
-        "text-refineui-alias-foreground-primary",
+        buttonStyles.base,
+        buttonVariantClass.outline,
+        buttonLabelSizeClass.sm,
+        "w-fit min-w-0 shrink-0",
     ),
     copyright: clsx(
         componentTextClass(componentTypographyTokens.footer.copyright),

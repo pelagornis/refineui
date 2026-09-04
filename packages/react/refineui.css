@@ -184,22 +184,15 @@
     transform var(--refineui-motion-duration-fast);
 }
 /* Calendar caption selects — ghost plate (header chrome, not form-field outline) */
-[data-refineui="calendar"] [data-refineui="select-trigger"][data-calendar-header] {
-  border: none !important;
-  background-color: transparent !important;
-  box-shadow: none !important;
-}
 [data-refineui="calendar"] [data-refineui="select-trigger"][data-calendar-header]:not(:disabled):hover:not(:active),
 [data-refineui="calendar"] [data-refineui="select-trigger"][data-calendar-header][data-state="open"]:not(:disabled) {
-  border-color: transparent !important;
-  background-color: var(--refineui-color-alias-background-primary-hover) !important;
-  color: var(--refineui-color-alias-foreground-primary-hover) !important;
+  background-color: var(--refineui-color-alias-background-primary-hover);
+  color: var(--refineui-color-alias-foreground-primary-hover);
 }
 [data-refineui="calendar"] [data-refineui="select-trigger"][data-calendar-header]:not(:disabled):active,
 [data-refineui="calendar"] [data-refineui="select-trigger"][data-calendar-header][data-state="open"]:not(:disabled):active {
-  border-color: transparent !important;
-  background-color: var(--refineui-color-alias-background-primary-active) !important;
-  color: var(--refineui-color-alias-foreground-primary) !important;
+  background-color: var(--refineui-color-alias-background-primary-active);
+  color: var(--refineui-color-alias-foreground-primary);
 }
 [data-refineui="calendar-nav"]:hover,
 [data-refineui="chip-remove"]:hover {
@@ -785,28 +778,28 @@
 }
 
 /* Select trigger — Navigation Menu hover / press / open plate; hairline field chrome */
-[data-refineui="select-trigger"] {
+[data-refineui="select-trigger"]:not([data-appearance="plain"]) {
   transition:
     color var(--refineui-motion-duration-fast),
     background-color var(--refineui-motion-duration-fast),
     border-color var(--refineui-motion-duration-fast);
 }
-[data-refineui="select-trigger"]:not(:disabled):hover:not(:active) {
+[data-refineui="select-trigger"]:not([data-appearance="plain"]):not(:disabled):hover:not(:active) {
   color: var(--refineui-color-alias-foreground-primary-hover) !important;
   background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
-[data-refineui="select-trigger"]:not(:disabled):active {
+[data-refineui="select-trigger"]:not([data-appearance="plain"]):not(:disabled):active {
   color: var(--refineui-color-alias-foreground-primary) !important;
   background-color: var(--refineui-color-alias-background-primary-active) !important;
 }
-[data-refineui="select-trigger"][data-state="open"]:not(:disabled) {
+[data-refineui="select-trigger"]:not([data-appearance="plain"])[data-state="open"]:not(:disabled) {
   color: var(--refineui-color-alias-foreground-primary) !important;
   background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
-[data-refineui="select-trigger"][data-state="open"]:not(:disabled):active {
+[data-refineui="select-trigger"]:not([data-appearance="plain"])[data-state="open"]:not(:disabled):active {
   background-color: var(--refineui-color-alias-background-primary-active) !important;
 }
-[data-refineui="select-trigger"]:focus-visible:not(:disabled) {
+[data-refineui="select-trigger"]:not([data-appearance="plain"]):focus-visible:not(:disabled) {
   outline: none;
   color: var(--refineui-color-alias-foreground-primary-hover);
   background-color: var(--refineui-color-alias-background-primary-hover);
@@ -1444,43 +1437,30 @@ a[data-refineui="link"]:focus-visible {
 }
 
 [data-refineui="footer-locale"] [data-refineui="select-trigger"] {
-  min-width: 0 !important;
-  width: fit-content;
-  height: auto !important;
-  min-height: var(--refineui-size-foundation-size-400) !important;
-  justify-content: center !important;
-  gap: var(--refineui-spacing-size-small);
-  padding-block: var(--refineui-spacing-size-small) !important;
-  padding-inline: var(--refineui-spacing-size-x-large) !important;
-  border: none !important;
-  border-radius: var(--refineui-radius-rounded-circle);
-  background-color: var(--refineui-color-alias-background-surface-hover) !important;
-  box-shadow: none !important;
-  color: var(--refineui-color-alias-foreground-primary) !important;
   transition:
     color var(--refineui-motion-duration-fast),
-    background-color var(--refineui-motion-duration-fast);
+    background-color var(--refineui-motion-duration-fast),
+    border-color var(--refineui-motion-duration-fast),
+    transform var(--refineui-motion-duration-fast);
 }
 [data-refineui="footer-locale"] [data-refineui-select-trigger-value] {
   display: inline-flex;
   flex: none;
   align-items: center;
-  gap: var(--refineui-spacing-size-small);
+  gap: var(--refineui-spacing-size-xx-small);
 }
-[data-refineui="footer-locale"] [data-refineui="select-trigger"] > :not([data-refineui-select-trigger-value]) {
-  display: none;
-}
-[data-refineui="footer-locale"] [data-refineui="select-trigger"]:not(:disabled):hover,
+/* Match Button outline hover / pressed / open */
+[data-refineui="footer-locale"] [data-refineui="select-trigger"]:not(:disabled):hover:not(:active),
 [data-refineui="footer-locale"] [data-refineui="select-trigger"][data-state="open"]:not(:disabled) {
-  border-color: transparent !important;
-  background-color: var(--refineui-color-alias-background-surface-selected) !important;
-  box-shadow: none !important;
-  color: var(--refineui-color-alias-foreground-primary) !important;
+  border-color: var(--refineui-color-alias-border-strong);
+  color: var(--refineui-color-alias-foreground-primary-hover);
+}
+[data-refineui="footer-locale"] [data-refineui="select-trigger"]:not(:disabled):active {
+  border-color: var(--refineui-color-alias-border-strong);
+  color: var(--refineui-color-alias-foreground-primary);
 }
 [data-refineui="footer-locale"] [data-refineui="select-trigger"]:focus:not(:disabled) {
-  border: none !important;
-  box-shadow: none !important;
-  outline: none !important;
+  outline: none;
 }
 [data-refineui="footer-locale"] [data-refineui="select-trigger"]:focus-visible {
   outline: 2px solid var(--refineui-focus-color);

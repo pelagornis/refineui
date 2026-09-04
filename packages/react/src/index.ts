@@ -81,6 +81,7 @@ export {
     type SelectScrollUpButtonProps,
     type SelectSectionProps,
     type SelectSeparatorProps,
+    type SelectTriggerAppearance,
     type SelectTriggerProps,
     type SelectValueProps,
     type SelectViewportProps,

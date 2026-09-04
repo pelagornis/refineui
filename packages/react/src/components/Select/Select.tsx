@@ -351,9 +351,10 @@ export function Select({
 }
 
 export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(function SelectTrigger(props, forwardedRef) {
-    const { className, children, style, ...triggerRest } = props;
+    const { className, children, style, appearance = "filled", ...triggerRest } = props;
     const { open, setOpen, triggerRef, onKeyDown, size, fullWidth, disabled, value, getLabelByValue } = useSelectCtx();
     const hasLabel = Boolean(getLabelByValue(value));
+    const isPlain = appearance === "plain";
     const setRefs = useCallback(
         (node: HTMLButtonElement | null) => {
             (triggerRef as MutableRefObject<HTMLButtonElement | null>).current = node;
@@ -370,6 +371,7 @@ export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(f
             aria-expanded={open}
             aria-haspopup="listbox"
             data-refineui="select-trigger"
+            data-appearance={appearance}
             data-size={size}
             data-state={open ? "open" : "closed"}
             data-placeholder={hasLabel ? undefined : ""}
@@ -382,10 +384,10 @@ export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(f
             onKeyDown={onKeyDown}
             className={clsx(
                 "data-[placeholder]:[&_[data-refineui-select-value]]:text-refineui-alias-foreground-placeholder",
-                selectStyles.trigger,
-                selectTriggerSizeClass[size],
-                open && selectStyles.triggerOpen,
-                disabled && selectStyles.triggerDisabled,
+                isPlain ? selectStyles.triggerPlain : selectStyles.trigger,
+                !isPlain && selectTriggerSizeClass[size],
+                !isPlain && open && selectStyles.triggerOpen,
+                disabled && (isPlain ? selectStyles.triggerPlainDisabled : selectStyles.triggerDisabled),
                 fullWidth && "w-full",
                 className,
             )}
