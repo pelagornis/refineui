@@ -7,6 +7,9 @@
   display: flex;
   flex-direction: column;
   gap: var(--refineui-spacing-size-xxx-large);
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
 }
 
 [data-docs-ui="token-inspector"] [data-docs-ui="section"] + [data-docs-ui="section"] {
@@ -142,10 +145,19 @@
 
 [data-docs-ui="spec-table"] {
   width: 100%;
+  max-width: 100%;
   min-width: 0;
+  overflow: hidden;
+}
+
+[data-docs-ui="spec-table"] [data-refineui="scroll-area"] {
+  width: 100%;
+  max-width: 100%;
 }
 
 [data-docs-ui="spec-table"] [data-refineui="table"] {
   padding-inline: 0;
   padding-bottom: 0;
+  width: max-content;
+  min-width: 100%;
 }

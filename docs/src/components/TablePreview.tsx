@@ -62,7 +62,7 @@ export default function TablePreview() {
 
   return (
     <Looks>
-      <Look align="stretch">
+      <Look align="fill">
         <Card variant="outlined" className="w-full">
           <CardHeader className="border-b-refineui-thin border-refineui-alias-border-subtle">
             <CardHeaderMain>

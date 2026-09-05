@@ -7,8 +7,9 @@ import { componentTextClass } from "../../typography";
  * Header/footer + hover/selected live in `refineui.css` (token CSS variables).
  */
 export const tableStyles = {
+    /** Overflow lives on composed `ScrollArea` when the table is constrained. */
     wrapper: clsx(
-        "relative box-border w-full overflow-x-auto",
+        "relative box-border w-full min-w-0",
         "px-refineui-size-small pb-refineui-size-small",
     ),
     table: "w-full caption-bottom border-separate text-start",

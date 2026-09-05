@@ -1943,6 +1943,22 @@ a[data-refineui="link"]:focus-visible {
   ) {
   grid-template-rows: minmax(0, 1fr) auto;
 }
+/* Horizontal-only: size viewport to content (no fixed height → 1fr collapses). */
+[data-refineui="scroll-area"]:has(
+    > [data-refineui="scroll-area-scrollbar"][data-orientation="horizontal"]
+  ):not(
+    :has(> [data-refineui="scroll-area-scrollbar"][data-orientation="vertical"])
+  ) {
+  grid-template-rows: auto auto;
+}
+[data-refineui="scroll-area"]:has(
+    > [data-refineui="scroll-area-scrollbar"][data-orientation="horizontal"]
+  ):not(
+    :has(> [data-refineui="scroll-area-scrollbar"][data-orientation="vertical"])
+  )
+  > [data-refineui="scroll-area-viewport"] {
+  height: auto;
+}
 [data-refineui="scroll-area-viewport"] {
   grid-column: 1;
   grid-row: 1;

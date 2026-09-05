@@ -1,4 +1,8 @@
 import {
+    ScrollArea,
+    ScrollAreaScrollbar,
+    ScrollAreaThumb,
+    ScrollAreaViewport,
     Table,
     TableBody,
     TableCell,
@@ -18,11 +22,11 @@ export type SpecColumn = {
 
 export type SpecRow = Record<string, string | undefined>;
 
-const cellBase = "whitespace-normal";
-const cellMono = "font-mono whitespace-normal";
-const cellMuted = "text-refineui-alias-foreground-secondary whitespace-normal";
+const cellBase = "whitespace-nowrap";
+const cellMono = "font-mono whitespace-nowrap";
+const cellMuted = "text-refineui-alias-foreground-secondary whitespace-nowrap";
 
-/** Docs reference table built on RefineUI Table. */
+/** Docs reference table — horizontal overflow owned by ScrollArea; height follows content. */
 export function SpecTable({
     columns,
     rows,
@@ -34,37 +38,47 @@ export function SpecTable({
 }) {
     return (
         <div data-docs-ui="spec-table">
-            <Table aria-label={ariaLabel}>
-                <TableHeader>
-                    <TableRow>
-                        {columns.map((col) => (
-                            <TableHead key={col.key}>{col.header}</TableHead>
-                        ))}
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {rows.map((row, index) => (
-                        <TableRow key={rowKey(row, columns, index)}>
-                            {columns.map((col, colIndex) => {
-                                const raw = row[col.key] ?? "—";
-                                const href = col.hrefKey ? row[col.hrefKey] : undefined;
-                                const className = cellClass(col, colIndex === 0);
-                                return (
-                                    <TableCell key={col.key} className={className}>
-                                        {href ? (
-                                            <a href={href} className="text-inherit no-underline hover:underline">
-                                                {raw}
-                                            </a>
-                                        ) : (
-                                            raw
-                                        )}
-                                    </TableCell>
-                                );
-                            })}
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+            <ScrollArea type="hover" className="w-full min-w-0">
+                <ScrollAreaViewport>
+                    <Table aria-label={ariaLabel}>
+                        <TableHeader>
+                            <TableRow>
+                                {columns.map((col) => (
+                                    <TableHead key={col.key}>{col.header}</TableHead>
+                                ))}
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {rows.map((row, index) => (
+                                <TableRow key={rowKey(row, columns, index)}>
+                                    {columns.map((col, colIndex) => {
+                                        const raw = row[col.key] ?? "—";
+                                        const href = col.hrefKey ? row[col.hrefKey] : undefined;
+                                        const className = cellClass(col, colIndex === 0);
+                                        return (
+                                            <TableCell key={col.key} className={className}>
+                                                {href ? (
+                                                    <a
+                                                        href={href}
+                                                        className="text-inherit no-underline hover:underline"
+                                                    >
+                                                        {raw}
+                                                    </a>
+                                                ) : (
+                                                    raw
+                                                )}
+                                            </TableCell>
+                                        );
+                                    })}
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </ScrollAreaViewport>
+                <ScrollAreaScrollbar orientation="horizontal">
+                    <ScrollAreaThumb />
+                </ScrollAreaScrollbar>
+            </ScrollArea>
         </div>
     );
 }

@@ -12,7 +12,7 @@ import type {
     TableRowProps,
 } from "./types";
 
-/** Dense semantic table — hover / selected via `refineui.css`. */
+/** Dense semantic table — hover / selected via `refineui.css`. Overflow via composed `ScrollArea`. */
 export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
     { className, ...props },
     ref,

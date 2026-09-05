@@ -67,6 +67,37 @@ import {
 </Table>
 ```
 
+## Scroll
+
+Table does not own overflow. Compose with `ScrollArea` when width is constrained (docs column, panel) or height is constrained (dialog, fixed layout). Specimen previews that fit the stage usually skip ScrollArea.
+
+```tsx
+import {
+  ScrollArea,
+  ScrollAreaViewport,
+  ScrollAreaScrollbar,
+  ScrollAreaThumb,
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "@refineui/react";
+
+<ScrollArea type="hover" className="w-full min-w-0">
+  <ScrollAreaViewport>
+    <Table>
+      <TableHeader>{/* … */}</TableHeader>
+      <TableBody>{/* … */}</TableBody>
+    </Table>
+  </ScrollAreaViewport>
+  <ScrollAreaScrollbar orientation="horizontal">
+    <ScrollAreaThumb />
+  </ScrollAreaScrollbar>
+</ScrollArea>
+```
+
 ## API Reference
 
 ### Table
@@ -100,4 +131,3 @@ Data cell (`<td>`).
 ### TableCaption
 
 Table caption for accessibility.
-
