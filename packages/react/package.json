@@ -27,7 +27,7 @@
   "dependencies": {
     "@refineui/tokens": "workspace:*",
     "@refineui/utilities": "workspace:*",
-    "@refineui/web-icons": "^0.3.32",
+    "@refineui/web-icons": "^0.3.39",
     "clsx": "2.1.1"
   },
   "peerDependencies": {

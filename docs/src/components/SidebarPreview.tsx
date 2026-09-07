@@ -245,10 +245,10 @@ export default function SidebarPreview() {
                                         onClick={toggleSidebar}
                                     >
                                         <WebIcon
-                                            name={collapsed ? "chevron-right" : "chevron-left"}
+                                            name="panel-left"
                                             size={iconSizes.small}
                                             color="currentColor"
-                                            fallback={collapsed ? "›" : "‹"}
+                                            fallback="☰"
                                         />
                                     </Button>
                                 ) : null}
@@ -274,10 +274,10 @@ export default function SidebarPreview() {
                                         onClick={expandAnimated}
                                     >
                                         <WebIcon
-                                            name="chevron-right"
+                                            name="panel-left"
                                             size={iconSizes.small}
                                             color="currentColor"
-                                            fallback="›"
+                                            fallback="☰"
                                         />
                                     </Button>
                                 </SidebarPeekPin>

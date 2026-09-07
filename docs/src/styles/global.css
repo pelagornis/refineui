@@ -1266,6 +1266,13 @@ body[data-mobile-menu-expanded] {
   inset-inline-start: var(--refineui-spacing-size-x-small);
 }
 
+/* Floating peek covers the rail gap — hide the docked toggle while the flyout is open. */
+[data-refineui="sidebar-peek"][data-sidebar-peek-open] [data-docs-sidebar-toggle],
+[data-refineui="sidebar-peek"][data-sidebar-peek-open] [data-sidebar-preview-toggle] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 [data-refineui="sidebar-peek-inset"] [data-docs-shell-main],
 [data-refineui="sidebar-peek-inset"] > [data-refineui="box"] {
   flex: 1 1 auto;

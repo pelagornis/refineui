@@ -124,10 +124,10 @@ function DocsShellMain({
                     onClick={onToggle}
                 >
                     <WebIcon
-                        name={collapsed ? "chevron-right" : "chevron-left"}
+                        name="panel-left"
                         size={iconSizes.small}
                         color="currentColor"
-                        fallback={collapsed ? "›" : "‹"}
+                        fallback="☰"
                     />
                 </Button>
             ) : null}
@@ -327,10 +327,10 @@ function DocsDesktopShell({ title, titleHref, entries, githubHref, children }: S
                                 onClick={expandAnimated}
                             >
                                 <WebIcon
-                                    name="chevron-right"
+                                    name="panel-left"
                                     size={iconSizes.small}
                                     color="currentColor"
-                                    fallback="›"
+                                    fallback="☰"
                                 />
                             </Button>
                         </SidebarPeekPin>
