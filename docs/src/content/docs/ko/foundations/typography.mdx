@@ -1,0 +1,49 @@
+---
+title: 타이포그래피
+description: Foundation heading, title, body, caption 스타일 위의 시맨틱 텍스트 역할.
+---
+
+import { SpecTable } from "../../../../docs-ui";
+import { TypographyPreview } from "../../../../components/foundation/TypographyPreview";
+
+`Text`에 **시맨틱 역할**(`headingMd`, `bodyMd`, `labelSm`)을 사용하세요. 각 역할은 `typographys`의 Foundation 프리셋을 별칭합니다. 제품 UI에서 원시 `fontSize`나 `body2` 같은 Foundation 키를 넘기지 마세요.
+
+## 역할
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="타이포그래피 역할"
+    columns={[
+      { key: "family", header: "역할 패밀리" },
+      { key: "examples", header: "예시", mono: true },
+      { key: "use", header: "일반적인 용도" },
+    ]}
+    rows={[
+      { family: "Display", examples: "displayLg, displayMd, displaySm", use: "마케팅 / 히어로" },
+      { family: "Heading", examples: "headingLg, headingMd, headingSm", use: "페이지·섹션 제목" },
+      { family: "Title", examples: "titleLg, titleMd, titleSm", use: "카드 / 다이얼로그 제목" },
+      { family: "Subtitle", examples: "subtitleLg, subtitleMd", use: "강조된 보조 라인" },
+      { family: "Body", examples: "bodyLg … bodyXs", use: "본문 텍스트" },
+      { family: "Label", examples: "labelLg, labelMd, labelSm", use: "폼·메뉴 라벨" },
+      { family: "Caption", examples: "captionLg … captionSm", use: "메타데이터·헬퍼" },
+    ]}
+  />
+</div>
+
+<div class="not-content">
+  <TypographyPreview client:load />
+</div>
+
+## 사용법
+
+```tsx
+import { Text } from "@refineui/react";
+
+<Text variant="headingMd" as="h2">
+  Section title
+</Text>
+<Text variant="bodyMd" as="p">
+  Body copy.
+</Text>
+```

@@ -11,10 +11,11 @@ import {
     FooterNav,
     FooterSocial,
 } from "@refineui/react";
-import { withBase } from "../lib/docs-path";
+import { toDocsLocale, withLocalePath, type DocsLocaleCode } from "../lib/docs-locale";
+import { DocsFooterLocaleSelect } from "./DocsFooterLocaleSelect";
 
-function siteHref(path: string) {
-    return withBase(path);
+function siteHref(path: string, locale: DocsLocaleCode) {
+    return withLocalePath(path, locale);
 }
 
 function SocialIcon({ children }: { children: ReactNode }) {
@@ -25,33 +26,77 @@ function SocialIcon({ children }: { children: ReactNode }) {
     );
 }
 
-export function DocsSiteFooter() {
+const COPY = {
+    en: {
+        docs: "Docs",
+        foundations: "Foundations",
+        components: "Components",
+        development: "Development",
+        installation: "Installation",
+        theming: "Theming",
+        motion: "Motion",
+        aiTools: "AI & Tools",
+        resources: "Resources",
+        button: "Button",
+        input: "Input",
+        dialog: "Dialog",
+        sidebar: "Sidebar",
+        language: "Language",
+    },
+    ko: {
+        docs: "문서",
+        foundations: "파운데이션",
+        components: "컴포넌트",
+        development: "개발",
+        installation: "설치",
+        theming: "테마",
+        motion: "모션",
+        aiTools: "AI & 도구",
+        resources: "리소스",
+        button: "Button",
+        input: "Input",
+        dialog: "Dialog",
+        sidebar: "Sidebar",
+        language: "언어",
+    },
+} as const;
+
+export type DocsSiteFooterProps = {
+    locale?: string;
+};
+
+export function DocsSiteFooter({ locale }: DocsSiteFooterProps) {
+    const docsLocale = toDocsLocale(locale);
+    const t = docsLocale === "ko" ? COPY.ko : COPY.en;
+
     return (
         <Footer data-refineui-docs-site-footer>
             <FooterExplore>
                 <FooterNav>
                     <FooterGroup>
-                        <FooterGroupLabel>Docs</FooterGroupLabel>
-                        <FooterLink href={siteHref("/foundations")}>Foundations</FooterLink>
-                        <FooterLink href={siteHref("/components")}>Components</FooterLink>
-                        <FooterLink href={siteHref("/development")}>Development</FooterLink>
+                        <FooterGroupLabel>{t.docs}</FooterGroupLabel>
+                        <FooterLink href={siteHref("/foundations", docsLocale)}>{t.foundations}</FooterLink>
+                        <FooterLink href={siteHref("/components", docsLocale)}>{t.components}</FooterLink>
+                        <FooterLink href={siteHref("/development", docsLocale)}>{t.development}</FooterLink>
                     </FooterGroup>
                     <FooterGroup>
-                        <FooterGroupLabel>Development</FooterGroupLabel>
-                        <FooterLink href={siteHref("/development/installation")}>Installation</FooterLink>
-                        <FooterLink href={siteHref("/development/theming")}>Theming</FooterLink>
-                        <FooterLink href={siteHref("/development/motion")}>Motion</FooterLink>
-                        <FooterLink href={siteHref("/ai-tools")}>AI & Tools</FooterLink>
+                        <FooterGroupLabel>{t.development}</FooterGroupLabel>
+                        <FooterLink href={siteHref("/development/installation", docsLocale)}>
+                            {t.installation}
+                        </FooterLink>
+                        <FooterLink href={siteHref("/development/theming", docsLocale)}>{t.theming}</FooterLink>
+                        <FooterLink href={siteHref("/development/motion", docsLocale)}>{t.motion}</FooterLink>
+                        <FooterLink href={siteHref("/ai-tools", docsLocale)}>{t.aiTools}</FooterLink>
                     </FooterGroup>
                     <FooterGroup>
-                        <FooterGroupLabel>Components</FooterGroupLabel>
-                        <FooterLink href={siteHref("/components/button")}>Button</FooterLink>
-                        <FooterLink href={siteHref("/components/input")}>Input</FooterLink>
-                        <FooterLink href={siteHref("/components/dialog")}>Dialog</FooterLink>
-                        <FooterLink href={siteHref("/components/sidebar")}>Sidebar</FooterLink>
+                        <FooterGroupLabel>{t.components}</FooterGroupLabel>
+                        <FooterLink href={siteHref("/components/button", docsLocale)}>{t.button}</FooterLink>
+                        <FooterLink href={siteHref("/components/input", docsLocale)}>{t.input}</FooterLink>
+                        <FooterLink href={siteHref("/components/dialog", docsLocale)}>{t.dialog}</FooterLink>
+                        <FooterLink href={siteHref("/components/sidebar", docsLocale)}>{t.sidebar}</FooterLink>
                     </FooterGroup>
                     <FooterGroup>
-                        <FooterGroupLabel>Resources</FooterGroupLabel>
+                        <FooterGroupLabel>{t.resources}</FooterGroupLabel>
                         <FooterLink href="https://github.com/pelagornis/refineui" target="_blank">
                             GitHub
                         </FooterLink>
@@ -79,6 +124,7 @@ export function DocsSiteFooter() {
                 <FooterBrand>
                     <FooterCopyright>Pelagornis © 2026</FooterCopyright>
                 </FooterBrand>
+                <DocsFooterLocaleSelect locale={locale} label={t.language} />
             </FooterMeta>
         </Footer>
     );

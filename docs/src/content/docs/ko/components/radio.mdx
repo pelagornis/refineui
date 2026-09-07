@@ -1,0 +1,73 @@
+---
+title: Radio
+description: 옵션 그룹에서 단일 선택.
+---
+import { SpecRenderer, TokenInspector } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import RadioPreview from "../../../../components/RadioPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <RadioPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="radio" />
+</div>
+
+## 토큰
+
+<div class="not-content">
+  <TokenInspector client:load component="radio" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Radio } from "@refineui/react";
+
+<Radio name="plan" value="basic" label="Basic Plan" />
+
+<Radio
+  name="plan"
+  value="pro"
+  label="Pro Plan"
+  description="Includes advanced features"
+  checked={selectedPlan === "pro"}
+  onChange={(e) => setSelectedPlan(e.target.value)}
+/>
+
+<Radio
+  name="plan"
+  value="enterprise"
+  label="Enterprise"
+  allowUncheck
+/>
+```
+
+## API 레퍼런스
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "label", default: "—", type: "string", description: "라디오 버튼 레이블 텍스트." },
+    { prop: "description", default: "—", type: "string", description: "레이블 아래 선택적 설명." },
+    { prop: "allowUncheck", default: "false", type: "boolean", description: "선택된 라디오 체크 해제를 허용합니다." },
+    { prop: "checked", default: "—", type: "boolean", description: "제어형 체크 상태." },
+    { prop: "value", default: "—", type: "string", description: "폼 제출용 값." },
+    { prop: "name", default: "—", type: "string", description: "라디오 버튼 그룹용 name." },
+    { prop: "disabled", default: "false", type: "boolean", description: "인터랙션을 비활성화합니다." }
+    ]}
+  />
+</div>

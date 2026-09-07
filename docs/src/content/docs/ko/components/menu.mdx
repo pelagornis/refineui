@@ -1,0 +1,131 @@
+---
+title: Menu
+description: 리스트 항목이 있는 액션 메뉴 드롭다운.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import MenuPreview from "../../../../components/MenuPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <MenuPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="menu" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Menu, MenuPopover, MenuList, MenuItem, MenuDivider, MenuSection } from "@refineui/react";
+
+<Menu>
+  <MenuPopover>
+    <MenuList>
+      <MenuItem onSelect={() => handleNew()}>
+        New File
+      </MenuItem>
+      <MenuItem onSelect={() => handleOpen()}>
+        Open
+      </MenuItem>
+      <MenuDivider />
+      <MenuItem state="disabled">
+        Save (disabled)
+      </MenuItem>
+    </MenuList>
+  </MenuPopover>
+</Menu>
+
+<Menu>
+  <MenuPopover>
+    <MenuList>
+      <MenuSection>
+        <MenuItem
+          startIcon={<Icon />}
+          endIcon={<Badge />}
+          description="Description text"
+          shortcut="⌘N"
+        >
+          Menu Item
+        </MenuItem>
+        <MenuSubTrigger>Submenu</MenuSubTrigger>
+        <MenuSubContent>
+          <MenuItem>Submenu Item</MenuItem>
+        </MenuSubContent>
+      </MenuSection>
+    </MenuList>
+  </MenuPopover>
+</Menu>
+```
+
+## API 레퍼런스
+
+### Menu
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "positioning", default: "—", type: "MenuPositioning", description: "포지셔닝 설정." }
+    ]}
+  />
+</div>
+### MenuPopover
+
+메뉴용 팝오버 컨테이너.
+
+### MenuList
+
+메뉴 항목 리스트 컨테이너.
+
+### MenuItem
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "description", default: "—", type: "ReactNode", description: "보조 설명 텍스트." },
+    { prop: "shortcut", default: "—", type: "ReactNode", description: "키보드 단축키 힌트." },
+    { prop: "startIcon", default: "—", type: "ReactNode", description: "앞쪽 아이콘." },
+    { prop: "endIcon", default: "—", type: "ReactNode", description: "뒤쪽 아이콘." },
+    { prop: "state", default: "\"default\"", type: "\"default\" | \"hover\" | \"pressed\" | \"active\" | \"disabled\"", description: "시각 상태." }
+    ]}
+  />
+</div>
+### MenuSection
+
+관련 메뉴 항목을 그룹화합니다.
+
+### MenuDivider
+
+항목 사이 시각적 구분선.
+
+### MenuSubTrigger
+
+서브메뉴 트리거 항목(셰브론 표시).
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "description", default: "—", type: "ReactNode", description: "보조 설명 텍스트." },
+    { prop: "startIcon", default: "—", type: "ReactNode", description: "앞쪽 아이콘." },
+    { prop: "state", default: "\"default\"", type: "\"default\" | \"hover\" | \"pressed\" | \"active\" | \"disabled\"", description: "시각 상태." }
+    ]}
+  />
+</div>
+### MenuSubContent
+
+서브메뉴 패널.
+

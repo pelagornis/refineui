@@ -1,0 +1,59 @@
+---
+title: 사이징
+description: Foundation 레이아웃 스텝, 컨트롤 높이, 아이콘 치수.
+---
+
+import { SpecTable } from "../../../../docs-ui";
+
+컴포넌트 치수는 `@refineui/tokens`의 `componentSizes`를 통해 **Foundation 사이즈 스텝**을 별칭합니다. React 스타일에 컨트롤 높이나 아이콘 박스를 하드코딩하지 마세요.
+
+## 무엇을 쓸까
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="사이징 레이어"
+    columns={[
+      { key: "layer", header: "레이어", mono: true },
+      { key: "purpose", header: "목적" },
+    ]}
+    rows={[
+      { layer: "foundationSizes", purpose: "전역 사이즈 스텝 (Foundation의 단일 소스)" },
+      { layer: "componentSizes", purpose: "Web Kit 치수 별칭 → Foundation 키" },
+      { layer: "iconSizes", purpose: "글리프 크기 px (xxsmall … xxlarge)" },
+    ]}
+  />
+</div>
+
+## 아이콘 크기
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="아이콘 크기"
+    columns={[
+      { key: "token", header: "토큰", mono: true },
+      { key: "px", header: "px", mono: true },
+    ]}
+    rows={[
+      { token: "xxsmall", px: "12" },
+      { token: "xsmall", px: "16" },
+      { token: "small", px: "20" },
+      { token: "medium", px: "24" },
+      { token: "large", px: "28" },
+      { token: "xlarge", px: "32" },
+      { token: "xxlarge", px: "48" },
+    ]}
+  />
+</div>
+
+## 예시
+
+컨트롤 높이(버튼, 인풋)와 오버레이 너비는 `--refineui-size-button-min-height-md`, `--refineui-size-dialog-max-width` 같은 CSS 변수로 해석됩니다. 커스텀 크롬을 조합하는 경우가 아니면 제품 CSS에서 그 변수를 읽기보다 컴포넌트 props(`size="md"`)를 우선하세요.
+
+```tsx
+import { iconSizes } from "@refineui/tokens";
+import { WebIcon } from "@refineui/react";
+
+<WebIcon name="search" size={iconSizes.small} />
+```

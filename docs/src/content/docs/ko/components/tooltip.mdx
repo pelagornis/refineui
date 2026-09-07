@@ -1,0 +1,59 @@
+---
+title: Tooltip
+description: 호버 또는 포커스 시 상황별 텍스트 팝업.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import TooltipDemo from "../../../../components/TooltipDemo";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <TooltipDemo client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="tooltip" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Tooltip } from "@refineui/react";
+
+<Tooltip trigger={<Button>Hover me</Button>} content="Helpful tooltip text" />
+
+<Tooltip
+  trigger={<IconButton icon="info" />}
+  content="Extended information"
+  position="Top"
+  align="Center"
+/>
+```
+
+## API 레퍼런스
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "trigger", default: "—", type: "ReactNode", description: "툴팁을 트리거하는 요소(필수)." },
+    { prop: "content", default: "—", type: "ReactNode", description: "툴팁 콘텐츠(필수)." },
+    { prop: "position", default: "\"Top\"", type: "\"Top\" | \"Left\" | \"Bottom\" | \"Right\"", description: "트리거 기준 위치." },
+    { prop: "align", default: "\"Center\"", type: "\"Start\" | \"Center\" | \"End\"", description: "가장자리 기준 정렬." },
+    { prop: "delayMs", default: "700", type: "number", description: "표시 전 지연(밀리초)." },
+    { prop: "open", default: "—", type: "boolean", description: "제어형 열림 상태." },
+    { prop: "defaultOpen", default: "—", type: "boolean", description: "비제어형 초기 열림 상태." },
+    { prop: "onOpenChange", default: "—", type: "(open: boolean) => void", description: "열림 상태 변경 시 이벤트 핸들러." }
+    ]}
+  />
+</div>

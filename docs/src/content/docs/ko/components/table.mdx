@@ -1,0 +1,133 @@
+---
+title: Table
+description: 구조화된 레코드를 위한 데이터 그리드 테이블.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import TablePreview from "../../../../components/TablePreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <TablePreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="table" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableRow,
+  TableHead,
+  TableCell,
+  TableCaption
+} from "@refineui/react";
+
+<Table>
+  <TableCaption>Product inventory</TableCaption>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Product</TableHead>
+      <TableHead>Price</TableHead>
+      <TableHead>Stock</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>Widget A</TableCell>
+      <TableCell>$19.99</TableCell>
+      <TableCell>52</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Widget B</TableCell>
+      <TableCell>$29.99</TableCell>
+      <TableCell>12</TableCell>
+    </TableRow>
+  </TableBody>
+  <TableFooter>
+    <TableRow>
+      <TableCell colSpan={2}>Total Items</TableCell>
+      <TableCell>64</TableCell>
+    </TableRow>
+  </TableFooter>
+</Table>
+```
+
+## 스크롤
+
+Table은 overflow를 직접 소유하지 않습니다. 너비가 제한될 때(문서 열, 패널) 또는 높이가 제한될 때(다이얼로그, 고정 레이아웃) `ScrollArea`와 조합하세요. 스테이지에 맞는 표본 프리뷰는 보통 ScrollArea를 생략합니다.
+
+```tsx
+import {
+  ScrollArea,
+  ScrollAreaViewport,
+  ScrollAreaScrollbar,
+  ScrollAreaThumb,
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "@refineui/react";
+
+<ScrollArea type="hover" className="w-full min-w-0">
+  <ScrollAreaViewport>
+    <Table>
+      <TableHeader>{/* … */}</TableHeader>
+      <TableBody>{/* … */}</TableBody>
+    </Table>
+  </ScrollAreaViewport>
+  <ScrollAreaScrollbar orientation="horizontal">
+    <ScrollAreaThumb />
+  </ScrollAreaScrollbar>
+</ScrollArea>
+```
+
+## API 레퍼런스
+
+### Table
+
+루트 테이블 요소.
+
+### TableHeader
+
+테이블 헤더 섹션(`<thead>`).
+
+### TableBody
+
+테이블 본문 섹션(`<tbody>`).
+
+### TableFooter
+
+테이블 푸터 섹션(`<tfoot>`).
+
+### TableRow
+
+테이블 행(`<tr>`).
+
+### TableHead
+
+헤더 셀(`<th>`).
+
+### TableCell
+
+데이터 셀(`<td>`).
+
+### TableCaption
+
+접근성용 테이블 캡션.

@@ -1,0 +1,59 @@
+---
+title: Stepper
+description: 인디케이터와 제목이 있는 다단계 플로우용 단계 목록.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import StepperDemo from "../../../../components/StepperDemo";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+`Stepper`는 순서 있는 단계의 진행을 추적합니다. 위저드·온보딩에 사용하세요. 선형 진행만 필요하면 [Progress](/ko/components/progress/) 또는 [ProgressStepper](/ko/components/progress-stepper/)를 권장합니다.
+
+<div class="not-content my-6">
+  <StepperDemo client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="stepper" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import {
+  Stepper,
+  StepperList,
+  StepperItem,
+  StepperIndicator,
+  StepperTitle,
+  StepperDescription,
+  StepperSeparator,
+} from "@refineui/react";
+
+<Stepper value={step} onValueChange={setStep}>
+  <StepperList>
+    <StepperItem value={0}>
+      <StepperIndicator>1</StepperIndicator>
+      <StepperTitle>Account</StepperTitle>
+      <StepperDescription>Profile & email</StepperDescription>
+    </StepperItem>
+    <StepperSeparator />
+    <StepperItem value={1}>
+      <StepperIndicator>2</StepperIndicator>
+      <StepperTitle>Plan</StepperTitle>
+    </StepperItem>
+  </StepperList>
+</Stepper>
+```
+
+## 관련
+
+- [Progress stepper](/ko/components/progress-stepper/)

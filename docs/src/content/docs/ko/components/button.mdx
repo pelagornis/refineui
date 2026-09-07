@@ -1,0 +1,50 @@
+---
+title: Button
+description: 저장, 계속, 패널 열기, 다이얼로그 닫기 등 액션을 시작합니다.
+---
+
+import { ComponentPreview, SpecRenderer, TokenInspector } from "../../../../components/spec";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <ComponentPreview client:load component="button" variant="primary" />
+</div>
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="button" />
+</div>
+
+## 토큰
+
+<div class="not-content">
+  <TokenInspector client:load component="button" variant="primary" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+뷰당 기본(primary) 액션은 하나만 사용하세요. 밀집된 툴바의 보조 액션에는 ghost 또는 outline을 권장합니다.
+
+```tsx
+import { Button, WebIcon } from "@refineui/react";
+import { iconSizes } from "@refineui/tokens";
+
+<Button variant="primary" size="md">
+  Continue
+</Button>
+
+<Button variant="outline" disabled>
+  Unavailable
+</Button>
+
+<Button variant="ghost" layout="icon" aria-label="Add">
+  <WebIcon name="add" size={iconSizes.medium} color="currentColor" />
+</Button>
+```
+
+계약 소스: `packages/react/spec/components/button.json` — 위의 SpecRenderer로 렌더링됩니다.

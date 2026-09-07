@@ -1,0 +1,59 @@
+---
+title: 시작하기
+description: RefineUI를 설치하고 아키텍처 — 토큰, 컴포넌트, AI 준비 문서를 이해합니다.
+---
+
+import PackageInstallFull from "../../../components/PackageInstallFull.mdx";
+
+RefineUI는 Pelagornis 제품을 위한 통합 디자인 시스템입니다. 파운데이션 변수는 `@refineui/tokens`가 되고, UI는 `@refineui/react`입니다. 디자인하는 Web Kit이 그대로 배포하는 React입니다.
+
+## 아키텍처
+
+- **[파운데이션](/ko/foundations/)** — 비주얼 언어, 디자인 토큰, 레이아웃
+- **[컴포넌트](/ko/components/)** — Actions, Forms, Navigation, Feedback, Overlays, Data Display, Content, Layout
+- **[개발](/ko/development/)** — 제품 코드에서의 설치, 테마, 모션
+- **[AI & 도구](/ko/ai-tools/)** — DESIGN.md, llms.txt, Skill, Doctor, MCP
+
+## 설치
+
+<PackageInstallFull />
+
+## 스타일시트
+
+앱 루트에서 토큰 CSS와 컴포넌트 인터랙션 스타일을 한 번 로드하세요.
+
+```css
+@import "@refineui/tokens/tailwind.css";
+@import "@refineui/web-icons/dist/fonts/refineui-system-icons.css";
+@import "@refineui/react/refineui.css";
+```
+
+또는 JS에서:
+
+```tsx
+import "@refineui/react/refineui.css";
+```
+
+## 예제
+
+```tsx
+import { Button, Input, Card } from "@refineui/react";
+import "@refineui/react/refineui.css";
+
+export function Example() {
+  return (
+    <Card>
+      <Input placeholder="Email" />
+      <Button variant="primary">Continue</Button>
+    </Card>
+  );
+}
+```
+
+## 다음 단계
+
+- [파운데이션](/ko/foundations/) — 토큰과 레이아웃
+- [컴포넌트](/ko/components/) — 인터랙티브 UI 프리미티브
+- [개발 / 설치](/ko/development/installation/) — 자세한 설정 노트
+- [DESIGN.md](/DESIGN.md) — 에이전트용 디자인 아이덴티티
+- [아이코노그래피](https://github.com/pelagornis/refineui-system-icons) — 시스템 아이콘 (별도 사이트 / 저장소)

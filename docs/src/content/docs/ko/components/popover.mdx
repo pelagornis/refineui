@@ -1,0 +1,80 @@
+---
+title: Popover
+description: 트리거 기준의 떠 있는 콘텐츠 패널.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import PopOverDemo from "../../../../components/PopOverDemo";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <PopOverDemo client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="popover" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Popover, PopoverTrigger, PopoverContent, Button } from "@refineui/react";
+
+<Popover>
+  <PopoverTrigger>
+    <Button>Show Info</Button>
+  </PopoverTrigger>
+  <PopoverContent>
+    <p>Additional information here</p>
+  </PopoverContent>
+</Popover>
+
+<Popover open={isOpen} onOpenChange={setIsOpen}>
+  <PopoverTrigger>
+    <Button>Toggle</Button>
+  </PopoverTrigger>
+  <PopoverContent placement="top" align="center">
+    <p>Popover content</p>
+  </PopoverContent>
+</Popover>
+```
+
+## API 레퍼런스
+
+### Popover
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "open", default: "—", type: "boolean", description: "제어형 열림 상태." },
+    { prop: "defaultOpen", default: "—", type: "boolean", description: "비제어형 초기 열림 상태." },
+    { prop: "onOpenChange", default: "—", type: "(open: boolean) => void", description: "열림 상태 변경 시 이벤트 핸들러." }
+    ]}
+  />
+</div>
+### PopoverTrigger
+
+팝오버를 여는 트리거 요소.
+
+### PopoverContent
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "placement", default: "\"bottom\"", type: "\"top\" | \"bottom\" | \"left\" | \"right\"", description: "트리거 기준 위치." },
+    { prop: "align", default: "\"center\"", type: "\"start\" | \"center\" | \"end\"", description: "가장자리 기준 정렬." }
+    ]}
+  />
+</div>

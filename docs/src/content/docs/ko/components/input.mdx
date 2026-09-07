@@ -1,0 +1,64 @@
+---
+title: Input
+description: 한 줄 텍스트 입력을 위한 텍스트 입력.
+---
+import { SpecRenderer, TokenInspector } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import InputPreview from "../../../../components/InputPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <InputPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="input" />
+</div>
+
+## 토큰
+
+<div class="not-content">
+  <TokenInspector client:load component="input" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Input } from "@refineui/react";
+
+<Input placeholder="Enter your name" />
+
+<Input
+  size="lg"
+  error={hasError}
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+/>
+
+<Input fullWidth placeholder="Full width input" />
+```
+
+## API 레퍼런스
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "Input 크기 티어." },
+    { prop: "error", default: "false", type: "boolean", description: "에러 상태 스타일을 표시합니다." },
+    { prop: "success", default: "false", type: "boolean", description: "성공 상태 스타일을 표시합니다." },
+    { prop: "fullWidth", default: "false", type: "boolean", description: "부모 전체 너비로 늘어납니다." },
+    { prop: "disabled", default: "false", type: "boolean", description: "인터랙션을 비활성화합니다." }
+    ]}
+  />
+</div>

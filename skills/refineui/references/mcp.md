@@ -39,8 +39,8 @@ Run `bun run build:mcp` first.
 | `list_components` | A–Z component list |
 | `list_foundations` | Foundation pages |
 | `get_llm_index` | Full llm.txt text |
-| `get_design_rules` | Condensed rules for codegen |
+| `get_design_rules` | Full DESIGN.md (Stitch alpha) |
 | `list_tokens` | Token categories + semantic text roles |
 | `run_doctor` | Read-only workspace diagnostics |
 
-Resources: `refineui://llm.txt`, `refineui://design-rules`
+Resources: `refineui://llm.txt`, `refineui://DESIGN.md`, `refineui://design-rules`

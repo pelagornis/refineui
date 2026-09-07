@@ -1,0 +1,45 @@
+---
+title: 모션
+description: 인터랙션을 위한 duration, easing, scale, distance 역할.
+---
+
+import { SpecTable } from "../../../../docs-ui";
+import { MotionPreview } from "../../../../components/foundation/MotionPreview";
+
+**시맨틱 역할**(`fast`, `press`, `panel`)을 사용하세요 — CSS `--refineui-motion-duration-fast`, `--refineui-motion-scale-press`. 컴포넌트에 `150ms`나 일회성 커브를 쓰지 마세요. 컨트롤 hover와 focus는 이미 `refineui.css`가 담당합니다.
+
+## 역할 (요약)
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="모션 역할 요약"
+    columns={[
+      { key: "kind", header: "종류" },
+      { key: "examples", header: "예시", mono: true },
+    ]}
+    rows={[
+      { kind: "Duration", examples: "instant, fast, normal, medium, slow, overlay, panel" },
+      { kind: "Easing", examples: "standard, emphasized, panel, content, easeOut" },
+      { kind: "Scale", examples: "enter, press, hoverGrow" },
+      { kind: "Distance", examples: "float (4px)" },
+    ]}
+  />
+</div>
+
+<div class="not-content">
+  <MotionPreview client:load />
+</div>
+
+## 사용법
+
+```css
+.control {
+  transition: transform var(--refineui-motion-duration-fast)
+    var(--refineui-motion-easing-standard);
+}
+
+.control[data-pressed] {
+  transform: scale(var(--refineui-motion-scale-press));
+}
+```

@@ -1,3 +1,5 @@
+import { toDocsLocale, withLocalePath, type DocsLocaleCode } from "../lib/docs-locale";
+
 export type DocsHeaderNavLink = {
     label: string;
     href: string;
@@ -21,6 +23,129 @@ export type DocsSearchItem = {
     keywords?: string[];
     external?: boolean;
 };
+
+const HEADER_NAV_KO: Record<string, { label: string; links?: Record<string, { label: string; description?: string }> }> = {
+    foundations: {
+        label: "파운데이션",
+        links: {
+            Overview: { label: "개요", description: "토큰 기반 파운데이션" },
+            "Design tokens": { label: "디자인 토큰", description: "시맨틱 토큰 모델" },
+            Color: { label: "컬러", description: "팔레트와 별칭" },
+            Typography: { label: "타이포그래피", description: "타입 스케일과 역할" },
+            Spacing: { label: "스페이싱", description: "레이아웃 리듬" },
+            Layout: { label: "레이아웃", description: "그리드, 컨테이너, 정렬" },
+            Iconography: { label: "아이코노그래피", description: "시스템 아이콘 저장소" },
+        },
+    },
+    components: {
+        label: "컴포넌트",
+        links: {
+            Overview: { label: "개요", description: "카탈로그와 프리뷰" },
+            Button: { label: "Button", description: "주요 액션" },
+            Input: { label: "Input", description: "텍스트 입력" },
+            Dialog: { label: "Dialog", description: "모달 서피스" },
+            Sidebar: { label: "Sidebar", description: "앱 내비게이션 레일" },
+            Table: { label: "Table", description: "구조화된 데이터" },
+            Toast: { label: "Toast", description: "일시적 피드백" },
+            Tree: { label: "Tree", description: "계층형 목록" },
+        },
+    },
+    development: {
+        label: "개발",
+        links: {
+            Overview: { label: "개요", description: "RefineUI로 구축하기" },
+            Installation: { label: "설치", description: "패키지와 설정" },
+            Theming: { label: "테마", description: "라이트/다크 모드" },
+            Motion: { label: "모션", description: "duration과 easing" },
+        },
+    },
+    "ai-tools": {
+        label: "AI & 도구",
+        links: {
+            Overview: { label: "개요", description: "LLM 인덱스와 에이전트 도구" },
+            "DESIGN.md": { label: "DESIGN.md", description: "디자인 아이덴티티" },
+            "llms.txt": { label: "llms.txt", description: "문서 인덱스" },
+            "llm.txt": { label: "llm.txt", description: "확장 평문 레퍼런스" },
+            Skill: { label: "Skill", description: "refineui 에이전트 스킬" },
+            Doctor: { label: "Doctor", description: "워크스페이스 진단" },
+            MCP: { label: "MCP", description: "@refineui/mcp 서버" },
+        },
+    },
+};
+
+const SEARCH_GROUP_KO: Record<string, string> = {
+    Guides: "가이드",
+    Foundations: "파운데이션",
+    Components: "컴포넌트",
+    Development: "개발",
+    "AI & Tools": "AI & 도구",
+};
+
+const SEARCH_LABEL_KO: Record<string, string> = {
+    "Getting started": "시작하기",
+    "Foundations overview": "파운데이션 개요",
+    "Design tokens": "디자인 토큰",
+    Color: "컬러",
+    Typography: "타이포그래피",
+    Spacing: "스페이싱",
+    Sizing: "사이징",
+    Radius: "라디우스",
+    Border: "보더",
+    Elevation: "엘리베이션",
+    Opacity: "투명도",
+    Motion: "모션",
+    Layout: "레이아웃",
+    "Components overview": "컴포넌트 개요",
+    "Development overview": "개발 개요",
+    Installation: "설치",
+    Theming: "테마",
+    "AI & Tools overview": "AI & 도구 개요",
+    "DESIGN.md": "DESIGN.md",
+    "llms.txt": "llms.txt",
+    "llm.txt": "llm.txt",
+    "Z-index": "Z-index",
+    Skill: "Skill",
+    Doctor: "Doctor",
+    MCP: "MCP",
+};
+
+function localizeHref(href: string, locale: DocsLocaleCode, external?: boolean): string {
+    if (external) return href;
+    return withLocalePath(href, locale);
+}
+
+/** Header nav sections for the active docs locale. */
+export function getDocsHeaderNav(locale: string | undefined | null): DocsHeaderNavSection[] {
+    const docsLocale = toDocsLocale(locale);
+    return DOCS_HEADER_NAV.map((section) => {
+        const koSection = docsLocale === "ko" ? HEADER_NAV_KO[section.value] : undefined;
+        return {
+            ...section,
+            label: koSection?.label ?? section.label,
+            href: localizeHref(section.href, docsLocale),
+            links: section.links.map((link) => {
+                const koLink = koSection?.links?.[link.label];
+                return {
+                    ...link,
+                    label: koLink?.label ?? link.label,
+                    description: koLink?.description ?? link.description,
+                    href: localizeHref(link.href, docsLocale, link.external),
+                };
+            }),
+        };
+    });
+}
+
+/** Command palette items for the active docs locale. */
+export function getDocsSearchItems(locale: string | undefined | null): DocsSearchItem[] {
+    const docsLocale = toDocsLocale(locale);
+    return DOCS_SEARCH_ITEMS.map((item) => ({
+        ...item,
+        label: docsLocale === "ko" ? (SEARCH_LABEL_KO[item.label] ?? item.label) : item.label,
+        group: docsLocale === "ko" ? (SEARCH_GROUP_KO[item.group] ?? item.group) : item.group,
+        href: localizeHref(item.href, docsLocale, item.external),
+    }));
+}
 
 /** Override sections or links to customize the header navigation menu. */
 export const DOCS_HEADER_NAV: DocsHeaderNavSection[] = [
@@ -75,7 +200,9 @@ export const DOCS_HEADER_NAV: DocsHeaderNavSection[] = [
         href: "/ai-tools/",
         links: [
             { label: "Overview", href: "/ai-tools/", description: "LLM indexes and agent tooling" },
+            { label: "DESIGN.md", href: "/DESIGN.md", description: "Stitch design identity for agents" },
             { label: "llms.txt", href: "/llms.txt", description: "Curated documentation index" },
+            { label: "llm.txt", href: "/llm.txt", description: "Expanded plain-text reference" },
             { label: "Skill", href: "/ai-tools/skill/", description: "refineui agent skill" },
             { label: "Doctor", href: "/ai-tools/doctor/", description: "RefineUI workspace diagnostics" },
             { label: "MCP", href: "/ai-tools/mcp/", description: "@refineui/mcp server" },
@@ -160,7 +287,9 @@ export const DOCS_SEARCH_ITEMS: DocsSearchItem[] = [
     { value: "theming", label: "Theming", href: "/development/theming/", group: "Development" },
     { value: "motion-dev", label: "Motion", href: "/development/motion/", group: "Development" },
     { value: "ai-tools", label: "AI & Tools overview", href: "/ai-tools/", group: "AI & Tools" },
+    { value: "design-md", label: "DESIGN.md", href: "/DESIGN.md", group: "AI & Tools" },
     { value: "llms-txt", label: "llms.txt", href: "/llms.txt", group: "AI & Tools" },
+    { value: "llm-txt", label: "llm.txt", href: "/llm.txt", group: "AI & Tools" },
     { value: "refineui-skill", label: "Skill", href: "/ai-tools/skill/", group: "AI & Tools" },
     { value: "refineui-doctor", label: "Doctor", href: "/ai-tools/doctor/", group: "AI & Tools" },
     { value: "refineui-mcp", label: "MCP", href: "/ai-tools/mcp/", group: "AI & Tools" },

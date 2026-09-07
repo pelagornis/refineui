@@ -1,0 +1,129 @@
+---
+title: Drawer
+description: 화면 가장자리에서 미끄러져 나오는 패널 오버레이.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import DrawerDemo from "../../../../components/DrawerDemo";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <DrawerDemo client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="drawer" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import {
+  Drawer,
+  DrawerTrigger,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerDescription,
+  DrawerBody,
+  DrawerFooter,
+  DrawerClose,
+  Button
+} from "@refineui/react";
+
+<Drawer>
+  <DrawerTrigger asChild>
+    <Button>Open Drawer</Button>
+  </DrawerTrigger>
+  <DrawerContent>
+    <DrawerHeader>
+      <DrawerTitle>Settings</DrawerTitle>
+      <DrawerDescription>Adjust your preferences</DrawerDescription>
+    </DrawerHeader>
+    <DrawerBody>
+      {/* Drawer content */}
+    </DrawerBody>
+    <DrawerFooter>
+      <DrawerClose>Close</DrawerClose>
+    </DrawerFooter>
+  </DrawerContent>
+</Drawer>
+
+<Drawer type="inline" placement="left" size="md" showFooter>
+  {/* Drawer content */}
+</Drawer>
+```
+
+## API 레퍼런스
+
+### Drawer
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "open", default: "—", type: "boolean", description: "제어형 열림 상태." },
+    { prop: "defaultOpen", default: "—", type: "boolean", description: "비제어형 초기 열림 상태." },
+    { prop: "onOpenChange", default: "—", type: "(open: boolean) => void", description: "열림 상태 변경 시 이벤트 핸들러." },
+    { prop: "type", default: "\"overlay\"", type: "\"overlay\" | \"inline\"", description: "Drawer 표시 타입." },
+    { prop: "placement", default: "\"right\"", type: "\"left\" | \"right\"", description: "화면 쪽." },
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "Drawer 너비." },
+    { prop: "showFooter", default: "false", type: "boolean", description: "푸터 섹션을 표시합니다." }
+    ]}
+  />
+</div>
+### DrawerTrigger
+
+트리거 요소(보통 Button).
+
+### DrawerContent
+
+Drawer 패널 컨테이너.
+
+### DrawerHeader
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "showClose", default: "true", type: "boolean", description: "닫기 버튼을 표시합니다." },
+    { prop: "actions", default: "—", type: "ReactNode", description: "추가 헤더 액션." }
+    ]}
+  />
+</div>
+### DrawerTitle
+
+Drawer 제목 요소.
+
+### DrawerDescription
+
+Drawer 설명 텍스트.
+
+### DrawerBody
+
+스크롤 가능한 콘텐츠 영역.
+
+### DrawerFooter
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "state", default: "—", type: "\"icons\" | \"single\" | \"split\"", description: "푸터 버튼 레이아웃." }
+    ]}
+  />
+</div>
+### DrawerClose
+
+닫기 버튼.
+

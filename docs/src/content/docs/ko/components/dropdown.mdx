@@ -1,0 +1,98 @@
+---
+title: Dropdown
+description: 상황별 액션 드롭다운 패널.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import DropdownDemo from "../../../../components/DropdownDemo";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <DropdownDemo client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="dropdown" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Dropdown, DropdownTrigger, DropdownContent, DropdownItem, Button } from "@refineui/react";
+
+<Dropdown>
+  <DropdownTrigger>
+    <Button>Options</Button>
+  </DropdownTrigger>
+  <DropdownContent>
+    <DropdownItem onSelect={() => handleEdit()}>Edit</DropdownItem>
+    <DropdownItem onSelect={() => handleDelete()}>Delete</DropdownItem>
+    <DropdownItem disabled>Disabled</DropdownItem>
+  </DropdownContent>
+</Dropdown>
+
+<Dropdown>
+  <DropdownTrigger>
+    <Button>More</Button>
+  </DropdownTrigger>
+  <DropdownContent align="end" side="bottom">
+    <DropdownItem selected>Active Item</DropdownItem>
+    <DropdownSubTrigger>Submenu</DropdownSubTrigger>
+    <DropdownSubContent>
+      <DropdownItem>Submenu Item</DropdownItem>
+    </DropdownSubContent>
+  </DropdownContent>
+</Dropdown>
+```
+
+## API 레퍼런스
+
+### Dropdown
+
+루트 컴포넌트(열림 상태 관리).
+
+### DropdownTrigger
+
+드롭다운을 여는 트리거 요소.
+
+### DropdownContent
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "align", default: "\"start\"", type: "\"start\" | \"end\" | \"center\"", description: "트리거 기준 정렬." },
+    { prop: "side", default: "\"auto\"", type: "\"auto\" | \"top\" | \"bottom\"", description: "선호하는 쪽." },
+    { prop: "sideOffset", default: "4", type: "number", description: "트리거와 패널 사이 간격(픽셀)." }
+    ]}
+  />
+</div>
+### DropdownItem
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "selected", default: "false", type: "boolean", description: "선택 상태를 표시합니다." },
+    { prop: "disabled", default: "false", type: "boolean", description: "이 항목을 비활성화합니다." }
+    ]}
+  />
+</div>
+### DropdownSubTrigger
+
+서브메뉴 트리거 항목(셰브론 표시).
+
+### DropdownSubContent
+
+서브메뉴 패널.
+

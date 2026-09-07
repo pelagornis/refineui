@@ -1,0 +1,55 @@
+---
+title: Textarea
+description: 여러 줄 텍스트 입력 필드.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import TextareaPreview from "../../../../components/TextareaPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <TextareaPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="textarea" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Textarea } from "@refineui/react";
+
+<Textarea placeholder="Enter your comments..." rows={4} />
+
+<Textarea
+  error={hasError}
+  value={message}
+  onChange={(e) => setMessage(e.target.value)}
+  fullWidth
+/>
+```
+
+## API 레퍼런스
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "error", default: "false", type: "boolean", description: "에러 상태 스타일을 표시합니다." },
+    { prop: "success", default: "false", type: "boolean", description: "성공 상태 스타일을 표시합니다." },
+    { prop: "fullWidth", default: "false", type: "boolean", description: "부모 전체 너비로 늘어납니다." },
+    { prop: "disabled", default: "false", type: "boolean", description: "인터랙션을 비활성화합니다." }
+    ]}
+  />
+</div>

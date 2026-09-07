@@ -5,6 +5,7 @@ import { discoverWorkspaces, runDoctor, reportToSummary } from "@refineui/doctor
 import { DESIGN_RULES } from "./design-rules.js";
 import { getComponentRecipe, getComponentSpec, getTokenSpecIndex, inspectToken, listComponentSpecs } from "./token-spec.js";
 import {
+    getDesignMd,
     getDocPage,
     getIndexMeta,
     getLlmIndex,
@@ -52,11 +53,30 @@ function createServer() {
     );
 
     server.registerResource(
+        "design-md",
+        "refineui://DESIGN.md",
+        {
+            title: "RefineUI DESIGN.md",
+            description: "Stitch-compatible design system identity and agent rules",
+            mimeType: "text/markdown",
+        },
+        async () => ({
+            contents: [
+                {
+                    uri: "refineui://DESIGN.md",
+                    mimeType: "text/markdown",
+                    text: getDesignMd(),
+                },
+            ],
+        }),
+    );
+
+    server.registerResource(
         "design-rules",
         "refineui://design-rules",
         {
             title: "RefineUI design rules",
-            description: "Token and component rules for AI-assisted development",
+            description: "Alias of DESIGN.md for backward compatibility",
             mimeType: "text/markdown",
         },
         async () => ({
@@ -142,11 +162,12 @@ function createServer() {
     server.registerTool(
         "get_design_rules",
         {
-            title: "Get RefineUI design rules",
-            description: "Return condensed design-system rules for building with @refineui/react and tokens.",
+            title: "Get RefineUI DESIGN.md",
+            description:
+                "Return docs/public/DESIGN.md — Stitch-compatible visual identity and codegen rules for @refineui/*.",
             inputSchema: z.object({}),
         },
-        async () => textResult(DESIGN_RULES),
+        async () => textResult(getDesignMd()),
     );
 
     server.registerTool(

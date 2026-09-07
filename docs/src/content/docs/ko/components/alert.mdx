@@ -1,0 +1,61 @@
+---
+title: Alert
+description: 상태나 경고를 전달하는 눈에 띄는 메시지.
+---
+
+import { ComponentPreview, SpecRenderer, TokenInspector } from "../../../../components/spec";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <ComponentPreview client:load component="alert" variant="info" />
+</div>
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="alert" />
+</div>
+
+## 토큰
+
+<div class="not-content">
+  <TokenInspector client:load component="alert" variant="info" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import {
+  Alert,
+  AlertIcon,
+  AlertRow,
+  AlertBody,
+  AlertTitle,
+  AlertDescription,
+  AlertClose,
+  AlertActions,
+  AlertAction,
+} from "@refineui/react";
+
+<Alert variant="warning">
+  <AlertRow>
+    <AlertIcon />
+    <AlertBody>
+      <AlertTitle>Warning</AlertTitle>
+      <AlertDescription>Review before continuing.</AlertDescription>
+    </AlertBody>
+    <AlertClose type="button" />
+  </AlertRow>
+  <AlertActions>
+    <AlertAction type="button">Review</AlertAction>
+  </AlertActions>
+</Alert>
+```
+
+계약 소스: `packages/react/spec/components/alert.json` — 위의 SpecRenderer로 렌더링됩니다.
+
+토큰 추적 소스: `packages/react/dist/spec/token-trace-v2.json` + `packages/tokens/dist/spec/trace-v2.json`.

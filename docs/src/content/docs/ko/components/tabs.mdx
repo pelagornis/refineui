@@ -1,0 +1,100 @@
+---
+title: Tabs
+description: 콘텐츠를 별도의 뷰 패널로 구성합니다.
+---
+import { SpecRenderer, TokenInspector } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import TabsPreview from "../../../../components/TabsPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <TabsPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="tabs" />
+</div>
+
+
+## 토큰
+
+<div class="not-content">
+  <TokenInspector client:load component="tabs" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@refineui/react";
+
+<Tabs defaultValue="overview">
+  <TabsList>
+    <TabsTrigger value="overview">Overview</TabsTrigger>
+    <TabsTrigger value="analytics">Analytics</TabsTrigger>
+    <TabsTrigger value="settings">Settings</TabsTrigger>
+  </TabsList>
+  <TabsContent value="overview">
+    <p>Overview content</p>
+  </TabsContent>
+  <TabsContent value="analytics">
+    <p>Analytics content</p>
+  </TabsContent>
+  <TabsContent value="settings">
+    <p>Settings content</p>
+  </TabsContent>
+</Tabs>
+
+<Tabs value={activeTab} onValueChange={setActiveTab}>
+  {/* Controlled tabs */}
+</Tabs>
+```
+
+## API 레퍼런스
+
+### Tabs
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "제어형 활성 탭 값." },
+    { prop: "defaultValue", default: "—", type: "string", description: "비제어형 초기 활성 탭." },
+    { prop: "onValueChange", default: "—", type: "(value: string) => void", description: "활성 탭 변경 시 이벤트 핸들러." }
+    ]}
+  />
+</div>
+### TabsList
+
+탭 트리거 컨테이너.
+
+### TabsTrigger
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "탭 식별자(필수)." },
+    { prop: "disabled", default: "false", type: "boolean", description: "이 탭을 비활성화합니다." }
+    ]}
+  />
+</div>
+### TabsContent
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "연결된 탭 값(필수)." }
+    ]}
+  />
+</div>

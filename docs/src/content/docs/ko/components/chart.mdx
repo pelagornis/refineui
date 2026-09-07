@@ -1,0 +1,180 @@
+---
+title: Chart
+description: 데이터 시각화 차트 프리미티브.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import ChartPreview from "../../../../components/ChartPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <ChartPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="chart" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import {
+  Chart,
+  ChartBody,
+  ChartContent,
+  ChartPlot,
+  ChartGrid,
+  ChartBars,
+  ChartLine,
+  ChartYAxisLabels,
+  ChartAxisLabels,
+  ChartLegend,
+  ChartLegendItem
+} from "@refineui/react";
+
+const data = [45, 52, 38, 65, 42, 80, 55];
+const labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+<Chart>
+  <ChartBody>
+    <ChartContent>
+      <ChartYAxisLabels values={data} />
+      <ChartPlot aria-label="Weekly sales chart">
+        <ChartGrid values={data} />
+        <ChartBars values={data} seriesColor="blue" />
+      </ChartPlot>
+      <ChartAxisLabels labels={labels} />
+    </ChartContent>
+  </ChartBody>
+  <ChartLegend>
+    <ChartLegendItem seriesColor="blue">Sales</ChartLegendItem>
+  </ChartLegend>
+</Chart>
+
+<Chart>
+  <ChartBody>
+    <ChartContent>
+      <ChartPlot>
+        <ChartGrid values={data} lines={5} />
+        <ChartLine values={data} seriesColor="green" showArea showPoints />
+      </ChartPlot>
+    </ChartContent>
+  </ChartBody>
+</Chart>
+```
+
+## API 레퍼런스
+
+### Chart
+
+루트 차트 컨테이너.
+
+### ChartBody
+
+메인 차트 본문 섹션.
+
+### ChartContent
+
+차트 콘텐츠 래퍼.
+
+### ChartPlot
+
+SVG 플롯 영역.
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "aria-label", default: "—", type: "string", description: "차트의 접근 가능한 이름." }
+    ]}
+  />
+</div>
+### ChartGrid
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "lines", default: "5", type: "number", description: "가로 그리드 선 개수(기준선 포함)." },
+    { prop: "max", default: "—", type: "number", description: "Y 스케일 최댓값(생략 시 values에서 자동 산출)." },
+    { prop: "values", default: "—", type: "number[]", description: "스케일 산출용 소스 값." }
+    ]}
+  />
+</div>
+### ChartBars
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "values", default: "—", type: "number[]", description: "막대 값(필수)." },
+    { prop: "max", default: "—", type: "number", description: "Y 스케일 최댓값." },
+    { prop: "seriesColor", default: "—", type: "ChartSeriesColor", description: "시리즈 색상 키." },
+    { prop: "showTrack", default: "false", type: "boolean", description: "각 막대 뒤에 전체 높이 트랙을 표시합니다." }
+    ]}
+  />
+</div>
+### ChartLine
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "values", default: "—", type: "number[]", description: "선 값(필수)." },
+    { prop: "max", default: "—", type: "number", description: "Y 스케일 최댓값." },
+    { prop: "seriesColor", default: "—", type: "ChartSeriesColor", description: "시리즈 색상 키." },
+    { prop: "showArea", default: "false", type: "boolean", description: "선 아래 영역 채우기." },
+    { prop: "showPoints", default: "false", type: "boolean", description: "각 값의 포인트 마커." }
+    ]}
+  />
+</div>
+### ChartYAxisLabels
+
+Y축 눈금 레이블.
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "values", default: "—", type: "number[]", description: "스케일용 소스 값." },
+    { prop: "formatTick", default: "—", type: "(value: number) => string", description: "커스텀 포매터." }
+    ]}
+  />
+</div>
+### ChartAxisLabels
+
+X축 레이블.
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "labels", default: "—", type: "string[]", description: "레이블 문자열(필수)." },
+    { prop: "align", default: "\"bar\"", type: "\"bar\" | \"line\"", description: "정렬 스타일." }
+    ]}
+  />
+</div>
+### ChartLegend
+
+범례 리스트 컨테이너.
+
+### ChartLegendItem
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "seriesColor", default: "—", type: "ChartSeriesColor", description: "시리즈 색상 키(필수)." }
+    ]}
+  />
+</div>

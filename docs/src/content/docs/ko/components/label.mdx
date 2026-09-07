@@ -1,0 +1,66 @@
+---
+title: Label
+description: 폼 필드를 위한 텍스트 레이블 컨트롤.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import LabelPreview from "../../../../components/LabelPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <LabelPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="label" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Label, LabelRequired } from "@refineui/react";
+
+<Label htmlFor="email">Email address</Label>
+
+<Label htmlFor="password" required>
+  Password
+</Label>
+
+<Label size="lg" disabled>
+  Disabled Label
+</Label>
+
+<Label htmlFor="name">
+  Name <LabelRequired />
+</Label>
+```
+
+## API 레퍼런스
+
+### Label
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "required", default: "false", type: "boolean", description: "LabelRequired를 붙이는 편의 prop." },
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "Label 크기 티어." },
+    { prop: "disabled", default: "false", type: "boolean", description: "비활성 스타일을 표시합니다." },
+    { prop: "htmlFor", default: "—", type: "string", description: "레이블을 폼 컨트롤과 연결합니다." }
+    ]}
+  />
+</div>
+### LabelRequired
+
+필수 표시 시각 인디케이터(별표). 레이블을 직접 조합할 때 사용하세요.
+

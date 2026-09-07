@@ -48,7 +48,7 @@ Example for monorepo contributors (after `bun run build:mcp`):
 | `list_components` | All component doc pages |
 | `list_foundations` | Foundation / token doc pages |
 | `get_llm_index` | Full `llm.txt` content |
-| `get_design_rules` | Condensed design-system rules |
+| `get_design_rules` | Full `DESIGN.md` (Stitch alpha) |
 | `list_tokens` | Token categories and semantic text roles |
 | `get_index_meta` | Index generation timestamp and page count |
 | `run_doctor` | Read-only workspace diagnostics (setup, tokens, composition) |
@@ -58,17 +58,18 @@ Example for monorepo contributors (after `bun run build:mcp`):
 | URI | Content |
 |-----|---------|
 | `refineui://llm.txt` | Machine-readable docs index |
-| `refineui://design-rules` | Agent codegen rules |
+| `refineui://DESIGN.md` | Stitch-compatible design identity |
+| `refineui://design-rules` | Alias of `DESIGN.md` |
 
-## vs llms.txt vs Skill
+## vs DESIGN.md vs llms.txt vs Skill
 
-| | llms.txt | Skill | MCP |
-|---|----------|-------|-----|
-| **Format** | Static text file | Agent instructions | Live tools + resources |
-| **Best for** | Static index, simple context | Routing + rules in any agent | Dynamic search & page fetch |
-| **Updates** | Deploy with site | `skills add` from GitHub | npm package / rebuild index |
+| | DESIGN.md | llms.txt | Skill | MCP |
+|---|-----------|----------|-------|-----|
+| **Format** | Tokens YAML + prose | Static link index | Agent instructions | Live tools + resources |
+| **Best for** | Visual identity / UI generation | Discovery of pages | Routing + rules | Dynamic search & page fetch |
+| **Updates** | Deploy with site | Deploy with site | `skills add` from GitHub | npm package / rebuild index |
 
-Use all three together: **Skill** for behavior, **MCP** for lookup, **llms.txt** as the canonical index URL.
+Use them together: **DESIGN.md** for look & feel, **Skill** for behavior, **MCP** for lookup, **llms.txt** as the curated index URL.
 
 ## Development
 

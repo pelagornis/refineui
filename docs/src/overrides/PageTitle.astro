@@ -1,10 +1,12 @@
 ---
 import DocsBreadcrumb from "../components/DocsBreadcrumb";
 import { buildDocsBreadcrumbTrail } from "../lib/docs-breadcrumb";
+import { toDocsLocale } from "../lib/docs-locale";
 
 const { title, description } = Astro.locals.starlightRoute.entry.data;
 const pageId = Astro.locals.starlightRoute.id;
-const breadcrumbItems = buildDocsBreadcrumbTrail(pageId, title);
+const locale = toDocsLocale(Astro.locals.starlightRoute.locale);
+const breadcrumbItems = buildDocsBreadcrumbTrail(pageId, title, locale);
 ---
 
 <div data-refineui-docs-pagehead>

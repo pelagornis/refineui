@@ -24,15 +24,17 @@ export const tableStyles = {
     head: clsx(
         componentTextClass(componentTypographyTokens.table.head),
         "h-refineui-control-height-sm whitespace-nowrap px-refineui-size-medium",
-        "align-middle font-medium text-refineui-alias-foreground-tertiary",
+        /** Explicit start — UA `th { text-align: center }` otherwise wins over table inherit. */
+        "align-middle text-start font-medium text-refineui-alias-foreground-tertiary",
     ),
     cell: clsx(
         componentTextClass(componentTypographyTokens.table.cell),
         "h-refineui-control-height-md whitespace-nowrap px-refineui-size-medium",
-        "align-middle text-refineui-alias-foreground-primary",
+        "align-middle text-start text-refineui-alias-foreground-primary",
     ),
     caption: clsx(
         componentTextClass(componentTypographyTokens.table.caption),
-        "mt-refineui-size-medium px-refineui-size-x-small text-refineui-alias-foreground-tertiary",
+        /** Explicit start — UA caption is centered by default. */
+        "mt-refineui-size-medium px-refineui-size-x-small text-start text-refineui-alias-foreground-tertiary",
     ),
 } as const;

@@ -1,0 +1,83 @@
+---
+title: Progress Stepper
+description: 다단계 프로세스 완료 표시기.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import ProgressStepperPreview from "../../../../components/ProgressStepperPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <ProgressStepperPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="progress-stepper" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { ProgressStepper, ProgressStepperList, ProgressStepperItem, ProgressStepperMarker, ProgressStepperLabel } from "@refineui/react";
+
+<ProgressStepper value={currentStep} onValueChange={setCurrentStep}>
+  <ProgressStepperList>
+    <ProgressStepperItem value={1}>
+      <ProgressStepperMarker />
+      <ProgressStepperLabel>Account</ProgressStepperLabel>
+    </ProgressStepperItem>
+    <ProgressStepperItem value={2}>
+      <ProgressStepperMarker />
+      <ProgressStepperLabel>Profile</ProgressStepperLabel>
+    </ProgressStepperItem>
+    <ProgressStepperItem value={3}>
+      <ProgressStepperMarker />
+      <ProgressStepperLabel>Complete</ProgressStepperLabel>
+    </ProgressStepperItem>
+  </ProgressStepperList>
+</ProgressStepper>
+```
+
+## API 레퍼런스
+
+### ProgressStepper
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "number", description: "제어형 활성 단계 값." },
+    { prop: "defaultValue", default: "—", type: "number", description: "비제어형 초기 단계." },
+    { prop: "onValueChange", default: "—", type: "(value: number) => void", description: "단계 변경 시 이벤트 핸들러." }
+    ]}
+  />
+</div>
+### ProgressStepperItem
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "number", description: "단계 식별자(필수)." },
+    { prop: "disabled", default: "false", type: "boolean", description: "이 단계를 비활성화합니다." }
+    ]}
+  />
+</div>
+### ProgressStepperMarker
+
+단계 인디케이터(원/체크마크).
+
+### ProgressStepperLabel
+
+단계 레이블 텍스트.
+

@@ -1937,33 +1937,15 @@ a[data-refineui="link"]:focus-visible {
   cursor: not-allowed;
 }
 
-/* ScrollArea — grid layout; viewport + inset scrollbar rails separated by gap */
+/**
+ * ScrollArea — overlay scrollbar (does not steal viewport width/height).
+ * Rails float over the viewport; show/hide is opacity-only so docs/shell
+ * content does not shift when the bar appears.
+ */
 [data-refineui="scroll-area"] {
-  display: grid;
-  column-gap: 0;
-  row-gap: 0;
-  transition-property: column-gap, row-gap;
-  transition-duration: var(--refineui-motion-duration-fast);
-  transition-timing-function: var(--refineui-motion-easing-ease-out);
+  position: relative;
 }
-[data-refineui="scroll-area"]:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="vertical"]
-  ) {
-  grid-template-columns: minmax(0, 1fr) auto;
-}
-[data-refineui="scroll-area"]:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="horizontal"]
-  ) {
-  grid-template-rows: minmax(0, 1fr) auto;
-}
-/* Horizontal-only: size viewport to content (no fixed height → 1fr collapses). */
-[data-refineui="scroll-area"]:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="horizontal"]
-  ):not(
-    :has(> [data-refineui="scroll-area-scrollbar"][data-orientation="vertical"])
-  ) {
-  grid-template-rows: auto auto;
-}
+/* Horizontal-only: size viewport to content (no fixed parent height). */
 [data-refineui="scroll-area"]:has(
     > [data-refineui="scroll-area-scrollbar"][data-orientation="horizontal"]
   ):not(
@@ -1973,8 +1955,6 @@ a[data-refineui="link"]:focus-visible {
   height: auto;
 }
 [data-refineui="scroll-area-viewport"] {
-  grid-column: 1;
-  grid-row: 1;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -1984,41 +1964,18 @@ a[data-refineui="link"]:focus-visible {
   height: 0;
 }
 [data-refineui="scroll-area-scrollbar"][data-orientation="vertical"] {
-  grid-column: 2;
-  grid-row: 1;
-  align-self: stretch;
-  width: 0;
-  min-width: 0;
-  margin: 0;
+  position: absolute;
+  inset-block: var(--refineui-spacing-size-xxx-small);
+  inset-inline-end: var(--refineui-spacing-size-xxx-small);
+  width: var(--refineui-spacing-size-medium);
   overflow: hidden;
 }
 [data-refineui="scroll-area-scrollbar"][data-orientation="horizontal"] {
-  grid-column: 1 / -1;
-  grid-row: 2;
-  height: 0;
-  min-height: 0;
-  margin: 0;
-  overflow: hidden;
-}
-[data-refineui="scroll-area-scrollbar"][data-visibility="always"][data-state="visible"][data-orientation="vertical"] {
-  width: var(--refineui-spacing-size-medium);
-  margin-block: var(--refineui-spacing-size-xxx-small);
-  margin-inline-end: var(--refineui-spacing-size-xxx-small);
-}
-[data-refineui="scroll-area-scrollbar"][data-visibility="always"][data-state="visible"][data-orientation="horizontal"] {
+  position: absolute;
+  inset-inline: var(--refineui-spacing-size-xxx-small);
+  inset-block-end: var(--refineui-spacing-size-xxx-small);
   height: var(--refineui-spacing-size-medium);
-  margin-inline: var(--refineui-spacing-size-xxx-small);
-  margin-block-end: var(--refineui-spacing-size-xxx-small);
-}
-[data-refineui="scroll-area"][data-type="always"]:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="vertical"][data-state="visible"]
-  ) {
-  column-gap: var(--refineui-spacing-size-xx-small);
-}
-[data-refineui="scroll-area"][data-type="always"]:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="horizontal"][data-state="visible"]
-  ) {
-  row-gap: var(--refineui-spacing-size-xx-small);
+  overflow: hidden;
 }
 [data-refineui="scroll-area-track"] {
   background-color: var(--refineui-color-alias-background-surface-selected);
@@ -2035,79 +1992,25 @@ a[data-refineui="link"]:focus-visible {
 [data-refineui="scroll-area-scrollbar"][data-state="hidden"] {
   pointer-events: none;
   opacity: 0;
-  width: 0;
-  min-width: 0;
-  height: 0;
-  min-height: 0;
-  margin: 0;
 }
 [data-refineui="scroll-area-scrollbar"][data-visibility="always"][data-state="visible"] {
   opacity: 1;
 }
 [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"] {
   opacity: 0;
+  pointer-events: none;
 }
 [data-refineui="scroll-area"]:hover
-  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-orientation="vertical"],
+  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"],
 [data-refineui="scroll-area"]:focus-within
-  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-orientation="vertical"],
+  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"],
 [data-refineui="scroll-area"][data-scrolling]
-  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-orientation="vertical"],
+  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"],
 [data-refineui="scroll-area"][data-interacting]
-  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-orientation="vertical"],
-[data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-active="true"][data-orientation="vertical"] {
+  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"],
+[data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-active="true"] {
   opacity: 1;
-  width: var(--refineui-spacing-size-medium);
-  margin-block: var(--refineui-spacing-size-xxx-small);
-  margin-inline-end: var(--refineui-spacing-size-xxx-small);
-}
-[data-refineui="scroll-area"]:hover
-  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-orientation="horizontal"],
-[data-refineui="scroll-area"]:focus-within
-  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-orientation="horizontal"],
-[data-refineui="scroll-area"][data-scrolling]
-  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-orientation="horizontal"],
-[data-refineui="scroll-area"][data-interacting]
-  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-orientation="horizontal"],
-[data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-active="true"][data-orientation="horizontal"] {
-  opacity: 1;
-  height: var(--refineui-spacing-size-medium);
-  margin-inline: var(--refineui-spacing-size-xxx-small);
-  margin-block-end: var(--refineui-spacing-size-xxx-small);
-}
-[data-refineui="scroll-area"][data-type="hover"]:hover:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="vertical"][data-state="visible"]
-  ),
-[data-refineui="scroll-area"][data-type="hover"]:focus-within:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="vertical"][data-state="visible"]
-  ),
-[data-refineui="scroll-area"][data-type="hover"][data-scrolling]:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="vertical"][data-state="visible"]
-  ),
-[data-refineui="scroll-area"][data-type="hover"][data-interacting]:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="vertical"][data-state="visible"]
-  ),
-[data-refineui="scroll-area"][data-type="hover"]:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="vertical"][data-visibility="hover"][data-state="visible"][data-active="true"]
-  ) {
-  column-gap: var(--refineui-spacing-size-xx-small);
-}
-[data-refineui="scroll-area"][data-type="hover"]:hover:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="horizontal"][data-state="visible"]
-  ),
-[data-refineui="scroll-area"][data-type="hover"]:focus-within:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="horizontal"][data-state="visible"]
-  ),
-[data-refineui="scroll-area"][data-type="hover"][data-scrolling]:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="horizontal"][data-state="visible"]
-  ),
-[data-refineui="scroll-area"][data-type="hover"][data-interacting]:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="horizontal"][data-state="visible"]
-  ),
-[data-refineui="scroll-area"][data-type="hover"]:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="horizontal"][data-visibility="hover"][data-state="visible"][data-active="true"]
-  ) {
-  row-gap: var(--refineui-spacing-size-xx-small);
+  pointer-events: auto;
 }
 /**
  * Select menu is focused while open and may auto-scroll to the selected item,
@@ -2119,54 +2022,9 @@ a[data-refineui="link"]:focus-visible {
   > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"],
 [data-refineui="select-menu"]
   [data-refineui="scroll-area"][data-scrolling]
-  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"],
-[data-refineui="select-menu"]
-  [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-active="true"] {
+  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"] {
   opacity: 0;
-}
-[data-refineui="select-menu"]
-  [data-refineui="scroll-area"]:focus-within
-  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-orientation="vertical"],
-[data-refineui="select-menu"]
-  [data-refineui="scroll-area"][data-scrolling]
-  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-orientation="vertical"],
-[data-refineui="select-menu"]
-  [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-active="true"][data-orientation="vertical"] {
-  width: 0;
-  min-width: 0;
-  margin: 0;
-}
-[data-refineui="select-menu"]
-  [data-refineui="scroll-area"]:focus-within
-  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-orientation="horizontal"],
-[data-refineui="select-menu"]
-  [data-refineui="scroll-area"][data-scrolling]
-  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-orientation="horizontal"],
-[data-refineui="select-menu"]
-  [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-active="true"][data-orientation="horizontal"] {
-  height: 0;
-  min-height: 0;
-  margin: 0;
-}
-[data-refineui="select-menu"]
-  [data-refineui="scroll-area"][data-type="hover"]:focus-within:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="vertical"][data-state="visible"]
-  ),
-[data-refineui="select-menu"]
-  [data-refineui="scroll-area"][data-type="hover"][data-scrolling]:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="vertical"][data-state="visible"]
-  ) {
-  column-gap: 0;
-}
-[data-refineui="select-menu"]
-  [data-refineui="scroll-area"][data-type="hover"]:focus-within:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="horizontal"][data-state="visible"]
-  ),
-[data-refineui="select-menu"]
-  [data-refineui="scroll-area"][data-type="hover"][data-scrolling]:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="horizontal"][data-state="visible"]
-  ) {
-  row-gap: 0;
+  pointer-events: none;
 }
 [data-refineui="select-menu"]
   [data-refineui="scroll-area"]:hover
@@ -2175,46 +2033,7 @@ a[data-refineui="link"]:focus-visible {
   [data-refineui="scroll-area"][data-interacting]
   > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"] {
   opacity: 1;
-}
-[data-refineui="select-menu"]
-  [data-refineui="scroll-area"]:hover
-  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-orientation="vertical"],
-[data-refineui="select-menu"]
-  [data-refineui="scroll-area"][data-interacting]
-  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-orientation="vertical"] {
-  width: var(--refineui-spacing-size-medium);
-  margin-block: var(--refineui-spacing-size-xxx-small);
-  margin-inline-end: var(--refineui-spacing-size-xxx-small);
-}
-[data-refineui="select-menu"]
-  [data-refineui="scroll-area"]:hover
-  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-orientation="horizontal"],
-[data-refineui="select-menu"]
-  [data-refineui="scroll-area"][data-interacting]
-  > [data-refineui="scroll-area-scrollbar"][data-visibility="hover"][data-state="visible"][data-orientation="horizontal"] {
-  height: var(--refineui-spacing-size-medium);
-  margin-inline: var(--refineui-spacing-size-xxx-small);
-  margin-block-end: var(--refineui-spacing-size-xxx-small);
-}
-[data-refineui="select-menu"]
-  [data-refineui="scroll-area"][data-type="hover"]:hover:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="vertical"][data-state="visible"]
-  ),
-[data-refineui="select-menu"]
-  [data-refineui="scroll-area"][data-type="hover"][data-interacting]:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="vertical"][data-state="visible"]
-  ) {
-  column-gap: var(--refineui-spacing-size-xx-small);
-}
-[data-refineui="select-menu"]
-  [data-refineui="scroll-area"][data-type="hover"]:hover:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="horizontal"][data-state="visible"]
-  ),
-[data-refineui="select-menu"]
-  [data-refineui="scroll-area"][data-type="hover"][data-interacting]:has(
-    > [data-refineui="scroll-area-scrollbar"][data-orientation="horizontal"][data-state="visible"]
-  ) {
-  row-gap: var(--refineui-spacing-size-xx-small);
+  pointer-events: auto;
 }
 
 /* Command list — fixed height shell so ScrollArea viewport can scroll */

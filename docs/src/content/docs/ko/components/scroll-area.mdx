@@ -1,0 +1,81 @@
+---
+title: Scroll Area
+description: 커스텀 스타일 스크롤바 컨테이너.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import ScrollAreaDemo from "../../../../components/ScrollAreaDemo";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <ScrollAreaDemo client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="scroll-area" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { ScrollArea, ScrollAreaViewport, ScrollAreaScrollbar, ScrollAreaThumb } from "@refineui/react";
+
+<ScrollArea>
+  <div style={{ height: "400px" }}>
+    {/* Long content */}
+  </div>
+</ScrollArea>
+
+<ScrollArea type="always">
+  <ScrollAreaViewport>
+    {/* Custom viewport */}
+  </ScrollAreaViewport>
+  <ScrollAreaScrollbar orientation="vertical">
+    <ScrollAreaThumb />
+  </ScrollAreaScrollbar>
+  <ScrollAreaScrollbar orientation="horizontal">
+    <ScrollAreaThumb />
+  </ScrollAreaScrollbar>
+</ScrollArea>
+```
+
+## API 레퍼런스
+
+### ScrollArea
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "type", default: "\"hover\"", type: "\"hover\" | \"always\"", description: "커스텀 스크롤바가 보이는 시점." }
+    ]}
+  />
+</div>
+### ScrollAreaViewport
+
+뷰포트 컨테이너(스크롤 영역).
+
+### ScrollAreaScrollbar
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "orientation", default: "\"vertical\"", type: "\"vertical\" | \"horizontal\"", description: "스크롤바 방향." }
+    ]}
+  />
+</div>
+### ScrollAreaThumb
+
+스크롤바 썸(드래그 핸들).
+

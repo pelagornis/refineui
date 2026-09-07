@@ -42,6 +42,7 @@ import "@refineui/react/refineui.css";
 - [Skill](https://ui.pelagornis.com/ai-tools/skill/): `refineui` agent skill for doc routing and codegen rules
 - [Doctor](https://ui.pelagornis.com/ai-tools/doctor/): Read-only workspace diagnostics
 - [MCP](https://ui.pelagornis.com/ai-tools/mcp/): `@refineui/mcp` documentation server
+- [/DESIGN.md](https://ui.pelagornis.com/DESIGN.md): Stitch-compatible design identity for AI agents
 - [/llms.txt](https://ui.pelagornis.com/llms.txt): Curated link index (llmstxt.org)
 - [/llm.txt](https://ui.pelagornis.com/llm.txt): Expanded plain-text reference
 
@@ -132,10 +133,11 @@ Alphabetical catalog — full docs at [/components/](https://ui.pelagornis.com/c
 
 ## AI & machine-readable docs
 
+- [/DESIGN.md](https://ui.pelagornis.com/DESIGN.md) — Stitch-compatible design identity for AI agents
 - [/llms.txt](https://ui.pelagornis.com/llms.txt) — Curated link index (llmstxt.org format)
 - [/llm.txt](https://ui.pelagornis.com/llm.txt) — Expanded reference for LLM context windows
-- [AI & Tools](https://ui.pelagornis.com/ai-tools/) — Overview, llms.txt viewer, Skill, Doctor, MCP
-- `@refineui/mcp` — MCP server (`search_docs`, `get_doc_page`, `list_components`, …)
+- [AI & Tools](https://ui.pelagornis.com/ai-tools/) — Overview, DESIGN.md, llms.txt, Skill, Doctor, MCP
+- `@refineui/mcp` — MCP server (`search_docs`, `get_doc_page`, `get_design_rules`, …)
 - [GitHub](https://github.com/pelagornis/refineui) — Source and issues
 
 ## Usage notes for LLMs

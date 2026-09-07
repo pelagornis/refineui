@@ -1,5 +1,6 @@
 export { DESIGN_RULES } from "./design-rules.js";
 export {
+    getDesignMd,
     getDocPage,
     getIndexMeta,
     getLlmIndex,

@@ -1,0 +1,64 @@
+---
+title: Calendar
+description: 날짜 선택 캘린더 그리드 컴포넌트.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import CalendarPreview from "../../../../components/CalendarPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <CalendarPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="calendar" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Calendar } from "@refineui/react";
+
+<Calendar value={selectedDate} onChange={setSelectedDate} />
+
+<Calendar
+  mode="range"
+  rangeStart={startDate}
+  rangeEnd={endDate}
+  onRangeChange={(start, end) => {
+    setStartDate(start);
+    setEndDate(end);
+  }}
+/>
+
+<Calendar weekStartsOn={1} defaultMonth={new Date(2024, 0)} />
+```
+
+## API 레퍼런스
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "mode", default: "\"single\"", type: "\"single\" | \"range\"", description: "선택 모드." },
+    { prop: "value", default: "—", type: "Date", description: "제어형 선택 날짜(single 모드)." },
+    { prop: "onChange", default: "—", type: "(date: Date) => void", description: "날짜 변경 시 이벤트 핸들러(single 모드)." },
+    { prop: "rangeStart", default: "—", type: "Date", description: "제어형 범위 시작 날짜(range 모드)." },
+    { prop: "rangeEnd", default: "—", type: "Date", description: "제어형 범위 종료 날짜(range 모드)." },
+    { prop: "onRangeChange", default: "—", type: "(start?: Date, end?: Date) => void", description: "범위 변경 시 이벤트 핸들러(range 모드)." },
+    { prop: "weekStartsOn", default: "0", type: "0 | 1", description: "주의 첫 요일: 0(일요일) 또는 1(월요일)." },
+    { prop: "defaultMonth", default: "—", type: "Date", description: "처음에 표시할 월." }
+    ]}
+  />
+</div>

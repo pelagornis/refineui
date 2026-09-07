@@ -1,0 +1,38 @@
+---
+title: Z-index
+description: 콘텐츠, 오버레이, 팝업, 토스트, 디버그를 위한 스택킹 레이어.
+---
+
+import { TokenSpec } from "../../../../docs-ui";
+import { ZIndexPreview } from "../../../../components/foundation/ZIndexPreview";
+
+<div class="not-content">
+  <TokenSpec
+    client:load
+    columns="pair"
+    aria-label="Z-index 토큰"
+    rows={[
+      { token: "zIndexBackground", role: "콘텐츠 뒤" },
+      { token: "zIndexContent", role: "기본 콘텐츠" },
+      { token: "zIndexOverlay", role: "모달 / 드로어 스크림과 패널" },
+      { token: "zIndexPopup / zIndexFloating", role: "메뉴, 팝오버" },
+      { token: "zIndexMessages", role: "토스트" },
+      { token: "zIndexPriority", role: "중요 크롬" },
+      { token: "zIndexDebug", role: "개발 오버레이" },
+    ]}
+  />
+</div>
+
+모달·드로어 → `overlay`. 메뉴·팝오버 → `popup`. 토스트 → `messages`. `z-index: 9999`를 만들지 마세요.
+
+<div class="not-content">
+  <ZIndexPreview client:load />
+</div>
+
+## 사용법
+
+```css
+.menu {
+  z-index: var(--refineui-z-popup);
+}
+```

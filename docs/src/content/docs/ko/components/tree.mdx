@@ -1,0 +1,87 @@
+---
+title: Tree
+description: 파일, 폴더, 중첩 내비게이션용 확장 가능한 계층 목록.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import TreePreview from "../../../../components/TreePreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <TreePreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="tree" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Tree, TreeItem, TreeItemContent, TreeItemTrigger } from "@refineui/react";
+
+<Tree defaultExpanded={["src"]} defaultSelected="button">
+  <TreeItem value="src">
+    <TreeItemTrigger>src</TreeItemTrigger>
+    <TreeItemContent>
+      <TreeItem value="button">
+        <TreeItemTrigger>Button.tsx</TreeItemTrigger>
+      </TreeItem>
+    </TreeItemContent>
+  </TreeItem>
+  <TreeItem value="package">
+    <TreeItemTrigger>package.json</TreeItemTrigger>
+  </TreeItem>
+</Tree>
+```
+
+Foundation spacing, radius, color 별칭, typography 토큰으로 구성됩니다(Sidebar / Menu와 동일한 밀도). 셰브론으로 분기를 펼치고, 행 클릭으로 선택합니다. 화살표 키는 WAI-ARIA tree 패턴을 따릅니다.
+
+## API 레퍼런스
+
+### Tree
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "행 typography 크기." },
+    { prop: "expanded", default: "—", type: "string[]", description: "제어형 펼친 항목 값." },
+    { prop: "defaultExpanded", default: "—", type: "string[]", description: "비제어형 초기 펼침 값." },
+    { prop: "onExpandedChange", default: "—", type: "(value: string[]) => void", description: "펼침이 변경될 때 호출됩니다." },
+    { prop: "selected", default: "—", type: "string | null", description: "제어형 선택 항목 값." },
+    { prop: "defaultSelected", default: "—", type: "string", description: "비제어형 초기 선택." },
+    { prop: "onSelectedChange", default: "—", type: "(value: string | null) => void", description: "선택이 변경될 때 호출됩니다." }
+    ]}
+  />
+</div>
+
+### TreeItem
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "고유 식별자(필수)." },
+    { prop: "disabled", default: "false", type: "boolean", description: "선택과 펼침을 비활성화합니다." }
+    ]}
+  />
+</div>
+
+### TreeItemTrigger
+
+포커스 가능한 행 레이블. 항목에 `TreeItemContent`가 있으면 셰브론을 표시합니다.
+
+### TreeItemContent
+
+중첩 `TreeItem` 그룹. 부모가 펼쳐진 동안에만 마운트됩니다.

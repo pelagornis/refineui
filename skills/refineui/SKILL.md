@@ -31,16 +31,18 @@ If the user only asks for design/token meaning, open Foundations docs — do not
 
 Do **not** memorize paths or invent APIs. Start from:
 
+- **Design identity:** `https://ui.pelagornis.com/DESIGN.md` (Stitch DESIGN.md — visual tokens + rules)
 - **Full index:** `https://ui.pelagornis.com/llm.txt` (expanded) or `https://ui.pelagornis.com/llms.txt` (curated)
 - **Site:** `https://ui.pelagornis.com`
 - **AI & Tools hub:** `https://ui.pelagornis.com/ai-tools/`
 
 ### Routing order
 
-1. Read `llm.txt` or `llms.txt` for the current page list and slugs.
-2. Open the linked leaf doc (e.g. `/components/button/`, `/foundations/color/`) for API, examples, and PropSpec tables.
-3. For implementation in code, also read `/development/installation/` and `/development/theming/` when setup is involved.
-4. If `@refineui/mcp` is available, prefer `search_docs` and `get_doc_page` over guessing.
+1. For look & feel / UI generation, read `DESIGN.md` first.
+2. Read `llm.txt` or `llms.txt` for the current page list and slugs.
+3. Open the linked leaf doc (e.g. `/components/button/`, `/foundations/color/`) for API, examples, and PropSpec tables.
+4. For implementation in code, also read `/development/installation/` and `/development/theming/` when setup is involved.
+5. If `@refineui/mcp` is available, prefer `search_docs`, `get_doc_page`, and `get_design_rules` over guessing.
 
 If an index entry is missing after a successful fetch, treat the topic as undocumented — do not substitute another component's API.
 

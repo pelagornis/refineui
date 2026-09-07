@@ -1,0 +1,131 @@
+---
+title: Sidebar
+description: 접을 수 있는 세로 내비게이션 드로어/사이드바.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import SidebarPreview from "../../../../components/SidebarPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <SidebarPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="sidebar" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import {
+  Sidebar,
+  SidebarHeader,
+  SidebarBrand,
+  SidebarContent,
+  SidebarNav,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarLink,
+  SidebarFooter
+} from "@refineui/react";
+
+<Sidebar>
+  <SidebarHeader>
+    <SidebarBrand>
+      <Logo />
+      My App
+    </SidebarBrand>
+  </SidebarHeader>
+  <SidebarContent>
+    <SidebarNav>
+      <SidebarGroup>
+        <SidebarGroupLabel>Main</SidebarGroupLabel>
+        <SidebarLink href="/" active>Dashboard</SidebarLink>
+        <SidebarLink href="/projects">Projects</SidebarLink>
+        <SidebarLink href="/tasks">Tasks</SidebarLink>
+      </SidebarGroup>
+      <SidebarGroup>
+        <SidebarGroupLabel>Settings</SidebarGroupLabel>
+        <SidebarLink href="/settings">Preferences</SidebarLink>
+        <SidebarLink href="/profile">Profile</SidebarLink>
+      </SidebarGroup>
+    </SidebarNav>
+  </SidebarContent>
+  <SidebarFooter>
+    <p>© 2024</p>
+  </SidebarFooter>
+</Sidebar>
+```
+
+## API 레퍼런스
+
+### Sidebar
+
+루트 사이드바 컨테이너(`<aside>` 요소).
+
+### SidebarHeader
+
+헤더 섹션.
+
+### SidebarBrand
+
+브랜드/로고 영역.
+
+### SidebarContent
+
+메인 콘텐츠 영역.
+
+### SidebarNav
+
+내비게이션 컨테이너(`<nav>` 요소).
+
+### SidebarGroup
+
+관련 링크를 그룹화합니다.
+
+### SidebarGroupLabel
+
+그룹 레이블.
+
+### SidebarLink
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "active", default: "false", type: "boolean", description: "현재 페이지를 표시합니다(`aria-current=\"page\"`)." }
+    ]}
+  />
+</div>
+### SidebarFooter
+
+푸터 섹션.
+
+### Sidebar peek (접힌 상태 호버)
+
+도킹된 사이드바가 접혀 있을 때의 조합형 플라이아웃 — 가장자리 호버 시 메인 영역 위에 떠 있는 패널이 나타납니다(콘텐츠는 리플로우되지 않음).
+
+```tsx
+<SidebarPeek enabled={collapsed} widthPercent={28} mode="contained" onPin={expand}>
+  <SidebarPeekEdge />
+  <SidebarPeekPanel>
+    <SidebarPeekPin>{/* pin control */}</SidebarPeekPin>
+    <Sidebar>...</Sidebar>
+  </SidebarPeekPanel>
+  <SidebarPeekInset>{/* main + toggle */}</SidebarPeekInset>
+</SidebarPeek>
+```
+
+peek 레이어를 고정 앱 헤더 아래에 맞출 때는 `mode="viewport"`와 `--refineui-sidebar-peek-viewport-offset`을 사용하세요.
+

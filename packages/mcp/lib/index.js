@@ -1,5 +1,6 @@
 import {
   DESIGN_RULES,
+  getDesignMd,
   getDocPage,
   getIndexMeta,
   getLlmIndex,
@@ -8,9 +9,10 @@ import {
   listTokenCategories,
   normalizeSlug,
   searchDocs
-} from "./chunk-J6MSGISG.js";
+} from "./chunk-FZNS2HBK.js";
 export {
   DESIGN_RULES,
+  getDesignMd,
   getDocPage,
   getIndexMeta,
   getLlmIndex,

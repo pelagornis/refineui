@@ -1,0 +1,61 @@
+---
+title: Stack
+description: Foundation gap 토큰을 쓰는 단일 축 flex 레이아웃.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import StackPreview from "../../../../components/layout/StackPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+`Stack`은 spacing 토큰 `gap`으로 자식을 행 또는 열로 배치합니다. 기본 방향은 `column`입니다.
+
+<div class="not-content my-6">
+  <StackPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="stack" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Button, Stack } from "@refineui/react";
+
+<Stack gap="sizeMedium">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</Stack>
+
+<Stack direction="row" gap="sizeSmall" align="center" justify="between">
+  <Button type="button" variant="outline">Cancel</Button>
+  <Button type="button" variant="primary">Save</Button>
+</Stack>
+```
+
+## API 레퍼런스
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "as", default: "\"div\"", type: "ElementType", description: "루트 요소." },
+    { prop: "direction", default: "\"column\"", type: "\"row\" | \"column\" | \"row-reverse\" | \"column-reverse\"", description: "Flex 방향." },
+    { prop: "gap", default: "\"sizeNone\"", type: "Spacing token", description: "자식 사이 gap." },
+    { prop: "align", default: "—", type: "\"start\" | \"center\" | \"end\" | \"stretch\" | \"baseline\"", description: "교차축 정렬." },
+    { prop: "justify", default: "—", type: "\"start\" | \"center\" | \"end\" | \"between\" | \"around\" | \"evenly\"", description: "주축 justify." },
+    { prop: "wrap", default: "—", type: "boolean | wrap token", description: "줄바꿈 동작." },
+    { prop: "inline", default: "false", type: "boolean", description: "`inline-flex`를 사용합니다." }
+    ]}
+  />
+</div>

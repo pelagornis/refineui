@@ -1,0 +1,61 @@
+---
+title: Badge
+description: 상태 배지 또는 숫자 카운터 태그.
+---
+import { SpecRenderer, TokenInspector } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import BadgePreview from "../../../../components/BadgePreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <BadgePreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="badge" />
+</div>
+
+
+## 토큰
+
+<div class="not-content">
+  <TokenInspector client:load component="badge" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Badge } from "@refineui/react";
+
+<Badge>New</Badge>
+
+<Badge variant="success">5</Badge>
+
+<Badge variant="warning" layout="number">12</Badge>
+
+<Badge variant="danger">Error</Badge>
+
+<Badge variant="outline">Draft</Badge>
+```
+
+## API 레퍼런스
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "variant", default: "\"default\"", type: "\"default\" | \"neutral\" | \"outline\" | \"success\" | \"warning\" | \"danger\"", description: "시각적 변형 스타일." },
+    { prop: "layout", default: "\"label\"", type: "\"label\" | \"number\"", description: "레이블 vs 숫자 표시용 레이아웃 타입." }
+    ]}
+  />
+</div>

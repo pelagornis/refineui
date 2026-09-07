@@ -1,0 +1,32 @@
+---
+title: 코드에서의 모션
+description: 모션 토큰의 CSS 트랜지션을 우선하고, 필요할 때만 런타임을 사용하세요.
+---
+
+모션은 디자인 시스템의 일급 프리미티브입니다.
+
+## CSS 트랜지션을 우선하세요
+
+마이크로 인터랙션(호버, 프레스, 포커스 컬러)은 시맨틱 역할을 사용합니다.
+
+```css
+.control {
+  transition:
+    transform var(--refineui-motion-duration-fast)
+      var(--refineui-motion-easing-ease-out),
+    background-color var(--refineui-motion-duration-fast)
+      var(--refineui-motion-easing-ease-out);
+}
+
+.control:active {
+  transform: scale(var(--refineui-motion-scale-press));
+}
+```
+
+## 모션 런타임
+
+레이아웃 애니메이션, enter/exit, 공유 요소, 스프링, 시퀀스 안무(Dialog, Drawer, Accordion)가 필요할 때만 런타임을 사용하세요. 지속 시간은 `semanticInteraction` / `motionMsToNumber`로 해석하고 — `150ms`를 하드코딩하지 마세요.
+
+## 모션 줄이기
+
+`prefers-reduced-motion: reduce`를 존중하세요 — 변환과 비필수 애니메이션을 축소합니다. 파운데이션: [모션](/ko/foundations/motion/).

@@ -1,0 +1,113 @@
+---
+title: Navigation Menu
+description: 최상위 반응형 헤더 내비게이션 메뉴.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import NavigationMenuPreview from "../../../../components/NavigationMenuPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <NavigationMenuPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="navigation-menu" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
+  NavigationMenuLink
+} from "@refineui/react";
+
+<NavigationMenu>
+  <NavigationMenuList>
+    <NavigationMenuItem>
+      <NavigationMenuLink href="/" active>
+        Home
+      </NavigationMenuLink>
+    </NavigationMenuItem>
+    <NavigationMenuItem>
+      <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+      <NavigationMenuContent>
+        <NavigationMenuLink href="/products/web">Web</NavigationMenuLink>
+        <NavigationMenuLink href="/products/mobile">Mobile</NavigationMenuLink>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
+    <NavigationMenuItem>
+      <NavigationMenuLink href="/about">About</NavigationMenuLink>
+    </NavigationMenuItem>
+  </NavigationMenuList>
+</NavigationMenu>
+```
+
+## API 레퍼런스
+
+### NavigationMenu
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "제어형 열린 항목 값(빈 문자열 = 닫힘)." },
+    { prop: "defaultValue", default: "—", type: "string", description: "비제어형 초기 열린 항목." },
+    { prop: "onValueChange", default: "—", type: "(value: string) => void", description: "열린 항목 변경 시 이벤트 핸들러." },
+    { prop: "delayDuration", default: "—", type: "number", description: "포인터 enter 시 열리기 전 지연(ms)." },
+    { prop: "skipDelayDuration", default: "—", type: "number", description: "열린 상태에서 항목 간 이동 시 지연." },
+    { prop: "aria-label", default: "\"Main\"", type: "string", description: "내비게이션 landmark의 접근 가능한 이름." }
+    ]}
+  />
+</div>
+### NavigationMenuList
+
+내비게이션 항목 목록.
+
+### NavigationMenuItem
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "열림 상태용 안정적 id(생략 시 자동 생성)." }
+    ]}
+  />
+</div>
+### NavigationMenuTrigger
+
+드롭다운 콘텐츠용 트리거 버튼.
+
+### NavigationMenuContent
+
+드롭다운 패널 콘텐츠.
+
+### NavigationMenuLink
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "active", default: "false", type: "boolean", description: "현재 페이지를 표시합니다(`aria-current=\"page\"`)." }
+    ]}
+  />
+</div>
+### NavigationMenuIndicator
+
+활성 항목 인디케이터(시각적 밑줄).
+

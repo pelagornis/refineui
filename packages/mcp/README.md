@@ -47,7 +47,7 @@ From the monorepo after build:
 | `list_components` | All component doc pages |
 | `list_foundations` | All foundation doc pages |
 | `get_llm_index` | Full `llm.txt` content |
-| `get_design_rules` | Condensed token/component rules for LLMs |
+| `get_design_rules` | Full `DESIGN.md` (Stitch alpha) |
 | `list_tokens` | Token categories + semantic text roles |
 | `get_index_meta` | Embedded index generation metadata |
 | `run_doctor` | Read-only RefineUI workspace diagnostics (via `@refineui/doctor`) |
@@ -55,7 +55,8 @@ From the monorepo after build:
 ## Resources
 
 - `refineui://llm.txt` — machine-readable docs index
-- `refineui://design-rules` — design-system rules
+- `refineui://DESIGN.md` — Stitch-compatible design identity
+- `refineui://design-rules` — alias of `DESIGN.md`
 
 ## Development
 

@@ -1,0 +1,80 @@
+---
+title: MCP
+description: Model Context Protocol 서버 — RefineUI 문서 검색, 컴포넌트 페이지 조회, AI 도구에서 디자인 규칙 읽기.
+---
+
+import McpInstall from "../../../../components/McpInstall.mdx";
+
+**`@refineui/mcp`**는 Model Context Protocol을 지원하는 에디터·에이전트용 stdio MCP 서버입니다. 문서 사이트의 빌드 타임 인덱스를 내장해 `llm.txt` 전체를 컨텍스트에 붙여넣지 않고도 페이지를 조회할 수 있습니다.
+
+## 설치
+
+<McpInstall />
+
+## MCP 설정
+
+MCP 호스트 설정에 추가하세요 ([mcp.example.json](/mcp.example.json) 참고):
+
+```json
+{
+  "mcpServers": {
+    "refineui": {
+      "command": "bunx",
+      "args": ["@refineui/mcp"]
+    }
+  }
+}
+```
+
+모노레포 기여자 예시 (`bun run build:mcp` 이후):
+
+```json
+{
+  "mcpServers": {
+    "refineui": {
+      "command": "node",
+      "args": ["packages/mcp/lib/server.js"]
+    }
+  }
+}
+```
+
+## 도구
+
+| Tool | Purpose |
+|------|---------|
+| `search_docs` | 문서 키워드 검색 |
+| `get_doc_page` | 슬러그로 페이지 가져오기 (`components/button`, …) |
+| `list_components` | 모든 컴포넌트 문서 페이지 |
+| `list_foundations` | 파운데이션 / 토큰 문서 페이지 |
+| `get_llm_index` | `llm.txt` 전체 내용 |
+| `get_design_rules` | `DESIGN.md` 전체 (Stitch alpha) |
+| `list_tokens` | 토큰 카테고리와 시맨틱 텍스트 역할 |
+| `get_index_meta` | 인덱스 생성 시각과 페이지 수 |
+| `run_doctor` | 읽기 전용 워크스페이스 진단 (셋업, 토큰, 컴포지션) |
+
+## 리소스
+
+| URI | Content |
+|-----|---------|
+| `refineui://llm.txt` | 기계 판독 문서 인덱스 |
+| `refineui://DESIGN.md` | Stitch 호환 디자인 아이덴티티 |
+| `refineui://design-rules` | `DESIGN.md` 별칭 |
+
+## DESIGN.md vs llms.txt vs Skill 비교
+
+| | DESIGN.md | llms.txt | Skill | MCP |
+|---|-----------|----------|-------|-----|
+| **형식** | 토큰 YAML + 프로즈 | 정적 링크 인덱스 | 에이전트 지침 | 라이브 도구 + 리소스 |
+| **적합한 용도** | 비주얼 아이덴티티 / UI 생성 | 페이지 발견 | 라우팅 + 규칙 | 동적 검색·페이지 조회 |
+| **업데이트** | 사이트 배포와 함께 | 사이트 배포와 함께 | GitHub에서 `skills add` | npm 패키지 / 인덱스 재빌드 |
+
+함께 사용하세요: 룩앤필은 **DESIGN.md**, 동작은 **Skill**, 조회는 **MCP**, 큐레이션 인덱스는 **llms.txt**.
+
+## 개발
+
+```bash
+bun run build:mcp
+```
+
+패키지: [`packages/mcp`](https://github.com/pelagornis/refineui/tree/main/packages/mcp)

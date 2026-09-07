@@ -142,7 +142,7 @@ import {
 } from "@refineui/react";
 import { DemoBlock } from "../layout/DemoBlock";
 import { CatalogDropdownPreview, CatalogPopoverPreview } from "./catalogOverlayPreviews";
-import { CatalogCard, CatalogGrid } from "./CatalogCard";
+import { CatalogCard, CatalogGrid, CatalogLocaleProvider } from "./CatalogCard";
 import { chartValues, noopDate, noopNumber, noopString, portraitSrc } from "./catalogConstants";
 
 const scrollAreaItems = [
@@ -184,8 +184,9 @@ const scrollAreaItems = [
     "Tree",
 ] as const;
 
-export default function ComponentCatalog() {
+export default function ComponentCatalog({ locale }: { locale?: import("../../lib/docs-locale").DocsLocaleCode }) {
     return (
+        <CatalogLocaleProvider locale={locale}>
         <CatalogGrid data-refineui-catalog-overview>
             <CatalogCard
                 href="/components/accordion/"
@@ -922,5 +923,6 @@ export default function ComponentCatalog() {
                 }
             />
         </CatalogGrid>
+        </CatalogLocaleProvider>
     );
 }

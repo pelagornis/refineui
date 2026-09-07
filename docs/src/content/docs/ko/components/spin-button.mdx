@@ -1,0 +1,62 @@
+---
+title: Spin Button
+description: 증분 변경용 숫자 스테퍼 입력.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import SpinButtonDemo from "../../../../components/SpinButtonDemo";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <SpinButtonDemo client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="spin-button" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { SpinButton } from "@refineui/react";
+
+<SpinButton value={quantity} onChange={setQuantity} />
+
+<SpinButton
+  value={amount}
+  onChange={setAmount}
+  min={0}
+  max={100}
+  step={5}
+  placeholder="Enter amount"
+  size="lg"
+/>
+```
+
+## API 레퍼런스
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "number", description: "제어형 값(필수)." },
+    { prop: "onChange", default: "—", type: "(value: number) => void", description: "값 변경 시 이벤트 핸들러(필수)." },
+    { prop: "min", default: "—", type: "number", description: "허용 최솟값." },
+    { prop: "max", default: "—", type: "number", description: "허용 최댓값." },
+    { prop: "step", default: "1", type: "number", description: "단계 증분." },
+    { prop: "placeholder", default: "—", type: "string", description: "플레이스홀더 텍스트." },
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "컨트롤 높이 티어." },
+    { prop: "disabled", default: "false", type: "boolean", description: "인터랙션을 비활성화합니다." }
+    ]}
+  />
+</div>

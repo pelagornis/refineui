@@ -1,0 +1,59 @@
+---
+title: Bubble
+description: 대화형 UI용 채팅 스타일 메시지 버블.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import BubbleDemo from "../../../../components/BubbleDemo";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+`Bubble`은 채팅·대화 레이아웃용 메시지 표면을 렌더링합니다. `BubbleContent`, 선택적 `BubbleReactions`, 스택 메시지용 `BubbleGroup`과 함께 사용하세요.
+
+<div class="not-content my-6">
+  <BubbleDemo client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="bubble" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Bubble, BubbleContent, BubbleGroup } from "@refineui/react";
+
+<Bubble variant="muted" align="start">
+  <BubbleContent>Want to catch up later?</BubbleContent>
+</Bubble>
+
+<Bubble variant="default" align="end">
+  <BubbleContent>Sounds good.</BubbleContent>
+</Bubble>
+```
+
+## API 레퍼런스
+
+### Bubble
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "variant", default: "—", type: "\"default\" | \"secondary\" | \"muted\" | \"tinted\" | \"outline\" | \"ghost\" | \"destructive\"", description: "시각 스타일." },
+    { prop: "align", default: "—", type: "\"start\" | \"end\"", description: "메시지 정렬." }
+    ]}
+  />
+</div>
+### BubbleContent / BubbleReactions / BubbleGroup
+
+본문 텍스트, 리액션, 스택 그룹용 조합 슬롯입니다. 구조는 프리뷰를 참고하세요.

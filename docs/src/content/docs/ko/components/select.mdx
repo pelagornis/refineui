@@ -1,0 +1,137 @@
+---
+title: Select
+description: 목록에서 고르는 드롭다운 선택 컨트롤.
+---
+import { SpecRenderer, TokenInspector } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import SelectPreview from "../../../../components/SelectPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <SelectPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="select" />
+</div>
+
+## 토큰
+
+<div class="not-content">
+  <TokenInspector client:load component="select" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@refineui/react";
+
+<Select value={country} onValueChange={setCountry}>
+  <SelectTrigger>
+    <SelectValue placeholder="Select a country" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="us">United States</SelectItem>
+    <SelectItem value="ca">Canada</SelectItem>
+    <SelectItem value="uk">United Kingdom</SelectItem>
+  </SelectContent>
+</Select>
+
+<Select size="lg" fullWidth>
+  <SelectTrigger>
+    <SelectValue placeholder="Choose an option" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectGroup>
+      <SelectLabel>Fruits</SelectLabel>
+      <SelectItem value="apple">Apple</SelectItem>
+      <SelectItem value="banana">Banana</SelectItem>
+    </SelectGroup>
+    <SelectSeparator />
+    <SelectItem value="other">Other</SelectItem>
+  </SelectContent>
+</Select>
+```
+
+## API 레퍼런스
+
+### Select
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "제어형 선택 값." },
+    { prop: "defaultValue", default: "—", type: "string", description: "비제어형 초기 값." },
+    { prop: "onValueChange", default: "—", type: "(value: string) => void", description: "선택 변경 시 이벤트 핸들러." },
+    { prop: "open", default: "—", type: "boolean", description: "제어형 열림 상태." },
+    { prop: "onOpenChange", default: "—", type: "(open: boolean) => void", description: "열림 상태 변경 시 이벤트 핸들러." },
+    { prop: "placeholder", default: "—", type: "string", description: "플레이스홀더 텍스트." },
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "컨트롤 높이 티어." },
+    { prop: "fullWidth", default: "false", type: "boolean", description: "부모 전체 너비로 늘어납니다." },
+    { prop: "disabled", default: "false", type: "boolean", description: "인터랙션을 비활성화합니다." }
+    ]}
+  />
+</div>
+### SelectTrigger
+
+드롭다운을 여는 버튼.
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "appearance", default: "\"filled\"", type: "\"filled\" | \"plain\"", description: "조합 표면용 필드 크롬 vs flush 트리거(Footer 로케일, Calendar 캡션)." }
+    ]}
+  />
+</div>
+
+### SelectValue
+
+선택된 값 또는 플레이스홀더를 표시합니다.
+
+### SelectContent
+
+드롭다운 패널 컨테이너.
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "position", default: "\"item-aligned\"", type: "\"item-aligned\" | \"popper\"", description: "포지셔닝 전략." }
+    ]}
+  />
+</div>
+### SelectItem
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "항목 값(필수)." },
+    { prop: "disabled", default: "false", type: "boolean", description: "이 항목을 비활성화합니다." }
+    ]}
+  />
+</div>
+### SelectGroup
+
+관련 항목을 그룹화합니다.
+
+### SelectLabel
+
+그룹 레이블.
+
+### SelectSeparator
+
+항목 사이 시각적 구분선.
+

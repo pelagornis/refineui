@@ -1,0 +1,64 @@
+---
+title: Checkbox
+description: 폼용 이진 선택 컨트롤.
+---
+import { SpecRenderer, TokenInspector } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import CheckboxPreview from "../../../../components/CheckboxPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <CheckboxPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="checkbox" />
+</div>
+
+## 토큰
+
+<div class="not-content">
+  <TokenInspector client:load component="checkbox" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Checkbox } from "@refineui/react";
+
+<Checkbox label="Accept terms and conditions" />
+
+<Checkbox
+  label="Enable notifications"
+  description="Receive updates about your account"
+  checked={notificationsEnabled}
+  onChange={(e) => setNotificationsEnabled(e.target.checked)}
+/>
+
+<Checkbox variant="circular" label="Circular variant" />
+```
+
+## API 레퍼런스
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "label", default: "—", type: "string", description: "체크박스 레이블 텍스트." },
+    { prop: "description", default: "—", type: "string", description: "레이블 아래 선택적 설명." },
+    { prop: "variant", default: "\"default\"", type: "\"default\" | \"circular\"", description: "시각적 변형 스타일." },
+    { prop: "checked", default: "—", type: "boolean", description: "제어형 체크 상태." },
+    { prop: "disabled", default: "false", type: "boolean", description: "인터랙션을 비활성화합니다." }
+    ]}
+  />
+</div>

@@ -1,0 +1,56 @@
+---
+title: 스페이싱
+description: 갭, 패딩, 마진을 위한 T-shirt 스페이싱 스케일.
+---
+
+import { SpecTable } from "../../../../docs-ui";
+import { IconSizePreview, SpacingPreview } from "../../../../components/foundation/SpacingPreview";
+
+갭과 패딩은 `spacings`를 사용합니다. 임의 픽셀이 아니라 `Stack`, `Box`, 레이아웃 props의 이 키를 우선하세요.
+
+## 스케일
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="스페이싱 스케일"
+    columns={[
+      { key: "token", header: "토큰", mono: true },
+      { key: "value", header: "값", mono: true },
+    ]}
+    rows={[
+      { token: "sizeNone", value: "0" },
+      { token: "sizeXXXSmall", value: "2px" },
+      { token: "sizeXXSmall", value: "4px" },
+      { token: "sizeXSmall", value: "6px" },
+      { token: "sizeSmall", value: "8px" },
+      { token: "sizeMedium", value: "10px" },
+      { token: "sizeLarge", value: "16px" },
+      { token: "sizeXLarge", value: "20px" },
+      { token: "sizeXXLarge", value: "24px" },
+      { token: "sizeXXXLarge", value: "32px" },
+    ]}
+  />
+</div>
+
+<div class="not-content">
+  <SpacingPreview client:load />
+</div>
+
+## 아이콘 글리프 크기
+
+아이콘 픽셀은 스페이싱과 별개입니다(`iconSizes`). `WebIcon` / 글리프 슬롯에만 사용하세요.
+
+<div class="not-content">
+  <IconSizePreview client:load />
+</div>
+
+## 사용법
+
+```tsx
+<Stack gap="sizeMedium">
+  <Box padding="sizeLarge" background="backgroundSurface" radius="roundedLarge">
+    Inset
+  </Box>
+</Stack>
+```

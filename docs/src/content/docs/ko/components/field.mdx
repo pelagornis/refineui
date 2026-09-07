@@ -1,0 +1,73 @@
+---
+title: Field
+description: 레이블, 컨트롤, 에러, 도움말을 감싸는 폼 필드 컨테이너.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import FieldPreview from "../../../../components/FieldPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <FieldPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="field" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Field, FieldLabel, FieldHint, FieldError, FieldRequired, Input } from "@refineui/react";
+
+<Field size="md">
+  <FieldLabel>Email address</FieldLabel>
+  <Input type="email" placeholder="you@example.com" />
+  <FieldHint>We'll never share your email.</FieldHint>
+</Field>
+
+<Field size="lg">
+  <FieldLabel>Password <FieldRequired /></FieldLabel>
+  <Input type="password" error={hasError} />
+  {hasError && <FieldError>Password is required</FieldError>}
+</Field>
+```
+
+## API 레퍼런스
+
+### Field
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "필드 크기 티어(레이블과 메시지에 영향)." }
+    ]}
+  />
+</div>
+### FieldLabel
+
+필드의 레이블 요소. `size` prop을 받습니다(Field 컨텍스트에서 기본값).
+
+### FieldRequired
+
+필수 표시 시각 인디케이터(별표).
+
+### FieldHint
+
+입력 아래 도움말 텍스트.
+
+### FieldError
+
+입력 아래 에러 메시지.
+

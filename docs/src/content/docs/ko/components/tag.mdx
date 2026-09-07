@@ -1,0 +1,67 @@
+---
+title: Tag
+description: 분류 태그 또는 필터 칩.
+---
+import { SpecRenderer, TokenInspector } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import TagDemo from "../../../../components/TagDemo";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <TagDemo client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="tag" />
+</div>
+
+## 토큰
+
+<div class="not-content">
+  <TokenInspector client:load component="tag" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Chip } from "@refineui/react";
+
+<Chip>Tag Label</Chip>
+
+<Chip variant="filled">Filled</Chip>
+
+<Chip variant="outline" size="sm">Small Tag</Chip>
+
+<Chip onRemove={() => handleRemove()}>
+  Removable
+</Chip>
+
+<Chip avatar={<Avatar src="/user.jpg" />}>
+  With Avatar
+</Chip>
+```
+
+## API 레퍼런스
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "variant", default: "\"default\"", type: "\"default\" | \"outline\" | \"filled\"", description: "시각적 변형 스타일." },
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "칩 크기 티어." },
+    { prop: "avatar", default: "—", type: "ReactNode", description: "선택적 앞쪽 아바타 요소." },
+    { prop: "onRemove", default: "—", type: "() => void", description: "제공되면 제거 버튼을 표시합니다." },
+    { prop: "disabled", default: "false", type: "boolean", description: "인터랙션을 비활성화합니다." }
+    ]}
+  />
+</div>

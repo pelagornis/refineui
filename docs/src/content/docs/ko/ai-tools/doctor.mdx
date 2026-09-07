@@ -1,0 +1,83 @@
+---
+title: Doctor
+description: 읽기 전용 RefineUI 워크스페이스 진단 — 셋업, 토큰, 컴포지션 계약, 임포트 규칙.
+---
+
+import DoctorInstall from "../../../../components/DoctorInstall.mdx";
+
+**RefineUI Doctor**는 `@refineui/*`를 쓰는 프로젝트를 검사해 셋업 공백, 토큰 계약 위반, 컴포넌트 API 오용을 보고합니다 — 코드를 수정하지 않습니다.
+
+## 검사 항목
+
+| Rule | Category | Description |
+|------|----------|-------------|
+| `package-setup` | setup | 앱 프로젝트가 `@refineui/react`와 `@refineui/tokens`를 선언 |
+| `stylesheet-setup` | setup | 전역 CSS가 토큰, 아이콘, `refineui.css`를 임포트 |
+| `foundation-contract` | foundations | 컴포넌트 스타일에 하드코딩 hex/rgba·임의 px 없음 |
+| `composition-api` | components | RefineUI 컴포넌트에 편의 props(`title`, `description`, …) 없음 |
+| `component-imports` | components | `@refineui/react` 루트에서만 임포트 |
+
+진단은 **읽기 전용**입니다. Doctor는 YAML 리포트를 쓰며, 별도로 에이전트에게 수정을 요청하지 않는 한 패키지를 설치하거나 파일을 편집하지 않습니다.
+
+## 설치
+
+<DoctorInstall />
+
+## CLI
+
+```bash
+refineui-doctor
+refineui-doctor ./apps/web
+refineui-doctor --workspace packages/my-app --output ./doctor-report.yaml
+refineui-doctor --category setup --category foundations
+```
+
+error 심각도 소견이 있으면 종료 코드 `1`입니다.
+
+## Skill 워크플로
+
+RefineUI 스킬을 설치한 뒤 자연어로 요청하세요.
+
+```
+RefineUI 잘 쓰고 있나 봐줘
+셋업만 진단해줘
+이 모노레포의 RefineUI 워크스페이스를 전부 진단해줘
+```
+
+스킬은 [doctor rules](https://github.com/pelagornis/refineui/tree/main/skills/refineui/rules)를 로드하고 [llm.txt](/llm.txt)로 라이브 문서에 라우팅합니다 — 문서를 복제하지 않습니다.
+
+## MCP
+
+`@refineui/mcp`가 설정되어 있으면 에이전트가 선택적 프로젝트 경로·워크스페이스 이름으로 **`run_doctor`**를 호출할 수 있습니다. 도구는 YAML 스키마와 맞는 JSON을 반환합니다.
+
+## 리포트 형식
+
+임시 디렉터리 또는 `--output`에 쓰는 스키마 v2 YAML:
+
+```yaml
+schemaVersion: 2
+meta:
+  target: /path/to/project
+  projectKinds: [app]
+  refineui:
+    declared:
+      "@refineui/react": "^0.x"
+summary:
+  error: 0
+  warn: 1
+  info: 0
+checks: [...]
+findings: [...]
+```
+
+각 소견에는 에이전트 가이드 수정에 쓸 `remediation` 텍스트가 포함됩니다.
+
+## Skill vs MCP 비교
+
+| | Doctor CLI | Skill | MCP `run_doctor` |
+|---|------------|-------|------------------|
+| **로컬 실행** | Yes | 에이전트가 규칙 따름 | Yes |
+| **적합한 용도** | CI / 스크립트 | 자연어 요청 | 에이전트 자동화 |
+| **출력** | YAML 파일 | 대화 + 선택적 YAML | JSON |
+
+대화형 진단은 **Skill**, 반복 검사는 **CLI**, 프로그래밍 방식 진단은 **MCP**를 사용하세요.

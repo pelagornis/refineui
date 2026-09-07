@@ -1,6 +1,18 @@
-import type { ReactNode } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 import { Box, Card, CardHeader, CardTitle, Grid } from "@refineui/react";
-import { withBase } from "../../lib/docs-path";
+import { withLocalePath, type DocsLocaleCode } from "../../lib/docs-locale";
+
+const CatalogLocaleContext = createContext<DocsLocaleCode>(undefined);
+
+export function CatalogLocaleProvider({
+    locale,
+    children,
+}: {
+    locale?: DocsLocaleCode;
+    children: ReactNode;
+}) {
+    return <CatalogLocaleContext.Provider value={locale}>{children}</CatalogLocaleContext.Provider>;
+}
 
 export function CatalogCard({
     href,
@@ -16,6 +28,8 @@ export function CatalogCard({
     /** Stretch preview to the full canvas (sidebar, carousel, chart, …). */
     fill?: boolean;
 }) {
+    const locale = useContext(CatalogLocaleContext);
+
     return (
         <Card variant="outlined" interactive data-refineui-catalog-card className="relative flex h-full min-h-0 flex-col">
             <div data-refineui-catalog-preview className="flex min-h-0 flex-1 flex-col">
@@ -37,7 +51,7 @@ export function CatalogCard({
             <CardHeader data-refineui-catalog-label className="shrink-0">
                 <CardTitle>
                     <a
-                        href={external ? href : withBase(href)}
+                        href={external ? href : withLocalePath(href, locale)}
                         data-refineui-catalog-link
                         {...(external ? { target: "_blank", rel: "noreferrer" } : undefined)}
                     >

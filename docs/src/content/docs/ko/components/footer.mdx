@@ -1,0 +1,58 @@
+---
+title: Footer
+description: 브랜드, 내비게이션 그룹, 로케일, 소셜 링크가 있는 사이트 푸터.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import FooterPreview from "../../../../components/FooterPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+`Footer`는 마케팅·앱 푸터용 복합 레이아웃입니다 — 브랜드, 링크 그룹, 메타 행, 로케일, 소셜 아이콘.
+
+<div class="not-content my-6">
+  <FooterPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="footer" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import {
+  Footer,
+  FooterBrand,
+  FooterNav,
+  FooterGroup,
+  FooterGroupLabel,
+  FooterLink,
+  FooterMeta,
+  FooterCopyright,
+} from "@refineui/react";
+
+<Footer>
+  <FooterBrand>RefineUI</FooterBrand>
+  <FooterNav>
+    <FooterGroup>
+      <FooterGroupLabel>Product</FooterGroupLabel>
+      <FooterLink href="/components/">Components</FooterLink>
+    </FooterGroup>
+  </FooterNav>
+  <FooterMeta>
+    <FooterCopyright>© Pelagornis</FooterCopyright>
+  </FooterMeta>
+</Footer>
+```
+
+## 구성 요소
+
+`FooterBrand`, `FooterNav`, `FooterGroup`, `FooterGroupLabel`, `FooterLink`, `FooterExplore`, `FooterSocial`, `FooterLocale`, `FooterMeta`, `FooterMetaEnd`, `FooterCopyright`.

@@ -1,0 +1,67 @@
+---
+title: Box
+description: 패딩, 시맨틱 채우기, radius, border — 기본 레이아웃 표면.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import BoxPreview from "../../../../components/layout/BoxPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+`Box`는 Foundation spacing, color, radius, stroke 토큰을 하나의 표면에 적용합니다. CSS를 직접 만들지 않고 토큰 기반 래퍼가 필요할 때 사용하세요.
+
+<div class="not-content my-6">
+  <BoxPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="box" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Box } from "@refineui/react";
+
+<Box padding="sizeLarge" background="backgroundSurface" radius="roundedLarge">
+  Content
+</Box>
+
+<Box
+  as="section"
+  paddingX="sizeLarge"
+  paddingY="sizeSmall"
+  border="strokeWidthThin"
+  borderColor="borderDefault"
+  background="backgroundPrimary"
+>
+  Outlined section
+</Box>
+```
+
+## API 레퍼런스
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "as", default: "\"div\"", type: "ElementType", description: "루트 요소." },
+    { prop: "padding", default: "—", type: "Spacing token", description: "모든 면 패딩." },
+    { prop: "paddingX", default: "—", type: "Spacing token", description: "가로 패딩." },
+    { prop: "paddingY", default: "—", type: "Spacing token", description: "세로 패딩." },
+    { prop: "background", default: "—", type: "Background / surface alias", description: "채우기 색." },
+    { prop: "radius", default: "—", type: "Radius token", description: "모서리 radius." },
+    { prop: "border", default: "—", type: "Stroke token", description: "테두리 두께." },
+    { prop: "borderColor", default: "—", type: "Border color alias", description: "테두리 색(`border`와 함께 기본 적용)." }
+    ]}
+  />
+</div>

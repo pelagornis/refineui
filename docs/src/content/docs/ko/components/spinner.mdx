@@ -1,0 +1,55 @@
+---
+title: Spinner
+description: 비동기 액션용 로딩 인디케이터 스피너.
+---
+import { SpecRenderer, TokenInspector } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import SpinnerPreview from "../../../../components/SpinnerPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <SpinnerPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="spinner" />
+</div>
+
+## 토큰
+
+<div class="not-content">
+  <TokenInspector client:load component="spinner" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Spinner } from "@refineui/react";
+
+<Spinner size="md" />
+
+<Spinner size="lg" label="Loading..." labelPosition="right" />
+```
+
+## API 레퍼런스
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "size", default: "—", type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\" | \"xxl\"", description: "스피너 크기 티어." },
+    { prop: "label", default: "—", type: "ReactNode", description: "선택적 레이블 텍스트 또는 요소." },
+    { prop: "labelPosition", default: "—", type: "\"left\" | \"right\" | \"top\" | \"bottom\"", description: "스피너 기준 레이블 위치." }
+    ]}
+  />
+</div>

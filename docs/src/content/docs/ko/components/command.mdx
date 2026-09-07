@@ -1,0 +1,142 @@
+---
+title: Command
+description: 검색이 있는 커맨드 팔레트 인터페이스.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import CommandPreview from "../../../../components/CommandPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <CommandPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="command" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import {
+  Command,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandGroupHeading,
+  CommandItem,
+  CommandSeparator
+} from "@refineui/react";
+
+<Command>
+  <CommandInput placeholder="Search commands..." />
+  <CommandList>
+    <CommandEmpty>No results found.</CommandEmpty>
+    <CommandGroup>
+      <CommandGroupHeading>File</CommandGroupHeading>
+      <CommandItem value="new" onSelect={() => handleNew()}>
+        New File
+      </CommandItem>
+      <CommandItem value="open">Open</CommandItem>
+    </CommandGroup>
+    <CommandSeparator />
+    <CommandGroup>
+      <CommandGroupHeading>Edit</CommandGroupHeading>
+      <CommandItem value="copy">Copy</CommandItem>
+      <CommandItem value="paste">Paste</CommandItem>
+    </CommandGroup>
+  </CommandList>
+</Command>
+
+<CommandDialog open={isOpen} onOpenChange={setIsOpen}>
+  <Command>
+    {/* Command content */}
+  </Command>
+</CommandDialog>
+```
+
+## API 레퍼런스
+
+### Command
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "제어형 검색 쿼리." },
+    { prop: "defaultValue", default: "—", type: "string", description: "비제어형 초기 검색 쿼리." },
+    { prop: "onValueChange", default: "—", type: "(search: string) => void", description: "검색 변경 시 이벤트 핸들러." },
+    { prop: "shouldFilter", default: "true", type: "boolean", description: "true이면 검색 텍스트로 항목을 필터링합니다." },
+    { prop: "filter", default: "—", type: "CommandFilter", description: "커스텀 점수 함수(0을 반환하면 숨김)." },
+    { prop: "selectedValue", default: "—", type: "string", description: "제어형 하이라이트 항목 값." },
+    { prop: "defaultSelectedValue", default: "—", type: "string", description: "비제어형 초기 하이라이트 항목." },
+    { prop: "onSelectedValueChange", default: "—", type: "(value: string) => void", description: "하이라이트 항목 변경 시 이벤트 핸들러." },
+    { prop: "label", default: "—", type: "string", description: "접근 가능한 이름(`aria-label`)." }
+    ]}
+  />
+</div>
+### CommandDialog
+
+Dialog 오버레이 안의 Command.
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "open", default: "—", type: "boolean", description: "제어형 열림 상태." },
+    { prop: "onOpenChange", default: "—", type: "(open: boolean) => void", description: "열림 상태 변경 시 이벤트 핸들러." },
+    { prop: "commandProps", default: "—", type: "CommandProps", description: "내부 Command로 전달되는 props." }
+    ]}
+  />
+</div>
+### CommandInput
+
+선택적 `startIcon`이 있는 검색 입력.
+
+### CommandList
+
+스크롤 가능한 리스트 컨테이너(내부적으로 `ScrollArea` 사용).
+
+### CommandEmpty
+
+일치하는 항목이 없을 때 표시.
+
+### CommandGroup
+
+관련 항목을 그룹화합니다.
+
+### CommandGroupHeading
+
+그룹 제목.
+
+### CommandSeparator
+
+시각적 구분선.
+
+### CommandItem
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "필터링·선택용 고유 값(필수)." },
+    { prop: "keywords", default: "—", type: "string[]", description: "기본 필터용 추가 문자열." },
+    { prop: "onSelect", default: "—", type: "(value: string) => void", description: "활성화 시 호출(클릭/Enter)." },
+    { prop: "forceMount", default: "false", type: "boolean", description: "필터로 제외되어도 마운트 유지." },
+    { prop: "startIcon", default: "—", type: "ReactNode", description: "앞쪽 아이콘." },
+    { prop: "endIcon", default: "—", type: "ReactNode", description: "뒤쪽 아이콘." },
+    { prop: "shortcut", default: "—", type: "ReactNode", description: "키보드 단축키 힌트." }
+    ]}
+  />
+</div>

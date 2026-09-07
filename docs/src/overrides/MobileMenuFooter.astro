@@ -1,9 +1,9 @@
 ---
 import SocialIcons from "@astrojs/starlight/components/SocialIcons.astro";
-import ThemeSelect from "virtual:starlight/components/ThemeSelect";
+import { DocsThemeSelect } from "./DocsThemeSelect";
 ---
 
 <div data-refineui-docs-mobile-prefs>
     <SocialIcons />
-    <ThemeSelect />
+    <DocsThemeSelect client:load />
 </div>

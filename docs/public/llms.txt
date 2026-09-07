@@ -7,7 +7,7 @@ Install: `bun add @refineui/react @refineui/tokens`. Load `@refineui/tokens/tail
 ## Guides
 
 - [Getting started](https://ui.pelagornis.com/getting-started/): Architecture, install, stylesheet, first example
-- [AI & Tools](https://ui.pelagornis.com/ai-tools/): llms.txt, Skill, Doctor, MCP
+- [AI & Tools](https://ui.pelagornis.com/ai-tools/): DESIGN.md, llms.txt, Skill, Doctor, MCP
 
 ## Foundations
 
@@ -96,6 +96,7 @@ Install: `bun add @refineui/react @refineui/tokens`. Load `@refineui/tokens/tail
 ## AI & Tools
 
 - [Overview](https://ui.pelagornis.com/ai-tools/): LLM indexes, Skill, Doctor, MCP
+- [DESIGN.md](https://ui.pelagornis.com/DESIGN.md): Stitch-compatible design identity for AI agents
 - [llm.txt](https://ui.pelagornis.com/llm.txt): Expanded plain-text reference
 - [Skill](https://ui.pelagornis.com/ai-tools/skill/): refineui agent skill
 - [Doctor](https://ui.pelagornis.com/ai-tools/doctor/): Read-only workspace diagnostics
@@ -103,5 +104,6 @@ Install: `bun add @refineui/react @refineui/tokens`. Load `@refineui/tokens/tail
 
 ## Optional
 
+- [DESIGN.md](https://ui.pelagornis.com/DESIGN.md): Stitch DESIGN.md visual identity for coding agents
 - [llm.txt](https://ui.pelagornis.com/llm.txt): Expanded plain-text reference for LLM context windows
 - [GitHub](https://github.com/pelagornis/refineui): Source code and issue tracker

@@ -1,0 +1,19 @@
+---
+title: 테마
+description: 시맨틱 컬러 별칭으로 라이트·다크 서피스를 구성합니다.
+---
+
+RefineUI 테마는 시맨틱 별칭(`--refineui-color-alias-*`)으로 해석됩니다. 문서와 동일하게 문서 루트에 `data-theme="dark"`(선택적으로 `.dark`)를 설정해 다크를 켭니다.
+
+```html
+<html data-theme="light">
+<html data-theme="dark" class="dark">
+```
+
+## 규칙
+
+- UI에서는 원시 팔레트 단계가 아니라 **별칭**(`background-brand`, `foreground-primary`)을 사용하세요
+- 컴포넌트 크기는 Foundation 사이즈 스텝에 연결된 상태를 유지합니다
+- 제품 CSS에 테마 전용 hex를 새로 만들지 마세요
+
+비주얼 토큰 맵은 [컬러](/ko/foundations/color/)를 참고하세요.

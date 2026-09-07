@@ -6,8 +6,8 @@ import type { ScrollAreaOrientation } from "./types";
 export const SCROLL_AREA_THUMB_MIN_PX = Number.parseFloat(spacings.sizeXLarge);
 
 /**
- * ScrollArea — grid layout with an inset scrollbar rail beside the viewport.
- * Grid placement, gap, and rail sizing live in `refineui.css`.
+ * ScrollArea — overlay scrollbar over the viewport (no layout shift).
+ * Placement / visibility live in `refineui.css`.
  */
 export const scrollAreaStyles = {
     root: "box-border min-h-0 min-w-0 overflow-hidden outline-none",

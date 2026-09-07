@@ -1,0 +1,61 @@
+---
+title: Avatar Group
+description: 팀/사용자 목록용 그룹 아바타.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import AvatarsPreview from "../../../../components/AvatarsPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <AvatarsPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="avatars" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Avatars } from "@refineui/react";
+
+<Avatars
+  avatars={[
+    { src: "/user1.jpg", alt: "User 1" },
+    { src: "/user2.jpg", alt: "User 2" },
+    { src: "/user3.jpg", alt: "User 3" }
+  ]}
+/>
+
+<Avatars
+  avatars={teamMembers}
+  size="lg"
+  max={3}
+  layout="spread"
+/>
+```
+
+## API 레퍼런스
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "avatars", default: "—", type: "AvatarItem[]", description: "아바타 항목 배열(필수). 각 항목은 `src?`, `alt` 속성을 가집니다." },
+    { prop: "size", default: "\"md\"", type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"", description: "아바타 크기 티어." },
+    { prop: "max", default: "—", type: "number", description: "개수 표시 전에 보여줄 최대 아바타 수." },
+    { prop: "layout", default: "\"stack\"", type: "\"stack\" | \"spread\"", description: "레이아웃 스타일: 스택 또는 펼침." }
+    ]}
+  />
+</div>

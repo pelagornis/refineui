@@ -1,0 +1,68 @@
+---
+title: Dialog
+description: 중요한 작업을 위한 모달 다이얼로그 오버레이.
+---
+
+import { ComponentPreview, SpecRenderer, TokenInspector } from "../../../../components/spec";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <ComponentPreview client:load component="dialog" variant="lg" />
+</div>
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="dialog" />
+</div>
+
+
+## 토큰
+
+<div class="not-content">
+  <TokenInspector client:load component="dialog" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+  Button,
+} from "@refineui/react";
+
+<Dialog>
+  <DialogTrigger asChild>
+    <Button>Open Dialog</Button>
+  </DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Confirm Action</DialogTitle>
+      <DialogDescription>
+        Are you sure you want to continue?
+      </DialogDescription>
+    </DialogHeader>
+    <DialogClose asChild>
+      <Button>Cancel</Button>
+    </DialogClose>
+  </DialogContent>
+</Dialog>
+
+<Dialog size="sm" open={isOpen} onOpenChange={setIsOpen}>
+  <DialogContent scrollable={false}>
+    {/* Content with custom scroll handling */}
+  </DialogContent>
+</Dialog>
+```
+
+계약 소스: `packages/react/spec/components/dialog.json` — 위의 SpecRenderer로 렌더링됩니다.

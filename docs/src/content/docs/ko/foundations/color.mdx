@@ -1,0 +1,44 @@
+---
+title: 컬러
+description: 팔레트 원시값과 시맨틱 별칭 — 배경, 전경, 보더, 서피스.
+---
+
+import { ColorAliasPreview, ColorPalettePreview } from "../../../../components/foundation/ColorPreview";
+
+UI는 **별칭**(`foregroundPrimary`, `backgroundBrand`, `borderDefault`)으로 칠하세요. 팔레트는 라이트·다크에서 그 별칭이 해석되는 Foundation 소스입니다. 제품 UI에 hex나 원시 팔레트 키를 붙여넣지 마세요.
+
+`surfaceOverlay`는 모달 스크림입니다 — 팔레트 페어가 아닌 Foundation RGBA(`--refineui-color-alias-surface-overlay`).
+
+## 별칭
+
+라이브 CSS 변수입니다. 캡션에 `light / dark` 팔레트 키가 표시됩니다.
+
+<div class="not-content">
+  <ColorAliasPreview client:load />
+</div>
+
+## 팔레트
+
+<div class="not-content">
+  <ColorPalettePreview client:load />
+</div>
+
+## 사용법
+
+```tsx
+<Box
+  padding="sizeLarge"
+  background="backgroundSurface"
+  radius="roundedLarge"
+  border="strokeWidthThin"
+  borderColor="borderDefault"
+>
+  Surface
+</Box>
+```
+
+```tsx
+import { semanticColorCssVar } from "@refineui/utilities";
+
+<div style={{ color: semanticColorCssVar("foregroundPrimary") }} />
+```

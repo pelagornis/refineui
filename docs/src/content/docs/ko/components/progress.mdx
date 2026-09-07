@@ -1,0 +1,49 @@
+---
+title: Progress
+description: 완료 비율을 나타내는 시각적 바.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import ProgressPreview from "../../../../components/ProgressPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <ProgressPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="progress" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Progress } from "@refineui/react";
+
+<Progress value={60} max={100} size="lg" />
+
+<Progress value={uploadedBytes} max={totalBytes} />
+```
+
+## API 레퍼런스
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "number", description: "현재 진행 값(필수)." },
+    { prop: "max", default: "100", type: "number", description: "최댓값." },
+    { prop: "size", default: "—", type: "\"sm\" | \"lg\"", description: "바 두께: Small(2px) 또는 Large(4px)." }
+    ]}
+  />
+</div>

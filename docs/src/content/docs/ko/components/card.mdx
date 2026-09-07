@@ -1,0 +1,103 @@
+---
+title: Card
+description: 관련 정보를 묶는 컨테이너.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import CardPreview from "../../../../components/CardPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <CardPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="card" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import {
+  Card,
+  CardHeader,
+  CardHeaderMain,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+  CardAction
+} from "@refineui/react";
+
+<Card>
+  <CardHeader>
+    <CardTitle>Card Title</CardTitle>
+    <CardDescription>Card description goes here.</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p>Card body content</p>
+  </CardContent>
+  <CardFooter>
+    <Button>Action</Button>
+  </CardFooter>
+</Card>
+
+<Card variant="outlined" interactive state="hover">
+  <CardContent>
+    Interactive card with outlined variant
+  </CardContent>
+</Card>
+```
+
+## API 레퍼런스
+
+### Card
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "variant", default: "\"elevated\"", type: "\"elevated\" | \"outlined\"", description: "시각적 변형 스타일." },
+    { prop: "interactive", default: "false", type: "boolean", description: "호버/프레스 인터랙션을 활성화합니다." },
+    { prop: "state", default: "\"default\"", type: "\"default\" | \"hover\" | \"pressed\" | \"disabled\"", description: "시각 상태." }
+    ]}
+  />
+</div>
+### CardHeader
+
+헤더 레이아웃 섹션.
+
+### CardHeaderMain
+
+메인 헤더 콘텐츠 래퍼.
+
+### CardTitle
+
+제목 헤딩 요소.
+
+### CardDescription
+
+보조 설명 텍스트.
+
+### CardContent
+
+카드 본문 콘텐츠.
+
+### CardFooter
+
+푸터 섹션(보통 액션용).
+
+### CardAction
+
+헤더의 액션 버튼.
+

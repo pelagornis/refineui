@@ -1,0 +1,5 @@
+# https://ui.pelagornis.com
+User-agent: *
+Allow: /
+
+Sitemap: https://ui.pelagornis.com/sitemap-index.xml

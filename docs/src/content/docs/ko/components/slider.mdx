@@ -1,0 +1,60 @@
+---
+title: Slider
+description: 숫자 스케일에서 범위를 고르는 컨트롤.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import SliderDemo from "../../../../components/SliderDemo";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <SliderDemo client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="slider" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Slider } from "@refineui/react";
+
+<Slider min={0} max={100} value={volume} onChange={setVolume} />
+
+<Slider
+  min={0}
+  max={10}
+  step={1}
+  value={rating}
+  onChange={setRating}
+  size="md"
+/>
+```
+
+## API 레퍼런스
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "number", description: "제어형 값." },
+    { prop: "onChange", default: "—", type: "(value: number) => void", description: "값 변경 시 이벤트 핸들러." },
+    { prop: "min", default: "0", type: "number", description: "최솟값." },
+    { prop: "max", default: "100", type: "number", description: "최댓값." },
+    { prop: "step", default: "1", type: "number", description: "단계 증분." },
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\"", description: "레일 두께: sm(2px) 또는 md(4px)." },
+    { prop: "disabled", default: "false", type: "boolean", description: "인터랙션을 비활성화합니다." }
+    ]}
+  />
+</div>

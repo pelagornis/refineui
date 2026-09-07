@@ -1,0 +1,76 @@
+---
+title: Grid
+description: 동일 열 또는 Foundation min-item 자동 맞춤 CSS 그리드.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import GridPreview from "../../../../components/layout/GridPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+`Grid`는 자식을 열로 배치합니다. 고정 `columns`를 쓰거나, Foundation 크기와 함께 `minItem`으로 유동 auto-fit 그리드를 만드세요.
+
+<div class="not-content my-6">
+  <GridPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="grid" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Grid, GridItem } from "@refineui/react";
+
+<Grid columns={3} gap="sizeMedium">
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+</Grid>
+
+<Grid minItem="foundationSize2560" gap="sizeLarge">
+  <GridItem>Card</GridItem>
+  <GridItem>Card</GridItem>
+</Grid>
+```
+
+## API 레퍼런스
+
+### Grid
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "as", default: "\"div\"", type: "ElementType", description: "루트 요소." },
+    { prop: "columns", default: "1", type: "number", description: "동일 열 개수(`minItem` 설정 시 무시)." },
+    { prop: "minItem", default: "—", type: "Foundation size name", description: "auto-fit 최소 트랙 크기." },
+    { prop: "gap", default: "\"sizeNone\"", type: "Spacing token", description: "행·열 gap." },
+    { prop: "columnGap", default: "—", type: "Spacing token", description: "열 gap 재정의." },
+    { prop: "rowGap", default: "—", type: "Spacing token", description: "행 gap 재정의." },
+    { prop: "align", default: "—", type: "Align token", description: "아이템 정렬." },
+    { prop: "justify", default: "—", type: "Justify token", description: "콘텐츠 justify." }
+    ]}
+  />
+</div>
+### GridItem
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "span", default: "1", type: "number", description: "열 span." },
+    { prop: "rowSpan", default: "—", type: "number", description: "행 span." }
+    ]}
+  />
+</div>

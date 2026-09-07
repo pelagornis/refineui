@@ -1,0 +1,96 @@
+---
+title: Avatar
+description: 사용자 이미지 또는 이니셜 표현.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import AvatarPreview from "../../../../components/AvatarPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <AvatarPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="avatar" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Avatar, AvatarImage, AvatarFallback, AvatarBadge } from "@refineui/react";
+
+<Avatar>
+  <AvatarImage src="/user.jpg" alt="User Name" />
+  <AvatarFallback>UN</AvatarFallback>
+</Avatar>
+
+<Avatar size="lg" showStatus status="online">
+  <AvatarImage src="/avatar.jpg" alt="User" />
+  <AvatarFallback>U</AvatarFallback>
+  <AvatarBadge status="online" />
+</Avatar>
+
+<Avatar layout="icon" color="blue">
+  <AvatarIcon name="user" />
+</Avatar>
+
+<Avatar layout="initials" color="green">
+  <AvatarText>AB</AvatarText>
+</Avatar>
+```
+
+## API 레퍼런스
+
+### Avatar
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "src", default: "—", type: "string | null", description: "이미지 소스 URL." },
+    { prop: "alt", default: "—", type: "string", description: "이미지 alt 텍스트." },
+    { prop: "layout", default: "—", type: "\"image\" | \"icon\" | \"initials\"", description: "아바타 레이아웃(생략 시 children에서 추론)." },
+    { prop: "size", default: "\"md\"", type: "\"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"", description: "아바타 크기 티어." },
+    { prop: "showStatus", default: "false", type: "boolean", description: "프레즌스 상태 배지를 표시합니다." },
+    { prop: "status", default: "—", type: "\"online\" | \"away\" | \"unavailable\" | \"offline\"", description: "프레즌스 상태." },
+    { prop: "color", default: "—", type: "AvatarColor", description: "배경색(아이콘/이니셜용)." }
+    ]}
+  />
+</div>
+### AvatarImage
+
+이미지 요소.
+
+### AvatarFallback
+
+이미지 로드 실패 시 대체 콘텐츠.
+
+### AvatarBadge
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "status", default: "—", type: "\"online\" | \"away\" | \"unavailable\" | \"offline\"", description: "프레즌스 상태 인디케이터." }
+    ]}
+  />
+</div>
+### AvatarText
+
+이니셜용 텍스트 콘텐츠.
+
+### AvatarIcon
+
+아이콘 레이아웃용 아이콘 요소.
+

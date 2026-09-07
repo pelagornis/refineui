@@ -1,0 +1,38 @@
+---
+title: 투명도
+description: 공유 투명도 스텝과 오버레이 헬퍼.
+---
+
+import { SpecTable } from "../../../../docs-ui";
+import { OpacityPreview } from "../../../../components/foundation/OpacityPreview";
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="투명도 토큰"
+    columns={[
+      { key: "token", header: "토큰", mono: true },
+      { key: "value", header: "값", mono: true },
+      { key: "use", header: "용도" },
+    ]}
+    rows={[
+      { token: "opacityFull", value: "1", use: "기본" },
+      { token: "opacityDisabled", value: "0.5", use: "비활성 wash" },
+      { token: "opacityGhostHover", value: "0.08", use: "Ghost hover wash (다크)" },
+    ]}
+  />
+</div>
+
+페이지 디머는 커스텀 알파가 아니라 `surfaceOverlay` / `--refineui-overlay-backdrop`를 사용합니다 ([컬러](/ko/foundations/color/) 참고).
+
+<div class="not-content">
+  <OpacityPreview client:load />
+</div>
+
+## 사용법
+
+```css
+.scrim {
+  background: var(--refineui-overlay-backdrop);
+}
+```

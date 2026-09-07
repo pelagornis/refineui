@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const docsRoot = path.resolve(__dirname, "../../../docs/src/content/docs");
 const llmPath = path.resolve(__dirname, "../../../docs/public/llm.txt");
+const designMdPath = path.resolve(__dirname, "../../../docs/public/DESIGN.md");
 const outPath = path.resolve(__dirname, "../src/generated/docs-index.json");
 
 /** @param {string} content */
@@ -82,10 +83,12 @@ const pages = walk(docsRoot).map((rel) => {
 });
 
 const llmIndex = fs.existsSync(llmPath) ? fs.readFileSync(llmPath, "utf8") : "";
+const designMd = fs.existsSync(designMdPath) ? fs.readFileSync(designMdPath, "utf8") : "";
 
 const index = {
     generatedAt: new Date().toISOString(),
     llmIndex,
+    designMd,
     pages,
 };
 

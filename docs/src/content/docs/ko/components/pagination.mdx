@@ -1,0 +1,103 @@
+---
+title: Pagination
+description: 여러 페이지 데이터셋 간 탐색.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import PaginationDemo from "../../../../components/PaginationDemo";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <PaginationDemo client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="pagination" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEllipsis
+} from "@refineui/react";
+
+<Pagination>
+  <PaginationContent>
+    <PaginationItem>
+      <PaginationPrevious href="#" />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#" isActive>1</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">2</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">3</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationEllipsis />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">10</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationNext href="#" />
+    </PaginationItem>
+  </PaginationContent>
+</Pagination>
+```
+
+## API 레퍼런스
+
+### Pagination
+
+루트 컨테이너(`<nav>` 요소).
+
+### PaginationContent
+
+페이지네이션 항목 목록.
+
+### PaginationItem
+
+리스트 항목 래퍼.
+
+### PaginationLink
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "isActive", default: "false", type: "boolean", description: "현재 페이지를 표시합니다." }
+    ]}
+  />
+</div>
+### PaginationPrevious
+
+이전 페이지 버튼.
+
+### PaginationNext
+
+다음 페이지 버튼.
+
+### PaginationEllipsis
+
+건너뛴 페이지 표시기.
+

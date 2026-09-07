@@ -1,0 +1,53 @@
+---
+title: Container
+description: 토큰 패딩과 전체 max width를 가진 가운데 정렬 페이지 셸.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import ContainerPreview from "../../../../components/layout/ContainerPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+`Container`는 선택적 spacing 토큰 패딩으로 콘텐츠를 가로 가운데 정렬합니다. 페이지 또는 섹션 셸로 사용하세요.
+
+<div class="not-content my-6">
+  <ContainerPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="container" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Container, Stack, Text } from "@refineui/react";
+
+<Container padding="sizeXXLarge">
+  <Stack gap="sizeLarge">
+    <Text variant="headingMd" as="h1">Page title</Text>
+    <Text variant="bodyMd">Body</Text>
+  </Stack>
+</Container>
+```
+
+## API 레퍼런스
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "as", default: "\"div\"", type: "ElementType", description: "루트 요소." },
+    { prop: "padding", default: "—", type: "Spacing token", description: "모든 면 패딩." }
+    ]}
+  />
+</div>

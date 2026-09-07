@@ -1,0 +1,95 @@
+---
+title: Toast
+description: 일시적인 알림 메시지 오버레이.
+---
+import { SpecRenderer, TokenInspector } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import ToastPreview from "../../../../components/ToastPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <ToastPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="toast" />
+</div>
+
+
+## 토큰
+
+<div class="not-content">
+  <TokenInspector client:load component="toast" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Toast, Toaster, toast } from "@refineui/react";
+
+// Add Toaster to your app root (one toast at a time by default)
+<Toaster />
+
+// Show a toast — replaces any currently visible toast
+toast("Settings saved successfully", {
+  variant: "success",
+  duration: 3000,
+});
+
+toast("Upload failed", {
+  variant: "error",
+  action: {
+    label: "Retry",
+    onClick: () => retryUpload(),
+  },
+});
+```
+
+토스트를 위쪽으로 스와이프하거나 드래그하면 일찍 닫을 수 있습니다.
+
+## API 레퍼런스
+
+### Toast
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "variant", default: "\"default\"", type: "\"default\" | \"success\" | \"error\" | \"warning\"", description: "Toast 시각적 변형." },
+    { prop: "message", default: "—", type: "ReactNode", description: "Toast 메시지." },
+    { prop: "icon", default: "—", type: "ReactNode", description: "커스텀 아이콘 요소." },
+    { prop: "iconName", default: "—", type: "string", description: "아이콘 이름(icon 미사용 시)." },
+    { prop: "action", default: "—", type: "ReactNode | ToastAction", description: "액션 버튼 또는 커스텀 요소." }
+    ]}
+  />
+</div>
+### Toaster
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "maxToasts", default: "1", type: "number", description: "동시 토스트 최대 개수. 기본은 이전 토스트를 대체합니다." },
+    { prop: "swipeDirections", default: "[\"top\"]", type: "(\"top\" | \"right\" | \"bottom\" | \"left\")[]", description: "스와이프로 닫을 수 있는 방향." }
+    ]}
+  />
+</div>
+### toast(message, options)
+
+프로그래밍 방식으로 토스트를 표시하는 함수입니다. 새 호출이 이전 토스트를 대체합니다.
+
+**옵션:**
+- `variant?: ToastVariant` — 시각적 변형
+- `icon?: ReactNode` — 커스텀 아이콘
+- `action?: ToastAction` — 액션 버튼
+- `duration?: number` — 지속 시간(밀리초, 기본 4200)

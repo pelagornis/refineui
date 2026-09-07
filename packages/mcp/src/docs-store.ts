@@ -23,6 +23,7 @@ type DocPageRecord = DocPage & {
 type DocsIndexFile = {
     generatedAt: string;
     llmIndex: string;
+    designMd: string;
     pages: DocPageRecord[];
 };
 
@@ -52,6 +53,11 @@ export function normalizeSlug(input: string): string {
 
 export function getLlmIndex(): string {
     return index.llmIndex;
+}
+
+/** Canonical DESIGN.md (Google Stitch alpha) embedded at MCP build time. */
+export function getDesignMd(): string {
+    return index.designMd;
 }
 
 export function listPages(category?: DocCategory): DocSummary[] {

@@ -1,6 +1,6 @@
 ---
 title: Skill
-description: RefineUI agent skill — routes AI assistants to official docs, llm.txt, and design rules without duplicating content.
+description: RefineUI agent skill — routes AI assistants to official docs, DESIGN.md, llm.txt, and design rules without duplicating content.
 ---
 
 import SkillInstall from "../../../components/SkillInstall.mdx";
@@ -34,7 +34,7 @@ argument-hint: "[question or topic]"
 | Section | What it tells the agent |
 |---------|-------------------------|
 | **1. Classify the request** | Foundations vs components vs setup vs MCP vs health check — and whether to read the project first |
-| **2. Documentation routing** | Start from `llm.txt` / `llms.txt`, open leaf pages on ui.pelagornis.com; use MCP when available |
+| **2. Documentation routing** | Start from `DESIGN.md` / `llm.txt` / `llms.txt`, open leaf pages on ui.pelagornis.com; use MCP when available |
 | **3. Code-writing contract** | `@refineui/react` imports, composable APIs, tokens-only styling, a11y |
 | **4. Monorepo contributors** | Paths inside this repository (`packages/tokens`, `packages/react`, docs) |
 | **5. MCP** | When and how to use `@refineui/mcp` tools |
@@ -49,7 +49,7 @@ Source: [skills/refineui/SKILL.md](https://github.com/pelagornis/refineui/blob/m
 
 | Layer | Role |
 |-------|------|
-| **Doc routing** | Start from `llm.txt` / `llms.txt`, open leaf pages on ui.pelagornis.com |
+| **Doc routing** | Start from `DESIGN.md` / `llm.txt` / `llms.txt`, open leaf pages on ui.pelagornis.com |
 | **Codegen rules** | Tokens-only styling, composable APIs, no invented props |
 | **Monorepo hints** | Where tokens, components, and docs live in this repository |
 | **MCP pointer** | When to use `@refineui/mcp` tools |
@@ -67,7 +67,7 @@ The skill does **not** embed component lists or token tables — those stay in o
 skills/refineui/
 ├── SKILL.md                      # Entry — request classification & doc routing
 ├── references/
-│   ├── design-rules.md           # Token + composition contract (summary)
+│   ├── design-rules.md           # Points to canonical DESIGN.md
 │   ├── doctor.md                 # Doctor workflow & report schema
 │   └── mcp.md                    # @refineui/mcp setup & tools
 └── rules/                        # Doctor rule definitions (read-only diagnostics)
@@ -81,7 +81,7 @@ skills/refineui/
 | File | When the agent reads it |
 |------|-------------------------|
 | `SKILL.md` | Any RefineUI-related question — routes to docs or references |
-| `references/design-rules.md` | Writing or reviewing UI code |
+| `references/design-rules.md` | Writing or reviewing UI code → opens `DESIGN.md` |
 | `references/doctor.md` | Health check / "using RefineUI correctly?" requests |
 | `references/mcp.md` | MCP host setup or tool selection |
 | `rules/*.md` | Doctor diagnostics (manual or with `refineui-doctor` CLI) |
@@ -90,11 +90,12 @@ skills/refineui/
 
 Agents should **fetch the index on each task**, not rely on memorized slugs:
 
-1. Read `https://ui.pelagornis.com/llms.txt` or `https://ui.pelagornis.com/llm.txt`
-2. Follow links to Foundations, Components, or Development leaf pages
-3. For code generation, combine component docs with [Installation](/development/installation/) and [Theming](/development/theming/)
+1. Read `https://ui.pelagornis.com/DESIGN.md` for visual identity
+2. Read `https://ui.pelagornis.com/llms.txt` or `https://ui.pelagornis.com/llm.txt`
+3. Follow links to Foundations, Components, or Development leaf pages
+4. For code generation, combine component docs with [Installation](/development/installation/) and [Theming](/development/theming/)
 
-If MCP is configured, prefer `search_docs` and `get_doc_page` from `@refineui/mcp`.
+If MCP is configured, prefer `search_docs`, `get_doc_page`, and `get_design_rules` from `@refineui/mcp`.
 
 ## Request classification
 

@@ -1,0 +1,105 @@
+---
+title: Carousel
+description: 이미지 또는 카드 슬라이더 캐러셀.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import CarouselDemo from "../../../../components/CarouselDemo";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <CarouselDemo client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="carousel" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselControls,
+  CarouselPrevious,
+  CarouselNext,
+  CarouselIndicators
+} from "@refineui/react";
+
+<Carousel>
+  <CarouselContent>
+    <CarouselItem>
+      <img src="/slide1.jpg" alt="Slide 1" />
+    </CarouselItem>
+    <CarouselItem>
+      <img src="/slide2.jpg" alt="Slide 2" />
+    </CarouselItem>
+    <CarouselItem>
+      <img src="/slide3.jpg" alt="Slide 3" />
+    </CarouselItem>
+  </CarouselContent>
+  <CarouselControls>
+    <CarouselPrevious />
+    <CarouselNext />
+  </CarouselControls>
+  <CarouselIndicators />
+</Carousel>
+
+<Carousel
+  index={currentIndex}
+  onIndexChange={setCurrentIndex}
+  loop
+/>
+```
+
+## API 레퍼런스
+
+### Carousel
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "index", default: "—", type: "number", description: "제어형 슬라이드 인덱스(0부터)." },
+    { prop: "defaultIndex", default: "0", type: "number", description: "비제어형 초기 인덱스." },
+    { prop: "onIndexChange", default: "—", type: "(index: number) => void", description: "슬라이드 변경 시 이벤트 핸들러." },
+    { prop: "loop", default: "false", type: "boolean", description: "마지막↔처음으로 순환합니다." }
+    ]}
+  />
+</div>
+### CarouselContent
+
+슬라이드 컨테이너.
+
+### CarouselItem
+
+개별 슬라이드.
+
+### CarouselControls
+
+내비게이션 버튼 컨테이너.
+
+### CarouselPrevious
+
+이전 슬라이드 버튼.
+
+### CarouselNext
+
+다음 슬라이드 버튼.
+
+### CarouselIndicators
+
+슬라이드 점 인디케이터.
+

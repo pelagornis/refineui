@@ -1,0 +1,73 @@
+---
+title: Search Field
+description: 지우기 액션이 있는 검색 입력에 맞춘 컨트롤.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import SearchFieldPreview from "../../../../components/SearchFieldPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <SearchFieldPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="search-field" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { SearchField, SearchFieldIcon, SearchFieldInput, SearchFieldClear } from "@refineui/react";
+
+<SearchField value={query} onValueChange={setQuery} />
+
+<SearchField
+  value={searchTerm}
+  onValueChange={setSearchTerm}
+  appearance="filled"
+  aria-label="Search products"
+/>
+
+<SearchField appearance="plain" defaultValue="initial query" />
+```
+
+## API 레퍼런스
+
+### SearchField
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "제어형 쿼리 문자열." },
+    { prop: "defaultValue", default: "—", type: "string", description: "비제어형 초기 쿼리." },
+    { prop: "onValueChange", default: "—", type: "(value: string) => void", description: "쿼리 변경 시 이벤트 핸들러." },
+    { prop: "appearance", default: "\"filled\"", type: "\"filled\" | \"plain\"", description: "시각 스타일: filled(단독) 또는 plain(조합 표면용)." },
+    { prop: "disabled", default: "false", type: "boolean", description: "인터랙션을 비활성화합니다." },
+    { prop: "aria-label", default: "—", type: "string", description: "검색 입력의 접근 가능한 이름." }
+    ]}
+  />
+</div>
+### SearchFieldIcon
+
+검색 아이콘 슬롯(기본: 검색 글리프).
+
+### SearchFieldInput
+
+입력 요소.
+
+### SearchFieldClear
+
+지우기 버튼(기본: dismiss 글리프).
+

@@ -22,12 +22,13 @@ import {
 import { DocsThemeSelect } from "./DocsThemeSelect";
 import { RefineUILogo } from "../resources/logo";
 import {
-    DOCS_HEADER_NAV,
-    DOCS_SEARCH_ITEMS,
+    getDocsHeaderNav,
+    getDocsSearchItems,
     type DocsHeaderNavSection,
     type DocsSearchItem,
 } from "./docsHeaderConfig";
-import { stripBase, withBase } from "../lib/docs-path";
+import { withBase } from "../lib/docs-path";
+import { splitLocalePath } from "../lib/docs-locale";
 
 export type DocsHeaderBrandProps = {
     title: string;
@@ -40,19 +41,23 @@ export type DocsHeaderBrandProps = {
 
 export type DocsHeaderNavProps = {
     currentPath?: string;
+    /** Starlight locale (`undefined` = root English). */
+    locale?: string;
     /** Override default header navigation sections. */
     sections?: DocsHeaderNavSection[];
 };
 
 export type DocsHeaderSearchProps = {
+    /** Starlight locale (`undefined` = root English). */
+    locale?: string;
     /** Override command palette targets. */
     items?: DocsSearchItem[];
 };
 
 function normalizePath(path: string): string {
-    const stripped = stripBase(path);
-    if (stripped === "/") return "/";
-    return stripped.replace(/\/$/, "");
+    const { path: withoutLocale } = splitLocalePath(path);
+    if (withoutLocale === "/") return "/";
+    return withoutLocale.replace(/\/$/, "") || "/";
 }
 
 function resolveHref(href: string, external?: boolean): string {
@@ -106,12 +111,13 @@ export function DocsHeaderBrand({ title, titleHref, logo, hideTitle = false }: D
     );
 }
 
-export function DocsHeaderNav({ currentPath = "/", sections = DOCS_HEADER_NAV }: DocsHeaderNavProps) {
+export function DocsHeaderNav({ currentPath = "/", locale, sections }: DocsHeaderNavProps) {
+    const resolvedSections = sections ?? getDocsHeaderNav(locale);
     return (
         <div data-refineui-docs-nav>
             <NavigationMenu aria-label="Documentation">
                 <NavigationMenuList>
-                    {sections.map((section) => {
+                    {resolvedSections.map((section) => {
                         const sectionActive = sectionIsActive(section, currentPath);
 
                         if (section.links.length === 0) {
@@ -162,18 +168,19 @@ function navigateTo(href: string, external?: boolean) {
     window.location.assign(href);
 }
 
-export function DocsHeaderSearch({ items = DOCS_SEARCH_ITEMS }: DocsHeaderSearchProps) {
+export function DocsHeaderSearch({ locale, items }: DocsHeaderSearchProps) {
     const [open, setOpen] = useState(false);
+    const resolvedItems = useMemo(() => items ?? getDocsSearchItems(locale), [items, locale]);
 
     const groups = useMemo(() => {
         const map = new Map<string, DocsSearchItem[]>();
-        for (const item of items) {
+        for (const item of resolvedItems) {
             const list = map.get(item.group) ?? [];
             list.push(item);
             map.set(item.group, list);
         }
         return Array.from(map.entries());
-    }, [items]);
+    }, [resolvedItems]);
 
     useEffect(() => {
         const onKeyDown = (event: KeyboardEvent) => {

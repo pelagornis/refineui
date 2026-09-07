@@ -7,15 +7,15 @@ import {
     DocsMobileMenuToggle,
 } from "./DocsHeader";
 
-const { siteTitle, siteTitleHref, hasSidebar } = Astro.locals.starlightRoute;
+const { siteTitle, siteTitleHref, hasSidebar, locale } = Astro.locals.starlightRoute;
 const currentPath = Astro.url.pathname;
 ---
 
 <div data-refineui-docs-header>
     <DocsHeaderBrand title={siteTitle} titleHref={siteTitleHref} />
-    <DocsHeaderNav client:load currentPath={currentPath} />
+    <DocsHeaderNav client:load currentPath={currentPath} locale={locale} />
     <div data-refineui-docs-header-end>
-        <DocsHeaderSearch client:load />
+        <DocsHeaderSearch client:load locale={locale} />
         <DocsHeaderTools client:load />
         {hasSidebar ? <DocsMobileMenuToggle client:load /> : null}
     </div>

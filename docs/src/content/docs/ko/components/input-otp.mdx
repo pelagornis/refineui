@@ -1,0 +1,79 @@
+---
+title: Input OTP
+description: 일회용 비밀번호 코드 입력 필드.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import InputOTPDemo from "../../../../components/InputOTPDemo";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <InputOTPDemo client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="input-otp" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { InputOTP, InputOTPSlot } from "@refineui/react";
+
+<InputOTP maxLength={6} value={code} onValueChange={setCode}>
+  <InputOTPSlot index={0} />
+  <InputOTPSlot index={1} />
+  <InputOTPSlot index={2} />
+  <InputOTPSlot index={3} />
+  <InputOTPSlot index={4} />
+  <InputOTPSlot index={5} />
+</InputOTP>
+
+<InputOTP
+  maxLength={4}
+  pattern={/\d/}
+  size="lg"
+  aria-label="Enter verification code"
+/>
+```
+
+## API 레퍼런스
+
+### InputOTP
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "value", default: "—", type: "string", description: "제어형 OTP 문자열." },
+    { prop: "defaultValue", default: "—", type: "string", description: "비제어형 초기 값." },
+    { prop: "onValueChange", default: "—", type: "(value: string) => void", description: "값 변경 시 이벤트 핸들러." },
+    { prop: "maxLength", default: "—", type: "number", description: "슬롯 수(필수)." },
+    { prop: "pattern", default: "/\\d/", type: "RegExp", description: "문자별 허용 목록(기본: 숫자만)." },
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "컨트롤 크기 티어." },
+    { prop: "disabled", default: "false", type: "boolean", description: "인터랙션을 비활성화합니다." },
+    { prop: "autoFocus", default: "false", type: "boolean", description: "마운트 시 자동 포커스." },
+    { prop: "aria-label", default: "—", type: "string", description: "컨트롤의 접근 가능한 이름." }
+    ]}
+  />
+</div>
+### InputOTPSlot
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "index", default: "—", type: "number", description: "0부터 시작하는 슬롯 인덱스(필수)." }
+    ]}
+  />
+</div>

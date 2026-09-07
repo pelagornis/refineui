@@ -1,0 +1,91 @@
+---
+title: Resizable
+description: 드래그 핸들이 있는 분할 패널 레이아웃.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import ResizableDemo from "../../../../components/ResizableDemo";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <ResizableDemo client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="resizable" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@refineui/react";
+
+<ResizablePanelGroup orientation="horizontal">
+  <ResizablePanel defaultSize={50} minSize={30}>
+    Left panel
+  </ResizablePanel>
+  <ResizableHandle />
+  <ResizablePanel defaultSize={50} minSize={30}>
+    Right panel
+  </ResizablePanel>
+</ResizablePanelGroup>
+
+<ResizablePanelGroup orientation="vertical" onLayout={(sizes) => console.log(sizes)}>
+  <ResizablePanel size={topPanelSize} onResize={setTopPanelSize}>
+    Top
+  </ResizablePanel>
+  <ResizableHandle withHandle />
+  <ResizablePanel>
+    Bottom
+  </ResizablePanel>
+</ResizablePanelGroup>
+```
+
+## API 레퍼런스
+
+### ResizablePanelGroup
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "orientation", default: "\"horizontal\"", type: "\"horizontal\" | \"vertical\"", description: "분할 방향." },
+    { prop: "onLayout", default: "—", type: "(sizes: number[]) => void", description: "리사이즈 후 패널 크기(합이 약 100%인 백분율)로 호출됩니다." }
+    ]}
+  />
+</div>
+### ResizablePanel
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "defaultSize", default: "50", type: "number", description: "초기 크기(백분율)." },
+    { prop: "minSize", default: "10", type: "number", description: "최소 크기 백분율." },
+    { prop: "maxSize", default: "100", type: "number", description: "최대 크기 백분율." },
+    { prop: "size", default: "—", type: "number", description: "제어형 크기 백분율." },
+    { prop: "onResize", default: "—", type: "(size: number) => void", description: "패널 리사이즈 시 이벤트 핸들러." }
+    ]}
+  />
+</div>
+### ResizableHandle
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "withHandle", default: "false", type: "boolean", description: "구분선에 grip affordance를 표시합니다." },
+    { prop: "disabled", default: "false", type: "boolean", description: "리사이즈를 비활성화합니다." }
+    ]}
+  />
+</div>

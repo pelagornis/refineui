@@ -1,0 +1,39 @@
+---
+title: 디자인 토큰
+description: RefineUI를 구동하는 시맨틱 변수 — 컬러, 타입, 공간, 모션, 스택킹.
+---
+
+import { SpecTable } from "../../../../docs-ui";
+
+토큰은 시각 값의 단일 소스입니다. `@refineui/tokens`는 Foundation 스케일을 CSS 변수와 Tailwind 유틸리티로 매핑합니다. 컴포넌트와 제품 UI는 팔레트 hex나 임의 `px`가 아니라 **시맨틱 이름**을 참조해야 합니다.
+
+## 카테고리
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="토큰 카테고리"
+    columns={[
+      { key: "category", header: "카테고리", hrefKey: "href" },
+      { key: "use", header: "용도" },
+    ]}
+    rows={[
+      { category: "컬러", href: "/ko/foundations/color/", use: "서피스, 텍스트, 보더, 브랜드, 상태" },
+      { category: "타이포그래피", href: "/ko/foundations/typography/", use: "텍스트 역할 (headingMd, bodyMd, …)" },
+      { category: "스페이싱", href: "/ko/foundations/spacing/", use: "갭, 패딩, 마진" },
+      { category: "사이징", href: "/ko/foundations/sizing/", use: "컨트롤 높이, 아이콘, 레이아웃 스텝" },
+      { category: "라디우스", href: "/ko/foundations/radius/", use: "모서리 둥글기" },
+      { category: "보더", href: "/ko/foundations/border/", use: "스트로크 너비" },
+      { category: "엘리베이션", href: "/ko/foundations/elevation/", use: "그림자 / 깊이" },
+      { category: "투명도", href: "/ko/foundations/opacity/", use: "비활성 wash, 오버레이 헬퍼" },
+      { category: "모션", href: "/ko/foundations/motion/", use: "지속 시간, 이징, press 스케일" },
+      { category: "Z-index", href: "/ko/foundations/z-index/", use: "오버레이 스택킹" },
+    ]}
+  />
+</div>
+
+## 규칙
+
+1. 제품 코드에서는 Foundation 원시값보다 시맨틱 별칭(`backgroundSurface`, `sizeMedium`, `fast`)을 우선하세요.
+2. 값이 없으면 Foundation을 먼저 업데이트한 뒤 `packages/tokens`를 맞추세요 — 일회성 값을 만들지 마세요.
+3. 컨트롤 hover / focus 모션이 일관되도록 `@refineui/react/refineui.css`를 한 번만 임포트하세요.

@@ -1,0 +1,53 @@
+---
+title: Divider
+description: 항목 사이의 시각적 구분선.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import DividerPreview from "../../../../components/DividerPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <DividerPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="divider" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Divider } from "@refineui/react";
+
+<Divider />
+
+<Divider layout="content" align="center">
+  Or continue with
+</Divider>
+
+<Divider layout="icon" align="left" />
+```
+
+## API 레퍼런스
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "layout", default: "\"default\"", type: "\"default\" | \"content\" | \"icon\"", description: "Divider 레이아웃 스타일." },
+    { prop: "align", default: "\"center\"", type: "\"center\" | \"left\" | \"right\"", description: "콘텐츠/아이콘 정렬(layout이 default가 아닐 때)." },
+    { prop: "children", default: "—", type: "ReactNode", description: "표시할 콘텐츠(layout이 \"content\"일 때 필수)." }
+    ]}
+  />
+</div>

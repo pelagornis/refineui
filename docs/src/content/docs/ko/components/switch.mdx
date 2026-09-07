@@ -1,0 +1,59 @@
+---
+title: Switch
+description: 설정용 즉시 토글 스위치.
+---
+import { SpecRenderer, TokenInspector } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import SwitchDemo from "../../../../components/SwitchDemo";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <SwitchDemo client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="switch" />
+</div>
+
+## 토큰
+
+<div class="not-content">
+  <TokenInspector client:load component="switch" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Switch } from "@refineui/react";
+
+<Switch checked={isEnabled} onCheckedChange={setIsEnabled} />
+
+<Switch
+  checked={darkMode}
+  onCheckedChange={setDarkMode}
+  aria-label="Toggle dark mode"
+/>
+```
+
+## API 레퍼런스
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "checked", default: "—", type: "boolean", description: "제어형 체크 상태." },
+    { prop: "onCheckedChange", default: "—", type: "(checked: boolean) => void", description: "체크 상태 변경 시 이벤트 핸들러." },
+    { prop: "disabled", default: "false", type: "boolean", description: "인터랙션을 비활성화합니다." }
+    ]}
+  />
+</div>

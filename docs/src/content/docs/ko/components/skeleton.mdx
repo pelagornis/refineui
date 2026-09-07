@@ -1,0 +1,49 @@
+---
+title: Skeleton
+description: 데이터 로딩 중 플레이스홀더 애니메이션.
+---
+import { SpecRenderer } from "../../../../components/spec";
+
+
+import { PropSpec } from "../../../../docs-ui";
+
+import SkeletonPreview from "../../../../components/SkeletonPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <SkeletonPreview client:load />
+</div>
+
+
+## 계약
+
+<div class="not-content">
+  <SpecRenderer client:load component="skeleton" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { Skeleton } from "@refineui/react";
+
+<Skeleton width={200} height={20} />
+
+<Skeleton width="100%" height={100} shape="circle" />
+```
+
+## API 레퍼런스
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "width", default: "—", type: "number | string", description: "스켈레톤 너비(픽셀 또는 CSS 값)." },
+    { prop: "height", default: "—", type: "number | string", description: "스켈레톤 높이(픽셀 또는 CSS 값)." },
+    { prop: "shape", default: "\"rectangle\"", type: "\"rectangle\" | \"circle\"", description: "스켈레톤 모양." }
+    ]}
+  />
+</div>
