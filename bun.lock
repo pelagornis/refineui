@@ -27,6 +27,9 @@
         "react-dom": "^18.3.1",
         "tailwindcss": "^4.1.0",
       },
+      "devDependencies": {
+        "pagefind": "1.5.2",
+      },
     },
     "packages/doctor": {
       "name": "@refineui/doctor",

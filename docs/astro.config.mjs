@@ -14,12 +14,12 @@ const ICONOGRAPHY_SITE = 'https://github.com/pelagornis/refineui-system-icons';
 export default defineConfig({
   site: 'https://ui.pelagornis.com',
   redirects: {
+    // No trailing-slash twins: `trailingSlash: 'ignore'` maps both forms to one
+    // route, and declaring both is a static route collision (hard error in
+    // upcoming Astro versions).
     '/ai-integration': '/ai-tools',
-    '/ai-integration/': '/ai-tools/',
     '/ai-tools/llms-txt': '/llms.txt',
-    '/ai-tools/llms-txt/': '/llms.txt',
     '/ko/ai-integration': '/ko/ai-tools',
-    '/ko/ai-integration/': '/ko/ai-tools/',
     // Locale-agnostic public files (docs/public) — Starlight may prefix /ko/
     '/ko/DESIGN.md': '/DESIGN.md',
     '/ko/llms.txt': '/llms.txt',
