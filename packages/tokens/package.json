@@ -1,6 +1,6 @@
 {
   "name": "@refineui/tokens",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "RefineUI Theme Tokens",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -46,5 +46,9 @@
     "./tailwind.css": "./tailwind.css",
     "./package.json": "./package.json"
   },
-  "files": ["*.md", "dist", "tailwind.css"]
+  "files": [
+    "*.md",
+    "dist",
+    "tailwind.css"
+  ]
 }
