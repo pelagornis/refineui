@@ -12,11 +12,17 @@ export const SCROLL_AREA_THUMB_MIN_PX = Number.parseFloat(spacings.sizeXLarge);
 export const scrollAreaStyles = {
     root: "box-border min-h-0 min-w-0 overflow-hidden outline-none",
 
+    /**
+     * Overflow and scroll chaining are per axis: an axis only becomes scrollable
+     * when its scrollbar is declared, so a horizontal-only area lets vertical
+     * wheel gestures chain to the page instead of swallowing them.
+     */
     viewport: clsx(
         "size-full min-h-0 min-w-0 rounded-[inherit]",
-        "overflow-x-hidden overflow-y-auto overscroll-contain",
+        "overflow-hidden",
         "outline-none",
-        "data-[overflow-x=true]:overflow-x-auto",
+        "data-[overflow-x=true]:overflow-x-auto data-[overflow-x=true]:overscroll-x-contain",
+        "data-[overflow-y=true]:overflow-y-auto data-[overflow-y=true]:overscroll-y-contain",
     ),
 
     scrollbar: clsx(

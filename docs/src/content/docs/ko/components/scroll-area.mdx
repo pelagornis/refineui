@@ -30,10 +30,13 @@ import PackageInstall from "../../../../components/PackageInstall.mdx";
 ```tsx
 import { ScrollArea, ScrollAreaViewport, ScrollAreaScrollbar, ScrollAreaThumb } from "@refineui/react";
 
-<ScrollArea>
-  <div style={{ height: "400px" }}>
+<ScrollArea className="h-80">
+  <ScrollAreaViewport>
     {/* Long content */}
-  </div>
+  </ScrollAreaViewport>
+  <ScrollAreaScrollbar orientation="vertical">
+    <ScrollAreaThumb />
+  </ScrollAreaScrollbar>
 </ScrollArea>
 
 <ScrollArea type="always">
@@ -64,6 +67,8 @@ import { ScrollArea, ScrollAreaViewport, ScrollAreaScrollbar, ScrollAreaThumb } 
 ### ScrollAreaViewport
 
 뷰포트 컨테이너(스크롤 영역).
+
+각 축은 해당 `ScrollAreaScrollbar`를 선언했을 때만 스크롤됩니다. 따라서 가로 전용 영역에서는 세로 휠 제스처가 영역에 갇히지 않고 페이지 스크롤로 전달됩니다. 뷰포트는 내용이 실제로 넘칠 때만 탭 스톱이 됩니다.
 
 ### ScrollAreaScrollbar
 

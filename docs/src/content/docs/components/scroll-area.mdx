@@ -30,10 +30,13 @@ import PackageInstall from "../../../components/PackageInstall.mdx";
 ```tsx
 import { ScrollArea, ScrollAreaViewport, ScrollAreaScrollbar, ScrollAreaThumb } from "@refineui/react";
 
-<ScrollArea>
-  <div style={{ height: "400px" }}>
+<ScrollArea className="h-80">
+  <ScrollAreaViewport>
     {/* Long content */}
-  </div>
+  </ScrollAreaViewport>
+  <ScrollAreaScrollbar orientation="vertical">
+    <ScrollAreaThumb />
+  </ScrollAreaScrollbar>
 </ScrollArea>
 
 <ScrollArea type="always">
@@ -64,6 +67,8 @@ import { ScrollArea, ScrollAreaViewport, ScrollAreaScrollbar, ScrollAreaThumb } 
 ### ScrollAreaViewport
 
 Viewport container (scrollable area).
+
+An axis becomes scrollable only when its `ScrollAreaScrollbar` is declared, so a horizontal-only area lets vertical wheel gestures scroll the page instead of swallowing them. The viewport is a tab stop only while its content actually overflows.
 
 ### ScrollAreaScrollbar
 

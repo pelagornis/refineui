@@ -39,12 +39,15 @@ type ScrollAxisMetrics = {
     scrollOffset: number;
 };
 
+/** Which axes declared a scrollbar — drives viewport overflow per axis. */
+type ScrollAreaAxes = Record<ScrollAreaOrientation, boolean>;
+
 type ScrollAreaContextValue = {
     type: ScrollAreaType;
     viewportRef: MutableRefObject<HTMLDivElement | null>;
     setViewportNode: (node: HTMLDivElement | null) => void;
-    overflowX: boolean;
-    setOverflowX: (enabled: boolean) => void;
+    axes: ScrollAreaAxes;
+    setAxisEnabled: (orientation: ScrollAreaOrientation, enabled: boolean) => void;
     vertical: ScrollAxisMetrics;
     horizontal: ScrollAxisMetrics;
     scrolling: boolean;
@@ -78,6 +81,8 @@ const EMPTY_METRICS: ScrollAxisMetrics = {
     clientSize: 0,
     scrollOffset: 0,
 };
+
+const NO_AXES: ScrollAreaAxes = { vertical: false, horizontal: false };
 
 function readMetrics(viewport: HTMLDivElement): {
     vertical: ScrollAxisMetrics;
@@ -142,7 +147,7 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
     const [horizontal, setHorizontal] = useState<ScrollAxisMetrics>(EMPTY_METRICS);
     const [scrolling, setScrolling] = useState(false);
     const [interacting, setInteracting] = useState(false);
-    const [overflowX, setOverflowX] = useState(false);
+    const [axes, setAxes] = useState<ScrollAreaAxes>(NO_AXES);
     const hideTimerRef = useRef<number | null>(null);
 
     const setViewportNode = useCallback((node: HTMLDivElement | null) => {
@@ -150,6 +155,15 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
         viewportRef.current = node;
         setViewportEpoch((n) => n + 1);
     }, []);
+
+    const setAxisEnabled = useCallback(
+        (orientation: ScrollAreaOrientation, enabled: boolean) => {
+            setAxes((prev) =>
+                prev[orientation] === enabled ? prev : { ...prev, [orientation]: enabled },
+            );
+        },
+        [],
+    );
 
     const sync = useCallback(() => {
         const viewport = viewportRef.current;
@@ -170,7 +184,7 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
 
     useLayoutEffect(() => {
         sync();
-    }, [sync, overflowX, viewportEpoch]);
+    }, [sync, axes, viewportEpoch]);
 
     useEffect(() => {
         const viewport = viewportRef.current;
@@ -211,8 +225,8 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
             type,
             viewportRef,
             setViewportNode,
-            overflowX,
-            setOverflowX,
+            axes,
+            setAxisEnabled,
             vertical,
             horizontal,
             scrolling,
@@ -222,7 +236,8 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
         [
             type,
             setViewportNode,
-            overflowX,
+            axes,
+            setAxisEnabled,
             vertical,
             horizontal,
             scrolling,
@@ -249,15 +264,19 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
 
 export const ScrollAreaViewport = forwardRef<HTMLDivElement, ScrollAreaViewportProps>(
     function ScrollAreaViewport({ className, children, ...props }, forwardedRef) {
-        const { setViewportNode, overflowX } = useScrollAreaContext("ScrollAreaViewport");
+        const { setViewportNode, axes, vertical, horizontal } =
+            useScrollAreaContext("ScrollAreaViewport");
         const composedRef = useComposedRefs(setViewportNode, forwardedRef);
+        /** Keyboard scrolling needs a tab stop only while content actually overflows. */
+        const scrollable = isScrollable(vertical) || isScrollable(horizontal);
 
         return (
             <div
                 ref={composedRef}
                 data-refineui="scroll-area-viewport"
-                data-overflow-x={overflowX ? "true" : undefined}
-                tabIndex={0}
+                data-overflow-x={axes.horizontal ? "true" : undefined}
+                data-overflow-y={axes.vertical ? "true" : undefined}
+                tabIndex={scrollable ? 0 : undefined}
                 className={clsx(scrollAreaStyles.viewport, className)}
                 {...props}
             >
@@ -277,7 +296,7 @@ export function ScrollAreaScrollbar({
     const {
         type,
         viewportRef,
-        setOverflowX,
+        setAxisEnabled,
         vertical,
         horizontal,
         scrolling,
@@ -289,10 +308,9 @@ export function ScrollAreaScrollbar({
     const active = scrolling || interacting;
 
     useLayoutEffect(() => {
-        if (orientation !== "horizontal") return;
-        setOverflowX(true);
-        return () => setOverflowX(false);
-    }, [orientation, setOverflowX]);
+        setAxisEnabled(orientation, true);
+        return () => setAxisEnabled(orientation, false);
+    }, [orientation, setAxisEnabled]);
 
     const scrollbarCtx = useMemo<ScrollbarContextValue>(
         () => ({ orientation, metrics, trackRef }),
