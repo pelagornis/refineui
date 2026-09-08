@@ -31,7 +31,7 @@ const PATHWAYS = {
         {
             href: "/foundations/",
             title: "파운데이션",
-            description: "컬러, 타이포, 스페이스, 모션, 엘리베이션 토큰.",
+            description: "컬러, 타이포, 스페이스, 모션, 그림자 토큰.",
         },
         {
             href: "/components/",

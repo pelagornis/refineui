@@ -7,13 +7,13 @@ description: 공간 리듬, 컨테이너, 그리드, 정렬, 반응형 규칙.
 
 ## 원칙
 
-1. **토큰 갭과 패딩** — 임의 `px`가 아니라 스페이싱 키(`sizeSmall`, `sizeLarge`)를 사용하세요.
+1. **토큰 갭과 패딩** — 임의 `px`가 아니라 Spacing 키(`sizeSmall`, `sizeLarge`)를 사용하세요.
 2. **프리미티브 조합** — 제품 화면에서 일회성 flex CSS보다 `Stack` / `Grid` / `Container`를 우선하세요.
 3. **하나의 주 읽기 너비** — 긴 텍스트는 `Container` 또는 Foundation max-width 토큰으로 제한하세요.
 
 ## Container
 
-컨테이너는 콘텐츠를 가운데 두고 너비를 제한해 긴 페이지가 읽기 쉽게 유지됩니다. React에서는 스페이싱 토큰 패딩과 함께 [`Container`](/ko/components/container/) 프리미티브를 사용하세요.
+컨테이너는 콘텐츠를 가운데 두고 너비를 제한해 긴 페이지가 읽기 쉽게 유지됩니다. React에서는 Spacing 토큰 패딩과 함께 [`Container`](/ko/components/container/) 프리미티브를 사용하세요.
 
 **언제 쓰나**
 
@@ -23,12 +23,12 @@ description: 공간 리듬, 컨테이너, 그리드, 정렬, 반응형 규칙.
 **규칙**
 
 - 새 브레이크포인트 너비를 만들기보다 Foundation / 컴포넌트 max-width 토큰을 우선하세요.
-- 즉흥 마진보다 페이지 수준 수직 스페이싱(`sizeXXLarge` / `sizeXXXLarge`)과 함께 쓰세요.
+- 즉흥 마진보다 페이지 수준 수직 Spacing(`sizeXXLarge` / `sizeXXXLarge`)과 함께 쓰세요.
 - 중첩 컨테이너는 보통 불필요합니다 — 페이지 셸 하나로 충분합니다.
 
 ## Grid
 
-콘텐츠가 2차원일 때(카드, 대시보드, 갤러리) 그리드를 사용하세요. React에서는 `columns` 또는 `minItem`(Foundation 사이즈)과 스페이싱 토큰 갭으로 [`Grid`](/ko/components/grid/)를 사용하세요.
+콘텐츠가 2차원일 때(카드, 대시보드, 갤러리) 그리드를 사용하세요. React에서는 `columns` 또는 `minItem`(Foundation 사이즈)과 Spacing 토큰 갭으로 [`Grid`](/ko/components/grid/)를 사용하세요.
 
 **언제 쓰나**
 
@@ -38,7 +38,7 @@ description: 공간 리듬, 컨테이너, 그리드, 정렬, 반응형 규칙.
 
 **규칙**
 
-- 갭은 스페이싱 토큰에서 옵니다(`gap="sizeLarge"`).
+- 갭은 Spacing 토큰에서 옵니다(`gap="sizeLarge"`).
 - 유동 카드 그리드에는 `minItem` auto-fit을, 개수가 의도적일 때는 고정 `columns`를 우선하세요.
 - 작은 뷰포트에서는 한 컬럼으로 접으세요 ([반응형](#responsive) 참고).
 
@@ -52,9 +52,9 @@ description: 공간 리듬, 컨테이너, 그리드, 정렬, 반응형 규칙.
 
 ## 반응형
 
-레이아웃은 스페이싱·타입 토큰을 안정적으로 유지하면서 뷰포트에 맞춰 리플로우해야 합니다. 작은 화면에서는 컬럼을 줄이고, 스택을 쌓으며, 컨트롤을 전체 너비로 두는 편이 좋습니다.
+레이아웃은 Spacing·타입 토큰을 안정적으로 유지하면서 뷰포트에 맞춰 리플로우해야 합니다. 작은 화면에서는 컬럼을 줄이고, 스택을 쌓으며, 컨트롤을 전체 너비로 두는 편이 좋습니다.
 
-1. **같은 토큰** — 모바일용 두 번째 스페이싱 스케일을 만들지 마세요.
+1. **같은 토큰** — 모바일용 두 번째 Spacing 스케일을 만들지 마세요.
 2. **구조 접기** — 그리드는 한 컬럼이 되고, 나란한 스택은 `direction="column"`이 됩니다.
 3. **터치 타깃** — 컴포넌트 API의 컨트롤 크기(`size="md"` / `lg`)를 유지하세요. Foundation 컨트롤 높이 아래로 줄이지 마세요.
 4. **내비게이션** — 데스크톱 레일은 작은 화면에서 드로어가 됩니다 ([Drawer](/ko/components/drawer/), [Sidebar](/ko/components/sidebar/) 참고).

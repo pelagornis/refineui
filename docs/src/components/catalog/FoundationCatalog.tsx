@@ -28,7 +28,7 @@ const AREAS = {
         {
             href: "/foundations/design-tokens/",
             name: "디자인 토큰",
-            hint: "컬러, 타이포, 스페이스, 라디우스, 모션, 스택킹",
+            hint: "컬러, 타이포, 스페이스, 모서리, 모션, 스택킹",
             external: false,
         },
         {
@@ -39,7 +39,7 @@ const AREAS = {
         },
         {
             href: ICONOGRAPHY_SITE,
-            name: "아이코노그래피",
+            name: "Iconography",
             hint: "시스템 아이콘 — refineui-system-icons로 이동",
             external: true,
         },
@@ -62,11 +62,11 @@ const TOKENS = {
     ko: [
         { href: "/foundations/color/", name: "컬러", hint: "별칭과 팔레트" },
         { href: "/foundations/typography/", name: "타이포그래피", hint: "시맨틱 텍스트 역할" },
-        { href: "/foundations/spacing/", name: "스페이싱", hint: "갭과 패딩" },
-        { href: "/foundations/sizing/", name: "사이징", hint: "컨트롤·레이아웃 크기" },
-        { href: "/foundations/radius/", name: "라디우스", hint: "모서리" },
-        { href: "/foundations/border/", name: "보더", hint: "스트로크 두께" },
-        { href: "/foundations/elevation/", name: "엘리베이션", hint: "테마 그림자" },
+        { href: "/foundations/spacing/", name: "Spacing", hint: "갭과 패딩" },
+        { href: "/foundations/sizing/", name: "Sizing", hint: "컨트롤·레이아웃 크기" },
+        { href: "/foundations/radius/", name: "Radius", hint: "모서리" },
+        { href: "/foundations/border/", name: "Border", hint: "스트로크 두께" },
+        { href: "/foundations/elevation/", name: "Elevation", hint: "테마 그림자" },
         { href: "/foundations/opacity/", name: "투명도", hint: "비활성 워시·오버레이" },
         { href: "/foundations/motion/", name: "모션", hint: "지속 시간, 이징, 스케일" },
         { href: "/foundations/z-index/", name: "Z-index", hint: "스택킹 레이어" },
