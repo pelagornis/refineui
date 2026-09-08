@@ -308,6 +308,16 @@
 }
 
 /* Segmented Control — sliding brand indicator */
+
+/* Overflowing options stay reachable by drag/keyboard without native scrollbar chrome inside the pill. */
+[data-refineui="segmented-control"] {
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+[data-refineui="segmented-control"]::-webkit-scrollbar {
+  display: none;
+}
+
 [data-refineui="segmented-control-indicator"] {
   transition: none;
   display: block;
@@ -1429,8 +1439,8 @@ a[data-refineui="link"]:focus-visible {
   cursor: not-allowed;
 }
 [data-refineui="footer-social"] [data-refineui="footer-link"] {
-  width: var(--refineui-size-foundation-size-160);
-  height: var(--refineui-size-foundation-size-160);
+  width: var(--refineui-size-foundation-size-240);
+  height: var(--refineui-size-foundation-size-240);
 }
 [data-refineui="footer-social"] [data-refineui="footer-link"] svg {
   display: block;

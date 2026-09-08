@@ -7,6 +7,10 @@ import {
   CardHeader,
   CardHeaderMain,
   CardTitle,
+  ScrollArea,
+  ScrollAreaScrollbar,
+  ScrollAreaThumb,
+  ScrollAreaViewport,
   Stack,
   Table,
   TableBody,
@@ -77,52 +81,59 @@ export default function TablePreview() {
             </CardHeaderMain>
           </CardHeader>
           <CardContent className="px-0 pb-refineui-size-medium pt-refineui-size-small">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Invoice</TableHead>
-                  <TableHead>Customer</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Method</TableHead>
-                  <TableHead className="text-right">Amount</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {invoices.map((row) => {
-                  const selected = selectedId === row.id;
-                  return (
-                    <TableRow
-                      key={row.id}
-                      data-state={selected ? "selected" : undefined}
-                      aria-selected={selected || undefined}
-                      className="cursor-pointer"
-                      onClick={() =>
-                        setSelectedId((prev) => (prev === row.id ? null : row.id))
-                      }
-                    >
-                      <TableCell className="font-medium">{row.id}</TableCell>
-                      <TableCell className="text-refineui-alias-foreground-secondary">
-                        {row.customer}
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant={statusVariant(row.status)}>{row.status}</Badge>
-                      </TableCell>
-                      <TableCell className="text-refineui-alias-foreground-secondary">
-                        {row.method}
-                      </TableCell>
-                      <TableCell className="text-right tabular-nums">{row.amount}</TableCell>
+            <ScrollArea type="hover" className="w-full min-w-0">
+              <ScrollAreaViewport>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Invoice</TableHead>
+                      <TableHead>Customer</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Method</TableHead>
+                      <TableHead className="text-right">Amount</TableHead>
                     </TableRow>
-                  );
-                })}
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TableCell colSpan={4}>Total</TableCell>
-                  <TableCell className="text-right tabular-nums">$2,624.50</TableCell>
-                </TableRow>
-              </TableFooter>
-              <TableCaption>Four invoices in this period.</TableCaption>
-            </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {invoices.map((row) => {
+                      const selected = selectedId === row.id;
+                      return (
+                        <TableRow
+                          key={row.id}
+                          data-state={selected ? "selected" : undefined}
+                          aria-selected={selected || undefined}
+                          className="cursor-pointer"
+                          onClick={() =>
+                            setSelectedId((prev) => (prev === row.id ? null : row.id))
+                          }
+                        >
+                          <TableCell className="font-medium">{row.id}</TableCell>
+                          <TableCell className="text-refineui-alias-foreground-secondary">
+                            {row.customer}
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant={statusVariant(row.status)}>{row.status}</Badge>
+                          </TableCell>
+                          <TableCell className="text-refineui-alias-foreground-secondary">
+                            {row.method}
+                          </TableCell>
+                          <TableCell className="text-right tabular-nums">{row.amount}</TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                  <TableFooter>
+                    <TableRow>
+                      <TableCell colSpan={4}>Total</TableCell>
+                      <TableCell className="text-right tabular-nums">$2,624.50</TableCell>
+                    </TableRow>
+                  </TableFooter>
+                  <TableCaption>Four invoices in this period.</TableCaption>
+                </Table>
+              </ScrollAreaViewport>
+              <ScrollAreaScrollbar orientation="horizontal">
+                <ScrollAreaThumb />
+              </ScrollAreaScrollbar>
+            </ScrollArea>
           </CardContent>
         </Card>
       </Look>

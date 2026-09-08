@@ -14,7 +14,12 @@ export const segmentedControlRecipe = defineSlotRecipe({
     base: {
         root: clsx(
             "relative box-border inline-flex max-w-full w-fit flex-nowrap items-stretch gap-refineui-size-none",
-            "overflow-hidden rounded-refineui-circle border-refineui-thin border-refineui-alias-border-default",
+            /**
+             * Scrolls rather than clips: `max-w-full` caps the pill at the container,
+             * so at narrow widths `overflow-hidden` would make trailing options
+             * unreachable. Scrollbar chrome is suppressed in `refineui.css`.
+             */
+            "overflow-x-auto overflow-y-hidden rounded-refineui-circle border-refineui-thin border-refineui-alias-border-default",
             "bg-refineui-alias-background-brand-subtle",
         ),
         indicator: clsx(

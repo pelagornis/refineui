@@ -45,7 +45,8 @@ export const footerStyles = {
     ),
     link: clsx(
         componentTextClass(componentTypographyTokens.footer.link),
-        "box-border inline-flex w-fit cursor-pointer items-center",
+        /** `min-h` carries the WCAG 2.2 Target Size (Minimum) 24px floor — the 20px line box alone is under it. */
+        "box-border inline-flex w-fit min-h-refineui-foundation-size-240 cursor-pointer items-center",
         "text-refineui-alias-foreground-tertiary no-underline outline-none",
         "transition-[color] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",
     ),
@@ -77,8 +78,9 @@ export const footerStyles = {
         "flex flex-wrap items-center justify-center gap-refineui-size-large",
         "md:col-start-1 md:justify-self-start md:justify-start",
     ),
+    /** Box is the 24px tap target; the glyph inside stays 16px (see `refineui.css`). */
     socialLink: clsx(
-        "box-border inline-flex size-refineui-foundation-size-160 shrink-0 cursor-pointer items-center justify-center",
+        "box-border inline-flex size-refineui-foundation-size-240 shrink-0 cursor-pointer items-center justify-center",
         "text-refineui-alias-foreground-tertiary no-underline outline-none",
         "transition-[color] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",
     ),

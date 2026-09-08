@@ -118,17 +118,30 @@
   gap: var(--refineui-spacing-size-x-large);
 }
 
+/*
+ * Side gutters only widen once there is room to spare. A fixed inline padding
+ * of size-800 costs 160px, which leaves a 320px screen just 128px of stage —
+ * narrower than any product would give a component, so specimens render
+ * squeezed (labels collide, buttons clip) for reasons that are not the
+ * component's.
+ */
 [data-refineui-look-stage] {
   box-sizing: border-box;
   display: flex;
   width: 100%;
   min-width: 0;
   min-height: var(--refineui-size-foundation-size-2000);
-  padding: var(--refineui-size-foundation-size-800);
+  padding: var(--refineui-size-foundation-size-800) var(--refineui-spacing-size-xx-large);
   overflow: visible;
   border-radius: var(--refineui-radius-rounded-large);
   align-items: center;
   justify-content: center;
+}
+
+@media (min-width: 50rem) {
+  [data-refineui-look-stage] {
+    padding: var(--refineui-size-foundation-size-800);
+  }
 }
 
 [data-refineui-look-grid] [data-refineui-look-stage] {

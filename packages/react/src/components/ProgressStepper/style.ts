@@ -62,7 +62,14 @@ export const progressStepperStyles = {
 
     label: clsx(
         componentTextClass(componentTypographyTokens.progressStepper.label),
-        "m-0 w-full text-center",
+        /**
+         * Truncates because steps split the track evenly (`flex-1`), so a narrow
+         * container can hand a label less width than its text needs. Labels are
+         * usually single words with no break opportunity, and the item is
+         * `overflow-visible` for the absolute marker — without this the text
+         * would paint over the neighbouring step instead of wrapping.
+         */
+        "m-0 w-full truncate text-center",
         "group-first/step:pl-[var(--refineui-progress-stepper-inset)] group-first/step:text-start",
         "group-last/step:pr-[var(--refineui-progress-stepper-inset)] group-last/step:text-end",
         "transition-colors duration-[var(--refineui-motion-duration-fast)]",
