@@ -41,8 +41,14 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      # Fails here rather than after the packages are built, so a missing secret
+      # is not reported as a bare "missing authentication" from bun publish.
       - name: Configure npm registry auth
         run: |
+          if [ -z "${NPM_TOKEN}" ]; then
+            echo "::error::NPM_TOKEN secret is not set. Add an npm automation token with publish access to the @refineui scope under Settings > Secrets and variables > Actions."
+            exit 1
+          fi
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
