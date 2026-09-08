@@ -2,13 +2,20 @@
   "name": "@refineui/version",
   "version": "1.0.0",
   "description": "Non-Fabric-specific package version setter",
-  "main": "lib-commonjs/index.js",
-  "module": "lib/index.js",
-  "typings": "lib/index.d.ts",
-  "repository": {"type": "git", "url": "https://github.com/pelagornis/refineui"},
+  "type": "module",
+  "main": "./lib/index.cjs",
+  "module": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
+  "repository": {"type": "git", "url": "https://github.com/pelagornis/refineui", "directory": "packages/version"},
   "license": "MIT",
-  "scripts": {"test": "vitest", "test:run": "vitest run"},
-  "devDependencies": {},
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts --clean --out-dir lib",
+    "test": "vitest",
+    "test:run": "vitest run"
+  },
+  "devDependencies": {"tsup": "^8.0.0", "typescript": "^5.0.0"},
   "dependencies": {"tslib": "^2.8.1"},
-  "exports": {".": {"types": "./lib/index.d.ts", "import": "./lib/index.js", "require": "./lib-commonjs/index.js"}}
+  "exports": {".": {"types": "./lib/index.d.ts", "import": "./lib/index.js", "require": "./lib/index.cjs"}},
+  "files": ["lib"],
+  "publishConfig": {"access": "public"}
 }

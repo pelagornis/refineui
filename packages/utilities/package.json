@@ -4,6 +4,8 @@
   "description": "RefineUI React utilities for building components",
   "sideEffects": false,
   "type": "module",
+  "license": "MIT",
+  "repository": {"type": "git", "url": "https://github.com/pelagornis/refineui", "directory": "packages/utilities"},
   "scripts": {
     "build": "tsup src/color.ts --format cjs,esm --dts --clean --out-dir lib --external react --external react-dom && tsup src/typography.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom && tsup src/animation.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom && tsup src/react.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom && tsup src/index.ts --format cjs,esm --dts --out-dir lib --external react --external react-dom",
     "build:color": "tsup src/color.ts --format cjs,esm --dts --clean --out-dir lib --external react --external react-dom",
@@ -19,6 +21,7 @@
     "./react": {"types": "./lib/react.d.ts", "import": "./lib/react.js", "require": "./lib/react.cjs"}
   },
   "main": "./lib/index.cjs",
+  "files": ["lib"],
   "dependencies": {"@refineui/version": "workspace:*"},
   "peerDependencies": {"react": ">=18.0.0", "react-dom": ">=18.0.0"},
   "devDependencies": {"@types/react": "^18.3.20", "react": "^18.3.1", "react-dom": "^18.3.1", "tsup": "^8.0.0", "typescript": "^5.0.0"},

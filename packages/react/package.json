@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "RefineUI React components — Pelagornis RefineUI Web Kit",
   "type": "module",
+  "license": "MIT",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -46,5 +47,8 @@
     "type": "git",
     "url": "git+https://github.com/pelagornis/refineui.git",
     "directory": "packages/react"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

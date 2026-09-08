@@ -5,13 +5,19 @@
   "workspaces": ["packages/*", "docs"],
   "scripts": {
     "build": "node scripts/ws.mjs @refineui/utilities build && node scripts/ws.mjs @refineui/tokens build && node scripts/ws.mjs @refineui/react build",
+    "build:packages": "node scripts/ws.mjs @refineui/version build && node scripts/ws.mjs @refineui/utilities build && node scripts/ws.mjs @refineui/tokens build && node scripts/ws.mjs @refineui/react build && node scripts/ws.mjs @refineui/doctor build && node scripts/ws.mjs @refineui/mcp build",
+    "build:version": "node scripts/ws.mjs @refineui/version build",
     "build:utilities": "node scripts/ws.mjs @refineui/utilities build",
     "build:tokens": "node scripts/ws.mjs @refineui/tokens build",
     "build:react": "node scripts/ws.mjs @refineui/react build",
     "build:mcp": "node scripts/ws.mjs @refineui/mcp build",
     "build:doctor": "node scripts/ws.mjs @refineui/doctor build",
     "docs": "node scripts/ws.mjs @refineui/docs dev",
-    "docs:build": "node scripts/ws.mjs @refineui/docs build"
+    "docs:build": "node scripts/ws.mjs @refineui/docs build",
+    "changeset": "changeset",
+    "version:packages": "changeset version && bun install --lockfile-only",
+    "publish:packages": "node scripts/publish.mjs",
+    "release": "bun run build:packages && node scripts/publish.mjs"
   },
   "devDependencies": {
     "@changesets/cli": "^2.28.1",

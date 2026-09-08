@@ -7,7 +7,8 @@
   "typings": "./dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pelagornis/refineui"
+    "url": "https://github.com/pelagornis/refineui",
+    "directory": "packages/tokens"
   },
   "license": "MIT",
   "scripts": {
@@ -28,8 +29,8 @@
       "optional": true
     }
   },
-  "beachball": {
-    "disallowedChangeTypes": ["major", "minor", "patch"]
+  "publishConfig": {
+    "access": "public"
   },
   "exports": {
     ".": {
