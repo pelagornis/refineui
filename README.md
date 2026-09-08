@@ -7,9 +7,10 @@ Design system for Pelagornis products. Foundation variables ship as `@refineui/t
 ## Install
 
 ```bash
-bun add @refineui/react @refineui/tokens
-# or
 npm install @refineui/react @refineui/tokens
+yarn add @refineui/react @refineui/tokens
+pnpm add @refineui/react @refineui/tokens
+bun add @refineui/react @refineui/tokens
 ```
 
 React 18+ and `react-dom` 18+ are required.

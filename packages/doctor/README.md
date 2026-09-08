@@ -5,9 +5,19 @@ Read-only diagnostics for RefineUI app and library workspaces.
 ## Install
 
 ```bash
-bun add -D @refineui/doctor
-# or
+npm install -D @refineui/doctor
+yarn add -D @refineui/doctor
+pnpm add -D @refineui/doctor
+bun add -d @refineui/doctor
+```
+
+Or run it without installing:
+
+```bash
 npx @refineui/doctor
+yarn dlx @refineui/doctor
+pnpm dlx @refineui/doctor
+bunx @refineui/doctor
 ```
 
 ## Usage

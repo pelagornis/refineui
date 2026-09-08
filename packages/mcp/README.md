@@ -5,9 +5,10 @@ MCP server for [RefineUI](https://ui.pelagornis.com) — search docs, fetch comp
 ## Install
 
 ```bash
-bun add -d @refineui/mcp
-# or
 npm install -D @refineui/mcp
+yarn add -D @refineui/mcp
+pnpm add -D @refineui/mcp
+bun add -d @refineui/mcp
 ```
 
 ## MCP configuration
@@ -24,6 +25,8 @@ Add to your MCP host config:
   }
 }
 ```
+
+Swap `bunx` for `npx`, `yarn dlx`, or `pnpm dlx` to match your toolchain.
 
 From the monorepo after build:
 

@@ -2,10 +2,19 @@
 
 Design tokens for RefineUI — TypeScript source of truth plus generated CSS.
 
-## Install / build
+## Install
 
 ```bash
-bun run build   # or pnpm build — builds utilities → tokens → react
+npm install @refineui/tokens
+yarn add @refineui/tokens
+pnpm add @refineui/tokens
+bun add @refineui/tokens
+```
+
+## Build
+
+```bash
+bun run build   # or npm/yarn/pnpm run build — builds utilities → tokens → react
 ```
 
 `@refineui/tokens` `build` runs `tsup` then `scripts/generate-css.mjs` and `scripts/generate-spec.mjs`, writing:
