@@ -20,6 +20,11 @@ Merging to `main` runs `.github/workflows/release.yml`:
 1. Pending changesets → the workflow opens a "chore: version packages" PR that
    applies the bumps and writes each `CHANGELOG.md`.
 2. Merging that PR → the workflow builds the packages and publishes them to
-   npm with `bun publish`.
+   npm via OIDC trusted publishing, with no long-lived token.
+
+Each package needs a trusted publisher registered once on npmjs.com (GitHub
+Actions → `pelagornis` / `refineui` / `release.yml`). npm can only attach that
+to a package that already exists, so a brand-new package's first version has to
+be published with a token before it can go tokenless.
 
 Docs (`@refineui/docs`) is private and is never versioned or published.

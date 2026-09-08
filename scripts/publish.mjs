@@ -2,10 +2,15 @@
 /**
  * Publish every public workspace package to npm.
  *
- * bun is required here instead of `changeset publish`: internal dependencies
- * use the `workspace:*` protocol, and only `bun publish` rewrites it to the
- * resolved version inside the tarball. npm ships the literal `workspace:*`,
- * which installs as a broken dependency.
+ * Each package is packed with bun and then uploaded with npm, because neither
+ * tool can do both halves:
+ *
+ * - Internal deps use the `workspace:*` protocol. `bun pm pack` rewrites it to
+ *   the resolved version inside the tarball; npm ships the literal
+ *   `workspace:*`, which installs as a broken dependency.
+ * - Auth is OIDC trusted publishing. `npm publish` performs the token exchange;
+ *   `bun publish` cannot (oven-sh/bun#22423) and fails with "missing
+ *   authentication" even when the workflow grants `id-token: write`.
  *
  * Already-published versions are skipped so a re-run is a no-op, and each new
  * release prints `New tag: <name>@<version>` plus a local git tag, which is the
@@ -14,7 +19,8 @@
  * Usage: node scripts/publish.mjs [--dry-run]
  */
 import { spawnSync } from "node:child_process";
-import { readdirSync, readFileSync, existsSync } from "node:fs";
+import { mkdtempSync, readdirSync, readFileSync, existsSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -120,18 +126,48 @@ async function isAlreadyPublished(name, version) {
   throw new Error(`Cannot read ${name}@${version} from npm: ${response.status} ${response.statusText}`);
 }
 
-/** @param {WorkspacePackage} pkg */
-function publish(pkg) {
-  const args = ["publish", "--access", "public"];
-  if (dryRun) args.push("--dry-run");
-
-  const result = spawnSync("bun", args, { cwd: pkg.dir, stdio: "inherit" });
+/**
+ * @param {WorkspacePackage} pkg
+ * @param {string} destination
+ * @returns {string} absolute path of the packed tarball
+ */
+function pack(pkg, destination) {
+  const result = spawnSync("bun", ["pm", "pack", "--quiet", "--destination", destination], {
+    cwd: pkg.dir,
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "inherit"],
+  });
 
   if (result.error) {
-    throw new Error(`Cannot run \`bun publish\` for ${pkg.name}: ${result.error.message}`);
+    throw new Error(`Cannot run \`bun pm pack\` for ${pkg.name}: ${result.error.message}`);
   }
   if (result.status !== 0) {
-    throw new Error(`\`bun publish\` failed for ${pkg.name}@${pkg.version} (exit ${result.status})`);
+    throw new Error(`\`bun pm pack\` failed for ${pkg.name}@${pkg.version} (exit ${result.status})`);
+  }
+
+  const tarball = result.stdout.trim().split("\n").pop()?.trim();
+  if (!tarball || !existsSync(tarball)) {
+    throw new Error(`\`bun pm pack\` did not report a tarball path for ${pkg.name}@${pkg.version}`);
+  }
+
+  return tarball;
+}
+
+/**
+ * @param {WorkspacePackage} pkg
+ * @param {string} tarball
+ */
+function publish(pkg, tarball) {
+  const args = ["publish", tarball, "--access", "public"];
+  if (dryRun) args.push("--dry-run");
+
+  const result = spawnSync("npm", args, { cwd: ROOT, stdio: "inherit" });
+
+  if (result.error) {
+    throw new Error(`Cannot run \`npm publish\` for ${pkg.name}: ${result.error.message}`);
+  }
+  if (result.status !== 0) {
+    throw new Error(`\`npm publish\` failed for ${pkg.name}@${pkg.version} (exit ${result.status})`);
   }
 }
 
@@ -148,26 +184,31 @@ function createGitTag(tag) {
 
 async function main() {
   const packages = readPublishablePackages();
+  const stagingDir = mkdtempSync(join(tmpdir(), "refineui-publish-"));
   let published = 0;
 
-  for (const pkg of packages) {
-    const tag = `${pkg.name}@${pkg.version}`;
+  try {
+    for (const pkg of packages) {
+      const tag = `${pkg.name}@${pkg.version}`;
 
-    if (await isAlreadyPublished(pkg.name, pkg.version)) {
-      console.log(`Skipped: ${tag} is already on npm`);
-      continue;
+      if (await isAlreadyPublished(pkg.name, pkg.version)) {
+        console.log(`Skipped: ${tag} is already on npm`);
+        continue;
+      }
+
+      publish(pkg, pack(pkg, stagingDir));
+      published += 1;
+
+      if (dryRun) {
+        console.log(`Would publish: ${tag}`);
+        continue;
+      }
+
+      createGitTag(tag);
+      console.log(`New tag: ${tag}`);
     }
-
-    publish(pkg);
-    published += 1;
-
-    if (dryRun) {
-      console.log(`Would publish: ${tag}`);
-      continue;
-    }
-
-    createGitTag(tag);
-    console.log(`New tag: ${tag}`);
+  } finally {
+    rmSync(stagingDir, { recursive: true, force: true });
   }
 
   if (published === 0) {
