@@ -22,13 +22,6 @@ export const ALERT_RECIPE_TOKEN_BINDINGS: readonly AlertRecipeTokenBinding[] = [
     },
     {
         slot: "root",
-        variant: "danger",
-        property: "background",
-        trace: { kind: "semantic", name: "backgroundErrorSubtle" },
-        recipeClass: "bg-refineui-alias-background-error-subtle",
-    },
-    {
-        slot: "root",
         property: "border",
         trace: { kind: "component", path: "alert.border" },
         recipeClass: "border-refineui-alias-border-default",
@@ -72,8 +65,8 @@ export const ALERT_RECIPE_TOKEN_BINDINGS: readonly AlertRecipeTokenBinding[] = [
         slot: "description",
         variant: "info",
         property: "foreground",
-        trace: { kind: "semantic", name: "backgroundInfo" },
-        recipeClass: "text-refineui-alias-background-info",
+        trace: { kind: "semantic", name: "foregroundInfo" },
+        recipeClass: "text-refineui-alias-foreground-info",
     },
     {
         slot: "icon",
@@ -93,8 +86,8 @@ export const ALERT_RECIPE_TOKEN_BINDINGS: readonly AlertRecipeTokenBinding[] = [
         slot: "description",
         variant: "success",
         property: "foreground",
-        trace: { kind: "semantic", name: "backgroundSuccess" },
-        recipeClass: "text-refineui-alias-background-success",
+        trace: { kind: "semantic", name: "foregroundSuccess" },
+        recipeClass: "text-refineui-alias-foreground-success",
     },
     {
         slot: "icon",
@@ -114,8 +107,8 @@ export const ALERT_RECIPE_TOKEN_BINDINGS: readonly AlertRecipeTokenBinding[] = [
         slot: "description",
         variant: "warning",
         property: "foreground",
-        trace: { kind: "semantic", name: "backgroundWarning" },
-        recipeClass: "text-refineui-alias-background-warning",
+        trace: { kind: "semantic", name: "foregroundWarning" },
+        recipeClass: "text-refineui-alias-foreground-warning",
     },
     {
         slot: "icon",
@@ -135,8 +128,8 @@ export const ALERT_RECIPE_TOKEN_BINDINGS: readonly AlertRecipeTokenBinding[] = [
         slot: "description",
         variant: "danger",
         property: "foreground",
-        trace: { kind: "semantic", name: "backgroundError" },
-        recipeClass: "text-refineui-alias-background-error",
+        trace: { kind: "semantic", name: "foregroundError" },
+        recipeClass: "text-refineui-alias-foreground-error",
     },
     {
         slot: "icon",
@@ -156,19 +149,15 @@ export const ALERT_RECIPE_TOKEN_BINDINGS: readonly AlertRecipeTokenBinding[] = [
         slot: "description",
         variant: "custom",
         property: "foreground",
-        trace: { kind: "semantic", name: "backgroundDiscovery" },
-        recipeClass: "text-refineui-alias-background-discovery",
+        trace: { kind: "semantic", name: "foregroundDiscovery" },
+        recipeClass: "text-refineui-alias-foreground-discovery",
     },
 ];
 
 export function filterAlertRecipeBindings(
     variant: string = "info",
 ): readonly AlertRecipeTokenBinding[] {
-    return ALERT_RECIPE_TOKEN_BINDINGS.filter((binding) => {
-        if (!binding.variant) {
-            if (binding.property === "background" && variant === "danger") return false;
-            return true;
-        }
-        return binding.variant === variant;
-    });
+    return ALERT_RECIPE_TOKEN_BINDINGS.filter(
+        (binding) => !binding.variant || binding.variant === variant,
+    );
 }

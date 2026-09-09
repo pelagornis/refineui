@@ -23,31 +23,31 @@ const variantSlotClasses: Record<AlertVariant, Readonly<Record<string, string>>>
         root: "bg-refineui-alias-background-primary",
         icon: "text-refineui-alias-foreground-info",
         title: "text-refineui-alias-foreground-info",
-        description: "text-refineui-alias-background-info",
+        description: "text-refineui-alias-foreground-info",
     },
     success: {
         root: "bg-refineui-alias-background-primary",
         icon: "text-refineui-alias-foreground-success",
         title: "text-refineui-alias-foreground-success",
-        description: "text-refineui-alias-background-success",
+        description: "text-refineui-alias-foreground-success",
     },
     warning: {
         root: "bg-refineui-alias-background-primary",
         icon: "text-refineui-alias-foreground-warning",
         title: "text-refineui-alias-foreground-warning",
-        description: "text-refineui-alias-background-warning",
+        description: "text-refineui-alias-foreground-warning",
     },
     danger: {
-        root: "bg-refineui-alias-background-error-subtle",
+        root: "bg-refineui-alias-background-primary",
         icon: "text-refineui-alias-foreground-error",
         title: "text-refineui-alias-foreground-error",
-        description: "text-refineui-alias-background-error",
+        description: "text-refineui-alias-foreground-error",
     },
     custom: {
         root: "bg-refineui-alias-background-primary",
         icon: "text-refineui-alias-foreground-discovery",
         title: "text-refineui-alias-foreground-discovery",
-        description: "text-refineui-alias-background-discovery",
+        description: "text-refineui-alias-foreground-discovery",
     },
 };
 
