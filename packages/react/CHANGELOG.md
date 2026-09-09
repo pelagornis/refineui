@@ -1,5 +1,11 @@
 # @refineui/react
 
+## 0.0.3
+
+### Patch Changes
+
+- 928ceba: Give every Alert variant the same surface instead of tinting only `danger`, and color Alert descriptions with the foreground aliases the recipe renders so `warning` text is no longer far under contrast.
+
 ## 0.0.2
 
 ### Patch Changes
