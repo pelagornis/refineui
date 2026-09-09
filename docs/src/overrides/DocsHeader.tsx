@@ -103,7 +103,7 @@ export function DocsHeaderBrand({ title, titleHref, logo, hideTitle = false }: D
                 {logo ?? <RefineUILogo />}
             </span>
             {hideTitle ? null : (
-                <Text as="span" variant="subtitleMd" className="text-refineui-alias-foreground-primary">
+                <Text as="span" variant="titleSm" className="text-refineui-alias-foreground-primary">
                     {title}
                 </Text>
             )}
