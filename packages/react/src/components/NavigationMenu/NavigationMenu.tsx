@@ -293,10 +293,12 @@ export function NavigationMenuItem({
                 onPointerEnter={(event: PointerEvent<HTMLLIElement>) => {
                     onPointerEnter?.(event);
                     if (event.defaultPrevented) return;
-                    const hasTrigger = Boolean(
-                        event.currentTarget.querySelector('[data-refineui="navigation-menu-trigger"]'),
+                    const hasEnabledTrigger = Boolean(
+                        event.currentTarget.querySelector(
+                            '[data-refineui="navigation-menu-trigger"]:not(:disabled)',
+                        ),
                     );
-                    if (hasTrigger) {
+                    if (hasEnabledTrigger) {
                         menu.openItem(value);
                     }
                 }}
@@ -476,7 +478,11 @@ export function NavigationMenuLink({
             )}
             onClick={(event) => {
                 onClick?.(event);
-                if (event.defaultPrevented || disabled) return;
+                if (event.defaultPrevented) return;
+                if (disabled) {
+                    event.preventDefault();
+                    return;
+                }
                 menu?.setValue("");
             }}
             onFocus={(event: FocusEvent<HTMLAnchorElement>) => {
@@ -488,7 +494,6 @@ export function NavigationMenuLink({
             {...props}
         >
             {children}
-            {!inContent ? <span aria-hidden className={navigationMenuStyles.linkChevronSpacer} /> : null}
         </a>
     );
 }

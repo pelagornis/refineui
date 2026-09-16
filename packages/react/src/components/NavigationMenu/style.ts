@@ -4,7 +4,7 @@ import { componentTextClass } from "../../typography";
 
 const topLevelItem = clsx(
     componentTextClass(componentTypographyTokens.navigationMenu.trigger),
-    "box-border inline-flex cursor-pointer items-center justify-center gap-refineui-size-x-small",
+    "box-border inline-flex min-h-refineui-button-min-height-sm min-w-refineui-navigation-menu-item-min-width cursor-pointer items-center justify-center gap-refineui-size-x-small",
     "rounded-refineui-large border-none bg-transparent px-refineui-size-medium py-refineui-size-x-small",
     "text-refineui-alias-foreground-tertiary outline-none leading-none",
     "transition-[color,background-color] duration-[var(--refineui-motion-duration-fast)]",
@@ -27,8 +27,6 @@ export const navigationMenuStyles = {
     triggerDisabled: "cursor-not-allowed text-refineui-alias-foreground-disabled",
     chevron,
     chevronOpen: "rotate-180",
-    /** Matches trigger chevron box so direct top-level links align with dropdown triggers. */
-    linkChevronSpacer: clsx(chevron, "inline-block size-refineui-icon-xsmall shrink-0 pointer-events-none invisible"),
     content: clsx(
         /** Flush under trigger so pointer does not leave the item while moving into the panel. */
         "absolute start-0 top-full z-refineui-messages pt-refineui-size-xx-small",
