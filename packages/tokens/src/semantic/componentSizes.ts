@@ -29,7 +29,7 @@ export const componentSizeFoundationKeys = {
     popoverPanelWidth: "foundationSize3250",
     popoverBeakInsetFromStartEdge: "foundationSize340",
     popoverBeakInsetFromEndEdge: "foundationSize300",
-    navigationMenuItemMinWidth: "foundationSize800",
+    navigationMenuItemMinWidth: "foundationSize400",
     menuPanelWidth: "foundationSize2440",
     dropdownMenuWidth: "foundationSize2440",
     sidebarWidth: "foundationSize2560",

@@ -4,7 +4,7 @@ import { componentTextClass } from "../../typography";
 
 const topLevelItem = clsx(
     componentTextClass(componentTypographyTokens.navigationMenu.trigger),
-    "box-border inline-flex min-h-refineui-button-min-height-sm min-w-refineui-navigation-menu-item-min-width cursor-pointer items-center justify-center gap-refineui-size-x-small",
+    "box-border inline-flex h-refineui-button-min-height-md min-w-refineui-navigation-menu-item-min-width cursor-pointer items-center justify-center gap-refineui-size-x-small",
     "rounded-refineui-large border-none bg-transparent px-refineui-size-medium py-refineui-size-x-small",
     "text-refineui-alias-foreground-tertiary outline-none leading-none",
     "transition-[color,background-color] duration-[var(--refineui-motion-duration-fast)]",
