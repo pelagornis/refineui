@@ -9,6 +9,7 @@ export const foundationSizes = {
     foundationSize20: "2px",
     foundationSize30: "3px",
     foundationSize40: "4px",
+    foundationSize50: "5px",
     foundationSize60: "6px",
     foundationSize80: "8px",
     foundationSize100: "10px",

@@ -25,6 +25,7 @@ const {
     opacities,
     overlays,
     semanticColors,
+    semanticElevations,
     semanticShadows,
     shadow2Lighter,
     spacings,
@@ -123,6 +124,15 @@ function shadowElevationLines() {
         theme.push(`  --shadow-${NS}-${n}light: var(--refineui-elevation-${n}light);`);
         theme.push(`  --shadow-${NS}-${n}dark: var(--refineui-elevation-${n}dark);`);
         theme.push(`  --shadow-${NS}-${n}: var(--refineui-elevation-${n});`);
+    }
+
+    for (const [name, pair] of Object.entries(semanticElevations)) {
+        const lightVal = toBoxShadow(pair.light);
+        const darkVal = toBoxShadow(pair.dark);
+
+        root.push(`  --refineui-elevation-${toKebab(name)}: ${lightVal};`);
+        dark.push(`  --refineui-elevation-${toKebab(name)}: ${darkVal};`);
+        theme.push(`  --shadow-${NS}-${toKebab(name)}: var(--refineui-elevation-${toKebab(name)});`);
     }
 
     const softer = toBoxShadow(shadow2Lighter);

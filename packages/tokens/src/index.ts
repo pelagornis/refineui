@@ -5,7 +5,8 @@ export type { SemanticColorName, SemanticPaletteName } from "./semantic/colors";
 export { semanticInteraction } from "./semantic/interaction";
 export { semanticFocus, SEMANTIC_FOCUS_PAIRS, type SemanticFocusName } from "./semantic/focus";
 export type { ThemeContextKey, SemanticThemeMap, TokenMeta, TokenStatus } from "./types";
-export { semanticShadows } from "./semantic/shadows";
+export { semanticElevations, semanticShadows } from "./semantic/shadows";
+export type { SemanticElevationName } from "./types";
 export { SEMANTIC_TEXT, type FoundationTypographyName, type SemanticTextName } from "./semantic/text";
 export {
     fontFamilies,

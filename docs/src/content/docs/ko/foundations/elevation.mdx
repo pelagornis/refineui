@@ -6,7 +6,7 @@ description: 카드, 팝오버, 플로팅 서피스를 위한 그림자 레시�
 import { SpecTable } from "../../../../docs-ui";
 import { ElevationPreview } from "../../../../components/foundation/ElevationPreview";
 
-각 Elevation 스텝(`--refineui-elevation-N`)은 활성 테마에 따라 라이트·다크 값을 자동으로 전환합니다. bare 변수를 사용하세요 — 명시적 `*light` / `*dark` 접미사는 테마와 무관하게 한 모드로 고정해야 할 때만 필요합니다.
+각 Foundation 스텝(`--refineui-elevation-N`)은 활성 테마에 따라 라이트·다크 값을 자동으로 전환합니다. 컴포넌트는 Foundation 스텝에 연결된 아래 의도형 alias를 우선 사용하세요. bare 변수를 사용하세요 — 명시적 `*light` / `*dark` 접미사는 테마와 무관하게 한 모드로 고정해야 할 때만 필요합니다.
 
 <div class="not-content">
   <SpecTable
@@ -17,7 +17,9 @@ import { ElevationPreview } from "../../../../components/foundation/ElevationPre
       { key: "css", header: "CSS", mono: true },
     ]}
     rows={[
-      { use: "테마 인식 (권장)", css: "--refineui-elevation-8" },
+      { use: "서피스 / raised / floating", css: "--refineui-elevation-surface | -raised | -floating" },
+      { use: "overlay / modal / toast", css: "--refineui-elevation-overlay | -modal | -toast" },
+      { use: "Foundation 스텝", css: "--refineui-elevation-8" },
       { use: "라이트 강제", css: "--refineui-elevation-8light" },
       { use: "다크 강제", css: "--refineui-elevation-8dark" },
     ]}
@@ -32,6 +34,6 @@ import { ElevationPreview } from "../../../../components/foundation/ElevationPre
 
 ```css
 .panel {
-  box-shadow: var(--refineui-elevation-8);
+  box-shadow: var(--refineui-elevation-floating);
 }
 ```

@@ -6,7 +6,7 @@ description: Shadow recipes for cards, popovers, and floating surfaces.
 import { SpecTable } from "../../../docs-ui";
 import { ElevationPreview } from "../../../components/foundation/ElevationPreview";
 
-Each elevation step (`--refineui-elevation-N`) automatically switches between light and dark values based on the active theme. Use the bare variable — explicit `*light` / `*dark` suffixes are only needed when a surface must stay in one mode regardless of theme.
+Each Foundation step (`--refineui-elevation-N`) automatically switches between light and dark values based on the active theme. Components should prefer the intent-level aliases below, which remain mapped to those Foundation steps. Use the bare variable — explicit `*light` / `*dark` suffixes are only needed when a surface must stay in one mode regardless of theme.
 
 <div class="not-content">
   <SpecTable
@@ -17,7 +17,9 @@ Each elevation step (`--refineui-elevation-N`) automatically switches between li
       { key: "css", header: "CSS", mono: true },
     ]}
     rows={[
-      { use: "Theme-aware (recommended)", css: "--refineui-elevation-8" },
+      { use: "Surface / raised / floating", css: "--refineui-elevation-surface | -raised | -floating" },
+      { use: "Overlay / modal / toast", css: "--refineui-elevation-overlay | -modal | -toast" },
+      { use: "Foundation step", css: "--refineui-elevation-8" },
       { use: "Force light", css: "--refineui-elevation-8light" },
       { use: "Force dark", css: "--refineui-elevation-8dark" },
     ]}
@@ -32,6 +34,6 @@ Each elevation step (`--refineui-elevation-N`) automatically switches between li
 
 ```css
 .panel {
-  box-shadow: var(--refineui-elevation-8);
+  box-shadow: var(--refineui-elevation-floating);
 }
 ```

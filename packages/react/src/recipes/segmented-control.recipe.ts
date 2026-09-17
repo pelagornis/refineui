@@ -1,7 +1,11 @@
 /**
  * Segmented Control slot recipe — visual mapping only.
  * Contract: packages/react/spec/components/segmented-control.json
- * Tokens: componentColorTokens.segmentedControl
+ * Tokens: componentTokens.segmentedControl
+ *   color → componentColorTokens.segmentedControl
+ *   typography → componentTypographyTokens.segmentedControl
+ *   motion.indicator → CSS in refineui.css (`data-animate`)
+ *   elevation.surface → selected thumb shadow
  */
 import { clsx } from "clsx";
 import { componentTypographyTokens } from "../tokens/componentTypographyTokens";

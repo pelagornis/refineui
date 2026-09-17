@@ -73,6 +73,8 @@ export function SegmentedControl({
         width: 0,
         ready: false,
     });
+    const [animate, setAnimate] = useState(false);
+    const hasMeasuredRef = useRef(false);
 
     const updateIndicator = useCallback(() => {
         const group = groupRef.current;
@@ -81,6 +83,8 @@ export function SegmentedControl({
             `${ITEM_SELECTOR}[data-selected="true"]`,
         );
         if (!selected) {
+            hasMeasuredRef.current = false;
+            setAnimate(false);
             setIndicator((prev) => ({ ...prev, width: 0, ready: false }));
             return;
         }
@@ -94,6 +98,20 @@ export function SegmentedControl({
     useLayoutEffect(() => {
         updateIndicator();
     }, [updateIndicator, selectedValue, children]);
+
+    // Enable transitions only after the first committed paint with geometry.
+    useEffect(() => {
+        if (!indicator.ready || hasMeasuredRef.current) return;
+        hasMeasuredRef.current = true;
+        let raf2 = 0;
+        const raf1 = requestAnimationFrame(() => {
+            raf2 = requestAnimationFrame(() => setAnimate(true));
+        });
+        return () => {
+            cancelAnimationFrame(raf1);
+            cancelAnimationFrame(raf2);
+        };
+    }, [indicator.ready]);
 
     useEffect(() => {
         const group = groupRef.current;
@@ -133,6 +151,7 @@ export function SegmentedControl({
                 <div
                     data-refineui="segmented-control-indicator"
                     data-ready={indicator.ready ? "true" : undefined}
+                    data-animate={animate ? "true" : undefined}
                     aria-hidden
                     className={segmentedControlStyles.indicator}
                     style={indicatorStyle}

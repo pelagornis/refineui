@@ -33,7 +33,7 @@ export const componentSizeFoundationKeys = {
     menuPanelWidth: "foundationSize2440",
     dropdownMenuWidth: "foundationSize2440",
     sidebarWidth: "foundationSize2560",
-    toastMinWidth: "foundationSize3250",
+    toastMinWidth: "foundationSize2000",
     toastMaxWidth: "foundationSize3250",
     dialogMaxWidth: "foundationSize6000",
     dialogWidthSm: "foundationSize3000",

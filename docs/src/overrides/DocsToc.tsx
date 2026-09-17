@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type RefObject } from "react";
+import { useEffect, useRef, useState, type RefObject, type WheelEvent } from "react";
 import {
     SidebarGroup,
     SidebarGroupLabel,
@@ -176,6 +176,21 @@ export function DocsToc({
 
     useTocScrollSpy(rootRef, minHeadingLevel, maxHeadingLevel, setActiveSlug);
 
+    /**
+     * The desktop TOC sits in Starlight's fixed right rail, outside the docs
+     * ScrollArea. Forward wheel gestures from a TOC link to the actual reading
+     * viewport so the fixed rail never becomes a dead-end scroll surface.
+     */
+    const forwardDesktopWheel = (event: WheelEvent<HTMLElement>) => {
+        if (variant !== "desktop") return;
+        const viewport = document.querySelector<HTMLElement>(
+            "[data-docs-shell-main] [data-refineui='scroll-area-viewport']",
+        );
+        if (!viewport) return;
+        event.preventDefault();
+        viewport.scrollBy({ left: event.deltaX, top: event.deltaY });
+    };
+
     useEffect(() => {
         if (variant !== "mobile") return;
         const details = detailsRef.current;
@@ -250,7 +265,12 @@ export function DocsToc({
     }
 
     return (
-        <nav ref={rootRef} data-refineui-docs-toc aria-labelledby="refineui-docs-toc-heading">
+        <nav
+            ref={rootRef}
+            data-refineui-docs-toc
+            aria-labelledby="refineui-docs-toc-heading"
+            onWheel={forwardDesktopWheel}
+        >
             <SidebarGroup>
                 <SidebarGroupLabel id="refineui-docs-toc-heading">{title}</SidebarGroupLabel>
                 <TocTree items={items} activeSlug={activeSlug} />

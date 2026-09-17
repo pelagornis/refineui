@@ -92,12 +92,16 @@ export function TabsList({ className, children, ...props }: TabsListProps) {
         width: 0,
         ready: false,
     });
+    const [animate, setAnimate] = useState(false);
+    const hasMeasuredRef = useRef(false);
 
     const updateIndicator = useCallback(() => {
         const list = tabListRef.current;
         if (!list) return;
         const selected = list.querySelector<HTMLElement>(`${TRIGGER_SELECTOR}[data-selected="true"]`);
         if (!selected) {
+            hasMeasuredRef.current = false;
+            setAnimate(false);
             setIndicator((prev) => ({ ...prev, width: 0, ready: false }));
             return;
         }
@@ -111,6 +115,20 @@ export function TabsList({ className, children, ...props }: TabsListProps) {
     useLayoutEffect(() => {
         updateIndicator();
     }, [updateIndicator, selectedValue, children]);
+
+    // Enable transitions only after the first committed paint with geometry.
+    useEffect(() => {
+        if (!indicator.ready || hasMeasuredRef.current) return;
+        hasMeasuredRef.current = true;
+        let raf2 = 0;
+        const raf1 = requestAnimationFrame(() => {
+            raf2 = requestAnimationFrame(() => setAnimate(true));
+        });
+        return () => {
+            cancelAnimationFrame(raf1);
+            cancelAnimationFrame(raf2);
+        };
+    }, [indicator.ready]);
 
     useEffect(() => {
         const list = tabListRef.current;
@@ -149,6 +167,7 @@ export function TabsList({ className, children, ...props }: TabsListProps) {
             <div
                 data-refineui="tabs-indicator"
                 data-ready={indicator.ready ? "true" : undefined}
+                data-animate={animate ? "true" : undefined}
                 aria-hidden
                 className={tabsStyles.indicator}
                 style={indicatorStyle}

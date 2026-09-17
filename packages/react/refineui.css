@@ -322,10 +322,17 @@
   transition: none;
   display: block;
 }
-[data-refineui="segmented-control-indicator"][data-ready="true"] {
+/* Animate only after first layout (`data-animate`) so mount does not slide from 0. */
+[data-refineui="segmented-control-indicator"][data-animate="true"] {
+  /* Selection slide: medium + emphasized for a springier thumb move. */
   transition:
     transform var(--refineui-motion-duration-medium) var(--refineui-motion-easing-emphasized),
     width var(--refineui-motion-duration-medium) var(--refineui-motion-easing-emphasized);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-refineui="segmented-control-indicator"][data-animate="true"] {
+    transition: none;
+  }
 }
 
 [data-refineui="segmented-control"] [data-refineui="segmented-control-item"]:not(:disabled):not([aria-disabled="true"]):not([data-selected="true"]):hover {
@@ -350,10 +357,16 @@
   transition: none;
   display: block;
 }
-[data-refineui="tabs-indicator"][data-ready="true"] {
+/* Animate only after first layout (`data-animate`) — same contract as Segmented Control. */
+[data-refineui="tabs-indicator"][data-animate="true"] {
   transition:
     transform var(--refineui-motion-duration-medium) var(--refineui-motion-easing-emphasized),
     width var(--refineui-motion-duration-medium) var(--refineui-motion-easing-emphasized);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-refineui="tabs-indicator"][data-animate="true"] {
+    transition: none;
+  }
 }
 [data-refineui="tab"]:not(:disabled):not([aria-disabled="true"]):not([data-selected="true"]):hover {
   color: var(--refineui-color-alias-foreground-primary-hover);
@@ -1016,14 +1029,10 @@
   width: fit-content;
   max-width: 100%;
   box-sizing: border-box;
-  background-color: color-mix(
-    in srgb,
-    var(--refineui-color-alias-surface-popover) 82%,
-    transparent
-  );
-  backdrop-filter: blur(var(--refineui-spacing-size-xxx-large));
-  -webkit-backdrop-filter: blur(var(--refineui-spacing-size-xxx-large));
-  box-shadow: var(--refineui-elevation-8);
+  /* Semantic: backgroundPrimary + borderDefault (Menu / Select panel). */
+  background-color: var(--refineui-color-alias-background-primary);
+  border-color: var(--refineui-color-alias-border-default);
+  box-shadow: var(--refineui-elevation-toast);
   touch-action: none;
   cursor: grab;
   transform: translate3d(var(--refineui-toast-swipe-x), var(--refineui-toast-swipe-y), 0);
@@ -1051,12 +1060,6 @@
 }
 
 @media (prefers-reduced-transparency: reduce) {
-  [data-refineui="toast"] {
-    background-color: var(--refineui-color-alias-surface-popover);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-
   [data-refineui="dialog"] > [role="presentation"],
   [data-refineui="drawer"] > [role="presentation"] {
     backdrop-filter: none;

@@ -1,11 +1,17 @@
 import { clsx } from "clsx";
-import type { CSSProperties, ReactElement, ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 import { cloneElement, useId, useRef, useState } from "react";
-import { spacings } from "@refineui/tokens";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { getMergeableTriggerChild } from "@refineui/utilities/react";
-import { tooltipArrowStyle, tooltipPanelDropShadow, tooltipPanelStyle, tooltipStyles } from "./style";
+import {
+    TOOLTIP_BEAK_H,
+    TOOLTIP_BEAK_W,
+    tooltipBeakRotateDeg,
+    tooltipBeakWrapperStyle,
+    tooltipFloatingStyle,
+    tooltipStyles,
+} from "./style";
 import type { TooltipProps, TooltipTriggerMergeProps } from "./types";
 
 export function Tooltip({
@@ -30,8 +36,10 @@ export function Tooltip({
         onOpenChange?.(next);
     };
 
-    const bg = resolveColorTokenValue(componentColorTokens.tooltip.default.background);
-    const fg = resolveColorTokenValue(componentColorTokens.tooltip.default.foreground);
+    const tipColor = componentColorTokens.tooltip.default;
+    const bg = resolveColorTokenValue(tipColor.background);
+    const fg = resolveColorTokenValue(tipColor.foreground);
+    const borderCol = resolveColorTokenValue(tipColor.border);
 
     const clearTimer = () => {
         if (showTimer.current != null) {
@@ -50,9 +58,9 @@ export function Tooltip({
         setOpen(false);
     };
 
-    const arrowHalf = Number.parseInt(spacings.sizeXSmall, 10) || 6;
-    const panelPos: CSSProperties = tooltipPanelStyle(position, align);
-    const arrow: CSSProperties = tooltipArrowStyle(position, align, bg, arrowHalf);
+    const floatingStyle = tooltipFloatingStyle(position, align);
+    const beakWrapStyle = tooltipBeakWrapperStyle(position, align);
+    const beakRot = tooltipBeakRotateDeg(position);
 
     const describedBy = open ? tooltipId : undefined;
     const mergeEl = getMergeableTriggerChild(trigger);
@@ -110,21 +118,50 @@ export function Tooltip({
         <div data-refineui="tooltip" className={clsx(tooltipStyles.root, className)} {...props}>
             {triggerNode}
             {open && (
-                <div
-                    id={tooltipId}
-                    role="tooltip"
-                    data-position={position}
-                    data-align={align}
-                    className={tooltipStyles.panel}
-                    style={{
-                        ...panelPos,
-                        backgroundColor: bg,
-                        color: fg,
-                        filter: tooltipPanelDropShadow,
-                    }}
-                >
-                    {content}
-                    <span aria-hidden style={arrow} />
+                <div className={tooltipStyles.floating} style={floatingStyle}>
+                    <div className={tooltipStyles.panelWrap}>
+                        <div
+                            className={tooltipStyles.beakWrap}
+                            style={{ ...beakWrapStyle, width: TOOLTIP_BEAK_W, height: TOOLTIP_BEAK_H }}
+                            aria-hidden
+                        >
+                            <div
+                                style={{
+                                    width: TOOLTIP_BEAK_W,
+                                    height: TOOLTIP_BEAK_H,
+                                    transform: `rotate(${beakRot}deg)`,
+                                    transformOrigin: "center center",
+                                }}
+                            >
+                                <svg
+                                    width={TOOLTIP_BEAK_W}
+                                    height={TOOLTIP_BEAK_H}
+                                    viewBox="0 0 16 8"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    style={{ display: "block" }}
+                                >
+                                    <polygon points="8,0 0,8 16,8" fill={borderCol} />
+                                    <polygon points="8,2 2,8 14,8" fill={bg} />
+                                </svg>
+                            </div>
+                        </div>
+                        <div
+                            id={tooltipId}
+                            role="tooltip"
+                            data-refineui="tooltip-panel"
+                            data-position={position}
+                            data-align={align}
+                            className={tooltipStyles.panel}
+                            style={{
+                                backgroundColor: bg,
+                                color: fg,
+                                borderColor: borderCol,
+                            }}
+                        >
+                            {content}
+                        </div>
+                    </div>
                 </div>
             )}
         </div>

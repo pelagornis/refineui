@@ -1,5 +1,6 @@
 export { componentColorTokens } from "./tokens/componentColorTokens";
 export { componentTypographyTokens, type ControlSize } from "./tokens/componentTypographyTokens";
+export { componentTokens } from "./tokens/componentTokens";
 export {
     componentTextClass,
     semanticTextClass,

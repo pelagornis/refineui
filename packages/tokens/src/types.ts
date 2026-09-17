@@ -258,6 +258,21 @@ export type SemanticShadowElevationName =
 export type SemanticShadowElevationTokens = Record<SemanticShadowElevationName, SemanticShadowElevationPair>;
 
 /**
+ * Intent-level elevation roles. Components consume these names rather than
+ * choosing a numbered shadow step, while the mapping remains traceable to the
+ * Foundation elevation scale.
+ */
+export type SemanticElevationName =
+    | "surface"
+    | "raised"
+    | "floating"
+    | "overlay"
+    | "modal"
+    | "toast";
+
+export type SemanticElevationTokens = Record<SemanticElevationName, SemanticShadowElevationPair>;
+
+/**
  * Design tokens for stroke width
  */
 export type StrokeWidthTokens = {

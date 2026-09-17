@@ -10,10 +10,13 @@ import {
     type PointerEvent as ReactPointerEvent,
 } from "react";
 import { createPortal } from "react-dom";
-import { iconSizes, semanticInteraction, spacings } from "@refineui/tokens";
+import { iconSizes, spacings } from "@refineui/tokens";
 import { motionMsToNumber } from "@refineui/utilities/animation";
+import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { WebIcon } from "../../WebIcon";
 import { Button } from "../Button";
+import { componentColorTokens } from "../../tokens/componentColorTokens";
+import { componentTokens } from "../../tokens/componentTokens";
 import { toastStyles } from "./style";
 import type {
     ToastOptions,
@@ -28,7 +31,7 @@ const useIsomorphicLayoutEffect = typeof document !== "undefined" ? useLayoutEff
 
 const ENTER_MS = 20;
 /** Match `--refineui-motion-duration-toast-leave` + buffer for slide-out. */
-const LEAVE_MS = motionMsToNumber(semanticInteraction.duration.toastLeave) + 60;
+const LEAVE_MS = motionMsToNumber(componentTokens.toast.motion.leave) + 60;
 const DEFAULT_DURATION = 4200;
 /** Material-style: one toast at a time by default. */
 const DEFAULT_MAX_TOASTS = 1;
@@ -279,6 +282,13 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(props
             action
         );
 
+    const color = componentColorTokens.toast;
+    const tokenStyle = {
+        backgroundColor: resolveColorTokenValue(color.background),
+        borderColor: resolveColorTokenValue(color.border),
+        color: resolveColorTokenValue(color.message),
+    } as const;
+
     return (
         <div
             ref={ref}
@@ -288,7 +298,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(props
             role={liveRole}
             aria-live={ariaLive}
             {...domProps}
-            style={style}
+            style={{ ...tokenStyle, ...style }}
             className={clsx(toastStyles.card, className)}
         >
             <div data-refineui="toast-icon" className={toastStyles.iconWrap}>

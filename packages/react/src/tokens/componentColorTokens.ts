@@ -149,13 +149,16 @@ export const componentColorTokens = {
     },
     tooltip: {
         default: {
-            background: semanticToken("surfacePopover"),
+            /** Menu / Select floating panel semantic */
+            background: semanticToken("backgroundPrimary"),
             foreground: semanticToken("foregroundPrimary"),
+            border: semanticToken("borderDefault"),
         }
     },
     popover: {
         default: {
-            background: semanticToken("surfacePopover"),
+            /** Menu / Select floating panel semantic */
+            background: semanticToken("backgroundPrimary"),
             foreground: semanticToken("foregroundPrimary"),
             border: semanticToken("borderDefault"),
         },
@@ -334,8 +337,8 @@ export const componentColorTokens = {
             foreground: semanticToken("foregroundOnSuccess"),
         },
         warning: {
-            background: paletteToken("orange500"),
-            foreground: paletteToken("neutralWhite"),
+            background: semanticToken("backgroundWarning"),
+            foreground: semanticToken("foregroundOnWarning"),
         },
         danger: {
             background: semanticToken("backgroundError"),
@@ -404,7 +407,7 @@ export const componentColorTokens = {
         pointStroke: semanticToken("backgroundPrimary"),
         cursor: semanticToken("backgroundSurfaceHover"),
         tooltip: {
-            background: semanticToken("surfacePopover"),
+            background: semanticToken("backgroundPrimary"),
             foreground: semanticToken("foregroundPrimary"),
             muted: semanticToken("foregroundSecondary"),
             border: semanticToken("borderDefault"),
@@ -457,8 +460,10 @@ export const componentColorTokens = {
         },
     },
     toast: {
-        background: semanticToken("surfacePopover"),
+        /** Menu / Select panel semantic — solid, not frosted */
+        background: semanticToken("backgroundPrimary"),
         message: semanticToken("foregroundPrimary"),
+        border: semanticToken("borderDefault"),
         accent: {
             default: semanticToken("foregroundPrimary"),
             success: semanticToken("foregroundSuccess"),
@@ -526,14 +531,15 @@ export const componentColorTokens = {
     },
     menu: {
         panel: {
-            background: semanticToken("backgroundSurface"),
+            /** Matches Menu.style panel classes */
+            background: semanticToken("backgroundPrimary"),
             border: semanticToken("borderDefault"),
         },
         popover: {
             background: "transparent",
         },
         list: {
-            background: semanticToken("backgroundSurface"),
+            background: semanticToken("backgroundPrimary"),
             border: semanticToken("borderDefault"),
         },
         section: semanticToken("foregroundPrimary"),
@@ -637,8 +643,8 @@ export const componentColorTokens = {
     },
     divider: {
         line: semanticToken("borderDefault"),
-        label: paletteToken("primaryBlack"),
-        icon: paletteToken("primaryBlack"),
+        label: semanticToken("foregroundPrimary"),
+        icon: semanticToken("foregroundPrimary"),
     },
     avatar: {
         image: {
