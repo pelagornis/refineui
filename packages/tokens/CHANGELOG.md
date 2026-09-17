@@ -1,5 +1,11 @@
 # @refineui/tokens
 
+## 1.0.2
+
+### Patch Changes
+
+- Skip Segmented Control/Tabs mount animation, align Toast/Tooltip/PopOver with Menu semantic colors, and match Tooltip beak to the PopOver SVG pattern.
+
 ## 1.0.1
 
 ### Patch Changes

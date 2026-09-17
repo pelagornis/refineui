@@ -15,12 +15,11 @@ has its own user-facing change to describe.
 
 ## Release flow
 
-Merging to `main` runs `.github/workflows/release.yml`:
-
-1. Pending changesets → the workflow opens a "chore: version packages" PR that
-   applies the bumps and writes each `CHANGELOG.md`.
-2. Merging that PR → the workflow builds the packages and publishes them to
-   npm via OIDC trusted publishing, with no long-lived token.
+1. Merge to `main` with pending changesets → `.github/workflows/version.yml`
+   opens/updates a "chore: version packages" PR (bumps + `CHANGELOG.md`).
+2. Merge that version PR → versions land on `main`, but nothing is published yet.
+3. Push package tags (`@refineui/<pkg>@<version>`) → `.github/workflows/release.yml`
+   builds and publishes to npm via OIDC trusted publishing.
 
 Each package needs a trusted publisher registered once on npmjs.com (GitHub
 Actions → `pelagornis` / `refineui` / `release.yml`). npm can only attach that
