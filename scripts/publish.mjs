@@ -154,21 +154,56 @@ function pack(pkg, destination) {
 }
 
 /**
+ * npm briefly stages a version before it is readable on the registry. A second
+ * tag-triggered release can race that window and get E409 even though the first
+ * publish already succeeded — treat those conflicts as "already published".
+ *
+ * @param {string} output
+ * @returns {boolean}
+ */
+function isPublishConflictAlreadyPresent(output) {
+  return (
+    /npm error code E409/.test(output) ||
+    /Cannot publish over previously staged version/.test(output) ||
+    /cannot publish over the previously published versions/i.test(output) ||
+    /EPUBLISHCONFLICT/.test(output)
+  );
+}
+
+/**
  * @param {WorkspacePackage} pkg
  * @param {string} tarball
+ * @returns {{ ok: true, alreadyPresent?: boolean }}
  */
 function publish(pkg, tarball) {
   const args = ["publish", tarball, "--access", "public"];
   if (dryRun) args.push("--dry-run");
 
-  const result = spawnSync("npm", args, { cwd: ROOT, stdio: "inherit" });
+  const result = spawnSync("npm", args, {
+    cwd: ROOT,
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"],
+  });
 
   if (result.error) {
     throw new Error(`Cannot run \`npm publish\` for ${pkg.name}: ${result.error.message}`);
   }
-  if (result.status !== 0) {
-    throw new Error(`\`npm publish\` failed for ${pkg.name}@${pkg.version} (exit ${result.status})`);
+
+  const output = `${result.stdout ?? ""}${result.stderr ?? ""}`;
+  if (output) {
+    process.stderr.write(output.endsWith("\n") ? output : `${output}\n`);
   }
+
+  if (result.status === 0) return { ok: true };
+
+  if (isPublishConflictAlreadyPresent(output)) {
+    console.log(
+      `Skipped: ${pkg.name}@${pkg.version} is already staged or published on npm (publish race)`,
+    );
+    return { ok: true, alreadyPresent: true };
+  }
+
+  throw new Error(`\`npm publish\` failed for ${pkg.name}@${pkg.version} (exit ${result.status})`);
 }
 
 /** @param {string} tag */
@@ -196,14 +231,19 @@ async function main() {
         continue;
       }
 
-      publish(pkg, pack(pkg, stagingDir));
-      published += 1;
+      const result = publish(pkg, pack(pkg, stagingDir));
 
       if (dryRun) {
         console.log(`Would publish: ${tag}`);
+        if (!result.alreadyPresent) published += 1;
         continue;
       }
 
+      // Only count / announce tags for versions this run newly published.
+      // alreadyPresent means another tag job won the race — GH release already exists.
+      if (result.alreadyPresent) continue;
+
+      published += 1;
       createGitTag(tag);
       console.log(`New tag: ${tag}`);
     }
