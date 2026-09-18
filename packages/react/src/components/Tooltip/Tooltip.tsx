@@ -1,9 +1,9 @@
 import { clsx } from "clsx";
-import type { ReactElement, ReactNode } from "react";
-import { cloneElement, useId, useRef, useState } from "react";
+import type { ReactNode } from "react";
+import { useId, useRef, useState } from "react";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
-import { getMergeableTriggerChild } from "@refineui/utilities/react";
+import { Slot, getMergeableTriggerChild } from "@refineui/utilities/react";
 import {
     TOOLTIP_BEAK_H,
     TOOLTIP_BEAK_W,
@@ -12,7 +12,7 @@ import {
     tooltipFloatingStyle,
     tooltipStyles,
 } from "./style";
-import type { TooltipProps, TooltipTriggerMergeProps } from "./types";
+import type { TooltipProps } from "./types";
 
 export function Tooltip({
     trigger,
@@ -67,34 +67,22 @@ export function Tooltip({
 
     let triggerNode: ReactNode;
     if (mergeEl != null) {
-        const el = mergeEl as ReactElement<TooltipTriggerMergeProps>;
-        const prevDescribedBy = el.props["aria-describedby"];
-        triggerNode = cloneElement(el, {
-            "aria-describedby":
-                prevDescribedBy && describedBy
-                    ? `${prevDescribedBy} ${describedBy}`
-                    : describedBy ?? prevDescribedBy,
-            onMouseEnter: (e) => {
-                el.props.onMouseEnter?.(e);
-                scheduleShow();
-            },
-            onMouseLeave: (e) => {
-                el.props.onMouseLeave?.(e);
-                hide();
-            },
-            onFocus: (e) => {
-                el.props.onFocus?.(e);
-                scheduleShow();
-            },
-            onBlur: (e) => {
-                el.props.onBlur?.(e);
-                if (!e.currentTarget.contains(e.relatedTarget as Node)) hide();
-            },
-            onKeyDown: (e) => {
-                el.props.onKeyDown?.(e);
-                if (e.key === "Escape") hide();
-            },
-        } as Partial<TooltipTriggerMergeProps>);
+        triggerNode = (
+            <Slot
+                aria-describedby={describedBy}
+                onMouseEnter={scheduleShow}
+                onMouseLeave={hide}
+                onFocus={scheduleShow}
+                onBlur={(event) => {
+                    if (!event.currentTarget.contains(event.relatedTarget as Node)) hide();
+                }}
+                onKeyDown={(event) => {
+                    if (event.key === "Escape") hide();
+                }}
+            >
+                {mergeEl}
+            </Slot>
+        );
     } else {
         triggerNode = (
             <span

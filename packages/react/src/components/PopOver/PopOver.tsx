@@ -1,6 +1,5 @@
 import { clsx } from "clsx";
 import {
-    cloneElement,
     createContext,
     useCallback,
     useContext,
@@ -13,16 +12,14 @@ import {
     type HTMLAttributes,
     type KeyboardEvent,
     type MouseEvent,
-    type ReactElement,
     type ReactNode,
-    type Ref,
 } from "react";
 import { spacings, strokeWidths } from "@refineui/tokens";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentSizes, foundationSizes } from "../../componentSizes";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
-import { composeRefs, getMergeableTriggerChild } from "@refineui/utilities/react";
+import { Slot, getMergeableTriggerChild } from "@refineui/utilities/react";
 import { popoverFloatingClasses, popoverStyles } from "./style";
 import type {
     PopOverProps,
@@ -37,8 +34,6 @@ type TriggerProps = {
     onClick?: (e: MouseEvent<HTMLElement>) => void;
     onKeyDown?: (e: KeyboardEvent<HTMLElement>) => void;
 };
-
-type TriggerElement = ReactElement<TriggerProps> & { ref?: Ref<HTMLElement | null> };
 
 type PopoverContextValue = {
     open: boolean;
@@ -192,27 +187,27 @@ export function PopoverTrigger({ children, className, ...props }: PopoverTrigger
 
     const mergeEl = getMergeableTriggerChild(children);
     if (mergeEl) {
-        const el = mergeEl as unknown as TriggerElement;
         const passthrough = props as TriggerProps & HTMLAttributes<HTMLElement>;
-        const passthroughCn = (props as HTMLAttributes<HTMLElement>).className;
-        return cloneElement(el, {
-            ...props,
-            ref: composeRefs(triggerRef, el.ref),
-            className: clsx(className, passthroughCn, (el.props as HTMLAttributes<HTMLElement>).className),
-            "aria-expanded": open,
-            "aria-haspopup": "dialog" as const,
-            "aria-controls": contentId,
-            onClick: (e: MouseEvent<HTMLElement>) => {
-                passthrough.onClick?.(e as unknown as MouseEvent<HTMLElement>);
-                el.props.onClick?.(e);
-                toggle();
-            },
-            onKeyDown: (e: KeyboardEvent<HTMLElement>) => {
-                passthrough.onKeyDown?.(e as unknown as KeyboardEvent<HTMLElement>);
-                el.props.onKeyDown?.(e);
-                onTriggerKeyDown(e);
-            },
-        } as Partial<TriggerProps>);
+        return (
+            <Slot
+                ref={triggerRef}
+                {...props}
+                className={className}
+                aria-expanded={open}
+                aria-haspopup="dialog"
+                aria-controls={contentId}
+                onClick={(event) => {
+                    passthrough.onClick?.(event);
+                    toggle();
+                }}
+                onKeyDown={(event) => {
+                    passthrough.onKeyDown?.(event);
+                    onTriggerKeyDown(event);
+                }}
+            >
+                {mergeEl}
+            </Slot>
+        );
     }
 
     const passthroughBtn = props as HTMLAttributes<HTMLButtonElement>;

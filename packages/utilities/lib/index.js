@@ -228,6 +228,49 @@ function getMergeableTriggerChild(children) {
   return node;
 }
 
+// src/Slot.tsx
+import {
+  cloneElement,
+  forwardRef,
+  isValidElement as isValidElement2
+} from "react";
+import { Fragment as Fragment2, jsx } from "react/jsx-runtime";
+function mergeProps(slotProps, childProps) {
+  const merged = { ...slotProps };
+  for (const key of Object.keys(childProps)) {
+    if (key === "ref" || key === "children") continue;
+    const slotValue = slotProps[key];
+    const childValue = childProps[key];
+    const isEvent = key.startsWith("on") && typeof slotValue === "function" && typeof childValue === "function";
+    if (key === "className" || key === "aria-describedby") {
+      merged[key] = [slotValue, childValue].filter(Boolean).join(" ");
+    } else if (key === "style") {
+      merged.style = { ...slotValue ?? {}, ...childValue ?? {} };
+    } else if (isEvent) {
+      merged[key] = (event) => {
+        childValue(event);
+        if (!event?.defaultPrevented) slotValue(event);
+      };
+    } else {
+      merged[key] = childValue;
+    }
+  }
+  return merged;
+}
+var Slot = forwardRef(function Slot2({ children, ...slotProps }, forwardedRef) {
+  if (!isValidElement2(children)) {
+    return /* @__PURE__ */ jsx(Fragment2, { children });
+  }
+  const child = children;
+  const childProps = { ...child.props ?? {} };
+  const childRef = child.ref ?? childProps.ref;
+  delete childProps.ref;
+  delete childProps.children;
+  const merged = mergeProps(slotProps, childProps);
+  merged.ref = composeRefs(forwardedRef, childRef);
+  return cloneElement(child, merged);
+});
+
 // src/typography.ts
 function semanticTextToken(name) {
   return { type: "semantic-text", name };
@@ -244,6 +287,7 @@ function isSemanticTextTokenRef(value) {
   return candidate.type === "semantic-text" && typeof candidate.name === "string";
 }
 export {
+  Slot,
   acquireBodyScrollLock,
   ariaAttr,
   buttonProps,
