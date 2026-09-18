@@ -9,7 +9,7 @@ import { removeEmptyFrameHeaders } from './src/expressive-code/removeEmptyFrameH
 const monorepoRoot = fileURLToPath(new URL('..', import.meta.url));
 
 /** Iconography lives in refineui-system-icons — swap when the icons site ships. */
-const ICONOGRAPHY_SITE = 'https://icons.pelagornis.com';
+const ICONOGRAPHY_SITE = 'https://icon.pelagornis.com';
 
 export default defineConfig({
   site: 'https://ui.pelagornis.com',
