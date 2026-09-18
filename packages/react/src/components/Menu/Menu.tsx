@@ -3,14 +3,11 @@ import type {
     CSSProperties,
     Dispatch,
     KeyboardEvent as ReactKeyboardEvent,
-    MouseEvent,
-    ReactElement,
     ReactNode,
     RefObject,
     SetStateAction,
 } from "react";
 import {
-    cloneElement,
     createContext,
     useCallback,
     useContext,
@@ -23,7 +20,7 @@ import {
 import { createPortal } from "react-dom";
 import { iconSizes, semanticInteraction, spacings, zIndex } from "@refineui/tokens";
 import { motionMsToNumber } from "@refineui/utilities/animation";
-import { getMergeableTriggerChild } from "@refineui/utilities/react";
+import { Slot, getMergeableTriggerChild } from "@refineui/utilities/react";
 import { componentSizes } from "../../componentSizes";
 import { WebIcon } from "../../WebIcon";
 import { computeSubmenuPanelPosition, subscribeScrollAndScrollableAncestors } from "../Dropdown/positioning";
@@ -133,15 +130,11 @@ export function MenuTrigger({ children }: MenuTriggerProps) {
 
     const mergeEl = getMergeableTriggerChild(children);
     if (mergeEl) {
-        const el = mergeEl as ReactElement<{ onClick?: (e: MouseEvent<HTMLElement>) => void }>;
-        return cloneElement(el, {
-            "aria-expanded": open,
-            "aria-haspopup": "menu" as const,
-            onClick: (e: MouseEvent<HTMLElement>) => {
-                el.props.onClick?.(e);
-                setOpen(!open);
-            },
-        } as never);
+        return (
+            <Slot aria-expanded={open} aria-haspopup="menu" onClick={() => setOpen(!open)}>
+                {mergeEl}
+            </Slot>
+        );
     }
 
     return (

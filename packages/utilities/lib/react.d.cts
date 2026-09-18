@@ -1,4 +1,5 @@
-import { Ref, ReactNode, ReactElement } from 'react';
+import * as react from 'react';
+import { Ref, ReactNode, ReactElement, HTMLAttributes } from 'react';
 
 /**
  * Root document scroll lock with ref-counting for nested overlays.
@@ -24,4 +25,10 @@ declare const composeRef: typeof composeRefs;
  */
 declare function getMergeableTriggerChild(children: ReactNode): ReactElement | null;
 
-export { acquireBodyScrollLock, composeRef, composeRefs, getMergeableTriggerChild, useComposedRefs };
+interface SlotProps extends Omit<HTMLAttributes<HTMLElement>, "children"> {
+    children?: any;
+}
+/** Merges its props onto the single child. Used for `asChild`. */
+declare const Slot: react.ForwardRefExoticComponent<SlotProps & react.RefAttributes<HTMLElement | null>>;
+
+export { Slot, type SlotProps, acquireBodyScrollLock, composeRef, composeRefs, getMergeableTriggerChild, useComposedRefs };

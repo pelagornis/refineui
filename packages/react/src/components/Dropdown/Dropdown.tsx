@@ -5,14 +5,12 @@ import type {
     HTMLAttributes,
     KeyboardEvent,
     MouseEvent,
-    ReactElement,
     ReactNode,
     Ref,
     RefObject,
     SetStateAction,
 } from "react";
 import {
-    cloneElement,
     createContext,
     useCallback,
     useContext,
@@ -29,7 +27,7 @@ import { componentSizes } from "../../componentSizes";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { WebIcon } from "../../WebIcon";
 import { dropdownStyles } from "./style";
-import { acquireBodyScrollLock, composeRefs, getMergeableTriggerChild } from "@refineui/utilities/react";
+import { Slot, acquireBodyScrollLock, getMergeableTriggerChild } from "@refineui/utilities/react";
 import { ScrollAreaRegion } from "../ScrollArea/ScrollAreaRegion";
 import { RadioInput } from "../Radio/RadioInput";
 import type {
@@ -53,8 +51,6 @@ type TriggerProps = {
     onKeyDown?: (e: KeyboardEvent<HTMLElement>) => void;
     className?: string;
 };
-type TriggerElement = ReactElement<TriggerProps> & { ref?: Ref<HTMLElement | null> };
-
 
 function DropdownCheckboxGlyph({ selected, disabled }: { selected: boolean; disabled?: boolean }) {
     return (
@@ -196,27 +192,27 @@ export function DropdownTrigger({ children, className, ...props }: DropdownTrigg
 
     const mergeEl = getMergeableTriggerChild(children);
     if (mergeEl) {
-        const el = mergeEl as TriggerElement;
         const passthrough = props as TriggerProps & HTMLAttributes<HTMLElement>;
-        const passthroughCn = (props as HTMLAttributes<HTMLElement>).className;
-        return cloneElement(el, {
-            ...props,
-            ref: composeRefs(triggerRef, el.ref),
-            className: clsx(className, passthroughCn, (el.props as HTMLAttributes<HTMLElement>).className),
-            "aria-expanded": open,
-            "aria-haspopup": "menu" as const,
-            "aria-controls": menuId,
-            onClick: (e: MouseEvent<HTMLElement>) => {
-                passthrough.onClick?.(e as unknown as MouseEvent<HTMLElement>);
-                el.props.onClick?.(e);
-                toggle();
-            },
-            onKeyDown: (e: KeyboardEvent<HTMLElement>) => {
-                passthrough.onKeyDown?.(e as unknown as KeyboardEvent<HTMLElement>);
-                el.props.onKeyDown?.(e);
-                onTriggerKeyDown(e);
-            },
-        } as Partial<TriggerProps>);
+        return (
+            <Slot
+                ref={triggerRef}
+                {...props}
+                className={className}
+                aria-expanded={open}
+                aria-haspopup="menu"
+                aria-controls={menuId}
+                onClick={(event) => {
+                    passthrough.onClick?.(event);
+                    toggle();
+                }}
+                onKeyDown={(event) => {
+                    passthrough.onKeyDown?.(event);
+                    onTriggerKeyDown(event);
+                }}
+            >
+                {mergeEl}
+            </Slot>
+        );
     }
 
     const passthroughBtn = props as HTMLAttributes<HTMLButtonElement>;

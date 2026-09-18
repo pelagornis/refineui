@@ -608,3 +608,34 @@ export {
     type ChartTooltipProps,
     type ChartYAxisLabelsProps,
 } from "./components/Chart";
+
+export { Slot, type SlotProps } from "./components/Slot";
+export {
+    Collapsible,
+    CollapsibleRoot,
+    CollapsibleTrigger,
+    CollapsibleContent,
+    type CollapsibleRootProps,
+    type CollapsibleTriggerProps,
+    type CollapsibleContentProps,
+} from "./components/Collapsible";
+export {
+    ContextMenu,
+    ContextMenuRoot,
+    ContextMenuTrigger,
+    ContextMenuPortal,
+    ContextMenuContent,
+    ContextMenuItem,
+    ContextMenuSection,
+    ContextMenuSeparator,
+    ContextMenuSub,
+    ContextMenuSubTrigger,
+    ContextMenuSubContent,
+    type ContextMenuRootProps,
+    type ContextMenuTriggerProps,
+    type ContextMenuContentProps,
+    type ContextMenuItemProps,
+    type ContextMenuSelectEvent,
+    type ContextMenuSubTriggerProps,
+    type ContextMenuSubContentProps,
+} from "./components/ContextMenu";

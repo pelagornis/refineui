@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CSSProperties, Ref, ReactNode, ReactElement } from 'react';
+import { CSSProperties, Ref, ReactNode, ReactElement, HTMLAttributes } from 'react';
 
 declare const motionDurations: {
     readonly instant: "var(--refineui-motion-duration-instant)";
@@ -115,6 +115,12 @@ declare const composeRef: typeof composeRefs;
  */
 declare function getMergeableTriggerChild(children: ReactNode): ReactElement | null;
 
+interface SlotProps extends Omit<HTMLAttributes<HTMLElement>, "children"> {
+    children?: any;
+}
+/** Merges its props onto the single child. Used for `asChild`. */
+declare const Slot: React.ForwardRefExoticComponent<SlotProps & React.RefAttributes<HTMLElement | null>>;
+
 type SemanticTextTokenRef<TName extends string = string> = Readonly<{
     type: "semantic-text";
     name: TName;
@@ -129,4 +135,4 @@ declare function foundationTypographyToken<TName extends string>(name: TName): F
 declare function foundationTypographyUtilityClass(foundationKey: string): string;
 declare function isSemanticTextTokenRef(value: unknown): value is SemanticTextTokenRef;
 
-export { type AnimationStyleOptions, type ColorTokenRef, type ColorTokenValue, type FoundationTypographyTokenRef, type MotionDuration, type MotionEasing, type MotionPresetName, type PaletteColorTokenRef, type SemanticColorTokenRef, type SemanticTextTokenRef, type TransitionStyleOptions, acquireBodyScrollLock, ariaAttr, buttonProps, composeRef, composeRefs, createAnimationStyle, createTransitionStyle, dataAttr, elementProps, foundationTypographyToken, foundationTypographyUtilityClass, getMergeableTriggerChild, getReducedMotionQuery, hexToRgba, imgProps, inputProps, isColorTokenRef, isSemanticTextTokenRef, labelProps, motionDurations, motionEasings, motionKeyframesCss, motionMsToNumber, motionPresets, paletteColorCssVar, paletteColorToken, resolveColorToken, resolveColorTokenValue, semanticColorCssVar, semanticColorToken, semanticTextToken, shadowWithColor, toKebab, useComposedRefs };
+export { type AnimationStyleOptions, type ColorTokenRef, type ColorTokenValue, type FoundationTypographyTokenRef, type MotionDuration, type MotionEasing, type MotionPresetName, type PaletteColorTokenRef, type SemanticColorTokenRef, type SemanticTextTokenRef, Slot, type SlotProps, type TransitionStyleOptions, acquireBodyScrollLock, ariaAttr, buttonProps, composeRef, composeRefs, createAnimationStyle, createTransitionStyle, dataAttr, elementProps, foundationTypographyToken, foundationTypographyUtilityClass, getMergeableTriggerChild, getReducedMotionQuery, hexToRgba, imgProps, inputProps, isColorTokenRef, isSemanticTextTokenRef, labelProps, motionDurations, motionEasings, motionKeyframesCss, motionMsToNumber, motionPresets, paletteColorCssVar, paletteColorToken, resolveColorToken, resolveColorTokenValue, semanticColorCssVar, semanticColorToken, semanticTextToken, shadowWithColor, toKebab, useComposedRefs };
