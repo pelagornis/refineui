@@ -87,8 +87,6 @@ export type SelectArrowProps = HTMLAttributes<HTMLSpanElement>;
 export type SelectScrollUpButtonProps = HTMLAttributes<HTMLDivElement>;
 export type SelectScrollDownButtonProps = HTMLAttributes<HTMLDivElement>;
 export type SelectPortalProps = { children?: ReactNode; container?: HTMLElement | null };
-export type SelectSectionProps = HTMLAttributes<HTMLDivElement>;
-
 export interface SelectItemRegistration {
     value: string;
     disabled: boolean;

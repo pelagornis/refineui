@@ -11,7 +11,7 @@ export const CHART_PLOT_PADDING_TOP = parseFloat(spacings.sizeMedium);
 export const CHART_PLOT_PADDING_BOTTOM = parseFloat(spacings.sizeXXSmall);
 export const CHART_PLOT_PADDING_X = parseFloat(spacings.sizeMedium);
 
-export const CHART_BAR_RADIUS = parseFloat(borderRadii.roundedMedium);
+export const CHART_BAR_RADIUS = parseFloat(borderRadii.roundedXLarge);
 /** Slim bars with gutter — no px cap; band fill is the only width rule. */
 export const CHART_BAR_BAND_FILL = 0.5;
 
@@ -209,7 +209,7 @@ export function monotoneAreaPath(coords: ChartPoint[], baselineY: number) {
     return `${monotoneLinePath(coords)} L ${last.x} ${baselineY} L ${first.x} ${baselineY} Z`;
 }
 
-/** Bar path with rounded top corners only — shadcn `radius={[4,4,0,0]}`. */
+/** Bar path with rounded top corners only. */
 export function barPathTopRounded(x: number, y: number, width: number, height: number, radius: number) {
     const r = Math.min(radius, width / 2, height);
     if (r <= 0 || height <= 0) {

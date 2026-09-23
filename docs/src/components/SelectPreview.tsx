@@ -4,7 +4,7 @@ import {
     SelectGroup,
     SelectItem,
     SelectPortal,
-    SelectSection,
+    SelectLabel,
     SelectTrigger,
     SelectValue,
 } from "@refineui/react";
@@ -54,7 +54,7 @@ function menu() {
                 <SelectGroup>
                     {groupedOptions.map((group, groupIndex) => (
                         <div key={group.section}>
-                            <SelectSection>{group.section}</SelectSection>
+                            <SelectLabel>{group.section}</SelectLabel>
                             {group.items.map((label, itemIndex) => (
                                 <SelectItem
                                     key={`${group.section}-${label}`}

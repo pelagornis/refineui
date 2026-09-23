@@ -11,6 +11,7 @@ import {
     type CSSProperties,
     type HTMLAttributes,
     type MouseEvent,
+    type ReactNode,
 } from "react";
 import { clsx } from "clsx";
 import { semanticInteraction } from "@refineui/tokens";
@@ -28,7 +29,7 @@ const CollapsibleContext = createContext<CollapsibleContextValue | null>(null);
 
 function useCollapsible() {
     const value = useContext(CollapsibleContext);
-    if (!value) throw new Error("Collapsible parts must be used inside Collapsible.Root");
+    if (!value) throw new Error("Collapsible parts must be used within Collapsible");
     return value;
 }
 
@@ -44,15 +45,16 @@ function usePrefersReducedMotion() {
     return reduce;
 }
 
-export interface CollapsibleRootProps extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
+export interface CollapsibleProps extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
     open?: boolean;
     defaultOpen?: boolean;
     onOpenChange?: (open: boolean) => void;
     asChild?: boolean;
-    children?: any;
+    children?: ReactNode;
 }
 
-export const CollapsibleRoot = forwardRef<HTMLDivElement, CollapsibleRootProps>(function CollapsibleRoot(
+/** Root — same compound pattern as Accordion / Dialog (`Collapsible` + `CollapsibleTrigger`). */
+export const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(function Collapsible(
     { open: openProp, defaultOpen = false, onOpenChange, asChild = false, className, children, ...props },
     ref,
 ) {
@@ -96,89 +98,81 @@ export interface CollapsibleTriggerProps extends ButtonHTMLAttributes<HTMLButton
     asChild?: boolean;
 }
 
-export const CollapsibleTrigger = forwardRef<HTMLButtonElement, CollapsibleTriggerProps>(function CollapsibleTrigger(
-    { asChild = false, onClick, className, children, ...props },
-    ref,
-) {
-    const { open, toggle, contentId, triggerId } = useCollapsible();
-    const shared = {
-        ...props,
-        ref,
-        id: triggerId,
-        "aria-expanded": open,
-        "aria-controls": contentId,
-        "data-state": open ? "open" : "closed",
-        "data-refineui": "collapsible-trigger",
-        className,
-        onClick: (event: MouseEvent<HTMLButtonElement>) => {
-            onClick?.(event);
-            if (!event.defaultPrevented) toggle();
-        },
-    };
+export const CollapsibleTrigger = forwardRef<HTMLButtonElement, CollapsibleTriggerProps>(
+    function CollapsibleTrigger({ asChild = false, onClick, className, children, ...props }, ref) {
+        const { open, toggle, contentId, triggerId } = useCollapsible();
+        const shared = {
+            ...props,
+            ref,
+            id: triggerId,
+            "aria-expanded": open,
+            "aria-controls": contentId,
+            "data-state": open ? "open" : "closed",
+            "data-refineui": "collapsible-trigger",
+            className,
+            onClick: (event: MouseEvent<HTMLButtonElement>) => {
+                onClick?.(event);
+                if (!event.defaultPrevented) toggle();
+            },
+        };
 
-    if (asChild) return <Slot {...shared}>{children}</Slot>;
-    return (
-        <button {...shared} type="button">
-            {children}
-        </button>
-    );
-});
+        if (asChild) return <Slot {...shared}>{children}</Slot>;
+        return (
+            <button {...shared} type="button">
+                {children}
+            </button>
+        );
+    },
+);
 
 export interface CollapsibleContentProps extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
-    children?: any;
+    children?: ReactNode;
 }
 
-export const CollapsibleContent = forwardRef<HTMLDivElement, CollapsibleContentProps>(function CollapsibleContent(
-    { className, children, style, ...props },
-    ref,
-) {
-    const { open, contentId, triggerId, reduceMotion } = useCollapsible();
-    const innerRef = useRef<HTMLDivElement | null>(null);
-    const [size, setSize] = useState({ height: 0, width: 0 });
+export const CollapsibleContent = forwardRef<HTMLDivElement, CollapsibleContentProps>(
+    function CollapsibleContent({ className, children, style, ...props }, ref) {
+        const { open, contentId, triggerId, reduceMotion } = useCollapsible();
+        const innerRef = useRef<HTMLDivElement | null>(null);
+        const [size, setSize] = useState({ height: 0, width: 0 });
 
-    useLayoutEffect(() => {
-        const node = innerRef.current;
-        if (!node) return;
-        const measure = () => {
-            setSize({ height: node.scrollHeight, width: node.scrollWidth });
-        };
-        measure();
-        const observer = new ResizeObserver(measure);
-        observer.observe(node);
-        return () => observer.disconnect();
-    }, [children, open]);
+        useLayoutEffect(() => {
+            const node = innerRef.current;
+            if (!node) return;
+            const measure = () => {
+                setSize({ height: node.scrollHeight, width: node.scrollWidth });
+            };
+            measure();
+            const observer = new ResizeObserver(measure);
+            observer.observe(node);
+            return () => observer.disconnect();
+        }, [children, open]);
 
-    const clipStyle = {
-        ["--refineui-collapsible-content-height" as string]: `${size.height}px`,
-        ["--refineui-collapsible-content-width" as string]: `${size.width}px`,
-        height: open ? size.height : 0,
-        overflow: "hidden",
-        transition: reduceMotion
-            ? undefined
-            : `height ${semanticInteraction.duration.panel} ${semanticInteraction.easing.panel}`,
-    } as CSSProperties;
+        const clipStyle = {
+            ["--refineui-collapsible-content-height" as string]: `${size.height}px`,
+            ["--refineui-collapsible-content-width" as string]: `${size.width}px`,
+            height: open ? size.height : 0,
+            overflow: "hidden",
+            transition: reduceMotion
+                ? undefined
+                : `height ${semanticInteraction.duration.panel} ${semanticInteraction.easing.panel}`,
+        } as CSSProperties;
 
-    return (
-        <div
-            {...props}
-            ref={ref}
-            id={contentId}
-            role="region"
-            aria-labelledby={triggerId}
-            aria-hidden={!open}
-            data-state={open ? "open" : "closed"}
-            data-refineui="collapsible-content"
-            style={clipStyle}
-        >
-            <div ref={innerRef} className={clsx(className)} style={style}>
-                {children}
+        return (
+            <div
+                {...props}
+                ref={ref}
+                id={contentId}
+                role="region"
+                aria-labelledby={triggerId}
+                aria-hidden={!open}
+                data-state={open ? "open" : "closed"}
+                data-refineui="collapsible-content"
+                style={clipStyle}
+            >
+                <div ref={innerRef} className={clsx(className)} style={style}>
+                    {children}
+                </div>
             </div>
-        </div>
-    );
-});
-
-export const Collapsible = Object.assign(CollapsibleRoot, {
-    Root: CollapsibleRoot,
-    Trigger: CollapsibleTrigger,
-    Content: CollapsibleContent,
-});
+        );
+    },
+);

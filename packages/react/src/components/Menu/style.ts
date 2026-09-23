@@ -5,15 +5,15 @@ import { componentTextClass } from "../../typography";
 export const menuStyles = {
     /** Panel chrome — Web Kit Menu `633:4268` (fill matches Dropdown elevated panel for contrast on docs) */
     panel:
-        "box-border flex w-refineui-menu-panel-width flex-col gap-px overflow-hidden rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xx-small shadow-refineui-2",
+        "box-border flex w-refineui-menu-panel-width flex-col gap-px overflow-hidden rounded-refineui-xx-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xx-small shadow-refineui-2",
     root: "relative inline-flex items-center leading-none",
     triggerFallback: "cursor-pointer border-none bg-transparent p-0 font-inherit text-inherit",
     /** Portal shell — position/z-index from `MenuPopover` fixed style */
     popover: "z-refineui-messages",
     list:
-        "box-border flex w-full min-w-refineui-menu-panel-width flex-col gap-px overflow-hidden rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xx-small shadow-refineui-2 outline-none",
+        "box-border flex w-full min-w-refineui-menu-panel-width flex-col gap-px overflow-hidden rounded-refineui-xx-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xx-small shadow-refineui-2 outline-none",
     subPanel:
-        "box-border flex w-refineui-menu-panel-width min-w-refineui-menu-panel-width flex-col gap-px overflow-hidden rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xx-small shadow-refineui-2 outline-none",
+        "box-border flex w-refineui-menu-panel-width min-w-refineui-menu-panel-width flex-col gap-px overflow-hidden rounded-refineui-xx-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xx-small shadow-refineui-2 outline-none",
     section: "flex w-full items-center overflow-hidden px-refineui-size-x-small py-refineui-size-x-small",
     sectionText: clsx(
         componentTextClass(componentTypographyTokens.menu.section),

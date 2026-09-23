@@ -1,5 +1,11 @@
 import { iconSizes } from "@refineui/tokens";
-import { Button, Collapsible, WebIcon } from "@refineui/react";
+import {
+    Button,
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+    WebIcon,
+} from "@refineui/react";
 import { accordionItemOpenClass, contentTypo, triggerTypo } from "../../../packages/react/src/components/Accordion/style";
 import { Look, Looks } from "./PreviewFrame";
 
@@ -22,24 +28,24 @@ export default function CollapsiblePreview() {
     return (
         <Looks>
             <Look>
-                <Collapsible.Root
+                <Collapsible
                     defaultOpen
                     className="flex w-full max-w-sm flex-col gap-refineui-size-small text-refineui-alias-foreground-primary"
                     style={{ width: 350 }}
                 >
                     <div className="flex items-center justify-between gap-refineui-size-large px-refineui-size-large">
                         <h4 className={triggerTypo.md}>Order #4189</h4>
-                        <Collapsible.Trigger asChild>
+                        <CollapsibleTrigger asChild>
                             <Button variant="ghost" layout="icon" size="sm" aria-label="Toggle details">
                                 <ToggleGlyph />
                             </Button>
-                        </Collapsible.Trigger>
+                        </CollapsibleTrigger>
                     </div>
                     <div className={`${card} flex-row items-center justify-between`}>
                         <span className={`${contentTypo.md} text-refineui-alias-foreground-secondary`}>Status</span>
                         <span className={contentTypo.md}>Shipped</span>
                     </div>
-                    <Collapsible.Content>
+                    <CollapsibleContent>
                         <div className="flex flex-col gap-refineui-size-small">
                             <div className={card}>
                                 <p className={contentTypo.md}>Shipping address</p>
@@ -54,8 +60,8 @@ export default function CollapsiblePreview() {
                                 </p>
                             </div>
                         </div>
-                    </Collapsible.Content>
-                </Collapsible.Root>
+                    </CollapsibleContent>
+                </Collapsible>
             </Look>
         </Looks>
     );

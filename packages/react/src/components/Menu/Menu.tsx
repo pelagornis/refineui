@@ -32,7 +32,7 @@ import type {
     MenuPopoverProps,
     MenuPositioning,
     MenuProps,
-    MenuSectionProps,
+    MenuLabelProps,
     MenuSubContentProps,
     MenuSubTriggerProps,
 } from "./types";
@@ -241,11 +241,11 @@ export function MenuList({ className, ...props }: MenuListProps) {
     );
 }
 
-/** Web Kit `Menu / Section` (`633:4258`) */
-export function MenuSection({ className, children, ...props }: MenuSectionProps) {
+/** Group heading — same role as DropdownLabel / SelectLabel. */
+export function MenuLabel({ className, children, ...props }: MenuLabelProps) {
     return (
         <div
-            data-refineui="menu-section"
+            data-refineui="menu-label"
             className={clsx(menuStyles.section, className)}
             {...props}
         >

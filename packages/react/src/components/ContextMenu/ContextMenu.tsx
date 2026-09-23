@@ -53,7 +53,7 @@ const SubContext = createContext<SubContextValue | null>(null);
 
 function useMenu() {
     const value = useContext(MenuContext);
-    if (!value) throw new Error("Context menu parts must be used inside ContextMenu.Root");
+    if (!value) throw new Error("Context menu parts must be used within ContextMenu");
     return value;
 }
 
@@ -69,14 +69,14 @@ function placeInView(element: HTMLElement, x: number, y: number) {
     element.style.top = `${top}px`;
 }
 
-export interface ContextMenuRootProps {
+export interface ContextMenuProps {
     modal?: boolean;
     onOpenChange?: (open: boolean) => void;
     children?: ReactNode;
     className?: string;
 }
 
-export function ContextMenuRoot({ modal = true, onOpenChange, children }: ContextMenuRootProps) {
+export function ContextMenu({ modal = true, onOpenChange, children }: ContextMenuProps) {
     void modal;
     const [open, setOpen] = useState(false);
     const [point, setPoint] = useState<Point>({ x: 0, y: 0 });
@@ -334,9 +334,9 @@ export const ContextMenuSeparator = forwardRef<HTMLDivElement, HTMLAttributes<HT
     },
 );
 
-export function ContextMenuSection({ className, children, ...props }: HTMLAttributes<HTMLDivElement>) {
+export function ContextMenuLabel({ className, children, ...props }: HTMLAttributes<HTMLDivElement>) {
     return (
-        <div data-refineui="menu-section" className={clsx(menuStyles.section, className)} {...props}>
+        <div data-refineui="menu-label" className={clsx(menuStyles.section, className)} {...props}>
             <span className={menuStyles.sectionText}>{children}</span>
         </div>
     );
@@ -371,7 +371,7 @@ export function ContextMenuSub({ children }: { children?: ReactNode }) {
 
 function useSub() {
     const value = useContext(SubContext);
-    if (!value) throw new Error("ContextMenu.SubTrigger must be used inside ContextMenu.Sub");
+    if (!value) throw new Error("ContextMenuSubTrigger must be used within ContextMenuSub");
     return value;
 }
 
@@ -512,16 +512,3 @@ export const ContextMenuSubContent = forwardRef<HTMLDivElement, ContextMenuSubCo
         );
     },
 );
-
-export const ContextMenu = Object.assign(ContextMenuRoot, {
-    Root: ContextMenuRoot,
-    Trigger: ContextMenuTrigger,
-    Portal: ContextMenuPortal,
-    Content: ContextMenuContent,
-    Item: ContextMenuItem,
-    Section: ContextMenuSection,
-    Separator: ContextMenuSeparator,
-    Sub: ContextMenuSub,
-    SubTrigger: ContextMenuSubTrigger,
-    SubContent: ContextMenuSubContent,
-});

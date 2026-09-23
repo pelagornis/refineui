@@ -28,7 +28,7 @@ import PackageInstall from "../../../components/PackageInstall.mdx";
 ## Usage
 
 ```tsx
-import { Menu, MenuPopover, MenuList, MenuItem, MenuDivider, MenuSection } from "@refineui/react";
+import { Menu, MenuPopover, MenuList, MenuItem, MenuDivider, MenuLabel, MenuSubTrigger, MenuSubContent } from "@refineui/react";
 
 <Menu>
   <MenuPopover>
@@ -50,20 +50,19 @@ import { Menu, MenuPopover, MenuList, MenuItem, MenuDivider, MenuSection } from 
 <Menu>
   <MenuPopover>
     <MenuList>
-      <MenuSection>
-        <MenuItem
-          startIcon={<Icon />}
-          endIcon={<Badge />}
-          description="Description text"
-          shortcut="⌘N"
-        >
-          Menu Item
-        </MenuItem>
-        <MenuSubTrigger>Submenu</MenuSubTrigger>
-        <MenuSubContent>
-          <MenuItem>Submenu Item</MenuItem>
-        </MenuSubContent>
-      </MenuSection>
+      <MenuLabel>File</MenuLabel>
+      <MenuItem
+        startIcon={<Icon />}
+        endIcon={<Badge />}
+        description="Description text"
+        shortcut="⌘N"
+      >
+        Menu Item
+      </MenuItem>
+      <MenuSubTrigger>Submenu</MenuSubTrigger>
+      <MenuSubContent>
+        <MenuItem>Submenu Item</MenuItem>
+      </MenuSubContent>
     </MenuList>
   </MenuPopover>
 </Menu>
@@ -103,9 +102,9 @@ List container for menu items.
     ]}
   />
 </div>
-### MenuSection
+### MenuLabel
 
-Groups related menu items.
+Heading label for a group of related items.
 
 ### MenuDivider
 

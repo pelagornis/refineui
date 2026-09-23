@@ -16,27 +16,37 @@ import PackageInstall from "../../../components/PackageInstall.mdx";
 ## Usage
 
 ```tsx
-import { ContextMenu } from "@refineui/react";
+import {
+  ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuPortal,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuSub,
+  ContextMenuSubTrigger,
+  ContextMenuSubContent,
+} from "@refineui/react";
 
-<ContextMenu.Root>
-  <ContextMenu.Trigger asChild>
+<ContextMenu>
+  <ContextMenuTrigger asChild>
     <div>Right click</div>
-  </ContextMenu.Trigger>
-  <ContextMenu.Portal>
-    <ContextMenu.Content>
-      <ContextMenu.Item onSelect={() => copy()}>Copy</ContextMenu.Item>
-      <ContextMenu.Separator />
-      <ContextMenu.Sub>
-        <ContextMenu.SubTrigger>More</ContextMenu.SubTrigger>
-        <ContextMenu.Portal>
-          <ContextMenu.SubContent>
-            <ContextMenu.Item>Rename</ContextMenu.Item>
-          </ContextMenu.SubContent>
-        </ContextMenu.Portal>
-      </ContextMenu.Sub>
-    </ContextMenu.Content>
-  </ContextMenu.Portal>
-</ContextMenu.Root>
+  </ContextMenuTrigger>
+  <ContextMenuPortal>
+    <ContextMenuContent>
+      <ContextMenuItem onSelect={() => copy()}>Copy</ContextMenuItem>
+      <ContextMenuSeparator />
+      <ContextMenuSub>
+        <ContextMenuSubTrigger>More</ContextMenuSubTrigger>
+        <ContextMenuPortal>
+          <ContextMenuSubContent>
+            <ContextMenuItem>Rename</ContextMenuItem>
+          </ContextMenuSubContent>
+        </ContextMenuPortal>
+      </ContextMenuSub>
+    </ContextMenuContent>
+  </ContextMenuPortal>
+</ContextMenu>
 ```
 
 `onSelect` receives an event. Call `preventDefault()` on it to keep the menu open. Disabled items do not select.

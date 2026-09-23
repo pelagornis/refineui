@@ -10,7 +10,7 @@ const COMMAND_LIST_MAX_HEIGHT = `min(60vh, ${foundationSizes.foundationSize3200}
 export const commandStyles = {
     root: clsx(
         "flex w-full flex-col overflow-hidden outline-none",
-        "rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default",
+        "rounded-refineui-xx-large border-refineui-hairline border-refineui-alias-border-default",
         "bg-refineui-alias-background-primary text-refineui-alias-foreground-primary",
         "shadow-refineui-2",
     ),

@@ -3,10 +3,10 @@
  * Used by canvas Vite aliases so the full @refineui/react graph is not typechecked.
  */
 export { Slot, type SlotProps } from "./components/Slot";
-export { Collapsible, type CollapsibleRootProps, type CollapsibleTriggerProps, type CollapsibleContentProps } from "./components/Collapsible";
+export { Collapsible, type CollapsibleProps, type CollapsibleTriggerProps, type CollapsibleContentProps } from "./components/Collapsible";
 export {
     ContextMenu,
-    type ContextMenuRootProps,
+    type ContextMenuProps,
     type ContextMenuTriggerProps,
     type ContextMenuContentProps,
     type ContextMenuItemProps,

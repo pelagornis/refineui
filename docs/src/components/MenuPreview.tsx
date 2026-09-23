@@ -4,9 +4,9 @@ import {
     Menu,
     MenuDivider,
     MenuItem,
+    MenuLabel,
     MenuList,
     MenuPopover,
-    MenuSection,
     MenuTrigger,
     WebIcon,
 } from "@refineui/react";
@@ -28,7 +28,7 @@ export default function MenuPreview() {
                     </MenuTrigger>
                     <MenuPopover>
                         <MenuList>
-                            <MenuSection>File</MenuSection>
+                            <MenuLabel>File</MenuLabel>
                             <MenuItem startIcon={<MenuGlyph name="add" />} shortcut="⌘N">
                                 New
                             </MenuItem>

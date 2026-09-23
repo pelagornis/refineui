@@ -16,14 +16,14 @@ import PackageInstall from "../../../components/PackageInstall.mdx";
 ## Usage
 
 ```tsx
-import { Collapsible } from "@refineui/react";
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@refineui/react";
 
-<Collapsible.Root defaultOpen>
-  <Collapsible.Trigger>Details</Collapsible.Trigger>
-  <Collapsible.Content>
+<Collapsible defaultOpen>
+  <CollapsibleTrigger>Details</CollapsibleTrigger>
+  <CollapsibleContent>
     Hidden until the trigger opens it.
-  </Collapsible.Content>
-</Collapsible.Root>
+  </CollapsibleContent>
+</Collapsible>
 ```
 
-`open` and `onOpenChange` make it controlled. `Collapsible.Trigger` accepts `asChild` and merges onto its child. Closed content stays mounted and is hidden.
+`open` and `onOpenChange` make it controlled. `CollapsibleTrigger` accepts `asChild` and merges onto its child. Closed content stays mounted and is hidden.

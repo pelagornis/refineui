@@ -28,7 +28,7 @@ import PackageInstall from "../../../../components/PackageInstall.mdx";
 ## 사용법
 
 ```tsx
-import { Menu, MenuPopover, MenuList, MenuItem, MenuDivider, MenuSection } from "@refineui/react";
+import { Menu, MenuPopover, MenuList, MenuItem, MenuDivider, MenuLabel, MenuSubTrigger, MenuSubContent } from "@refineui/react";
 
 <Menu>
   <MenuPopover>
@@ -50,20 +50,19 @@ import { Menu, MenuPopover, MenuList, MenuItem, MenuDivider, MenuSection } from 
 <Menu>
   <MenuPopover>
     <MenuList>
-      <MenuSection>
-        <MenuItem
-          startIcon={<Icon />}
-          endIcon={<Badge />}
-          description="Description text"
-          shortcut="⌘N"
-        >
-          Menu Item
-        </MenuItem>
-        <MenuSubTrigger>Submenu</MenuSubTrigger>
-        <MenuSubContent>
-          <MenuItem>Submenu Item</MenuItem>
-        </MenuSubContent>
-      </MenuSection>
+      <MenuLabel>File</MenuLabel>
+      <MenuItem
+        startIcon={<Icon />}
+        endIcon={<Badge />}
+        description="Description text"
+        shortcut="⌘N"
+      >
+        Menu Item
+      </MenuItem>
+      <MenuSubTrigger>Submenu</MenuSubTrigger>
+      <MenuSubContent>
+        <MenuItem>Submenu Item</MenuItem>
+      </MenuSubContent>
     </MenuList>
   </MenuPopover>
 </Menu>
@@ -103,9 +102,9 @@ import { Menu, MenuPopover, MenuList, MenuItem, MenuDivider, MenuSection } from 
     ]}
   />
 </div>
-### MenuSection
+### MenuLabel
 
-관련 메뉴 항목을 그룹화합니다.
+관련 항목 그룹의 헤딩 라벨.
 
 ### MenuDivider
 
@@ -128,4 +127,3 @@ import { Menu, MenuPopover, MenuList, MenuItem, MenuDivider, MenuSection } from 
 ### MenuSubContent
 
 서브메뉴 패널.
-

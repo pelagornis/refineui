@@ -1,6 +1,18 @@
-import { componentSizes, iconSizes } from "@refineui/tokens";
-import { Button, ContextMenu, WebIcon } from "@refineui/react";
-import { menuStyles } from "../../../packages/react/src/components/Menu/style";
+import { iconSizes } from "@refineui/tokens";
+import {
+    Button,
+    ContextMenu,
+    ContextMenuContent,
+    ContextMenuItem,
+    ContextMenuLabel,
+    ContextMenuPortal,
+    ContextMenuSeparator,
+    ContextMenuSub,
+    ContextMenuSubContent,
+    ContextMenuSubTrigger,
+    ContextMenuTrigger,
+    WebIcon,
+} from "@refineui/react";
 import { Look, Looks } from "./PreviewFrame";
 
 function MenuGlyph({ name }: { name: string }) {
@@ -10,20 +22,20 @@ function MenuGlyph({ name }: { name: string }) {
 function MenuItems() {
     return (
         <>
-            <ContextMenu.Section>File</ContextMenu.Section>
-            <ContextMenu.Item startIcon={<MenuGlyph name="add" />} shortcut="⌘N">
+            <ContextMenuLabel>File</ContextMenuLabel>
+            <ContextMenuItem startIcon={<MenuGlyph name="add" />} shortcut="⌘N">
                 New
-            </ContextMenu.Item>
-            <ContextMenu.Item startIcon={<MenuGlyph name="folder-open" />} shortcut="⌘O">
+            </ContextMenuItem>
+            <ContextMenuItem startIcon={<MenuGlyph name="folder-open" />} shortcut="⌘O">
                 Open…
-            </ContextMenu.Item>
-            <ContextMenu.Separator />
-            <ContextMenu.Item startIcon={<MenuGlyph name="copy" />} shortcut="⌘C">
+            </ContextMenuItem>
+            <ContextMenuSeparator />
+            <ContextMenuItem startIcon={<MenuGlyph name="copy" />} shortcut="⌘C">
                 Copy
-            </ContextMenu.Item>
-            <ContextMenu.Item startIcon={<MenuGlyph name="delete" />} shortcut="⌘⌫">
+            </ContextMenuItem>
+            <ContextMenuItem startIcon={<MenuGlyph name="delete" />} shortcut="⌘⌫">
                 Delete
-            </ContextMenu.Item>
+            </ContextMenuItem>
         </>
     );
 }
@@ -32,39 +44,28 @@ export default function ContextMenuPreview() {
     return (
         <Looks>
             <Look>
-                <div className="flex flex-wrap items-start gap-8">
-                    <ContextMenu.Root>
-                        <div
-                            data-refineui="menu"
-                            className={menuStyles.list}
-                            style={{ width: componentSizes.menuPanelWidth }}
-                        >
+                <ContextMenu>
+                    <ContextMenuTrigger asChild>
+                        <Button type="button" variant="secondary">
+                            Right click
+                        </Button>
+                    </ContextMenuTrigger>
+                    <ContextMenuPortal>
+                        <ContextMenuContent>
                             <MenuItems />
-                        </div>
-                    </ContextMenu.Root>
-                    <ContextMenu.Root>
-                        <ContextMenu.Trigger asChild>
-                            <Button type="button" variant="secondary">
-                                Right click
-                            </Button>
-                        </ContextMenu.Trigger>
-                        <ContextMenu.Portal>
-                            <ContextMenu.Content>
-                                <MenuItems />
-                                <ContextMenu.Separator />
-                                <ContextMenu.Sub>
-                                    <ContextMenu.SubTrigger>More</ContextMenu.SubTrigger>
-                                    <ContextMenu.Portal>
-                                        <ContextMenu.SubContent>
-                                            <ContextMenu.Item>Rename</ContextMenu.Item>
-                                            <ContextMenu.Item>Move</ContextMenu.Item>
-                                        </ContextMenu.SubContent>
-                                    </ContextMenu.Portal>
-                                </ContextMenu.Sub>
-                            </ContextMenu.Content>
-                        </ContextMenu.Portal>
-                    </ContextMenu.Root>
-                </div>
+                            <ContextMenuSeparator />
+                            <ContextMenuSub>
+                                <ContextMenuSubTrigger>More</ContextMenuSubTrigger>
+                                <ContextMenuPortal>
+                                    <ContextMenuSubContent>
+                                        <ContextMenuItem>Rename</ContextMenuItem>
+                                        <ContextMenuItem>Move</ContextMenuItem>
+                                    </ContextMenuSubContent>
+                                </ContextMenuPortal>
+                            </ContextMenuSub>
+                        </ContextMenuContent>
+                    </ContextMenuPortal>
+                </ContextMenu>
             </Look>
         </Looks>
     );

@@ -2,6 +2,7 @@ import { clsx } from "clsx";
 import { forwardRef } from "react";
 import { iconSizes } from "@refineui/tokens";
 import { WebIcon } from "../../WebIcon";
+import { Button } from "../Button";
 import { breadcrumbStyles } from "./style";
 import type {
     BreadcrumbEllipsisProps,
@@ -91,50 +92,47 @@ export function BreadcrumbSeparator({ children, className, ...props }: Breadcrum
     );
 }
 
+function EllipsisIcon() {
+    return (
+        <WebIcon
+            name="more-horizontal"
+            size={iconSizes.small}
+            color="currentColor"
+            fallback="⋯"
+            className="items-center justify-center"
+        />
+    );
+}
+
+/** Presentational collapsed marker (not interactive). Square chip matches icon Button sm. */
 export function BreadcrumbEllipsis({ className, ...props }: BreadcrumbEllipsisProps) {
     return (
         <span
             data-refineui="breadcrumb-ellipsis"
-            className={clsx(
-                breadcrumbStyles.ellipsis,
-                className,
-            )}
+            className={clsx(breadcrumbStyles.ellipsis, className)}
             {...props}
         >
-            <WebIcon
-                name="more-horizontal"
-                size={iconSizes.small}
-                color="currentColor"
-                fallback="⋯"
-                className="items-center justify-center"
-            />
+            <EllipsisIcon />
         </span>
     );
 }
 
+/** Interactive collapsed control — Button icon sm, breadcrumb hover contract via `data-refineui`. */
 export const BreadcrumbEllipsisTrigger = forwardRef<HTMLButtonElement, BreadcrumbEllipsisTriggerProps>(
     function BreadcrumbEllipsisTrigger({ className, type = "button", children, ...props }, ref) {
         return (
-            <button
+            <Button
                 ref={ref}
                 type={type}
+                variant="ghost"
+                size="sm"
+                layout="icon"
                 data-refineui="breadcrumb-ellipsis"
-                className={clsx(
-                    breadcrumbStyles.ellipsisTrigger,
-                    className,
-                )}
+                className={clsx(breadcrumbStyles.ellipsisTrigger, className)}
                 {...props}
             >
-                {children ?? (
-                    <WebIcon
-                name="more-horizontal"
-                size={iconSizes.small}
-                color="currentColor"
-                fallback="⋯"
-                className="items-center justify-center"
-            />
-                )}
-            </button>
+                {children ?? <EllipsisIcon />}
+            </Button>
         );
     },
 );

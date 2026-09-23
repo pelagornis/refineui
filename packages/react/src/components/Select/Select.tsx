@@ -37,7 +37,6 @@ import type {
     SelectProps,
     SelectScrollDownButtonProps,
     SelectScrollUpButtonProps,
-    SelectSectionProps,
     SelectSeparatorProps,
     SelectTriggerProps,
     SelectValueProps,
@@ -801,14 +800,6 @@ export function SelectGroup({ children, className, ...props }: SelectGroupProps)
 }
 
 export function SelectLabel({ children, className, ...props }: SelectLabelProps) {
-    return (
-        <div className={clsx(selectStyles.label, className)} {...props}>
-            {children}
-        </div>
-    );
-}
-
-export function SelectSection({ children, className, ...props }: SelectSectionProps) {
     return (
         <div className={clsx(selectStyles.label, className)} {...props}>
             {children}

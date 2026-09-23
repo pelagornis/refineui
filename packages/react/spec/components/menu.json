@@ -8,7 +8,7 @@
     "divider": "menu-divider",
     "item": "menu-item",
     "popover": "menu-popover",
-    "section": "menu-section"
+    "label": "menu-label"
   },
   "attributes": {
     "data-refineui": "menu"

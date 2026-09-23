@@ -60,7 +60,10 @@ export const componentTokens = {
             foundation: semanticElevations.surface,
         },
         motion: {
-            /** Indicator slide after first layout */
+            /**
+             * Indicator slide after first layout.
+             * CSS applies transform=`medium` / width=`slow` so edges arrive apart.
+             */
             indicator: motion.indicator,
             /** Item label color fade */
             itemColor: motion.fast,
