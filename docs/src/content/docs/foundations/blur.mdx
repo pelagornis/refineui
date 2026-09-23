@@ -29,12 +29,14 @@ Prefer **semantic roles** (`overlayScrim`, `surfaceFrost`) — CSS `--refineui-b
       {
         token: "surfaceFrost",
         css: "--refineui-blur-surface-frost",
-        foundation: "blur8",
-        use: "Frosted glass surfaces (menus, toast plate, …)",
+        foundation: "blur16",
+        use: "Menu / Dropdown / Select / Context Menu / SidebarPeek frosted panels",
       },
     ]}
   />
 </div>
+
+Pair the blur with translucent fill **`surfaceFrosted`** (`--refineui-color-alias-surface-frosted`). Opaque `backgroundPrimary` alone will hide the blur.
 
 ## Foundation steps
 
@@ -66,6 +68,11 @@ Scrim **tint** stays on `surfaceOverlay` / `--refineui-overlay-backdrop` (see [O
 ## Usage
 
 ```css
+.menu-panel {
+  background: var(--refineui-color-alias-surface-frosted);
+  backdrop-filter: blur(var(--refineui-blur-surface-frost));
+}
+
 .scrim {
   background: var(--refineui-overlay-backdrop);
   backdrop-filter: blur(var(--refineui-blur-overlay-scrim));

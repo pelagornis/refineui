@@ -62,7 +62,7 @@ export const componentTypographyTokens = {
         link: role("bodyMd"),
         copyright: role("bodyMd"),
     },
-    /** App sidebar — group labels match menu sections; links match menu rows. */
+    /** App sidebar — group labels share `captionLg` + tight py with Menu/Dropdown/Select/Command. */
     sidebar: {
         brand: role("bodyMd"),
         groupLabel: role("captionLg"),

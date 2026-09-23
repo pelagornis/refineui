@@ -29,12 +29,14 @@ import { SpecTable } from "../../../../docs-ui";
       {
         token: "surfaceFrost",
         css: "--refineui-blur-surface-frost",
-        foundation: "blur8",
-        use: "프로스티드 글래스 표면 (메뉴, toast plate, …)",
+        foundation: "blur16",
+        use: "Menu / Dropdown / Select / Context Menu / SidebarPeek frosted 패널",
       },
     ]}
   />
 </div>
+
+Blur는 반투명 fill **`surfaceFrosted`**(`--refineui-color-alias-surface-frosted`)와 함께 씁니다. 불투명 `backgroundPrimary`만 있으면면 blur가 보이지 않습니다.
 
 ## Foundation 스텝
 
@@ -66,6 +68,11 @@ Scrim **틴트**는 `surfaceOverlay` / `--refineui-overlay-backdrop`에 둡니�
 ## 사용법
 
 ```css
+.menu-panel {
+  background: var(--refineui-color-alias-surface-frosted);
+  backdrop-filter: blur(var(--refineui-blur-surface-frost));
+}
+
 .scrim {
   background: var(--refineui-overlay-backdrop);
   backdrop-filter: blur(var(--refineui-blur-overlay-scrim));

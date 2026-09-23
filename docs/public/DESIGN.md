@@ -150,7 +150,7 @@ Layout primitives: `Box`, `Stack`, `Grid`, `Container`. Prefer **logical** inset
 
 Elevation steps are semantic shadows (`shadow2` … `shadow64`) with separate light/dark recipes. Use the lowest step that establishes hierarchy; do not stack multi-layer custom box-shadows. Overlays use `surfaceOverlay` scrims, not ad-hoc rgba.
 
-Backdrop **blur** is separate from tint: prefer semantic roles `overlayScrim` / `surfaceFrost` (`--refineui-blur-*`). Do not borrow spacing tokens for `backdrop-filter`.
+Backdrop **blur** is separate from tint: prefer semantic roles `overlayScrim` / `surfaceFrost` (`--refineui-blur-*`). Frosted floating panels (Menu family, SidebarPeek) pair blur with translucent **`surfaceFrosted`** fill — do not borrow spacing tokens for `backdrop-filter`. Docked Sidebar stays opaque `backgroundPrimary`.
 
 ## Shapes
 

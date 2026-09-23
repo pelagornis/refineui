@@ -17,7 +17,7 @@ export const semanticBlurFoundationKeys = {
     /** Dialog / Drawer scrim — light frosted dim behind modal chrome */
     overlayScrim: "blur2",
     /** Frosted glass surfaces (menus, toast plate, …) */
-    surfaceFrost: "blur8",
+    surfaceFrost: "blur16",
 } as const satisfies Record<keyof SemanticBlurTokens, FoundationBlurName>;
 
 export type SemanticBlurName = keyof typeof semanticBlurFoundationKeys;

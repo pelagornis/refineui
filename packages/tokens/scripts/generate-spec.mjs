@@ -47,6 +47,14 @@ function traceSemanticColor(semanticName) {
                 resolved: semanticColors.surfaceOverlay,
             };
         }
+        if (semanticName === "surfaceFrosted") {
+            return {
+                name: semanticName,
+                layer: "semantic",
+                references: [],
+                resolved: semanticColors.surfaceFrosted,
+            };
+        }
         return null;
     }
     return {

@@ -154,3 +154,4 @@ Alphabetical catalog — full docs at [/components/](https://ui.pelagornis.com/c
 - **Breadcrumb:** `BreadcrumbEllipsis` is presentational (square icon chip); interactive collapse uses `BreadcrumbEllipsisTrigger` (`Button` ghost icon sm)
 - **Input OTP:** empty slots reuse Skeleton opacity pulse (staggered by index); filled, focused, disabled, and `prefers-reduced-motion` stop the pulse
 - **Checkbox** default radius is `roundedLarge`; **Chart** bar tops use `roundedXLarge` (clamped to bar geometry)
+- **Menu / Dropdown / Select / Context Menu / SidebarPeek** panels use frosted glass: `surfaceFrosted` fill + `surfaceFrost` blur (`prefers-reduced-transparency` falls back to opaque `backgroundPrimary`). Docked Sidebar stays opaque.

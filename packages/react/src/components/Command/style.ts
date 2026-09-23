@@ -39,7 +39,7 @@ export const commandStyles = {
     group: "flex flex-col gap-refineui-size-xxx-small overflow-hidden",
     groupHeading: clsx(
         componentTextClass(componentTypographyTokens.command.group),
-        "flex w-full items-center overflow-hidden px-refineui-size-x-small pb-refineui-size-xxx-small pt-refineui-size-x-small text-refineui-alias-foreground-tertiary",
+        "flex w-full items-center overflow-hidden px-refineui-size-x-small py-refineui-size-xxx-small text-refineui-alias-foreground-tertiary",
     ),
     separatorWrap: "flex w-full items-center px-refineui-size-x-small py-refineui-size-x-small",
     separatorLine: "h-px w-full shrink-0 bg-refineui-alias-border-default",
