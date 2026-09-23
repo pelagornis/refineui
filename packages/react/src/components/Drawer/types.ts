@@ -32,7 +32,6 @@ export interface DrawerContentProps extends Omit<HTMLAttributes<HTMLDivElement>,
 }
 
 export interface DrawerHeaderProps extends HTMLAttributes<HTMLDivElement> {
-    showClose?: boolean;
     actions?: ReactNode;
 }
 
@@ -42,9 +41,5 @@ export type DrawerBodyProps = HTMLAttributes<HTMLDivElement>;
 export interface DrawerFooterProps extends HTMLAttributes<HTMLDivElement> {
     /** Web Kit Drawer/Footer state */
     state?: DrawerFooterState;
-}
-
-export interface DrawerCloseProps extends Omit<ButtonProps, "children"> {
-    children?: ReactNode;
 }
 

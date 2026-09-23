@@ -14,20 +14,18 @@ import {
     type RefObject,
 } from "react";
 import { createPortal } from "react-dom";
-import { iconSizes, semanticInteraction } from "@refineui/tokens";
+import { semanticInteraction } from "@refineui/tokens";
 import { motionMsToNumber } from "@refineui/utilities/animation";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentSizes } from "../../componentSizes";
 import { acquireBodyScrollLock } from "@refineui/utilities/react";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
-import { WebIcon } from "../../WebIcon";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
 import { Button } from "../Button";
 import { drawerStyles } from "./style";
 import { ScrollAreaRegion } from "../ScrollArea/ScrollAreaRegion";
 import type {
     DrawerBodyProps,
-    DrawerCloseProps,
     DrawerContentProps,
     DrawerDescriptionProps,
     DrawerFooterProps,
@@ -295,7 +293,6 @@ export function DrawerContent({
 export function DrawerHeader({
     className,
     children,
-    showClose = true,
     actions,
     ...props
 }: DrawerHeaderProps) {
@@ -314,7 +311,6 @@ export function DrawerHeader({
                 {hasActions ? (
                     <div className={drawerStyles.headerActions}>{actions}</div>
                 ) : null}
-                {showClose ? <DrawerClose /> : null}
             </div>
         </div>
     );
@@ -392,41 +388,5 @@ export function DrawerFooter({ className, ...props }: DrawerFooterProps) {
                 {children}
             </div>
         </div>
-    );
-}
-
-export function DrawerClose({
-    children,
-    onClick,
-    className,
-    type = "button",
-    variant,
-    size,
-    layout,
-    ...props
-}: DrawerCloseProps) {
-    const { setOpen } = useDrawerContext("DrawerClose");
-    const iconOnly = children == null;
-
-    return (
-        <Button
-            {...props}
-            type={type}
-            variant={variant ?? (iconOnly ? "ghost" : "outline")}
-            size={size ?? "md"}
-            layout={layout ?? (iconOnly ? "icon" : "label")}
-            aria-label={iconOnly ? "Close" : undefined}
-            className={className}
-            onClick={(e) => {
-                onClick?.(e);
-                if (!e.defaultPrevented) setOpen(false);
-            }}
-        >
-            {iconOnly ? (
-                <WebIcon name="dismiss" size={iconSizes.xlarge} color="currentColor" iconStyle="regular" aria-hidden />
-            ) : (
-                children
-            )}
-        </Button>
     );
 }

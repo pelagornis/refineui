@@ -1,8 +1,8 @@
+import { useState } from "react";
 import {
     Button,
     Drawer,
     DrawerBody,
-    DrawerClose,
     DrawerContent,
     DrawerDescription,
     DrawerFooter,
@@ -14,10 +14,12 @@ import {
 import { Look, Looks } from "./PreviewFrame";
 
 export default function DrawerDemo() {
+    const [open, setOpen] = useState(false);
+
     return (
         <Looks>
             <Look>
-                <Drawer>
+                <Drawer open={open} onOpenChange={setOpen}>
                     <DrawerTrigger type="button">Open</DrawerTrigger>
                     <DrawerContent type="overlay" size="sm" placement="right">
                         <DrawerHeader>
@@ -30,7 +32,9 @@ export default function DrawerDemo() {
                             </Text>
                         </DrawerBody>
                         <DrawerFooter state="split">
-                            <DrawerClose variant="outline">Cancel</DrawerClose>
+                            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+                                Cancel
+                            </Button>
                             <Button type="button">Submit</Button>
                         </DrawerFooter>
                     </DrawerContent>

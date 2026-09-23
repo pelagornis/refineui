@@ -26,4 +26,4 @@ import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@refineui/r
 </Collapsible>
 ```
 
-`open` and `onOpenChange` make it controlled. `CollapsibleTrigger` accepts `asChild` and merges onto its child. Closed content stays mounted and is hidden.
+`open` and `onOpenChange` make it controlled. `CollapsibleTrigger` renders a Button `ghost` by default (`layout`, `size`, and other Button props pass through); use `asChild` to merge onto a custom child. Closed content stays mounted and is hidden.

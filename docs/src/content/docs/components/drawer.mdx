@@ -37,11 +37,12 @@ import {
   DrawerDescription,
   DrawerBody,
   DrawerFooter,
-  DrawerClose,
   Button
 } from "@refineui/react";
 
-<Drawer>
+const [open, setOpen] = useState(false);
+
+<Drawer open={open} onOpenChange={setOpen}>
   <DrawerTrigger asChild>
     <Button>Open Drawer</Button>
   </DrawerTrigger>
@@ -54,7 +55,8 @@ import {
       {/* Drawer content */}
     </DrawerBody>
     <DrawerFooter>
-      <DrawerClose>Close</DrawerClose>
+      <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
+      <Button>Save</Button>
     </DrawerFooter>
   </DrawerContent>
 </Drawer>
@@ -96,7 +98,6 @@ Drawer panel container.
   <PropSpec
     client:load
     rows={[
-    { prop: "showClose", default: "true", type: "boolean", description: "Shows the close button." },
     { prop: "actions", default: "—", type: "ReactNode", description: "Additional header actions." }
     ]}
   />
@@ -123,7 +124,4 @@ Scrollable content area.
     ]}
   />
 </div>
-### DrawerClose
-
-Close button.
 

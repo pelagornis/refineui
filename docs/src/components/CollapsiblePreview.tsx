@@ -1,6 +1,5 @@
 import { iconSizes } from "@refineui/tokens";
 import {
-    Button,
     Collapsible,
     CollapsibleContent,
     CollapsibleTrigger,
@@ -27,22 +26,19 @@ export default function CollapsiblePreview() {
                 >
                     <div className="flex items-center justify-between gap-refineui-size-large px-refineui-size-large">
                         <h4 className={triggerTypo.md}>Order #4189</h4>
-                        <CollapsibleTrigger asChild>
-                            <Button
-                                variant="ghost"
-                                layout="icon"
-                                size="sm"
-                                aria-label="Toggle details"
-                                className="group"
-                            >
-                                <WebIcon
-                                    name="chevron-down"
-                                    size={iconSizes.small}
-                                    color="currentColor"
-                                    fallback="▼"
-                                    className={`${accordionStyles.chevron} group-data-[state=open]:rotate-180`}
-                                />
-                            </Button>
+                        <CollapsibleTrigger
+                            layout="icon"
+                            size="sm"
+                            aria-label="Toggle details"
+                            className="group"
+                        >
+                            <WebIcon
+                                name="chevron-down"
+                                size={iconSizes.small}
+                                color="currentColor"
+                                fallback="▼"
+                                className={`${accordionStyles.chevron} group-data-[state=open]:rotate-180`}
+                            />
                         </CollapsibleTrigger>
                     </div>
                     <div className={`${card} flex-row items-center justify-between`}>

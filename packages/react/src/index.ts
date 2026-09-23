@@ -338,7 +338,6 @@ export {
     DrawerDescription,
     DrawerBody,
     DrawerFooter,
-    DrawerClose,
     type DrawerProps,
     type DrawerTriggerProps,
     type DrawerContentProps,
@@ -347,7 +346,6 @@ export {
     type DrawerDescriptionProps,
     type DrawerBodyProps,
     type DrawerFooterProps,
-    type DrawerCloseProps,
 } from "./components/Drawer";
 export type { MenuAlign as DropdownAlign } from "./components/Dropdown";
 export {

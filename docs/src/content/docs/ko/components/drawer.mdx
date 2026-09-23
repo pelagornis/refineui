@@ -37,11 +37,12 @@ import {
   DrawerDescription,
   DrawerBody,
   DrawerFooter,
-  DrawerClose,
   Button
 } from "@refineui/react";
 
-<Drawer>
+const [open, setOpen] = useState(false);
+
+<Drawer open={open} onOpenChange={setOpen}>
   <DrawerTrigger asChild>
     <Button>Open Drawer</Button>
   </DrawerTrigger>
@@ -54,7 +55,8 @@ import {
       {/* Drawer content */}
     </DrawerBody>
     <DrawerFooter>
-      <DrawerClose>Close</DrawerClose>
+      <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
+      <Button>Save</Button>
     </DrawerFooter>
   </DrawerContent>
 </Drawer>
@@ -96,7 +98,6 @@ Drawer 패널 컨테이너.
   <PropSpec
     client:load
     rows={[
-    { prop: "showClose", default: "true", type: "boolean", description: "닫기 버튼을 표시합니다." },
     { prop: "actions", default: "—", type: "ReactNode", description: "추가 헤더 액션." }
     ]}
   />
@@ -123,7 +124,3 @@ Drawer 설명 텍스트.
     ]}
   />
 </div>
-### DrawerClose
-
-닫기 버튼.
-

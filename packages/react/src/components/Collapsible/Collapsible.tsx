@@ -4,7 +4,6 @@ import {
     useId,
     useMemo,
     useState,
-    type ButtonHTMLAttributes,
     type CSSProperties,
     type HTMLAttributes,
     type MouseEvent,
@@ -12,6 +11,7 @@ import {
 } from "react";
 import { clsx } from "clsx";
 import { Slot } from "@refineui/utilities/react";
+import { Button, type ButtonProps } from "../Button";
 import {
     CollapsibleContext,
     PANEL_CONTENT_EASE,
@@ -73,12 +73,27 @@ export const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(function
     );
 });
 
-export interface CollapsibleTriggerProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface CollapsibleTriggerProps extends ButtonProps {
     asChild?: boolean;
 }
 
+/** Default surface is Button `ghost` — use `layout="icon"` for chevron-only triggers. */
 export const CollapsibleTrigger = forwardRef<HTMLButtonElement, CollapsibleTriggerProps>(
-    function CollapsibleTrigger({ asChild = false, onClick, className, children, ...props }, ref) {
+    function CollapsibleTrigger(
+        {
+            asChild = false,
+            onClick,
+            className,
+            children,
+            variant = "ghost",
+            size,
+            layout,
+            fullWidth,
+            type = "button",
+            ...props
+        },
+        ref,
+    ) {
         const { open, toggle, contentId, triggerId } = useCollapsibleContext("CollapsibleTrigger");
         const shared = {
             ...props,
@@ -87,7 +102,6 @@ export const CollapsibleTrigger = forwardRef<HTMLButtonElement, CollapsibleTrigg
             "aria-expanded": open,
             "aria-controls": contentId,
             "data-state": open ? ("open" as const) : ("closed" as const),
-            "data-refineui": "collapsible-trigger",
             className,
             onClick: (event: MouseEvent<HTMLButtonElement>) => {
                 onClick?.(event);
@@ -97,9 +111,16 @@ export const CollapsibleTrigger = forwardRef<HTMLButtonElement, CollapsibleTrigg
 
         if (asChild) return <Slot {...shared}>{children}</Slot>;
         return (
-            <button {...shared} type="button">
+            <Button
+                {...shared}
+                type={type}
+                variant={variant}
+                size={size}
+                layout={layout}
+                fullWidth={fullWidth}
+            >
                 {children}
-            </button>
+            </Button>
         );
     },
 );
