@@ -1,0 +1,52 @@
+---
+title: Context Menu
+description: 우클릭으로 열리는 메뉴입니다.
+---
+import ContextMenuPreview from "../../../../components/ContextMenuPreview";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <ContextMenuPreview client:load />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import {
+  ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuPortal,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuSub,
+  ContextMenuSubTrigger,
+  ContextMenuSubContent,
+} from "@refineui/react";
+
+<ContextMenu>
+  <ContextMenuTrigger asChild>
+    <div>Right click</div>
+  </ContextMenuTrigger>
+  <ContextMenuPortal>
+    <ContextMenuContent>
+      <ContextMenuItem onSelect={() => copy()}>Copy</ContextMenuItem>
+      <ContextMenuSeparator />
+      <ContextMenuSub>
+        <ContextMenuSubTrigger>More</ContextMenuSubTrigger>
+        <ContextMenuPortal>
+          <ContextMenuSubContent>
+            <ContextMenuItem>Rename</ContextMenuItem>
+          </ContextMenuSubContent>
+        </ContextMenuPortal>
+      </ContextMenuSub>
+    </ContextMenuContent>
+  </ContextMenuPortal>
+</ContextMenu>
+```
+
+`onSelect`는 이벤트를 받습니다. `preventDefault()`를 호출하면 메뉴가 열린 채로 유지됩니다. disabled 항목은 선택되지 않습니다.

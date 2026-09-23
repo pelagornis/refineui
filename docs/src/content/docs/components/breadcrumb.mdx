@@ -33,7 +33,8 @@ import {
   BreadcrumbLink,
   BreadcrumbPage,
   BreadcrumbSeparator,
-  BreadcrumbEllipsis
+  BreadcrumbEllipsis,
+  BreadcrumbEllipsisTrigger,
 } from "@refineui/react";
 
 <Breadcrumb>
@@ -97,5 +98,9 @@ Visual separator between items.
 
 ### BreadcrumbEllipsis
 
-Collapsed items indicator.
+Presentational collapsed marker (square icon chip, not interactive).
+
+### BreadcrumbEllipsisTrigger
+
+Interactive collapsed control — ghost icon `Button` (`layout="icon"` `size="sm"`). Use when the ellipsis should open a menu or expand the trail.
 

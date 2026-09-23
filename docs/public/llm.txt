@@ -82,8 +82,10 @@ Alphabetical catalog — full docs at [/components/](https://ui.pelagornis.com/c
 - [Carousel](https://ui.pelagornis.com/components/carousel/)
 - [Chart](https://ui.pelagornis.com/components/chart/)
 - [Checkbox](https://ui.pelagornis.com/components/checkbox/)
+- [Collapsible](https://ui.pelagornis.com/components/collapsible/): Show/hide a section from a trigger (`asChild` supported)
 - [Command](https://ui.pelagornis.com/components/command/): Command palette with search and keyboard navigation
 - [Container](https://ui.pelagornis.com/components/container/)
+- [Context Menu](https://ui.pelagornis.com/components/context-menu/): Right-click menu (Menu anatomy + portal)
 - [Dialog](https://ui.pelagornis.com/components/dialog/)
 - [Divider](https://ui.pelagornis.com/components/divider/)
 - [Drawer](https://ui.pelagornis.com/components/drawer/)
@@ -145,4 +147,9 @@ Alphabetical catalog — full docs at [/components/](https://ui.pelagornis.com/c
 - Import components from `@refineui/react` only; do not invent parallel APIs
 - Use design tokens (`bg-refineui-alias-*`, `text-refineui-alias-*`, spacing/radius utilities) — no arbitrary px or hex in component styles
 - Match Web Kit component scope; do not add variants or convenience props not in Figma Web Kit
-- Prefer composition (`Field` + `Input`, `Command` + `CommandDialog`, `Sidebar` + `SidebarLink`) over raw HTML for forms, navigation, and feedback
+- Prefer composition (`Field` + `Input`, `Command` + `CommandDialog`, `Sidebar` + `SidebarLink`, `Collapsible` + `CollapsibleTrigger`/`Content`, `ContextMenu` + portal content) over raw HTML for forms, navigation, and feedback
+- `Slot` / `asChild` merge props onto a child element — use for triggers that should render as `Button` or custom hosts
+- **Segmented Control:** sliding brand indicator; until `data-ready`, the selected item keeps a brand fill so SSR/first paint is not blank; transform leads width on slide
+- **Breadcrumb:** `BreadcrumbEllipsis` is presentational (square icon chip); interactive collapse uses `BreadcrumbEllipsisTrigger` (`Button` ghost icon sm)
+- **Input OTP:** empty slots reuse Skeleton opacity pulse (staggered by index); filled, focused, disabled, and `prefers-reduced-motion` stop the pulse
+- **Checkbox** default radius is `roundedLarge`; **Chart** bar tops use `roundedXLarge` (clamped to bar geometry)

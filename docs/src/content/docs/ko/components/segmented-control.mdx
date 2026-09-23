@@ -42,6 +42,8 @@ import { SegmentedControl, SegmentedControlItem } from "@refineui/react";
 </SegmentedControl>
 ```
 
+선택 thumb는 슬라이딩 brand indicator입니다. geometry가 준비되기 전(`data-ready`)에는 selected item이 brand fill을 유지해 첫 페인트가 비지 않습니다. 첫 레이아웃 이후에는 transform이 width보다 조금 앞서 슬라이드가 덜 기계적으로 보입니다.
+
 ## API 레퍼런스
 
 ### SegmentedControl

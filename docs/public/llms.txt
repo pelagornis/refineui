@@ -44,8 +44,10 @@ Install: `bun add @refineui/react @refineui/tokens`. Load `@refineui/tokens/tail
 - [Carousel](https://ui.pelagornis.com/components/carousel/)
 - [Chart](https://ui.pelagornis.com/components/chart/)
 - [Checkbox](https://ui.pelagornis.com/components/checkbox/)
+- [Collapsible](https://ui.pelagornis.com/components/collapsible/): Show/hide from a trigger
 - [Command](https://ui.pelagornis.com/components/command/): Command palette with search
 - [Container](https://ui.pelagornis.com/components/container/)
+- [Context Menu](https://ui.pelagornis.com/components/context-menu/): Right-click menu
 - [Dialog](https://ui.pelagornis.com/components/dialog/)
 - [Divider](https://ui.pelagornis.com/components/divider/)
 - [Drawer](https://ui.pelagornis.com/components/drawer/)

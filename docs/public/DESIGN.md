@@ -165,6 +165,17 @@ DOM / state contract:
 - `data-state` — open, selected, loading, …
 - Hover / `:focus-visible` / disabled — `refineui.css` (do not reimplement with `:focus` alone)
 
+**Composition highlights**
+
+- **Collapsible** — `Collapsible` + `CollapsibleTrigger` + `CollapsibleContent`; trigger supports `asChild` (often a ghost icon `Button`)
+- **Context Menu** — same Menu item anatomy as Dropdown/Menu, opened from `ContextMenuTrigger` via right-click; content lives in `ContextMenuPortal`
+- **Slot / asChild** — merge host props onto a single child; prefer this over wrapping extra DOM for triggers
+- **Segmented Control** — mutually exclusive pill; brand indicator slides after first layout (`data-ready` / `data-animate`); empty first paint uses selected-item fill fallback
+- **Breadcrumb** — trail composition; square `BreadcrumbEllipsis` (presentational) vs `BreadcrumbEllipsisTrigger` (interactive icon Button)
+- **Input OTP** — per-digit slots; empty cells pulse like Skeleton until filled
+- **Checkbox** — default corner `roundedLarge`; circular variant uses `roundedCircle`
+- **Chart bars** — top corners use `roundedXLarge` (clamped to width/height)
+
 Import only from `@refineui/react`. Stylesheet at app root:
 
 ```css
