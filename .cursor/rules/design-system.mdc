@@ -66,11 +66,12 @@ tokens → utilities → react → docs
 - `fonts.ts`, `typographys.ts` — font families, sizes, weights, line heights, type scale
 - `spacings.ts` — sizeNone ~ sizeXXXLarge
 - `foundationSizes.ts` — Global/Size steps (aliases for component dimensions)
-- `strokeWidths.ts`, `borderRadii.ts`, `shadows.ts`, `motion.ts`, `zIndex.ts`
+- `strokeWidths.ts`, `borderRadii.ts`, `blurs.ts`, `shadows.ts`, `motion.ts`, `zIndex.ts`
 - `semantic/colors.ts` — `--refineui-color-alias-*` (light/dark)
 - `semantic/focus.ts` — focus ring (`:focus-visible` contract)
 - `semantic/componentSizes.ts` — component dimension aliases → foundationSizes
 - `semantic/interaction.ts` — motion roles (duration, easing, scale)
+- `semantic/blur.ts` — backdrop / surface blur roles → Foundation `blurs`
 
 Build: `bun run build:tokens` → `dist/spec/trace-v2.json`, `token-graph.json`.  
 `bun run build:react` → copies `spec/`, generates `token-trace-v2.json`, `contract-index.json`.

@@ -150,6 +150,8 @@ Layout primitives: `Box`, `Stack`, `Grid`, `Container`. Prefer **logical** inset
 
 Elevation steps are semantic shadows (`shadow2` … `shadow64`) with separate light/dark recipes. Use the lowest step that establishes hierarchy; do not stack multi-layer custom box-shadows. Overlays use `surfaceOverlay` scrims, not ad-hoc rgba.
 
+Backdrop **blur** is separate from tint: prefer semantic roles `overlayScrim` / `surfaceFrost` (`--refineui-blur-*`). Frosted floating panels (Menu family, SidebarPeek) pair blur with translucent **`surfaceFrosted`** fill — do not borrow spacing tokens for `backdrop-filter`. Docked Sidebar stays opaque `backgroundPrimary`.
+
 ## Shapes
 
 Radius scale: `roundedXSmall` (2px) through `roundedXXLarge` (16px), plus `roundedCircle`. Default interactive controls land around **large (8px)**; cards and panels often **x-large (12px)**. Prefer token radii over arbitrary `rounded-*` values.
@@ -164,6 +166,17 @@ DOM / state contract:
 - `data-variant` / `data-size` — visual options
 - `data-state` — open, selected, loading, …
 - Hover / `:focus-visible` / disabled — `refineui.css` (do not reimplement with `:focus` alone)
+
+**Composition highlights**
+
+- **Collapsible** — `Collapsible` + `CollapsibleTrigger` + `CollapsibleContent`; trigger supports `asChild` (often a ghost icon `Button`)
+- **Context Menu** — same Menu item anatomy as Dropdown/Menu, opened from `ContextMenuTrigger` via right-click; content lives in `ContextMenuPortal`
+- **Slot / asChild** — merge host props onto a single child; prefer this over wrapping extra DOM for triggers
+- **Segmented Control** — mutually exclusive pill; brand indicator slides after first layout (`data-ready` / `data-animate`); empty first paint uses selected-item fill fallback
+- **Breadcrumb** — trail composition; square `BreadcrumbEllipsis` (presentational) vs `BreadcrumbEllipsisTrigger` (interactive icon Button)
+- **Input OTP** — per-digit slots; empty cells pulse like Skeleton until filled
+- **Checkbox** — default corner `roundedLarge`; circular variant uses `roundedCircle`
+- **Chart bars** — top corners use `roundedXLarge` (clamped to width/height)
 
 Import only from `@refineui/react`. Stylesheet at app root:
 

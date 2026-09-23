@@ -126,7 +126,7 @@ export const componentColorTokens = {
             border: semanticToken("borderDefault"),
         },
         menu: {
-            background: semanticToken("backgroundPrimary"),
+            background: semanticToken("surfaceFrosted"),
             border: semanticToken("borderDefault"),
             title: semanticToken("foregroundPrimary"),
             itemText: semanticToken("foregroundPrimary"),
@@ -140,6 +140,10 @@ export const componentColorTokens = {
         placeholder: semanticToken("foregroundPlaceholder"),
         background: semanticToken("backgroundPrimary"),
         disabledBackground: semanticToken("backgroundSurfaceDisabled"),
+        menu: {
+            background: semanticToken("surfaceFrosted"),
+            border: semanticToken("borderDefault"),
+        },
         border: {
             default: semanticToken("borderDefault"),
             disabled: semanticToken("borderDisabled"),
@@ -531,15 +535,15 @@ export const componentColorTokens = {
     },
     menu: {
         panel: {
-            /** Matches Menu.style panel classes */
-            background: semanticToken("backgroundPrimary"),
+            /** Frosted glass — `surfaceFrosted` fill + `surfaceFrost` blur in refineui.css */
+            background: semanticToken("surfaceFrosted"),
             border: semanticToken("borderDefault"),
         },
         popover: {
             background: "transparent",
         },
         list: {
-            background: semanticToken("backgroundPrimary"),
+            background: semanticToken("surfaceFrosted"),
             border: semanticToken("borderDefault"),
         },
         section: semanticToken("foregroundPrimary"),

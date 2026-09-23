@@ -6,23 +6,15 @@ import {
     CollapsibleTrigger,
     WebIcon,
 } from "@refineui/react";
-import { accordionItemOpenClass, contentTypo, triggerTypo } from "../../../packages/react/src/components/Accordion/style";
+import {
+    accordionItemOpenClass,
+    accordionStyles,
+    contentTypo,
+    triggerTypo,
+} from "../../../packages/react/src/components/Accordion/style";
 import { Look, Looks } from "./PreviewFrame";
 
 const card = `flex flex-col rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default ${accordionItemOpenClass} px-refineui-size-large py-refineui-size-small`;
-
-function ToggleGlyph() {
-    return (
-        <span
-            aria-hidden
-            className="inline-flex flex-col items-center justify-center"
-            style={{ width: iconSizes.xsmall, height: iconSizes.xsmall }}
-        >
-            <WebIcon name="chevron-up" size={iconSizes.xxsmall} color="currentColor" style={{ marginBottom: -6 }} />
-            <WebIcon name="chevron-down" size={iconSizes.xxsmall} color="currentColor" style={{ marginTop: -6 }} />
-        </span>
-    );
-}
 
 export default function CollapsiblePreview() {
     return (
@@ -36,8 +28,20 @@ export default function CollapsiblePreview() {
                     <div className="flex items-center justify-between gap-refineui-size-large px-refineui-size-large">
                         <h4 className={triggerTypo.md}>Order #4189</h4>
                         <CollapsibleTrigger asChild>
-                            <Button variant="ghost" layout="icon" size="sm" aria-label="Toggle details">
-                                <ToggleGlyph />
+                            <Button
+                                variant="ghost"
+                                layout="icon"
+                                size="sm"
+                                aria-label="Toggle details"
+                                className="group"
+                            >
+                                <WebIcon
+                                    name="chevron-down"
+                                    size={iconSizes.small}
+                                    color="currentColor"
+                                    fallback="▼"
+                                    className={`${accordionStyles.chevron} group-data-[state=open]:rotate-180`}
+                                />
                             </Button>
                         </CollapsibleTrigger>
                     </div>

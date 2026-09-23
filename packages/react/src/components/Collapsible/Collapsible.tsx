@@ -1,11 +1,8 @@
 import {
-    createContext,
     forwardRef,
-    useContext,
-    useEffect,
+    useCallback,
     useId,
-    useLayoutEffect,
-    useRef,
+    useMemo,
     useState,
     type ButtonHTMLAttributes,
     type CSSProperties,
@@ -14,36 +11,17 @@ import {
     type ReactNode,
 } from "react";
 import { clsx } from "clsx";
-import { semanticInteraction } from "@refineui/tokens";
 import { Slot } from "@refineui/utilities/react";
-
-interface CollapsibleContextValue {
-    open: boolean;
-    toggle: () => void;
-    contentId: string;
-    triggerId: string;
-    reduceMotion: boolean;
-}
-
-const CollapsibleContext = createContext<CollapsibleContextValue | null>(null);
-
-function useCollapsible() {
-    const value = useContext(CollapsibleContext);
-    if (!value) throw new Error("Collapsible parts must be used within Collapsible");
-    return value;
-}
-
-function usePrefersReducedMotion() {
-    const [reduce, setReduce] = useState(false);
-    useEffect(() => {
-        const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-        const sync = () => setReduce(query.matches);
-        sync();
-        query.addEventListener("change", sync);
-        return () => query.removeEventListener("change", sync);
-    }, []);
-    return reduce;
-}
+import {
+    CollapsibleContext,
+    PANEL_CONTENT_EASE,
+    PANEL_CONTENT_MS,
+    PANEL_HEIGHT_EASE,
+    PANEL_HEIGHT_MS,
+    useCollapsibleContext,
+    usePrefersReducedMotion,
+} from "./context";
+import { collapsibleStyles } from "./style";
 
 export interface CollapsibleProps extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
     open?: boolean;
@@ -53,42 +31,43 @@ export interface CollapsibleProps extends Omit<HTMLAttributes<HTMLDivElement>, "
     children?: ReactNode;
 }
 
-/** Root — same compound pattern as Accordion / Dialog (`Collapsible` + `CollapsibleTrigger`). */
+/** Root — compound pattern aligned with Accordion (`Collapsible` + Trigger + Content). */
 export const Collapsible = forwardRef<HTMLDivElement, CollapsibleProps>(function Collapsible(
     { open: openProp, defaultOpen = false, onOpenChange, asChild = false, className, children, ...props },
     ref,
 ) {
     const [uncontrolled, setUncontrolled] = useState(defaultOpen);
     const open = openProp ?? uncontrolled;
-    const openRef = useRef(open);
-    openRef.current = open;
     const reactId = useId();
     const reduceMotion = usePrefersReducedMotion();
 
-    const toggle = () => {
-        const next = !openRef.current;
+    const toggle = useCallback(() => {
+        const next = !(openProp ?? uncontrolled);
         if (openProp === undefined) setUncontrolled(next);
         onOpenChange?.(next);
-    };
+    }, [onOpenChange, openProp, uncontrolled]);
+
+    const contextValue = useMemo(
+        () => ({
+            open,
+            toggle,
+            contentId: `${reactId}-content`,
+            triggerId: `${reactId}-trigger`,
+            reduceMotion,
+        }),
+        [open, reactId, reduceMotion, toggle],
+    );
 
     const shared = {
         ...props,
         ref,
-        "data-state": open ? "open" : "closed",
+        "data-state": open ? ("open" as const) : ("closed" as const),
         "data-refineui": "collapsible",
         className,
     };
 
     return (
-        <CollapsibleContext.Provider
-            value={{
-                open,
-                toggle,
-                contentId: `${reactId}-content`,
-                triggerId: `${reactId}-trigger`,
-                reduceMotion,
-            }}
-        >
+        <CollapsibleContext.Provider value={contextValue}>
             {asChild ? <Slot {...shared}>{children}</Slot> : <div {...shared}>{children}</div>}
         </CollapsibleContext.Provider>
     );
@@ -100,14 +79,14 @@ export interface CollapsibleTriggerProps extends ButtonHTMLAttributes<HTMLButton
 
 export const CollapsibleTrigger = forwardRef<HTMLButtonElement, CollapsibleTriggerProps>(
     function CollapsibleTrigger({ asChild = false, onClick, className, children, ...props }, ref) {
-        const { open, toggle, contentId, triggerId } = useCollapsible();
+        const { open, toggle, contentId, triggerId } = useCollapsibleContext("CollapsibleTrigger");
         const shared = {
             ...props,
             ref,
             id: triggerId,
             "aria-expanded": open,
             "aria-controls": contentId,
-            "data-state": open ? "open" : "closed",
+            "data-state": open ? ("open" as const) : ("closed" as const),
             "data-refineui": "collapsible-trigger",
             className,
             onClick: (event: MouseEvent<HTMLButtonElement>) => {
@@ -129,33 +108,32 @@ export interface CollapsibleContentProps extends Omit<HTMLAttributes<HTMLDivElem
     children?: ReactNode;
 }
 
+/**
+ * Height clip via `grid-template-rows` (same technique as AccordionContent) —
+ * no scrollHeight / ResizeObserver.
+ */
 export const CollapsibleContent = forwardRef<HTMLDivElement, CollapsibleContentProps>(
     function CollapsibleContent({ className, children, style, ...props }, ref) {
-        const { open, contentId, triggerId, reduceMotion } = useCollapsible();
-        const innerRef = useRef<HTMLDivElement | null>(null);
-        const [size, setSize] = useState({ height: 0, width: 0 });
+        const { open, contentId, triggerId, reduceMotion } = useCollapsibleContext("CollapsibleContent");
 
-        useLayoutEffect(() => {
-            const node = innerRef.current;
-            if (!node) return;
-            const measure = () => {
-                setSize({ height: node.scrollHeight, width: node.scrollWidth });
-            };
-            measure();
-            const observer = new ResizeObserver(measure);
-            observer.observe(node);
-            return () => observer.disconnect();
-        }, [children, open]);
-
-        const clipStyle = {
-            ["--refineui-collapsible-content-height" as string]: `${size.height}px`,
-            ["--refineui-collapsible-content-width" as string]: `${size.width}px`,
-            height: open ? size.height : 0,
-            overflow: "hidden",
+        const gridStyle: CSSProperties = {
+            display: "grid",
+            gridTemplateRows: open ? "1fr" : "0fr",
             transition: reduceMotion
                 ? undefined
-                : `height ${semanticInteraction.duration.panel} ${semanticInteraction.easing.panel}`,
-        } as CSSProperties;
+                : `grid-template-rows ${PANEL_HEIGHT_MS}s ${PANEL_HEIGHT_EASE}`,
+        };
+        const innerMotionStyle: CSSProperties = {
+            opacity: open ? 1 : 0,
+            transform: open
+                ? "translate3d(0, 0, 0)"
+                : "translate3d(0, calc(-1 * var(--refineui-spacing-size-x-small)), 0)",
+            transition: reduceMotion
+                ? undefined
+                : `opacity ${PANEL_CONTENT_MS}s ${PANEL_CONTENT_EASE}, transform ${PANEL_CONTENT_MS}s ${PANEL_CONTENT_EASE}`,
+            pointerEvents: open ? undefined : "none",
+            ...style,
+        };
 
         return (
             <div
@@ -167,10 +145,12 @@ export const CollapsibleContent = forwardRef<HTMLDivElement, CollapsibleContentP
                 aria-hidden={!open}
                 data-state={open ? "open" : "closed"}
                 data-refineui="collapsible-content"
-                style={clipStyle}
+                style={gridStyle}
             >
-                <div ref={innerRef} className={clsx(className)} style={style}>
-                    {children}
+                <div className={collapsibleStyles.panelOuter}>
+                    <div className={clsx(className)} style={innerMotionStyle}>
+                        {children}
+                    </div>
                 </div>
             </div>
         );

@@ -299,6 +299,30 @@ export type BorderRadiusTokens = {
 };
 
 /**
+ * Foundation blur primitives (`global/blurs.ts`).
+ * Value-based steps only — no UI role names.
+ */
+export type FoundationBlurTokens = {
+    blurNone: string;
+    blur2: string;
+    blur4: string;
+    blur8: string;
+    blur12: string;
+    blur16: string;
+};
+
+export type FoundationBlurName = keyof FoundationBlurTokens;
+
+/**
+ * Semantic blur roles (`semantic/blur.ts`) — resolved Foundation strings.
+ * Prefer role keys (`overlayScrim`, `surfaceFrost`) in component / CSS code.
+ */
+export type SemanticBlurTokens = {
+    overlayScrim: string;
+    surfaceFrost: string;
+};
+
+/**
  * Design tokens for spacing size
  */
 export type SpacingTokens = {

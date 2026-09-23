@@ -26,9 +26,10 @@ export const selectStyles = {
     chevron:
         "shrink-0 transition-transform duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",
     chevronOpen: "rotate-180",
-    positioner: "z-refineui-popup flex flex-col overflow-hidden",
+    /* No overflow-hidden — it isolates descendants and kills panel `backdrop-filter`. */
+    positioner: "z-refineui-popup flex flex-col",
     contentShell:
-        "box-border flex w-full min-h-0 flex-col overflow-hidden rounded-refineui-xx-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xx-small shadow-refineui-2 outline-none",
+        "box-border flex w-full min-h-0 flex-col overflow-hidden rounded-refineui-xx-large border-refineui-hairline border-refineui-alias-border-default p-refineui-size-xx-small shadow-refineui-2 outline-none",
     contentPopper: "h-auto max-h-[var(--refineui-select-content-available-height,100dvh)]",
     contentItemAligned: "max-h-full",
     viewportPopper:
@@ -41,7 +42,7 @@ export const selectStyles = {
     group: "flex flex-col gap-px",
     label: clsx(
         componentTextClass(componentTypographyTokens.select.label),
-        "px-refineui-size-x-small py-refineui-size-x-small text-refineui-alias-foreground-tertiary",
+        "px-refineui-size-x-small py-refineui-size-xxx-small text-refineui-alias-foreground-tertiary",
     ),
     separator: "my-refineui-size-x-small h-px bg-refineui-alias-border-default",
 

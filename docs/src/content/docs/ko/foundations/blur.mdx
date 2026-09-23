@@ -1,0 +1,80 @@
+---
+title: Blur
+description: 프로스티드 크롬용 backdrop / surface blur 스텝.
+---
+
+import { SpecTable } from "../../../../docs-ui";
+
+**시맨틱 역할**(`overlayScrim`, `surfaceFrost`)을 사용하세요 — CSS `--refineui-blur-overlay-scrim`. 컴포넌트에 일회성 `blur(2px)`를 쓰지 마세요.
+
+## 시맨틱 역할
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="시맨틱 blur 역할"
+    columns={[
+      { key: "token", header: "토큰", mono: true },
+      { key: "css", header: "CSS 변수", mono: true },
+      { key: "foundation", header: "Foundation", mono: true },
+      { key: "use", header: "용도" },
+    ]}
+    rows={[
+      {
+        token: "overlayScrim",
+        css: "--refineui-blur-overlay-scrim",
+        foundation: "blur2",
+        use: "Dialog / Drawer scrim backdrop-filter",
+      },
+      {
+        token: "surfaceFrost",
+        css: "--refineui-blur-surface-frost",
+        foundation: "blur16",
+        use: "Menu / Dropdown / Select / Context Menu / SidebarPeek frosted 패널",
+      },
+    ]}
+  />
+</div>
+
+Blur는 반투명 fill **`surfaceFrosted`**(`--refineui-color-alias-surface-frosted`)와 함께 씁니다. 불투명 `backgroundPrimary`만 있으면면 blur가 보이지 않습니다.
+
+## Foundation 스텝
+
+값 기반 키만 — 새 시맨틱 역할을 추가하기 전에 여기를 확장하세요.
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="Foundation blur 스텝"
+    columns={[
+      { key: "token", header: "토큰", mono: true },
+      { key: "value", header: "값", mono: true },
+    ]}
+    rows={[
+      { token: "blurNone", value: "0" },
+      { token: "blur2", value: "2px" },
+      { token: "blur4", value: "4px" },
+      { token: "blur8", value: "8px" },
+      { token: "blur12", value: "12px" },
+      { token: "blur16", value: "16px" },
+    ]}
+  />
+</div>
+
+Scrim **틴트**는 `surfaceOverlay` / `--refineui-overlay-backdrop`에 둡니다 ([투명도](/ko/foundations/opacity/), [컬러](/ko/foundations/color/) 참고). Blur는 필터 반경만 담당합니다.
+
+`prefers-reduced-transparency: reduce`일 때 Dialog/Drawer `backdrop-filter`는 `refineui.css`에서 `none`으로 접힙니다.
+
+## 사용법
+
+```css
+.menu-panel {
+  background: var(--refineui-color-alias-surface-frosted);
+  backdrop-filter: blur(var(--refineui-blur-surface-frost));
+}
+
+.scrim {
+  background: var(--refineui-overlay-backdrop);
+  backdrop-filter: blur(var(--refineui-blur-overlay-scrim));
+}
+```

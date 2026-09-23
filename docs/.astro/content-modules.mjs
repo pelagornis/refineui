@@ -159,5 +159,9 @@ export default new Map([
 ["src/content/docs/ko/components/textarea.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fko%2Fcomponents%2Ftextarea.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/ko/components/toast.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fko%2Fcomponents%2Ftoast.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/ko/components/tooltip.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fko%2Fcomponents%2Ftooltip.mdx&astroContentModuleFlag=true")],
-["src/content/docs/ko/components/tree.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fko%2Fcomponents%2Ftree.mdx&astroContentModuleFlag=true")]]);
+["src/content/docs/ko/components/tree.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fko%2Fcomponents%2Ftree.mdx&astroContentModuleFlag=true")],
+["src/content/docs/ko/components/collapsible.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fko%2Fcomponents%2Fcollapsible.mdx&astroContentModuleFlag=true")],
+["src/content/docs/ko/components/context-menu.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fko%2Fcomponents%2Fcontext-menu.mdx&astroContentModuleFlag=true")],
+["src/content/docs/foundations/blur.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Ffoundations%2Fblur.mdx&astroContentModuleFlag=true")],
+["src/content/docs/ko/foundations/blur.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fko%2Ffoundations%2Fblur.mdx&astroContentModuleFlag=true")]]);
 		

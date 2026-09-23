@@ -44,6 +44,9 @@ import {
     ChartGrid,
     ChartPlot,
     Checkbox,
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
     Command,
     CommandGroup,
     CommandGroupHeading,
@@ -51,6 +54,11 @@ import {
     CommandItem,
     CommandList,
     Container,
+    ContextMenu,
+    ContextMenuContent,
+    ContextMenuItem,
+    ContextMenuPortal,
+    ContextMenuTrigger,
     Dialog,
     DialogTrigger,
     Divider,
@@ -408,6 +416,20 @@ export default function ComponentCatalog({ locale }: { locale?: import("../../li
                 }
             />
             <CatalogCard
+                href="/components/collapsible/"
+                name="Collapsible"
+                preview={
+                    <Collapsible defaultOpen className="w-full max-w-refineui-foundation-size-2000">
+                        <CollapsibleTrigger className="text-refineui-alias-foreground-primary">
+                            Details
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                            <p className="m-0 text-refineui-alias-foreground-secondary">Hidden until opened.</p>
+                        </CollapsibleContent>
+                    </Collapsible>
+                }
+            />
+            <CatalogCard
                 href="/components/command/"
                 name="Command"
                 preview={
@@ -440,6 +462,25 @@ export default function ComponentCatalog({ locale }: { locale?: import("../../li
                             </Container>
                         </Box>
                     </div>
+                }
+            />
+            <CatalogCard
+                href="/components/context-menu/"
+                name="Context Menu"
+                preview={
+                    <ContextMenu>
+                        <ContextMenuTrigger asChild>
+                            <Button variant="outline" size="sm">
+                                Right click
+                            </Button>
+                        </ContextMenuTrigger>
+                        <ContextMenuPortal>
+                            <ContextMenuContent>
+                                <ContextMenuItem>Copy</ContextMenuItem>
+                                <ContextMenuItem>Paste</ContextMenuItem>
+                            </ContextMenuContent>
+                        </ContextMenuPortal>
+                    </ContextMenu>
                 }
             />
             <CatalogCard

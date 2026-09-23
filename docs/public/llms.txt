@@ -21,6 +21,7 @@ Install: `bun add @refineui/react @refineui/tokens`. Load `@refineui/tokens/tail
 - [Border](https://ui.pelagornis.com/foundations/border/): Stroke widths and borders
 - [Elevation](https://ui.pelagornis.com/foundations/elevation/): Shadows and depth
 - [Opacity](https://ui.pelagornis.com/foundations/opacity/): Opacity and overlays
+- [Blur](https://ui.pelagornis.com/foundations/blur/): Backdrop / surface frosted blur
 - [Motion](https://ui.pelagornis.com/foundations/motion/): Duration, easing, distance
 - [Z-index](https://ui.pelagornis.com/foundations/z-index/): Layering scale
 - [Layout](https://ui.pelagornis.com/foundations/layout/): Container, grid, alignment, responsive layout
@@ -44,8 +45,10 @@ Install: `bun add @refineui/react @refineui/tokens`. Load `@refineui/tokens/tail
 - [Carousel](https://ui.pelagornis.com/components/carousel/)
 - [Chart](https://ui.pelagornis.com/components/chart/)
 - [Checkbox](https://ui.pelagornis.com/components/checkbox/)
+- [Collapsible](https://ui.pelagornis.com/components/collapsible/): Show/hide from a trigger
 - [Command](https://ui.pelagornis.com/components/command/): Command palette with search
 - [Container](https://ui.pelagornis.com/components/container/)
+- [Context Menu](https://ui.pelagornis.com/components/context-menu/): Right-click menu
 - [Dialog](https://ui.pelagornis.com/components/dialog/)
 - [Divider](https://ui.pelagornis.com/components/divider/)
 - [Drawer](https://ui.pelagornis.com/components/drawer/)

@@ -2,11 +2,12 @@
  * Foundation Alias/Color — Pelagornis RefineUI Foundation Variables.
  * Light / Dark map to `PaletteColors` keys; CSS resolves `var(--refineui-color-*)`.
  *
- * `surfaceOverlay` is raw RGBA scrim in Foundation (not a global alias).
+ * `surfaceOverlay` / `surfaceFrosted` are raw RGBA (not palette-key aliases).
  *
  * Pair map typing follows `SemanticPalettePairsOf<PaletteColors>` in `types.ts`.
  */
-import { paletteColorCssVar } from "../internal/color";
+import { colors } from "../global/colors";
+import { hexToRgba, paletteColorCssVar } from "../internal/color";
 import type {
     PaletteColors,
     SemanticColorModePair,
@@ -88,21 +89,31 @@ export const SEMANTIC_PALETTE_PAIRS = {
 
 export type SemanticPaletteName = keyof typeof SEMANTIC_PALETTE_PAIRS;
 
-/** Legacy row shape: [aliasTail, lightKey, darkKey | "__RGBA__"] (surfaceOverlay only) */
+/** Legacy row shape: [aliasTail, lightKey, darkKey | "__RGBA__"] (RGBA aliases) */
 export const SEMANTIC_COLOR_ROWS = [
     ...(Object.entries(SEMANTIC_PALETTE_PAIRS) as [
         SemanticPaletteName,
         SemanticPalettePairFor<PaletteColors>,
     ][]).map(([name, { light, dark }]) => [name, light, dark] as const),
     ["surfaceOverlay", "__RGBA__", "__RGBA__"] as const,
+    ["surfaceFrosted", "__RGBA__", "__RGBA__"] as const,
 ] as const;
 
-export type SemanticColorName = SemanticPaletteName | "surfaceOverlay";
+export type SemanticColorName = SemanticPaletteName | "surfaceOverlay" | "surfaceFrosted";
 
 /** Foundation surfaceOverlay (Overlay and Modal) — raw RGBA */
 export const surfaceOverlayRgba = {
     light: "rgba(0, 0, 0, 0.2)",
     dark: "rgba(0, 0, 0, 0.6)",
+} as const;
+
+/**
+ * Frosted panel fill (Menu / Dropdown / Select) — translucent so `surfaceFrost` blur shows.
+ * Keep alpha low enough that page content reads through; pair with `--refineui-blur-surface-frost`.
+ */
+export const surfaceFrostedRgba = {
+    light: hexToRgba(colors.neutralWhite, 0.55),
+    dark: hexToRgba(colors.neutral900, 0.55),
 } as const;
 
 function buildSemanticColors(): Record<SemanticColorName, SemanticColorModePair> {
@@ -115,6 +126,7 @@ function buildSemanticColors(): Record<SemanticColorName, SemanticColorModePair>
         };
     }
     out.surfaceOverlay = { light: surfaceOverlayRgba.light, dark: surfaceOverlayRgba.dark };
+    out.surfaceFrosted = { light: surfaceFrostedRgba.light, dark: surfaceFrostedRgba.dark };
     return out;
 }
 

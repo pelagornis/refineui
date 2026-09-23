@@ -134,40 +134,22 @@
   color: inherit;
 }
 
-[data-refineui="dropdown-menu"][data-side="bottom"] {
-  transform-origin: top center;
-  animation: refineui-dropdown-menu-enter-bottom var(--refineui-motion-duration-normal) var(--refineui-motion-easing-standard) both;
-}
-[data-refineui="select-menu"][data-side="bottom"] {
-  transform-origin: top center;
-  animation: refineui-dropdown-menu-enter-bottom var(--refineui-motion-duration-normal) var(--refineui-motion-easing-standard) both;
-}
-[data-refineui="dropdown-menu"][data-side="top"] {
-  transform-origin: bottom center;
-  animation: refineui-dropdown-menu-enter-top var(--refineui-motion-duration-normal) var(--refineui-motion-easing-standard) both;
-}
+/*
+ * Enter: opacity only. A leftover `transform` (esp. with `animation-fill-mode: both`)
+ * creates a containing group and kills `backdrop-filter` on frosted panels.
+ */
+[data-refineui="dropdown-menu"][data-side="bottom"],
+[data-refineui="select-menu"][data-side="bottom"],
+[data-refineui="dropdown-menu"][data-side="top"],
 [data-refineui="select-menu"][data-side="top"] {
-  transform-origin: bottom center;
-  animation: refineui-dropdown-menu-enter-top var(--refineui-motion-duration-normal) var(--refineui-motion-easing-standard) both;
+  animation: refineui-frosted-panel-enter var(--refineui-motion-duration-normal) var(--refineui-motion-easing-standard);
 }
-@keyframes refineui-dropdown-menu-enter-bottom {
+@keyframes refineui-frosted-panel-enter {
   from {
     opacity: 0;
-    transform: translateY(-4px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes refineui-dropdown-menu-enter-top {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -651,34 +633,29 @@
   background-color: var(--refineui-color-alias-background-primary-active) !important;
 }
 
+/* Opacity-only — parent transform would isolate and break child `backdrop-filter`. */
 @keyframes refineui-menu-popover-enter {
   from {
     opacity: 0;
-    transform: translateY(calc(-1 * var(--refineui-motion-distance-float))) scale(var(--refineui-motion-scale-press));
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
   }
 }
 
 @keyframes refineui-menu-popover-exit {
   from {
     opacity: 1;
-    transform: translateY(0) scale(1);
   }
   to {
     opacity: 0;
-    transform: translateY(calc(-1 * var(--refineui-motion-distance-float))) scale(var(--refineui-motion-scale-press));
   }
 }
 
 [data-refineui="menu-popover"][data-state="open"] {
-  transform-origin: top left;
   animation: refineui-menu-popover-enter var(--refineui-motion-duration-normal) var(--refineui-motion-easing-standard);
 }
 [data-refineui="menu-popover"][data-state="closed"] {
-  transform-origin: top left;
   pointer-events: none;
   animation: refineui-menu-popover-exit var(--refineui-motion-duration-normal) var(--refineui-motion-easing-standard);
 }
@@ -696,46 +673,38 @@
 @keyframes refineui-menu-submenu-enter-right {
   from {
     opacity: 0;
-    transform: translateX(calc(-1 * var(--refineui-motion-distance-float)));
   }
   to {
     opacity: 1;
-    transform: translateX(0);
   }
 }
 
 @keyframes refineui-menu-submenu-enter-left {
   from {
     opacity: 0;
-    transform: translateX(var(--refineui-motion-distance-float));
   }
   to {
     opacity: 1;
-    transform: translateX(0);
   }
 }
 
 [data-refineui="menu"][data-submenu="true"][data-state="open"] {
-  animation: refineui-menu-submenu-enter-right var(--refineui-motion-duration-fast) var(--refineui-motion-easing-standard) both;
+  animation: refineui-menu-submenu-enter-right var(--refineui-motion-duration-fast) var(--refineui-motion-easing-standard);
 }
 [data-refineui="menu"][data-submenu="true"][data-state="open"][data-side="left"] {
-  transform-origin: right center;
   animation-name: refineui-menu-submenu-enter-left;
 }
 [data-refineui="menu"][data-submenu="true"][data-state="open"][data-side="right"] {
-  transform-origin: left center;
   animation-name: refineui-menu-submenu-enter-right;
 }
 
 [data-refineui="dropdown-menu"][data-submenu="true"][data-state="open"] {
-  animation: refineui-menu-submenu-enter-right var(--refineui-motion-duration-fast) var(--refineui-motion-easing-standard) both;
+  animation: refineui-menu-submenu-enter-right var(--refineui-motion-duration-fast) var(--refineui-motion-easing-standard);
 }
 [data-refineui="dropdown-menu"][data-submenu="true"][data-state="open"][data-side="left"] {
-  transform-origin: right center;
   animation-name: refineui-menu-submenu-enter-left;
 }
 [data-refineui="dropdown-menu"][data-submenu="true"][data-state="open"][data-side="right"] {
-  transform-origin: left center;
   animation-name: refineui-menu-submenu-enter-right;
 }
 
@@ -1101,13 +1070,36 @@
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
+  /* Frosted panels — fall back to opaque primary when blur is disabled */
+  [data-refineui="menu"],
+  [data-refineui="dropdown-menu"],
+  [data-refineui="select-menu"],
+  [data-refineui="sidebar-peek-panel"] {
+    background-color: var(--refineui-color-alias-background-primary);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
-/* Dialog / Drawer scrim — tint (`surfaceOverlay`) + light blur (keep behind content readable) */
+/* Dialog / Drawer scrim — tint (`surfaceOverlay`) + semantic overlay blur */
 [data-refineui="dialog"] > [role="presentation"],
 [data-refineui="drawer"] > [role="presentation"] {
-  backdrop-filter: blur(var(--refineui-spacing-size-xxx-small));
-  -webkit-backdrop-filter: blur(var(--refineui-spacing-size-xxx-small));
+  backdrop-filter: blur(var(--refineui-blur-overlay-scrim));
+  -webkit-backdrop-filter: blur(var(--refineui-blur-overlay-scrim));
+}
+
+/*
+ * Frosted panels — fill + surface blur (Menu, ContextMenu, Dropdown, Select, SidebarPeek).
+ * Fill: `--refineui-color-alias-surface-frosted`; blur: `--refineui-blur-surface-frost`.
+ * Avoid ancestor `transform` / leftover animation transform on these nodes (breaks backdrop).
+ */
+[data-refineui="menu"],
+[data-refineui="dropdown-menu"],
+[data-refineui="select-menu"],
+[data-refineui="sidebar-peek-panel"] {
+  background-color: var(--refineui-color-alias-surface-frosted);
+  -webkit-backdrop-filter: blur(var(--refineui-blur-surface-frost));
+  backdrop-filter: blur(var(--refineui-blur-surface-frost));
 }
 
 [data-refineui="toast"][data-swiping="true"] {
@@ -1604,7 +1596,8 @@ a[data-refineui="link"]:focus-visible {
 [data-refineui="sidebar-peek-surface"][data-sidebar-peek-panel-open] {
   visibility: visible;
   pointer-events: auto;
-  transform: translateX(0);
+  /* `translateX(0)` still creates a containing group and kills child backdrop-filter */
+  transform: none;
   transition:
     transform var(--refineui-motion-duration-overlay) var(--refineui-motion-easing-standard),
     visibility 0s linear 0s;
@@ -1616,7 +1609,7 @@ a[data-refineui="link"]:focus-visible {
   pointer-events: auto;
   border: var(--refineui-stroke-width-thin) solid var(--refineui-color-alias-border-default);
   border-radius: var(--refineui-radius-rounded-xx-large);
-  background: var(--refineui-color-alias-background-primary);
+  /* Fill + blur: shared frosted panel rule above (`surfaceFrosted` / `surfaceFrost`) */
   box-shadow: var(--refineui-elevation-16);
   overflow: hidden;
   transition: box-shadow var(--refineui-motion-duration-overlay) var(--refineui-motion-easing-standard);
@@ -2230,6 +2223,15 @@ a[data-refineui="link"]:focus-visible {
   }
 
   [data-refineui="toast"] {
+    background-color: Canvas;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  [data-refineui="menu"],
+  [data-refineui="dropdown-menu"],
+  [data-refineui="select-menu"],
+  [data-refineui="sidebar-peek-panel"] {
     background-color: Canvas;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
