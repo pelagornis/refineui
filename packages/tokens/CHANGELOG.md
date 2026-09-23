@@ -1,5 +1,11 @@
 # @refineui/tokens
 
+## 1.0.3
+
+### Patch Changes
+
+- Add Collapsible and Context Menu, frosted floating panels with blur tokens, SidebarPeek glass, and control polish (SegmentedControl, Breadcrumb, InputOTP).
+
 ## 1.0.2
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@refineui/utilities",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "RefineUI React utilities for building components",
   "sideEffects": false,
   "type": "module",

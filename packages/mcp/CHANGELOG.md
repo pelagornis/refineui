@@ -1,5 +1,13 @@
 # @refineui/mcp
 
+## 0.1.3
+
+### Patch Changes
+
+- Add Collapsible and Context Menu, frosted floating panels with blur tokens, SidebarPeek glass, and control polish (SegmentedControl, Breadcrumb, InputOTP).
+- Updated dependencies
+  - @refineui/tokens@1.0.3
+
 ## 0.1.2
 
 ### Patch Changes

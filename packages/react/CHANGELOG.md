@@ -1,5 +1,14 @@
 # @refineui/react
 
+## 0.0.7
+
+### Patch Changes
+
+- Add Collapsible and Context Menu, frosted floating panels with blur tokens, SidebarPeek glass, and control polish (SegmentedControl, Breadcrumb, InputOTP).
+- Updated dependencies
+  - @refineui/tokens@1.0.3
+  - @refineui/utilities@0.0.4
+
 ## 0.0.4
 
 ### Patch Changes
