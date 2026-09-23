@@ -11,7 +11,7 @@ export interface MenuProps extends HTMLAttributes<HTMLDivElement> {
 export interface MenuPopoverProps extends HTMLAttributes<HTMLDivElement> {}
 export interface MenuListProps extends HTMLAttributes<HTMLDivElement> {}
 
-export interface MenuSectionProps extends HTMLAttributes<HTMLDivElement> {
+export interface MenuLabelProps extends HTMLAttributes<HTMLDivElement> {
     children: ReactNode;
 }
 

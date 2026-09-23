@@ -207,6 +207,7 @@ export function InputOTP({
 export function InputOTPSlot({
     index,
     className,
+    style,
     onChange,
     onKeyDown,
     onPaste,
@@ -299,6 +300,10 @@ export function InputOTPSlot({
             value={char}
             aria-label={`Digit ${index + 1} of ${maxLength}`}
             className={clsx(inputOtpStyles.slot, inputOtpSlotSizeClass[size], className)}
+            style={{
+                ...style,
+                ["--refineui-input-otp-slot-index" as string]: index,
+            }}
             onChange={onSlotChange}
             onKeyDown={onSlotKeyDown}
             onPaste={onSlotPaste}

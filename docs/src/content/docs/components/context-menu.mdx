@@ -1,0 +1,52 @@
+---
+title: Context Menu
+description: A menu opened from a right click.
+---
+import ContextMenuPreview from "../../../components/ContextMenuPreview";
+import PackageInstall from "../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <ContextMenuPreview client:load />
+</div>
+
+## Installation
+
+<PackageInstall />
+
+## Usage
+
+```tsx
+import {
+  ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuPortal,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuSub,
+  ContextMenuSubTrigger,
+  ContextMenuSubContent,
+} from "@refineui/react";
+
+<ContextMenu>
+  <ContextMenuTrigger asChild>
+    <div>Right click</div>
+  </ContextMenuTrigger>
+  <ContextMenuPortal>
+    <ContextMenuContent>
+      <ContextMenuItem onSelect={() => copy()}>Copy</ContextMenuItem>
+      <ContextMenuSeparator />
+      <ContextMenuSub>
+        <ContextMenuSubTrigger>More</ContextMenuSubTrigger>
+        <ContextMenuPortal>
+          <ContextMenuSubContent>
+            <ContextMenuItem>Rename</ContextMenuItem>
+          </ContextMenuSubContent>
+        </ContextMenuPortal>
+      </ContextMenuSub>
+    </ContextMenuContent>
+  </ContextMenuPortal>
+</ContextMenu>
+```
+
+`onSelect` receives an event. Call `preventDefault()` on it to keep the menu open. Disabled items do not select.

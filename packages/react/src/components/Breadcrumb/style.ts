@@ -1,6 +1,10 @@
 import { componentTypographyTokens } from "../../tokens/componentTypographyTokens";
 import { componentTextClass } from "../../typography";
 
+/** Icon-only chip — same box as Button `layout="icon" size="sm"`. */
+const ellipsisChip =
+    "box-border inline-flex min-h-refineui-button-min-height-sm min-w-refineui-button-min-height-sm shrink-0 items-center justify-center rounded-refineui-large p-refineui-size-xx-small leading-none";
+
 export const breadcrumbStyles = {
     textRow: `${componentTextClass(componentTypographyTokens.breadcrumb.row)} whitespace-nowrap`,
     root: "py-refineui-size-x-small",
@@ -12,8 +16,7 @@ export const breadcrumbStyles = {
         "inline-flex items-center px-refineui-size-medium py-refineui-size-x-small font-medium text-refineui-alias-foreground-primary",
     separator: "inline-flex shrink-0 items-center",
     separatorText: "inline-flex items-center text-refineui-alias-foreground-tertiary select-none",
-    ellipsis:
-        "box-border inline-flex min-h-refineui-button-min-height-sm shrink-0 items-center justify-center rounded-refineui-large px-refineui-size-medium py-refineui-size-x-small text-refineui-alias-foreground-tertiary leading-none",
-    ellipsisTrigger:
-        "box-border inline-flex min-h-refineui-button-min-height-sm shrink-0 cursor-pointer items-center justify-center rounded-refineui-large border-none bg-transparent px-refineui-size-medium py-refineui-size-x-small text-refineui-alias-foreground-tertiary leading-none outline-none transition-[color,background-color] duration-[var(--refineui-motion-duration-fast)]",
+    ellipsis: `${ellipsisChip} text-refineui-alias-foreground-tertiary`,
+    /** Color only — size/layout come from Button `layout="icon" size="sm"`. */
+    ellipsisTrigger: "text-refineui-alias-foreground-tertiary",
 } as const;

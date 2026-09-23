@@ -30,6 +30,7 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/react.ts
 var react_exports = {};
 __export(react_exports, {
+  Slot: () => Slot,
   acquireBodyScrollLock: () => acquireBodyScrollLock,
   composeRef: () => composeRef,
   composeRefs: () => composeRefs,
@@ -117,8 +118,48 @@ function getMergeableTriggerChild(children) {
   }
   return node;
 }
+
+// src/Slot.tsx
+var import_react2 = require("react");
+var import_jsx_runtime = require("react/jsx-runtime");
+function mergeProps(slotProps, childProps) {
+  const merged = { ...slotProps };
+  for (const key of Object.keys(childProps)) {
+    if (key === "ref" || key === "children") continue;
+    const slotValue = slotProps[key];
+    const childValue = childProps[key];
+    const isEvent = key.startsWith("on") && typeof slotValue === "function" && typeof childValue === "function";
+    if (key === "className" || key === "aria-describedby") {
+      merged[key] = [slotValue, childValue].filter(Boolean).join(" ");
+    } else if (key === "style") {
+      merged.style = { ...slotValue ?? {}, ...childValue ?? {} };
+    } else if (isEvent) {
+      merged[key] = (event) => {
+        childValue(event);
+        if (!event?.defaultPrevented) slotValue(event);
+      };
+    } else {
+      merged[key] = childValue;
+    }
+  }
+  return merged;
+}
+var Slot = (0, import_react2.forwardRef)(function Slot2({ children, ...slotProps }, forwardedRef) {
+  if (!(0, import_react2.isValidElement)(children)) {
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_jsx_runtime.Fragment, { children });
+  }
+  const child = children;
+  const childProps = { ...child.props ?? {} };
+  const childRef = child.ref ?? childProps.ref;
+  delete childProps.ref;
+  delete childProps.children;
+  const merged = mergeProps(slotProps, childProps);
+  merged.ref = composeRefs(forwardedRef, childRef);
+  return (0, import_react2.cloneElement)(child, merged);
+});
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
+  Slot,
   acquireBodyScrollLock,
   composeRef,
   composeRefs,

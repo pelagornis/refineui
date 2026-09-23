@@ -148,6 +148,10 @@ export function SegmentedControl({
                 className={clsx(segmentedControlStyles.root, className)}
                 {...props}
             >
+                {/*
+                  Geometry + `data-ready` / `data-animate` drive visibility & motion in refineui.css.
+                  Until ready, selected item keeps a brand fill so SSR/first paint is not blank.
+                */}
                 <div
                     data-refineui="segmented-control-indicator"
                     data-ready={indicator.ready ? "true" : undefined}

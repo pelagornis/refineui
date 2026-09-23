@@ -2,7 +2,6 @@ import { SEMANTIC_TEXT, type SemanticTextName } from "@refineui/tokens";
 import {
     foundationTypographyUtilityClass,
     isSemanticTextTokenRef,
-    semanticTextToken,
     type SemanticTextTokenRef,
 } from "@refineui/utilities";
 

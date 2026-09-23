@@ -28,7 +28,7 @@ export const selectStyles = {
     chevronOpen: "rotate-180",
     positioner: "z-refineui-popup flex flex-col overflow-hidden",
     contentShell:
-        "box-border flex w-full min-h-0 flex-col overflow-hidden rounded-refineui-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xx-small shadow-refineui-2 outline-none",
+        "box-border flex w-full min-h-0 flex-col overflow-hidden rounded-refineui-xx-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary p-refineui-size-xx-small shadow-refineui-2 outline-none",
     contentPopper: "h-auto max-h-[var(--refineui-select-content-available-height,100dvh)]",
     contentItemAligned: "max-h-full",
     viewportPopper:

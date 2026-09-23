@@ -4,8 +4,9 @@
  * Tokens: componentTokens.segmentedControl
  *   color → componentColorTokens.segmentedControl
  *   typography → componentTypographyTokens.segmentedControl
- *   motion.indicator → CSS in refineui.css (`data-animate`)
+ *   motion.indicator → CSS in refineui.css (`data-animate`; transform leads, width lags)
  *   elevation.surface → selected thumb shadow
+ *   Pre-measure fill → selected item brand bg until indicator `data-ready` (refineui.css)
  */
 import { clsx } from "clsx";
 import { componentTypographyTokens } from "../tokens/componentTypographyTokens";

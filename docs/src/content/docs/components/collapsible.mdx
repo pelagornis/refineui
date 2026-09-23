@@ -1,0 +1,29 @@
+---
+title: Collapsible
+description: Show and hide a section from a trigger.
+---
+import CollapsiblePreview from "../../../components/CollapsiblePreview";
+import PackageInstall from "../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6">
+  <CollapsiblePreview client:load />
+</div>
+
+## Installation
+
+<PackageInstall />
+
+## Usage
+
+```tsx
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@refineui/react";
+
+<Collapsible defaultOpen>
+  <CollapsibleTrigger>Details</CollapsibleTrigger>
+  <CollapsibleContent>
+    Hidden until the trigger opens it.
+  </CollapsibleContent>
+</Collapsible>
+```
+
+`open` and `onOpenChange` make it controlled. `CollapsibleTrigger` accepts `asChild` and merges onto its child. Closed content stays mounted and is hidden.

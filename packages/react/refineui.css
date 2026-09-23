@@ -321,13 +321,30 @@
 [data-refineui="segmented-control-indicator"] {
   transition: none;
   display: block;
+  opacity: 0;
 }
-/* Animate only after first layout (`data-animate`) so mount does not slide from 0. */
+[data-refineui="segmented-control-indicator"][data-ready="true"] {
+  opacity: 1;
+}
+/*
+ * SSR / pre-measure: selected item carries brand fill until the sliding thumb
+ * has geometry (`data-ready`). Avoids a blank selection on first paint.
+ */
+[data-refineui="segmented-control"]:not(:has([data-refineui="segmented-control-indicator"][data-ready="true"]))
+  [data-refineui="segmented-control-item"][data-selected="true"]:not(:disabled):not([aria-disabled="true"]) {
+  background-color: var(--refineui-color-alias-background-brand);
+  box-shadow: var(--refineui-elevation-2);
+}
+[data-refineui="segmented-control"]:not(:has([data-refineui="segmented-control-indicator"][data-ready="true"]))
+  [data-refineui="segmented-control-item"][data-selected="true"]:not(:disabled):not([aria-disabled="true"]):hover {
+  background-color: var(--refineui-color-alias-background-brand-hover);
+}
+/* Animate only after first layout (`data-animate`) so mount does not slide from 0.
+ * Transform leads; width lags slightly so leading/trailing edges arrive apart. */
 [data-refineui="segmented-control-indicator"][data-animate="true"] {
-  /* Selection slide: medium + emphasized for a springier thumb move. */
   transition:
     transform var(--refineui-motion-duration-medium) var(--refineui-motion-easing-emphasized),
-    width var(--refineui-motion-duration-medium) var(--refineui-motion-easing-emphasized);
+    width var(--refineui-motion-duration-slow) var(--refineui-motion-easing-emphasized);
 }
 @media (prefers-reduced-motion: reduce) {
   [data-refineui="segmented-control-indicator"][data-animate="true"] {
@@ -339,7 +356,9 @@
   color: var(--refineui-color-alias-foreground-primary);
   background-color: transparent;
 }
-[data-refineui="segmented-control"] [data-refineui="segmented-control-item"][data-selected="true"]:not(:disabled):not([aria-disabled="true"]):hover {
+/* Once the thumb is ready, selection fill lives on the indicator — keep item transparent. */
+[data-refineui="segmented-control"]:has([data-refineui="segmented-control-indicator"][data-ready="true"])
+  [data-refineui="segmented-control-item"][data-selected="true"]:not(:disabled):not([aria-disabled="true"]):hover {
   color: var(--refineui-color-alias-foreground-on-brand);
   background-color: transparent;
 }
@@ -833,6 +852,23 @@
     border-color var(--refineui-motion-duration-fast);
   caret-color: var(--refineui-color-alias-foreground-primary);
 }
+/*
+ * Empty slots — same opacity pulse as Skeleton; staggered by `--refineui-input-otp-slot-index`.
+ * Stops when filled, focused, disabled, or reduced-motion.
+ */
+[data-refineui="input-otp"]:not([data-disabled="true"])
+  [data-refineui="input-otp-slot"]:not([data-filled]):not(:disabled):not(:focus) {
+  animation: refineui-skeleton-pulse var(--refineui-motion-duration-skeleton)
+    var(--refineui-motion-easing-ease-in-out) infinite;
+  animation-delay: calc(
+    var(--refineui-input-otp-slot-index, 0) * var(--refineui-motion-duration-fast) * -1
+  );
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-refineui="input-otp"] [data-refineui="input-otp-slot"] {
+    animation: none;
+  }
+}
 /* OTP digit typography — CSS vars (not Tailwind @utility; runtime-resolved classes are tree-shaken) */
 [data-refineui="input-otp"][data-size="sm"] [data-refineui="input-otp-slot"] {
   font-family: var(--refineui-typography-sub-title-1-font-family);
@@ -1205,12 +1241,12 @@
   min-width: var(--refineui-size-control-checkbox, 20px);
   min-height: var(--refineui-size-control-checkbox, 20px);
   border: 1px solid var(--refineui-color-alias-border-default);
-  border-radius: 4px;
+  border-radius: var(--refineui-radius-rounded-large);
   background-color: var(--refineui-color-alias-background-primary);
   transition: background-color var(--refineui-motion-duration-fast), border-color var(--refineui-motion-duration-fast), border-width var(--refineui-motion-duration-fast);
 }
 [data-refineui="checkbox"][data-variant="circular"] {
-  border-radius: 9999px;
+  border-radius: var(--refineui-radius-rounded-circle);
 }
 /* Unchecked — Hover: border subtle; Pressed: border strong */
 label:hover:not(:active) [data-refineui="checkbox"][data-checked="false"]:not([data-disabled="true"]) {
