@@ -14,8 +14,11 @@ const specDir = join(__dirname, "../dist/spec");
 const {
     SEMANTIC_PALETTE_PAIRS,
     SEMANTIC_TEXT,
+    blurs,
     colors,
     componentSizeFoundationKeys,
+    semanticBlur,
+    semanticBlurFoundationKeys,
     semanticColors,
     semanticFocus,
     semanticInteraction,
@@ -62,10 +65,11 @@ mkdirSync(specDir, { recursive: true });
 
 const foundation = {
     schemaVersion: 1,
-    categories: ["colors", "spacings", "foundationSizes", "motion"],
+    categories: ["colors", "spacings", "foundationSizes", "motion", "blurs"],
     spacings,
     foundationSizes,
     motion,
+    blurs,
 };
 
 const semanticColorsSpec = {
@@ -98,6 +102,27 @@ const motionSpec = {
         reducedMotion: {
             mediaQuery: "(prefers-reduced-motion: reduce)",
             contract: "Motion duration roles collapse to instant; scale roles resolve to 1.",
+        },
+    },
+};
+
+const blurSpec = {
+    schemaVersion: 1,
+    foundation: blurs,
+    semantic: Object.fromEntries(
+        Object.entries(semanticBlurFoundationKeys).map(([role, foundationKey]) => [
+            role,
+            {
+                foundation: foundationKey,
+                resolved: semanticBlur[role],
+                cssVar: `--refineui-blur-${toKebab(role)}`,
+            },
+        ]),
+    ),
+    accessibility: {
+        reducedTransparency: {
+            mediaQuery: "(prefers-reduced-transparency: reduce)",
+            contract: "Backdrop-filter blur collapses to none on Dialog/Drawer scrims (refineui.css).",
         },
     },
 };
@@ -135,6 +160,7 @@ const index = {
         semanticColors: "./semantic-colors.json",
         semanticText: "./semantic-text.json",
         motion: "./motion.json",
+        blur: "./blur.json",
         componentSizes: "./component-sizes.json",
         focus: "./focus.json",
         traceV2: "./trace-v2.json",
@@ -163,6 +189,7 @@ writeSpec("foundation.json", foundation);
 writeSpec("semantic-colors.json", semanticColorsSpec);
 writeSpec("semantic-text.json", semanticTextSpec);
 writeSpec("motion.json", motionSpec);
+writeSpec("blur.json", blurSpec);
 writeSpec("component-sizes.json", componentSizesSpec);
 writeSpec("focus.json", focusSpec);
 writeSpec("index.json", index);

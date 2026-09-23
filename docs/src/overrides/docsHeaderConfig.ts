@@ -223,6 +223,7 @@ export const DOCS_SEARCH_ITEMS: DocsSearchItem[] = [
     { value: "border", label: "Border", href: "/foundations/border/", group: "Foundations" },
     { value: "elevation", label: "Elevation", href: "/foundations/elevation/", group: "Foundations" },
     { value: "opacity", label: "Opacity", href: "/foundations/opacity/", group: "Foundations" },
+    { value: "blur", label: "Blur", href: "/foundations/blur/", group: "Foundations" },
     { value: "motion-foundations", label: "Motion", href: "/foundations/motion/", group: "Foundations" },
     { value: "z-index", label: "Z-index", href: "/foundations/z-index/", group: "Foundations" },
     { value: "layout", label: "Layout", href: "/foundations/layout/", group: "Foundations" },

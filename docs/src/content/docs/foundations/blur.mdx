@@ -1,0 +1,73 @@
+---
+title: Blur
+description: Backdrop and surface blur steps for frosted chrome.
+---
+
+import { SpecTable } from "../../../docs-ui";
+
+Prefer **semantic roles** (`overlayScrim`, `surfaceFrost`) — CSS `--refineui-blur-overlay-scrim`. Do not invent a one-off `blur(2px)` in components.
+
+## Semantic roles
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="Semantic blur roles"
+    columns={[
+      { key: "token", header: "Token", mono: true },
+      { key: "css", header: "CSS variable", mono: true },
+      { key: "foundation", header: "Foundation", mono: true },
+      { key: "use", header: "Use" },
+    ]}
+    rows={[
+      {
+        token: "overlayScrim",
+        css: "--refineui-blur-overlay-scrim",
+        foundation: "blur2",
+        use: "Dialog / Drawer scrim backdrop-filter",
+      },
+      {
+        token: "surfaceFrost",
+        css: "--refineui-blur-surface-frost",
+        foundation: "blur8",
+        use: "Frosted glass surfaces (menus, toast plate, …)",
+      },
+    ]}
+  />
+</div>
+
+## Foundation steps
+
+Value-based keys only — extend here before adding new semantic roles.
+
+<div class="not-content">
+  <SpecTable
+    client:load
+    aria-label="Foundation blur steps"
+    columns={[
+      { key: "token", header: "Token", mono: true },
+      { key: "value", header: "Value", mono: true },
+    ]}
+    rows={[
+      { token: "blurNone", value: "0" },
+      { token: "blur2", value: "2px" },
+      { token: "blur4", value: "4px" },
+      { token: "blur8", value: "8px" },
+      { token: "blur12", value: "12px" },
+      { token: "blur16", value: "16px" },
+    ]}
+  />
+</div>
+
+Scrim **tint** stays on `surfaceOverlay` / `--refineui-overlay-backdrop` (see [Opacity](/foundations/opacity/) and [Color](/foundations/color/)). Blur is the filter radius only.
+
+`prefers-reduced-transparency: reduce` collapses Dialog/Drawer `backdrop-filter` to `none` in `refineui.css`.
+
+## Usage
+
+```css
+.scrim {
+  background: var(--refineui-overlay-backdrop);
+  backdrop-filter: blur(var(--refineui-blur-overlay-scrim));
+}
+```

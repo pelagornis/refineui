@@ -16,6 +16,7 @@ const tokensDist = join(__dirname, "../dist/index.mjs");
 
 const {
     borderRadii,
+    blurs,
     colors,
     componentSizes,
     componentSizeFoundationKeys,
@@ -24,6 +25,7 @@ const {
     motion,
     opacities,
     overlays,
+    semanticBlurFoundationKeys,
     semanticColors,
     semanticElevations,
     semanticShadows,
@@ -284,6 +286,24 @@ function opacityEntries() {
     });
 }
 
+/** Foundation blur steps + semantic role aliases (`overlayScrim` → foundation blur2). */
+function blurLines() {
+    const root = [];
+    for (const [k, v] of Object.entries(blurs)) {
+        const step = k.replace(/^blur/, "") || "none";
+        const suffix = step === "None" || step === "none" ? "none" : toKebab(step);
+        root.push(`  --refineui-foundation-blur-${suffix}: ${v};`);
+    }
+    for (const [role, foundationKey] of Object.entries(semanticBlurFoundationKeys)) {
+        const step = foundationKey.replace(/^blur/, "") || "none";
+        const suffix = step === "None" || step === "none" ? "none" : toKebab(step);
+        root.push(
+            `  --refineui-blur-${toKebab(role)}: var(--refineui-foundation-blur-${suffix});`,
+        );
+    }
+    return root;
+}
+
 function iconSizeLines() {
     return Object.entries(iconSizes).map(
         ([k, v]) => `  --refineui-icon-size-${toKebab(k)}: ${v}px;`,
@@ -353,6 +373,9 @@ function emitTailwindThemeLines(shadowTheme, zTheme) {
     for (const { kebab } of opacityEntries()) {
         lines.push(`  --opacity-${NS}-${kebab}: var(--refineui-opacity-${kebab});`);
     }
+    for (const role of Object.keys(semanticBlurFoundationKeys)) {
+        lines.push(`  --blur-${NS}-${toKebab(role)}: var(--refineui-blur-${toKebab(role)});`);
+    }
     // Backdrop overlays theme via semantic alias
     lines.push(`  --color-${NS}-overlay-backdrop: var(--refineui-overlay-backdrop);`);
     lines.push(
@@ -393,6 +416,8 @@ const rootInner = [
     ...opacityEntries().map(
         ({ kebab, value }) => `  --refineui-opacity-${kebab}: ${value};`,
     ),
+    "  /* Blur — Foundation steps + Semantic role aliases */",
+    ...blurLines(),
     "  /* Motion — Foundation steps + Semantic role aliases */",
     ...interactionMotionLines(),
     "  /* Overlays — backdrop tracks semantic surfaceOverlay for theme */",

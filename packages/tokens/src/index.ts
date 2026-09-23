@@ -25,6 +25,12 @@ export {
 } from "./semantic/componentSizes";
 export { opacities } from "./global/opacities";
 export { overlays } from "./global/overlays";
+export { blurs } from "./global/blurs";
+export {
+    semanticBlur,
+    semanticBlurFoundationKeys,
+    type SemanticBlurName,
+} from "./semantic/blur";
 export { motion } from "./global/motion";
 export { strokeWidths } from "./global/strokeWidths";
 export { borderRadii } from "./global/borderRadii";

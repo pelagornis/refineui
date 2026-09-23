@@ -30,8 +30,8 @@ bun run build   # or npm/yarn/pnpm run build — builds utilities → tokens →
 
 ## Layers
 
-1. **Primitive / Foundation** (`src/global`) — palette, spacing, radius, shadows, foundation sizes, opacities, icon sizes, **`typographys`**, **`motion`** (raw duration / easing / scale / distance steps)
-2. **Semantic** (`src/semantic`) — color aliases, **`semanticInteraction`** (motion roles → Foundation steps), elevation pairs, **`SEMANTIC_TEXT`** (bodyMd, labelSm, … → Foundation keys)
+1. **Primitive / Foundation** (`src/global`) — palette, spacing, radius, **blurs**, shadows, foundation sizes, opacities, icon sizes, **`typographys`**, **`motion`** (raw duration / easing / scale / distance steps)
+2. **Semantic** (`src/semantic`) — color aliases, **`semanticInteraction`** (motion roles → Foundation steps), **`semanticBlur`** (overlay/surface blur roles → Foundation steps), elevation pairs, **`SEMANTIC_TEXT`** (bodyMd, labelSm, … → Foundation keys)
 3. **Component** — colors/sizes/typography/state role maps in `@refineui/react` (`componentColorTokens`, `componentTypographyTokens`)
 4. **Recipe** — `packages/react/src/recipes/` (base, variants, compoundVariants; slot recipes for Alert/Dialog/…)
 5. **Interaction** — `refineui.css` + `data-state` contract

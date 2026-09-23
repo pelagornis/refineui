@@ -1103,11 +1103,11 @@
   }
 }
 
-/* Dialog / Drawer scrim — tint (`surfaceOverlay`) + light blur (keep behind content readable) */
+/* Dialog / Drawer scrim — tint (`surfaceOverlay`) + semantic overlay blur */
 [data-refineui="dialog"] > [role="presentation"],
 [data-refineui="drawer"] > [role="presentation"] {
-  backdrop-filter: blur(var(--refineui-spacing-size-xxx-small));
-  -webkit-backdrop-filter: blur(var(--refineui-spacing-size-xxx-small));
+  backdrop-filter: blur(var(--refineui-blur-overlay-scrim));
+  -webkit-backdrop-filter: blur(var(--refineui-blur-overlay-scrim));
 }
 
 [data-refineui="toast"][data-swiping="true"] {

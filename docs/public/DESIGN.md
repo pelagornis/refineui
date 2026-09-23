@@ -150,6 +150,8 @@ Layout primitives: `Box`, `Stack`, `Grid`, `Container`. Prefer **logical** inset
 
 Elevation steps are semantic shadows (`shadow2` … `shadow64`) with separate light/dark recipes. Use the lowest step that establishes hierarchy; do not stack multi-layer custom box-shadows. Overlays use `surfaceOverlay` scrims, not ad-hoc rgba.
 
+Backdrop **blur** is separate from tint: prefer semantic roles `overlayScrim` / `surfaceFrost` (`--refineui-blur-*`). Do not borrow spacing tokens for `backdrop-filter`.
+
 ## Shapes
 
 Radius scale: `roundedXSmall` (2px) through `roundedXXLarge` (16px), plus `roundedCircle`. Default interactive controls land around **large (8px)**; cards and panels often **x-large (12px)**. Prefer token radii over arbitrary `rounded-*` values.
