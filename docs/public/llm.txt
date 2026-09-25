@@ -83,13 +83,13 @@ Alphabetical catalog — full docs at [/components/](https://ui.pelagornis.com/c
 - [Carousel](https://ui.pelagornis.com/components/carousel/)
 - [Chart](https://ui.pelagornis.com/components/chart/)
 - [Checkbox](https://ui.pelagornis.com/components/checkbox/)
-- [Collapsible](https://ui.pelagornis.com/components/collapsible/): Show/hide a section from a trigger (`asChild` supported)
+- [Collapsible](https://ui.pelagornis.com/components/collapsible/): Show/hide a section; `CollapsibleTrigger` defaults to `Button` `ghost` (`layout` / `size`; `asChild` optional)
 - [Command](https://ui.pelagornis.com/components/command/): Command palette with search and keyboard navigation
 - [Container](https://ui.pelagornis.com/components/container/)
 - [Context Menu](https://ui.pelagornis.com/components/context-menu/): Right-click menu (Menu anatomy + portal)
 - [Dialog](https://ui.pelagornis.com/components/dialog/)
 - [Divider](https://ui.pelagornis.com/components/divider/)
-- [Drawer](https://ui.pelagornis.com/components/drawer/)
+- [Drawer](https://ui.pelagornis.com/components/drawer/): Edge panel; no `DrawerClose` — dismiss via scrim, Escape, or controlled footer `Button`
 - [Dropdown](https://ui.pelagornis.com/components/dropdown/)
 - [Field](https://ui.pelagornis.com/components/field/)
 - [Footer](https://ui.pelagornis.com/components/footer/)
@@ -149,7 +149,9 @@ Alphabetical catalog — full docs at [/components/](https://ui.pelagornis.com/c
 - Use design tokens (`bg-refineui-alias-*`, `text-refineui-alias-*`, spacing/radius utilities) — no arbitrary px or hex in component styles
 - Match Web Kit component scope; do not add variants or convenience props not in Figma Web Kit
 - Prefer composition (`Field` + `Input`, `Command` + `CommandDialog`, `Sidebar` + `SidebarLink`, `Collapsible` + `CollapsibleTrigger`/`Content`, `ContextMenu` + portal content) over raw HTML for forms, navigation, and feedback
-- `Slot` / `asChild` merge props onto a child element — use for triggers that should render as `Button` or custom hosts
+- `CollapsibleTrigger` is a `Button` `ghost` by default — pass `layout="icon"` for chevron-only; use `asChild` only when merging onto a custom child
+- Drawer has no `DrawerClose` / auto header X — close with scrim, Escape, or controlled `onOpenChange` + footer `Button` (unlike Dialog’s `DialogClose`)
+- `Slot` / `asChild` merge props onto a child element — use for triggers that should render as a custom host
 - **Segmented Control:** sliding brand indicator; until `data-ready`, the selected item keeps a brand fill so SSR/first paint is not blank; transform leads width on slide
 - **Breadcrumb:** `BreadcrumbEllipsis` is presentational (square icon chip); interactive collapse uses `BreadcrumbEllipsisTrigger` (`Button` ghost icon sm)
 - **Input OTP:** empty slots reuse Skeleton opacity pulse (staggered by index); filled, focused, disabled, and `prefers-reduced-motion` stop the pulse

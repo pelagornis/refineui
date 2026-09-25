@@ -45,13 +45,13 @@ Install: `bun add @refineui/react @refineui/tokens`. Load `@refineui/tokens/tail
 - [Carousel](https://ui.pelagornis.com/components/carousel/)
 - [Chart](https://ui.pelagornis.com/components/chart/)
 - [Checkbox](https://ui.pelagornis.com/components/checkbox/)
-- [Collapsible](https://ui.pelagornis.com/components/collapsible/): Show/hide from a trigger
+- [Collapsible](https://ui.pelagornis.com/components/collapsible/): Show/hide; trigger defaults to Button ghost
 - [Command](https://ui.pelagornis.com/components/command/): Command palette with search
 - [Container](https://ui.pelagornis.com/components/container/)
 - [Context Menu](https://ui.pelagornis.com/components/context-menu/): Right-click menu
 - [Dialog](https://ui.pelagornis.com/components/dialog/)
 - [Divider](https://ui.pelagornis.com/components/divider/)
-- [Drawer](https://ui.pelagornis.com/components/drawer/)
+- [Drawer](https://ui.pelagornis.com/components/drawer/): Edge panel; no DrawerClose — scrim / Escape / controlled Button
 - [Dropdown](https://ui.pelagornis.com/components/dropdown/)
 - [Field](https://ui.pelagornis.com/components/field/)
 - [Footer](https://ui.pelagornis.com/components/footer/)

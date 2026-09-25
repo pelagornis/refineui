@@ -169,7 +169,8 @@ DOM / state contract:
 
 **Composition highlights**
 
-- **Collapsible** — `Collapsible` + `CollapsibleTrigger` + `CollapsibleContent`; trigger supports `asChild` (often a ghost icon `Button`)
+- **Collapsible** — `Collapsible` + `CollapsibleTrigger` + `CollapsibleContent`; trigger defaults to `Button` `ghost` (`layout` / `size` pass through); use `asChild` only for a custom child
+- **Drawer** — no `DrawerClose` / header X; dismiss via scrim, Escape, or controlled `onOpenChange` + footer `Button` (Dialog still has `DialogClose`)
 - **Context Menu** — same Menu item anatomy as Dropdown/Menu, opened from `ContextMenuTrigger` via right-click; content lives in `ContextMenuPortal`
 - **Slot / asChild** — merge host props onto a single child; prefer this over wrapping extra DOM for triggers
 - **Segmented Control** — mutually exclusive pill; brand indicator slides after first layout (`data-ready` / `data-animate`); empty first paint uses selected-item fill fallback

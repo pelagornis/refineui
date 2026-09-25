@@ -147,7 +147,9 @@ import {
     TreeItemContent,
     TreeItemTrigger,
     Tooltip,
+    WebIcon,
 } from "@refineui/react";
+import { iconSizes } from "@refineui/tokens";
 import { DemoBlock } from "../layout/DemoBlock";
 import { CatalogDropdownPreview, CatalogPopoverPreview } from "./catalogOverlayPreviews";
 import { CatalogCard, CatalogGrid, CatalogLocaleProvider } from "./CatalogCard";
@@ -420,9 +422,18 @@ export default function ComponentCatalog({ locale }: { locale?: import("../../li
                 name="Collapsible"
                 preview={
                     <Collapsible defaultOpen className="w-full max-w-refineui-foundation-size-2000">
-                        <CollapsibleTrigger className="text-refineui-alias-foreground-primary">
-                            Details
-                        </CollapsibleTrigger>
+                        <div className="flex items-center justify-between gap-refineui-size-medium">
+                            <span className="text-refineui-alias-foreground-primary">Details</span>
+                            <CollapsibleTrigger layout="icon" size="sm" aria-label="Toggle details">
+                                <WebIcon
+                                    name="chevron-down"
+                                    size={iconSizes.small}
+                                    color="currentColor"
+                                    fallback="▼"
+                                    aria-hidden
+                                />
+                            </CollapsibleTrigger>
+                        </div>
                         <CollapsibleContent>
                             <p className="m-0 text-refineui-alias-foreground-secondary">Hidden until opened.</p>
                         </CollapsibleContent>
