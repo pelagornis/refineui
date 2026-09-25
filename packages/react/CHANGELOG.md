@@ -1,5 +1,11 @@
 # @refineui/react
 
+## 0.0.8
+
+### Patch Changes
+
+- 20eb17d: CollapsibleTrigger defaults to Button ghost (keep `data-refineui="button"` for hover), remove DrawerClose / header X, and refresh LLM indexes so agents match the dismiss and trigger APIs.
+
 ## 0.0.7
 
 ### Patch Changes
