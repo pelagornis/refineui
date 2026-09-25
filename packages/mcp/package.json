@@ -1,6 +1,6 @@
 {
   "name": "@refineui/mcp",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "MCP server for RefineUI docs, components, and design-system rules",
   "type": "module",
   "license": "MIT",

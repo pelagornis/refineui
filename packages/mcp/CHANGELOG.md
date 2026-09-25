@@ -1,5 +1,11 @@
 # @refineui/mcp
 
+## 0.1.4
+
+### Patch Changes
+
+- 20eb17d: CollapsibleTrigger defaults to Button ghost (keep `data-refineui="button"` for hover), remove DrawerClose / header X, and refresh LLM indexes so agents match the dismiss and trigger APIs.
+
 ## 0.1.3
 
 ### Patch Changes
