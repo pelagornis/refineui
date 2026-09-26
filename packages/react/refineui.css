@@ -69,8 +69,8 @@
 }
 [data-refineui="select-item"] {
   transition:
-    background-color var(--refineui-motion-duration-fast),
-    transform var(--refineui-motion-duration-fast);
+    background-color var(--refineui-motion-duration-fast) var(--refineui-motion-easing-ease-out),
+    transform var(--refineui-motion-duration-fast) var(--refineui-motion-easing-ease-out);
 }
 /* List rows — Sidebar link plate (primary hover / active) */
 [data-refineui="dropdown-item"][data-selected="true"]:not(:disabled) {
@@ -160,19 +160,29 @@
 }
 [data-refineui="calendar-day"] {
   transition:
-    background-color var(--refineui-motion-duration-fast),
-    border-color var(--refineui-motion-duration-fast),
-    color var(--refineui-motion-duration-fast),
-    transform var(--refineui-motion-duration-fast);
+    background-color var(--refineui-motion-duration-fast) var(--refineui-motion-easing-ease-out),
+    border-color var(--refineui-motion-duration-fast) var(--refineui-motion-easing-ease-out),
+    color var(--refineui-motion-duration-fast) var(--refineui-motion-easing-ease-out),
+    transform var(--refineui-motion-duration-fast) var(--refineui-motion-easing-ease-out);
+}
+/* Select trigger — Button-like transform (press scale) */
+[data-refineui="select-trigger"] {
+  transition:
+    color var(--refineui-motion-duration-fast) var(--refineui-motion-easing-ease-out),
+    background-color var(--refineui-motion-duration-fast) var(--refineui-motion-easing-ease-out),
+    border-color var(--refineui-motion-duration-fast) var(--refineui-motion-easing-ease-out),
+    transform var(--refineui-motion-duration-fast) var(--refineui-motion-easing-ease-out);
 }
 /* Select trigger ghost — Button-like plate (Calendar caption, compact chrome) */
-[data-refineui="select-trigger"][data-appearance="ghost"]:not(:disabled):hover:not(:active),
-[data-refineui="select-trigger"][data-appearance="ghost"][data-state="open"]:not(:disabled) {
+[data-refineui="select-trigger"][data-appearance="ghost"]:not(:disabled):hover:not(:active):not([data-pressed]),
+[data-refineui="select-trigger"][data-appearance="ghost"][data-state="open"]:not(:disabled):not(:active):not([data-pressed]) {
   background-color: var(--refineui-color-alias-background-primary-hover);
   color: var(--refineui-color-alias-foreground-primary-hover);
 }
 [data-refineui="select-trigger"][data-appearance="ghost"]:not(:disabled):active,
-[data-refineui="select-trigger"][data-appearance="ghost"][data-state="open"]:not(:disabled):active {
+[data-refineui="select-trigger"][data-appearance="ghost"][data-pressed]:not(:disabled),
+[data-refineui="select-trigger"][data-appearance="ghost"][data-state="open"]:not(:disabled):active,
+[data-refineui="select-trigger"][data-appearance="ghost"][data-state="open"][data-pressed]:not(:disabled) {
   background-color: var(--refineui-color-alias-background-primary-active);
   color: var(--refineui-color-alias-foreground-primary);
 }
@@ -388,7 +398,7 @@
 [data-refineui="tab"]:active {
   transform: none;
 }
-/* Calendar / Day — Web Kit `Calendar / Day` (`639:7052`) */
+/* Calendar / Day — Web Kit `Calendar / Day` (`639:7052`) + Button press scale */
 [data-refineui="calendar-day"]:not([disabled]):not([data-inactive="true"]):not([data-selected]):not([data-range-middle]):hover:not(:active) {
   background-color: var(--refineui-color-alias-background-primary-hover) !important;
   color: var(--refineui-color-alias-foreground-primary-hover) !important;
@@ -396,6 +406,7 @@
 [data-refineui="calendar-day"]:not([disabled]):not([data-inactive="true"]):not([data-selected]):not([data-range-middle]):active {
   background-color: var(--refineui-color-alias-background-primary-active) !important;
   color: var(--refineui-color-alias-foreground-primary) !important;
+  transform: scale(var(--refineui-motion-scale-press));
 }
 [data-refineui="calendar-day"][data-range-middle]:not([disabled]):not([data-inactive="true"]):hover:not(:active) {
   background-color: var(--refineui-color-alias-background-primary-hover) !important;
@@ -404,8 +415,12 @@
 [data-refineui="calendar-day"][data-range-middle]:not([disabled]):not([data-inactive="true"]):active {
   background-color: var(--refineui-color-alias-background-primary-active) !important;
   color: var(--refineui-color-alias-foreground-primary) !important;
+  transform: scale(var(--refineui-motion-scale-press));
 }
-/* Selected / Day — selection uses fixed rest only; no hover/pressed background (Web Kit) */
+/* Selected day — keep rest fill; still press-scale on click like Button */
+[data-refineui="calendar-day"][data-selected]:not([disabled]):not([data-inactive="true"]):active {
+  transform: scale(var(--refineui-motion-scale-press));
+}
 /* Stepper — markers share Calendar day cell selection; upcoming uses primary hover/active */
 [data-refineui="stepper-item"]:not([data-disabled="true"])
   [data-refineui="stepper-indicator"][data-state="upcoming"]:active {
@@ -501,6 +516,8 @@
 [data-refineui="pagination"]:not(:disabled):active,
 [data-refineui="dropdown-item"]:not(:disabled):active,
 [data-refineui="select-item"]:not([aria-disabled="true"]):active,
+[data-refineui="select-trigger"]:not(:disabled):active,
+[data-refineui="select-trigger"][data-pressed]:not(:disabled),
 [data-refineui="menu-item"]:not(:disabled):active,
 [data-refineui="command-item"]:not(:disabled):active,
 [data-refineui="calendar-nav"]:active,
@@ -794,25 +811,21 @@
 }
 
 /* Select trigger — Navigation Menu hover / press / open plate; hairline field chrome */
-[data-refineui="select-trigger"][data-appearance="filled"] {
-  transition:
-    color var(--refineui-motion-duration-fast),
-    background-color var(--refineui-motion-duration-fast),
-    border-color var(--refineui-motion-duration-fast);
-}
-[data-refineui="select-trigger"][data-appearance="filled"]:not(:disabled):hover:not(:active) {
+[data-refineui="select-trigger"][data-appearance="filled"]:not(:disabled):hover:not(:active):not([data-pressed]) {
   color: var(--refineui-color-alias-foreground-primary-hover) !important;
   background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
-[data-refineui="select-trigger"][data-appearance="filled"]:not(:disabled):active {
+[data-refineui="select-trigger"][data-appearance="filled"]:not(:disabled):active,
+[data-refineui="select-trigger"][data-appearance="filled"][data-pressed]:not(:disabled) {
   color: var(--refineui-color-alias-foreground-primary) !important;
   background-color: var(--refineui-color-alias-background-primary-active) !important;
 }
-[data-refineui="select-trigger"][data-appearance="filled"][data-state="open"]:not(:disabled) {
+[data-refineui="select-trigger"][data-appearance="filled"][data-state="open"]:not(:disabled):not(:active):not([data-pressed]) {
   color: var(--refineui-color-alias-foreground-primary) !important;
   background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
-[data-refineui="select-trigger"][data-appearance="filled"][data-state="open"]:not(:disabled):active {
+[data-refineui="select-trigger"][data-appearance="filled"][data-state="open"]:not(:disabled):active,
+[data-refineui="select-trigger"][data-appearance="filled"][data-state="open"][data-pressed]:not(:disabled) {
   background-color: var(--refineui-color-alias-background-primary-active) !important;
 }
 [data-refineui="select-trigger"][data-appearance="filled"]:focus-visible:not(:disabled) {

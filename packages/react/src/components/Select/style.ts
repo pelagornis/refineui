@@ -12,7 +12,7 @@ export const selectStyles = {
         "border-refineui-hairline border-refineui-alias-border-default",
         "bg-refineui-alias-background-primary px-refineui-size-medium py-refineui-size-x-small",
         "text-refineui-alias-foreground-primary outline-none",
-        "transition-[color,background-color,border-color] duration-[var(--refineui-motion-duration-fast)]",
+        "transition-[color,background-color,border-color,transform] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",
     ),
     /** Ghost plate — same gap/radius as filled, no field border (Button ghost-like). */
     triggerGhost: clsx(
@@ -21,10 +21,13 @@ export const selectStyles = {
         "border-refineui-none border-transparent bg-transparent",
         "px-refineui-size-x-small py-refineui-size-xx-small",
         "text-refineui-alias-foreground-primary outline-none",
-        "transition-[color,background-color] duration-[var(--refineui-motion-duration-fast)]",
+        "transition-[color,background-color,transform] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",
     ),
     /** Flush shell — consumer / parent owns padding, radius, surface. */
-    triggerPlain: "box-border inline-flex cursor-pointer items-center outline-none",
+    triggerPlain: clsx(
+        "box-border inline-flex cursor-pointer items-center outline-none",
+        "transition-[transform] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",
+    ),
     triggerInner: "min-w-0 flex-1 overflow-hidden text-start",
     triggerOpen: "text-refineui-alias-foreground-primary",
     triggerDisabled:

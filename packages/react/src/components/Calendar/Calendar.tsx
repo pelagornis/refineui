@@ -43,12 +43,16 @@ function getWeekdayLabels(weekStartsOn: 0 | 1) {
     return [...WEEKDAYS.slice(weekStartsOn), ...WEEKDAYS.slice(0, weekStartsOn)];
 }
 
-function formatMonthName(year: number, month: number) {
+function formatMonthLabel(year: number, month: number) {
+    return new Intl.DateTimeFormat("en-US", { month: "short" }).format(new Date(year, month, 1));
+}
+
+function formatMonthNameLong(year: number, month: number) {
     return new Intl.DateTimeFormat("en-US", { month: "long" }).format(new Date(year, month, 1));
 }
 
 const MONTH_LABELS = Array.from({ length: MONTH_COUNT }, (_, monthIndex) =>
-    formatMonthName(2000, monthIndex),
+    formatMonthLabel(2000, monthIndex),
 );
 
 function yearOptionsForView(viewYear: number): number[] {
@@ -82,7 +86,10 @@ function CalendarCaptionSelect({
             <SelectTrigger
                 appearance="ghost"
                 data-calendar-header={header}
-                className={calendarStyles.captionButton}
+                className={clsx(
+                    calendarStyles.captionButton,
+                    header === "caption-year" && "tabular-nums",
+                )}
             >
                 <SelectValue placeholder={placeholder} />
             </SelectTrigger>
@@ -153,7 +160,9 @@ export function Calendar({
     const cells = getMonthGrid(year, month, weekStartsOn);
     const weeks = chunkWeeks(cells);
     const weekdayLabels = getWeekdayLabels(weekStartsOn);
-    const monthName = formatMonthName(year, month);
+    const monthLabel = formatMonthLabel(year, month);
+    const monthNameLong = formatMonthNameLong(year, month);
+    const yearOptions = yearOptionsForView(year);
 
     const getDateFromCell = (d: number, monthOffset: MonthOffset) => new Date(year, month + monthOffset, d);
 
@@ -360,8 +369,8 @@ export function Calendar({
                 </Button>
                 <CalendarCaptionSelect
                     value={String(month)}
-                    placeholder={monthName}
-                    ariaLabel={`Month: ${monthName}`}
+                    placeholder={monthLabel}
+                    ariaLabel={`Month: ${monthNameLong}`}
                     header="caption-month"
                     onValueChange={(nextMonth) => {
                         setView(new Date(year, Number.parseInt(nextMonth, 10), 1));
@@ -382,7 +391,7 @@ export function Calendar({
                         setView(new Date(Number.parseInt(nextYear, 10), month, 1));
                     }}
                 >
-                    {yearOptionsForView(year).map((yearOption) => (
+                    {yearOptions.map((yearOption) => (
                         <SelectItem key={yearOption} value={String(yearOption)}>
                             {String(yearOption)}
                         </SelectItem>

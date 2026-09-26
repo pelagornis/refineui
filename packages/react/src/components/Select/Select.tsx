@@ -356,6 +356,7 @@ export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(f
     const isPlain = appearance === "plain";
     const isGhost = appearance === "ghost";
     const isFilled = appearance === "filled";
+    const [pressed, setPressed] = useState(false);
     const setRefs = useCallback(
         (node: HTMLButtonElement | null) => {
             (triggerRef as MutableRefObject<HTMLButtonElement | null>).current = node;
@@ -364,6 +365,7 @@ export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(f
         },
         [forwardedRef, triggerRef],
     );
+    const clearPressed = useCallback(() => setPressed(false), []);
     return (
         <button
             ref={setRefs}
@@ -375,10 +377,19 @@ export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(f
             data-appearance={appearance}
             data-size={size}
             data-state={open ? "open" : "closed"}
+            data-pressed={pressed ? "" : undefined}
             data-placeholder={hasLabel ? undefined : ""}
             disabled={disabled}
+            onPointerDown={(event) => {
+                if (disabled || event.button !== 0) return;
+                setPressed(true);
+            }}
+            onPointerUp={clearPressed}
+            onPointerLeave={clearPressed}
+            onPointerCancel={clearPressed}
             onMouseDown={(event) => {
                 event.preventDefault();
+                if (disabled) return;
                 setOpen(!open);
                 triggerRef.current?.focus();
             }}
