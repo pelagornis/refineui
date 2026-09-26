@@ -172,6 +172,7 @@ export function TabsList({ className, children, ...props }: TabsListProps) {
                 className={tabsStyles.indicator}
                 style={indicatorStyle}
             />
+            {/* Pre-measure underline: selected tab ::after until `data-ready` (refineui.css). */}
             {children}
         </div>
     );

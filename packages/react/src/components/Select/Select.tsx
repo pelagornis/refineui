@@ -351,8 +351,9 @@ export function Select({
 
 export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(function SelectTrigger(props, forwardedRef) {
     const { className, children, style, appearance = "filled", ...triggerRest } = props;
-    const { open, setOpen, triggerRef, onKeyDown, size, fullWidth, disabled, value, getLabelByValue } = useSelectCtx();
-    const hasLabel = Boolean(getLabelByValue(value));
+    const { open, setOpen, triggerRef, onKeyDown, size, fullWidth, disabled, value } = useSelectCtx();
+    /** Empty value only — closed menus may not have registered item labels yet. */
+    const isPlaceholder = value === "";
     const isPlain = appearance === "plain";
     const isGhost = appearance === "ghost";
     const isFilled = appearance === "filled";
@@ -378,7 +379,7 @@ export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(f
             data-size={size}
             data-state={open ? "open" : "closed"}
             data-pressed={pressed ? "" : undefined}
-            data-placeholder={hasLabel ? undefined : ""}
+            data-placeholder={isPlaceholder ? "" : undefined}
             disabled={disabled}
             onPointerDown={(event) => {
                 if (disabled || event.button !== 0) return;
@@ -431,8 +432,18 @@ SelectTrigger.displayName = "SelectTrigger";
 export function SelectValue({ placeholder, className, ...props }: SelectValueProps) {
     const { value, getLabelByValue, placeholder: rootPlaceholder } = useSelectCtx();
     const label = getLabelByValue(value);
+    /** Placeholder color only when unselected — label cache may be empty until the menu opens once. */
+    const isPlaceholder = value === "";
     return (
-        <span data-refineui-select-value="" className={clsx(selectStyles.value, !label && "text-refineui-alias-foreground-placeholder", className)} {...props}>
+        <span
+            data-refineui-select-value=""
+            className={clsx(
+                selectStyles.value,
+                isPlaceholder && "text-refineui-alias-foreground-placeholder",
+                className,
+            )}
+            {...props}
+        >
             {label || placeholder || rootPlaceholder || "Select..."}
         </span>
     );

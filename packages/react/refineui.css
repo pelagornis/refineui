@@ -372,6 +372,28 @@
 [data-refineui="tabs-indicator"] {
   transition: none;
   display: block;
+  opacity: 0;
+}
+[data-refineui="tabs-indicator"][data-ready="true"] {
+  opacity: 1;
+}
+/*
+ * SSR / pre-measure: selected tab carries a static underline until the sliding
+ * indicator has geometry (`data-ready`). Avoids a missing brand line on first paint.
+ */
+[data-refineui="tabs-list"]:not(:has([data-refineui="tabs-indicator"][data-ready="true"]))
+  [data-refineui="tab"][data-selected="true"]::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: var(--refineui-stroke-width-thick);
+  background-color: var(--refineui-color-alias-background-brand);
+  pointer-events: none;
+}
+[data-refineui="tabs-list"]:not(:has([data-refineui="tabs-indicator"][data-ready="true"]))
+  [data-refineui="tab"][data-selected="true"]:not(:disabled):not([aria-disabled="true"]):hover::after {
+  background-color: var(--refineui-color-alias-background-brand-hover);
 }
 /* Animate only after first layout (`data-animate`) — same contract as Segmented Control. */
 [data-refineui="tabs-indicator"][data-animate="true"] {
