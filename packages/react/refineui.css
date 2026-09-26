@@ -165,16 +165,21 @@
     color var(--refineui-motion-duration-fast),
     transform var(--refineui-motion-duration-fast);
 }
-/* Calendar caption selects — ghost plate (header chrome, not form-field outline) */
-[data-refineui="calendar"] [data-refineui="select-trigger"][data-calendar-header]:not(:disabled):hover:not(:active),
-[data-refineui="calendar"] [data-refineui="select-trigger"][data-calendar-header][data-state="open"]:not(:disabled) {
+/* Select trigger ghost — Button-like plate (Calendar caption, compact chrome) */
+[data-refineui="select-trigger"][data-appearance="ghost"]:not(:disabled):hover:not(:active),
+[data-refineui="select-trigger"][data-appearance="ghost"][data-state="open"]:not(:disabled) {
   background-color: var(--refineui-color-alias-background-primary-hover);
   color: var(--refineui-color-alias-foreground-primary-hover);
 }
-[data-refineui="calendar"] [data-refineui="select-trigger"][data-calendar-header]:not(:disabled):active,
-[data-refineui="calendar"] [data-refineui="select-trigger"][data-calendar-header][data-state="open"]:not(:disabled):active {
+[data-refineui="select-trigger"][data-appearance="ghost"]:not(:disabled):active,
+[data-refineui="select-trigger"][data-appearance="ghost"][data-state="open"]:not(:disabled):active {
   background-color: var(--refineui-color-alias-background-primary-active);
   color: var(--refineui-color-alias-foreground-primary);
+}
+[data-refineui="select-trigger"][data-appearance="ghost"]:focus-visible:not(:disabled) {
+  outline: none;
+  background-color: var(--refineui-color-alias-background-primary-hover);
+  color: var(--refineui-color-alias-foreground-primary-hover);
 }
 [data-refineui="calendar-nav"]:hover,
 [data-refineui="chip-remove"]:hover {
@@ -789,28 +794,28 @@
 }
 
 /* Select trigger — Navigation Menu hover / press / open plate; hairline field chrome */
-[data-refineui="select-trigger"]:not([data-appearance="plain"]) {
+[data-refineui="select-trigger"][data-appearance="filled"] {
   transition:
     color var(--refineui-motion-duration-fast),
     background-color var(--refineui-motion-duration-fast),
     border-color var(--refineui-motion-duration-fast);
 }
-[data-refineui="select-trigger"]:not([data-appearance="plain"]):not(:disabled):hover:not(:active) {
+[data-refineui="select-trigger"][data-appearance="filled"]:not(:disabled):hover:not(:active) {
   color: var(--refineui-color-alias-foreground-primary-hover) !important;
   background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
-[data-refineui="select-trigger"]:not([data-appearance="plain"]):not(:disabled):active {
+[data-refineui="select-trigger"][data-appearance="filled"]:not(:disabled):active {
   color: var(--refineui-color-alias-foreground-primary) !important;
   background-color: var(--refineui-color-alias-background-primary-active) !important;
 }
-[data-refineui="select-trigger"]:not([data-appearance="plain"])[data-state="open"]:not(:disabled) {
+[data-refineui="select-trigger"][data-appearance="filled"][data-state="open"]:not(:disabled) {
   color: var(--refineui-color-alias-foreground-primary) !important;
   background-color: var(--refineui-color-alias-background-primary-hover) !important;
 }
-[data-refineui="select-trigger"]:not([data-appearance="plain"])[data-state="open"]:not(:disabled):active {
+[data-refineui="select-trigger"][data-appearance="filled"][data-state="open"]:not(:disabled):active {
   background-color: var(--refineui-color-alias-background-primary-active) !important;
 }
-[data-refineui="select-trigger"]:not([data-appearance="plain"]):focus-visible:not(:disabled) {
+[data-refineui="select-trigger"][data-appearance="filled"]:focus-visible:not(:disabled) {
   outline: none;
   color: var(--refineui-color-alias-foreground-primary-hover);
   background-color: var(--refineui-color-alias-background-primary-hover);

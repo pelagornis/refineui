@@ -4,9 +4,10 @@ export type SelectSize = "sm" | "md" | "lg";
 
 /**
  * `filled` — standalone field chrome (border + surface).
- * `plain` — flush trigger for composed surfaces (Footer locale, Calendar caption).
+ * `ghost` — compact chrome without field border (Calendar caption, Button-like ghost).
+ * `plain` — flush trigger; consumer / parent owns padding, radius, surface.
  */
-export type SelectTriggerAppearance = "filled" | "plain";
+export type SelectTriggerAppearance = "filled" | "ghost" | "plain";
 
 export interface SelectOption {
     value: string;
@@ -32,7 +33,8 @@ export interface SelectTriggerProps extends HTMLAttributes<HTMLButtonElement> {
     children?: ReactNode;
     /**
      * `filled` — default field chrome.
-     * `plain` — no field chrome; compose visuals via `className` / parent recipe.
+     * `ghost` — no field border; gap + radius + ghost hover plate.
+     * `plain` — no chrome; compose visuals via `className` / parent recipe.
      * @default "filled"
      */
     appearance?: SelectTriggerAppearance;

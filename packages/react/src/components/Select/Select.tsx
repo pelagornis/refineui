@@ -354,6 +354,8 @@ export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(f
     const { open, setOpen, triggerRef, onKeyDown, size, fullWidth, disabled, value, getLabelByValue } = useSelectCtx();
     const hasLabel = Boolean(getLabelByValue(value));
     const isPlain = appearance === "plain";
+    const isGhost = appearance === "ghost";
+    const isFilled = appearance === "filled";
     const setRefs = useCallback(
         (node: HTMLButtonElement | null) => {
             (triggerRef as MutableRefObject<HTMLButtonElement | null>).current = node;
@@ -383,10 +385,17 @@ export const SelectTrigger = forwardRef<HTMLButtonElement, SelectTriggerProps>(f
             onKeyDown={onKeyDown}
             className={clsx(
                 "data-[placeholder]:[&_[data-refineui-select-value]]:text-refineui-alias-foreground-placeholder",
-                isPlain ? selectStyles.triggerPlain : selectStyles.trigger,
-                !isPlain && selectTriggerSizeClass[size],
-                !isPlain && open && selectStyles.triggerOpen,
-                disabled && (isPlain ? selectStyles.triggerPlainDisabled : selectStyles.triggerDisabled),
+                isPlain && selectStyles.triggerPlain,
+                isGhost && selectStyles.triggerGhost,
+                isFilled && selectStyles.trigger,
+                (isFilled || isGhost) && selectTriggerSizeClass[size],
+                isFilled && open && selectStyles.triggerOpen,
+                disabled &&
+                    (isPlain
+                        ? selectStyles.triggerPlainDisabled
+                        : isGhost
+                          ? selectStyles.triggerGhostDisabled
+                          : selectStyles.triggerDisabled),
                 fullWidth && "w-full",
                 className,
             )}

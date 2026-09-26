@@ -20,12 +20,7 @@ export const calendarStyles = {
         "box-border flex w-fit min-w-refineui-calendar-min-width flex-col gap-refineui-size-none rounded-refineui-large bg-refineui-alias-background-primary p-refineui-size-x-large",
     header: "flex w-full min-w-0 items-center justify-between pb-refineui-size-large",
     navButton: "shrink-0 text-refineui-alias-foreground-primary",
-    captionButton: clsx(
-        "shrink-0",
-        "border-refineui-none border-transparent bg-transparent",
-        "px-refineui-size-x-small py-refineui-size-xx-small",
-        "text-refineui-alias-foreground-primary",
-    ),
+    captionButton: "shrink-0",
     body: "flex flex-col gap-refineui-size-small",
     weekday: clsx(
         componentTextClass(componentTypographyTokens.calendar.weekday),
