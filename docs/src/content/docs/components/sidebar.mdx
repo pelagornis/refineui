@@ -14,6 +14,8 @@ import PackageInstall from "../../../components/PackageInstall.mdx";
   <SidebarPreview client:load />
 </div>
 
+`SidebarTrigger` is the button that opens and closes the sidebar. Put it anywhere inside `SidebarProvider` — this page places it at the start of the content. Closing removes the sidebar. Hover the edge to peek it, or press the trigger to open it again.
+
 
 ## Contract
 
@@ -111,6 +113,35 @@ Label for a group.
 ### SidebarFooter
 
 Footer section.
+
+### SidebarProvider
+
+Owns whether the sidebar is expanded. Wrap both the docked `Sidebar` and the trigger so the trigger can sit outside the sidebar.
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "open", default: "—", type: "boolean", description: "Expanded state. Omit to let the provider own it." },
+    { prop: "defaultOpen", default: "true", type: "boolean", description: "Initial expanded state when `open` is omitted." },
+    { prop: "onOpenChange", default: "—", type: "(open: boolean) => void", description: "Called when the trigger toggles." },
+    { prop: "id", default: "—", type: "string", description: "Id of the docked sidebar. The trigger sets `aria-controls` to this id." }
+    ]}
+  />
+</div>
+
+### SidebarTrigger
+
+`Button` that toggles the provider. Where you render it is the position. Default variant is `secondary`.
+
+```tsx
+<SidebarProvider id="app-sidebar" open={open} onOpenChange={setOpen}>
+  <SidebarTrigger layout="icon" size="sm" aria-label={open ? "Close sidebar" : "Open sidebar"}>
+    <PanelIcon />
+  </SidebarTrigger>
+  <Sidebar id="app-sidebar">{/* nav */}</Sidebar>
+</SidebarProvider>
+```
 
 ### Sidebar peek (collapsed hover)
 

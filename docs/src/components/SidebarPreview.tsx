@@ -5,7 +5,8 @@ import { motionMsToNumber } from "@refineui/utilities/animation";
 import {
     Box,
     Button,
-    ResizableHandle,
+    SidebarProvider,
+    SidebarTrigger,
     ResizablePanel,
     ResizablePanelGroup,
     Sidebar,
@@ -26,7 +27,9 @@ import {
     WebIcon,
 } from "@refineui/react";
 import { Look, Looks } from "./PreviewFrame";
+import { SidebarResizeHandle } from "./SidebarSeam";
 
+const PREVIEW_SIDEBAR_ID = "refineui-sidebar-preview";
 const DEFAULT_SIDEBAR = 32;
 const MAX_SIDEBAR = 48;
 const COLLAPSE_AT = 1;
@@ -45,9 +48,9 @@ function NavGlyph({ name }: { name: string }) {
     return <WebIcon name={name} size={iconSizes.small} color="currentColor" aria-hidden />;
 }
 
-function SidebarRail() {
+function SidebarRail({ id }: { id?: string }) {
     return (
-        <Sidebar className="h-full min-h-0">
+        <Sidebar id={id} className="h-full min-h-0">
             <SidebarHeader>
                 <SidebarBrand>RefineUI</SidebarBrand>
             </SidebarHeader>
@@ -145,20 +148,14 @@ export default function SidebarPreview() {
         if (sidebarSize > COLLAPSE_AT) {
             restoredSize.current = clampSidebarSize(sidebarSize);
         }
+        setCollapsed(true);
         runPanelMotion(0, finishCollapse);
     };
 
     const expandAnimated = () => {
         if (!collapsed || animating) return;
-        setCollapsed(false);
         setSidebarSize(0);
         runPanelMotion(restoredSize.current, finishExpand);
-    };
-
-    const toggleSidebar = () => {
-        if (animating) return;
-        if (collapsed) expandAnimated();
-        else collapseAnimated();
     };
 
     const handleSidebarTransitionEnd = (event: TransitionEvent<HTMLDivElement>) => {
@@ -193,56 +190,55 @@ export default function SidebarPreview() {
                     onPin={expandAnimated}
                     className="h-refineui-foundation-size-4500 w-full"
                 >
-                    <ResizablePanelGroup
-                        orientation="horizontal"
-                        data-sidebar-preview=""
-                        data-sidebar-preview-collapsed={collapsed && !animating ? "" : undefined}
-                        data-sidebar-preview-animating={animating ? "" : undefined}
-                        className="h-full w-full"
-                        onLayout={(sizes) => {
-                            if (animating || collapsed) return;
-                            const next = sizes[0];
-                            if (next == null) return;
-                            if (next <= COLLAPSE_AT) {
-                                collapseInstant();
-                                return;
-                            }
-                            setSidebarSize(next);
+                    <SidebarProvider
+                        id={PREVIEW_SIDEBAR_ID}
+                        open={!collapsed}
+                        onOpenChange={(open) => {
+                            if (animating) return;
+                            if (open) expandAnimated();
+                            else collapseAnimated();
                         }}
                     >
-                        <ResizablePanel
-                            size={sidebarSize}
-                            minSize={0}
-                            maxSize={collapsed && !animating ? 0 : MAX_SIDEBAR}
-                            className="flex min-h-0 min-w-0 overflow-hidden"
-                            style={panelMotionStyle}
-                            onTransitionEnd={handleSidebarTransitionEnd}
-                            aria-hidden={collapsed && !animating}
+                        <ResizablePanelGroup
+                            orientation="horizontal"
+                            data-sidebar-preview=""
+                            data-sidebar-preview-collapsed={collapsed && !animating ? "" : undefined}
+                            data-sidebar-preview-animating={animating ? "" : undefined}
+                            className="h-full w-full"
+                            onLayout={(sizes) => {
+                                if (animating || collapsed) return;
+                                const next = sizes[0];
+                                if (next == null) return;
+                                if (next <= COLLAPSE_AT) {
+                                    collapseInstant();
+                                    return;
+                                }
+                                setSidebarSize(next);
+                            }}
                         >
-                            {railOpen ? (
-                                <div className="flex h-full min-h-0 w-full min-w-0">
-                                    <SidebarRail />
-                                </div>
-                            ) : null}
-                        </ResizablePanel>
-                        {railOpen ? <ResizableHandle withHandle disabled={animating} /> : null}
-                        <ResizablePanel
-                            size={100 - sidebarSize}
-                            minSize={collapsed && !animating ? 100 : 30}
-                            className="relative flex min-h-0 min-w-0"
-                            style={panelMotionStyle}
-                        >
-                            <SidebarPeekInset>
-                                {!animating ? (
-                                    <Button
-                                        type="button"
-                                        variant="ghost"
+                            <ResizablePanel
+                                size={sidebarSize}
+                                minSize={0}
+                                maxSize={collapsed && !animating ? 0 : MAX_SIDEBAR}
+                                className="flex min-h-0 min-w-0 overflow-hidden"
+                                style={panelMotionStyle}
+                                onTransitionEnd={handleSidebarTransitionEnd}
+                            >
+                                {railOpen ? <SidebarRail id={PREVIEW_SIDEBAR_ID} /> : null}
+                            </ResizablePanel>
+                            {railOpen ? <SidebarResizeHandle animating={animating} /> : null}
+                            <ResizablePanel
+                                size={100 - sidebarSize}
+                                minSize={collapsed && !animating ? 100 : 30}
+                                className="relative flex min-h-0 min-w-0"
+                                style={panelMotionStyle}
+                            >
+                                <SidebarPeekInset>
+                                    <SidebarTrigger
                                         layout="icon"
                                         size="sm"
                                         data-sidebar-preview-toggle
                                         aria-label={collapsed ? "Open sidebar" : "Close sidebar"}
-                                        aria-expanded={!collapsed}
-                                        onClick={toggleSidebar}
                                     >
                                         <WebIcon
                                             name="panel-left"
@@ -250,44 +246,47 @@ export default function SidebarPreview() {
                                             color="currentColor"
                                             fallback="☰"
                                         />
-                                    </Button>
-                                ) : null}
-                                <Box
-                                    background="surfaceSunken"
-                                    padding="sizeLarge"
-                                    className="flex min-h-0 min-w-0 flex-1 items-center justify-center"
-                                >
-                                    <Text variant="bodySm" className="text-refineui-alias-foreground-secondary">
-                                        Main
-                                    </Text>
-                                </Box>
-                            </SidebarPeekInset>
-                            <SidebarPeekEdge />
-                            <SidebarPeekPanel>
-                                <SidebarPeekPin>
-                                    <Button
-                                        type="button"
-                                        variant="ghost"
-                                        layout="icon"
-                                        size="sm"
-                                        aria-label="Pin sidebar open"
-                                        onClick={expandAnimated}
+                                    </SidebarTrigger>
+                                    <Box
+                                        background="surfaceSunken"
+                                        padding="sizeLarge"
+                                        className="flex min-h-0 min-w-0 flex-1 flex-col items-start justify-start gap-refineui-size-x-small"
                                     >
-                                        <WebIcon
-                                            name="panel-left"
-                                            size={iconSizes.small}
-                                            color="currentColor"
-                                            fallback="☰"
-                                        />
-                                    </Button>
-                                </SidebarPeekPin>
-                                <div className="flex min-h-0 w-full flex-1">
-                                    <SidebarRail />
-                                </div>
-                            </SidebarPeekPanel>
-                        </ResizablePanel>
-                    </ResizablePanelGroup>
-                </SidebarPeek>
+                                        <Text variant="bodySm" className="text-refineui-alias-foreground-primary">
+                                            Overview
+                                        </Text>
+                                        <Text variant="bodySm" className="text-refineui-alias-foreground-secondary">
+                                            Main
+                                        </Text>
+                                    </Box>
+                                </SidebarPeekInset>
+                                <SidebarPeekEdge />
+                                <SidebarPeekPanel>
+                                    <SidebarPeekPin>
+                                        <Button
+                                            type="button"
+                                            variant="ghost"
+                                            layout="icon"
+                                            size="sm"
+                                            aria-label="Pin sidebar open"
+                                            onClick={expandAnimated}
+                                        >
+                                            <WebIcon
+                                                name="panel-left"
+                                                size={iconSizes.small}
+                                                color="currentColor"
+                                                fallback="☰"
+                                            />
+                                        </Button>
+                                    </SidebarPeekPin>
+                                    <div className="flex min-h-0 w-full flex-1">
+                                        <SidebarRail />
+                                    </div>
+                                </SidebarPeekPanel>
+                            </ResizablePanel>
+                        </ResizablePanelGroup>
+                    </SidebarProvider>
+                    </SidebarPeek>
             </Look>
         </Looks>
     );

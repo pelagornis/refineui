@@ -6,6 +6,7 @@ import {
     ScrollAreaViewport,
     Sidebar,
     SidebarContent,
+    SidebarHeader,
     SidebarGroup,
     SidebarGroupLabel,
     SidebarLink,
@@ -15,18 +16,23 @@ import type { DocsNavEntry } from "./nav";
 import { withBase } from "../lib/docs-path";
 
 export function DocsSidebar({
+    id,
     entries,
     footer,
+    header,
 }: {
+    id?: string;
     title?: string;
     titleHref?: string;
     entries: DocsNavEntry[];
     footer?: ReactNode;
+    header?: ReactNode;
 }) {
     const hrefFor = (href: string, external?: boolean) => (external ? href : withBase(href));
 
     return (
-        <Sidebar data-refineui-docs-sidebar>
+        <Sidebar id={id} data-refineui-docs-sidebar>
+            {header ? <SidebarHeader>{header}</SidebarHeader> : null}
             <SidebarContent style={{ overflow: "hidden" }}>
                 <ScrollArea type="hover" className="h-full w-full min-h-0">
                     <ScrollAreaViewport>

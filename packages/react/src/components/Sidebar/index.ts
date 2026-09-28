@@ -17,6 +17,7 @@ export {
     SidebarPeekPin,
     useSidebarPeek,
 } from "./SidebarPeek";
+export { SidebarProvider, SidebarTrigger, useSidebar } from "./SidebarProvider";
 export type {
     SidebarBrandProps,
     SidebarContentProps,
@@ -34,3 +35,4 @@ export type {
     SidebarPeekPinProps,
     SidebarPeekProps,
 } from "./types";
+export type { SidebarProviderProps, SidebarTriggerProps } from "./SidebarProvider";

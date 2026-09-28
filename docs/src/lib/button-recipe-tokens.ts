@@ -32,7 +32,7 @@ export const BUTTON_RECIPE_TOKEN_BINDINGS: readonly ButtonRecipeTokenBinding[] =
         variant: "secondary",
         property: "background",
         trace: { kind: "component", path: "button.secondary.background" },
-        recipeClass: "bg-refineui-alias-background-surface",
+        recipeClass: "bg-refineui-alias-background-surface-hover",
     },
     {
         slot: "root",
@@ -40,13 +40,6 @@ export const BUTTON_RECIPE_TOKEN_BINDINGS: readonly ButtonRecipeTokenBinding[] =
         property: "foreground",
         trace: { kind: "component", path: "button.secondary.foreground" },
         recipeClass: "text-refineui-alias-foreground-primary",
-    },
-    {
-        slot: "root",
-        variant: "secondary",
-        property: "border",
-        trace: { kind: "component", path: "button.secondary.border" },
-        recipeClass: "border-refineui-alias-border-default",
     },
     {
         slot: "root",

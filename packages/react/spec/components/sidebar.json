@@ -18,7 +18,9 @@
     "peek_inset": "sidebar-peek-inset",
     "peek_panel": "sidebar-peek-panel",
     "peek_pin": "sidebar-peek-pin",
-    "peek_surface": "sidebar-peek-surface"
+    "peek_surface": "sidebar-peek-surface",
+    "provider": "sidebar-provider",
+    "trigger": "button"
   },
   "attributes": {
     "data-refineui": "sidebar"

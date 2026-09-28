@@ -482,13 +482,11 @@
   background-color: var(--refineui-btn-primary-pressed) !important;
 }
 [data-refineui="button"][data-variant="secondary"]:not([data-inactive="true"]):hover:not(:active) {
-  background-color: var(--refineui-color-alias-background-surface-hover) !important;
-  border-color: var(--refineui-color-alias-border-strong) !important;
+  background-color: var(--refineui-color-alias-background-surface-active) !important;
   color: var(--refineui-color-alias-foreground-primary-hover) !important;
 }
 [data-refineui="button"][data-variant="secondary"]:not([data-inactive="true"]):active {
   background-color: var(--refineui-color-alias-background-surface-active) !important;
-  border-color: var(--refineui-color-alias-border-strong) !important;
   color: var(--refineui-color-alias-foreground-primary) !important;
 }
 [data-refineui="button"][data-variant="outline"]:not([data-inactive="true"]):hover:not(:active) {
@@ -519,7 +517,7 @@
 }
 [data-refineui="button"][data-variant="secondary"][data-inactive="true"] {
   background-color: var(--refineui-color-alias-background-surface-disabled) !important;
-  border-color: var(--refineui-color-alias-border-disabled) !important;
+  border-color: transparent !important;
   color: var(--refineui-color-alias-foreground-disabled) !important;
 }
 [data-refineui="button"][data-variant="outline"][data-inactive="true"] {

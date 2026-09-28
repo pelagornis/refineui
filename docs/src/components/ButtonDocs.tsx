@@ -185,8 +185,13 @@ export default function ButtonDocs() {
                             value: "semantic color alias",
                         },
                         {
+                            token: "--refineui-color-alias-background-surface-hover",
+                            role: "Secondary fill",
+                            value: "semantic color alias",
+                        },
+                        {
                             token: "--refineui-color-alias-border-default",
-                            role: "Secondary / outline stroke",
+                            role: "Outline stroke",
                             value: "semantic color alias",
                         },
                         {

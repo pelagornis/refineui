@@ -47,14 +47,13 @@ export const componentColorTokens = {
             states: buttonPrimaryColorTokens.states,
         },
         secondary: {
-            background: semanticToken("backgroundPrimary"),
+            background: semanticToken("backgroundSurfaceHover"),
             foreground: semanticToken("foregroundPrimary"),
-            border: semanticToken("borderDefault"),
-            hoverBackground: semanticToken("backgroundSurfaceHover"),
-            hoverBorder: semanticToken("borderStrong"),
+            hoverBackground: semanticToken("backgroundSurfaceActive"),
+            hoverForeground: semanticToken("foregroundPrimaryHover"),
             activeBackground: semanticToken("backgroundSurfaceActive"),
+            activeForeground: semanticToken("foregroundPrimary"),
             disabledBackground: semanticToken("backgroundSurfaceDisabled"),
-            disabledBorder: semanticToken("borderDisabled"),
             disabledForeground: semanticToken("foregroundDisabled"),
         },
         outline: {

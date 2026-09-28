@@ -428,6 +428,9 @@ export {
     SidebarHeader,
     SidebarLink,
     SidebarNav,
+    SidebarProvider,
+    SidebarTrigger,
+    useSidebar,
     SidebarPeek,
     SidebarPeekEdge,
     SidebarPeekInset,
@@ -449,6 +452,8 @@ export {
     type SidebarPeekPanelProps,
     type SidebarPeekPinProps,
     type SidebarPeekProps,
+    type SidebarProviderProps,
+    type SidebarTriggerProps,
 } from "./components/Sidebar";
 export {
     Pagination,

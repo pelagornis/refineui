@@ -11,7 +11,7 @@ const buttonVariantClass: Record<ButtonVariant, string> = {
     primary:
         "border-refineui-none border border-transparent bg-refineui-alias-background-brand text-refineui-alias-foreground-inversed",
     secondary:
-        "border-refineui-thin border-refineui-alias-border-default bg-refineui-alias-background-surface text-refineui-alias-foreground-primary",
+        "border-refineui-none border border-transparent bg-refineui-alias-background-surface-hover text-refineui-alias-foreground-primary",
     outline:
         "border-refineui-thin border-refineui-alias-border-default bg-transparent text-refineui-alias-foreground-primary",
     ghost: "border-refineui-none border border-transparent bg-transparent text-refineui-alias-foreground-primary",
@@ -52,6 +52,10 @@ export const buttonRecipe = defineRecipe({
         },
         {
             match: { layout: "icon", variant: "primary" },
+            className: "border-0",
+        },
+        {
+            match: { layout: "icon", variant: "secondary" },
             className: "border-0",
         },
         {

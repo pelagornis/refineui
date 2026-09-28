@@ -27,9 +27,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
 
     const sizeStyles = layout === "icon" ? buttonIconSizeClass[size] : buttonLabelSizeClass[size];
 
-    /** Icon layout: Primary/Ghost omit border so a 1px stroke does not shrink the box. */
+    /** Icon layout: filled variants omit border so a 1px stroke does not shrink the box. */
     const iconNoStroke =
-        layout === "icon" && (variant === "primary" || variant === "ghost") ? "border-0" : null;
+        layout === "icon" && (variant === "primary" || variant === "secondary" || variant === "ghost")
+            ? "border-0"
+            : null;
 
     return (
         <button

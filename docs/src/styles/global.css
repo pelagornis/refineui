@@ -1299,7 +1299,6 @@ body[data-mobile-menu-expanded] {
   inset-inline-start: var(--refineui-spacing-size-x-small);
 }
 
-/* Floating peek covers the rail gap — hide the docked toggle while the flyout is open. */
 [data-refineui="sidebar-peek"][data-sidebar-peek-open] [data-docs-sidebar-toggle],
 [data-refineui="sidebar-peek"][data-sidebar-peek-open] [data-sidebar-preview-toggle] {
   visibility: hidden;
@@ -1311,11 +1310,6 @@ body[data-mobile-menu-expanded] {
   flex: 1 1 auto;
   min-height: 0;
   min-width: 0;
-}
-
-[data-sidebar-preview][data-sidebar-preview-collapsed] [data-refineui="resizable-handle"] {
-  pointer-events: none;
-  opacity: 0;
 }
 
 [data-sidebar-preview][data-sidebar-preview-animating] [data-refineui="resizable-handle"] {

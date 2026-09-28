@@ -4,7 +4,8 @@ import { iconSizes, semanticInteraction } from "@refineui/tokens";
 import { motionMsToNumber } from "@refineui/utilities/animation";
 import {
     Button,
-    ResizableHandle,
+    SidebarProvider,
+    SidebarTrigger,
     ResizablePanel,
     ResizablePanelGroup,
     ScrollArea,
@@ -20,11 +21,13 @@ import {
     SidebarPeekPin,
     WebIcon,
 } from "@refineui/react";
+import { SidebarResizeHandle } from "../components/SidebarSeam";
 import { DocsSidebar } from "./DocsSidebar";
 import type { DocsNavEntry } from "./nav";
 
 const STORAGE_KEY = "refineui-docs-sidebar-size";
 const COLLAPSED_KEY = "refineui-docs-sidebar-collapsed";
+const DOCS_SIDEBAR_ID = "refineui-docs-sidebar";
 const DESKTOP_MQ = "(min-width: 50rem)";
 const DEFAULT_SIDEBAR = 22;
 const MIN_SIDEBAR = 14;
@@ -76,13 +79,17 @@ function DocsMainScroll({ children }: { children?: ReactNode }) {
 }
 
 function DocsShellSidebar({
+    id,
     title,
     titleHref,
     entries,
     githubHref,
-}: Pick<ShellProps, "title" | "titleHref" | "entries" | "githubHref">) {
+}: Pick<ShellProps, "title" | "titleHref" | "entries" | "githubHref"> & {
+    id?: string;
+}) {
     return (
         <DocsSidebar
+            id={id}
             title={title}
             titleHref={titleHref}
             entries={entries}
@@ -99,38 +106,17 @@ function DocsShellSidebar({
     );
 }
 
-function DocsShellMain({
-    animating,
-    collapsed,
-    onToggle,
-    children,
-}: {
-    animating: boolean;
-    collapsed: boolean;
-    onToggle: () => void;
-    children?: ReactNode;
-}) {
+function DocsShellMain({ collapsed, children }: { collapsed: boolean; children?: ReactNode }) {
     return (
         <SidebarPeekInset>
-            {!animating ? (
-                <Button
-                    type="button"
-                    variant="ghost"
-                    layout="icon"
-                    size="sm"
-                    data-docs-sidebar-toggle
-                    aria-label={collapsed ? "Open sidebar" : "Close sidebar"}
-                    aria-expanded={!collapsed}
-                    onClick={onToggle}
-                >
-                    <WebIcon
-                        name="panel-left"
-                        size={iconSizes.small}
-                        color="currentColor"
-                        fallback="☰"
-                    />
-                </Button>
-            ) : null}
+            <SidebarTrigger
+                layout="icon"
+                size="sm"
+                data-docs-sidebar-toggle
+                aria-label={collapsed ? "Open sidebar" : "Close sidebar"}
+            >
+                <WebIcon name="panel-left" size={iconSizes.small} color="currentColor" fallback="☰" />
+            </SidebarTrigger>
             <DocsMainScroll>{children}</DocsMainScroll>
         </SidebarPeekInset>
     );
@@ -213,20 +199,14 @@ function DocsDesktopShell({ title, titleHref, entries, githubHref, children }: S
         if (sidebarSize > COLLAPSE_AT) {
             persistSize(sidebarSize);
         }
+        setCollapsed(true);
         runPanelMotion(0, finishCollapse);
     };
 
     const expandAnimated = () => {
         if (!collapsed || animating) return;
-        setCollapsed(false);
         setSidebarSize(0);
         runPanelMotion(restoredSize.current, finishExpand);
-    };
-
-    const toggleSidebar = () => {
-        if (animating) return;
-        if (collapsed) expandAnimated();
-        else collapseAnimated();
     };
 
     const handleSidebarTransitionEnd = (event: TransitionEvent<HTMLDivElement>) => {
@@ -251,8 +231,9 @@ function DocsDesktopShell({ title, titleHref, entries, githubHref, children }: S
     const railOpen = !collapsed || animating;
     const peekEligible = collapsed && !animating;
 
-    const sidebarBlock = (
+    const sidebarBlock = (docked: boolean) => (
         <DocsShellSidebar
+            id={docked ? DOCS_SIDEBAR_ID : undefined}
             title={title}
             titleHref={titleHref}
             entries={entries}
@@ -268,6 +249,15 @@ function DocsDesktopShell({ title, titleHref, entries, githubHref, children }: S
             onPin={expandAnimated}
             className="relative h-full w-full min-h-0"
         >
+            <SidebarProvider
+                id={DOCS_SIDEBAR_ID}
+                open={!collapsed}
+                onOpenChange={(open) => {
+                    if (animating) return;
+                    if (open) expandAnimated();
+                    else collapseAnimated();
+                }}
+            >
             <ResizablePanelGroup
                 orientation="horizontal"
                 data-docs-shell="desktop"
@@ -293,28 +283,21 @@ function DocsDesktopShell({ title, titleHref, entries, githubHref, children }: S
                     className="flex min-h-0 overflow-hidden"
                     style={panelMotionStyle}
                     onTransitionEnd={handleSidebarTransitionEnd}
-                    aria-hidden={collapsed && !animating}
                 >
                     {railOpen ? (
                         <div data-docs-shell-sidebar className="flex h-full min-h-0 w-full">
-                            {sidebarBlock}
+                            {sidebarBlock(true)}
                         </div>
                     ) : null}
                 </ResizablePanel>
-                {railOpen ? <ResizableHandle withHandle disabled={animating} /> : null}
+                {railOpen ? <SidebarResizeHandle animating={animating} /> : null}
                 <ResizablePanel
                     size={100 - sidebarSize}
                     minSize={collapsed && !animating ? 100 : 50}
                     className="relative flex min-h-0 min-w-0"
                     style={panelMotionStyle}
                 >
-                    <DocsShellMain
-                        animating={animating}
-                        collapsed={collapsed}
-                        onToggle={toggleSidebar}
-                    >
-                        {children}
-                    </DocsShellMain>
+                    <DocsShellMain collapsed={collapsed}>{children}</DocsShellMain>
                     <SidebarPeekEdge />
                     <SidebarPeekPanel>
                         <SidebarPeekPin>
@@ -335,11 +318,12 @@ function DocsDesktopShell({ title, titleHref, entries, githubHref, children }: S
                             </Button>
                         </SidebarPeekPin>
                         <div data-docs-shell-sidebar className="flex min-h-0 w-full flex-1">
-                            {sidebarBlock}
+                            {sidebarBlock(false)}
                         </div>
                     </SidebarPeekPanel>
                 </ResizablePanel>
             </ResizablePanelGroup>
+            </SidebarProvider>
         </SidebarPeek>
     );
 }

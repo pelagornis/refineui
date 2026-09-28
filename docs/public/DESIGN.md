@@ -89,7 +89,7 @@ components:
     rounded: "{rounded.lg}"
     padding: 10px
   button-secondary:
-    backgroundColor: "{colors.surface}"
+    backgroundColor: "#F5F5F5"
     textColor: "{colors.foreground}"
     rounded: "{rounded.lg}"
     padding: 10px
