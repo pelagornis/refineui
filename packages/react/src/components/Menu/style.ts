@@ -33,8 +33,12 @@ export const menuStyles = {
     row: "flex items-center gap-refineui-size-x-small",
     iconWrap: "inline-flex shrink-0 items-center justify-center text-current [&>span]:leading-none",
     textCol: "flex min-w-0 flex-1 flex-col gap-refineui-size-xxx-small px-refineui-size-xxx-small",
-    title: clsx(componentTextClass(componentTypographyTokens.menu.item), "truncate"),
-    description: clsx(componentTextClass(componentTypographyTokens.menu.description), "truncate"),
+    /** Preserve labels and supporting copy; the shared 244px panel token gives them room before wrapping. */
+    title: clsx(componentTextClass(componentTypographyTokens.menu.item), "break-words whitespace-normal"),
+    description: clsx(
+        componentTextClass(componentTypographyTokens.menu.description),
+        "break-words whitespace-normal",
+    ),
     descriptionEnabled: "text-refineui-alias-foreground-tertiary",
     descriptionDisabled: "text-refineui-alias-foreground-disabled",
     rightWrap: "flex shrink-0 items-center gap-refineui-size-x-small",

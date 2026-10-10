@@ -589,7 +589,7 @@ export function MenuSubContent({ className, children, style, ...props }: MenuSub
     /** Tighter gap — easier to move pointer onto the panel without closing */
     const gapPx = parseCssPx(spacings.sizeXXXSmall, 2);
     const z = (Number.parseInt(String(zIndex.zIndexMessages), 10) || 10000) + 100;
-    const defaultW = parseCssPx(componentSizes.menuPanelWidth, 244);
+    const defaultW = parseCssPx(componentSizes.menuPanelWidth, 200);
 
     const setPanelEl = useCallback(
         (el: HTMLDivElement | null) => {

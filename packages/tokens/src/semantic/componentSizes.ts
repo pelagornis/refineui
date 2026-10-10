@@ -30,6 +30,8 @@ export const componentSizeFoundationKeys = {
     popoverBeakInsetFromStartEdge: "foundationSize340",
     popoverBeakInsetFromEndEdge: "foundationSize300",
     navigationMenuItemMinWidth: "foundationSize400",
+    /** Two-column navigation content needs readable link columns, unlike a compact action menu. */
+    navigationMenuPanelWidth: "foundationSize3250",
     menuPanelWidth: "foundationSize2000",
     dropdownMenuWidth: "foundationSize2000",
     sidebarWidth: "foundationSize2560",
@@ -106,6 +108,7 @@ export const componentSizes = {
     popoverBeakInsetFromStartEdge: fromFoundation("popoverBeakInsetFromStartEdge"),
     popoverBeakInsetFromEndEdge: fromFoundation("popoverBeakInsetFromEndEdge"),
     navigationMenuItemMinWidth: fromFoundation("navigationMenuItemMinWidth"),
+    navigationMenuPanelWidth: fromFoundation("navigationMenuPanelWidth"),
     menuPanelWidth: fromFoundation("menuPanelWidth"),
     /** @deprecated Same as `menuPanelWidth` */
     dropdownMenuWidth: fromFoundation("dropdownMenuWidth"),

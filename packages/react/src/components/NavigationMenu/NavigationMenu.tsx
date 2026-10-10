@@ -14,8 +14,10 @@ import {
     type KeyboardEvent,
     type PointerEvent,
 } from "react";
-import { iconSizes, semanticInteraction } from "@refineui/tokens";
+import { createPortal } from "react-dom";
+import { iconSizes, semanticInteraction, spacings, zIndex } from "@refineui/tokens";
 import { motionMsToNumber } from "@refineui/utilities/animation";
+import { subscribeScrollAndScrollableAncestors } from "../Dropdown/positioning";
 import { WebIcon } from "../../WebIcon";
 import { navigationMenuStyles } from "./style";
 import type {
@@ -39,6 +41,9 @@ type NavigationMenuContextValue = {
     skipDelayDuration: number;
     listRef: React.RefObject<HTMLUListElement | null>;
     registerTrigger: (itemValue: string, el: HTMLButtonElement | null) => void;
+    registerContent: (itemValue: string, el: HTMLDivElement | null) => void;
+    isContentTarget: (itemValue: string, target: EventTarget | null) => boolean;
+    isMenuTarget: (target: EventTarget | null) => boolean;
     isInsideContent: boolean;
 };
 
@@ -101,6 +106,7 @@ export function NavigationMenu({
     const [value, setValue] = useControllableOpen(valueControlled, defaultValue, onValueChange);
     const listRef = useRef<HTMLUListElement | null>(null);
     const triggerMapRef = useRef(new Map<string, HTMLButtonElement>());
+    const contentMapRef = useRef(new Map<string, HTMLDivElement>());
     const openTimerRef = useRef<number | null>(null);
     const closeTimerRef = useRef<number | null>(null);
     const rootRef = useRef<HTMLElement | null>(null);
@@ -168,14 +174,33 @@ export function NavigationMenu({
         }
     }, []);
 
+    const registerContent = useCallback((itemValue: string, el: HTMLDivElement | null) => {
+        if (el) {
+            contentMapRef.current.set(itemValue, el);
+        } else {
+            contentMapRef.current.delete(itemValue);
+        }
+    }, []);
+
+    const isContentTarget = useCallback((itemValue: string, target: EventTarget | null) => {
+        return target instanceof Node && contentMapRef.current.get(itemValue)?.contains(target) === true;
+    }, []);
+
+    const isMenuTarget = useCallback((target: EventTarget | null) => {
+        if (!(target instanceof Node)) return false;
+        return (
+            rootRef.current?.contains(target) === true ||
+            Array.from(contentMapRef.current.values()).some((content) => content.contains(target))
+        );
+    }, []);
+
     useEffect(() => () => clearTimers(), [clearTimers]);
 
     useEffect(() => {
         if (!value) return;
 
         const onPointerDown = (event: globalThis.PointerEvent) => {
-            const target = event.target as Node;
-            if (rootRef.current?.contains(target)) return;
+            if (isMenuTarget(event.target)) return;
             setValueSafe("");
         };
 
@@ -193,7 +218,7 @@ export function NavigationMenu({
             document.removeEventListener("pointerdown", onPointerDown);
             document.removeEventListener("keydown", onKeyDown);
         };
-    }, [setValueSafe, value]);
+    }, [isMenuTarget, setValueSafe, value]);
 
     const ctx = useMemo<NavigationMenuContextValue>(
         () => ({
@@ -205,9 +230,23 @@ export function NavigationMenu({
             skipDelayDuration,
             listRef,
             registerTrigger,
+            registerContent,
+            isContentTarget,
+            isMenuTarget,
             isInsideContent: false,
         }),
-        [close, delayDuration, openItem, registerTrigger, setValueSafe, skipDelayDuration, value],
+        [
+            close,
+            delayDuration,
+            isContentTarget,
+            isMenuTarget,
+            openItem,
+            registerContent,
+            registerTrigger,
+            setValueSafe,
+            skipDelayDuration,
+            value,
+        ],
     );
 
     return (
@@ -305,6 +344,7 @@ export function NavigationMenuItem({
                 onPointerLeave={(event: PointerEvent<HTMLLIElement>) => {
                     onPointerLeave?.(event);
                     if (event.defaultPrevented) return;
+                    if (menu.isContentTarget(value, event.relatedTarget)) return;
                     menu.close();
                 }}
                 {...props}
@@ -394,12 +434,23 @@ export function NavigationMenuContent({
     children,
     className,
     onKeyDown,
+    style,
     ...props
 }: NavigationMenuContentProps) {
     const menu = useNavigationMenu("NavigationMenuContent");
     const item = useNavigationMenuItem("NavigationMenuContent");
     const [shouldRender, setShouldRender] = useState(item.open);
     const [isClosing, setIsClosing] = useState(false);
+    const contentRef = useRef<HTMLDivElement | null>(null);
+    const [positionStyle, setPositionStyle] = useState<CSSProperties | null>(null);
+
+    const setContentRef = useCallback(
+        (el: HTMLDivElement | null) => {
+            contentRef.current = el;
+            menu.registerContent(item.value, el);
+        },
+        [item.value, menu],
+    );
 
     useEffect(() => {
         if (item.open) {
@@ -416,6 +467,42 @@ export function NavigationMenuContent({
         return () => window.clearTimeout(timeout);
     }, [item.open, shouldRender]);
 
+    useIsomorphicLayoutEffect(() => {
+        if (!shouldRender || !item.open || typeof document === "undefined") return;
+        const trigger = document.getElementById(item.triggerId);
+        if (!trigger) return;
+
+        const updatePosition = () => {
+            const content = contentRef.current;
+            if (!content) return;
+
+            const triggerRect = trigger.getBoundingClientRect();
+            const contentWidth = content.offsetWidth;
+            const edge = Number.parseFloat(spacings.sizeMedium) || 8;
+            const left = Math.max(
+                edge,
+                Math.min(triggerRect.left, window.innerWidth - contentWidth - edge),
+            );
+
+            setPositionStyle({
+                position: "fixed",
+                top: triggerRect.bottom,
+                left,
+                zIndex: Number.parseInt(String(zIndex.zIndexMessages), 10) || 10000,
+            });
+        };
+
+        updatePosition();
+        const frame = requestAnimationFrame(updatePosition);
+        window.addEventListener("resize", updatePosition);
+        const unsubscribe = subscribeScrollAndScrollableAncestors(trigger, updatePosition);
+        return () => {
+            cancelAnimationFrame(frame);
+            window.removeEventListener("resize", updatePosition);
+            unsubscribe();
+        };
+    }, [item.open, item.triggerId, shouldRender]);
+
     const contentCtx = useMemo<NavigationMenuContextValue>(
         () => ({ ...menu, isInsideContent: true }),
         [menu],
@@ -423,15 +510,22 @@ export function NavigationMenuContent({
 
     if (!shouldRender) return null;
 
-    return (
+    const content = (
         <NavigationMenuContext.Provider value={contentCtx}>
             <div
+                ref={setContentRef}
                 id={item.contentId}
                 role="region"
                 aria-labelledby={item.triggerId}
                 data-refineui="navigation-menu-content"
                 data-state={isClosing || !item.open ? "closed" : "open"}
                 className={clsx(navigationMenuStyles.content, className)}
+                style={{ ...positionStyle, ...style }}
+                onPointerEnter={() => menu.openItem(item.value, { immediate: true })}
+                onPointerLeave={(event: PointerEvent<HTMLDivElement>) => {
+                    if (menu.isMenuTarget(event.relatedTarget)) return;
+                    menu.close();
+                }}
                 onKeyDown={(event: KeyboardEvent<HTMLDivElement>) => {
                     onKeyDown?.(event);
                     if (event.defaultPrevented) return;
@@ -448,6 +542,8 @@ export function NavigationMenuContent({
             </div>
         </NavigationMenuContext.Provider>
     );
+
+    return typeof document === "undefined" ? content : createPortal(content, document.body);
 }
 
 export function NavigationMenuLink({

@@ -78,9 +78,9 @@ function sectionIsActive(section: DocsHeaderNavSection, currentPath: string): bo
 function NavLinkStack({ title, description }: { title: string; description?: string }) {
     return (
         <Stack as="span" gap="sizeXXXSmall" className="min-w-0 flex-1 px-refineui-size-xxx-small">
-            <span className="truncate">{title}</span>
+            <span className="break-words whitespace-normal">{title}</span>
             {description ? (
-                <span className="truncate text-refineui-alias-foreground-tertiary refineui-typo-body-4">
+                <span className="break-words whitespace-normal text-refineui-alias-foreground-tertiary refineui-typo-body-4">
                     {description}
                 </span>
             ) : null}
@@ -90,7 +90,7 @@ function NavLinkStack({ title, description }: { title: string; description?: str
 
 function NavContentGrid({ children }: { children: ReactNode }) {
     return (
-        <div className="grid w-full min-w-refineui-menu-panel-width grid-cols-2 gap-refineui-size-x-small">
+        <div className="grid w-full min-w-refineui-navigation-menu-panel-width grid-cols-2 gap-refineui-size-x-small">
             {children}
         </div>
     );

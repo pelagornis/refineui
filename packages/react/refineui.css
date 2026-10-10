@@ -1112,7 +1112,8 @@
   [data-refineui="menu"],
   [data-refineui="dropdown-menu"],
   [data-refineui="select-menu"],
-  [data-refineui="sidebar-peek-panel"] {
+  [data-refineui="sidebar-peek-panel"],
+  [data-refineui="navigation-menu-content-panel"] {
     background-color: var(--refineui-color-alias-background-primary);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -1127,14 +1128,15 @@
 }
 
 /*
- * Frosted panels — fill + surface blur (Menu, ContextMenu, Dropdown, Select, SidebarPeek).
+ * Frosted panels — fill + surface blur (Menu, ContextMenu, Dropdown, Select, SidebarPeek, Navigation Menu).
  * Fill: `--refineui-color-alias-surface-frosted`; blur: `--refineui-blur-surface-frost`.
  * Avoid ancestor `transform` / leftover animation transform on these nodes (breaks backdrop).
  */
 [data-refineui="menu"],
 [data-refineui="dropdown-menu"],
 [data-refineui="select-menu"],
-[data-refineui="sidebar-peek-panel"] {
+[data-refineui="sidebar-peek-panel"],
+[data-refineui="navigation-menu-content-panel"] {
   background-color: var(--refineui-color-alias-surface-frosted);
   -webkit-backdrop-filter: blur(var(--refineui-blur-surface-frost));
   backdrop-filter: blur(var(--refineui-blur-surface-frost));
