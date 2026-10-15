@@ -4,6 +4,7 @@ import { useId, useRef, useState } from "react";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { Slot, getMergeableTriggerChild } from "@refineui/utilities/react";
+import { FrostedBeak } from "../shared/FrostedBeak";
 import {
     TOOLTIP_BEAK_H,
     TOOLTIP_BEAK_W,
@@ -113,26 +114,12 @@ export function Tooltip({
                             style={{ ...beakWrapStyle, width: TOOLTIP_BEAK_W, height: TOOLTIP_BEAK_H }}
                             aria-hidden
                         >
-                            <div
-                                style={{
-                                    width: TOOLTIP_BEAK_W,
-                                    height: TOOLTIP_BEAK_H,
-                                    transform: `rotate(${beakRot}deg)`,
-                                    transformOrigin: "center center",
-                                }}
-                            >
-                                <svg
-                                    width={TOOLTIP_BEAK_W}
-                                    height={TOOLTIP_BEAK_H}
-                                    viewBox="0 0 16 8"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    style={{ display: "block" }}
-                                >
-                                    <polygon points="8,0 0,8 16,8" fill={borderCol} />
-                                    <polygon points="8,2 2,8 14,8" fill={bg} />
-                                </svg>
-                            </div>
+                            <FrostedBeak
+                                width={TOOLTIP_BEAK_W}
+                                height={TOOLTIP_BEAK_H}
+                                rotateDeg={beakRot}
+                                borderColor={borderCol}
+                            />
                         </div>
                         <div
                             id={tooltipId}

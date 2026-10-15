@@ -152,16 +152,16 @@ export const componentColorTokens = {
     },
     tooltip: {
         default: {
-            /** Menu / Select floating panel semantic */
-            background: semanticToken("backgroundPrimary"),
+            /** Frosted floating panel — blur is applied by refineui.css */
+            background: semanticToken("surfaceFrosted"),
             foreground: semanticToken("foregroundPrimary"),
             border: semanticToken("borderDefault"),
         }
     },
     popover: {
         default: {
-            /** Menu / Select floating panel semantic */
-            background: semanticToken("backgroundPrimary"),
+            /** Frosted floating panel — blur is applied by refineui.css */
+            background: semanticToken("surfaceFrosted"),
             foreground: semanticToken("foregroundPrimary"),
             border: semanticToken("borderDefault"),
         },

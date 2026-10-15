@@ -33,7 +33,7 @@ export const menuStyles = {
     row: "flex items-center gap-refineui-size-x-small",
     iconWrap: "inline-flex shrink-0 items-center justify-center text-current [&>span]:leading-none",
     textCol: "flex min-w-0 flex-1 flex-col gap-refineui-size-xxx-small px-refineui-size-xxx-small",
-    /** Preserve labels and supporting copy; the shared 244px panel token gives them room before wrapping. */
+    /** Preserve labels and supporting copy by wrapping within the shared panel width. */
     title: clsx(componentTextClass(componentTypographyTokens.menu.item), "break-words whitespace-normal"),
     description: clsx(
         componentTextClass(componentTypographyTokens.menu.description),

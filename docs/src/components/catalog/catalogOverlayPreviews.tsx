@@ -16,9 +16,10 @@ export function CatalogPopoverPreview() {
                     Dimensions
                 </Button>
                 <Box
+                    data-refineui="popover"
                     data-refineui-catalog-popover-panel
                     padding="sizeSmall"
-                    background="backgroundPrimary"
+                    background="surfaceFrosted"
                     radius="roundedXXLarge"
                     border="strokeWidthThin"
                     borderColor="borderDefault"
