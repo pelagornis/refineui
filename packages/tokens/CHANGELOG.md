@@ -1,5 +1,11 @@
 # @refineui/tokens
 
+## 1.0.4
+
+### Patch Changes
+
+- 83e530f: Align Navigation Menu, Menu, Tooltip, and Popover surface styling; improve portal-based blur behavior; match floating-panel beaks to their content surfaces; and preserve readable menu titles and descriptions.
+
 ## 1.0.3
 
 ### Patch Changes
