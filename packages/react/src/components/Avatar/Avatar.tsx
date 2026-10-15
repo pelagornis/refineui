@@ -154,6 +154,7 @@ export function Avatar({
                     className={clsx(
                         AVATAR_INNER_MASK,
                         resolveAvatarShellColorLayer(effectiveColor, normalizedSize, resolvedLayout),
+                        "box-border border border-refineui-thin",
                         useNeutralShellTypo && avatarTypoNeutral[normalizedSize],
                         innerClassName,
                     )}

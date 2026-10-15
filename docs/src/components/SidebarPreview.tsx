@@ -95,7 +95,10 @@ export default function SidebarPreview() {
     const [sidebarSize, setSidebarSize] = useState(DEFAULT_SIDEBAR);
     const [collapsed, setCollapsed] = useState(false);
     const [animating, setAnimating] = useState(false);
+    const [frozenRailWidth, setFrozenRailWidth] = useState<number | null>(null);
+    const [resizeHandleOpen, setResizeHandleOpen] = useState(true);
     const motionTimerRef = useRef<number | null>(null);
+    const sidebarRailRef = useRef<HTMLDivElement>(null);
 
     const clearMotionTimer = () => {
         if (motionTimerRef.current != null) {
@@ -111,6 +114,8 @@ export default function SidebarPreview() {
         setSidebarSize(0);
         setAnimating(false);
         setCollapsed(true);
+        setFrozenRailWidth(null);
+        setResizeHandleOpen(false);
     };
 
     const finishExpand = () => {
@@ -118,6 +123,8 @@ export default function SidebarPreview() {
         setSidebarSize(restoredSize.current);
         setAnimating(false);
         setCollapsed(false);
+        setFrozenRailWidth(null);
+        setResizeHandleOpen(true);
     };
 
     const runPanelMotion = (toSize: number, onDone: () => void) => {
@@ -141,6 +148,8 @@ export default function SidebarPreview() {
         setAnimating(false);
         setSidebarSize(0);
         setCollapsed(true);
+        setFrozenRailWidth(null);
+        setResizeHandleOpen(false);
     };
 
     const collapseAnimated = () => {
@@ -148,6 +157,8 @@ export default function SidebarPreview() {
         if (sidebarSize > COLLAPSE_AT) {
             restoredSize.current = clampSidebarSize(sidebarSize);
         }
+        setFrozenRailWidth(sidebarRailRef.current?.getBoundingClientRect().width ?? null);
+        setResizeHandleOpen(false);
         setCollapsed(true);
         runPanelMotion(0, finishCollapse);
     };
@@ -155,6 +166,7 @@ export default function SidebarPreview() {
     const expandAnimated = () => {
         if (!collapsed || animating) return;
         setSidebarSize(0);
+        setResizeHandleOpen(true);
         runPanelMotion(restoredSize.current, finishExpand);
     };
 
@@ -224,9 +236,23 @@ export default function SidebarPreview() {
                                 style={panelMotionStyle}
                                 onTransitionEnd={handleSidebarTransitionEnd}
                             >
-                                {railOpen ? <SidebarRail id={PREVIEW_SIDEBAR_ID} /> : null}
+                                {railOpen ? (
+                                    <div
+                                        ref={sidebarRailRef}
+                                        className="flex h-full min-h-0 w-full"
+                                        style={
+                                            frozenRailWidth == null
+                                                ? undefined
+                                                : { width: frozenRailWidth, flex: "0 0 auto" }
+                                        }
+                                    >
+                                        <SidebarRail id={PREVIEW_SIDEBAR_ID} />
+                                    </div>
+                                ) : null}
                             </ResizablePanel>
-                            {railOpen ? <SidebarResizeHandle animating={animating} /> : null}
+                            {railOpen ? (
+                                <SidebarResizeHandle animating={animating} open={resizeHandleOpen} />
+                            ) : null}
                             <ResizablePanel
                                 size={100 - sidebarSize}
                                 minSize={collapsed && !animating ? 100 : 30}

@@ -10,16 +10,16 @@ import { defineRecipe } from "./types";
 import type { ChipSize, ChipVariant } from "../components/Chip/types";
 
 export const chipVariantClass: Record<ChipVariant, string> = {
-    default: "border-none bg-refineui-alias-background-surface text-refineui-alias-foreground-brand",
+    default: "border-none bg-refineui-alias-background-surface-selected text-refineui-alias-foreground-brand",
     outline:
-        "border-refineui-thin border-refineui-alias-border-default box-border bg-transparent text-refineui-alias-foreground-brand",
+        "border border-refineui-thin border-refineui-alias-border-default box-border bg-transparent text-refineui-alias-foreground-brand",
     filled: "border-none bg-refineui-alias-background-brand text-refineui-alias-foreground-inversed",
 };
 
 export const chipDisabledVariantClass: Record<ChipVariant, string> = {
     default: "border-none bg-refineui-alias-background-surface-disabled text-refineui-alias-foreground-disabled",
     outline:
-        "border-refineui-thin border-refineui-alias-border-disabled box-border bg-transparent text-refineui-alias-foreground-disabled",
+        "border border-refineui-thin border-refineui-alias-border-disabled box-border bg-transparent text-refineui-alias-foreground-disabled",
     filled: "border-none bg-refineui-alias-background-surface-disabled text-refineui-alias-foreground-disabled",
 };
 

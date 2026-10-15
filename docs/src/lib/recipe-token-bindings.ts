@@ -177,7 +177,7 @@ export const CHIP_RECIPE_TOKEN_BINDINGS: readonly RecipeTokenBinding[] = [
         variant: "default",
         property: "background",
         trace: { kind: "component", path: "chip.default.background" },
-        recipeClass: "bg-refineui-alias-background-surface",
+        recipeClass: "bg-refineui-alias-background-surface-selected",
     },
     {
         slot: "root",

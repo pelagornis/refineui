@@ -11,7 +11,7 @@ import type { BadgeVariant } from "../components/Badge/types";
 
 export const badgeVariantClass: Record<BadgeVariant, string> = {
     default: "bg-refineui-alias-background-brand text-refineui-alias-foreground-inversed",
-    neutral: "bg-refineui-alias-background-primary text-refineui-alias-foreground-primary",
+    neutral: "bg-refineui-alias-background-brand-subtle text-refineui-alias-foreground-brand-strong",
     outline:
         "border-refineui-thin border-refineui-alias-border-default border bg-transparent text-refineui-alias-foreground-primary box-border",
     success: "bg-refineui-alias-background-success text-refineui-alias-foreground-inversed",

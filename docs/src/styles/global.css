@@ -1314,7 +1314,6 @@ body[data-mobile-menu-expanded] {
 
 [data-sidebar-preview][data-sidebar-preview-animating] [data-refineui="resizable-handle"] {
   pointer-events: none;
-  opacity: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1329,7 +1328,6 @@ body[data-mobile-menu-expanded] {
 
 [data-docs-shell="desktop"][data-docs-shell-animating] [data-refineui="resizable-handle"] {
   pointer-events: none;
-  opacity: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1426,6 +1424,27 @@ body[data-mobile-menu-expanded] {
   pointer-events: none;
 }
 
+[data-refineui-docs-toc-mobile-slot] {
+  display: block;
+}
+
+[data-refineui-docs-toc-desktop-slot] {
+  display: none;
+}
+
+/* Keep the reading column uncluttered between the mobile and full rail layouts. */
+@media (min-width: 50rem) {
+  [data-refineui-docs-toc-mobile-slot] {
+    display: none;
+  }
+}
+
+@media (min-width: 72rem) {
+  [data-refineui-docs-toc-desktop-slot] {
+    display: block;
+  }
+}
+
 /* Right rail TOC — layout shell; item chrome from Sidebar (`data-refineui="sidebar-link"`). */
 [data-refineui-docs-toc-panel] {
   padding: var(--refineui-spacing-size-x-large) var(--refineui-spacing-size-large);
@@ -1458,6 +1477,7 @@ body[data-mobile-menu-expanded] {
   inset-inline: 0;
   border-top: var(--refineui-stroke-width-thin) solid var(--refineui-color-alias-border-subtle);
   background: var(--refineui-color-alias-background-primary);
+  pointer-events: auto;
 }
 
 @media (min-width: 50rem) {

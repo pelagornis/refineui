@@ -133,7 +133,10 @@ function DocsDesktopShell({ title, titleHref, entries, githubHref, children }: S
     );
     const [collapsed, setCollapsed] = useState(readStoredCollapsed);
     const [animating, setAnimating] = useState(false);
+    const [frozenRailWidth, setFrozenRailWidth] = useState<number | null>(null);
+    const [resizeHandleOpen, setResizeHandleOpen] = useState(() => !readStoredCollapsed());
     const motionTimerRef = useRef<number | null>(null);
+    const sidebarRailRef = useRef<HTMLDivElement>(null);
 
     const clearMotionTimer = () => {
         if (motionTimerRef.current != null) {
@@ -159,6 +162,8 @@ function DocsDesktopShell({ title, titleHref, entries, githubHref, children }: S
         setSidebarSize(0);
         setAnimating(false);
         setCollapsed(true);
+        setFrozenRailWidth(null);
+        setResizeHandleOpen(false);
         persistCollapsed(true);
     };
 
@@ -167,6 +172,8 @@ function DocsDesktopShell({ title, titleHref, entries, githubHref, children }: S
         setSidebarSize(restoredSize.current);
         setAnimating(false);
         setCollapsed(false);
+        setFrozenRailWidth(null);
+        setResizeHandleOpen(true);
         persistCollapsed(false);
     };
 
@@ -191,6 +198,8 @@ function DocsDesktopShell({ title, titleHref, entries, githubHref, children }: S
         setAnimating(false);
         setSidebarSize(0);
         setCollapsed(true);
+        setFrozenRailWidth(null);
+        setResizeHandleOpen(false);
         persistCollapsed(true);
     };
 
@@ -199,6 +208,8 @@ function DocsDesktopShell({ title, titleHref, entries, githubHref, children }: S
         if (sidebarSize > COLLAPSE_AT) {
             persistSize(sidebarSize);
         }
+        setFrozenRailWidth(sidebarRailRef.current?.getBoundingClientRect().width ?? null);
+        setResizeHandleOpen(false);
         setCollapsed(true);
         runPanelMotion(0, finishCollapse);
     };
@@ -206,6 +217,7 @@ function DocsDesktopShell({ title, titleHref, entries, githubHref, children }: S
     const expandAnimated = () => {
         if (!collapsed || animating) return;
         setSidebarSize(0);
+        setResizeHandleOpen(true);
         runPanelMotion(restoredSize.current, finishExpand);
     };
 
@@ -285,12 +297,21 @@ function DocsDesktopShell({ title, titleHref, entries, githubHref, children }: S
                     onTransitionEnd={handleSidebarTransitionEnd}
                 >
                     {railOpen ? (
-                        <div data-docs-shell-sidebar className="flex h-full min-h-0 w-full">
+                        <div
+                            ref={sidebarRailRef}
+                            data-docs-shell-sidebar
+                            className="flex h-full min-h-0 w-full"
+                            style={
+                                frozenRailWidth == null
+                                    ? undefined
+                                    : { width: frozenRailWidth, flex: "0 0 auto" }
+                            }
+                        >
                             {sidebarBlock(true)}
                         </div>
                     ) : null}
                 </ResizablePanel>
-                {railOpen ? <SidebarResizeHandle animating={animating} /> : null}
+                {railOpen ? <SidebarResizeHandle animating={animating} open={resizeHandleOpen} /> : null}
                 <ResizablePanel
                     size={100 - sidebarSize}
                     minSize={collapsed && !animating ? 100 : 50}

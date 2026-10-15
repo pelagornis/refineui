@@ -350,7 +350,7 @@ export const componentColorTokens = {
     },
     chip: {
         default: {
-            background: semanticToken("backgroundSurface"),
+            background: semanticToken("backgroundSurfaceSelected"),
             foreground: semanticToken("foregroundBrand"),
             hoverBackground: semanticToken("backgroundPrimaryHover"),
             activeBackground: semanticToken("backgroundPrimaryActive"),
@@ -380,7 +380,7 @@ export const componentColorTokens = {
     },
     tag: {
         default: {
-            background: semanticToken("backgroundSurface"),
+            background: semanticToken("backgroundSurfaceSelected"),
             foreground: semanticToken("foregroundBrand"),
         },
         outline: {
@@ -678,6 +678,7 @@ export const componentColorTokens = {
         },
         /** Cell fill only — Global tint per MCP `Color`. Glyph/initials ink: `avatar.icon`. */
         shell: {
+            border: semanticToken("borderSubtle"),
             background: {
                 neutral: paletteToken("neutral300"),
                 blue: paletteToken("blue100"),

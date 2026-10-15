@@ -170,6 +170,7 @@ const avatarShellInitialsForegroundColor: Record<AvatarColor, string> = {
 };
 
 export const avatarNeutralForegroundColor = resolveColorTokenValue(componentColorTokens.avatar.icon.neutral);
+const avatarShellBorderColor = resolveColorTokenValue(componentColorTokens.avatar.shell.border);
 
 export function resolveAvatarShellStyle(
     color: AvatarColor,
@@ -179,11 +180,13 @@ export function resolveAvatarShellStyle(
         return {
             backgroundColor: avatarShellBackgroundColor[color],
             color: avatarShellInitialsForegroundColor[color],
+            borderColor: avatarShellInitialsForegroundColor[color],
         };
     }
 
     return {
         backgroundColor: avatarShellBackgroundColor[color],
+        borderColor: avatarShellBorderColor,
     };
 }
 
