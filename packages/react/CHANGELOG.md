@@ -1,5 +1,11 @@
 # @refineui/react
 
+## 0.0.12
+
+### Patch Changes
+
+- 2be54fc: Improve Avatar borders across image and initials layouts, and make neutral Badge and Tag variants easier to distinguish from their surrounding surfaces.
+
 ## 0.0.11
 
 ### Patch Changes
