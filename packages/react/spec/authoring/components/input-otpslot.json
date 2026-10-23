@@ -1,0 +1,27 @@
+{
+  "id": "input-otpslot",
+  "exportPath": "@refineui/react",
+  "exportName": "InputOTPSlot",
+  "kind": "part",
+  "category": "parts",
+  "label": "Input OTPSlot",
+  "props": [
+    {
+      "name": "index",
+      "label": "index",
+      "valueType": "number",
+      "control": "number",
+      "required": true,
+      "section": "properties"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "InputOTP",
+      "slot": "children"
+    }
+  ]
+}

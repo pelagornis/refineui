@@ -1,0 +1,27 @@
+{
+  "id": "sidebar-header",
+  "exportPath": "@refineui/react",
+  "exportName": "SidebarHeader",
+  "kind": "part",
+  "category": "parts",
+  "label": "Sidebar Header",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Sidebar",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "SidebarBrand"
+      ],
+      "repeatable": true
+    }
+  ]
+}

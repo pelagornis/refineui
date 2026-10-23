@@ -1,0 +1,30 @@
+{
+  "id": "menu-list",
+  "exportPath": "@refineui/react",
+  "exportName": "MenuList",
+  "kind": "part",
+  "category": "parts",
+  "label": "Menu List",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "MenuPopover",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "MenuLabel",
+        "MenuDivider",
+        "MenuItem",
+        "MenuSub"
+      ],
+      "repeatable": true
+    }
+  ]
+}

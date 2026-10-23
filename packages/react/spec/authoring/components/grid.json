@@ -1,0 +1,48 @@
+{
+  "id": "grid",
+  "exportPath": "@refineui/react",
+  "exportName": "Grid",
+  "kind": "root",
+  "category": "components",
+  "label": "Grid",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "GridItem"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "grid",
+      "label": "Grid",
+      "root": {
+        "component": "Grid",
+        "slots": {
+          "children": [
+            {
+              "component": "GridItem",
+              "text": "Item 1"
+            },
+            {
+              "component": "GridItem",
+              "text": "Item 2"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

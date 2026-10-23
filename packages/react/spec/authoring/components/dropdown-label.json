@@ -1,0 +1,22 @@
+{
+  "id": "dropdown-label",
+  "exportPath": "@refineui/react",
+  "exportName": "DropdownLabel",
+  "kind": "part",
+  "category": "parts",
+  "label": "Dropdown Label",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "DropdownContent",
+      "slot": "children"
+    },
+    {
+      "component": "DropdownGroup",
+      "slot": "children"
+    }
+  ]
+}

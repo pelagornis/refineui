@@ -1,0 +1,38 @@
+{
+  "id": "switch",
+  "exportPath": "@refineui/react",
+  "exportName": "Switch",
+  "kind": "root",
+  "category": "components",
+  "label": "Switch",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [],
+      "repeatable": true,
+      "allowText": false,
+      "allowAnyComponent": true,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "label": "Default",
+      "root": {
+        "component": "Switch",
+        "slots": {}
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

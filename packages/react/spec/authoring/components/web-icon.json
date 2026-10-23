@@ -1,0 +1,48 @@
+{
+  "id": "web-icon",
+  "exportPath": "@refineui/react",
+  "exportName": "WebIcon",
+  "kind": "root",
+  "category": "utilities",
+  "label": "Web Icon",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [],
+      "repeatable": true,
+      "allowText": true,
+      "allowAnyComponent": true,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "label": "Default",
+      "root": {
+        "component": "WebIcon",
+        "slots": {
+          "children": [
+            {
+              "component": "Text",
+              "props": {
+                "variant": "bodyMd"
+              },
+              "text": "Web Icon"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "tabs-content",
+  "exportPath": "@refineui/react",
+  "exportName": "TabsContent",
+  "kind": "part",
+  "category": "parts",
+  "label": "Tabs Content",
+  "props": [
+    {
+      "name": "value",
+      "label": "value",
+      "valueType": "string",
+      "control": "text",
+      "required": true,
+      "section": "properties"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Tabs",
+      "slot": "children"
+    }
+  ]
+}

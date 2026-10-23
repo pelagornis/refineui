@@ -1,0 +1,27 @@
+{
+  "id": "chart-legend-item",
+  "exportPath": "@refineui/react",
+  "exportName": "ChartLegendItem",
+  "kind": "part",
+  "category": "parts",
+  "label": "Chart Legend Item",
+  "props": [
+    {
+      "name": "seriesColor",
+      "label": "series Color",
+      "valueType": "enum",
+      "control": "select",
+      "required": true,
+      "section": "properties"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "ChartLegend",
+      "slot": "children"
+    }
+  ]
+}

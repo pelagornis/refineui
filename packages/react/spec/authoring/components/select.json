@@ -1,0 +1,145 @@
+{
+  "id": "select",
+  "exportPath": "@refineui/react",
+  "exportName": "Select",
+  "kind": "root",
+  "category": "components",
+  "label": "Select",
+  "props": [
+    {
+      "name": "appearance",
+      "label": "appearance",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "filled",
+        "ghost",
+        "plain"
+      ],
+      "defaultValue": "filled",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "portal": {
+    "strategy": "themed-overlay-root",
+    "inheritsTheme": true,
+    "containerComponent": "SelectPortal",
+    "containerProp": "container"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "SelectTrigger",
+        "SelectPortal"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "options",
+      "label": "Options",
+      "root": {
+        "component": "Select",
+        "props": {
+          "defaultValue": "option-1",
+          "placeholder": "Select an option"
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "SelectTrigger",
+              "slots": {
+                "children": [
+                  {
+                    "component": "SelectValue",
+                    "props": {
+                      "placeholder": "Select an option"
+                    }
+                  },
+                  {
+                    "component": "SelectIcon"
+                  }
+                ]
+              }
+            },
+            {
+              "component": "SelectPortal",
+              "slots": {
+                "children": [
+                  {
+                    "component": "SelectContent",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "SelectViewport",
+                          "slots": {
+                            "children": [
+                              {
+                                "component": "SelectItem",
+                                "props": {
+                                  "value": "option-1",
+                                  "textValue": "Option 1"
+                                },
+                                "slots": {
+                                  "children": [
+                                    {
+                                      "component": "SelectItemText",
+                                      "text": "Option 1"
+                                    }
+                                  ]
+                                }
+                              },
+                              {
+                                "component": "SelectItem",
+                                "props": {
+                                  "value": "option-2",
+                                  "textValue": "Option 2"
+                                },
+                                "slots": {
+                                  "children": [
+                                    {
+                                      "component": "SelectItemText",
+                                      "text": "Option 2"
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "value",
+      "valueProp": "value",
+      "defaultValueProp": "defaultValue",
+      "changeEvent": "onValueChange",
+      "valueType": "string"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onValueChange",
+      "payload": "string"
+    }
+  ]
+}

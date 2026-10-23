@@ -1,0 +1,30 @@
+{
+  "id": "context-menu-sub-content",
+  "exportPath": "@refineui/react",
+  "exportName": "ContextMenuSubContent",
+  "kind": "part",
+  "category": "parts",
+  "label": "Context Menu Sub Content",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "ContextMenuSub",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "ContextMenuItem",
+        "ContextMenuLabel",
+        "ContextMenuSeparator",
+        "ContextMenuSub"
+      ],
+      "repeatable": true
+    }
+  ]
+}

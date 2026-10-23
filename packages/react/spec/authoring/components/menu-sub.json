@@ -1,0 +1,28 @@
+{
+  "id": "menu-sub",
+  "exportPath": "@refineui/react",
+  "exportName": "MenuSub",
+  "kind": "part",
+  "category": "parts",
+  "label": "Menu Sub",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "MenuList",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "MenuSubTrigger",
+        "MenuSubContent"
+      ],
+      "repeatable": true
+    }
+  ]
+}

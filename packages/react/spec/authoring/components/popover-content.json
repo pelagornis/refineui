@@ -1,0 +1,18 @@
+{
+  "id": "popover-content",
+  "exportPath": "@refineui/react",
+  "exportName": "PopoverContent",
+  "kind": "part",
+  "category": "parts",
+  "label": "Popover Content",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "PopOver",
+      "slot": "children"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "menu-label",
+  "exportPath": "@refineui/react",
+  "exportName": "MenuLabel",
+  "kind": "part",
+  "category": "parts",
+  "label": "Menu Label",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "MenuList",
+      "slot": "children"
+    }
+  ]
+}

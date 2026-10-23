@@ -1,0 +1,39 @@
+{
+  "id": "spacer",
+  "exportPath": "@refineui/react",
+  "exportName": "Spacer",
+  "kind": "root",
+  "category": "components",
+  "label": "Spacer",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "GridItem"
+      ],
+      "repeatable": true,
+      "allowText": false,
+      "allowAnyComponent": false,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "spacer",
+      "label": "Spacer",
+      "root": {
+        "component": "Spacer"
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

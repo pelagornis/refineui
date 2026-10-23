@@ -1,0 +1,18 @@
+{
+  "id": "search-field-icon",
+  "exportPath": "@refineui/react",
+  "exportName": "SearchFieldIcon",
+  "kind": "part",
+  "category": "parts",
+  "label": "Search Field Icon",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "SearchField",
+      "slot": "children"
+    }
+  ]
+}

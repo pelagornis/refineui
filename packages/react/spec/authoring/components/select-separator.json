@@ -1,0 +1,22 @@
+{
+  "id": "select-separator",
+  "exportPath": "@refineui/react",
+  "exportName": "SelectSeparator",
+  "kind": "part",
+  "category": "parts",
+  "label": "Select Separator",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "SelectViewport",
+      "slot": "children"
+    },
+    {
+      "component": "SelectGroup",
+      "slot": "children"
+    }
+  ]
+}

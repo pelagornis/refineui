@@ -1,0 +1,87 @@
+{
+  "id": "bubble",
+  "exportPath": "@refineui/react",
+  "exportName": "Bubble",
+  "kind": "root",
+  "category": "components",
+  "label": "Bubble",
+  "props": [
+    {
+      "name": "variant",
+      "label": "Variant",
+      "valueType": "enum",
+      "control": "select",
+      "options": [
+        "default",
+        "secondary",
+        "muted",
+        "tinted",
+        "outline",
+        "ghost",
+        "destructive"
+      ],
+      "defaultValue": "default",
+      "section": "variants"
+    },
+    {
+      "name": "align",
+      "label": "Align",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "start",
+        "end"
+      ],
+      "defaultValue": "start",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "BubbleContent",
+        "BubbleReactions"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "message",
+      "label": "Message",
+      "root": {
+        "component": "Bubble",
+        "props": {
+          "variant": "default",
+          "align": "start"
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "BubbleContent",
+              "text": "Message"
+            },
+            {
+              "component": "BubbleReactions",
+              "props": {
+                "side": "bottom",
+                "align": "end"
+              },
+              "text": "Reaction"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

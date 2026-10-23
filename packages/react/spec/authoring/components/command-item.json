@@ -1,0 +1,79 @@
+{
+  "id": "command-item",
+  "exportPath": "@refineui/react",
+  "exportName": "CommandItem",
+  "kind": "part",
+  "category": "parts",
+  "label": "Command Item",
+  "props": [
+    {
+      "name": "value",
+      "label": "value",
+      "valueType": "string",
+      "control": "text",
+      "required": true,
+      "section": "properties"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "CommandGroup",
+      "slot": "children"
+    },
+    {
+      "component": "CommandList",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "CommandShortcut"
+      ],
+      "repeatable": true,
+      "allowText": true
+    },
+    {
+      "name": "startIcon",
+      "prop": "startIcon",
+      "target": "prop",
+      "accepts": [
+        "WebIcon"
+      ],
+      "max": 1
+    },
+    {
+      "name": "endIcon",
+      "prop": "endIcon",
+      "target": "prop",
+      "accepts": [
+        "WebIcon"
+      ],
+      "max": 1
+    }
+  ],
+  "iconSlots": [
+    {
+      "name": "startIcon",
+      "optional": true,
+      "accepts": [
+        "refineui-icon",
+        "svg",
+        "image"
+      ]
+    },
+    {
+      "name": "endIcon",
+      "optional": true,
+      "accepts": [
+        "refineui-icon",
+        "svg",
+        "image"
+      ]
+    }
+  ]
+}

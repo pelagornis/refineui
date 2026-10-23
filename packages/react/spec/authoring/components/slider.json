@@ -1,0 +1,64 @@
+{
+  "id": "slider",
+  "exportPath": "@refineui/react",
+  "exportName": "Slider",
+  "kind": "root",
+  "category": "components",
+  "label": "Slider",
+  "props": [
+    {
+      "name": "size",
+      "label": "size",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "sm",
+        "md"
+      ],
+      "defaultValue": "sm",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [],
+      "repeatable": true,
+      "allowText": false,
+      "allowAnyComponent": true,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "label": "Default",
+      "root": {
+        "component": "Slider",
+        "slots": {}
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "value",
+      "valueProp": "value",
+      "defaultValueProp": "defaultValue",
+      "changeEvent": "onValueChange",
+      "valueType": "number"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onValueChange",
+      "payload": "number"
+    }
+  ]
+}

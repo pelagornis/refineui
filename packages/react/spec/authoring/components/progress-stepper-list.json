@@ -1,0 +1,28 @@
+{
+  "id": "progress-stepper-list",
+  "exportPath": "@refineui/react",
+  "exportName": "ProgressStepperList",
+  "kind": "part",
+  "category": "parts",
+  "label": "Progress Stepper List",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "ProgressStepper",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "ProgressStepperItem"
+      ],
+      "repeatable": true,
+      "min": 1
+    }
+  ]
+}

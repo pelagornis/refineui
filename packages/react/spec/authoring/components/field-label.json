@@ -1,0 +1,28 @@
+{
+  "id": "field-label",
+  "exportPath": "@refineui/react",
+  "exportName": "FieldLabel",
+  "kind": "part",
+  "category": "parts",
+  "label": "Field Label",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Field",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "FieldRequired"
+      ],
+      "repeatable": true,
+      "allowText": true
+    }
+  ]
+}

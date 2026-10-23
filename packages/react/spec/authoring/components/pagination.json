@@ -1,0 +1,80 @@
+{
+  "id": "pagination",
+  "exportPath": "@refineui/react",
+  "exportName": "Pagination",
+  "kind": "root",
+  "category": "components",
+  "label": "Pagination",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "PaginationContent"
+      ],
+      "max": 1
+    }
+  ],
+  "presets": [
+    {
+      "id": "pages",
+      "label": "Pagination",
+      "root": {
+        "component": "Pagination",
+        "slots": {
+          "children": [
+            {
+              "component": "PaginationContent",
+              "slots": {
+                "children": [
+                  {
+                    "component": "PaginationItem",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "PaginationLink",
+                          "props": {
+                            "href": "#",
+                            "isActive": true
+                          },
+                          "text": "1"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "component": "PaginationItem",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "PaginationLink",
+                          "props": {
+                            "href": "#"
+                          },
+                          "text": "2"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "component": "PaginationNext",
+                    "text": "Next"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

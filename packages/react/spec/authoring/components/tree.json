@@ -1,0 +1,139 @@
+{
+  "id": "tree",
+  "exportPath": "@refineui/react",
+  "exportName": "Tree",
+  "kind": "root",
+  "category": "components",
+  "label": "Tree",
+  "props": [
+    {
+      "name": "size",
+      "label": "Size",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "defaultValue": "md",
+      "section": "variants"
+    },
+    {
+      "name": "defaultExpanded",
+      "label": "Initially expanded",
+      "valueType": "string-array",
+      "control": "collection",
+      "defaultValue": [
+        "item-1"
+      ],
+      "section": "state"
+    },
+    {
+      "name": "defaultSelected",
+      "label": "Initially selected",
+      "valueType": "string",
+      "control": "text",
+      "defaultValue": "item-1",
+      "section": "state"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "TreeItem"
+      ],
+      "repeatable": true,
+      "min": 1
+    }
+  ],
+  "presets": [
+    {
+      "id": "nested",
+      "label": "Nested tree",
+      "root": {
+        "component": "Tree",
+        "props": {
+          "defaultExpanded": [
+            "item-1"
+          ],
+          "defaultSelected": "item-1",
+          "size": "md"
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "TreeItem",
+              "props": {
+                "value": "item-1"
+              },
+              "slots": {
+                "children": [
+                  {
+                    "component": "TreeItemTrigger",
+                    "text": "Item 1"
+                  },
+                  {
+                    "component": "TreeItemContent",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "TreeItem",
+                          "props": {
+                            "value": "item-1-1"
+                          },
+                          "slots": {
+                            "children": [
+                              {
+                                "component": "TreeItemTrigger",
+                                "text": "Child item"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "expanded",
+      "valueProp": "expanded",
+      "defaultValueProp": "defaultExpanded",
+      "changeEvent": "onExpandedChange",
+      "valueType": "string-array"
+    },
+    {
+      "name": "selected",
+      "valueProp": "selected",
+      "defaultValueProp": "defaultSelected",
+      "changeEvent": "onSelectedChange",
+      "valueType": "string"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onExpandedChange",
+      "payload": "string-array"
+    },
+    {
+      "name": "onSelectedChange",
+      "payload": "string"
+    }
+  ]
+}

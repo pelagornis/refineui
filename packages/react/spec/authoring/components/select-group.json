@@ -1,0 +1,29 @@
+{
+  "id": "select-group",
+  "exportPath": "@refineui/react",
+  "exportName": "SelectGroup",
+  "kind": "part",
+  "category": "parts",
+  "label": "Select Group",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "SelectViewport",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "SelectLabel",
+        "SelectItem",
+        "SelectSeparator"
+      ],
+      "repeatable": true
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "id": "checkbox",
+  "exportPath": "@refineui/react",
+  "exportName": "Checkbox",
+  "kind": "root",
+  "category": "components",
+  "label": "Checkbox",
+  "props": [
+    {
+      "name": "variant",
+      "label": "variant",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "default",
+        "circular"
+      ],
+      "defaultValue": "default",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [],
+      "repeatable": true,
+      "allowText": false,
+      "allowAnyComponent": true,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "label": "Default",
+      "root": {
+        "component": "Checkbox",
+        "slots": {}
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

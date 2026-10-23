@@ -1,0 +1,31 @@
+{
+  "id": "dropdown-content",
+  "exportPath": "@refineui/react",
+  "exportName": "DropdownContent",
+  "kind": "part",
+  "category": "parts",
+  "label": "Dropdown Content",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "DropdownPortal",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "DropdownGroup",
+        "DropdownItem",
+        "DropdownLabel",
+        "DropdownSeparator",
+        "DropdownSub"
+      ],
+      "repeatable": true
+    }
+  ]
+}

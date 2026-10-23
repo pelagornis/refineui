@@ -1,0 +1,28 @@
+{
+  "id": "sidebar-group",
+  "exportPath": "@refineui/react",
+  "exportName": "SidebarGroup",
+  "kind": "part",
+  "category": "parts",
+  "label": "Sidebar Group",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "SidebarContent",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "SidebarGroupLabel",
+        "SidebarLink"
+      ],
+      "repeatable": true
+    }
+  ]
+}

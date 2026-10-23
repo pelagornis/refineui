@@ -1,0 +1,71 @@
+{
+  "id": "segmented-control",
+  "exportPath": "@refineui/react",
+  "exportName": "SegmentedControl",
+  "kind": "root",
+  "category": "components",
+  "label": "Segmented Control",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "SegmentedControlItem"
+      ],
+      "repeatable": true,
+      "min": 1
+    }
+  ],
+  "presets": [
+    {
+      "id": "choices",
+      "label": "Choices",
+      "root": {
+        "component": "SegmentedControl",
+        "props": {
+          "defaultValue": "first"
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "SegmentedControlItem",
+              "props": {
+                "value": "first"
+              },
+              "text": "First"
+            },
+            {
+              "component": "SegmentedControlItem",
+              "props": {
+                "value": "second"
+              },
+              "text": "Second"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "value",
+      "valueProp": "value",
+      "defaultValueProp": "defaultValue",
+      "changeEvent": "onValueChange",
+      "valueType": "string"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onValueChange",
+      "payload": "string"
+    }
+  ]
+}

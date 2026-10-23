@@ -1,0 +1,59 @@
+{
+  "id": "bubble-group",
+  "exportPath": "@refineui/react",
+  "exportName": "BubbleGroup",
+  "kind": "root",
+  "category": "components",
+  "label": "Bubble Group",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "Bubble",
+        "BubbleGroup"
+      ],
+      "repeatable": true,
+      "recursive": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "conversation",
+      "label": "Conversation",
+      "root": {
+        "component": "BubbleGroup",
+        "slots": {
+          "children": [
+            {
+              "component": "Bubble",
+              "props": {
+                "variant": "default",
+                "align": "start"
+              },
+              "slots": {
+                "children": [
+                  {
+                    "component": "BubbleContent",
+                    "text": "Message"
+                  },
+                  {
+                    "component": "BubbleReactions",
+                    "props": {
+                      "side": "bottom",
+                      "align": "end"
+                    },
+                    "text": "Reaction"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "sidebar-link",
+  "exportPath": "@refineui/react",
+  "exportName": "SidebarLink",
+  "kind": "part",
+  "category": "parts",
+  "label": "Sidebar Link",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "SidebarNav",
+      "slot": "children"
+    },
+    {
+      "component": "SidebarGroup",
+      "slot": "children"
+    }
+  ]
+}

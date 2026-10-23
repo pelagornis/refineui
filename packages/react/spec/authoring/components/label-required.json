@@ -1,0 +1,18 @@
+{
+  "id": "label-required",
+  "exportPath": "@refineui/react",
+  "exportName": "LabelRequired",
+  "kind": "part",
+  "category": "parts",
+  "label": "Label Required",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Label",
+      "slot": "children"
+    }
+  ]
+}

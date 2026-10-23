@@ -1,0 +1,37 @@
+{
+  "id": "command-dialog",
+  "exportPath": "@refineui/react",
+  "exportName": "CommandDialog",
+  "kind": "root",
+  "category": "components",
+  "label": "Command Dialog",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "Command"
+      ],
+      "max": 1
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "label": "Command dialog",
+      "root": {
+        "component": "CommandDialog",
+        "slots": {
+          "children": [
+            {
+              "component": "Command"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

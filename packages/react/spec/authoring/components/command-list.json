@@ -1,0 +1,30 @@
+{
+  "id": "command-list",
+  "exportPath": "@refineui/react",
+  "exportName": "CommandList",
+  "kind": "part",
+  "category": "parts",
+  "label": "Command List",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Command",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "CommandEmpty",
+        "CommandGroup",
+        "CommandItem",
+        "CommandSeparator"
+      ],
+      "repeatable": true
+    }
+  ]
+}

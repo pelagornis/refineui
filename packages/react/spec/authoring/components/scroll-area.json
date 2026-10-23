@@ -1,0 +1,71 @@
+{
+  "id": "scroll-area",
+  "exportPath": "@refineui/react",
+  "exportName": "ScrollArea",
+  "kind": "root",
+  "category": "components",
+  "label": "Scroll Area",
+  "props": [
+    {
+      "name": "type",
+      "label": "type",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "hover",
+        "always"
+      ],
+      "defaultValue": "hover",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "ScrollAreaViewport",
+        "ScrollAreaScrollbar"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "scroll",
+      "label": "Scrollable content",
+      "root": {
+        "component": "ScrollArea",
+        "slots": {
+          "children": [
+            {
+              "component": "ScrollAreaViewport",
+              "text": "Scrollable content"
+            },
+            {
+              "component": "ScrollAreaScrollbar",
+              "props": {
+                "orientation": "vertical"
+              },
+              "slots": {
+                "children": [
+                  {
+                    "component": "ScrollAreaThumb"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

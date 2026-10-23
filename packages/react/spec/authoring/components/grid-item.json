@@ -1,0 +1,18 @@
+{
+  "id": "grid-item",
+  "exportPath": "@refineui/react",
+  "exportName": "GridItem",
+  "kind": "part",
+  "category": "parts",
+  "label": "Grid Item",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Grid",
+      "slot": "children"
+    }
+  ]
+}

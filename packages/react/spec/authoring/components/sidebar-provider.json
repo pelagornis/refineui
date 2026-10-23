@@ -1,0 +1,38 @@
+{
+  "id": "sidebar-provider",
+  "exportPath": "@refineui/react",
+  "exportName": "SidebarProvider",
+  "kind": "root",
+  "category": "components",
+  "label": "Sidebar Provider",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "Sidebar",
+        "SidebarTrigger"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "layout",
+      "label": "Sidebar layout",
+      "root": {
+        "component": "SidebarProvider",
+        "slots": {
+          "children": [
+            {
+              "component": "Sidebar"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

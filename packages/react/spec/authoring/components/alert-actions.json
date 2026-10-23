@@ -1,0 +1,28 @@
+{
+  "id": "alert-actions",
+  "exportPath": "@refineui/react",
+  "exportName": "AlertActions",
+  "kind": "part",
+  "category": "parts",
+  "label": "Alert Actions",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Alert",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "AlertAction",
+        "AlertClose"
+      ],
+      "repeatable": true
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "footer-link",
+  "exportPath": "@refineui/react",
+  "exportName": "FooterLink",
+  "kind": "part",
+  "category": "parts",
+  "label": "Footer Link",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "FooterGroup",
+      "slot": "children"
+    },
+    {
+      "component": "FooterNav",
+      "slot": "children"
+    }
+  ]
+}

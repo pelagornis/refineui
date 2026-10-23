@@ -1,0 +1,18 @@
+{
+  "id": "popover-trigger",
+  "exportPath": "@refineui/react",
+  "exportName": "PopoverTrigger",
+  "kind": "part",
+  "category": "parts",
+  "label": "Popover Trigger",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "PopOver",
+      "slot": "children"
+    }
+  ]
+}

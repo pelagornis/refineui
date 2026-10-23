@@ -1,0 +1,88 @@
+{
+  "id": "button",
+  "exportPath": "@refineui/react",
+  "exportName": "Button",
+  "kind": "root",
+  "category": "components",
+  "label": "Button",
+  "props": [
+    {
+      "name": "variant",
+      "label": "variant",
+      "valueType": "enum",
+      "control": "select",
+      "options": [
+        "primary",
+        "secondary",
+        "outline",
+        "ghost"
+      ],
+      "defaultValue": "primary",
+      "section": "variants"
+    },
+    {
+      "name": "size",
+      "label": "size",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "defaultValue": "sm",
+      "section": "variants"
+    },
+    {
+      "name": "layout",
+      "label": "layout",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "label",
+        "icon"
+      ],
+      "defaultValue": "label",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [],
+      "repeatable": true,
+      "allowText": true,
+      "allowAnyComponent": true,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "label": "Default",
+      "root": {
+        "component": "Button",
+        "slots": {
+          "children": [
+            {
+              "component": "Text",
+              "props": {
+                "variant": "bodyMd"
+              },
+              "text": "Button"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

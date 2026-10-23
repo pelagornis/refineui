@@ -1,0 +1,18 @@
+{
+  "id": "breadcrumb-ellipsis-trigger",
+  "exportPath": "@refineui/react",
+  "exportName": "BreadcrumbEllipsisTrigger",
+  "kind": "part",
+  "category": "parts",
+  "label": "Breadcrumb Ellipsis Trigger",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "BreadcrumbEllipsis",
+      "slot": "children"
+    }
+  ]
+}

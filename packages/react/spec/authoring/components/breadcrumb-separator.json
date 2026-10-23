@@ -1,0 +1,18 @@
+{
+  "id": "breadcrumb-separator",
+  "exportPath": "@refineui/react",
+  "exportName": "BreadcrumbSeparator",
+  "kind": "part",
+  "category": "parts",
+  "label": "Breadcrumb Separator",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "BreadcrumbList",
+      "slot": "children"
+    }
+  ]
+}

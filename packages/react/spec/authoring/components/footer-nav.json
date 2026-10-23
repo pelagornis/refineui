@@ -1,0 +1,27 @@
+{
+  "id": "footer-nav",
+  "exportPath": "@refineui/react",
+  "exportName": "FooterNav",
+  "kind": "part",
+  "category": "parts",
+  "label": "Footer Nav",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "FooterContent",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "FooterLink"
+      ],
+      "repeatable": true
+    }
+  ]
+}

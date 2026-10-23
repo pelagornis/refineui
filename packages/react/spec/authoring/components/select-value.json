@@ -1,0 +1,18 @@
+{
+  "id": "select-value",
+  "exportPath": "@refineui/react",
+  "exportName": "SelectValue",
+  "kind": "part",
+  "category": "parts",
+  "label": "Select Value",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "SelectTrigger",
+      "slot": "children"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "select-scroll-up-button",
+  "exportPath": "@refineui/react",
+  "exportName": "SelectScrollUpButton",
+  "kind": "part",
+  "category": "parts",
+  "label": "Select Scroll Up Button",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "SelectContent",
+      "slot": "children"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "select-trigger",
+  "exportPath": "@refineui/react",
+  "exportName": "SelectTrigger",
+  "kind": "part",
+  "category": "parts",
+  "label": "Select Trigger",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Select",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "SelectValue",
+        "SelectIcon",
+        "SelectArrow"
+      ],
+      "repeatable": true
+    }
+  ]
+}

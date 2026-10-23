@@ -1,0 +1,102 @@
+{
+  "id": "dialog",
+  "exportPath": "@refineui/react",
+  "exportName": "Dialog",
+  "kind": "root",
+  "category": "components",
+  "label": "Dialog",
+  "props": [
+    {
+      "name": "size",
+      "label": "size",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "sm",
+        "lg"
+      ],
+      "defaultValue": "sm",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "portal": {
+    "strategy": "themed-overlay-root",
+    "inheritsTheme": true,
+    "containerComponent": "DialogContent",
+    "containerProp": "container"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "DialogTrigger",
+        "DialogContent"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "dialog",
+      "label": "Dialog",
+      "root": {
+        "component": "Dialog",
+        "props": {
+          "defaultOpen": false
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "DialogTrigger",
+              "text": "Open dialog"
+            },
+            {
+              "component": "DialogContent",
+              "slots": {
+                "children": [
+                  {
+                    "component": "DialogHeader",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "DialogTitle",
+                          "text": "Dialog title"
+                        },
+                        {
+                          "component": "DialogDescription",
+                          "text": "Dialog description"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "open",
+      "valueProp": "open",
+      "defaultValueProp": "defaultOpen",
+      "changeEvent": "onOpenChange",
+      "valueType": "boolean"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onOpenChange",
+      "payload": "boolean"
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "id": "toast",
+  "exportPath": "@refineui/react",
+  "exportName": "Toast",
+  "kind": "root",
+  "category": "components",
+  "label": "Toast",
+  "props": [
+    {
+      "name": "variant",
+      "label": "variant",
+      "valueType": "enum",
+      "control": "select",
+      "options": [
+        "default",
+        "success",
+        "error",
+        "warning"
+      ],
+      "defaultValue": "default",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "portal": {
+    "strategy": "document-body",
+    "inheritsTheme": false
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "Toaster"
+      ],
+      "repeatable": true,
+      "allowText": true,
+      "allowAnyComponent": false,
+      "defaultChildren": []
+    },
+    {
+      "name": "message",
+      "prop": "message",
+      "target": "prop",
+      "accepts": [
+        "Text"
+      ],
+      "max": 1,
+      "allowText": true
+    },
+    {
+      "name": "icon",
+      "prop": "icon",
+      "target": "prop",
+      "accepts": [
+        "WebIcon"
+      ],
+      "max": 1
+    }
+  ],
+  "presets": [
+    {
+      "id": "toast",
+      "label": "Toast",
+      "root": {
+        "component": "Toast",
+        "props": {
+          "variant": "default"
+        },
+        "slots": {
+          "message": [
+            {
+              "component": "Text",
+              "props": {
+                "variant": "bodyMd"
+              },
+              "text": "Changes saved"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ],
+  "iconSlots": [
+    {
+      "name": "icon",
+      "optional": true,
+      "accepts": [
+        "refineui-icon",
+        "svg",
+        "image"
+      ]
+    }
+  ]
+}

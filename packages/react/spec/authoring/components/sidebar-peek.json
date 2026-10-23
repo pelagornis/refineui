@@ -1,0 +1,40 @@
+{
+  "id": "sidebar-peek",
+  "exportPath": "@refineui/react",
+  "exportName": "SidebarPeek",
+  "kind": "part",
+  "category": "parts",
+  "label": "Sidebar Peek",
+  "props": [
+    {
+      "name": "widthPercent",
+      "label": "width Percent",
+      "valueType": "number",
+      "control": "number",
+      "defaultValue": 35,
+      "required": true,
+      "section": "properties"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Sidebar",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "SidebarPeekEdge",
+        "SidebarPeekInset",
+        "SidebarPeekPanel",
+        "SidebarPeekPin"
+      ],
+      "repeatable": true
+    }
+  ]
+}

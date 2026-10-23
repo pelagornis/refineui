@@ -1,0 +1,29 @@
+{
+  "id": "select-content",
+  "exportPath": "@refineui/react",
+  "exportName": "SelectContent",
+  "kind": "part",
+  "category": "parts",
+  "label": "Select Content",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "SelectPortal",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "SelectScrollUpButton",
+        "SelectViewport",
+        "SelectScrollDownButton"
+      ],
+      "repeatable": true
+    }
+  ]
+}

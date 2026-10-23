@@ -1,0 +1,80 @@
+{
+  "id": "menu",
+  "exportPath": "@refineui/react",
+  "exportName": "Menu",
+  "kind": "root",
+  "category": "components",
+  "label": "Menu",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "MenuTrigger",
+        "MenuPopover"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "menu",
+      "label": "Menu",
+      "root": {
+        "component": "Menu",
+        "slots": {
+          "children": [
+            {
+              "component": "MenuTrigger",
+              "text": "Open menu"
+            },
+            {
+              "component": "MenuPopover",
+              "slots": {
+                "children": [
+                  {
+                    "component": "MenuList",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "MenuItem",
+                          "text": "First item"
+                        },
+                        {
+                          "component": "MenuItem",
+                          "text": "Second item"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "open",
+      "valueProp": "open",
+      "defaultValueProp": "defaultOpen",
+      "changeEvent": "onOpenChange",
+      "valueType": "boolean"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onOpenChange",
+      "payload": "boolean"
+    }
+  ]
+}

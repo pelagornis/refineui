@@ -1,0 +1,48 @@
+{
+  "id": "select-item",
+  "exportPath": "@refineui/react",
+  "exportName": "SelectItem",
+  "kind": "part",
+  "category": "parts",
+  "label": "Select Item",
+  "props": [
+    {
+      "name": "textValue",
+      "valueType": "string",
+      "control": "text",
+      "section": "accessibility",
+      "label": "text Value"
+    },
+    {
+      "name": "value",
+      "label": "value",
+      "valueType": "string",
+      "control": "text",
+      "required": true,
+      "section": "properties"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "SelectViewport",
+      "slot": "children"
+    },
+    {
+      "component": "SelectGroup",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "SelectItemIndicator",
+        "SelectItemText"
+      ],
+      "repeatable": true
+    }
+  ]
+}

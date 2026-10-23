@@ -1,0 +1,40 @@
+{
+  "id": "container",
+  "exportPath": "@refineui/react",
+  "exportName": "Container",
+  "kind": "root",
+  "category": "components",
+  "label": "Container",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "GridItem"
+      ],
+      "repeatable": true,
+      "allowText": true,
+      "allowAnyComponent": false,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "container",
+      "label": "Container",
+      "root": {
+        "component": "Container",
+        "text": "Container content"
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "menu-trigger",
+  "exportPath": "@refineui/react",
+  "exportName": "MenuTrigger",
+  "kind": "part",
+  "category": "parts",
+  "label": "Menu Trigger",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Menu",
+      "slot": "children"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "alert-body",
+  "exportPath": "@refineui/react",
+  "exportName": "AlertBody",
+  "kind": "part",
+  "category": "parts",
+  "label": "Alert Body",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "AlertContent",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "AlertTitle",
+        "AlertDescription"
+      ],
+      "repeatable": true
+    }
+  ]
+}

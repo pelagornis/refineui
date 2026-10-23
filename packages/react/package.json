@@ -13,6 +13,12 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./authoring-manifest": {
+      "types": "./dist/authoring-manifest.d.ts",
+      "import": "./dist/authoring-manifest.js",
+      "require": "./dist/authoring-manifest.cjs"
+    },
+    "./authoring-manifest.json": "./spec/authoring/manifest.json",
     "./package.json": "./package.json",
     "./refineui.css": "./refineui.css"
   },
@@ -22,8 +28,13 @@
     "refineui.css"
   ],
   "scripts": {
-    "build": "node ../../scripts/ws.mjs @refineui/utilities build && node ../../scripts/ws.mjs @refineui/tokens build && tsup && node scripts/generate-refineui-css.mjs && node scripts/generate-component-spec.mjs",
-    "dev": "tsup --watch"
+    "build": "node ../../scripts/ws.mjs @refineui/utilities build && node ../../scripts/ws.mjs @refineui/tokens build && node scripts/generate-authoring-manifest.mjs && node scripts/validate-authoring-manifest.mjs && tsup && node scripts/generate-refineui-css.mjs && node scripts/generate-component-spec.mjs",
+    "dev": "node scripts/generate-authoring-manifest.mjs && tsup --watch",
+    "generate:authoring": "node scripts/generate-authoring-manifest.mjs",
+    "validate:authoring": "node scripts/validate-authoring-manifest.mjs",
+    "verify:authoring-presets": "node scripts/verify-authoring-presets.mjs",
+    "test:authoring": "node scripts/validate-authoring-manifest.mjs && vitest run --config vitest.authoring.config.ts",
+    "test:authoring:browser": "vitest run --config vitest.authoring.browser.config.ts"
   },
   "dependencies": {
     "@refineui/tokens": "workspace:*",
@@ -41,7 +52,8 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tsup": "^8.0.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "jsdom": "^30.1.3"
   },
   "repository": {
     "type": "git",

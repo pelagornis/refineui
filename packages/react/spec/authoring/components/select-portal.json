@@ -1,0 +1,27 @@
+{
+  "id": "select-portal",
+  "exportPath": "@refineui/react",
+  "exportName": "SelectPortal",
+  "kind": "provider",
+  "category": "parts",
+  "label": "Select Portal",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Select",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "SelectContent"
+      ],
+      "max": 1
+    }
+  ]
+}

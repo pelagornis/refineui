@@ -1,0 +1,77 @@
+{
+  "id": "avatar",
+  "exportPath": "@refineui/react",
+  "exportName": "Avatar",
+  "kind": "root",
+  "category": "components",
+  "label": "Avatar",
+  "props": [
+    {
+      "name": "size",
+      "label": "size",
+      "valueType": "enum",
+      "control": "select",
+      "options": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl"
+      ],
+      "defaultValue": "xs",
+      "section": "variants"
+    },
+    {
+      "name": "layout",
+      "label": "layout",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "image",
+        "icon",
+        "initials"
+      ],
+      "defaultValue": "image",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "AvatarImage",
+        "AvatarFallback",
+        "AvatarText",
+        "AvatarIcon",
+        "AvatarBadge"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "initials",
+      "label": "Initials avatar",
+      "root": {
+        "component": "Avatar",
+        "slots": {
+          "children": [
+            {
+              "component": "AvatarText",
+              "text": "AB"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

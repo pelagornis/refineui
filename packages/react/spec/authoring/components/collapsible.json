@@ -1,0 +1,65 @@
+{
+  "id": "collapsible",
+  "exportPath": "@refineui/react",
+  "exportName": "Collapsible",
+  "kind": "root",
+  "category": "utilities",
+  "label": "Collapsible",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "CollapsibleTrigger",
+        "CollapsibleContent"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "collapsible",
+      "label": "Collapsible",
+      "root": {
+        "component": "Collapsible",
+        "props": {
+          "defaultOpen": true
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "CollapsibleTrigger",
+              "text": "Toggle details"
+            },
+            {
+              "component": "CollapsibleContent",
+              "text": "Additional details"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "open",
+      "valueProp": "open",
+      "defaultValueProp": "defaultOpen",
+      "changeEvent": "onOpenChange",
+      "valueType": "boolean"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onOpenChange",
+      "payload": "boolean"
+    }
+  ]
+}

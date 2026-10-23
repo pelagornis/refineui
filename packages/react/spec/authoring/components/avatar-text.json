@@ -1,0 +1,18 @@
+{
+  "id": "avatar-text",
+  "exportPath": "@refineui/react",
+  "exportName": "AvatarText",
+  "kind": "part",
+  "category": "parts",
+  "label": "Avatar Text",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Avatar",
+      "slot": "children"
+    }
+  ]
+}

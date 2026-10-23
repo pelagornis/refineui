@@ -1,0 +1,102 @@
+{
+  "id": "accordion",
+  "exportPath": "@refineui/react",
+  "exportName": "Accordion",
+  "kind": "root",
+  "category": "components",
+  "label": "Accordion",
+  "props": [
+    {
+      "name": "size",
+      "label": "size",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "defaultValue": "sm",
+      "section": "variants"
+    },
+    {
+      "name": "type",
+      "label": "type",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "single",
+        "multiple"
+      ],
+      "defaultValue": "single",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "AccordionItem"
+      ],
+      "repeatable": true,
+      "min": 1
+    }
+  ],
+  "presets": [
+    {
+      "id": "items",
+      "label": "Accordion",
+      "root": {
+        "component": "Accordion",
+        "props": {
+          "type": "single",
+          "defaultValue": "item-1"
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "AccordionItem",
+              "props": {
+                "value": "item-1"
+              },
+              "slots": {
+                "children": [
+                  {
+                    "component": "AccordionTrigger",
+                    "text": "What is RefineUI?"
+                  },
+                  {
+                    "component": "AccordionContent",
+                    "text": "A composable component library."
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "value",
+      "valueProp": "value",
+      "defaultValueProp": "defaultValue",
+      "changeEvent": "onValueChange",
+      "valueType": "json"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onValueChange",
+      "payload": "object"
+    }
+  ]
+}

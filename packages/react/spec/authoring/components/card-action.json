@@ -1,0 +1,18 @@
+{
+  "id": "card-action",
+  "exportPath": "@refineui/react",
+  "exportName": "CardAction",
+  "kind": "part",
+  "category": "parts",
+  "label": "Card Action",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "CardHeader",
+      "slot": "children"
+    }
+  ]
+}

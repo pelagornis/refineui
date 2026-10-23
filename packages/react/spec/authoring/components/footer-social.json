@@ -1,0 +1,18 @@
+{
+  "id": "footer-social",
+  "exportPath": "@refineui/react",
+  "exportName": "FooterSocial",
+  "kind": "part",
+  "category": "parts",
+  "label": "Footer Social",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "FooterContent",
+      "slot": "children"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "scroll-area-viewport",
+  "exportPath": "@refineui/react",
+  "exportName": "ScrollAreaViewport",
+  "kind": "part",
+  "category": "parts",
+  "label": "Scroll Area Viewport",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "ScrollArea",
+      "slot": "children"
+    }
+  ]
+}

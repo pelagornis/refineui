@@ -1,0 +1,18 @@
+{
+  "id": "breadcrumb-link",
+  "exportPath": "@refineui/react",
+  "exportName": "BreadcrumbLink",
+  "kind": "part",
+  "category": "parts",
+  "label": "Breadcrumb Link",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "BreadcrumbItem",
+      "slot": "children"
+    }
+  ]
+}

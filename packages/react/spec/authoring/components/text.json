@@ -1,0 +1,84 @@
+{
+  "id": "text",
+  "exportPath": "@refineui/react",
+  "exportName": "Text",
+  "kind": "root",
+  "category": "components",
+  "label": "Text",
+  "props": [
+    {
+      "name": "variant",
+      "label": "Text style",
+      "valueType": "enum",
+      "control": "select",
+      "options": [
+        "displayLg",
+        "displayMd",
+        "displaySm",
+        "headingLg",
+        "headingMd",
+        "headingSm",
+        "titleLg",
+        "titleMd",
+        "titleSm",
+        "subtitleLg",
+        "subtitleMd",
+        "bodyLg",
+        "bodyMd",
+        "bodySm",
+        "bodyXs",
+        "labelLg",
+        "labelMd",
+        "labelSm",
+        "captionLg",
+        "captionMd",
+        "captionSm"
+      ],
+      "defaultValue": "bodyMd",
+      "required": true,
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [],
+      "repeatable": true,
+      "allowText": true,
+      "allowAnyComponent": true,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "label": "Default",
+      "root": {
+        "component": "Text",
+        "props": {
+          "variant": "bodyMd"
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "Text",
+              "props": {
+                "variant": "bodyMd"
+              },
+              "text": "Text"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

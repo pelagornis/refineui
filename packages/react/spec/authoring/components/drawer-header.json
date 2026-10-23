@@ -1,0 +1,28 @@
+{
+  "id": "drawer-header",
+  "exportPath": "@refineui/react",
+  "exportName": "DrawerHeader",
+  "kind": "part",
+  "category": "parts",
+  "label": "Drawer Header",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "DrawerContent",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "DrawerTitle",
+        "DrawerDescription"
+      ],
+      "repeatable": true
+    }
+  ]
+}

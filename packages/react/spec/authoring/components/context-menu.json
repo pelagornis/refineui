@@ -1,0 +1,84 @@
+{
+  "id": "context-menu",
+  "exportPath": "@refineui/react",
+  "exportName": "ContextMenu",
+  "kind": "root",
+  "category": "utilities",
+  "label": "Context Menu",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "portal": {
+    "strategy": "document-body",
+    "inheritsTheme": false
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "ContextMenuTrigger",
+        "ContextMenuPortal"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "context-menu",
+      "label": "Context menu",
+      "root": {
+        "component": "ContextMenu",
+        "slots": {
+          "children": [
+            {
+              "component": "ContextMenuTrigger",
+              "text": "Right-click target"
+            },
+            {
+              "component": "ContextMenuPortal",
+              "slots": {
+                "children": [
+                  {
+                    "component": "ContextMenuContent",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "ContextMenuItem",
+                          "text": "Copy"
+                        },
+                        {
+                          "component": "ContextMenuItem",
+                          "text": "Paste"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "open",
+      "valueProp": "open",
+      "defaultValueProp": "defaultOpen",
+      "changeEvent": "onOpenChange",
+      "valueType": "boolean"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onOpenChange",
+      "payload": "boolean"
+    }
+  ]
+}

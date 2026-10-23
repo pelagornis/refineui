@@ -1,0 +1,30 @@
+{
+  "id": "footer-content",
+  "exportPath": "@refineui/react",
+  "exportName": "FooterContent",
+  "kind": "part",
+  "category": "parts",
+  "label": "Footer Content",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Footer",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "FooterBrand",
+        "FooterExplore",
+        "FooterNav",
+        "FooterSocial"
+      ],
+      "repeatable": true
+    }
+  ]
+}

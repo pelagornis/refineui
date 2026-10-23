@@ -1,0 +1,32 @@
+{
+  "id": "dropdown-item",
+  "exportPath": "@refineui/react",
+  "exportName": "DropdownItem",
+  "kind": "part",
+  "category": "parts",
+  "label": "Dropdown Item",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "DropdownContent",
+      "slot": "children"
+    },
+    {
+      "component": "DropdownGroup",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "DropdownShortcut"
+      ],
+      "repeatable": true,
+      "allowText": true
+    }
+  ]
+}

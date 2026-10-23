@@ -1,0 +1,18 @@
+{
+  "id": "select-label",
+  "exportPath": "@refineui/react",
+  "exportName": "SelectLabel",
+  "kind": "part",
+  "category": "parts",
+  "label": "Select Label",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "SelectGroup",
+      "slot": "children"
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "id": "navigation-menu",
+  "exportPath": "@refineui/react",
+  "exportName": "NavigationMenu",
+  "kind": "root",
+  "category": "components",
+  "label": "Navigation Menu",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "NavigationMenuList",
+        "NavigationMenuIndicator"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "navigation",
+      "label": "Navigation",
+      "root": {
+        "component": "NavigationMenu",
+        "slots": {
+          "children": [
+            {
+              "component": "NavigationMenuList",
+              "slots": {
+                "children": [
+                  {
+                    "component": "NavigationMenuItem",
+                    "props": {
+                      "value": "products"
+                    },
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "NavigationMenuTrigger",
+                          "text": "Products"
+                        },
+                        {
+                          "component": "NavigationMenuContent",
+                          "slots": {
+                            "children": [
+                              {
+                                "component": "NavigationMenuLink",
+                                "props": {
+                                  "href": "#"
+                                },
+                                "text": "Overview"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "value",
+      "valueProp": "value",
+      "defaultValueProp": "defaultValue",
+      "changeEvent": "onValueChange",
+      "valueType": "string"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onValueChange",
+      "payload": "string"
+    }
+  ]
+}

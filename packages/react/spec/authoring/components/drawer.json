@@ -1,0 +1,120 @@
+{
+  "id": "drawer",
+  "exportPath": "@refineui/react",
+  "exportName": "Drawer",
+  "kind": "root",
+  "category": "components",
+  "label": "Drawer",
+  "props": [
+    {
+      "name": "type",
+      "label": "type",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "overlay",
+        "inline"
+      ],
+      "defaultValue": "overlay",
+      "section": "variants"
+    },
+    {
+      "name": "size",
+      "label": "size",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "defaultValue": "sm",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "portal": {
+    "strategy": "themed-overlay-root",
+    "inheritsTheme": true,
+    "containerComponent": "DrawerContent",
+    "containerProp": "container"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "DrawerTrigger",
+        "DrawerContent"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "drawer",
+      "label": "Drawer",
+      "root": {
+        "component": "Drawer",
+        "props": {
+          "defaultOpen": false,
+          "placement": "right"
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "DrawerTrigger",
+              "text": "Open drawer"
+            },
+            {
+              "component": "DrawerContent",
+              "slots": {
+                "children": [
+                  {
+                    "component": "DrawerHeader",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "DrawerTitle",
+                          "text": "Drawer title"
+                        },
+                        {
+                          "component": "DrawerDescription",
+                          "text": "Drawer description"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "component": "DrawerBody",
+                    "text": "Drawer content"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "open",
+      "valueProp": "open",
+      "defaultValueProp": "defaultOpen",
+      "changeEvent": "onOpenChange",
+      "valueType": "boolean"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onOpenChange",
+      "payload": "boolean"
+    }
+  ]
+}

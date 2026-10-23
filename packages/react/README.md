@@ -1,5 +1,14 @@
 # @refineui/react
 
+## Design-editor authoring metadata
+
+`@refineui/react/authoring-manifest` exposes the additive, editor-neutral
+authoring manifest. It is also available as
+`@refineui/react/authoring-manifest.json` for data-only consumers. See
+[`spec/authoring/README.md`](./spec/authoring/README.md) for preset rendering,
+serialization, and migration guidance; existing React component imports do not
+change.
+
 Accessible React components for [RefineUI](https://ui.pelagornis.com) — composed from `@refineui/tokens`, shipped with a machine-readable component contract.
 
 ## Install

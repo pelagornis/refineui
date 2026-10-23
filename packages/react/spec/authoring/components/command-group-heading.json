@@ -1,0 +1,18 @@
+{
+  "id": "command-group-heading",
+  "exportPath": "@refineui/react",
+  "exportName": "CommandGroupHeading",
+  "kind": "part",
+  "category": "parts",
+  "label": "Command Group Heading",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "CommandGroup",
+      "slot": "children"
+    }
+  ]
+}

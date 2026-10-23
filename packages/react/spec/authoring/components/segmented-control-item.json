@@ -1,0 +1,27 @@
+{
+  "id": "segmented-control-item",
+  "exportPath": "@refineui/react",
+  "exportName": "SegmentedControlItem",
+  "kind": "part",
+  "category": "parts",
+  "label": "Segmented Control Item",
+  "props": [
+    {
+      "name": "value",
+      "label": "value",
+      "valueType": "string",
+      "control": "text",
+      "required": true,
+      "section": "properties"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "SegmentedControl",
+      "slot": "children"
+    }
+  ]
+}

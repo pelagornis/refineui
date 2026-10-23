@@ -1,0 +1,66 @@
+{
+  "id": "field",
+  "exportPath": "@refineui/react",
+  "exportName": "Field",
+  "kind": "root",
+  "category": "components",
+  "label": "Field",
+  "props": [
+    {
+      "name": "size",
+      "label": "size",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "defaultValue": "sm",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "FieldLabel",
+        "FieldHint",
+        "FieldError",
+        "FieldRequired"
+      ],
+      "repeatable": true,
+      "allowText": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "field",
+      "label": "Field",
+      "root": {
+        "component": "Field",
+        "slots": {
+          "children": [
+            {
+              "component": "FieldLabel",
+              "text": "Label"
+            },
+            {
+              "component": "FieldHint",
+              "text": "Helpful hint"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

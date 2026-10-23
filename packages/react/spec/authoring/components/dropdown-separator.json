@@ -1,0 +1,22 @@
+{
+  "id": "dropdown-separator",
+  "exportPath": "@refineui/react",
+  "exportName": "DropdownSeparator",
+  "kind": "part",
+  "category": "parts",
+  "label": "Dropdown Separator",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "DropdownContent",
+      "slot": "children"
+    },
+    {
+      "component": "DropdownGroup",
+      "slot": "children"
+    }
+  ]
+}

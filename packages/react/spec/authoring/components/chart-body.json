@@ -1,0 +1,28 @@
+{
+  "id": "chart-body",
+  "exportPath": "@refineui/react",
+  "exportName": "ChartBody",
+  "kind": "part",
+  "category": "parts",
+  "label": "Chart Body",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Chart",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "ChartContent",
+        "ChartPlot"
+      ],
+      "repeatable": true
+    }
+  ]
+}

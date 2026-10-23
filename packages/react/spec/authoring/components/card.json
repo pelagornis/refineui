@@ -1,0 +1,85 @@
+{
+  "id": "card",
+  "exportPath": "@refineui/react",
+  "exportName": "Card",
+  "kind": "root",
+  "category": "components",
+  "label": "Card",
+  "props": [
+    {
+      "name": "variant",
+      "label": "variant",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "elevated",
+        "outlined"
+      ],
+      "defaultValue": "elevated",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "CardHeader",
+        "CardContent",
+        "CardFooter"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "content",
+      "label": "Content card",
+      "root": {
+        "component": "Card",
+        "slots": {
+          "children": [
+            {
+              "component": "CardHeader",
+              "slots": {
+                "children": [
+                  {
+                    "component": "CardHeaderMain",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "CardTitle",
+                          "text": "Card title"
+                        },
+                        {
+                          "component": "CardDescription",
+                          "text": "A concise description."
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "component": "CardContent",
+              "text": "Card content"
+            },
+            {
+              "component": "CardFooter",
+              "text": "Footer"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

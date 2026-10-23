@@ -1,0 +1,18 @@
+{
+  "id": "sidebar-peek-edge",
+  "exportPath": "@refineui/react",
+  "exportName": "SidebarPeekEdge",
+  "kind": "part",
+  "category": "parts",
+  "label": "Sidebar Peek Edge",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "SidebarPeek",
+      "slot": "children"
+    }
+  ]
+}

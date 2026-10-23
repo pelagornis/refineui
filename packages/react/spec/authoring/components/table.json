@@ -1,0 +1,87 @@
+{
+  "id": "table",
+  "exportPath": "@refineui/react",
+  "exportName": "Table",
+  "kind": "root",
+  "category": "components",
+  "label": "Table",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "TableCaption",
+        "TableHeader",
+        "TableBody",
+        "TableFooter"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "data",
+      "label": "Data table",
+      "root": {
+        "component": "Table",
+        "slots": {
+          "children": [
+            {
+              "component": "TableHeader",
+              "slots": {
+                "children": [
+                  {
+                    "component": "TableRow",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "TableHead",
+                          "text": "Name"
+                        },
+                        {
+                          "component": "TableHead",
+                          "text": "Status"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "component": "TableBody",
+              "slots": {
+                "children": [
+                  {
+                    "component": "TableRow",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "TableCell",
+                          "text": "Example"
+                        },
+                        {
+                          "component": "TableCell",
+                          "text": "Active"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

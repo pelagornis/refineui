@@ -1,0 +1,22 @@
+{
+  "id": "alert-description",
+  "exportPath": "@refineui/react",
+  "exportName": "AlertDescription",
+  "kind": "part",
+  "category": "parts",
+  "label": "Alert Description",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "AlertBody",
+      "slot": "children"
+    },
+    {
+      "component": "AlertContent",
+      "slot": "children"
+    }
+  ]
+}

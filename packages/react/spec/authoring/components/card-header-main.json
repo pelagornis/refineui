@@ -1,0 +1,28 @@
+{
+  "id": "card-header-main",
+  "exportPath": "@refineui/react",
+  "exportName": "CardHeaderMain",
+  "kind": "part",
+  "category": "parts",
+  "label": "Card Header Main",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "CardHeader",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "CardTitle",
+        "CardDescription"
+      ],
+      "repeatable": true
+    }
+  ]
+}

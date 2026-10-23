@@ -1,0 +1,28 @@
+{
+  "id": "command-group",
+  "exportPath": "@refineui/react",
+  "exportName": "CommandGroup",
+  "kind": "part",
+  "category": "parts",
+  "label": "Command Group",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "CommandList",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "CommandGroupHeading",
+        "CommandItem"
+      ],
+      "repeatable": true
+    }
+  ]
+}

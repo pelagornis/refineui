@@ -1,0 +1,82 @@
+{
+  "id": "context-menu-item",
+  "exportPath": "@refineui/react",
+  "exportName": "ContextMenuItem",
+  "kind": "part",
+  "category": "parts",
+  "label": "Context Menu Item",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "ContextMenuContent",
+      "slot": "children"
+    },
+    {
+      "component": "ContextMenuSubContent",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "startIcon",
+      "prop": "startIcon",
+      "target": "prop",
+      "accepts": [
+        "WebIcon"
+      ],
+      "max": 1
+    },
+    {
+      "name": "endIcon",
+      "prop": "endIcon",
+      "target": "prop",
+      "accepts": [
+        "WebIcon"
+      ],
+      "max": 1
+    },
+    {
+      "name": "description",
+      "prop": "description",
+      "target": "prop",
+      "accepts": [
+        "Text"
+      ],
+      "max": 1,
+      "allowText": true
+    },
+    {
+      "name": "shortcut",
+      "prop": "shortcut",
+      "target": "prop",
+      "accepts": [
+        "Text"
+      ],
+      "max": 1,
+      "allowText": true
+    }
+  ],
+  "iconSlots": [
+    {
+      "name": "startIcon",
+      "optional": true,
+      "accepts": [
+        "refineui-icon",
+        "svg",
+        "image"
+      ]
+    },
+    {
+      "name": "endIcon",
+      "optional": true,
+      "accepts": [
+        "refineui-icon",
+        "svg",
+        "image"
+      ]
+    }
+  ]
+}

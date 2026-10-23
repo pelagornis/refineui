@@ -1,0 +1,65 @@
+{
+  "id": "pop-over-part",
+  "exportPath": "@refineui/react",
+  "exportName": "PopOver",
+  "kind": "root",
+  "category": "components",
+  "label": "Pop Over",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "PopoverTrigger",
+        "PopoverContent"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "popover",
+      "label": "Popover",
+      "root": {
+        "component": "PopOver",
+        "props": {
+          "defaultOpen": false
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "PopoverTrigger",
+              "text": "Open popover"
+            },
+            {
+              "component": "PopoverContent",
+              "text": "Popover content"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "open",
+      "valueProp": "open",
+      "defaultValueProp": "defaultOpen",
+      "changeEvent": "onOpenChange",
+      "valueType": "boolean"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onOpenChange",
+      "payload": "boolean"
+    }
+  ]
+}

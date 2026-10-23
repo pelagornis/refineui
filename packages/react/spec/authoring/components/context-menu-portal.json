@@ -1,0 +1,27 @@
+{
+  "id": "context-menu-portal",
+  "exportPath": "@refineui/react",
+  "exportName": "ContextMenuPortal",
+  "kind": "provider",
+  "category": "parts",
+  "label": "Context Menu Portal",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "ContextMenu",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "ContextMenuContent"
+      ],
+      "max": 1
+    }
+  ]
+}

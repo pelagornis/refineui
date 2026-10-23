@@ -1,0 +1,18 @@
+{
+  "id": "sidebar-brand",
+  "exportPath": "@refineui/react",
+  "exportName": "SidebarBrand",
+  "kind": "part",
+  "category": "parts",
+  "label": "Sidebar Brand",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "SidebarHeader",
+      "slot": "children"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "chart-yaxis-labels",
+  "exportPath": "@refineui/react",
+  "exportName": "ChartYAxisLabels",
+  "kind": "part",
+  "category": "parts",
+  "label": "Chart YAxis Labels",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "ChartPlot",
+      "slot": "children"
+    }
+  ]
+}

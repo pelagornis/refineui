@@ -1,0 +1,52 @@
+{
+  "id": "divider",
+  "exportPath": "@refineui/react",
+  "exportName": "Divider",
+  "kind": "root",
+  "category": "components",
+  "label": "Divider",
+  "props": [
+    {
+      "name": "layout",
+      "label": "layout",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "default",
+        "content",
+        "icon"
+      ],
+      "defaultValue": "default",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [],
+      "repeatable": true,
+      "allowText": false,
+      "allowAnyComponent": true,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "label": "Default",
+      "root": {
+        "component": "Divider",
+        "slots": {}
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

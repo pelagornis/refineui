@@ -1,0 +1,112 @@
+{
+  "id": "carousel",
+  "exportPath": "@refineui/react",
+  "exportName": "Carousel",
+  "kind": "root",
+  "category": "components",
+  "label": "Carousel",
+  "props": [
+    {
+      "name": "defaultIndex",
+      "label": "Initial slide",
+      "valueType": "number",
+      "control": "number",
+      "defaultValue": 0,
+      "bindable": true,
+      "section": "state"
+    },
+    {
+      "name": "loop",
+      "label": "Loop",
+      "valueType": "boolean",
+      "control": "toggle",
+      "defaultValue": true,
+      "section": "state"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "CarouselContent",
+        "CarouselControls",
+        "CarouselIndicators"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "slides",
+      "label": "Slides",
+      "root": {
+        "component": "Carousel",
+        "props": {
+          "defaultIndex": 0,
+          "loop": true
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "CarouselContent",
+              "slots": {
+                "children": [
+                  {
+                    "component": "CarouselItem",
+                    "text": "Slide 1"
+                  },
+                  {
+                    "component": "CarouselItem",
+                    "text": "Slide 2"
+                  },
+                  {
+                    "component": "CarouselItem",
+                    "text": "Slide 3"
+                  }
+                ]
+              }
+            },
+            {
+              "component": "CarouselControls",
+              "slots": {
+                "children": [
+                  {
+                    "component": "CarouselPrevious"
+                  },
+                  {
+                    "component": "CarouselNext"
+                  }
+                ]
+              }
+            },
+            {
+              "component": "CarouselIndicators"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "index",
+      "valueProp": "index",
+      "defaultValueProp": "defaultIndex",
+      "changeEvent": "onIndexChange",
+      "valueType": "number"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onIndexChange",
+      "payload": "number"
+    }
+  ]
+}

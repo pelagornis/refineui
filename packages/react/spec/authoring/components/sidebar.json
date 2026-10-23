@@ -1,0 +1,84 @@
+{
+  "id": "sidebar",
+  "exportPath": "@refineui/react",
+  "exportName": "Sidebar",
+  "kind": "root",
+  "category": "components",
+  "label": "Sidebar",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "SidebarHeader",
+        "SidebarContent",
+        "SidebarFooter",
+        "SidebarPeek",
+        "SidebarTrigger"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "sidebar",
+      "label": "Sidebar",
+      "root": {
+        "component": "Sidebar",
+        "slots": {
+          "children": [
+            {
+              "component": "SidebarHeader",
+              "slots": {
+                "children": [
+                  {
+                    "component": "SidebarBrand",
+                    "text": "Workspace"
+                  }
+                ]
+              }
+            },
+            {
+              "component": "SidebarContent",
+              "slots": {
+                "children": [
+                  {
+                    "component": "SidebarNav",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "SidebarLink",
+                          "props": {
+                            "href": "#",
+                            "active": true
+                          },
+                          "text": "Overview"
+                        },
+                        {
+                          "component": "SidebarLink",
+                          "props": {
+                            "href": "#"
+                          },
+                          "text": "Settings"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

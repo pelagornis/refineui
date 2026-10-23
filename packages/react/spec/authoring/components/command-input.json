@@ -1,0 +1,40 @@
+{
+  "id": "command-input",
+  "exportPath": "@refineui/react",
+  "exportName": "CommandInput",
+  "kind": "part",
+  "category": "parts",
+  "label": "Command Input",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Command",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "startIcon",
+      "prop": "startIcon",
+      "target": "prop",
+      "accepts": [
+        "WebIcon"
+      ],
+      "max": 1
+    }
+  ],
+  "iconSlots": [
+    {
+      "name": "startIcon",
+      "optional": true,
+      "accepts": [
+        "refineui-icon",
+        "svg",
+        "image"
+      ]
+    }
+  ]
+}

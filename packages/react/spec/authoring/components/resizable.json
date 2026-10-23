@@ -1,0 +1,75 @@
+{
+  "id": "resizable",
+  "exportPath": "@refineui/react",
+  "exportName": "ResizablePanelGroup",
+  "kind": "root",
+  "category": "components",
+  "label": "Resizable Panel Group",
+  "props": [
+    {
+      "name": "orientation",
+      "label": "orientation",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "horizontal",
+        "vertical"
+      ],
+      "defaultValue": "horizontal",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "ResizablePanel",
+        "ResizableHandle"
+      ],
+      "repeatable": true,
+      "min": 2
+    }
+  ],
+  "presets": [
+    {
+      "id": "panels",
+      "label": "Resizable panels",
+      "root": {
+        "component": "ResizablePanelGroup",
+        "slots": {
+          "children": [
+            {
+              "component": "ResizablePanel",
+              "props": {
+                "defaultSize": 50
+              },
+              "text": "First panel"
+            },
+            {
+              "component": "ResizableHandle",
+              "props": {
+                "withHandle": true
+              }
+            },
+            {
+              "component": "ResizablePanel",
+              "props": {
+                "defaultSize": 50
+              },
+              "text": "Second panel"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

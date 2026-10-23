@@ -1,0 +1,97 @@
+{
+  "id": "progress-stepper",
+  "exportPath": "@refineui/react",
+  "exportName": "ProgressStepper",
+  "kind": "root",
+  "category": "components",
+  "label": "Progress Stepper",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "ProgressStepperList"
+      ],
+      "max": 1
+    }
+  ],
+  "presets": [
+    {
+      "id": "steps",
+      "label": "Progress steps",
+      "root": {
+        "component": "ProgressStepper",
+        "props": {
+          "defaultValue": 0
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "ProgressStepperList",
+              "slots": {
+                "children": [
+                  {
+                    "component": "ProgressStepperItem",
+                    "props": {
+                      "value": 0
+                    },
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "ProgressStepperMarker"
+                        },
+                        {
+                          "component": "ProgressStepperLabel",
+                          "text": "Start"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "component": "ProgressStepperItem",
+                    "props": {
+                      "value": 1
+                    },
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "ProgressStepperMarker"
+                        },
+                        {
+                          "component": "ProgressStepperLabel",
+                          "text": "Finish"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "value",
+      "valueProp": "value",
+      "defaultValueProp": "defaultValue",
+      "changeEvent": "onValueChange",
+      "valueType": "number"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onValueChange",
+      "payload": "number"
+    }
+  ]
+}

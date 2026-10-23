@@ -1,0 +1,22 @@
+{
+  "id": "card-description",
+  "exportPath": "@refineui/react",
+  "exportName": "CardDescription",
+  "kind": "part",
+  "category": "parts",
+  "label": "Card Description",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "CardHeader",
+      "slot": "children"
+    },
+    {
+      "component": "CardHeaderMain",
+      "slot": "children"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "scroll-area-thumb",
+  "exportPath": "@refineui/react",
+  "exportName": "ScrollAreaThumb",
+  "kind": "part",
+  "category": "parts",
+  "label": "Scroll Area Thumb",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "ScrollAreaScrollbar",
+      "slot": "children"
+    }
+  ]
+}

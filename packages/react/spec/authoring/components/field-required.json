@@ -1,0 +1,22 @@
+{
+  "id": "field-required",
+  "exportPath": "@refineui/react",
+  "exportName": "FieldRequired",
+  "kind": "part",
+  "category": "parts",
+  "label": "Field Required",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Field",
+      "slot": "children"
+    },
+    {
+      "component": "FieldLabel",
+      "slot": "children"
+    }
+  ]
+}

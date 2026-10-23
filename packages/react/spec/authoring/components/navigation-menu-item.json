@@ -1,0 +1,29 @@
+{
+  "id": "navigation-menu-item",
+  "exportPath": "@refineui/react",
+  "exportName": "NavigationMenuItem",
+  "kind": "part",
+  "category": "parts",
+  "label": "Navigation Menu Item",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "NavigationMenuList",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "NavigationMenuTrigger",
+        "NavigationMenuContent",
+        "NavigationMenuLink"
+      ],
+      "repeatable": true
+    }
+  ]
+}

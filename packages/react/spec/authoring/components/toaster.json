@@ -1,0 +1,18 @@
+{
+  "id": "toaster",
+  "exportPath": "@refineui/react",
+  "exportName": "Toaster",
+  "kind": "provider",
+  "category": "parts",
+  "label": "Toaster",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Toast",
+      "slot": "children"
+    }
+  ]
+}

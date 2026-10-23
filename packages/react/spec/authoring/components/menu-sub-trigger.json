@@ -1,0 +1,50 @@
+{
+  "id": "menu-sub-trigger",
+  "exportPath": "@refineui/react",
+  "exportName": "MenuSubTrigger",
+  "kind": "part",
+  "category": "parts",
+  "label": "Menu Sub Trigger",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "MenuSub",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "startIcon",
+      "prop": "startIcon",
+      "target": "prop",
+      "accepts": [
+        "WebIcon"
+      ],
+      "max": 1
+    },
+    {
+      "name": "description",
+      "prop": "description",
+      "target": "prop",
+      "accepts": [
+        "Text"
+      ],
+      "max": 1,
+      "allowText": true
+    }
+  ],
+  "iconSlots": [
+    {
+      "name": "startIcon",
+      "optional": true,
+      "accepts": [
+        "refineui-icon",
+        "svg",
+        "image"
+      ]
+    }
+  ]
+}

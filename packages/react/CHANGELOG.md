@@ -1,5 +1,11 @@
 # @refineui/react
 
+## Unreleased
+
+### Added
+
+- Add the editor-neutral `@refineui/react/authoring-manifest` and JSON manifest exports. They provide explicit component composition, safe editable props, controlled-state bindings, portal contracts, and ready-to-render presets without changing the React component API.
+
 ## 0.0.12
 
 ### Patch Changes

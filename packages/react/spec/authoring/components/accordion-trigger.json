@@ -1,0 +1,18 @@
+{
+  "id": "accordion-trigger",
+  "exportPath": "@refineui/react",
+  "exportName": "AccordionTrigger",
+  "kind": "part",
+  "category": "parts",
+  "label": "Accordion Trigger",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "AccordionItem",
+      "slot": "children"
+    }
+  ]
+}

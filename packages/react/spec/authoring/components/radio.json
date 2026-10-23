@@ -1,0 +1,42 @@
+{
+  "id": "radio",
+  "exportPath": "@refineui/react",
+  "exportName": "Radio",
+  "kind": "root",
+  "category": "components",
+  "label": "Radio",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "RadioInput"
+      ],
+      "repeatable": true,
+      "allowText": false,
+      "allowAnyComponent": false,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "choice",
+      "label": "Radio choice",
+      "root": {
+        "component": "Radio",
+        "props": {
+          "label": "Choose this option"
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

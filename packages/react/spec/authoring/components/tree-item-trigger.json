@@ -1,0 +1,18 @@
+{
+  "id": "tree-item-trigger",
+  "exportPath": "@refineui/react",
+  "exportName": "TreeItemTrigger",
+  "kind": "part",
+  "category": "parts",
+  "label": "Tree Item Trigger",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "TreeItem",
+      "slot": "children"
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "id": "stepper",
+  "exportPath": "@refineui/react",
+  "exportName": "Stepper",
+  "kind": "root",
+  "category": "components",
+  "label": "Stepper",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "StepperList"
+      ],
+      "max": 1
+    }
+  ],
+  "presets": [
+    {
+      "id": "steps",
+      "label": "Stepper",
+      "root": {
+        "component": "Stepper",
+        "props": {
+          "defaultValue": 0
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "StepperList",
+              "slots": {
+                "children": [
+                  {
+                    "component": "StepperItem",
+                    "props": {
+                      "value": 0
+                    },
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "StepperIndicator",
+                          "text": "1"
+                        },
+                        {
+                          "component": "StepperContent",
+                          "slots": {
+                            "children": [
+                              {
+                                "component": "StepperTitle",
+                                "text": "Start"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "component": "StepperItem",
+                    "props": {
+                      "value": 1
+                    },
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "StepperIndicator",
+                          "text": "2"
+                        },
+                        {
+                          "component": "StepperContent",
+                          "slots": {
+                            "children": [
+                              {
+                                "component": "StepperTitle",
+                                "text": "Finish"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "value",
+      "valueProp": "value",
+      "defaultValueProp": "defaultValue",
+      "changeEvent": "onValueChange",
+      "valueType": "number"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onValueChange",
+      "payload": "number"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "id": "chart-legend",
+  "exportPath": "@refineui/react",
+  "exportName": "ChartLegend",
+  "kind": "part",
+  "category": "parts",
+  "label": "Chart Legend",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Chart",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "ChartLegendItem"
+      ],
+      "repeatable": true
+    }
+  ]
+}

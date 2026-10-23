@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://refineui.dev/schema/authoring-manifest-1.json",
+  "title": "RefineUI authoring manifest",
+  "type": "object",
+  "required": ["schema", "packageName", "packageVersion", "css", "components"],
+  "properties": {
+    "schema": { "const": "refineui.authoring/1" },
+    "packageName": { "const": "@refineui/react" },
+    "packageVersion": { "type": "string" },
+    "css": { "type": "array", "items": { "type": "string" } },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "exportPath", "exportName", "kind", "category", "label", "props", "preview"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "exportPath": { "const": "@refineui/react" },
+          "exportName": { "type": "string" },
+          "kind": { "enum": ["root", "part", "provider", "portal"] },
+          "props": { "type": "array" },
+          "slots": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "accepts"],
+              "properties": {
+                "name": { "type": "string" },
+                "target": { "enum": ["children", "prop"] },
+                "prop": { "type": "string" },
+                "accepts": { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          },
+          "parents": { "type": "array" },
+          "presets": { "type": "array" },
+          "portal": {
+            "type": "object",
+            "required": ["strategy", "inheritsTheme"],
+            "properties": {
+              "strategy": { "enum": ["screen-root", "themed-overlay-root", "document-body"] },
+              "inheritsTheme": { "type": "boolean" },
+              "containerComponent": { "type": "string" },
+              "containerProp": { "type": "string" }
+            }
+          },
+          "preview": { "type": "object", "required": ["mode"], "properties": { "mode": { "enum": ["full", "limited"] } } }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": false
+}

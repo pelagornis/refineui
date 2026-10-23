@@ -1,0 +1,18 @@
+{
+  "id": "select-icon",
+  "exportPath": "@refineui/react",
+  "exportName": "SelectIcon",
+  "kind": "part",
+  "category": "parts",
+  "label": "Select Icon",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "SelectTrigger",
+      "slot": "children"
+    }
+  ]
+}

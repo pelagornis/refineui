@@ -1,0 +1,27 @@
+{
+  "id": "footer-meta",
+  "exportPath": "@refineui/react",
+  "exportName": "FooterMeta",
+  "kind": "part",
+  "category": "parts",
+  "label": "Footer Meta",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "FooterBottom",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "FooterLocale"
+      ],
+      "repeatable": true
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "id": "alert-content",
+  "exportPath": "@refineui/react",
+  "exportName": "AlertContent",
+  "kind": "part",
+  "category": "parts",
+  "label": "Alert Content",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Alert",
+      "slot": "children"
+    },
+    {
+      "component": "AlertRow",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "AlertBody",
+        "AlertTitle",
+        "AlertDescription"
+      ],
+      "repeatable": true
+    }
+  ]
+}

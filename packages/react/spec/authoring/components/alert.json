@@ -1,0 +1,85 @@
+{
+  "id": "alert",
+  "exportPath": "@refineui/react",
+  "exportName": "Alert",
+  "kind": "root",
+  "category": "components",
+  "label": "Alert",
+  "props": [
+    {
+      "name": "variant",
+      "label": "variant",
+      "valueType": "enum",
+      "control": "select",
+      "options": [
+        "default",
+        "info",
+        "success",
+        "warning",
+        "danger",
+        "custom"
+      ],
+      "defaultValue": "default",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "AlertRow",
+        "AlertContent",
+        "AlertActions",
+        "AlertClose"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "notice",
+      "label": "Notice",
+      "root": {
+        "component": "Alert",
+        "props": {
+          "variant": "info"
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "AlertRow",
+              "slots": {
+                "children": [
+                  {
+                    "component": "AlertContent",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "AlertTitle",
+                          "text": "Heads up"
+                        },
+                        {
+                          "component": "AlertDescription",
+                          "text": "This is a helpful message."
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

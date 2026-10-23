@@ -1,0 +1,37 @@
+{
+  "id": "table-row",
+  "exportPath": "@refineui/react",
+  "exportName": "TableRow",
+  "kind": "part",
+  "category": "parts",
+  "label": "Table Row",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "TableHeader",
+      "slot": "children"
+    },
+    {
+      "component": "TableBody",
+      "slot": "children"
+    },
+    {
+      "component": "TableFooter",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "TableHead",
+        "TableCell"
+      ],
+      "repeatable": true,
+      "min": 1
+    }
+  ]
+}

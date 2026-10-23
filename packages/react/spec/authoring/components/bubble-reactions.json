@@ -1,0 +1,43 @@
+{
+  "id": "bubble-reactions",
+  "exportPath": "@refineui/react",
+  "exportName": "BubbleReactions",
+  "kind": "part",
+  "category": "parts",
+  "label": "Bubble Reactions",
+  "props": [
+    {
+      "name": "side",
+      "label": "Side",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "top",
+        "bottom"
+      ],
+      "defaultValue": "bottom",
+      "section": "variants"
+    },
+    {
+      "name": "align",
+      "label": "Align",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "start",
+        "end"
+      ],
+      "defaultValue": "end",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Bubble",
+      "slot": "children"
+    }
+  ]
+}

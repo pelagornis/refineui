@@ -1,0 +1,18 @@
+{
+  "id": "sidebar-peek-pin",
+  "exportPath": "@refineui/react",
+  "exportName": "SidebarPeekPin",
+  "kind": "part",
+  "category": "parts",
+  "label": "Sidebar Peek Pin",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "SidebarPeek",
+      "slot": "children"
+    }
+  ]
+}

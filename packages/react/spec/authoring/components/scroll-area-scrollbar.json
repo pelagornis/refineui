@@ -1,0 +1,27 @@
+{
+  "id": "scroll-area-scrollbar",
+  "exportPath": "@refineui/react",
+  "exportName": "ScrollAreaScrollbar",
+  "kind": "part",
+  "category": "parts",
+  "label": "Scroll Area Scrollbar",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "ScrollArea",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "ScrollAreaThumb"
+      ],
+      "max": 1
+    }
+  ]
+}

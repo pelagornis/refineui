@@ -1,0 +1,18 @@
+{
+  "id": "dropdown-sub-content",
+  "exportPath": "@refineui/react",
+  "exportName": "DropdownSubContent",
+  "kind": "part",
+  "category": "parts",
+  "label": "Dropdown Sub Content",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "DropdownSub",
+      "slot": "children"
+    }
+  ]
+}

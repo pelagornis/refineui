@@ -1,0 +1,27 @@
+{
+  "id": "tabs-trigger",
+  "exportPath": "@refineui/react",
+  "exportName": "TabsTrigger",
+  "kind": "part",
+  "category": "parts",
+  "label": "Tabs Trigger",
+  "props": [
+    {
+      "name": "value",
+      "label": "value",
+      "valueType": "string",
+      "control": "text",
+      "required": true,
+      "section": "properties"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "TabsList",
+      "slot": "children"
+    }
+  ]
+}

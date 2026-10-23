@@ -1,0 +1,27 @@
+{
+  "id": "chart-axis-labels",
+  "exportPath": "@refineui/react",
+  "exportName": "ChartAxisLabels",
+  "kind": "part",
+  "category": "parts",
+  "label": "Chart Axis Labels",
+  "props": [
+    {
+      "name": "labels",
+      "label": "labels",
+      "valueType": "string-array",
+      "control": "collection",
+      "required": true,
+      "section": "properties"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "ChartPlot",
+      "slot": "children"
+    }
+  ]
+}

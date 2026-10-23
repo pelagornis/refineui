@@ -1,0 +1,28 @@
+{
+  "id": "tabs-list",
+  "exportPath": "@refineui/react",
+  "exportName": "TabsList",
+  "kind": "part",
+  "category": "parts",
+  "label": "Tabs List",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Tabs",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "TabsTrigger"
+      ],
+      "repeatable": true,
+      "min": 1
+    }
+  ]
+}

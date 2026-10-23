@@ -1,0 +1,43 @@
+{
+  "id": "stack",
+  "exportPath": "@refineui/react",
+  "exportName": "Stack",
+  "kind": "root",
+  "category": "components",
+  "label": "Stack",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "GridItem"
+      ],
+      "repeatable": true,
+      "allowText": true,
+      "allowAnyComponent": false,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "stack",
+      "label": "Stack",
+      "root": {
+        "component": "Stack",
+        "props": {
+          "gap": "sizeMedium"
+        },
+        "text": "Stack content"
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

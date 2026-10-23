@@ -1,0 +1,86 @@
+{
+  "id": "chart",
+  "exportPath": "@refineui/react",
+  "exportName": "Chart",
+  "kind": "root",
+  "category": "components",
+  "label": "Chart",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "ChartBody",
+        "ChartLegend",
+        "ChartTooltip"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "bar-chart",
+      "label": "Bar chart",
+      "root": {
+        "component": "Chart",
+        "slots": {
+          "children": [
+            {
+              "component": "ChartBody",
+              "slots": {
+                "children": [
+                  {
+                    "component": "ChartContent",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "ChartPlot",
+                          "props": {
+                            "aria-label": "Example chart"
+                          },
+                          "slots": {
+                            "children": [
+                              {
+                                "component": "ChartGrid",
+                                "props": {
+                                  "values": [
+                                    12,
+                                    24,
+                                    18
+                                  ]
+                                }
+                              },
+                              {
+                                "component": "ChartBars",
+                                "props": {
+                                  "values": [
+                                    12,
+                                    24,
+                                    18
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

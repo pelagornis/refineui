@@ -1,0 +1,35 @@
+{
+  "id": "chart-plot",
+  "exportPath": "@refineui/react",
+  "exportName": "ChartPlot",
+  "kind": "part",
+  "category": "parts",
+  "label": "Chart Plot",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "ChartContent",
+      "slot": "children"
+    },
+    {
+      "component": "ChartBody",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "ChartGrid",
+        "ChartBars",
+        "ChartLine",
+        "ChartAxisLabels",
+        "ChartYAxisLabels"
+      ],
+      "repeatable": true
+    }
+  ]
+}

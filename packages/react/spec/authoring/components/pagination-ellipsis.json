@@ -1,0 +1,18 @@
+{
+  "id": "pagination-ellipsis",
+  "exportPath": "@refineui/react",
+  "exportName": "PaginationEllipsis",
+  "kind": "part",
+  "category": "parts",
+  "label": "Pagination Ellipsis",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "PaginationContent",
+      "slot": "children"
+    }
+  ]
+}

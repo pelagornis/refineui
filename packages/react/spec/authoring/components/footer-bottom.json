@@ -1,0 +1,29 @@
+{
+  "id": "footer-bottom",
+  "exportPath": "@refineui/react",
+  "exportName": "FooterBottom",
+  "kind": "part",
+  "category": "parts",
+  "label": "Footer Bottom",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Footer",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "FooterCopyright",
+        "FooterMeta",
+        "FooterMetaEnd"
+      ],
+      "repeatable": true
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "dropdown-group",
+  "exportPath": "@refineui/react",
+  "exportName": "DropdownGroup",
+  "kind": "part",
+  "category": "parts",
+  "label": "Dropdown Group",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "DropdownContent",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "DropdownItem",
+        "DropdownLabel",
+        "DropdownSeparator",
+        "DropdownSub"
+      ],
+      "repeatable": true
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "id": "tabs",
+  "exportPath": "@refineui/react",
+  "exportName": "Tabs",
+  "kind": "root",
+  "category": "components",
+  "label": "Tabs",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "TabsList",
+        "TabsContent"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "tabs",
+      "label": "Tabs",
+      "root": {
+        "component": "Tabs",
+        "props": {
+          "defaultValue": "tab-1"
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "TabsList",
+              "slots": {
+                "children": [
+                  {
+                    "component": "TabsTrigger",
+                    "props": {
+                      "value": "tab-1"
+                    },
+                    "text": "First"
+                  },
+                  {
+                    "component": "TabsTrigger",
+                    "props": {
+                      "value": "tab-2"
+                    },
+                    "text": "Second"
+                  }
+                ]
+              }
+            },
+            {
+              "component": "TabsContent",
+              "props": {
+                "value": "tab-1"
+              },
+              "text": "First tab content"
+            },
+            {
+              "component": "TabsContent",
+              "props": {
+                "value": "tab-2"
+              },
+              "text": "Second tab content"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "value",
+      "valueProp": "value",
+      "defaultValueProp": "defaultValue",
+      "changeEvent": "onValueChange",
+      "valueType": "string"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onValueChange",
+      "payload": "string"
+    }
+  ]
+}

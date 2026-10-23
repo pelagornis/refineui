@@ -1,0 +1,43 @@
+{
+  "id": "popover",
+  "exportPath": "@refineui/react",
+  "exportName": "Popover",
+  "kind": "root",
+  "category": "components",
+  "label": "Popover",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "PopoverTrigger",
+        "PopoverContent"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "label": "Popover",
+      "root": {
+        "component": "Popover",
+        "slots": {
+          "children": [
+            {
+              "component": "PopoverTrigger",
+              "text": "Open"
+            },
+            {
+              "component": "PopoverContent",
+              "text": "Content"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

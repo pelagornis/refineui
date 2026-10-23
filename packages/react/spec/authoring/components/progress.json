@@ -1,0 +1,63 @@
+{
+  "id": "progress",
+  "exportPath": "@refineui/react",
+  "exportName": "Progress",
+  "kind": "root",
+  "category": "components",
+  "label": "Progress",
+  "props": [
+    {
+      "name": "size",
+      "label": "size",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "sm",
+        "lg"
+      ],
+      "defaultValue": "sm",
+      "section": "variants"
+    },
+    {
+      "name": "value",
+      "label": "value",
+      "valueType": "number",
+      "control": "number",
+      "defaultValue": 50,
+      "required": true,
+      "section": "properties"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [],
+      "repeatable": true,
+      "allowText": false,
+      "allowAnyComponent": true,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "label": "Default",
+      "root": {
+        "component": "Progress",
+        "props": {
+          "value": 50
+        },
+        "slots": {}
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

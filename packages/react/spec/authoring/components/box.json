@@ -1,0 +1,45 @@
+{
+  "id": "box",
+  "exportPath": "@refineui/react",
+  "exportName": "Box",
+  "kind": "root",
+  "category": "components",
+  "label": "Box",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "GridItem"
+      ],
+      "repeatable": true,
+      "allowText": true,
+      "allowAnyComponent": false,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "box",
+      "label": "Box",
+      "root": {
+        "component": "Box",
+        "props": {
+          "padding": "sizeMedium",
+          "background": "backgroundPrimary",
+          "radius": "roundedMedium"
+        },
+        "text": "Box content"
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

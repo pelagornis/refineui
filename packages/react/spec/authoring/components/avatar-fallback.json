@@ -1,0 +1,18 @@
+{
+  "id": "avatar-fallback",
+  "exportPath": "@refineui/react",
+  "exportName": "AvatarFallback",
+  "kind": "part",
+  "category": "parts",
+  "label": "Avatar Fallback",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Avatar",
+      "slot": "children"
+    }
+  ]
+}

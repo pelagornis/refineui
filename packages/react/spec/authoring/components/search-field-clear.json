@@ -1,0 +1,18 @@
+{
+  "id": "search-field-clear",
+  "exportPath": "@refineui/react",
+  "exportName": "SearchFieldClear",
+  "kind": "part",
+  "category": "parts",
+  "label": "Search Field Clear",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "SearchField",
+      "slot": "children"
+    }
+  ]
+}

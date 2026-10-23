@@ -1,0 +1,22 @@
+{
+  "id": "dialog-description",
+  "exportPath": "@refineui/react",
+  "exportName": "DialogDescription",
+  "kind": "part",
+  "category": "parts",
+  "label": "Dialog Description",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "DialogHeader",
+      "slot": "children"
+    },
+    {
+      "component": "DialogContent",
+      "slot": "children"
+    }
+  ]
+}

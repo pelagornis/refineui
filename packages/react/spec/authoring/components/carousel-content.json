@@ -1,0 +1,28 @@
+{
+  "id": "carousel-content",
+  "exportPath": "@refineui/react",
+  "exportName": "CarouselContent",
+  "kind": "part",
+  "category": "parts",
+  "label": "Carousel Content",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Carousel",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "CarouselItem"
+      ],
+      "repeatable": true,
+      "min": 1
+    }
+  ]
+}

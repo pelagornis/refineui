@@ -1,0 +1,29 @@
+{
+  "id": "select-viewport",
+  "exportPath": "@refineui/react",
+  "exportName": "SelectViewport",
+  "kind": "part",
+  "category": "parts",
+  "label": "Select Viewport",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "SelectContent",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "SelectGroup",
+        "SelectItem",
+        "SelectSeparator"
+      ],
+      "repeatable": true
+    }
+  ]
+}

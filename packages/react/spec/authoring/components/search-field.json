@@ -1,0 +1,83 @@
+{
+  "id": "search-field",
+  "exportPath": "@refineui/react",
+  "exportName": "SearchField",
+  "kind": "root",
+  "category": "components",
+  "label": "Search Field",
+  "props": [
+    {
+      "name": "appearance",
+      "label": "appearance",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "filled",
+        "plain"
+      ],
+      "defaultValue": "filled",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "SearchFieldIcon",
+        "SearchFieldInput",
+        "SearchFieldClear"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "search",
+      "label": "Search field",
+      "root": {
+        "component": "SearchField",
+        "props": {
+          "aria-label": "Search"
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "SearchFieldIcon"
+            },
+            {
+              "component": "SearchFieldInput",
+              "props": {
+                "placeholder": "Search"
+              }
+            },
+            {
+              "component": "SearchFieldClear"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "value",
+      "valueProp": "value",
+      "defaultValueProp": "defaultValue",
+      "changeEvent": "onValueChange",
+      "valueType": "string"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onValueChange",
+      "payload": "string"
+    }
+  ]
+}

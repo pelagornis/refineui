@@ -1,0 +1,27 @@
+{
+  "id": "pagination-item",
+  "exportPath": "@refineui/react",
+  "exportName": "PaginationItem",
+  "kind": "part",
+  "category": "parts",
+  "label": "Pagination Item",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "PaginationContent",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "PaginationLink"
+      ],
+      "max": 1
+    }
+  ]
+}

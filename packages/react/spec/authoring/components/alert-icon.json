@@ -1,0 +1,18 @@
+{
+  "id": "alert-icon",
+  "exportPath": "@refineui/react",
+  "exportName": "AlertIcon",
+  "kind": "part",
+  "category": "parts",
+  "label": "Alert Icon",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "AlertRow",
+      "slot": "children"
+    }
+  ]
+}

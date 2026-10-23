@@ -1,0 +1,28 @@
+{
+  "id": "dialog-header",
+  "exportPath": "@refineui/react",
+  "exportName": "DialogHeader",
+  "kind": "part",
+  "category": "parts",
+  "label": "Dialog Header",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "DialogContent",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "DialogTitle",
+        "DialogDescription"
+      ],
+      "repeatable": true
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "tree-item-content",
+  "exportPath": "@refineui/react",
+  "exportName": "TreeItemContent",
+  "kind": "part",
+  "category": "parts",
+  "label": "Tree Item Content",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "TreeItem",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "TreeItem"
+      ],
+      "repeatable": true,
+      "recursive": true,
+      "min": 1
+    }
+  ]
+}

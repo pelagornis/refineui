@@ -1,0 +1,18 @@
+{
+  "id": "avatar-badge",
+  "exportPath": "@refineui/react",
+  "exportName": "AvatarBadge",
+  "kind": "part",
+  "category": "parts",
+  "label": "Avatar Badge",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Avatar",
+      "slot": "children"
+    }
+  ]
+}

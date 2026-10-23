@@ -1,0 +1,30 @@
+{
+  "id": "dialog-content",
+  "exportPath": "@refineui/react",
+  "exportName": "DialogContent",
+  "kind": "part",
+  "category": "parts",
+  "label": "Dialog Content",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Dialog",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "DialogHeader",
+        "DialogTitle",
+        "DialogDescription",
+        "DialogClose"
+      ],
+      "repeatable": true
+    }
+  ]
+}

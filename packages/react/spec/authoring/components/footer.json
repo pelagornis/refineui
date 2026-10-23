@@ -1,0 +1,99 @@
+{
+  "id": "footer",
+  "exportPath": "@refineui/react",
+  "exportName": "Footer",
+  "kind": "root",
+  "category": "components",
+  "label": "Footer",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "FooterContent",
+        "FooterBottom"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "site-footer",
+      "label": "Site footer",
+      "root": {
+        "component": "Footer",
+        "slots": {
+          "children": [
+            {
+              "component": "FooterContent",
+              "slots": {
+                "children": [
+                  {
+                    "component": "FooterBrand",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "FooterBrandName",
+                          "text": "Company"
+                        },
+                        {
+                          "component": "FooterBrandDescription",
+                          "text": "A short description."
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "component": "FooterExplore",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "FooterGroup",
+                          "slots": {
+                            "children": [
+                              {
+                                "component": "FooterGroupLabel",
+                                "text": "Explore"
+                              },
+                              {
+                                "component": "FooterLink",
+                                "props": {
+                                  "href": "#"
+                                },
+                                "text": "Documentation"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "component": "FooterBottom",
+              "slots": {
+                "children": [
+                  {
+                    "component": "FooterCopyright",
+                    "text": "© Company"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

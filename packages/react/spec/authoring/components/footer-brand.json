@@ -1,0 +1,29 @@
+{
+  "id": "footer-brand",
+  "exportPath": "@refineui/react",
+  "exportName": "FooterBrand",
+  "kind": "part",
+  "category": "parts",
+  "label": "Footer Brand",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "FooterContent",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "FooterLogo",
+        "FooterBrandName",
+        "FooterBrandDescription"
+      ],
+      "repeatable": true
+    }
+  ]
+}

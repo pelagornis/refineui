@@ -1,0 +1,18 @@
+{
+  "id": "table-caption",
+  "exportPath": "@refineui/react",
+  "exportName": "TableCaption",
+  "kind": "part",
+  "category": "parts",
+  "label": "Table Caption",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Table",
+      "slot": "children"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "id": "carousel-controls",
+  "exportPath": "@refineui/react",
+  "exportName": "CarouselControls",
+  "kind": "part",
+  "category": "parts",
+  "label": "Carousel Controls",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Carousel",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "CarouselPrevious",
+        "CarouselNext"
+      ],
+      "repeatable": true
+    }
+  ]
+}

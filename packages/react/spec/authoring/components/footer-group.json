@@ -1,0 +1,28 @@
+{
+  "id": "footer-group",
+  "exportPath": "@refineui/react",
+  "exportName": "FooterGroup",
+  "kind": "part",
+  "category": "parts",
+  "label": "Footer Group",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "FooterExplore",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "FooterGroupLabel",
+        "FooterLink"
+      ],
+      "repeatable": true
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "field-error",
+  "exportPath": "@refineui/react",
+  "exportName": "FieldError",
+  "kind": "part",
+  "category": "parts",
+  "label": "Field Error",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Field",
+      "slot": "children"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "pagination-content",
+  "exportPath": "@refineui/react",
+  "exportName": "PaginationContent",
+  "kind": "part",
+  "category": "parts",
+  "label": "Pagination Content",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Pagination",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "PaginationItem",
+        "PaginationPrevious",
+        "PaginationNext",
+        "PaginationEllipsis"
+      ],
+      "repeatable": true
+    }
+  ]
+}

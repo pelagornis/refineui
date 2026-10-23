@@ -1,0 +1,28 @@
+{
+  "id": "alert-row",
+  "exportPath": "@refineui/react",
+  "exportName": "AlertRow",
+  "kind": "part",
+  "category": "parts",
+  "label": "Alert Row",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Alert",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "AlertIcon",
+        "AlertContent"
+      ],
+      "repeatable": true
+    }
+  ]
+}

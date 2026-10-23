@@ -1,0 +1,76 @@
+{
+  "id": "spin-button",
+  "exportPath": "@refineui/react",
+  "exportName": "SpinButton",
+  "kind": "root",
+  "category": "components",
+  "label": "Spin Button",
+  "props": [
+    {
+      "name": "size",
+      "label": "size",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "defaultValue": "sm",
+      "section": "variants"
+    },
+    {
+      "name": "value",
+      "label": "value",
+      "valueType": "number",
+      "control": "number",
+      "defaultValue": 0,
+      "required": true,
+      "section": "properties"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [],
+      "repeatable": true,
+      "allowText": false,
+      "allowAnyComponent": true,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "label": "Default",
+      "root": {
+        "component": "SpinButton",
+        "props": {
+          "value": 0
+        },
+        "slots": {}
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "value",
+      "valueProp": "value",
+      "changeEvent": "onChange",
+      "valueType": "number"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onChange",
+      "payload": "number"
+    }
+  ]
+}

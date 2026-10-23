@@ -1,0 +1,84 @@
+{
+  "id": "dropdown",
+  "exportPath": "@refineui/react",
+  "exportName": "Dropdown",
+  "kind": "root",
+  "category": "components",
+  "label": "Dropdown",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "portal": {
+    "strategy": "document-body",
+    "inheritsTheme": false
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "DropdownTrigger",
+        "DropdownPortal"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "menu",
+      "label": "Dropdown menu",
+      "root": {
+        "component": "Dropdown",
+        "slots": {
+          "children": [
+            {
+              "component": "DropdownTrigger",
+              "text": "Open menu"
+            },
+            {
+              "component": "DropdownPortal",
+              "slots": {
+                "children": [
+                  {
+                    "component": "DropdownContent",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "DropdownItem",
+                          "text": "First action"
+                        },
+                        {
+                          "component": "DropdownItem",
+                          "text": "Second action"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "open",
+      "valueProp": "open",
+      "defaultValueProp": "defaultOpen",
+      "changeEvent": "onOpenChange",
+      "valueType": "boolean"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onOpenChange",
+      "payload": "boolean"
+    }
+  ]
+}

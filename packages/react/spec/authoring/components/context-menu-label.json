@@ -1,0 +1,22 @@
+{
+  "id": "context-menu-label",
+  "exportPath": "@refineui/react",
+  "exportName": "ContextMenuLabel",
+  "kind": "part",
+  "category": "parts",
+  "label": "Context Menu Label",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "ContextMenuContent",
+      "slot": "children"
+    },
+    {
+      "component": "ContextMenuSubContent",
+      "slot": "children"
+    }
+  ]
+}

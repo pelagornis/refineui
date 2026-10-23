@@ -1,0 +1,27 @@
+{
+  "id": "chart-content",
+  "exportPath": "@refineui/react",
+  "exportName": "ChartContent",
+  "kind": "part",
+  "category": "parts",
+  "label": "Chart Content",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "ChartBody",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "ChartPlot"
+      ],
+      "max": 1
+    }
+  ]
+}

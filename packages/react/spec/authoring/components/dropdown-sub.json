@@ -1,0 +1,32 @@
+{
+  "id": "dropdown-sub",
+  "exportPath": "@refineui/react",
+  "exportName": "DropdownSub",
+  "kind": "part",
+  "category": "parts",
+  "label": "Dropdown Sub",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "DropdownContent",
+      "slot": "children"
+    },
+    {
+      "component": "DropdownGroup",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "DropdownSubTrigger",
+        "DropdownSubContent"
+      ],
+      "repeatable": true
+    }
+  ]
+}

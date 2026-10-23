@@ -1,0 +1,106 @@
+{
+  "id": "command",
+  "exportPath": "@refineui/react",
+  "exportName": "Command",
+  "kind": "root",
+  "category": "components",
+  "label": "Command",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "CommandInput",
+        "CommandList"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "commands",
+      "label": "Command menu",
+      "root": {
+        "component": "Command",
+        "props": {
+          "label": "Commands"
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "CommandInput",
+              "props": {
+                "placeholder": "Search commands"
+              }
+            },
+            {
+              "component": "CommandList",
+              "slots": {
+                "children": [
+                  {
+                    "component": "CommandGroup",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "CommandGroupHeading",
+                          "text": "Actions"
+                        },
+                        {
+                          "component": "CommandItem",
+                          "props": {
+                            "value": "new"
+                          },
+                          "text": "New item"
+                        },
+                        {
+                          "component": "CommandItem",
+                          "props": {
+                            "value": "open"
+                          },
+                          "text": "Open"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "stateBindings": [
+    {
+      "name": "value",
+      "valueProp": "value",
+      "defaultValueProp": "defaultValue",
+      "changeEvent": "onValueChange",
+      "valueType": "string"
+    },
+    {
+      "name": "selected",
+      "valueProp": "selectedValue",
+      "defaultValueProp": "defaultSelectedValue",
+      "changeEvent": "onSelectedValueChange",
+      "valueType": "string"
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    },
+    {
+      "name": "onValueChange",
+      "payload": "string"
+    },
+    {
+      "name": "onSelectedValueChange",
+      "payload": "string"
+    }
+  ]
+}

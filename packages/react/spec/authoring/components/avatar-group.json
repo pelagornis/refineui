@@ -1,0 +1,57 @@
+{
+  "id": "avatar-group",
+  "exportPath": "@refineui/react",
+  "exportName": "AvatarGroup",
+  "kind": "root",
+  "category": "components",
+  "label": "Avatar Group",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "Avatar",
+        "AvatarGroupCount"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "group",
+      "label": "Avatar group",
+      "root": {
+        "component": "AvatarGroup",
+        "slots": {
+          "children": [
+            {
+              "component": "Avatar",
+              "slots": {
+                "children": [
+                  {
+                    "component": "AvatarText",
+                    "text": "A"
+                  }
+                ]
+              }
+            },
+            {
+              "component": "Avatar",
+              "slots": {
+                "children": [
+                  {
+                    "component": "AvatarText",
+                    "text": "B"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

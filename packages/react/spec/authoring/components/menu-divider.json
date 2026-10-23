@@ -1,0 +1,18 @@
+{
+  "id": "menu-divider",
+  "exportPath": "@refineui/react",
+  "exportName": "MenuDivider",
+  "kind": "part",
+  "category": "parts",
+  "label": "Menu Divider",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "MenuList",
+      "slot": "children"
+    }
+  ]
+}

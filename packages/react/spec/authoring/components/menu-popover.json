@@ -1,0 +1,27 @@
+{
+  "id": "menu-popover",
+  "exportPath": "@refineui/react",
+  "exportName": "MenuPopover",
+  "kind": "part",
+  "category": "parts",
+  "label": "Menu Popover",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Menu",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "MenuList"
+      ],
+      "max": 1
+    }
+  ]
+}

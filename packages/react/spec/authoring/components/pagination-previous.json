@@ -1,0 +1,18 @@
+{
+  "id": "pagination-previous",
+  "exportPath": "@refineui/react",
+  "exportName": "PaginationPrevious",
+  "kind": "part",
+  "category": "parts",
+  "label": "Pagination Previous",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "PaginationContent",
+      "slot": "children"
+    }
+  ]
+}

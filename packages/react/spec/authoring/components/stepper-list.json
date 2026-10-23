@@ -1,0 +1,28 @@
+{
+  "id": "stepper-list",
+  "exportPath": "@refineui/react",
+  "exportName": "StepperList",
+  "kind": "part",
+  "category": "parts",
+  "label": "Stepper List",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Stepper",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "StepperItem",
+        "StepperSeparator"
+      ],
+      "repeatable": true
+    }
+  ]
+}

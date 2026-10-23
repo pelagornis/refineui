@@ -1,0 +1,92 @@
+{
+  "id": "input-otp",
+  "exportPath": "@refineui/react",
+  "exportName": "InputOTP",
+  "kind": "root",
+  "category": "components",
+  "label": "Input OTP",
+  "props": [
+    {
+      "name": "size",
+      "label": "size",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "defaultValue": "sm",
+      "section": "variants"
+    },
+    {
+      "name": "maxLength",
+      "label": "max Length",
+      "valueType": "number",
+      "control": "number",
+      "defaultValue": 4,
+      "required": true,
+      "section": "properties"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "InputOTPSlot"
+      ],
+      "repeatable": true,
+      "min": 1
+    }
+  ],
+  "presets": [
+    {
+      "id": "code",
+      "label": "Verification code",
+      "root": {
+        "component": "InputOTP",
+        "props": {
+          "maxLength": 4,
+          "aria-label": "Verification code"
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "InputOTPSlot",
+              "props": {
+                "index": 0
+              }
+            },
+            {
+              "component": "InputOTPSlot",
+              "props": {
+                "index": 1
+              }
+            },
+            {
+              "component": "InputOTPSlot",
+              "props": {
+                "index": 2
+              }
+            },
+            {
+              "component": "InputOTPSlot",
+              "props": {
+                "index": 3
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

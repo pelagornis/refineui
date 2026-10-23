@@ -1,0 +1,76 @@
+{
+  "id": "breadcrumb",
+  "exportPath": "@refineui/react",
+  "exportName": "Breadcrumb",
+  "kind": "root",
+  "category": "components",
+  "label": "Breadcrumb",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "BreadcrumbList"
+      ],
+      "max": 1
+    }
+  ],
+  "presets": [
+    {
+      "id": "trail",
+      "label": "Breadcrumb",
+      "root": {
+        "component": "Breadcrumb",
+        "slots": {
+          "children": [
+            {
+              "component": "BreadcrumbList",
+              "slots": {
+                "children": [
+                  {
+                    "component": "BreadcrumbItem",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "BreadcrumbLink",
+                          "props": {
+                            "href": "#"
+                          },
+                          "text": "Home"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "component": "BreadcrumbSeparator",
+                    "text": "/"
+                  },
+                  {
+                    "component": "BreadcrumbItem",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "BreadcrumbPage",
+                          "text": "Current page"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

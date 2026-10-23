@@ -1,0 +1,77 @@
+{
+  "id": "badge",
+  "exportPath": "@refineui/react",
+  "exportName": "Badge",
+  "kind": "root",
+  "category": "components",
+  "label": "Badge",
+  "props": [
+    {
+      "name": "variant",
+      "label": "variant",
+      "valueType": "enum",
+      "control": "select",
+      "options": [
+        "default",
+        "neutral",
+        "outline",
+        "success",
+        "warning",
+        "danger"
+      ],
+      "defaultValue": "default",
+      "section": "variants"
+    },
+    {
+      "name": "layout",
+      "label": "layout",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "label",
+        "number"
+      ],
+      "defaultValue": "label",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [],
+      "repeatable": true,
+      "allowText": true,
+      "allowAnyComponent": true,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "label": "Default",
+      "root": {
+        "component": "Badge",
+        "slots": {
+          "children": [
+            {
+              "component": "Text",
+              "props": {
+                "variant": "bodyMd"
+              },
+              "text": "Badge"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

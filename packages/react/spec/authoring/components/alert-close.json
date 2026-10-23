@@ -1,0 +1,22 @@
+{
+  "id": "alert-close",
+  "exportPath": "@refineui/react",
+  "exportName": "AlertClose",
+  "kind": "part",
+  "category": "parts",
+  "label": "Alert Close",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "AlertActions",
+      "slot": "children"
+    },
+    {
+      "component": "Alert",
+      "slot": "children"
+    }
+  ]
+}

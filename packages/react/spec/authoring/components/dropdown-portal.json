@@ -1,0 +1,27 @@
+{
+  "id": "dropdown-portal",
+  "exportPath": "@refineui/react",
+  "exportName": "DropdownPortal",
+  "kind": "provider",
+  "category": "parts",
+  "label": "Dropdown Portal",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Dropdown",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "DropdownContent"
+      ],
+      "max": 1
+    }
+  ]
+}

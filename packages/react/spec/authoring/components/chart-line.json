@@ -1,0 +1,27 @@
+{
+  "id": "chart-line",
+  "exportPath": "@refineui/react",
+  "exportName": "ChartLine",
+  "kind": "part",
+  "category": "parts",
+  "label": "Chart Line",
+  "props": [
+    {
+      "name": "values",
+      "label": "values",
+      "valueType": "number-array",
+      "control": "collection",
+      "required": true,
+      "section": "properties"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "ChartPlot",
+      "slot": "children"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "progress-stepper-marker",
+  "exportPath": "@refineui/react",
+  "exportName": "ProgressStepperMarker",
+  "kind": "part",
+  "category": "parts",
+  "label": "Progress Stepper Marker",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "ProgressStepperItem",
+      "slot": "children"
+    }
+  ]
+}

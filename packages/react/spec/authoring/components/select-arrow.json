@@ -1,0 +1,18 @@
+{
+  "id": "select-arrow",
+  "exportPath": "@refineui/react",
+  "exportName": "SelectArrow",
+  "kind": "part",
+  "category": "parts",
+  "label": "Select Arrow",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "SelectTrigger",
+      "slot": "children"
+    }
+  ]
+}

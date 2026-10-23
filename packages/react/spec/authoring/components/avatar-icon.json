@@ -1,0 +1,18 @@
+{
+  "id": "avatar-icon",
+  "exportPath": "@refineui/react",
+  "exportName": "AvatarIcon",
+  "kind": "part",
+  "category": "parts",
+  "label": "Avatar Icon",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Avatar",
+      "slot": "children"
+    }
+  ]
+}

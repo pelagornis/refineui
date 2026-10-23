@@ -1,0 +1,18 @@
+{
+  "id": "carousel-indicators",
+  "exportPath": "@refineui/react",
+  "exportName": "CarouselIndicators",
+  "kind": "part",
+  "category": "parts",
+  "label": "Carousel Indicators",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Carousel",
+      "slot": "children"
+    }
+  ]
+}

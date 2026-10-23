@@ -1,0 +1,83 @@
+{
+  "id": "avatars",
+  "exportPath": "@refineui/react",
+  "exportName": "Avatars",
+  "kind": "root",
+  "category": "components",
+  "label": "Avatars",
+  "props": [
+    {
+      "name": "size",
+      "label": "size",
+      "valueType": "enum",
+      "control": "select",
+      "options": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl"
+      ],
+      "defaultValue": "xs",
+      "section": "variants"
+    },
+    {
+      "name": "layout",
+      "label": "layout",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "stack",
+        "spread"
+      ],
+      "defaultValue": "stack",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [],
+      "repeatable": true,
+      "allowText": true,
+      "allowAnyComponent": true,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "label": "Default",
+      "root": {
+        "component": "Avatars",
+        "props": {
+          "avatars": [
+            {
+              "alt": "Avatar"
+            }
+          ]
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "Text",
+              "props": {
+                "variant": "bodyMd"
+              },
+              "text": "Avatars"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

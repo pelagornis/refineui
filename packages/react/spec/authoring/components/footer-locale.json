@@ -1,0 +1,22 @@
+{
+  "id": "footer-locale",
+  "exportPath": "@refineui/react",
+  "exportName": "FooterLocale",
+  "kind": "part",
+  "category": "parts",
+  "label": "Footer Locale",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "FooterMeta",
+      "slot": "children"
+    },
+    {
+      "component": "FooterMetaEnd",
+      "slot": "children"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "id": "dialog-title",
+  "exportPath": "@refineui/react",
+  "exportName": "DialogTitle",
+  "kind": "part",
+  "category": "parts",
+  "label": "Dialog Title",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "DialogHeader",
+      "slot": "children"
+    },
+    {
+      "component": "DialogContent",
+      "slot": "children"
+    }
+  ]
+}

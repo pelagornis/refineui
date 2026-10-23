@@ -1,0 +1,28 @@
+{
+  "id": "breadcrumb-list",
+  "exportPath": "@refineui/react",
+  "exportName": "BreadcrumbList",
+  "kind": "part",
+  "category": "parts",
+  "label": "Breadcrumb List",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Breadcrumb",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "BreadcrumbItem",
+        "BreadcrumbSeparator"
+      ],
+      "repeatable": true
+    }
+  ]
+}

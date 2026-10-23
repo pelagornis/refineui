@@ -1,0 +1,18 @@
+{
+  "id": "drawer-body",
+  "exportPath": "@refineui/react",
+  "exportName": "DrawerBody",
+  "kind": "part",
+  "category": "parts",
+  "label": "Drawer Body",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "DrawerContent",
+      "slot": "children"
+    }
+  ]
+}
