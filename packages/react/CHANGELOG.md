@@ -1,5 +1,13 @@
 # @refineui/react
 
+## 0.1.0
+
+### Minor Changes
+
+- e67a58f: Add an editor-neutral authoring manifest for every public component export,
+  including compositional slots, serializable controls, presets, state bindings,
+  portal contracts, and a React rendering fixture.
+
 ## Unreleased
 
 ### Added
