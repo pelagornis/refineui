@@ -1,5 +1,13 @@
 # @refineui/react
 
+## 0.1.1
+
+### Patch Changes
+
+- Remove the Toast minimum-width token and refine overlay, Dialog, and Toast presentation.
+- Updated dependencies
+  - @refineui/tokens@2.0.0
+
 ## 0.1.0
 
 ### Minor Changes

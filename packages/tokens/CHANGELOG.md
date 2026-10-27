@@ -1,5 +1,11 @@
 # @refineui/tokens
 
+## 2.0.0
+
+### Major Changes
+
+- Remove the Toast minimum-width token and refine overlay, Dialog, and Toast presentation.
+
 ## 1.0.4
 
 ### Patch Changes

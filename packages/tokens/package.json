@@ -1,6 +1,6 @@
 {
   "name": "@refineui/tokens",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "RefineUI Theme Tokens",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
