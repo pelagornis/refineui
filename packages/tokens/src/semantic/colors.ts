@@ -103,7 +103,7 @@ export type SemanticColorName = SemanticPaletteName | "surfaceOverlay" | "surfac
 
 /** Foundation surfaceOverlay (Overlay and Modal) — raw RGBA */
 export const surfaceOverlayRgba = {
-    light: "rgba(0, 0, 0, 0.2)",
+    light: "rgba(0, 0, 0, 0.1)",
     dark: "rgba(0, 0, 0, 0.6)",
 } as const;
 

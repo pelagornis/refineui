@@ -1,7 +1,7 @@
 {
   "schema": "refineui.authoring/1",
   "packageName": "@refineui/react",
-  "packageVersion": "0.0.12",
+  "packageVersion": "0.1.0",
   "css": [
     "@refineui/react/refineui.css"
   ],

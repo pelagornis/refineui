@@ -10,7 +10,7 @@ import { defineRecipe } from "./types";
 
 export const toastRecipe = defineRecipe({
     name: "toast",
-    base: "relative isolate box-border flex w-fit min-w-refineui-toast-min-width max-w-refineui-toast-max-width cursor-grab items-center gap-refineui-size-small rounded-refineui-x-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary py-refineui-size-medium ps-refineui-size-medium pe-refineui-size-large select-none",
+    base: "relative isolate box-border flex w-fit max-w-refineui-toast-max-width cursor-grab items-center gap-refineui-size-small rounded-refineui-x-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-background-primary py-refineui-size-medium ps-refineui-size-medium pe-refineui-size-large select-none",
     variants: {
         variant: {
             default: "",

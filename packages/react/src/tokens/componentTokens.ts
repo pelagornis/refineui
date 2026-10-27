@@ -37,7 +37,6 @@ export const componentTokens = {
         color: componentColorTokens.toast,
         typography: componentTypographyTokens.toast,
         size: {
-            minWidth: componentSizes.toastMinWidth,
             maxWidth: componentSizes.toastMaxWidth,
         },
         elevation: {

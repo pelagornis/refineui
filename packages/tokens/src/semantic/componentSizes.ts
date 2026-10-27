@@ -35,7 +35,6 @@ export const componentSizeFoundationKeys = {
     menuPanelWidth: "foundationSize2000",
     dropdownMenuWidth: "foundationSize2000",
     sidebarWidth: "foundationSize2560",
-    toastMinWidth: "foundationSize2000",
     toastMaxWidth: "foundationSize3250",
     dialogMaxWidth: "foundationSize6000",
     dialogWidthSm: "foundationSize3000",
@@ -113,7 +112,6 @@ export const componentSizes = {
     /** @deprecated Same as `menuPanelWidth` */
     dropdownMenuWidth: fromFoundation("dropdownMenuWidth"),
     sidebarWidth: fromFoundation("sidebarWidth"),
-    toastMinWidth: fromFoundation("toastMinWidth"),
     toastMaxWidth: fromFoundation("toastMaxWidth"),
     dialogMaxWidth: fromFoundation("dialogMaxWidth"),
     /** Viewport-relative — not a Foundation px step */

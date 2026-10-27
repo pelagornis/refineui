@@ -88,7 +88,7 @@ export const componentTypographyTokens = {
         shortcut: role("bodyXs"),
     },
     dialog: {
-        title: role("subtitleMd"),
+        title: role("subtitleLg"),
         description: role("bodyXs"),
     },
     drawer: {
