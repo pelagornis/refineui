@@ -33,6 +33,7 @@ const {
     spacings,
     strokeWidths,
     toBoxShadow,
+    toDropShadowFilter,
     typographys,
     SEMANTIC_TEXT,
     semanticFocus,
@@ -129,12 +130,15 @@ function shadowElevationLines() {
     }
 
     for (const [name, pair] of Object.entries(semanticElevations)) {
+        const role = toKebab(name);
         const lightVal = toBoxShadow(pair.light);
         const darkVal = toBoxShadow(pair.dark);
 
-        root.push(`  --refineui-elevation-${toKebab(name)}: ${lightVal};`);
-        dark.push(`  --refineui-elevation-${toKebab(name)}: ${darkVal};`);
-        theme.push(`  --shadow-${NS}-${toKebab(name)}: var(--refineui-elevation-${toKebab(name)});`);
+        root.push(`  --refineui-elevation-${role}: ${lightVal};`);
+        root.push(`  --refineui-elevation-${role}-filter: ${toDropShadowFilter(pair.light)};`);
+        dark.push(`  --refineui-elevation-${role}: ${darkVal};`);
+        dark.push(`  --refineui-elevation-${role}-filter: ${toDropShadowFilter(pair.dark)};`);
+        theme.push(`  --shadow-${NS}-${role}: var(--refineui-elevation-${role});`);
     }
 
     const softer = toBoxShadow(shadow2Lighter);

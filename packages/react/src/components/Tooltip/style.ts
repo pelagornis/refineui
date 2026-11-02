@@ -1,30 +1,26 @@
 import type { CSSProperties } from "react";
-import { spacings, strokeWidths } from "@refineui/tokens";
+import { spacings } from "@refineui/tokens";
 import { clsx } from "clsx";
-import { foundationSizes } from "../../componentSizes";
+import { componentSizes } from "../../componentSizes";
 import { componentTypographyTokens } from "../../tokens/componentTypographyTokens";
 import { componentTextClass } from "../../typography";
+import type { FloatingBeakAlign, FloatingBeakSide } from "../shared/floatingOutline";
 import type { TooltipAlign, TooltipPosition } from "./types";
 
-/** Same beak geometry as PopOver (viewBox 16×8 dual polygons). */
-export const TOOLTIP_BEAK_W = foundationSizes.foundationSize160;
-export const TOOLTIP_BEAK_H = foundationSizes.foundationSize80;
-export const TOOLTIP_BEAK_OFFSET = foundationSizes.foundationSize80;
-const BEAK_BORDER_OVERLAP = strokeWidths.strokeWidthThin;
-
-const gap = spacings.sizeXSmall;
-const edgeInset = spacings.sizeMedium;
+/** Beak protrusion plus clear space between its tip and the trigger. */
+const gap = `calc(${componentSizes.tooltipBeakHeight} + ${spacings.sizeXXSmall})`;
+export const TOOLTIP_BEAK_INSET = spacings.sizeMedium;
 
 export const tooltipStyles = {
     root: "relative inline-block",
     fallbackTrigger: "inline-flex outline-none",
-    /** Positions the floating stack (beak + panel), like PopOver `floatingRoot`. */
+    /** Positions the floating stack (surface + panel), like PopOver `floatingRoot`. */
     floating: "pointer-events-none absolute z-refineui-popup",
     panelWrap: "relative inline-block max-w-refineui-tooltip-max-width",
-    beakWrap: "pointer-events-none absolute z-[1]",
+    /** Fill, stroke, and shadow come from `FloatingSurface`; the transparent border keeps the box size. */
     panel: clsx(
         componentTextClass(componentTypographyTokens.tooltip),
-        "relative z-0 box-border max-w-refineui-tooltip-max-width whitespace-nowrap rounded-refineui-medium border-refineui-thin px-refineui-size-medium py-refineui-size-small shadow-refineui-8",
+        "relative z-0 box-border max-w-refineui-tooltip-max-width whitespace-nowrap rounded-refineui-medium border-refineui-thin border-transparent px-refineui-size-medium py-refineui-size-small",
     ),
 } as const;
 
@@ -43,10 +39,21 @@ export function tooltipPlacement(position: TooltipPosition): "top" | "bottom" | 
     }
 }
 
-export function tooltipAlignKey(align: TooltipAlign): "start" | "center" | "end" {
+export function tooltipAlignKey(align: TooltipAlign): FloatingBeakAlign {
     if (align === "Start") return "start";
     if (align === "End") return "end";
     return "center";
+}
+
+const beakSideByPlacement: Record<ReturnType<typeof tooltipPlacement>, FloatingBeakSide> = {
+    bottom: "top",
+    top: "bottom",
+    left: "right",
+    right: "left",
+};
+
+export function tooltipBeakSide(position: TooltipPosition): FloatingBeakSide {
+    return beakSideByPlacement[tooltipPlacement(position)];
 }
 
 /** Floating stack offset from the trigger (gap + side). */
@@ -70,48 +77,5 @@ export function tooltipFloatingStyle(position: TooltipPosition, align: TooltipAl
             return { left: "100%", top: "50%", transform: "translateY(-50%)", marginLeft: gap };
         default:
             return {};
-    }
-}
-
-/** Beak wrapper position — mirrors PopOver `beakWrapperStyle`. */
-export function tooltipBeakWrapperStyle(position: TooltipPosition, align: TooltipAlign): CSSProperties {
-    const overlapOffset = `calc(-1 * ${TOOLTIP_BEAK_OFFSET} + ${BEAK_BORDER_OVERLAP})`;
-    const placement = tooltipPlacement(position);
-    const a = tooltipAlignKey(align);
-
-    switch (placement) {
-        case "bottom":
-            if (a === "center") return { top: overlapOffset, left: `calc(50% - ${TOOLTIP_BEAK_W} / 2)` };
-            if (a === "start") return { top: overlapOffset, left: edgeInset };
-            return { top: overlapOffset, right: edgeInset };
-        case "top":
-            if (a === "center") return { bottom: overlapOffset, left: `calc(50% - ${TOOLTIP_BEAK_W} / 2)` };
-            if (a === "start") return { bottom: overlapOffset, left: edgeInset };
-            return { bottom: overlapOffset, right: edgeInset };
-        case "left":
-            if (a === "center") return { right: overlapOffset, top: `calc(50% - ${TOOLTIP_BEAK_W} / 2)` };
-            if (a === "start") return { right: overlapOffset, top: edgeInset };
-            return { right: overlapOffset, bottom: edgeInset };
-        case "right":
-            if (a === "center") return { left: overlapOffset, top: `calc(50% - ${TOOLTIP_BEAK_W} / 2)` };
-            if (a === "start") return { left: overlapOffset, top: edgeInset };
-            return { left: overlapOffset, bottom: edgeInset };
-        default:
-            return {};
-    }
-}
-
-export function tooltipBeakRotateDeg(position: TooltipPosition): number {
-    switch (tooltipPlacement(position)) {
-        case "bottom":
-            return 0;
-        case "top":
-            return 180;
-        case "left":
-            return -90;
-        case "right":
-            return 90;
-        default:
-            return 0;
     }
 }

@@ -56,6 +56,21 @@ export function toBoxShadow(level: ShadowLevel): string {
     return `${level.key}, ${level.ambient}`;
 }
 
+/** Layer strings are `x y blur spread color`; `drop-shadow()` takes no spread. */
+const SHADOW_LAYER_COLOR_INDEX = 4;
+
+function toDropShadow(layer: string): string {
+    const parts = layer.split(" ");
+    const [x, y, blur] = parts;
+    const color = parts.slice(SHADOW_LAYER_COLOR_INDEX).join(" ");
+    return `drop-shadow(${x} ${y} ${blur} ${color})`;
+}
+
+/** Same key + ambient pair as a CSS `filter`, for surfaces that are not rectangles. */
+export function toDropShadowFilter(level: ShadowLevel): string {
+    return `${toDropShadow(level.key)} ${toDropShadow(level.ambient)}`;
+}
+
 /**
  * Elevation shadows — Figma `Elevation/Light` → `shadowNLight`, `Elevation/Dark` → `shadowNDark`
  * Foundation: https://www.figma.com/design/GOLyxZSkzbRIuMNBvxeqr3/Pelagornis-RefineUI-Foundation?node-id=1-5785

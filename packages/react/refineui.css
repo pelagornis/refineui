@@ -1112,9 +1112,7 @@
   [data-refineui="menu"],
   [data-refineui="dropdown-menu"],
   [data-refineui="select-menu"],
-  [data-refineui="popover"],
-  [data-refineui="tooltip-panel"],
-  [data-refineui="floating-beak-surface"],
+  [data-refineui="floating-surface"],
   [data-refineui="sidebar-peek-panel"],
   [data-refineui="navigation-menu-content-panel"] {
     background-color: var(--refineui-color-alias-background-primary) !important;
@@ -1138,8 +1136,7 @@
 [data-refineui="menu"],
 [data-refineui="dropdown-menu"],
 [data-refineui="select-menu"],
-[data-refineui="popover"],
-[data-refineui="tooltip-panel"],
+[data-refineui="floating-surface"],
 [data-refineui="sidebar-peek-panel"],
 [data-refineui="navigation-menu-content-panel"] {
   background-color: var(--refineui-color-alias-surface-frosted);
@@ -1148,12 +1145,11 @@
 }
 
 /*
- * Beaks are smaller than the surface blur radius. A separate backdrop-filter
- * samples the nearby trigger and shifts their visible color, so use the
- * frosted panel's resolved base tone to keep the seam pixel-consistent.
+ * Popover / Tooltip — panel + beak share one clipped surface. The shadow layer is a
+ * sibling (not an ancestor) so its filter does not become the surface's backdrop root.
  */
-[data-refineui="floating-beak-surface"] {
-  background-color: var(--refineui-color-alias-background-primary);
+[data-refineui="floating-shadow"] {
+  filter: var(--refineui-elevation-floating-filter);
 }
 
 [data-refineui="toast"][data-swiping="true"] {
@@ -2287,12 +2283,16 @@ a[data-refineui="link"]:focus-visible {
   [data-refineui="select-menu"],
   [data-refineui="popover"],
   [data-refineui="tooltip-panel"],
-  [data-refineui="floating-beak-surface"],
   [data-refineui="navigation-menu-content-panel"],
   [data-refineui="sidebar-peek-panel"] {
     background-color: Canvas !important;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
+  }
+
+  /* System colors draw the panel box itself; the clipped beak surface would not be forced. */
+  [data-refineui="floating-chrome"] {
+    display: none;
   }
 
   [data-refineui="dialog"] > [role="presentation"],
@@ -2308,7 +2308,8 @@ a[data-refineui="link"]:focus-visible {
 
   [data-refineui="dialog"],
   [data-refineui="drawer"],
-  [data-refineui="popover"] {
+  [data-refineui="popover"],
+  [data-refineui="tooltip-panel"] {
     border: var(--refineui-stroke-width-thin) solid CanvasText;
   }
 
@@ -2344,15 +2345,22 @@ a[data-refineui="link"]:focus-visible {
     border-width: var(--refineui-stroke-width-thick);
   }
 
-  [data-refineui="toast"],
-  [data-refineui="popover"],
-  [data-refineui="tooltip-panel"],
-  [data-refineui="floating-beak-surface"] {
+  [data-refineui="toast"] {
     border-style: solid;
     border-color: var(--refineui-color-alias-border-default);
     background-color: var(--refineui-color-alias-surface-popover) !important;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
+  }
+
+  [data-refineui="floating-surface"] {
+    background-color: var(--refineui-color-alias-surface-popover) !important;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  [data-refineui="floating-outline"] path {
+    stroke-width: var(--refineui-stroke-width-thick);
   }
 
   [data-refineui="dialog"] > [role="presentation"],

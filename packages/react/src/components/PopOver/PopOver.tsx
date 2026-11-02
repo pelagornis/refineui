@@ -14,12 +14,14 @@ import {
     type MouseEvent,
     type ReactNode,
 } from "react";
-import { spacings, strokeWidths } from "@refineui/tokens";
+import { borderRadii, spacings } from "@refineui/tokens";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
-import { componentSizes, foundationSizes } from "../../componentSizes";
+import { componentSizes } from "../../componentSizes";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
 import { Slot, getMergeableTriggerChild } from "@refineui/utilities/react";
+import { FloatingSurface } from "../shared/FloatingSurface";
+import type { FloatingBeakSide } from "../shared/floatingOutline";
 import { popoverFloatingClasses, popoverStyles } from "./style";
 import type {
     PopOverProps,
@@ -54,55 +56,17 @@ function usePopoverContext(component: string): PopoverContextValue {
     return ctx;
 }
 
-const BEAK_W = foundationSizes.foundationSize160;
-const BEAK_H = foundationSizes.foundationSize80;
-const BEAK_OFFSET = foundationSizes.foundationSize80;
-const BEAK_BORDER_OVERLAP = strokeWidths.strokeWidthThin;
-const POPOVER_GAP = spacings.sizeMedium;
+const BEAK_TIP_GAP = spacings.sizeXXSmall;
+/** Beak protrusion plus clear space between its tip and the trigger. */
+const POPOVER_GAP = `calc(${componentSizes.popoverBeakHeight} + ${BEAK_TIP_GAP})`;
+const SIDE_BEAK_INSET = spacings.sizeMedium;
 
-function beakWrapperStyle(placement: PopoverPlacement, align: PopoverAlign): CSSProperties {
-    const insetStart = componentSizes.popoverBeakInsetFromStartEdge;
-    const insetEnd = componentSizes.popoverBeakInsetFromEndEdge;
-    const edge = spacings.sizeMedium;
-
-    const overlapOffset = `calc(-1 * ${BEAK_OFFSET} + ${BEAK_BORDER_OVERLAP})`;
-
-    switch (placement) {
-        case "bottom":
-            if (align === "center") return { top: overlapOffset, left: `calc(50% - ${BEAK_W} / 2)` };
-            if (align === "start") return { top: overlapOffset, left: insetStart };
-            return { top: overlapOffset, right: insetEnd };
-        case "top":
-            if (align === "center") return { bottom: overlapOffset, left: `calc(50% - ${BEAK_W} / 2)` };
-            if (align === "start") return { bottom: overlapOffset, left: insetStart };
-            return { bottom: overlapOffset, right: insetEnd };
-        case "left":
-            if (align === "center") return { right: overlapOffset, top: `calc(50% - ${BEAK_W} / 2)` };
-            if (align === "start") return { right: overlapOffset, top: edge };
-            return { right: overlapOffset, bottom: edge };
-        case "right":
-            if (align === "center") return { left: overlapOffset, top: `calc(50% - ${BEAK_W} / 2)` };
-            if (align === "start") return { left: overlapOffset, top: edge };
-            return { left: overlapOffset, bottom: edge };
-        default:
-            return {};
-    }
-}
-
-function beakRotateDeg(placement: PopoverPlacement): number {
-    switch (placement) {
-        case "bottom":
-            return 0;
-        case "top":
-            return 180;
-        case "left":
-            return -90;
-        case "right":
-            return 90;
-        default:
-            return 0;
-    }
-}
+const beakSideByPlacement: Record<PopoverPlacement, FloatingBeakSide> = {
+    bottom: "top",
+    top: "bottom",
+    left: "right",
+    right: "left",
+};
 
 function floatingGapStyle(placement: PopoverPlacement): CSSProperties {
     if (placement === "top") return { marginBottom: POPOVER_GAP };
@@ -256,9 +220,8 @@ export function PopoverContent({
     const bg = resolveColorTokenValue(palette.background);
     const borderCol = resolveColorTokenValue(palette.border);
 
-    const bw = beakWrapperStyle(placement, align);
-    const rot = beakRotateDeg(placement);
     const gapStyle = floatingGapStyle(placement);
+    const vertical = placement === "top" || placement === "bottom";
 
     if (!open) return null;
 
@@ -271,28 +234,6 @@ export function PopoverContent({
             style={gapStyle}
         >
             <div className={popoverStyles.panelWrap}>
-                <div className={popoverStyles.beakWrap} style={{ ...bw, width: BEAK_W, height: BEAK_H }} aria-hidden>
-                    <div
-                        style={{
-                            width: BEAK_W,
-                            height: BEAK_H,
-                            transform: `rotate(${rot}deg)`,
-                            transformOrigin: "center center",
-                        }}
-                    >
-                        <svg
-                            width={BEAK_W}
-                            height={BEAK_H}
-                            viewBox="0 0 16 8"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            style={{ display: "block" }}
-                        >
-                            <polygon points="8,0 0,8 16,8" fill={borderCol} />
-                            <polygon points="8,2 2,8 14,8" fill={bg} />
-                        </svg>
-                    </div>
-                </div>
                 <div
                     ref={contentRef as React.RefObject<HTMLDivElement>}
                     id={contentId}
@@ -302,23 +243,30 @@ export function PopoverContent({
                     data-refineui="popover"
                     data-placement={placement}
                     data-align={align}
-                    className={clsx(
-                        popoverStyles.panel,
-                        popoverStyles.panelShadowDefault,
-                        className,
-                    )}
+                    className={clsx(popoverStyles.panel, className)}
                     style={{
                         ...(styleProp && typeof styleProp === "object" ? styleProp : {}),
                         minWidth: componentSizes.popoverPanelWidth,
                         padding: spacings.sizeLarge,
-                        backgroundColor: bg,
                         color: resolveColorTokenValue(palette.foreground),
-                        borderColor: borderCol,
                     }}
                     {...props}
                 >
                     {children}
                 </div>
+                <FloatingSurface
+                    panelRef={contentRef}
+                    side={beakSideByPlacement[placement]}
+                    align={align}
+                    radius={borderRadii.roundedXXLarge}
+                    beakWidth={componentSizes.popoverBeakWidth}
+                    beakHeight={componentSizes.popoverBeakHeight}
+                    tipRadius={componentSizes.popoverBeakTipRadius}
+                    beakInsetStart={vertical ? componentSizes.popoverBeakInsetFromStartEdge : SIDE_BEAK_INSET}
+                    beakInsetEnd={vertical ? componentSizes.popoverBeakInsetFromEndEdge : SIDE_BEAK_INSET}
+                    backgroundColor={bg}
+                    borderColor={borderCol}
+                />
             </div>
         </div>
     );

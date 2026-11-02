@@ -1,15 +1,16 @@
 import { clsx } from "clsx";
 import type { ReactNode } from "react";
 import { useId, useRef, useState } from "react";
+import { borderRadii } from "@refineui/tokens";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
+import { componentSizes } from "../../componentSizes";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { Slot, getMergeableTriggerChild } from "@refineui/utilities/react";
-import { FrostedBeak } from "../shared/FrostedBeak";
+import { FloatingSurface } from "../shared/FloatingSurface";
 import {
-    TOOLTIP_BEAK_H,
-    TOOLTIP_BEAK_W,
-    tooltipBeakRotateDeg,
-    tooltipBeakWrapperStyle,
+    TOOLTIP_BEAK_INSET,
+    tooltipAlignKey,
+    tooltipBeakSide,
     tooltipFloatingStyle,
     tooltipStyles,
 } from "./style";
@@ -31,6 +32,7 @@ export function Tooltip({
     const open = ctrlOpen !== undefined ? ctrlOpen : innerOpen;
     const tooltipId = useId();
     const showTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const panelRef = useRef<HTMLDivElement>(null);
 
     const setOpen = (next: boolean) => {
         if (ctrlOpen === undefined) setInnerOpen(next);
@@ -60,8 +62,6 @@ export function Tooltip({
     };
 
     const floatingStyle = tooltipFloatingStyle(position, align);
-    const beakWrapStyle = tooltipBeakWrapperStyle(position, align);
-    const beakRot = tooltipBeakRotateDeg(position);
 
     const describedBy = open ? tooltipId : undefined;
     const mergeEl = getMergeableTriggerChild(trigger);
@@ -110,32 +110,30 @@ export function Tooltip({
                 <div className={tooltipStyles.floating} style={floatingStyle}>
                     <div className={tooltipStyles.panelWrap}>
                         <div
-                            className={tooltipStyles.beakWrap}
-                            style={{ ...beakWrapStyle, width: TOOLTIP_BEAK_W, height: TOOLTIP_BEAK_H }}
-                            aria-hidden
-                        >
-                            <FrostedBeak
-                                width={TOOLTIP_BEAK_W}
-                                height={TOOLTIP_BEAK_H}
-                                rotateDeg={beakRot}
-                                borderColor={borderCol}
-                            />
-                        </div>
-                        <div
+                            ref={panelRef}
                             id={tooltipId}
                             role="tooltip"
                             data-refineui="tooltip-panel"
                             data-position={position}
                             data-align={align}
                             className={tooltipStyles.panel}
-                            style={{
-                                backgroundColor: bg,
-                                color: fg,
-                                borderColor: borderCol,
-                            }}
+                            style={{ color: fg }}
                         >
                             {content}
                         </div>
+                        <FloatingSurface
+                            panelRef={panelRef}
+                            side={tooltipBeakSide(position)}
+                            align={tooltipAlignKey(align)}
+                            radius={borderRadii.roundedMedium}
+                            beakWidth={componentSizes.tooltipBeakWidth}
+                            beakHeight={componentSizes.tooltipBeakHeight}
+                            tipRadius={componentSizes.tooltipBeakTipRadius}
+                            beakInsetStart={TOOLTIP_BEAK_INSET}
+                            beakInsetEnd={TOOLTIP_BEAK_INSET}
+                            backgroundColor={bg}
+                            borderColor={borderCol}
+                        />
                     </div>
                 </div>
             )}

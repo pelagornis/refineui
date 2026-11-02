@@ -34,7 +34,7 @@ export {
 export { motion } from "./global/motion";
 export { strokeWidths } from "./global/strokeWidths";
 export { borderRadii } from "./global/borderRadii";
-export { shadows, shadowColors, shadow2Lighter, toBoxShadow } from "./global/shadows";
+export { shadows, shadowColors, shadow2Lighter, toBoxShadow, toDropShadowFilter } from "./global/shadows";
 export { typographys } from "./global/typographys";
 export { zIndex } from "./global/zIndex";
 export { textAlignments } from "./global/textAlignments";

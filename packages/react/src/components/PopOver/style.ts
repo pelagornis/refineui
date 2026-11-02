@@ -6,10 +6,9 @@ export const popoverStyles = {
         "cursor-pointer border-none bg-transparent p-0 font-inherit text-inherit",
     floatingRoot: "absolute z-refineui-popup",
     panelWrap: "relative inline-block min-w-refineui-popover-panel-width",
-    beakWrap: "pointer-events-none absolute z-[1]",
+    /** Fill, stroke, and shadow come from `FloatingSurface`; the transparent border keeps the box size. */
     panel:
-        "relative z-0 box-border min-w-refineui-popover-panel-width rounded-refineui-xx-large border-refineui-thin outline-none",
-    panelShadowDefault: "shadow-refineui-8",
+        "relative z-0 box-border min-w-refineui-popover-panel-width rounded-refineui-xx-large border-refineui-thin border-transparent outline-none",
 } as const;
 
 export function popoverFloatingClasses(placement: PopoverPlacement, align: PopoverAlign): string {
