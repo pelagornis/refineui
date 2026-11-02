@@ -1,5 +1,13 @@
 # @refineui/react
 
+## 0.1.2
+
+### Patch Changes
+
+- a67965c: Draw Popover and Tooltip panels and their beaks as one shape so the beak shares the frosted fill, blur, stroke, and floating shadow. The beak tip is rounded, keeps clear space from the trigger, and the Popover beak is larger. Tokens add beak sizes for Popover and Tooltip, `toDropShadowFilter`, and `--refineui-elevation-*-filter` variables.
+- Updated dependencies [a67965c]
+  - @refineui/tokens@2.1.0
+
 ## 0.1.1
 
 ### Patch Changes

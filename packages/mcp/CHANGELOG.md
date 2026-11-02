@@ -1,5 +1,12 @@
 # @refineui/mcp
 
+## 0.1.7
+
+### Patch Changes
+
+- Updated dependencies [a67965c]
+  - @refineui/tokens@2.1.0
+
 ## 0.1.6
 
 ### Patch Changes
