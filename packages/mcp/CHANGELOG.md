@@ -1,5 +1,11 @@
 # @refineui/mcp
 
+## 0.1.9
+
+### Patch Changes
+
+- Depend on the current `@refineui/tokens` (2.2.0) instead of 1.0.4. The previous release was packed from a stale lockfile, so installs pulled tokens 1.0.4 — which lacks the Popover / Tooltip beak sizes and rendered the beaks as NaN. Drop any `overrides` / `resolutions` you added for `@refineui/tokens`.
+
 ## 0.1.8
 
 ### Patch Changes
