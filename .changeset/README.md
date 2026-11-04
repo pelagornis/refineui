@@ -15,11 +15,19 @@ has its own user-facing change to describe.
 
 ## Release flow
 
-1. Merge to `main` with pending changesets → `.github/workflows/version.yml`
-   opens/updates a "chore: version packages" PR (bumps + `CHANGELOG.md`).
-2. Merge that version PR → versions land on `main`, but nothing is published yet.
-3. Push package tags (`@refineui/<pkg>@<version>`) → `.github/workflows/release.yml`
-   builds and publishes to npm via OIDC trusted publishing.
+Everything runs in `.github/workflows/release.yml` on push to `main`:
+
+1. Merge to `main` with pending changesets → the workflow opens/updates a
+   "chore: version packages" PR (bumps, `CHANGELOG.md`, and `bun.lock`).
+2. Merge that version PR → no changesets are left, so the same workflow builds
+   and publishes every unpublished version to npm via OIDC trusted publishing,
+   then pushes `@refineui/<pkg>@<version>` tags and creates GitHub releases.
+
+Do not version locally with `changeset version` alone — use
+`bun run version:packages`, which also syncs the workspace versions bun.lock
+records (`bun pm pack` reads those when it rewrites `workspace:*`). To retry a
+failed publish, re-run the workflow (or dispatch it); published versions are
+skipped.
 
 Each package needs a trusted publisher registered once on npmjs.com (GitHub
 Actions → `pelagornis` / `refineui` / `release.yml`). npm can only attach that
