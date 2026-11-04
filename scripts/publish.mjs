@@ -6,8 +6,10 @@
  * tool can do both halves:
  *
  * - Internal deps use the `workspace:*` protocol. `bun pm pack` rewrites it to
- *   the resolved version inside the tarball; npm ships the literal
- *   `workspace:*`, which installs as a broken dependency.
+ *   the version bun.lock records for that workspace; npm ships the literal
+ *   `workspace:*`, which installs as a broken dependency. bun.lock is synced by
+ *   `scripts/sync-lockfile-versions.mjs`, and every tarball is checked before
+ *   upload so a stale lockfile can never ship old internal versions.
  * - Auth is OIDC trusted publishing. `npm publish` performs the token exchange;
  *   `bun publish` cannot (oven-sh/bun#22423) and fails with "missing
  *   authentication" even when the workflow grants `id-token: write`.
@@ -30,9 +32,12 @@ const PACKAGES_DIR = join(ROOT, "packages");
 
 const dryRun = process.argv.includes("--dry-run");
 
-/** @typedef {{ name: string; version: string; dir: string; internalDeps: string[] }} WorkspacePackage */
+/** @typedef {Record<string, string>} DependencyMap */
+/** @typedef {{ name: string; version: string; dir: string; internalDeps: string[]; dependencySpecs: DependencyMap }} WorkspacePackage */
 
-/** @returns {WorkspacePackage[]} */
+const DEPENDENCY_FIELDS = ["dependencies", "peerDependencies", "optionalDependencies"];
+
+/** @returns {{ ordered: WorkspacePackage[]; byName: Map<string, WorkspacePackage> }} */
 function readPublishablePackages() {
   /** @type {Map<string, WorkspacePackage>} */
   const byName = new Map();
@@ -48,14 +53,15 @@ function readPublishablePackages() {
     if (manifest.private) continue;
     if (!manifest.name || !manifest.version) continue;
 
+    /** @type {DependencyMap} */
+    const dependencySpecs = Object.assign({}, ...DEPENDENCY_FIELDS.map((field) => manifest[field] ?? {}));
+
     byName.set(manifest.name, {
       name: manifest.name,
       version: manifest.version,
       dir,
-      internalDeps: Object.keys({
-        ...manifest.dependencies,
-        ...manifest.peerDependencies,
-      }),
+      internalDeps: Object.keys(dependencySpecs),
+      dependencySpecs,
     });
   }
 
@@ -63,7 +69,7 @@ function readPublishablePackages() {
     pkg.internalDeps = pkg.internalDeps.filter((dep) => byName.has(dep));
   }
 
-  return topologicalOrder(byName);
+  return { ordered: topologicalOrder(byName), byName };
 }
 
 /**
@@ -154,6 +160,55 @@ function pack(pkg, destination) {
 }
 
 /**
+ * Expected published range for a `workspace:` spec — mirrors how pnpm / bun rewrite it.
+ *
+ * @param {string} spec
+ * @param {string} version
+ * @returns {string}
+ */
+function resolveWorkspaceSpec(spec, version) {
+  const range = spec.slice("workspace:".length);
+  if (range === "*" || range === "") return version;
+  if (range === "^" || range === "~") return `${range}${version}`;
+  return range;
+}
+
+/**
+ * Fail before upload when the tarball pins an internal dependency to anything
+ * other than the version currently in that workspace's package.json.
+ *
+ * @param {WorkspacePackage} pkg
+ * @param {string} tarball
+ * @param {Map<string, WorkspacePackage>} byName
+ */
+function assertPackedInternalVersions(pkg, tarball, byName) {
+  const result = spawnSync("tar", ["-xzf", tarball, "-O", "package/package.json"], { encoding: "utf8" });
+  if (result.status !== 0 || !result.stdout) {
+    throw new Error(`Cannot read package.json from ${tarball} for ${pkg.name}@${pkg.version}`);
+  }
+
+  const packed = JSON.parse(result.stdout);
+  /** @type {DependencyMap} */
+  const packedSpecs = Object.assign({}, ...DEPENDENCY_FIELDS.map((field) => packed[field] ?? {}));
+
+  const mismatches = pkg.internalDeps.flatMap((dep) => {
+    const source = pkg.dependencySpecs[dep];
+    const target = byName.get(dep);
+    if (!target || !source?.startsWith("workspace:")) return [];
+
+    const expected = resolveWorkspaceSpec(source, target.version);
+    return packedSpecs[dep] === expected ? [] : [`${dep}: packed ${packedSpecs[dep] ?? "(missing)"}, expected ${expected}`];
+  });
+
+  if (mismatches.length > 0) {
+    throw new Error(
+      `${pkg.name}@${pkg.version} tarball pins stale internal versions:\n  ${mismatches.join("\n  ")}\n` +
+        "Run `node scripts/sync-lockfile-versions.mjs` and commit bun.lock.",
+    );
+  }
+}
+
+/**
  * npm briefly stages a version before it is readable on the registry. A second
  * tag-triggered release can race that window and get E409 even though the first
  * publish already succeeded — treat those conflicts as "already published".
@@ -218,7 +273,7 @@ function createGitTag(tag) {
 }
 
 async function main() {
-  const packages = readPublishablePackages();
+  const { ordered: packages, byName } = readPublishablePackages();
   const stagingDir = mkdtempSync(join(tmpdir(), "refineui-publish-"));
   let published = 0;
 
@@ -231,7 +286,9 @@ async function main() {
         continue;
       }
 
-      const result = publish(pkg, pack(pkg, stagingDir));
+      const tarball = pack(pkg, stagingDir);
+      assertPackedInternalVersions(pkg, tarball, byName);
+      const result = publish(pkg, tarball);
 
       if (dryRun) {
         console.log(`Would publish: ${tag}`);

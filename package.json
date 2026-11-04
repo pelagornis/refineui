@@ -15,9 +15,9 @@
     "docs": "node scripts/ws.mjs @refineui/docs dev",
     "docs:build": "node scripts/ws.mjs @refineui/docs build",
     "changeset": "changeset",
-    "version:packages": "changeset version && bun install --lockfile-only",
+    "version:packages": "changeset version && bun install --lockfile-only && node scripts/sync-lockfile-versions.mjs",
     "publish:packages": "node scripts/publish.mjs",
-    "release": "bun run build:packages && node scripts/publish.mjs"
+    "release": "node scripts/sync-lockfile-versions.mjs && bun run build:packages && node scripts/publish.mjs"
   },
   "devDependencies": {
     "@changesets/cli": "^2.28.1",
