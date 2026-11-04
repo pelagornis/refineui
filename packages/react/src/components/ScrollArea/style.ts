@@ -6,6 +6,13 @@ import type { ScrollAreaOrientation } from "./types";
 export const SCROLL_AREA_THUMB_MIN_PX = Number.parseFloat(spacings.sizeXLarge);
 
 /**
+ * Share of the viewport over which edge rows blur — keep in sync with the 25% / 75% `cover`
+ * stops of `refineui-scroll-edge-falloff` in refineui.css. Also the scroll distance over which
+ * an edge's factor ramps from 0 (nothing hidden past it) to 1.
+ */
+export const SCROLL_EDGE_FALLOFF_RATIO = 0.25;
+
+/**
  * ScrollArea — overlay scrollbar over the viewport (no layout shift).
  * Placement / visibility live in `refineui.css`.
  */

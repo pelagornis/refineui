@@ -644,21 +644,25 @@
   background-color: var(--refineui-color-alias-background-primary-active) !important;
 }
 
-/* Command / Item — Sidebar link plate */
+/*
+ * Command / Item — soft surface plate (same family as SearchField / secondary Button).
+ * These item fills are the pre-measure fallback; once `command-indicator` is ready the
+ * sliding indicator owns the plate and item fills are cleared below.
+ */
 [data-refineui="command-item"][data-state="hover"],
 [data-refineui="command-item"][data-selected="true"]:not(:disabled):not(:active) {
   color: var(--refineui-color-alias-foreground-primary-hover) !important;
-  background-color: var(--refineui-color-alias-background-primary-hover) !important;
+  background-color: var(--refineui-color-alias-background-surface-hover) !important;
 }
 [data-refineui="command-item"][data-state="pressed"],
 [data-refineui="command-item"][data-state="active"]:not(:disabled):active,
 [data-refineui="command-item"][data-selected="true"]:not(:disabled):active {
   color: var(--refineui-color-alias-foreground-primary) !important;
-  background-color: var(--refineui-color-alias-background-primary-active) !important;
+  background-color: var(--refineui-color-alias-background-surface-active) !important;
 }
 [data-refineui="command-item"][data-state="active"]:not(:disabled):not(:active) {
   color: var(--refineui-color-alias-foreground-primary) !important;
-  background-color: var(--refineui-color-alias-background-primary-hover) !important;
+  background-color: var(--refineui-color-alias-background-surface-hover) !important;
 }
 [data-refineui="command-item"][data-state="disabled"],
 [data-refineui="command-item"]:disabled {
@@ -667,12 +671,53 @@
 }
 [data-refineui="command-item"][data-state="default"]:not(:disabled):hover {
   color: var(--refineui-color-alias-foreground-primary-hover) !important;
-  background-color: var(--refineui-color-alias-background-primary-hover) !important;
+  background-color: var(--refineui-color-alias-background-surface-hover) !important;
 }
 [data-refineui="command-item"][data-state="default"]:not(:disabled):active,
 [data-refineui="command-item"]:not(:disabled):active {
   color: var(--refineui-color-alias-foreground-primary) !important;
-  background-color: var(--refineui-color-alias-background-primary-active) !important;
+  background-color: var(--refineui-color-alias-background-surface-active) !important;
+}
+
+/* Command / Indicator — one plate slides between items instead of each item repainting. */
+[data-refineui="command-indicator"] {
+  opacity: 0;
+  transition: none;
+}
+[data-refineui="command-indicator"][data-ready="true"] {
+  opacity: 1;
+}
+[data-refineui="command-indicator"][data-animate="true"] {
+  transition:
+    top var(--refineui-motion-duration-medium) var(--refineui-motion-easing-emphasized),
+    left var(--refineui-motion-duration-medium) var(--refineui-motion-easing-emphasized),
+    height var(--refineui-motion-duration-medium) var(--refineui-motion-easing-emphasized),
+    width var(--refineui-motion-duration-medium) var(--refineui-motion-easing-emphasized),
+    opacity var(--refineui-motion-duration-fast) var(--refineui-motion-easing-standard),
+    background-color var(--refineui-motion-duration-fast);
+}
+[data-refineui="command-list"]:has([data-refineui="command-indicator"][data-ready="true"])
+  [data-refineui="command-item"]:not(:disabled) {
+  background-color: transparent !important;
+  /* The plate does not scale, so the label must not either. */
+  transform: none !important;
+}
+[data-refineui="command-list"]:has([data-refineui="command-item"]:not(:disabled):active)
+  [data-refineui="command-indicator"] {
+  background-color: var(--refineui-color-alias-background-surface-active);
+}
+
+[data-refineui="command-empty"] {
+  animation: refineui-menu-popover-enter var(--refineui-motion-duration-normal) var(--refineui-motion-easing-standard);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-refineui="command-indicator"][data-animate="true"] {
+    transition: none;
+  }
+  [data-refineui="command-empty"] {
+    animation: none;
+  }
 }
 
 /* Opacity-only — parent transform would isolate and break child `backdrop-filter`. */
@@ -1240,7 +1285,8 @@
 
 /* Carousel — stage drag + control focus (nav lives below slides) */
 @media (prefers-reduced-motion: reduce) {
-  [data-refineui="carousel-track"][data-animated="true"] {
+  [data-refineui="carousel-track"][data-animated="true"],
+  [data-refineui="carousel-indicator-thumb"][data-animate="true"] {
     transition: none !important;
   }
 }
@@ -1253,7 +1299,8 @@
 [data-refineui="carousel-indicator-thumb"] {
   transition: none;
 }
-[data-refineui="carousel-indicator-thumb"][data-ready="true"] {
+/* Animate only after first layout (`data-animate`) so mount does not grow from 0 — Segmented Control contract. */
+[data-refineui="carousel-indicator-thumb"][data-animate="true"] {
   transition: transform var(--refineui-motion-duration-medium) var(--refineui-motion-easing-emphasized),
     width var(--refineui-motion-duration-medium) var(--refineui-motion-easing-emphasized);
 }
@@ -2081,6 +2128,56 @@ a[data-refineui="link"]:focus-visible {
   top: 0;
   height: 100%;
 }
+/*
+ * ScrollArea edge blur (always on) — rows marked `data-scroll-edge-item` soften progressively
+ * across the outer 25% of the scrollport on each side, like a picker wheel's edge. Size and opacity
+ * stay put, so rows never shift or shrink.
+ *
+ * The scroll-driven animation (`view()` cover range) only tracks *where* a row sits; ScrollArea
+ * scales that by `--refineui-scroll-edge-top` / `-bottom` (0 → 1 as content hides past that edge),
+ * so lists that do not scroll, and the edge you are parked at, stay untouched.
+ * `cover 0%` is the block-end edge (rows entering from below), `cover 100%` the block-start edge.
+ */
+@supports (animation-timeline: view()) {
+  @property --refineui-scroll-edge-end {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 0;
+  }
+  @property --refineui-scroll-edge-start {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 0;
+  }
+  @keyframes refineui-scroll-edge-falloff {
+    cover 0% {
+      --refineui-scroll-edge-end: 1;
+    }
+    cover 25% {
+      --refineui-scroll-edge-end: 0;
+    }
+    cover 75% {
+      --refineui-scroll-edge-start: 0;
+    }
+    cover 100% {
+      --refineui-scroll-edge-start: 1;
+    }
+  }
+  [data-refineui="scroll-area"] [data-scroll-edge-item] {
+    --refineui-scroll-edge-amount: max(
+      calc(var(--refineui-scroll-edge-end) * var(--refineui-scroll-edge-bottom, 0)),
+      calc(var(--refineui-scroll-edge-start) * var(--refineui-scroll-edge-top, 0))
+    );
+    filter: blur(calc(var(--refineui-blur-scroll-edge) * var(--refineui-scroll-edge-amount)));
+    animation: refineui-scroll-edge-falloff linear both;
+    animation-timeline: view();
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-refineui="scroll-area"] [data-scroll-edge-item] {
+    animation: none;
+  }
+}
 [data-refineui="scroll-area-scrollbar"][data-state="hidden"] {
   pointer-events: none;
   opacity: 0;
@@ -2128,11 +2225,41 @@ a[data-refineui="link"]:focus-visible {
   pointer-events: auto;
 }
 
-/* Command list — fixed height shell so ScrollArea viewport can scroll */
+/*
+ * Command list — shell height is the measured results height (inline), capped by max-height,
+ * so ScrollArea still gets a real height. Height animates as results filter in and out.
+ */
+/* Panel radius per size — matches the SearchField radius of the same size; the scrollbar inset reads it too. */
+[data-refineui="command"] {
+  --refineui-command-list-radius: var(--refineui-radius-rounded-x-large);
+}
+[data-refineui="command"][data-size="sm"] {
+  --refineui-command-list-radius: var(--refineui-radius-rounded-large);
+}
+[data-refineui="command"][data-size="lg"] {
+  --refineui-command-list-radius: var(--refineui-radius-rounded-xx-large);
+}
 [data-refineui="command-list"] {
-  height: min(60vh, var(--refineui-size-foundation-size-3200));
   max-height: min(60vh, var(--refineui-size-foundation-size-3200));
   overflow: hidden;
+  border-radius: var(--refineui-command-list-radius);
+}
+/*
+ * Shorten the default rail at both ends so it clears the panel's rounded corners;
+ * half the radius is enough at the default inline inset. Rail look stays the ScrollArea default.
+ */
+[data-refineui="command-list"]
+  > [data-refineui="scroll-area"]
+  > [data-refineui="scroll-area-scrollbar"][data-orientation="vertical"] {
+  inset-block: calc(var(--refineui-command-list-radius) / 2);
+}
+[data-refineui="command-list"][data-animate="true"] {
+  transition: height var(--refineui-motion-duration-medium) var(--refineui-motion-easing-emphasized);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-refineui="command-list"][data-animate="true"] {
+    transition: none;
+  }
 }
 [data-refineui="command-list"] > [data-refineui="scroll-area"] {
   height: 100%;
@@ -2267,7 +2394,7 @@ a[data-refineui="link"]:focus-visible {
   [data-refineui="menu"],
   [data-refineui="dropdown-menu"],
   [data-refineui="select-menu"],
-  [data-refineui="command"],
+  [data-refineui="command-list"],
   [data-refineui="dialog"] {
     border-color: CanvasText;
   }
@@ -2293,6 +2420,19 @@ a[data-refineui="link"]:focus-visible {
   /* System colors draw the panel box itself; the clipped beak surface would not be forced. */
   [data-refineui="floating-chrome"] {
     display: none;
+  }
+
+  /* Detached layout: the root draws no surface; text follows the system colors (panel border lives on command-list). */
+  [data-refineui="command"] {
+    color: CanvasText;
+  }
+  /* Author fills are dropped in forced colors — mark the selected command with a system outline. */
+  [data-refineui="command-indicator"] {
+    display: none;
+  }
+  [data-refineui="command-item"][data-selected="true"] {
+    outline: 2px solid Highlight;
+    outline-offset: calc(var(--refineui-focus-offset) * -1);
   }
 
   [data-refineui="dialog"] > [role="presentation"],

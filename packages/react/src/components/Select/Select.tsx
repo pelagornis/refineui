@@ -832,7 +832,7 @@ export function SelectGroup({ children, className, ...props }: SelectGroupProps)
 
 export function SelectLabel({ children, className, ...props }: SelectLabelProps) {
     return (
-        <div className={clsx(selectStyles.label, className)} {...props}>
+        <div data-scroll-edge-item className={clsx(selectStyles.label, className)} {...props}>
             {children}
         </div>
     );
@@ -887,6 +887,7 @@ export function SelectItem({
             aria-selected={isSelected}
             aria-disabled={disabled}
             data-refineui="select-item"
+            data-scroll-edge-item
             data-selected={isSelected ? true : undefined}
             data-state={pressed ? "pressed" : isSelected ? "selected" : undefined}
             data-highlighted={isHighlighted ? "" : undefined}

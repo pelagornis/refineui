@@ -13,7 +13,7 @@ export const inputOtpStyles = {
         "inline-flex shrink-0 cursor-text items-center justify-center",
         "border-refineui-thin border-transparent",
         // Soft grey tile (not white) so cells read on light preview / page.
-        "bg-refineui-alias-background-surface-selected",
+        "bg-refineui-alias-background-surface-hover",
         "text-center tabular-nums",
         "text-refineui-alias-foreground-primary",
         "transition-[background-color,border-color]",

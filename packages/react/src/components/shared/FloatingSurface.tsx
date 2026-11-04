@@ -12,7 +12,7 @@ const useIsomorphicLayoutEffect = typeof document !== "undefined" ? useLayoutEff
 
 /** Room around the shape for the floating elevation's offset + blur. */
 const SHADOW_BLEED = parseFloat(spacings.sizeXXXLarge);
-const STROKE = parseFloat(strokeWidths.strokeWidthThin);
+const STROKE = parseFloat(strokeWidths.strokeWidthHairline);
 
 type FloatingSurfaceProps = {
     /** Panel whose border box the surface wraps. */
@@ -30,6 +30,14 @@ type FloatingSurfaceProps = {
 };
 
 type PanelSize = { width: number; height: number };
+
+/** `shape` as an SVG data-URL mask, padded by `bleed` on every side. */
+function svgPathMask(shape: string, width: number, height: number, bleed: number): string {
+    const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width + bleed * 2}" height="${height + bleed * 2}">` +
+        `<path transform="translate(${bleed} ${bleed})" d="${shape}"/></svg>`;
+    return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+}
 
 function usePanelSize(panelRef: RefObject<HTMLElement | null>): PanelSize | null {
     const [size, setSize] = useState<PanelSize | null>(null);
@@ -101,10 +109,9 @@ export function FloatingSurface({
     const outline = buildFloatingOutline({ ...geometry, inset: STROKE / 2 });
     const box = floatingShapeSize(size.width, size.height, side, bh);
 
-    const holeSvg =
-        `<svg xmlns="http://www.w3.org/2000/svg" width="${box.width + SHADOW_BLEED * 2}" height="${box.height + SHADOW_BLEED * 2}">` +
-        `<path transform="translate(${SHADOW_BLEED} ${SHADOW_BLEED})" d="${shape}"/></svg>`;
-    const holeMask = `linear-gradient(#000 0 0), url("data:image/svg+xml,${encodeURIComponent(holeSvg)}")`;
+    const holeMask = `linear-gradient(black 0 0), ${svgPathMask(shape, box.width, box.height, SHADOW_BLEED)}`;
+    // Chrome paints `backdrop-filter` over the full box under `clip-path`; a mask clips the blur too.
+    const surfaceMask = svgPathMask(shape, box.width, box.height, 0);
 
     const rootStyle: CSSProperties = {
         width: box.width,
@@ -123,6 +130,15 @@ export function FloatingSurface({
         maskRepeat: "no-repeat",
         WebkitMaskRepeat: "no-repeat",
     };
+    const surfaceStyle: CSSProperties = {
+        backgroundColor,
+        maskImage: surfaceMask,
+        WebkitMaskImage: surfaceMask,
+        maskSize: "100% 100%",
+        WebkitMaskSize: "100% 100%",
+        maskRepeat: "no-repeat",
+        WebkitMaskRepeat: "no-repeat",
+    };
     const clip = `path("${shape}")`;
 
     return (
@@ -132,7 +148,7 @@ export function FloatingSurface({
                     <div className="absolute inset-0" style={{ clipPath: clip, backgroundColor: borderColor }} />
                 </div>
             </div>
-            <div data-refineui="floating-surface" className="absolute inset-0" style={{ clipPath: clip, backgroundColor }} />
+            <div data-refineui="floating-surface" className="absolute inset-0" style={surfaceStyle} />
             <svg
                 data-refineui="floating-outline"
                 className="absolute inset-0 overflow-visible"

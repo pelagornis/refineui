@@ -17,6 +17,19 @@
       ],
       "defaultValue": "filled",
       "section": "variants"
+    },
+    {
+      "name": "size",
+      "label": "size",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "defaultValue": "sm",
+      "section": "variants"
     }
   ],
   "preview": {

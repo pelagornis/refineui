@@ -60,9 +60,8 @@ import {
 </Command>
 
 <CommandDialog open={isOpen} onOpenChange={setIsOpen}>
-  <Command>
-    {/* Command content */}
-  </Command>
+  <CommandInput placeholder="Search commands..." />
+  <CommandList>{/* 위와 같은 그룹과 항목 */}</CommandList>
 </CommandDialog>
 ```
 
@@ -74,6 +73,7 @@ import {
   <PropSpec
     client:load
     rows={[
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "검색 필드, 결과 패널 반경, 항목 행의 밀도 — SearchField와 같은 단계." },
     { prop: "value", default: "—", type: "string", description: "제어형 검색 쿼리." },
     { prop: "defaultValue", default: "—", type: "string", description: "비제어형 초기 검색 쿼리." },
     { prop: "onValueChange", default: "—", type: "(search: string) => void", description: "검색 변경 시 이벤트 핸들러." },
@@ -96,7 +96,7 @@ Dialog 오버레이 안의 Command.
     rows={[
     { prop: "open", default: "—", type: "boolean", description: "제어형 열림 상태." },
     { prop: "onOpenChange", default: "—", type: "(open: boolean) => void", description: "열림 상태 변경 시 이벤트 핸들러." },
-    { prop: "commandProps", default: "—", type: "CommandProps", description: "내부 Command로 전달되는 props." }
+    { prop: "commandProps", default: "—", type: "CommandProps", description: "내부 Command로 전달되는 props. 여기서 Command 크기 기본값은 \"lg\"이며, CommandDialog 자체의 `size`는 다이얼로그 너비입니다." }
     ]}
   />
 </div>
@@ -106,7 +106,7 @@ Dialog 오버레이 안의 Command.
 
 ### CommandList
 
-스크롤 가능한 리스트 컨테이너(내부적으로 `ScrollArea` 사용).
+결과 수에 맞춰 최대 높이까지 늘어나고, 넘치면 스크롤되는 리스트 컨테이너(내부적으로 `ScrollArea` 사용). 선택 항목으로 하이라이트 하나가 미끄러지듯 이동하고, 검색 결과가 바뀌면 높이가 부드럽게 변합니다. 둘 다 `prefers-reduced-motion`을 따릅니다.
 
 ### CommandEmpty
 

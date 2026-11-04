@@ -8,7 +8,14 @@ import type { DialogProps } from "../Dialog";
 
 export type CommandFilter = (value: string, search: string, keywords?: string[]) => number;
 
+export type CommandSize = "sm" | "md" | "lg";
+
 export interface CommandProps extends HTMLAttributes<HTMLDivElement> {
+    /**
+     * Density of the search field, results panel radius, and item rows — same tiers as SearchField.
+     * @default "md" (`CommandDialog` defaults to `"lg"`)
+     */
+    size?: CommandSize;
     /** Controlled search query */
     value?: string;
     /** Uncontrolled initial search query */

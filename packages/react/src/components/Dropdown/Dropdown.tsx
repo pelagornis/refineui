@@ -388,6 +388,7 @@ export function DropdownLabel({ className, ...props }: HTMLAttributes<HTMLDivEle
         <div
             role="presentation"
             data-refineui="dropdown-menu-label"
+            data-scroll-edge-item
             className={clsx(dropdownStyles.label, className)}
             {...props}
         />
@@ -418,6 +419,7 @@ export function DropdownItem({
             type="button"
             role="menuitem"
             data-refineui="dropdown-item"
+            data-scroll-edge-item
             data-selected={selected || undefined}
             data-state={pressed ? "pressed" : selected ? "selected" : undefined}
             disabled={disabled}
@@ -622,6 +624,7 @@ export function DropdownSubTrigger({
             aria-expanded={open}
             disabled={isDisabled}
             data-refineui="dropdown-item"
+            data-scroll-edge-item
             data-slot="dropdown-menu-sub-trigger"
             tabIndex={-1}
             className={clsx(

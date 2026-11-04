@@ -19,6 +19,7 @@ import {
 import { useComposedRefs } from "@refineui/utilities/react";
 import {
     SCROLL_AREA_THUMB_MIN_PX,
+    SCROLL_EDGE_FALLOFF_RATIO,
     scrollAreaScrollbarOrientationClass,
     scrollAreaStyles,
 } from "./style";
@@ -107,6 +108,20 @@ function isScrollable(metrics: ScrollAxisMetrics): boolean {
 }
 
 /**
+ * 0 when nothing is hidden past an edge, ramping to 1 over the falloff zone — so rows only
+ * blur toward an edge that actually hides content, and the blur fades in as you scroll away.
+ */
+function resolveEdgeFactors(metrics: ScrollAxisMetrics): { top: number; bottom: number } {
+    const zone = metrics.clientSize * SCROLL_EDGE_FALLOFF_RATIO;
+    if (!isScrollable(metrics) || zone <= 0) return { top: 0, bottom: 0 };
+    const hiddenBelow = metrics.scrollSize - metrics.clientSize - metrics.scrollOffset;
+    return {
+        top: Math.min(1, Math.max(0, metrics.scrollOffset / zone)),
+        bottom: Math.min(1, Math.max(0, hiddenBelow / zone)),
+    };
+}
+
+/**
  * Thumb size + offset in px against a full-height (100%) rail.
  * offset maps scrollOffset ∈ [0, maxScroll] → [0, trackSize − thumbSize].
  */
@@ -141,6 +156,8 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
     },
     ref,
 ) {
+    const rootRef = useRef<HTMLDivElement | null>(null);
+    const composedRootRef = useComposedRefs(rootRef, ref);
     const viewportRef = useRef<HTMLDivElement | null>(null);
     const [viewportEpoch, setViewportEpoch] = useState(0);
     const [vertical, setVertical] = useState<ScrollAxisMetrics>(EMPTY_METRICS);
@@ -171,6 +188,13 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
         const next = readMetrics(viewport);
         setVertical(next.vertical);
         setHorizontal(next.horizontal);
+        // Written straight to the root (not state) so every scroll frame updates without a re-render.
+        const root = rootRef.current;
+        if (root) {
+            const edges = resolveEdgeFactors(next.vertical);
+            root.style.setProperty("--refineui-scroll-edge-top", String(edges.top));
+            root.style.setProperty("--refineui-scroll-edge-bottom", String(edges.bottom));
+        }
     }, []);
 
     const markScrolling = useCallback(() => {
@@ -248,7 +272,7 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
     return (
         <ScrollAreaContext.Provider value={ctx}>
             <div
-                ref={ref}
+                ref={composedRootRef}
                 data-refineui="scroll-area"
                 data-type={type}
                 data-scrolling={scrolling || undefined}

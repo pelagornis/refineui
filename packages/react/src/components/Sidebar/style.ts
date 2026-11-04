@@ -20,7 +20,9 @@ export const sidebarStyles = {
         componentTextClass(componentTypographyTokens.sidebar.brand),
         "m-0 flex min-w-0 items-center gap-refineui-size-small text-refineui-alias-foreground-primary",
     ),
-    content: "flex min-h-0 flex-1 flex-col overflow-y-auto px-refineui-size-medium py-refineui-size-medium",
+    /** Scrolls through a built-in ScrollArea; padding sits inside the viewport so rows scroll under the edges. */
+    content: "flex min-h-0 flex-1 flex-col",
+    contentViewport: "box-border px-refineui-size-medium py-refineui-size-medium",
     nav: "flex min-h-0 flex-col gap-refineui-size-x-large",
     group: "flex min-w-0 flex-col gap-refineui-size-xx-small",
     groupLabel: clsx(

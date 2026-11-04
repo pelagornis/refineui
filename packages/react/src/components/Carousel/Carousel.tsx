@@ -87,11 +87,22 @@ export function Carousel({
         [count, isControlled, onIndexChange],
     );
 
+    /** Move the track with transitions off, then re-enable them once the jump has painted. */
+    const snapTrackTo = useCallback((next: number) => {
+        setInstant(true);
+        setTrackIndex(next);
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => setInstant(false));
+        });
+    }, []);
+
+    // Slides register after the first render, and loop clones shift every index by one;
+    // snap so the initial alignment does not slide in from the leading clone.
     useLayoutEffect(() => {
         if (count <= 0) return;
         const logical = clampIndex(index, count);
         if (logical !== index) commitLogical(logical);
-        setTrackIndex(loopActive ? logical + 1 : logical);
+        snapTrackTo(loopActive ? logical + 1 : logical);
     }, [count, loopActive]); // eslint-disable-line react-hooks/exhaustive-deps -- init / count / loop only
 
     useEffect(() => {
@@ -153,20 +164,9 @@ export function Carousel({
 
     const onTrackSettled = useCallback(() => {
         if (!loopActive) return;
-        if (trackIndex === 0) {
-            setInstant(true);
-            setTrackIndex(count);
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => setInstant(false));
-            });
-        } else if (trackIndex === count + 1) {
-            setInstant(true);
-            setTrackIndex(1);
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => setInstant(false));
-            });
-        }
-    }, [count, loopActive, trackIndex]);
+        if (trackIndex === 0) snapTrackTo(count);
+        else if (trackIndex === count + 1) snapTrackTo(1);
+    }, [count, loopActive, snapTrackTo, trackIndex]);
 
     const ctx = useMemo(
         () => ({
@@ -454,6 +454,7 @@ export function CarouselIndicators({ className, ...props }: CarouselIndicatorsPr
     const { count, index, scrollTo } = useCarouselContext("CarouselIndicators");
     const trackRef = useRef<HTMLDivElement | null>(null);
     const [thumb, setThumb] = useState({ width: 0, x: 0, ready: false });
+    const [animate, setAnimate] = useState(false);
 
     const updateThumb = useCallback(() => {
         const el = trackRef.current;
@@ -474,6 +475,23 @@ export function CarouselIndicators({ className, ...props }: CarouselIndicatorsPr
     useLayoutEffect(() => {
         updateThumb();
     }, [updateThumb]);
+
+    // Enable transitions only after the first committed paint with geometry (Segmented Control contract).
+    useEffect(() => {
+        if (!thumb.ready) {
+            setAnimate(false);
+            return;
+        }
+        if (animate) return;
+        let raf2 = 0;
+        const raf1 = requestAnimationFrame(() => {
+            raf2 = requestAnimationFrame(() => setAnimate(true));
+        });
+        return () => {
+            cancelAnimationFrame(raf1);
+            cancelAnimationFrame(raf2);
+        };
+    }, [thumb.ready, animate]);
 
     useEffect(() => {
         const el = trackRef.current;
@@ -502,6 +520,7 @@ export function CarouselIndicators({ className, ...props }: CarouselIndicatorsPr
             <span
                 data-refineui="carousel-indicator-thumb"
                 data-ready={thumb.ready ? "true" : undefined}
+                data-animate={animate ? "true" : undefined}
                 aria-hidden
                 className={carouselStyles.indicatorThumb}
                 style={thumbStyle}

@@ -77,7 +77,12 @@ export const componentTypographyTokens = {
     /** Command palette — same scale as Menu (list / section / shortcut). */
     command: {
         group: role("captionLg"),
-        item: role("bodyMd"),
+        /** Row text follows the Command size, like Tree rows. */
+        item: {
+            sm: role("bodySm"),
+            md: role("bodyMd"),
+            lg: role("bodyLg"),
+        },
         empty: role("bodyXs"),
         shortcut: role("bodyXs"),
         input: role("bodyMd"),

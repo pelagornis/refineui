@@ -40,7 +40,11 @@ import { SearchField, SearchFieldIcon, SearchFieldInput, SearchFieldClear } from
 />
 
 <SearchField appearance="plain" defaultValue="initial query" />
+
+<SearchField size="lg" aria-label="Search everything" />
 ```
+
+Sizes match `Input` (`sm` · `md` · `lg`). Inside `Field`, SearchField inherits the field size when `size` is omitted.
 
 ## API Reference
 
@@ -54,6 +58,7 @@ import { SearchField, SearchFieldIcon, SearchFieldInput, SearchFieldClear } from
     { prop: "defaultValue", default: "—", type: "string", description: "Uncontrolled initial query." },
     { prop: "onValueChange", default: "—", type: "(value: string) => void", description: "Event handler when query changes." },
     { prop: "appearance", default: "\"filled\"", type: "\"filled\" | \"plain\"", description: "Visual style: filled (standalone) or plain (for composed surfaces)." },
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "Control size — same tiers as Input. Inherits from Field when omitted; plain only takes the size's typography and icon sizes." },
     { prop: "disabled", default: "false", type: "boolean", description: "Disables interaction." },
     { prop: "aria-label", default: "—", type: "string", description: "Accessible name for the search input." }
     ]}

@@ -60,9 +60,8 @@ import {
 </Command>
 
 <CommandDialog open={isOpen} onOpenChange={setIsOpen}>
-  <Command>
-    {/* Command content */}
-  </Command>
+  <CommandInput placeholder="Search commands..." />
+  <CommandList>{/* Same groups and items as above */}</CommandList>
 </CommandDialog>
 ```
 
@@ -74,6 +73,7 @@ import {
   <PropSpec
     client:load
     rows={[
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "Density of the search field, results panel radius, and item rows — same tiers as SearchField." },
     { prop: "value", default: "—", type: "string", description: "Controlled search query." },
     { prop: "defaultValue", default: "—", type: "string", description: "Uncontrolled initial search query." },
     { prop: "onValueChange", default: "—", type: "(search: string) => void", description: "Event handler when search changes." },
@@ -96,7 +96,7 @@ Command in a Dialog overlay.
     rows={[
     { prop: "open", default: "—", type: "boolean", description: "Controlled open state." },
     { prop: "onOpenChange", default: "—", type: "(open: boolean) => void", description: "Event handler when open state changes." },
-    { prop: "commandProps", default: "—", type: "CommandProps", description: "Props forwarded to inner Command." }
+    { prop: "commandProps", default: "—", type: "CommandProps", description: "Props forwarded to inner Command. The Command size defaults to \"lg\" here; `size` on CommandDialog itself sets the dialog width." }
     ]}
   />
 </div>
@@ -106,7 +106,7 @@ Search input with optional `startIcon`.
 
 ### CommandList
 
-Scrollable list container (uses `ScrollArea` internally).
+List container that grows with its results up to a max height, then scrolls (uses `ScrollArea` internally). A single highlight slides to the selected item, and the height animates as results filter; both respect `prefers-reduced-motion`.
 
 ### CommandEmpty
 

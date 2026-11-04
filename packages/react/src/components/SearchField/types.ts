@@ -18,6 +18,12 @@ export interface SearchFieldProps extends Omit<HTMLAttributes<HTMLDivElement>, "
      * @default "filled"
      */
     appearance?: "filled" | "plain";
+    /**
+     * Control size — same tiers as Input. Inherits from `Field` when omitted.
+     * `plain` only takes the size's typography and icon sizes.
+     * @default "md"
+     */
+    size?: "sm" | "md" | "lg";
     /** Forwarded to the inner input. */
     id?: string;
     /** Accessible name for the search input. */

@@ -25,8 +25,8 @@ export const carouselStyles = {
     ),
     indicatorThumb: clsx(
         "pointer-events-none absolute top-refineui-size-xxx-small bottom-refineui-size-xxx-small start-refineui-size-xxx-small z-0",
+        /* Motion lives in refineui.css, gated by `data-animate`. */
         "rounded-refineui-circle bg-refineui-alias-background-brand shadow-refineui-2",
-        "transition-transform duration-[var(--refineui-motion-duration-medium)] ease-[var(--refineui-motion-easing-emphasized)]",
     ),
     indicatorHitRow: "relative z-[1] flex h-full w-full",
     indicatorHit: "h-full min-w-0 flex-1 cursor-pointer border-none bg-transparent p-0 outline-none",

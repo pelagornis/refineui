@@ -8,6 +8,7 @@
     "empty": "command-empty",
     "group": "command-group",
     "group_heading": "command-group-heading",
+    "indicator": "command-indicator",
     "input": "command-input",
     "item": "command-item",
     "list": "command-list",
@@ -16,6 +17,13 @@
   },
   "attributes": {
     "data-refineui": "command"
+  },
+  "variants": {
+    "size": [
+      "sm",
+      "md",
+      "lg"
+    ]
   },
   "states": {
     "pseudo": [

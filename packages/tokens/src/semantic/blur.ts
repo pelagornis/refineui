@@ -18,6 +18,8 @@ export const semanticBlurFoundationKeys = {
     overlayScrim: "blur2",
     /** Frosted glass surfaces (menus, toast plate, …) */
     surfaceFrost: "blur16",
+    /** Rows crossing a ScrollArea edge (`data-scroll-edge-item`) — a light softening, not a frost */
+    scrollEdge: "blur2",
 } as const satisfies Record<keyof SemanticBlurTokens, FoundationBlurName>;
 
 export type SemanticBlurName = keyof typeof semanticBlurFoundationKeys;
@@ -32,4 +34,5 @@ function fromFoundation<K extends SemanticBlurName>(
 export const semanticBlur = {
     overlayScrim: fromFoundation("overlayScrim"),
     surfaceFrost: fromFoundation("surfaceFrost"),
+    scrollEdge: fromFoundation("scrollEdge"),
 } as const satisfies SemanticBlurTokens;

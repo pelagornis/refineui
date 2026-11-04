@@ -23,4 +23,5 @@ export type {
     CommandItemProps,
     CommandShortcutProps,
     CommandFilter,
+    CommandSize,
 } from "./types";

@@ -1,23 +1,29 @@
 import { iconSizes } from "@refineui/tokens";
-import { formControlTypoClass } from "../../formControlSizes";
+import { formControlRowShellSizeClass, formControlTypoClass, type FormControlSize } from "../../formControlSizes";
 
-export const searchFieldLeadingIconSize = iconSizes.medium;
-export const searchFieldClearIconSize = iconSizes.small;
+export const searchFieldLeadingIconSize: Record<FormControlSize, number> = {
+    sm: iconSizes.small,
+    md: iconSizes.medium,
+    lg: iconSizes.large,
+};
+
+export const searchFieldClearIconSize: Record<FormControlSize, number> = {
+    sm: iconSizes.xsmall,
+    md: iconSizes.small,
+    lg: iconSizes.small,
+};
 
 export const searchFieldStyles = {
     root: [
         "box-border flex w-full min-w-0 items-center gap-refineui-size-x-small overflow-hidden outline-none",
-        formControlTypoClass.md,
         "transition-[background-color,border-color]",
         "duration-[var(--refineui-motion-duration-fast)]",
         "ease-[var(--refineui-motion-easing-emphasized)]",
     ].join(" "),
     rootFilled: [
-        "h-refineui-control-height-md min-h-refineui-control-height-md",
-        "rounded-refineui-x-large px-refineui-size-large",
         "border-refineui-thin border-transparent",
         /** Same soft plate as InputOTP slots */
-        "bg-refineui-alias-background-surface-selected",
+        "bg-refineui-alias-background-surface-hover",
     ].join(" "),
     rootPlain: [
         "h-auto min-h-0 rounded-none border-none bg-transparent px-0 py-0",
@@ -33,3 +39,8 @@ export const searchFieldStyles = {
         "inline-flex shrink-0 cursor-pointer items-center justify-center border-none bg-transparent p-0 leading-none text-refineui-alias-foreground-tertiary",
     clearDisabled: "cursor-not-allowed text-refineui-alias-foreground-disabled",
 } as const;
+
+/** Filled shell per size — height, radius, inline padding. */
+export const searchFieldFilledSizeClass = formControlRowShellSizeClass;
+
+export const searchFieldTypoClass = formControlTypoClass;

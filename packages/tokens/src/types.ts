@@ -320,6 +320,7 @@ export type FoundationBlurName = keyof FoundationBlurTokens;
 export type SemanticBlurTokens = {
     overlayScrim: string;
     surfaceFrost: string;
+    scrollEdge: string;
 };
 
 /**

@@ -50,7 +50,22 @@ import { ScrollArea, ScrollAreaViewport, ScrollAreaScrollbar, ScrollAreaThumb } 
     <ScrollAreaThumb />
   </ScrollAreaScrollbar>
 </ScrollArea>
+
+<ScrollArea className="h-80">
+  <ScrollAreaViewport>
+    {rows.map((row) => (
+      <div key={row.id} data-scroll-edge-item>{row.label}</div>
+    ))}
+  </ScrollAreaViewport>
+  <ScrollAreaScrollbar orientation="vertical">
+    <ScrollAreaThumb />
+  </ScrollAreaScrollbar>
+</ScrollArea>
 ```
+
+### Edge effect
+
+The edge effect is always on. Rows marked `data-scroll-edge-item` soften like a picker wheel's edge: rows blur progressively across the outer quarter of the scrollport on each side (`scrollEdge` blur), while size and opacity never change. It only applies toward an edge that actually hides content — a list that does not scroll, or the edge you are parked at, stays untouched, and the blur fades in as you scroll away. Unmarked content is never affected. It is scroll-driven (`animation-timeline: view()`), so it follows the scroll exactly; where that is unsupported, or with `prefers-reduced-motion`, rows simply stay as they are. Elements between the viewport and the rows must not be scroll containers — use `overflow: clip` instead of `overflow: hidden`. Command, Select, Dropdown, and Sidebar mark their rows.
 
 ## API Reference
 

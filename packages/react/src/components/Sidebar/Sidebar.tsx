@@ -1,4 +1,6 @@
 import { clsx } from "clsx";
+import { createContext, useContext } from "react";
+import { ScrollAreaRegion } from "../ScrollArea/ScrollAreaRegion";
 import { sidebarStyles } from "./style";
 import type {
     SidebarBrandProps,
@@ -11,6 +13,9 @@ import type {
     SidebarNavProps,
     SidebarProps,
 } from "./types";
+
+/** Rows inside `SidebarContent` sit in its ScrollArea and take the edge blur; footer rows do not. */
+const SidebarScrollContext = createContext(false);
 
 /** App sidebar landmark — token composition (no Web Kit COMPONENT_SET). */
 export function Sidebar({ className, ...props }: SidebarProps) {
@@ -43,13 +48,17 @@ export function SidebarBrand({ className, ...props }: SidebarBrandProps) {
     );
 }
 
-export function SidebarContent({ className, ...props }: SidebarContentProps) {
+export function SidebarContent({ className, children, ...props }: SidebarContentProps) {
     return (
         <div
             data-refineui="sidebar-content"
             className={clsx(sidebarStyles.content, className)}
             {...props}
-        />
+        >
+            <ScrollAreaRegion type="hover" viewportClassName={sidebarStyles.contentViewport}>
+                <SidebarScrollContext.Provider value>{children}</SidebarScrollContext.Provider>
+            </ScrollAreaRegion>
+        </div>
     );
 }
 
@@ -75,9 +84,12 @@ export function SidebarGroup({ className, ...props }: SidebarGroupProps) {
 }
 
 export function SidebarGroupLabel({ className, ...props }: SidebarGroupLabelProps) {
+    const inScroll = useContext(SidebarScrollContext);
+
     return (
         <p
             data-refineui="sidebar-group-label"
+            data-scroll-edge-item={inScroll || undefined}
             className={clsx(sidebarStyles.groupLabel, className)}
             {...props}
         />
@@ -91,10 +103,12 @@ export function SidebarLink({
     ...props
 }: SidebarLinkProps) {
     const disabled = ariaDisabled === true || ariaDisabled === "true";
+    const inScroll = useContext(SidebarScrollContext);
 
     return (
         <a
             data-refineui="sidebar-link"
+            data-scroll-edge-item={inScroll || undefined}
             data-active={active || undefined}
             aria-current={active ? "page" : undefined}
             aria-disabled={disabled || undefined}

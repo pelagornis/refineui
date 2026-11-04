@@ -50,25 +50,32 @@ const tags = [
   "Tooltip",
 ];
 
+function TagList() {
+  return (
+    <Stack as="ul" className="m-0 list-none p-0">
+      {tags.map((name) => (
+        <Box
+          key={name}
+          as="li"
+          paddingX="sizeLarge"
+          paddingY="sizeMedium"
+          data-scroll-edge-item
+          className="border-b-refineui-thin border-refineui-alias-border-default"
+        >
+          <Text variant="bodySm">{name}</Text>
+        </Box>
+      ))}
+    </Stack>
+  );
+}
+
 export default function ScrollAreaDemo() {
   return (
     <Looks>
       <Look align="stretch">
         <ScrollArea type="hover" className="h-refineui-foundation-size-2560 w-full">
           <ScrollAreaViewport>
-            <Stack as="ul" className="m-0 list-none p-0">
-              {tags.map((name) => (
-                <Box
-                  key={name}
-                  as="li"
-                  paddingX="sizeLarge"
-                  paddingY="sizeMedium"
-                  className="border-b-refineui-thin border-refineui-alias-border-default"
-                >
-                  <Text variant="bodySm">{name}</Text>
-                </Box>
-              ))}
-            </Stack>
+            <TagList />
           </ScrollAreaViewport>
           <ScrollAreaScrollbar orientation="vertical">
             <ScrollAreaThumb />

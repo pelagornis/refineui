@@ -40,7 +40,11 @@ import { SearchField, SearchFieldIcon, SearchFieldInput, SearchFieldClear } from
 />
 
 <SearchField appearance="plain" defaultValue="initial query" />
+
+<SearchField size="lg" aria-label="Search everything" />
 ```
+
+크기는 `Input`과 같습니다(`sm` · `md` · `lg`). `Field` 안에서 `size`를 생략하면 Field 크기를 따릅니다.
 
 ## API 레퍼런스
 
@@ -54,6 +58,7 @@ import { SearchField, SearchFieldIcon, SearchFieldInput, SearchFieldClear } from
     { prop: "defaultValue", default: "—", type: "string", description: "비제어형 초기 쿼리." },
     { prop: "onValueChange", default: "—", type: "(value: string) => void", description: "쿼리 변경 시 이벤트 핸들러." },
     { prop: "appearance", default: "\"filled\"", type: "\"filled\" | \"plain\"", description: "시각 스타일: filled(단독) 또는 plain(조합 표면용)." },
+    { prop: "size", default: "\"md\"", type: "\"sm\" | \"md\" | \"lg\"", description: "컨트롤 크기 — Input과 같은 단계. 생략하면 Field 크기를 따르고, plain은 크기별 글자·아이콘 크기만 적용됩니다." },
     { prop: "disabled", default: "false", type: "boolean", description: "인터랙션을 비활성화합니다." },
     { prop: "aria-label", default: "—", type: "string", description: "검색 입력의 접근 가능한 이름." }
     ]}

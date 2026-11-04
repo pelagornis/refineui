@@ -8,7 +8,7 @@ export const popoverStyles = {
     panelWrap: "relative inline-block min-w-refineui-popover-panel-width",
     /** Fill, stroke, and shadow come from `FloatingSurface`; the transparent border keeps the box size. */
     panel:
-        "relative z-0 box-border min-w-refineui-popover-panel-width rounded-refineui-xx-large border-refineui-thin border-transparent outline-none",
+        "relative z-0 box-border min-w-refineui-popover-panel-width rounded-refineui-xx-large border-refineui-hairline border-transparent outline-none",
 } as const;
 
 export function popoverFloatingClasses(placement: PopoverPlacement, align: PopoverAlign): string {

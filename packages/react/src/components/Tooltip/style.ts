@@ -20,7 +20,7 @@ export const tooltipStyles = {
     /** Fill, stroke, and shadow come from `FloatingSurface`; the transparent border keeps the box size. */
     panel: clsx(
         componentTextClass(componentTypographyTokens.tooltip),
-        "relative z-0 box-border max-w-refineui-tooltip-max-width whitespace-nowrap rounded-refineui-medium border-refineui-thin border-transparent px-refineui-size-medium py-refineui-size-small",
+        "relative z-0 box-border max-w-refineui-tooltip-max-width whitespace-nowrap rounded-refineui-medium border-refineui-hairline border-transparent px-refineui-size-medium py-refineui-size-small",
     ),
 } as const;
 

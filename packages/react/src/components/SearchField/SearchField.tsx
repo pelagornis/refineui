@@ -13,7 +13,15 @@ import {
     type PointerEvent,
 } from "react";
 import { WebIcon } from "../../WebIcon";
-import { searchFieldClearIconSize, searchFieldLeadingIconSize, searchFieldStyles } from "./style";
+import type { FormControlSize } from "../../formControlSizes";
+import { useOptionalFieldSize } from "../Field/context";
+import {
+    searchFieldClearIconSize,
+    searchFieldFilledSizeClass,
+    searchFieldLeadingIconSize,
+    searchFieldStyles,
+    searchFieldTypoClass,
+} from "./style";
 import type {
     SearchFieldClearProps,
     SearchFieldIconProps,
@@ -26,6 +34,7 @@ type SearchFieldContextValue = {
     setValue: (next: string) => void;
     clear: () => void;
     disabled: boolean;
+    size: FormControlSize;
     inputId: string;
     inputLabel: string | undefined;
     inputRef: MutableRefObject<HTMLInputElement | null>;
@@ -65,6 +74,7 @@ export function SearchField({
     onValueChange,
     disabled = false,
     appearance = "filled",
+    size: sizeProp,
     className,
     children,
     id,
@@ -72,6 +82,8 @@ export function SearchField({
     "aria-label": ariaLabel = "Search",
     ...props
 }: SearchFieldProps) {
+    const fieldSize = useOptionalFieldSize();
+    const size = sizeProp ?? fieldSize ?? "md";
     const [query, setQuery] = useControllableString(value, defaultValue, onValueChange);
     const inputRef = useRef<HTMLInputElement>(null);
     const reactId = useId();
@@ -88,11 +100,12 @@ export function SearchField({
             setValue: setQuery,
             clear,
             disabled,
+            size,
             inputId,
             inputLabel: ariaLabel,
             inputRef,
         }),
-        [ariaLabel, clear, disabled, inputId, query, setQuery],
+        [ariaLabel, clear, disabled, size, inputId, query, setQuery],
     );
 
     const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
@@ -110,10 +123,14 @@ export function SearchField({
             <div
                 data-refineui="search-field"
                 data-appearance={appearance}
+                data-size={size}
                 data-disabled={disabled || undefined}
                 className={clsx(
                     searchFieldStyles.root,
-                    appearance === "plain" ? searchFieldStyles.rootPlain : searchFieldStyles.rootFilled,
+                    searchFieldTypoClass[size],
+                    appearance === "plain"
+                        ? searchFieldStyles.rootPlain
+                        : [searchFieldStyles.rootFilled, searchFieldFilledSizeClass[size]],
                     disabled &&
                         (appearance === "plain"
                             ? searchFieldStyles.rootPlainDisabled
@@ -130,7 +147,7 @@ export function SearchField({
 }
 
 export function SearchFieldIcon({ children, className, ...props }: SearchFieldIconProps) {
-    const { disabled } = useSearchFieldContext("SearchFieldIcon");
+    const { disabled, size } = useSearchFieldContext("SearchFieldIcon");
 
     return (
         <span
@@ -146,7 +163,7 @@ export function SearchFieldIcon({ children, className, ...props }: SearchFieldIc
             {children ?? (
                 <WebIcon
                     name="search"
-                    size={searchFieldLeadingIconSize}
+                    size={searchFieldLeadingIconSize[size]}
                     color="currentColor"
                     aria-hidden
                 />
@@ -217,7 +234,7 @@ export function SearchFieldClear({
     "aria-label": ariaLabel = "Clear search",
     ...props
 }: SearchFieldClearProps) {
-    const { value, clear, disabled } = useSearchFieldContext("SearchFieldClear");
+    const { value, clear, disabled, size } = useSearchFieldContext("SearchFieldClear");
     const isDisabled = disabledProp ?? disabled;
 
     if (value.length === 0) return null;
@@ -243,7 +260,7 @@ export function SearchFieldClear({
             {children ?? (
                 <WebIcon
                     name="dismiss"
-                    size={searchFieldClearIconSize}
+                    size={searchFieldClearIconSize[size]}
                     color="currentColor"
                     iconStyle="filled"
                     aria-hidden

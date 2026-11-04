@@ -12,17 +12,18 @@ import {
     useMemo,
     useRef,
     useState,
+    type CSSProperties,
     type KeyboardEvent as ReactKeyboardEvent,
     type ReactElement,
     type ReactNode,
     type RefObject,
 } from "react";
-import { iconSizes } from "@refineui/tokens";
 import { Dialog, DialogContent } from "../Dialog";
 import { ScrollAreaRegion } from "../ScrollArea/ScrollAreaRegion";
 import { SearchField, SearchFieldClear, SearchFieldIcon, SearchFieldInput } from "../SearchField";
-import { commandStyles } from "./style";
+import { commandItemIconSize, commandItemSizeClass, commandStyles } from "./style";
 import type {
+    CommandSize,
     CommandDialogProps,
     CommandEmptyProps,
     CommandFilter,
@@ -57,6 +58,7 @@ type ItemRegistration = {
 };
 
 type CommandContextValue = {
+    size: CommandSize;
     search: string;
     setSearch: (next: string) => void;
     shouldFilter: boolean;
@@ -111,6 +113,7 @@ function useControllableString(
 export function Command({
     children,
     className,
+    size = "md",
     value,
     defaultValue,
     onValueChange,
@@ -250,6 +253,7 @@ export function Command({
 
     const ctx = useMemo<CommandContextValue>(
         () => ({
+            size,
             search,
             setSearch,
             shouldFilter,
@@ -267,6 +271,7 @@ export function Command({
             groupHasVisibleItems,
         }),
         [
+            size,
             search,
             setSearch,
             shouldFilter,
@@ -289,6 +294,7 @@ export function Command({
         <CommandContext.Provider value={ctx}>
             <div
                 data-refineui="command"
+                data-size={size}
                 role="presentation"
                 className={clsx(commandStyles.root, className)}
                 onKeyDown={(event: ReactKeyboardEvent<HTMLDivElement>) => {
@@ -349,6 +355,7 @@ export function CommandDialog({
                 <div className={commandStyles.dialogBody}>
                     <Command
                         {...commandProps}
+                        size={commandProps?.size ?? "lg"}
                         className={clsx(commandStyles.rootInDialog, commandProps?.className)}
                     >
                         {children}
@@ -363,12 +370,13 @@ export const CommandInput = forwardRef<HTMLInputElement, CommandInputProps>(func
     { className, startIcon, placeholder = "Type a command or search…", disabled, onKeyDown, ...props },
     ref,
 ) {
-    const { search, setSearch, listId, label, selectedValue } = useCommandContext("CommandInput");
+    const { size, search, setSearch, listId, label, selectedValue } = useCommandContext("CommandInput");
     const activeDescendantId = selectedValue ? `${listId}-item-${cssEscape(selectedValue)}` : undefined;
 
     return (
         <div data-refineui="command-input" className={commandStyles.inputWrap}>
             <SearchField
+                size={size}
                 value={search}
                 onValueChange={setSearch}
                 disabled={disabled}
@@ -395,13 +403,107 @@ export const CommandInput = forwardRef<HTMLInputElement, CommandInputProps>(func
     );
 });
 
+type IndicatorBox = { top: number; left: number; width: number; height: number; ready: boolean };
+
+const HIDDEN_INDICATOR: IndicatorBox = { top: 0, left: 0, width: 0, height: 0, ready: false };
+const SELECTED_ITEM_SELECTOR = '[data-refineui="command-item"][data-selected="true"]';
+
+function sameIndicatorBox(a: IndicatorBox, b: IndicatorBox): boolean {
+    return a.ready === b.ready && a.top === b.top && a.left === b.left && a.width === b.width && a.height === b.height;
+}
+
 export function CommandList({ className, children, ...props }: CommandListProps) {
-    const { listId } = useCommandContext("CommandList");
+    const { listId, selectedValue, search, visibleCount } = useCommandContext("CommandList");
+    const shellRef = useRef<HTMLDivElement>(null);
+    const innerRef = useRef<HTMLDivElement>(null);
+    const [contentHeight, setContentHeight] = useState<number | null>(null);
+    const [indicator, setIndicator] = useState<IndicatorBox>(HIDDEN_INDICATOR);
+    const [animate, setAnimate] = useState(false);
+    const [snap, setSnap] = useState(false);
+    const lastSearchRef = useRef(search);
+
+    const measure = useCallback(() => {
+        const inner = innerRef.current;
+        const shell = shellRef.current;
+        if (!inner || !shell) return;
+        // The shell is `box-border` and draws the panel border, so its height must include it.
+        const shellStyle = getComputedStyle(shell);
+        const height =
+            inner.offsetHeight + parseFloat(shellStyle.borderTopWidth) + parseFloat(shellStyle.borderBottomWidth);
+        setContentHeight((prev) => (prev === height ? prev : height));
+        const selected = inner.querySelector<HTMLElement>(SELECTED_ITEM_SELECTOR);
+        setIndicator((prev) => {
+            // Keep the last geometry while hidden so the highlight fades out in place.
+            const next = selected
+                ? {
+                      top: selected.offsetTop,
+                      left: selected.offsetLeft,
+                      width: selected.offsetWidth,
+                      height: selected.offsetHeight,
+                      ready: true,
+                  }
+                : { ...prev, ready: false };
+            return sameIndicatorBox(prev, next) ? prev : next;
+        });
+    }, []);
+
+    useIsomorphicLayoutEffect(() => {
+        // Filtering swaps the rows instantly; a sliding plate would trail behind them, so jump instead.
+        if (lastSearchRef.current !== search) {
+            lastSearchRef.current = search;
+            setSnap(true);
+        }
+        measure();
+    }, [measure, selectedValue, search, visibleCount, children]);
+
+    useEffect(() => {
+        if (!snap) return;
+        let raf2 = 0;
+        const raf1 = requestAnimationFrame(() => {
+            raf2 = requestAnimationFrame(() => setSnap(false));
+        });
+        return () => {
+            cancelAnimationFrame(raf1);
+            cancelAnimationFrame(raf2);
+        };
+    }, [snap]);
+
+    useEffect(() => {
+        const inner = innerRef.current;
+        if (!inner || typeof ResizeObserver === "undefined") return;
+        const observer = new ResizeObserver(measure);
+        observer.observe(inner);
+        return () => observer.disconnect();
+    }, [measure]);
+
+    // Enable transitions only after the first committed paint with geometry (Segmented Control contract).
+    const measured = contentHeight !== null;
+    useEffect(() => {
+        if (!measured || animate) return;
+        let raf2 = 0;
+        const raf1 = requestAnimationFrame(() => {
+            raf2 = requestAnimationFrame(() => setAnimate(true));
+        });
+        return () => {
+            cancelAnimationFrame(raf1);
+            cancelAnimationFrame(raf2);
+        };
+    }, [measured, animate]);
+
+    const indicatorStyle: CSSProperties = {
+        top: indicator.top,
+        left: indicator.left,
+        width: indicator.width,
+        height: indicator.height,
+    };
+
     return (
         <div
+            ref={shellRef}
             data-refineui="command-list"
+            data-animate={animate ? "true" : undefined}
             className={commandStyles.listShell}
-            style={commandStyles.listShellHeight}
+            style={{ ...commandStyles.listShellMaxHeight, height: contentHeight ?? undefined }}
         >
             <ScrollAreaRegion
                 type="hover"
@@ -409,7 +511,16 @@ export function CommandList({ className, children, ...props }: CommandListProps)
                 viewportClassName={commandStyles.listViewport}
                 {...props}
             >
-                <div id={listId} role="listbox" className={commandStyles.listInner}>
+                <div ref={innerRef} id={listId} role="listbox" className={commandStyles.listInner}>
+                    <div
+                        data-refineui="command-indicator"
+                        data-ready={indicator.ready ? "true" : undefined}
+                        data-animate={animate && !snap ? "true" : undefined}
+                        data-scroll-edge-item
+                        aria-hidden
+                        className={commandStyles.indicator}
+                        style={indicatorStyle}
+                    />
                     {children}
                 </div>
             </ScrollAreaRegion>
@@ -462,6 +573,7 @@ export function CommandGroupHeading({ className, children, ...props }: CommandGr
     return (
         <div
             data-refineui="command-group-heading"
+            data-scroll-edge-item
             className={clsx(commandStyles.groupHeading, className)}
             {...props}
         >
@@ -565,6 +677,7 @@ export const CommandItem = forwardRef<HTMLButtonElement, CommandItemProps>(funct
     forwardedRef,
 ) {
     const {
+        size,
         selectedValue,
         setSelectedValue,
         listId,
@@ -572,6 +685,7 @@ export const CommandItem = forwardRef<HTMLButtonElement, CommandItemProps>(funct
         isItemVisible,
         selectById,
     } = useCommandContext("CommandItem");
+    const iconSize = commandItemIconSize[size];
     const group = useContext(CommandGroupContext);
     const itemId = useId();
     const nodeRef = useRef<HTMLButtonElement | null>(null);
@@ -619,11 +733,13 @@ export const CommandItem = forwardRef<HTMLButtonElement, CommandItemProps>(funct
             aria-selected={isSelected}
             disabled={disabled}
             data-refineui="command-item"
+            data-scroll-edge-item
             data-state={disabled ? "disabled" : isSelected ? "active" : "default"}
             data-selected={isSelected || undefined}
             data-disabled={disabled || undefined}
             className={clsx(
                 commandStyles.itemBase,
+                commandItemSizeClass[size],
                 disabled ? commandStyles.itemDisabled : commandStyles.itemEnabled,
                 className,
             )}
@@ -642,9 +758,9 @@ export const CommandItem = forwardRef<HTMLButtonElement, CommandItemProps>(funct
                 <span
                     className={commandStyles.iconWrap}
                     style={{
-                        width: iconSizes.small,
-                        minWidth: iconSizes.small,
-                        height: iconSizes.small,
+                        width: iconSize,
+                        minWidth: iconSize,
+                        height: iconSize,
                     }}
                 >
                     {startIcon}
@@ -665,9 +781,9 @@ export const CommandItem = forwardRef<HTMLButtonElement, CommandItemProps>(funct
                         <span
                             className={commandStyles.iconWrap}
                             style={{
-                                width: iconSizes.small,
-                                minWidth: iconSizes.small,
-                                height: iconSizes.small,
+                                width: iconSize,
+                                minWidth: iconSize,
+                                height: iconSize,
                             }}
                         >
                             {endIcon}

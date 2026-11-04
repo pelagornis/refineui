@@ -16,6 +16,11 @@
     "appearance": [
       "filled",
       "plain"
+    ],
+    "size": [
+      "sm",
+      "md",
+      "lg"
     ]
   },
   "states": {

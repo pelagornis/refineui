@@ -1,4 +1,4 @@
-/** Shared sm / md / lg tiers for Input, SpinButton — keep in sync. */
+/** Shared sm / md / lg tiers for Input, SpinButton, SearchField — keep in sync. */
 import { componentTypographyTokens, type ControlSize } from "./tokens/componentTypographyTokens";
 import { sizedComponentTextClass } from "./typography";
 
@@ -22,10 +22,22 @@ const radius: Record<FormControlSize, string> = {
     lg: "rounded-refineui-xx-large",
 };
 
+const paddingInline: Record<FormControlSize, string> = {
+    sm: "px-refineui-size-medium",
+    md: "px-refineui-size-large",
+    lg: "px-refineui-size-x-large",
+};
+
+const paddingBlock: Record<FormControlSize, string> = {
+    sm: "py-refineui-size-x-small",
+    md: "py-refineui-size-medium",
+    lg: "py-refineui-size-large",
+};
+
 const padding: Record<FormControlSize, string> = {
-    sm: "px-refineui-size-medium py-refineui-size-x-small",
-    md: "px-refineui-size-large py-refineui-size-medium",
-    lg: "px-refineui-size-x-large py-refineui-size-large",
+    sm: [paddingInline.sm, paddingBlock.sm].join(" "),
+    md: [paddingInline.md, paddingBlock.md].join(" "),
+    lg: [paddingInline.lg, paddingBlock.lg].join(" "),
 };
 
 const typography: Record<FormControlSize, string> = {
@@ -48,6 +60,16 @@ export const formControlShellSizeClass: Record<FormControlSize, string> = {
     sm: [fixedHeight.sm, radius.sm, padding.sm, typography.sm].join(" "),
     md: [fixedHeight.md, radius.md, padding.md, typography.md].join(" "),
     lg: [fixedHeight.lg, radius.lg, padding.lg, typography.lg].join(" "),
+};
+
+/**
+ * Single-row field with inline adornments (SearchField) — the fixed height centers the row,
+ * so only inline padding applies; typography is set separately so `plain` can reuse it.
+ */
+export const formControlRowShellSizeClass: Record<FormControlSize, string> = {
+    sm: [fixedHeight.sm, radius.sm, paddingInline.sm].join(" "),
+    md: [fixedHeight.md, radius.md, paddingInline.md].join(" "),
+    lg: [fixedHeight.lg, radius.lg, paddingInline.lg].join(" "),
 };
 
 /**

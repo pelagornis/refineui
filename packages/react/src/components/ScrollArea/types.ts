@@ -5,6 +5,11 @@ export type ScrollAreaOrientation = "vertical" | "horizontal";
 /** When the custom scrollbar is visible. */
 export type ScrollAreaType = "hover" | "always";
 
+/**
+ * Rows marked `data-scroll-edge-item` always blur as they cross an edge that hides more content
+ * (picker-style); see the ScrollArea docs. Elements between the viewport and those rows must
+ * not be scroll containers (`overflow: hidden`) — use `overflow: clip`.
+ */
 export interface ScrollAreaProps extends HTMLAttributes<HTMLDivElement> {
     type?: ScrollAreaType;
 }
