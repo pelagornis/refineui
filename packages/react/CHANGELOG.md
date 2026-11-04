@@ -1,5 +1,35 @@
 # @refineui/react
 
+## 0.2.0
+
+### Minor Changes
+
+- 4c609a6: Command: add `size` (`"sm" | "md" | "lg"`, default `"md"`). It sets the SearchField size, the results panel radius (matching the field), and item text, vertical padding, and icon slot. `CommandDialog` defaults its Command to `"lg"`; pass `commandProps.size` to override. `componentTypographyTokens.command.item` is now a per-size record, and `CommandSize` is exported.
+- 4c609a6: ScrollArea: picker-style edge blur, always on. Rows marked `data-scroll-edge-item` blur progressively across the outer quarter of the scrollport on each side; size and opacity never change. The blur applies only toward an edge that actually hides content — ScrollArea publishes `--refineui-scroll-edge-top` / `--refineui-scroll-edge-bottom` (0 → 1 as content hides past that edge) — so lists that do not scroll, and the edge you are parked at, are untouched, and the blur fades in as you scroll away. Unmarked content is never affected. Scroll-driven via `animation-timeline: view()`; no effect where unsupported or under `prefers-reduced-motion`.
+
+  Command, Select, and Dropdown mark their rows (items and group labels); Command's selection plate is marked too, so it blurs with its row. `CommandGroup` uses `overflow: clip` so the viewport stays the scroll container. Command's forced-colors root rule is restored.
+
+  Tokens: semantic blur role `scrollEdge` → `blur2` (`--refineui-blur-scroll-edge`).
+
+- 4c609a6: SearchField: add `size` (`"sm" | "md" | "lg"`, default `"md"`) using the same height, radius, padding, and typography tiers as Input. Inherits the `Field` size when omitted; the leading and clear icons scale with it. Command's search field uses `lg` so its radius matches the results panel.
+- 4c609a6: Sidebar: `SidebarContent` now scrolls through a built-in ScrollArea (hover overlay scrollbar) instead of native `overflow-y: auto`; its padding moved inside the viewport so rows scroll under the edges. `SidebarLink` and `SidebarGroupLabel` inside `SidebarContent` take the ScrollArea edge blur; footer rows do not. Remove any ScrollArea you nested inside `SidebarContent`.
+
+### Patch Changes
+
+- 4c609a6: Carousel: no motion on first load. With `loop`, the initial track alignment (after slides register and edge clones are inserted) now snaps instead of sliding in from the leading clone. The indicator pill no longer grows from zero width — its transition is gated by `data-animate` after the first measured paint, like Segmented Control, and respects `prefers-reduced-motion`.
+- 4c609a6: Command: cleaner, motion-aware palette that works inline as well as in `CommandDialog`.
+
+  - Detached layout: `CommandInput` is the standard (filled) SearchField on top, and `CommandList` is its own bordered, raised results panel below. The `Command` root and the `CommandDialog` panel no longer draw a surface.
+  - One sliding `command-indicator` highlights the selected item (soft surface fill); it slides on keyboard/pointer navigation and snaps when filtering.
+  - `CommandList` height follows its results up to the existing max height and animates as results filter.
+  - The results scrollbar rail is shortened at both ends (half the panel radius) so it clears the rounded corners. Scoped to Command — the ScrollArea rail look is unchanged.
+  - `CommandEmpty` fades in. All motion respects `prefers-reduced-motion`; forced colors outline the selected item.
+
+- 4c609a6: Popover and Tooltip: clip the frosted floating surface with an SVG mask instead of `clip-path`, so Chrome no longer paints the backdrop blur as a rectangle outside the rounded corners. Their outline now uses the hairline stroke, matching Menu.
+- 4c609a6: SearchField (filled) and InputOTP slots: rest fill is now `backgroundSurfaceHover` instead of `backgroundSurfaceSelected`, matching the secondary Button fill. The plate no longer matches the border tone in dark mode, and hover (`backgroundSurfaceActive`) now moves in the expected direction in both themes.
+- Updated dependencies [4c609a6]
+  - @refineui/tokens@2.2.0
+
 ## 0.1.2
 
 ### Patch Changes
