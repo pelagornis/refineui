@@ -6,7 +6,7 @@ export const chartStyles = {
     root: "flex w-full min-w-0 flex-col gap-refineui-size-medium",
     body: "grid w-full min-w-0 grid-cols-[auto_minmax(0,1fr)] grid-rows-[minmax(0,1fr)_auto_auto] items-stretch gap-x-refineui-size-medium",
     plotColumn: "contents",
-    plotFrame: "relative col-start-2 row-start-1 min-w-0",
+    plotFrame: "group/chart-plot relative col-start-2 row-start-1 min-w-0",
     plot: "block h-auto w-full min-w-0 aspect-[5/2] overflow-visible",
     yAxis: "relative col-start-1 row-start-1 min-w-refineui-foundation-size-400 pe-refineui-size-x-small",
     yAxisTick: clsx(
@@ -39,4 +39,9 @@ export const chartStyles = {
         "flex items-center gap-refineui-size-x-small text-refineui-alias-foreground-secondary",
     ),
     legendSwatch: "size-refineui-foundation-size-80 shrink-0 rounded-refineui-small",
+    bar: "[transform-box:fill-box] origin-bottom [animation:refineui-chart-bar-enter_var(--refineui-motion-duration-panel)_var(--refineui-motion-easing-emphasized)_both] transition-opacity duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)] group-data-[hover]/chart-plot:data-[state=default]:opacity-[var(--refineui-opacity-disabled)] data-[state=hover]:opacity-[var(--refineui-opacity-full)] data-[state=selected]:opacity-[var(--refineui-opacity-full)]",
+    barTrack: "pointer-events-none",
+    lineStroke: "[stroke-dasharray:1] [stroke-dashoffset:1] [animation:refineui-chart-line-enter_var(--refineui-motion-duration-panel)_var(--refineui-motion-easing-emphasized)_both]",
+    lineArea: "[animation:refineui-chart-point-enter_var(--refineui-motion-duration-panel)_var(--refineui-motion-easing-emphasized)_both]",
+    point: "[animation:refineui-chart-point-enter_var(--refineui-motion-duration-fast)_var(--refineui-motion-easing-emphasized)_both]",
 } as const;

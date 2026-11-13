@@ -17,7 +17,7 @@ export const SCROLL_EDGE_FALLOFF_RATIO = 0.25;
  * Placement / visibility live in `refineui.css`.
  */
 export const scrollAreaStyles = {
-    root: "box-border min-h-0 min-w-0 overflow-hidden outline-none",
+    root: "relative box-border min-h-0 min-w-0 overflow-hidden outline-none",
 
     /**
      * Overflow and scroll chaining are per axis: an axis only becomes scrollable
@@ -27,22 +27,27 @@ export const scrollAreaStyles = {
     viewport: clsx(
         "size-full min-h-0 min-w-0 rounded-[inherit]",
         "overflow-hidden",
-        "outline-none",
+        "outline-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
         "data-[overflow-x=true]:overflow-x-auto data-[overflow-x=true]:overscroll-x-contain",
         "data-[overflow-y=true]:overflow-y-auto data-[overflow-y=true]:overscroll-y-contain",
     ),
 
     scrollbar: clsx(
         "z-refineui-content box-border touch-none select-none",
-        "transition-opacity duration-[var(--refineui-motion-duration-fast)]",
+        "transition-opacity duration-[var(--refineui-motion-duration-normal)]",
         "ease-[var(--refineui-motion-easing-ease-out)]",
+        "data-[state=hidden]:pointer-events-none data-[state=hidden]:opacity-0",
+        "data-[visibility=always]:data-[state=visible]:opacity-100",
+        "data-[visibility=hover]:data-[state=visible]:pointer-events-none data-[visibility=hover]:data-[state=visible]:opacity-0",
+        "data-[visibility=scroll]:data-[state=visible]:pointer-events-none data-[visibility=scroll]:data-[state=visible]:opacity-0",
+        "data-[active=true]:!pointer-events-auto data-[active=true]:!opacity-100",
     ),
 
-    scrollbarVertical: "",
-    scrollbarHorizontal: "",
+    scrollbarVertical: "absolute inset-y-refineui-size-xxx-small end-refineui-size-xxx-small w-refineui-size-medium overflow-hidden",
+    scrollbarHorizontal: "absolute inset-x-refineui-size-xxx-small bottom-refineui-size-xxx-small h-refineui-size-medium overflow-hidden",
 
     /** Inner rail — thumb is absolutely positioned here (padding lives on the outer scrollbar). */
-    track: "relative size-full min-h-0 min-w-0 overflow-hidden rounded-refineui-circle",
+    track: "relative size-full min-h-0 min-w-0 overflow-hidden rounded-refineui-circle bg-refineui-alias-background-surface-selected",
 
     thumb: clsx(
         "absolute rounded-refineui-circle",
@@ -50,7 +55,7 @@ export const scrollAreaStyles = {
         "transition-[background-color] duration-[var(--refineui-motion-duration-fast)]",
         "ease-[var(--refineui-motion-easing-ease-out)]",
         "hover:bg-refineui-alias-foreground-secondary",
-        "data-[dragging=true]:bg-refineui-alias-foreground-secondary",
+        "data-[dragging=true]:bg-refineui-alias-foreground-secondary data-[orientation=vertical]:start-0 data-[orientation=vertical]:w-full data-[orientation=horizontal]:top-0 data-[orientation=horizontal]:h-full",
     ),
 } as const;
 

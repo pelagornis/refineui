@@ -52,6 +52,10 @@ type ScrollAreaContextValue = {
     vertical: ScrollAxisMetrics;
     horizontal: ScrollAxisMetrics;
     scrolling: boolean;
+    hovering: boolean;
+    setHovering: (active: boolean) => void;
+    focused: boolean;
+    setFocused: (active: boolean) => void;
     interacting: boolean;
     setInteracting: (active: boolean) => void;
 };
@@ -163,6 +167,8 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
     const [vertical, setVertical] = useState<ScrollAxisMetrics>(EMPTY_METRICS);
     const [horizontal, setHorizontal] = useState<ScrollAxisMetrics>(EMPTY_METRICS);
     const [scrolling, setScrolling] = useState(false);
+    const [hovering, setHovering] = useState(false);
+    const [focused, setFocused] = useState(false);
     const [interacting, setInteracting] = useState(false);
     const [axes, setAxes] = useState<ScrollAreaAxes>(NO_AXES);
     const hideTimerRef = useRef<number | null>(null);
@@ -244,6 +250,23 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
         };
     }, [sync, markScrolling, viewportEpoch]);
 
+    /**
+     * A parent scroll can move this region away from a stationary pointer without
+     * dispatching `pointerleave` on the viewport. Clear its hover state in that
+     * case so a nested ScrollArea never leaves its indicator visible in a docs
+     * preview after the reading pane has scrolled.
+     */
+    useEffect(() => {
+        if (!hovering) return;
+
+        const clearHoverAfterAncestorScroll = (event: Event) => {
+            if (event.target !== viewportRef.current) setHovering(false);
+        };
+
+        window.addEventListener("scroll", clearHoverAfterAncestorScroll, true);
+        return () => window.removeEventListener("scroll", clearHoverAfterAncestorScroll, true);
+    }, [hovering]);
+
     const ctx = useMemo<ScrollAreaContextValue>(
         () => ({
             type,
@@ -254,6 +277,10 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
             vertical,
             horizontal,
             scrolling,
+            hovering,
+            setHovering,
+            focused,
+            setFocused,
             interacting,
             setInteracting,
         }),
@@ -265,6 +292,8 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
             vertical,
             horizontal,
             scrolling,
+            hovering,
+            focused,
             interacting,
         ],
     );
@@ -276,6 +305,7 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
                 data-refineui="scroll-area"
                 data-type={type}
                 data-scrolling={scrolling || undefined}
+                data-hovering={hovering || undefined}
                 data-interacting={interacting || undefined}
                 className={clsx(scrollAreaStyles.root, className)}
                 {...props}
@@ -287,8 +317,11 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
 });
 
 export const ScrollAreaViewport = forwardRef<HTMLDivElement, ScrollAreaViewportProps>(
-    function ScrollAreaViewport({ className, children, ...props }, forwardedRef) {
-        const { setViewportNode, axes, vertical, horizontal } =
+    function ScrollAreaViewport(
+        { className, children, onPointerEnter, onPointerLeave, onFocus, onBlur, ...props },
+        forwardedRef,
+    ) {
+        const { setViewportNode, axes, vertical, horizontal, setHovering, setFocused } =
             useScrollAreaContext("ScrollAreaViewport");
         const composedRef = useComposedRefs(setViewportNode, forwardedRef);
         /** Keyboard scrolling needs a tab stop only while content actually overflows. */
@@ -302,6 +335,23 @@ export const ScrollAreaViewport = forwardRef<HTMLDivElement, ScrollAreaViewportP
                 data-overflow-y={axes.vertical ? "true" : undefined}
                 tabIndex={scrollable ? 0 : undefined}
                 className={clsx(scrollAreaStyles.viewport, className)}
+                onPointerEnter={(event) => {
+                    onPointerEnter?.(event);
+                    setHovering(true);
+                }}
+                onPointerLeave={(event) => {
+                    onPointerLeave?.(event);
+                    setHovering(false);
+                }}
+                onFocus={(event) => {
+                    onFocus?.(event);
+                    setFocused(true);
+                }}
+                onBlur={(event) => {
+                    onBlur?.(event);
+                    const next = event.relatedTarget;
+                    if (!next || !event.currentTarget.contains(next as Node)) setFocused(false);
+                }}
                 {...props}
             >
                 {children}
@@ -315,6 +365,8 @@ export function ScrollAreaScrollbar({
     className,
     children,
     onPointerDown,
+    onPointerEnter,
+    onPointerLeave,
     ...props
 }: ScrollAreaScrollbarProps) {
     const {
@@ -324,12 +376,20 @@ export function ScrollAreaScrollbar({
         vertical,
         horizontal,
         scrolling,
+        hovering,
+        focused,
         interacting,
+        setHovering,
     } = useScrollAreaContext("ScrollAreaScrollbar");
     const trackRef = useRef<HTMLDivElement>(null);
     const metrics = orientation === "vertical" ? vertical : horizontal;
     const visible = isScrollable(metrics);
-    const active = scrolling || interacting;
+    const active =
+        type === "hover"
+            ? hovering || focused || scrolling || interacting
+            : type === "scroll"
+              ? focused || scrolling || interacting
+              : false;
 
     useLayoutEffect(() => {
         setAxisEnabled(orientation, true);
@@ -389,6 +449,14 @@ export function ScrollAreaScrollbar({
                     className,
                 )}
                 onPointerDown={onTrackPointerDown}
+                onPointerEnter={(event) => {
+                    onPointerEnter?.(event);
+                    setHovering(true);
+                }}
+                onPointerLeave={(event) => {
+                    onPointerLeave?.(event);
+                    setHovering(false);
+                }}
                 {...props}
             >
                 <div

@@ -1,5 +1,11 @@
 # @refineui/tokens
 
+## 2.2.1
+
+### Patch Changes
+
+- Refresh NavigationMenu layouts and interaction behavior, complete the Tailwind-backed component styling migration, and update generated MCP documentation data.
+
 ## 2.2.0
 
 ### Minor Changes

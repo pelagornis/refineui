@@ -35,6 +35,8 @@ export const componentSizeFoundationKeys = {
     navigationMenuItemMinWidth: "foundationSize400",
     /** Two-column navigation content needs readable link columns, unlike a compact action menu. */
     navigationMenuPanelWidth: "foundationSize3250",
+    /** Preferred desktop width for a spacious, content-led floating mega menu. */
+    navigationMenuMegaWidth: "foundationSize10000",
     menuPanelWidth: "foundationSize2000",
     dropdownMenuWidth: "foundationSize2000",
     sidebarWidth: "foundationSize2560",
@@ -117,6 +119,7 @@ export const componentSizes = {
     popoverBeakTipRadius: fromFoundation("popoverBeakTipRadius"),
     navigationMenuItemMinWidth: fromFoundation("navigationMenuItemMinWidth"),
     navigationMenuPanelWidth: fromFoundation("navigationMenuPanelWidth"),
+    navigationMenuMegaWidth: fromFoundation("navigationMenuMegaWidth"),
     menuPanelWidth: fromFoundation("menuPanelWidth"),
     /** @deprecated Same as `menuPanelWidth` */
     dropdownMenuWidth: fromFoundation("dropdownMenuWidth"),

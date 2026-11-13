@@ -78,20 +78,99 @@ function sectionIsActive(section: DocsHeaderNavSection, currentPath: string): bo
 function NavLinkStack({ title, description }: { title: string; description?: string }) {
     return (
         <Stack as="span" gap="sizeXXXSmall" className="min-w-0 flex-1 px-refineui-size-xxx-small">
-            <span className="break-words whitespace-normal">{title}</span>
+            <Text as="span" variant="bodyMd" className="break-words whitespace-normal">
+                {title}
+            </Text>
             {description ? (
-                <span className="break-words whitespace-normal text-refineui-alias-foreground-tertiary refineui-typo-body-4">
+                <Text as="span" variant="bodyXs" className="break-words whitespace-normal text-refineui-alias-foreground-tertiary">
                     {description}
-                </span>
+                </Text>
             ) : null}
         </Stack>
     );
 }
 
-function NavContentGrid({ children }: { children: ReactNode }) {
+type MegaColumn = {
+    title: string;
+    linkIndexes: number[];
+};
+
+function getMegaColumns(section: DocsHeaderNavSection, localized: boolean): MegaColumn[] {
+    const labels = localized
+        ? {
+            foundations: ["시작하기", "디자인 언어", "레이아웃"],
+            components: ["컴포넌트 둘러보기", "입력과 액션", "오버레이와 내비게이션", "데이터와 피드백"],
+            development: ["시작하기", "제품에 맞추기"],
+            "ai-tools": ["AI 시작점", "문서 지식", "연결과 진단"],
+        }
+        : {
+            foundations: ["Get started", "Design language", "Layout"],
+            components: ["Explore components", "Input and actions", "Overlays and navigation", "Data and feedback"],
+            development: ["Get started", "Adapt to your product"],
+            "ai-tools": ["Start with AI", "Documentation knowledge", "Connect and diagnose"],
+        };
+    const titles = labels[section.value as keyof typeof labels] ?? labels.components;
+    const structure: Record<string, number[][]> = {
+        foundations: [[0, 1], [2, 3, 6], [4, 5]],
+        components: [[0], [1, 2], [3, 4], [5, 6, 7]],
+        development: [[0, 1], [2, 3]],
+        "ai-tools": [[0, 1], [2, 3], [4, 5, 6]],
+    };
+    const groups = structure[section.value] ?? structure.components;
+    return groups.map((linkIndexes, index) => ({
+        title: titles[index] ?? titles[0],
+        linkIndexes,
+    }));
+}
+
+function NavContentGrid({
+    section,
+    currentPath,
+    locale,
+}: {
+    section: DocsHeaderNavSection;
+    currentPath: string;
+    locale?: string;
+}) {
+    if (section.links.length === 0) return null;
+
+    const localized = locale === "ko";
+    const columns = getMegaColumns(section, localized);
+    const gridClass = columns.length === 4 ? "grid-cols-4" : columns.length === 2 ? "grid-cols-2" : "grid-cols-3";
+
     return (
-        <div className="grid w-full min-w-refineui-navigation-menu-panel-width grid-cols-2 gap-refineui-size-x-small">
-            {children}
+        <div className={`grid w-full max-w-refineui-navigation-menu-mega-width ${gridClass} gap-refineui-size-xx-large px-refineui-size-x-large py-refineui-size-large max-md:grid-cols-1`}>
+            {columns.map((column, columnIndex) => (
+                <section
+                    key={column.title}
+                    className={columnIndex === 0 ? "flex min-w-0 flex-col gap-refineui-size-small" : "flex min-w-0 flex-col gap-refineui-size-small pl-refineui-size-x-large max-md:pl-0"}
+                >
+                    <Text
+                        as="span"
+                        variant="labelSm"
+                        className="px-refineui-size-medium text-refineui-alias-foreground-tertiary"
+                    >
+                        {column.title}
+                    </Text>
+                    <div className="flex flex-col gap-refineui-size-xxx-small">
+                        {column.linkIndexes.map((linkIndex) => {
+                            const link = section.links[linkIndex];
+                            if (!link) return null;
+                            return (
+                                <NavigationMenuLink
+                                    key={link.href}
+                                    href={resolveHref(link.href, link.external)}
+                                    active={!link.external && isPathActive(link.href, currentPath)}
+                                    className="items-start px-refineui-size-small py-refineui-size-xx-small"
+                                    {...(link.external ? { target: "_blank", rel: "noreferrer" } : undefined)}
+                                >
+                                    <NavLinkStack title={link.label} description={link.description} />
+                                </NavigationMenuLink>
+                            );
+                        })}
+                    </div>
+                </section>
+            ))}
         </div>
     );
 }
@@ -135,21 +214,14 @@ export function DocsHeaderNav({ currentPath = "/", locale, sections }: DocsHeade
                                 <NavigationMenuTrigger data-active={sectionActive || undefined}>
                                     {section.label}
                                 </NavigationMenuTrigger>
-                                <NavigationMenuContent>
-                                    <NavContentGrid>
-                                        {section.links.map((link) => (
-                                            <NavigationMenuLink
-                                                key={link.href}
-                                                href={resolveHref(link.href, link.external)}
-                                                active={!link.external && isPathActive(link.href, currentPath)}
-                                                {...(link.external
-                                                    ? { target: "_blank", rel: "noreferrer" }
-                                                    : undefined)}
-                                            >
-                                                <NavLinkStack title={link.label} description={link.description} />
-                                            </NavigationMenuLink>
-                                        ))}
-                                    </NavContentGrid>
+                                <NavigationMenuContent
+                                    layout="overlay"
+                                >
+                                    <NavContentGrid
+                                        section={section}
+                                        currentPath={currentPath}
+                                        locale={locale}
+                                    />
                                 </NavigationMenuContent>
                             </NavigationMenuItem>
                         );

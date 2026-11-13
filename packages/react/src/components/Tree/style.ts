@@ -19,9 +19,9 @@ export const treeStyles = {
         "rounded-refineui-large border-none bg-transparent",
         "px-refineui-size-medium py-refineui-size-x-small",
         "text-refineui-alias-foreground-tertiary outline-none",
-        "transition-[color,background-color] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",
+        "transition-[color,background-color] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)] hover:bg-refineui-alias-background-primary-hover hover:text-refineui-alias-foreground-primary-hover active:bg-refineui-alias-background-primary-active active:text-refineui-alias-foreground-primary focus-visible:outline-[length:var(--refineui-stroke-width-thick)] focus-visible:[outline-color:var(--refineui-focus-color)] focus-visible:[outline-offset:var(--refineui-focus-offset)] aria-disabled:pointer-events-none",
     ),
-    rowSelected: "font-medium text-refineui-alias-foreground-primary",
+    rowSelected: "font-medium bg-refineui-alias-background-primary-hover text-refineui-alias-foreground-primary",
     rowDisabled: "cursor-not-allowed",
     rowMain: "flex min-w-0 flex-1 items-center gap-refineui-size-x-small",
     chevronButton: clsx(

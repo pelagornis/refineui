@@ -7,6 +7,7 @@ import {
   Stack,
   Text,
 } from "@refineui/react";
+import { foundationSizes } from "@refineui/tokens";
 import { Look, Looks } from "./PreviewFrame";
 
 const tags = [
@@ -72,8 +73,12 @@ function TagList() {
 export default function ScrollAreaDemo() {
   return (
     <Looks>
-      <Look align="stretch">
-        <ScrollArea type="hover" className="h-refineui-foundation-size-2560 w-full">
+      <Look>
+        <ScrollArea
+          type="hover"
+          className="w-refineui-foundation-size-3250 max-w-full"
+          style={{ height: foundationSizes.foundationSize2560 }}
+        >
           <ScrollAreaViewport>
             <TagList />
           </ScrollAreaViewport>

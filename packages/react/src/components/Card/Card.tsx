@@ -32,6 +32,7 @@ export function Card({
                 state === "pressed" && cardStyles.statePressed,
                 state === "disabled" && cardStyles.stateDisabled,
                 interactive && !isDisabled && cardStyles.interactive,
+                interactive && !isDisabled && variant === "outlined" && cardStyles.interactiveOutlined,
                 className,
             )}
             {...props}

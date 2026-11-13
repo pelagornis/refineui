@@ -8,6 +8,7 @@ import { SpecRenderer } from "../../../components/spec";
 import { PropSpec } from "../../../docs-ui";
 
 import NavigationMenuPreview from "../../../components/NavigationMenuPreview";
+import NavigationMenuTokenInspector from "../../../components/NavigationMenuTokenInspector";
 import PackageInstall from "../../../components/PackageInstall.mdx";
 
 <div class="not-content my-6">
@@ -19,6 +20,12 @@ import PackageInstall from "../../../components/PackageInstall.mdx";
 
 <div class="not-content">
   <SpecRenderer client:load component="navigation-menu" />
+</div>
+
+## Tokens
+
+<div class="not-content">
+  <NavigationMenuTokenInspector client:load />
 </div>
 
 ## Installation
@@ -34,7 +41,9 @@ import {
   NavigationMenuItem,
   NavigationMenuTrigger,
   NavigationMenuContent,
-  NavigationMenuLink
+  NavigationMenuLink,
+  Stack,
+  Text
 } from "@refineui/react";
 
 <NavigationMenu>
@@ -47,8 +56,18 @@ import {
     <NavigationMenuItem>
       <NavigationMenuTrigger>Products</NavigationMenuTrigger>
       <NavigationMenuContent>
-        <NavigationMenuLink href="/products/web">Web</NavigationMenuLink>
-        <NavigationMenuLink href="/products/mobile">Mobile</NavigationMenuLink>
+        <NavigationMenuLink href="/products/web">
+          <Stack gap="sizeXXXSmall">
+            <Text variant="bodyMd">Web</Text>
+            <Text variant="bodyXs">Browser-based experience</Text>
+          </Stack>
+        </NavigationMenuLink>
+        <NavigationMenuLink href="/products/mobile">
+          <Stack gap="sizeXXXSmall">
+            <Text variant="bodyMd">Mobile</Text>
+            <Text variant="bodyXs">Optional supporting detail</Text>
+          </Stack>
+        </NavigationMenuLink>
       </NavigationMenuContent>
     </NavigationMenuItem>
     <NavigationMenuItem>
@@ -56,6 +75,35 @@ import {
     </NavigationMenuItem>
   </NavigationMenuList>
 </NavigationMenu>
+```
+
+## Choose a panel layout
+
+`NavigationMenuContent` remains content-agnostic and offers three Tailwind-backed
+panel treatments: `dropdown` for compact trigger-aligned choices, `floating` for
+a centered multi-column panel, and `overlay` for a header-connected full-width
+product navigation layer. The application still owns the panel content and its
+information architecture.
+
+```tsx
+<NavigationMenuContent>
+  <NavigationMenuLink href="/components">Components</NavigationMenuLink>
+  <NavigationMenuLink href="/tokens">Tokens</NavigationMenuLink>
+</NavigationMenuContent>
+
+<NavigationMenuContent layout="floating">
+  <div className="grid grid-cols-2 gap-refineui-size-medium">
+    {/* Compose a wider panel here. */}
+  </div>
+</NavigationMenuContent>
+
+<NavigationMenuContent
+  layout="overlay"
+>
+  <div className="grid max-w-refineui-navigation-menu-mega-width grid-cols-3 gap-refineui-size-xxx-small">
+    {/* The consuming app owns categories and destinations. */}
+  </div>
+</NavigationMenuContent>
 ```
 
 ## API Reference
@@ -95,7 +143,17 @@ Trigger button for dropdown content.
 
 ### NavigationMenuContent
 
-Dropdown panel content.
+Panel content. It manages positioning, dismissal, focus return, and transitions;
+the consuming app owns the panel's content and dimensions.
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "layout", default: '"dropdown"', type: '"dropdown" | "floating" | "overlay"', description: "Compact trigger-aligned, centered floating, or header-connected full-width panel." }
+    ]}
+  />
+</div>
 
 ### NavigationMenuLink
 

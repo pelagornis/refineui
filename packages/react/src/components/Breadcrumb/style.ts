@@ -11,12 +11,12 @@ export const breadcrumbStyles = {
     list: "m-0 flex flex-wrap list-none items-center gap-refineui-size-medium p-0",
     item: "inline-flex items-center",
     link:
-        "box-border inline-flex min-h-refineui-button-min-height-sm items-center justify-center rounded-refineui-large px-refineui-size-medium py-refineui-size-x-small text-refineui-alias-foreground-tertiary no-underline outline-none transition-[color,background-color] duration-[var(--refineui-motion-duration-fast)]",
+        "box-border inline-flex min-h-refineui-button-min-height-sm items-center justify-center rounded-refineui-large px-refineui-size-medium py-refineui-size-x-small text-refineui-alias-foreground-tertiary no-underline outline-none transition-[color,background-color] duration-[var(--refineui-motion-duration-fast)] hover:bg-refineui-alias-background-primary-hover hover:text-refineui-alias-foreground-primary-hover active:bg-refineui-alias-background-primary-active focus-visible:outline-[length:var(--refineui-stroke-width-thick)] focus-visible:[outline-color:var(--refineui-focus-color)] focus-visible:[outline-offset:var(--refineui-focus-offset)]",
     page:
         "inline-flex items-center px-refineui-size-medium py-refineui-size-x-small font-medium text-refineui-alias-foreground-primary",
     separator: "inline-flex shrink-0 items-center",
     separatorText: "inline-flex items-center text-refineui-alias-foreground-tertiary select-none",
     ellipsis: `${ellipsisChip} text-refineui-alias-foreground-tertiary`,
     /** Color only — size/layout come from Button `layout="icon" size="sm"`. */
-    ellipsisTrigger: "text-refineui-alias-foreground-tertiary",
+    ellipsisTrigger: "text-refineui-alias-foreground-tertiary hover:bg-refineui-alias-background-primary-hover hover:text-refineui-alias-foreground-primary-hover active:bg-refineui-alias-background-primary-active focus-visible:outline-[length:var(--refineui-stroke-width-thick)] focus-visible:[outline-color:var(--refineui-focus-color)] focus-visible:[outline-offset:var(--refineui-focus-offset)]",
 } as const;

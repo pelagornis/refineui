@@ -3,7 +3,7 @@ import type { HTMLAttributes } from "react";
 export type ScrollAreaOrientation = "vertical" | "horizontal";
 
 /** When the custom scrollbar is visible. */
-export type ScrollAreaType = "hover" | "always";
+export type ScrollAreaType = "hover" | "scroll" | "always";
 
 /**
  * Rows marked `data-scroll-edge-item` always blur as they cross an edge that hides more content

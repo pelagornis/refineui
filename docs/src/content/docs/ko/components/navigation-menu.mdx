@@ -8,6 +8,7 @@ import { SpecRenderer } from "../../../../components/spec";
 import { PropSpec } from "../../../../docs-ui";
 
 import NavigationMenuPreview from "../../../../components/NavigationMenuPreview";
+import NavigationMenuTokenInspector from "../../../../components/NavigationMenuTokenInspector";
 import PackageInstall from "../../../../components/PackageInstall.mdx";
 
 <div class="not-content my-6">
@@ -19,6 +20,12 @@ import PackageInstall from "../../../../components/PackageInstall.mdx";
 
 <div class="not-content">
   <SpecRenderer client:load component="navigation-menu" />
+</div>
+
+## 토큰
+
+<div class="not-content">
+  <NavigationMenuTokenInspector client:load locale="ko" />
 </div>
 
 ## 설치
@@ -34,7 +41,9 @@ import {
   NavigationMenuItem,
   NavigationMenuTrigger,
   NavigationMenuContent,
-  NavigationMenuLink
+  NavigationMenuLink,
+  Stack,
+  Text
 } from "@refineui/react";
 
 <NavigationMenu>
@@ -47,8 +56,18 @@ import {
     <NavigationMenuItem>
       <NavigationMenuTrigger>Products</NavigationMenuTrigger>
       <NavigationMenuContent>
-        <NavigationMenuLink href="/products/web">Web</NavigationMenuLink>
-        <NavigationMenuLink href="/products/mobile">Mobile</NavigationMenuLink>
+        <NavigationMenuLink href="/products/web">
+          <Stack gap="sizeXXXSmall">
+            <Text variant="bodyMd">Web</Text>
+            <Text variant="bodyXs">브라우저 기반 경험</Text>
+          </Stack>
+        </NavigationMenuLink>
+        <NavigationMenuLink href="/products/mobile">
+          <Stack gap="sizeXXXSmall">
+            <Text variant="bodyMd">Mobile</Text>
+            <Text variant="bodyXs">선택적으로 보조 설명을 넣습니다.</Text>
+          </Stack>
+        </NavigationMenuLink>
       </NavigationMenuContent>
     </NavigationMenuItem>
     <NavigationMenuItem>
@@ -56,6 +75,34 @@ import {
     </NavigationMenuItem>
   </NavigationMenuList>
 </NavigationMenu>
+```
+
+## 패널 레이아웃 선택
+
+`NavigationMenuContent`는 콘텐츠 구조를 정하지 않으며, Tailwind 기반의 세 가지
+패널 방식을 제공합니다. `dropdown`은 트리거에 맞춘 간결한 선택지에, `floating`은
+중앙 정렬 다중 열 패널에, `overlay`는 헤더에 연결되는 전체 폭 제품 내비게이션
+레이어에 사용합니다. 패널 내부의 정보 구조와 콘텐츠는 소비하는 앱이 구성합니다.
+
+```tsx
+<NavigationMenuContent>
+  <NavigationMenuLink href="/components">Components</NavigationMenuLink>
+  <NavigationMenuLink href="/tokens">Tokens</NavigationMenuLink>
+</NavigationMenuContent>
+
+<NavigationMenuContent layout="floating">
+  <div className="grid grid-cols-2 gap-refineui-size-medium">
+    {/* 더 넓은 패널을 자유롭게 구성합니다. */}
+  </div>
+</NavigationMenuContent>
+
+<NavigationMenuContent
+  layout="overlay"
+>
+  <div className="grid max-w-refineui-navigation-menu-mega-width grid-cols-3 gap-refineui-size-xxx-small">
+    {/* 카테고리와 이동 경로는 소비하는 앱에서 구성합니다. */}
+  </div>
+</NavigationMenuContent>
 ```
 
 ## API 레퍼런스
@@ -95,7 +142,17 @@ import {
 
 ### NavigationMenuContent
 
-드롭다운 패널 콘텐츠.
+패널 콘텐츠입니다. 위치, 닫힘 동작, 포커스 복귀, 전환은 컴포넌트가 관리하고,
+패널의 콘텐츠와 폭은 소비하는 앱이 구성합니다.
+
+<div class="not-content">
+  <PropSpec
+    client:load
+    rows={[
+    { prop: "layout", default: '"dropdown"', type: '"dropdown" | "floating" | "overlay"', description: "트리거 정렬 compact 패널, 중앙 floating 패널 또는 헤더에 연결되는 전체 폭 패널입니다." }
+    ]}
+  />
+</div>
 
 ### NavigationMenuLink
 

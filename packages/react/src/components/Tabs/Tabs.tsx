@@ -159,6 +159,7 @@ export function TabsList({ className, children, ...props }: TabsListProps) {
         <div
             ref={tabListRef as Ref<HTMLDivElement>}
             data-refineui="tabs-list"
+            data-ready={indicator.ready ? "true" : "false"}
             role="tablist"
             aria-orientation="horizontal"
             className={clsx(tabsStyles.list, className)}

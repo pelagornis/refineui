@@ -16,7 +16,7 @@ export const accordionRecipe = defineSlotRecipe({
         root: "flex flex-col gap-refineui-size-x-small",
         item: "overflow-hidden rounded-refineui-x-large transition-[background-color] duration-[var(--refineui-motion-duration-fast)]",
         trigger:
-            "flex min-h-refineui-control-touch-min w-full cursor-pointer items-center justify-between gap-refineui-size-medium rounded-refineui-x-large border-none bg-transparent px-refineui-size-medium py-refineui-size-x-small text-start text-refineui-alias-foreground-primary outline-none transition-[background-color,transform] duration-[var(--refineui-motion-duration-fast)]",
+            "flex min-h-refineui-control-touch-min w-full cursor-pointer items-center justify-between gap-refineui-size-medium rounded-refineui-x-large border-none bg-transparent px-refineui-size-medium py-refineui-size-x-small text-start text-refineui-alias-foreground-primary outline-none transition-[background-color,transform] duration-[var(--refineui-motion-duration-fast)] active:bg-refineui-alias-background-primary-active active:scale-[var(--refineui-motion-scale-press)]",
         triggerRow: "flex min-w-0 flex-1 items-center gap-refineui-size-medium",
         chevron:
             "shrink-0 transition-transform duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",

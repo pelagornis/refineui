@@ -10,17 +10,17 @@ import { defineRecipe } from "./types";
 import type { ChipSize, ChipVariant } from "../components/Chip/types";
 
 export const chipVariantClass: Record<ChipVariant, string> = {
-    default: "border-none bg-refineui-alias-background-surface-selected text-refineui-alias-foreground-brand",
+    default: "border-none bg-refineui-alias-background-surface-selected text-refineui-alias-foreground-brand hover:bg-refineui-alias-background-primary-hover active:bg-refineui-alias-background-primary-active",
     outline:
-        "border border-refineui-thin border-refineui-alias-border-default box-border bg-transparent text-refineui-alias-foreground-brand",
-    filled: "border-none bg-refineui-alias-background-brand text-refineui-alias-foreground-inversed",
+        "border border-refineui-thin border-refineui-alias-border-default box-border bg-transparent text-refineui-alias-foreground-brand hover:border-refineui-alias-border-hover active:border-refineui-alias-border-focus",
+    filled: "border-none bg-refineui-alias-background-brand text-refineui-alias-foreground-inversed hover:bg-refineui-alias-background-brand-hover active:bg-refineui-alias-background-brand-active",
 };
 
 export const chipDisabledVariantClass: Record<ChipVariant, string> = {
-    default: "border-none bg-refineui-alias-background-surface-disabled text-refineui-alias-foreground-disabled",
+    default: "pointer-events-none cursor-not-allowed border-none bg-refineui-alias-background-surface-disabled text-refineui-alias-foreground-disabled",
     outline:
-        "border border-refineui-thin border-refineui-alias-border-disabled box-border bg-transparent text-refineui-alias-foreground-disabled",
-    filled: "border-none bg-refineui-alias-background-surface-disabled text-refineui-alias-foreground-disabled",
+        "pointer-events-none cursor-not-allowed border border-refineui-thin border-refineui-alias-border-disabled box-border bg-transparent text-refineui-alias-foreground-disabled",
+    filled: "pointer-events-none cursor-not-allowed border-none bg-refineui-alias-background-surface-disabled text-refineui-alias-foreground-disabled",
 };
 
 export const chipSizeClass: Record<ChipSize, string> = {
@@ -39,7 +39,7 @@ export const chipSizeIcon: Record<ChipSize, number> = {
 
 export const chipRecipe = defineRecipe({
     name: "chip",
-    base: "box-border inline-flex max-w-full items-center gap-refineui-size-xx-small rounded-refineui-medium",
+    base: "box-border inline-flex max-w-full items-center gap-refineui-size-xx-small rounded-refineui-medium transition-[background-color,border-color] duration-[var(--refineui-motion-duration-fast)]",
     variants: {
         variant: chipVariantClass,
         size: chipSizeClass,

@@ -10,7 +10,7 @@ const COMMAND_LIST_MAX_HEIGHT = `min(60vh, ${foundationSizes.foundationSize3200}
 
 export const commandStyles = {
     /** Detached layout: the search field and the results panel are separate surfaces, so the root has none. */
-    root: "flex w-full flex-col gap-refineui-size-small text-refineui-alias-foreground-primary outline-none",
+    root: "flex w-full flex-col gap-refineui-size-small text-refineui-alias-foreground-primary outline-none [--refineui-command-list-radius:var(--refineui-radius-rounded-x-large)] data-[size=sm]:[--refineui-command-list-radius:var(--refineui-radius-rounded-large)] data-[size=lg]:[--refineui-command-list-radius:var(--refineui-radius-rounded-xx-large)]",
     rootInDialog: "min-h-0 w-full",
     /** Dialog panel stays transparent — the field and results panel float on the scrim themselves. */
     dialogContentPanel: {
@@ -27,11 +27,11 @@ export const commandStyles = {
      * Radius comes from `--refineui-command-list-radius` (per size, refineui.css) so the scrollbar inset can share it.
      */
     listShell: clsx(
-        "box-border w-full overflow-hidden",
+        "box-border w-full overflow-hidden rounded-[var(--refineui-command-list-radius)] data-[animate=true]:transition-[height] data-[animate=true]:duration-[var(--refineui-motion-duration-medium)] data-[animate=true]:ease-[var(--refineui-motion-easing-emphasized)] motion-reduce:data-[animate=true]:transition-none",
         "border-refineui-hairline border-refineui-alias-border-default",
         "bg-refineui-alias-background-primary shadow-refineui-2",
     ),
-    list: "h-full min-h-0 w-full",
+    list: "h-full min-h-0 w-full [&>[data-refineui=scroll-area]]:h-full [&>[data-refineui=scroll-area]]:min-h-0 [&>[data-refineui=scroll-area]>[data-refineui=scroll-area-scrollbar][data-orientation=vertical]]:inset-y-[calc(var(--refineui-command-list-radius)/2)]",
     listShellMaxHeight: {
         maxHeight: COMMAND_LIST_MAX_HEIGHT,
     } satisfies CSSProperties,
@@ -40,10 +40,10 @@ export const commandStyles = {
         "relative flex flex-col gap-refineui-size-xxx-small px-refineui-size-medium py-refineui-size-small",
     /** Sliding highlight behind the selected item; geometry is measured, so physical `left`/`top` (inline) are intentional. */
     indicator:
-        "pointer-events-none absolute rounded-refineui-large bg-refineui-alias-background-surface-hover",
+        "pointer-events-none absolute rounded-refineui-large bg-refineui-alias-background-surface-hover opacity-0 transition-none data-[ready=true]:opacity-100 data-[animate=true]:transition-[top,left,height,width,opacity,background-color] data-[animate=true]:duration-[var(--refineui-motion-duration-medium)] data-[animate=true]:ease-[var(--refineui-motion-easing-emphasized)] motion-reduce:transition-none",
     empty: clsx(
         componentTextClass(componentTypographyTokens.command.empty),
-        "px-refineui-size-medium py-refineui-size-xx-large text-center text-refineui-alias-foreground-tertiary",
+        "px-refineui-size-medium py-refineui-size-xx-large text-center text-refineui-alias-foreground-tertiary [animation:refineui-fade-enter_var(--refineui-motion-duration-normal)_var(--refineui-motion-easing-standard)] motion-reduce:animation-none",
     ),
     /** `overflow-clip`, not hidden: a hidden group would become the scroll container the edge effect tracks. */
     group: "flex flex-col gap-refineui-size-xxx-small overflow-clip",
@@ -55,7 +55,7 @@ export const commandStyles = {
     separatorLine: "h-px w-full shrink-0 bg-refineui-alias-border-default",
     itemBase: clsx(
         "relative flex w-full items-center gap-refineui-size-x-small rounded-refineui-large border-none bg-transparent",
-        "px-refineui-size-x-small text-start outline-none",
+        "px-refineui-size-x-small text-start outline-none transition-[background-color,transform] duration-[var(--refineui-motion-duration-fast)] hover:bg-refineui-alias-background-surface-hover hover:text-refineui-alias-foreground-primary-hover active:bg-refineui-alias-background-surface-active active:text-refineui-alias-foreground-primary active:scale-[var(--refineui-motion-scale-press)] data-[selected=true]:bg-refineui-alias-background-surface-hover data-[selected=true]:text-refineui-alias-foreground-primary-hover data-[state=hover]:bg-refineui-alias-background-surface-hover data-[state=hover]:text-refineui-alias-foreground-primary-hover data-[state=pressed]:bg-refineui-alias-background-surface-active data-[state=pressed]:text-refineui-alias-foreground-primary data-[state=active]:bg-refineui-alias-background-surface-hover data-[state=active]:text-refineui-alias-foreground-primary data-[state=disabled]:bg-transparent data-[state=disabled]:text-refineui-alias-foreground-disabled",
     ),
     itemDisabled: "cursor-not-allowed text-refineui-alias-foreground-disabled",
     itemEnabled: "cursor-pointer text-refineui-alias-foreground-primary",

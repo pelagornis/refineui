@@ -37,6 +37,9 @@ export const stepperStyles = {
         "hover:[&_[data-refineui=stepper-indicator][data-state=upcoming]]:border-refineui-alias-border-strong",
         "hover:[&_[data-refineui=stepper-indicator][data-state=upcoming]]:text-refineui-alias-foreground-primary-hover",
         "hover:[&_[data-refineui=stepper-title][data-state=upcoming]]:text-refineui-alias-foreground-primary",
+        "active:[&_[data-refineui=stepper-indicator][data-state=upcoming]]:bg-refineui-alias-background-primary-active",
+        "active:[&_[data-refineui=stepper-indicator][data-state=upcoming]]:border-refineui-alias-border-strong",
+        "active:[&_[data-refineui=stepper-indicator][data-state=upcoming]]:text-refineui-alias-foreground-primary",
     ),
     itemDisabled: "cursor-not-allowed opacity-50",
 

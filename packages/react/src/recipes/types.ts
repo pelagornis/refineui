@@ -36,7 +36,7 @@ export type ComponentRecipe = Readonly<{
     variants?: RecipeVariantMap;
     compoundVariants?: readonly RecipeCompoundVariant[];
     defaultVariants?: Readonly<Record<string, string>>;
-    /** CSS pseudo states owned by refineui.css — documented for Doctor/MCP. */
+    /** CSS pseudo states encoded by the recipe or component stylesheet — documented for Doctor/MCP. */
     cssStates?: readonly CssInteractionState[];
     /** Component states via data-state — documented for Doctor/MCP. */
     dataStates?: readonly ComponentDataState[];

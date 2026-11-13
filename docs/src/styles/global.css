@@ -1,4 +1,5 @@
 /* Foundation typography is applied via RefineUI tokens. */
+@import "@refineui/react/refineui.css";
 /* Monorepo: relative import into tokens only (no package alias); external apps use `@import "@refineui/tokens/tailwind.css"` */
 @import "../../../packages/tokens/tailwind.css";
 @source "../../../packages/react/src/**/*.{tsx,ts}";
@@ -10,7 +11,6 @@
   "refineui-typo-{heading-1,heading-2,heading-3,heading-4,title-1,title-2,title-3,sub-title-1,sub-title-2,body-1,body-2,body-3,body-4,caption-1,caption-2,caption-3}"
 );
 @import "@refineui/web-icons/dist/fonts/refineui-system-icons.css";
-@import "@refineui/react/refineui.css";
 @import "./docs-ui.css";
 
 /**

@@ -4,7 +4,7 @@ import { componentTypographyTokens } from "../../tokens/componentTypographyToken
 
 export const spinnerStyles = {
     ringBase:
-        "box-border rounded-refineui-circle border-solid border-refineui-alias-background-brand-subtle border-t-refineui-alias-background-brand",
+        "box-border shrink-0 animate-spin rounded-refineui-circle border-solid border-refineui-alias-background-brand-subtle border-t-refineui-alias-background-brand [animation-duration:var(--refineui-motion-duration-spinner)] [animation-timing-function:var(--refineui-motion-easing-linear)]",
     label: "text-refineui-alias-foreground-primary",
     withLabel: "inline-flex items-center justify-center gap-refineui-size-x-small",
 } as const;

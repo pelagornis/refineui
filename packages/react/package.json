@@ -1,6 +1,6 @@
 {
   "name": "@refineui/react",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "RefineUI React components — Pelagornis RefineUI Web Kit",
   "type": "module",
   "license": "MIT",
@@ -28,7 +28,7 @@
     "refineui.css"
   ],
   "scripts": {
-    "build": "node ../../scripts/ws.mjs @refineui/utilities build && node ../../scripts/ws.mjs @refineui/tokens build && node scripts/generate-authoring-manifest.mjs && node scripts/validate-authoring-manifest.mjs && tsup && node scripts/generate-refineui-css.mjs && node scripts/generate-component-spec.mjs",
+    "build": "node ../../scripts/ws.mjs @refineui/utilities build && node ../../scripts/ws.mjs @refineui/tokens build && node scripts/generate-authoring-manifest.mjs && node scripts/validate-authoring-manifest.mjs && tsup && node scripts/generate-refineui-tailwind.mjs && node scripts/generate-refineui-css.mjs && node scripts/generate-component-spec.mjs",
     "dev": "node scripts/generate-authoring-manifest.mjs && tsup --watch",
     "generate:authoring": "node scripts/generate-authoring-manifest.mjs",
     "validate:authoring": "node scripts/validate-authoring-manifest.mjs",
@@ -47,6 +47,8 @@
     "react-dom": ">=18.0.0"
   },
   "devDependencies": {
+    "@tailwindcss/node": "^4.3.3",
+    "@tailwindcss/oxide": "^4.3.3",
     "@types/react": "^18.3.20",
     "@types/react-dom": "^18.3.0",
     "react": "^18.3.1",

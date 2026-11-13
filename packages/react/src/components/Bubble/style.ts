@@ -12,10 +12,14 @@ export const BUBBLE_MAX_WIDTH = "80%";
 export const bubbleStyles = {
     group: clsx(
         "flex min-w-0 flex-col gap-refineui-size-xx-small",
-        // Connected corners for consecutive bubbles
-        "[&>[data-refineui=bubble]:first-child:not(:only-child)_[data-refineui=bubble-content]]:rounded-b-[var(--refineui-radius-rounded-medium)]",
-        "[&>[data-refineui=bubble]:last-child:not(:only-child)_[data-refineui=bubble-content]]:rounded-t-[var(--refineui-radius-rounded-medium)]",
-        "[&>[data-refineui=bubble]:not(:first-child):not(:last-child)_[data-refineui=bubble-content]]:rounded-[var(--refineui-radius-rounded-medium)]",
+        // Connected corners only flatten along the sender edge. The opposite
+        // edge keeps the outer bubble radius, including in RTL layouts.
+        "[&>[data-refineui=bubble][data-align=start]:first-child:not(:only-child)_[data-refineui=bubble-content]]:[border-end-start-radius:var(--refineui-radius-rounded-medium)]",
+        "[&>[data-refineui=bubble][data-align=end]:first-child:not(:only-child)_[data-refineui=bubble-content]]:[border-end-end-radius:var(--refineui-radius-rounded-medium)]",
+        "[&>[data-refineui=bubble][data-align=start]:last-child:not(:only-child)_[data-refineui=bubble-content]]:[border-start-start-radius:var(--refineui-radius-rounded-medium)]",
+        "[&>[data-refineui=bubble][data-align=end]:last-child:not(:only-child)_[data-refineui=bubble-content]]:[border-start-end-radius:var(--refineui-radius-rounded-medium)]",
+        "[&>[data-refineui=bubble][data-align=start]:not(:first-child):not(:last-child)_[data-refineui=bubble-content]]:[border-start-start-radius:var(--refineui-radius-rounded-medium)] [&>[data-refineui=bubble][data-align=start]:not(:first-child):not(:last-child)_[data-refineui=bubble-content]]:[border-end-start-radius:var(--refineui-radius-rounded-medium)]",
+        "[&>[data-refineui=bubble][data-align=end]:not(:first-child):not(:last-child)_[data-refineui=bubble-content]]:[border-start-end-radius:var(--refineui-radius-rounded-medium)] [&>[data-refineui=bubble][data-align=end]:not(:first-child):not(:last-child)_[data-refineui=bubble-content]]:[border-end-end-radius:var(--refineui-radius-rounded-medium)]",
         // Room for overlapping reactions on the last bubble in a group
         "[&>[data-refineui=bubble][data-has-reactions-bottom]:not(:last-child)]:mb-refineui-size-xx-large",
     ),

@@ -1,5 +1,16 @@
 # @refineui/react
 
+## 0.3.0
+
+### Minor Changes
+
+- Refresh NavigationMenu layouts and interaction behavior, complete the Tailwind-backed component styling migration, and update generated MCP documentation data.
+
+### Patch Changes
+
+- Updated dependencies
+  - @refineui/tokens@2.2.1
+
 ## 0.2.1
 
 ### Patch Changes

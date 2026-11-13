@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import { iconSizes } from "@refineui/tokens";
-import type { CSSProperties, KeyboardEvent, PointerEvent as ReactPointerEvent, TransitionEvent } from "react";
+import type { KeyboardEvent, PointerEvent as ReactPointerEvent, ReactNode, TransitionEvent } from "react";
 import {
     Children,
     cloneElement,
@@ -60,6 +60,23 @@ function clampIndex(i: number, count: number): number {
     return Math.min(count - 1, Math.max(0, i));
 }
 
+/**
+ * CarouselContent reports later changes through its effect, but its direct
+ * children are already available to Carousel's first render. Reading that
+ * initial count prevents controls and indicators from mounting as an empty
+ * state before the first effect runs.
+ */
+function getInitialSlideCount(children: ReactNode): number {
+    let slideCount = 0;
+
+    Children.forEach(children, (child) => {
+        if (!isValidElement<CarouselContentProps>(child) || child.type !== CarouselContent) return;
+        slideCount = Children.toArray(child.props.children).filter(isValidElement).length;
+    });
+
+    return slideCount;
+}
+
 export function Carousel({
     children,
     className,
@@ -72,7 +89,7 @@ export function Carousel({
 }: CarouselProps) {
     const isControlled = indexControlled !== undefined;
     const [internalIndex, setInternalIndex] = useState(defaultIndex);
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(() => getInitialSlideCount(children));
     const [trackIndex, setTrackIndex] = useState(defaultIndex);
     const [instant, setInstant] = useState(false);
     const index = isControlled ? indexControlled! : internalIndex;
@@ -401,7 +418,7 @@ export function CarouselPrevious({ className, disabled, onClick, ...props }: Car
             data-dir="prev"
             aria-label="Previous slide"
             disabled={isDisabled}
-            className={className}
+            className={clsx(carouselStyles.navFocus, className)}
             {...props}
             onClick={(e) => {
                 onClick?.(e);
@@ -432,7 +449,7 @@ export function CarouselNext({ className, disabled, onClick, ...props }: Carouse
             data-dir="next"
             aria-label="Next slide"
             disabled={isDisabled}
-            className={className}
+            className={clsx(carouselStyles.navFocus, className)}
             {...props}
             onClick={(e) => {
                 onClick?.(e);
@@ -452,37 +469,13 @@ export function CarouselNext({ className, disabled, onClick, ...props }: Carouse
 
 export function CarouselIndicators({ className, ...props }: CarouselIndicatorsProps) {
     const { count, index, scrollTo } = useCarouselContext("CarouselIndicators");
-    const trackRef = useRef<HTMLDivElement | null>(null);
-    const [thumb, setThumb] = useState({ width: 0, x: 0, ready: false });
     const [animate, setAnimate] = useState(false);
 
-    const updateThumb = useCallback(() => {
-        const el = trackRef.current;
-        if (!el || count <= 0) {
-            setThumb({ width: 0, x: 0, ready: false });
-            return;
-        }
-        const hits = el.querySelector<HTMLElement>("[data-refineui='carousel-indicator-hits']");
-        const inner = hits?.clientWidth ?? el.clientWidth;
-        const width = inner / count;
-        setThumb({
-            width,
-            x: width * index,
-            ready: true,
-        });
-    }, [count, index]);
-
-    useLayoutEffect(() => {
-        updateThumb();
-    }, [updateThumb]);
-
-    // Enable transitions only after the first committed paint with geometry (Segmented Control contract).
+    // Derive the initial geometry from the slide count so the thumb never
+    // first paints at zero width while waiting for a layout measurement.
     useEffect(() => {
-        if (!thumb.ready) {
-            setAnimate(false);
-            return;
-        }
-        if (animate) return;
+        setAnimate(false);
+        if (count <= 0) return;
         let raf2 = 0;
         const raf1 = requestAnimationFrame(() => {
             raf2 = requestAnimationFrame(() => setAnimate(true));
@@ -491,26 +484,18 @@ export function CarouselIndicators({ className, ...props }: CarouselIndicatorsPr
             cancelAnimationFrame(raf1);
             cancelAnimationFrame(raf2);
         };
-    }, [thumb.ready, animate]);
-
-    useEffect(() => {
-        const el = trackRef.current;
-        if (!el) return;
-        const ro = new ResizeObserver(() => updateThumb());
-        ro.observe(el);
-        return () => ro.disconnect();
-    }, [updateThumb]);
+    }, [count]);
 
     if (count <= 0) return null;
 
-    const thumbStyle: CSSProperties = {
-        width: thumb.width,
-        transform: `translate3d(${thumb.x}px, 0, 0)`,
+    const selectedIndex = clampIndex(index, count);
+    const thumbStyle = {
+        width: `${100 / count}%`,
+        transform: `translate3d(${selectedIndex * 100}%, 0, 0)`,
     };
 
     return (
         <div
-            ref={trackRef}
             data-refineui="carousel-indicators"
             role="tablist"
             aria-label="Slides"
@@ -519,7 +504,6 @@ export function CarouselIndicators({ className, ...props }: CarouselIndicatorsPr
         >
             <span
                 data-refineui="carousel-indicator-thumb"
-                data-ready={thumb.ready ? "true" : undefined}
                 data-animate={animate ? "true" : undefined}
                 aria-hidden
                 className={carouselStyles.indicatorThumb}

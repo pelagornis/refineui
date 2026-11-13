@@ -7,7 +7,7 @@ export const drawerStyles = {
     inlineRoot: "relative z-auto flex",
     rootLeft: "justify-start",
     rootRight: "justify-end",
-    scrim: "absolute inset-0 cursor-pointer transition-opacity",
+    scrim: "absolute inset-0 cursor-pointer transition-opacity backdrop-blur-[var(--refineui-blur-overlay-scrim)]",
     panel:
         "relative box-border flex h-full flex-col overflow-hidden bg-refineui-alias-background-primary outline-none",
     panelOverlay: "shadow-refineui-16",

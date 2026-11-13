@@ -144,11 +144,11 @@ export function FloatingSurface({
     return (
         <div data-refineui="floating-chrome" aria-hidden className="pointer-events-none absolute -z-1" style={rootStyle}>
             <div className="absolute" style={shadowStyle}>
-                <div data-refineui="floating-shadow" className="absolute" style={{ inset: SHADOW_BLEED }}>
+                <div data-refineui="floating-shadow" className="absolute [filter:var(--refineui-elevation-floating-filter)]" style={{ inset: SHADOW_BLEED }}>
                     <div className="absolute inset-0" style={{ clipPath: clip, backgroundColor: borderColor }} />
                 </div>
             </div>
-            <div data-refineui="floating-surface" className="absolute inset-0" style={surfaceStyle} />
+            <div data-refineui="floating-surface" className="absolute inset-0 bg-refineui-alias-surface-frosted backdrop-blur-refineui-surface-frost" style={surfaceStyle} />
             <svg
                 data-refineui="floating-outline"
                 className="absolute inset-0 overflow-visible"

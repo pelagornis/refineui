@@ -5,7 +5,21 @@
   "kind": "part",
   "category": "parts",
   "label": "Navigation Menu Content",
-  "props": [],
+  "props": [
+    {
+      "name": "layout",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "dropdown",
+        "floating",
+        "overlay"
+      ],
+      "defaultValue": "dropdown",
+      "section": "variants",
+      "label": "layout"
+    }
+  ],
   "preview": {
     "mode": "full"
   },
@@ -18,10 +32,10 @@
   "slots": [
     {
       "name": "children",
-      "accepts": [
-        "NavigationMenuLink"
-      ],
-      "repeatable": true
+      "accepts": [],
+      "repeatable": true,
+      "allowAnyComponent": true,
+      "allowText": true
     }
   ]
 }

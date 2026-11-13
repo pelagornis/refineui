@@ -13,7 +13,7 @@ export const dialogRecipe = defineSlotRecipe({
     slots: ["root", "scrim", "panel", "panelScrollWrap", "header", "headerMain", "title", "description"],
     base: {
         root: "fixed inset-0 z-refineui-messages flex items-center justify-center p-refineui-size-large",
-        scrim: "absolute inset-0 cursor-pointer transition-opacity",
+        scrim: "absolute inset-0 cursor-pointer transition-opacity backdrop-blur-[var(--refineui-blur-overlay-scrim)]",
         panel:
             "relative box-border flex max-h-refineui-dialog-max-height-viewport w-full flex-col overflow-hidden rounded-refineui-xx-large bg-refineui-alias-background-primary p-refineui-size-xx-large shadow-refineui-8 outline-none",
         panelScrollWrap: "flex min-h-0 min-w-0 flex-1 flex-col",

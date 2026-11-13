@@ -39,7 +39,7 @@ export function Toggle({
             disabled={disabled}
             {...props}
         >
-            <span className={clsx(toggleStyles.thumb, thumbClass)} />
+            <span className={clsx(toggleStyles.thumb, checked && toggleStyles.thumbChecked, thumbClass)} />
         </button>
     );
 }

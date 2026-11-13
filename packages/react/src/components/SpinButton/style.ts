@@ -4,7 +4,7 @@ import { formControlShellHeightClass, formControlTypoClass } from "../../formCon
 type SpinButtonSize = NonNullable<SpinButtonProps["size"]>;
 
 export const spinButtonStyles = {
-    root: "box-border flex w-full min-w-0 items-stretch overflow-hidden outline-none",
+    root: "box-border flex w-full min-w-0 items-stretch overflow-hidden outline-none transition-[border-color,background-color] duration-[var(--refineui-motion-duration-fast)] focus-within:border-refineui-alias-border-focus active:transform-none",
     borderDisabled: "border-refineui-thin border-refineui-alias-border-disabled",
     borderDefault: "border-refineui-thin border-refineui-alias-border-default",
     bgDisabled: "bg-refineui-alias-background-surface-disabled",
@@ -17,9 +17,9 @@ export const spinButtonStyles = {
     stepper: "flex h-full min-h-0 w-refineui-spin-stepper-width shrink-0 flex-col",
     /** Split column evenly inside shared `controlHeight*` shell */
     stepButtonBase:
-        "box-border flex min-h-0 w-full flex-1 items-center justify-center border-none p-0 text-refineui-alias-foreground-secondary",
-    stepButtonDisabled: "cursor-not-allowed bg-refineui-alias-background-surface-disabled opacity-50",
-    stepButtonEnabled: "cursor-pointer bg-refineui-alias-background-primary opacity-100",
+        "box-border flex min-h-0 w-full flex-1 items-center justify-center border-none p-0 text-refineui-alias-foreground-secondary outline-none transition-[background-color,color,opacity] duration-[var(--refineui-motion-duration-fast)] active:transform-none focus-visible:outline-none",
+    stepButtonDisabled: "cursor-not-allowed bg-refineui-alias-background-surface-disabled opacity-50 text-refineui-alias-foreground-disabled",
+    stepButtonEnabled: "cursor-pointer bg-refineui-alias-background-primary opacity-100 hover:bg-refineui-alias-background-surface-hover hover:text-refineui-alias-foreground-primary active:bg-refineui-alias-background-surface-active active:text-refineui-alias-foreground-primary",
 } as const;
 
 /** Height + radius from shared form-control tokens; typography on value only */

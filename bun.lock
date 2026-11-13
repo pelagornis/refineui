@@ -45,7 +45,7 @@
     },
     "packages/mcp": {
       "name": "@refineui/mcp",
-      "version": "0.1.9",
+      "version": "0.1.10",
       "bin": {
         "refineui-mcp": "./lib/server.js",
       },
@@ -63,7 +63,7 @@
     },
     "packages/react": {
       "name": "@refineui/react",
-      "version": "0.2.1",
+      "version": "0.3.0",
       "dependencies": {
         "@refineui/tokens": "workspace:*",
         "@refineui/utilities": "workspace:*",
@@ -71,6 +71,8 @@
         "clsx": "2.1.1",
       },
       "devDependencies": {
+        "@tailwindcss/node": "^4.3.3",
+        "@tailwindcss/oxide": "^4.3.3",
         "@types/react": "^18.3.20",
         "@types/react-dom": "^18.3.0",
         "jsdom": "^30.1.3",
@@ -86,7 +88,7 @@
     },
     "packages/tokens": {
       "name": "@refineui/tokens",
-      "version": "2.2.0",
+      "version": "2.2.1",
       "dependencies": {
         "@swc/helpers": "^0.5.1",
       },

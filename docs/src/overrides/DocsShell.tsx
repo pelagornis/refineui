@@ -69,7 +69,7 @@ type ShellProps = {
 
 function DocsMainScroll({ children }: { children?: ReactNode }) {
     return (
-        <ScrollArea type="hover" data-docs-shell-main className="h-full w-full min-h-0">
+        <ScrollArea type="scroll" data-docs-shell-main className="h-full w-full min-h-0">
             <ScrollAreaViewport>{children}</ScrollAreaViewport>
             <ScrollAreaScrollbar orientation="vertical">
                 <ScrollAreaThumb />

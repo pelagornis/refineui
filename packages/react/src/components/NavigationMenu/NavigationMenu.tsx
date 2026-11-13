@@ -13,6 +13,7 @@ import {
     type FocusEvent,
     type KeyboardEvent,
     type PointerEvent,
+    type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
 import { iconSizes, semanticInteraction, spacings, zIndex } from "@refineui/tokens";
@@ -39,12 +40,26 @@ type NavigationMenuContextValue = {
     close: (options?: { immediate?: boolean }) => void;
     delayDuration: number;
     skipDelayDuration: number;
+    idPrefix: string;
     listRef: React.RefObject<HTMLUListElement | null>;
     registerTrigger: (itemValue: string, el: HTMLButtonElement | null) => void;
     registerContent: (itemValue: string, el: HTMLDivElement | null) => void;
+    focusFirstContent: (itemValue: string) => void;
     isContentTarget: (itemValue: string, target: EventTarget | null) => boolean;
     isMenuTarget: (target: EventTarget | null) => boolean;
     isInsideContent: boolean;
+    isSwitching: boolean;
+    registerOverlayContent: (itemValue: string, content: OverlayContentRegistration) => void;
+    unregisterOverlayContent: (itemValue: string) => void;
+    getOverlayContent: (itemValue: string) => OverlayContentRegistration | undefined;
+};
+
+type OverlayContentRegistration = {
+    children: ReactNode;
+    className?: string;
+    style?: CSSProperties;
+    portalContainer?: Element | null;
+    onKeyDown?: NavigationMenuContentProps["onKeyDown"];
 };
 
 const NavigationMenuContext = createContext<NavigationMenuContextValue | null>(null);
@@ -104,12 +119,17 @@ export function NavigationMenu({
     ...props
 }: NavigationMenuProps) {
     const [value, setValue] = useControllableOpen(valueControlled, defaultValue, onValueChange);
+    const idPrefix = `refineui-nav-menu-${useId().replaceAll(":", "")}`;
     const listRef = useRef<HTMLUListElement | null>(null);
     const triggerMapRef = useRef(new Map<string, HTMLButtonElement>());
     const contentMapRef = useRef(new Map<string, HTMLDivElement>());
     const openTimerRef = useRef<number | null>(null);
     const closeTimerRef = useRef<number | null>(null);
+    const switchTimerRef = useRef<number | null>(null);
     const rootRef = useRef<HTMLElement | null>(null);
+    const [isSwitching, setIsSwitching] = useState(false);
+    const overlayContentRef = useRef(new Map<string, OverlayContentRegistration>());
+    const [overlayVersion, setOverlayVersion] = useState(0);
 
     const delayDuration =
         delayDurationProp ?? motionMsToNumber(semanticInteraction.duration.normal);
@@ -130,9 +150,21 @@ export function NavigationMenu({
     const setValueSafe = useCallback(
         (next: string) => {
             clearTimers();
+            if (switchTimerRef.current != null) {
+                window.clearTimeout(switchTimerRef.current);
+                switchTimerRef.current = null;
+            }
+            const switching = Boolean(value && next && value !== next);
+            setIsSwitching(switching);
+            if (switching) {
+                switchTimerRef.current = window.setTimeout(() => {
+                    setIsSwitching(false);
+                    switchTimerRef.current = null;
+                }, motionMsToNumber(semanticInteraction.duration.normal));
+            }
             setValue(next);
         },
-        [clearTimers, setValue],
+        [clearTimers, setValue, value],
     );
 
     const openItem = useCallback(
@@ -140,15 +172,15 @@ export function NavigationMenu({
             clearTimers();
             const delay = options?.immediate || value !== "" ? skipDelayDuration : delayDuration;
             if (delay <= 0 || options?.immediate) {
-                setValue(itemValue);
+                setValueSafe(itemValue);
                 return;
             }
             openTimerRef.current = window.setTimeout(() => {
-                setValue(itemValue);
+                setValueSafe(itemValue);
                 openTimerRef.current = null;
             }, delay);
         },
-        [clearTimers, delayDuration, setValue, skipDelayDuration, value],
+        [clearTimers, delayDuration, setValueSafe, skipDelayDuration, value],
     );
 
     const close = useCallback(
@@ -182,6 +214,43 @@ export function NavigationMenu({
         }
     }, []);
 
+    const registerOverlayContent = useCallback((itemValue: string, content: OverlayContentRegistration) => {
+        overlayContentRef.current.set(itemValue, content);
+        setOverlayVersion((version) => version + 1);
+    }, []);
+
+    const unregisterOverlayContent = useCallback((itemValue: string) => {
+        if (!overlayContentRef.current.delete(itemValue)) return;
+        setOverlayVersion((version) => version + 1);
+    }, []);
+
+    const getOverlayContent = useCallback(
+        (itemValue: string) => overlayContentRef.current.get(itemValue),
+        [],
+    );
+
+    const focusFirstContent = useCallback((itemValue: string) => {
+        const focus = () => {
+            const content = contentMapRef.current.get(itemValue);
+            const firstFocusable = content?.querySelector<HTMLElement>(
+                'a[href]:not([aria-disabled="true"]), button:not(:disabled), [tabindex]:not([tabindex="-1"])',
+            );
+            if (firstFocusable) {
+                firstFocusable.focus();
+                return;
+            }
+            requestAnimationFrame(() => {
+                contentMapRef.current
+                    .get(itemValue)
+                    ?.querySelector<HTMLElement>(
+                        'a[href]:not([aria-disabled="true"]), button:not(:disabled), [tabindex]:not([tabindex="-1"])',
+                    )
+                    ?.focus();
+            });
+        };
+        requestAnimationFrame(focus);
+    }, []);
+
     const isContentTarget = useCallback((itemValue: string, target: EventTarget | null) => {
         return target instanceof Node && contentMapRef.current.get(itemValue)?.contains(target) === true;
     }, []);
@@ -194,7 +263,10 @@ export function NavigationMenu({
         );
     }, []);
 
-    useEffect(() => () => clearTimers(), [clearTimers]);
+    useEffect(() => () => {
+        clearTimers();
+        if (switchTimerRef.current != null) window.clearTimeout(switchTimerRef.current);
+    }, [clearTimers]);
 
     useEffect(() => {
         if (!value) return;
@@ -228,19 +300,31 @@ export function NavigationMenu({
             close,
             delayDuration,
             skipDelayDuration,
+            idPrefix,
             listRef,
             registerTrigger,
             registerContent,
+            focusFirstContent,
             isContentTarget,
             isMenuTarget,
             isInsideContent: false,
+            isSwitching,
+            registerOverlayContent,
+            unregisterOverlayContent,
+            getOverlayContent,
         }),
         [
             close,
             delayDuration,
             isContentTarget,
             isMenuTarget,
+            isSwitching,
+            registerOverlayContent,
+            unregisterOverlayContent,
+            getOverlayContent,
+            idPrefix,
             openItem,
+            focusFirstContent,
             registerContent,
             registerTrigger,
             setValueSafe,
@@ -259,6 +343,7 @@ export function NavigationMenu({
                 {...props}
             >
                 {children}
+                <NavigationMenuOverlayViewport version={overlayVersion} />
             </nav>
         </NavigationMenuContext.Provider>
     );
@@ -315,8 +400,8 @@ export function NavigationMenuItem({
     const reactId = useId();
     const value = valueProp ?? reactId;
     const open = menu.value === value;
-    const triggerId = `refineui-nav-menu-trigger-${value}`;
-    const contentId = `refineui-nav-menu-content-${value}`;
+    const triggerId = `${menu.idPrefix}-trigger-${value}`;
+    const contentId = `${menu.idPrefix}-content-${value}`;
 
     const itemCtx = useMemo<NavigationMenuItemContextValue>(
         () => ({ value, open, triggerId, contentId }),
@@ -409,9 +494,10 @@ export function NavigationMenuTrigger({
                     } else {
                         menu.openItem(item.value, { immediate: true });
                     }
-                } else if (event.key === "ArrowDown" && !item.open) {
+                } else if (event.key === "ArrowDown") {
                     event.preventDefault();
                     menu.openItem(item.value, { immediate: true });
+                    menu.focusFirstContent(item.value);
                 }
             }}
             {...props}
@@ -430,9 +516,51 @@ export function NavigationMenuTrigger({
     );
 }
 
-export function NavigationMenuContent({
+export function NavigationMenuContent(props: NavigationMenuContentProps) {
+    return props.layout === "overlay"
+        ? <NavigationMenuOverlayContent {...props} />
+        : <NavigationMenuContentPanel {...props} />;
+}
+
+function NavigationMenuOverlayContent({
     children,
     className,
+    portalContainer,
+    onKeyDown,
+    style,
+}: NavigationMenuContentProps) {
+    const menu = useNavigationMenu("NavigationMenuContent");
+    const item = useNavigationMenuItem("NavigationMenuContent");
+    const { registerOverlayContent, unregisterOverlayContent } = menu;
+    const registrationRef = useRef<OverlayContentRegistration>({
+        children,
+        className,
+        portalContainer,
+        onKeyDown,
+        style,
+    });
+
+    registrationRef.current = {
+        children,
+        className,
+        portalContainer,
+        onKeyDown,
+        style,
+    };
+
+    useEffect(() => {
+        registerOverlayContent(item.value, registrationRef.current);
+        return () => unregisterOverlayContent(item.value);
+    }, [item.value, registerOverlayContent, unregisterOverlayContent]);
+
+    return null;
+}
+
+function NavigationMenuContentPanel({
+    children,
+    className,
+    layout = "dropdown",
+    portalContainer,
     onKeyDown,
     style,
     ...props
@@ -463,9 +591,13 @@ export function NavigationMenuContent({
         const timeout = window.setTimeout(() => {
             setShouldRender(false);
             setIsClosing(false);
-        }, motionMsToNumber(semanticInteraction.duration.fast));
+        }, motionMsToNumber(
+            layout === "overlay"
+                ? semanticInteraction.duration.normal
+                : semanticInteraction.duration.fast,
+        ));
         return () => window.clearTimeout(timeout);
-    }, [item.open, shouldRender]);
+    }, [item.open, layout, menu.isSwitching]);
 
     useIsomorphicLayoutEffect(() => {
         if (!shouldRender || !item.open || typeof document === "undefined") return;
@@ -478,15 +610,25 @@ export function NavigationMenuContent({
 
             const triggerRect = trigger.getBoundingClientRect();
             const contentWidth = content.offsetWidth;
+            const portalRect = portalContainer?.getBoundingClientRect();
+            const boundaryWidth = portalRect?.width ?? window.innerWidth;
             const edge = Number.parseFloat(spacings.sizeMedium) || 8;
-            const left = Math.max(
-                edge,
-                Math.min(triggerRect.left, window.innerWidth - contentWidth - edge),
-            );
+            const floatingOffset = Number.parseFloat(spacings.sizeXXSmall) || 4;
+            const left = layout === "floating"
+                ? Math.max(edge, Math.min((boundaryWidth - contentWidth) / 2, boundaryWidth - contentWidth - edge))
+                : Math.max(edge, Math.min(triggerRect.left - (portalRect?.left ?? 0), boundaryWidth - contentWidth - edge));
+
+            if (layout === "overlay") {
+                setPositionStyle({
+                    top: portalRect ? triggerRect.bottom - portalRect.top : triggerRect.bottom,
+                    zIndex: Number.parseInt(String(zIndex.zIndexMessages), 10) || 10000,
+                });
+                return;
+            }
 
             setPositionStyle({
-                position: "fixed",
-                top: triggerRect.bottom,
+                position: portalRect ? "absolute" : "fixed",
+                top: triggerRect.bottom + (layout === "floating" ? floatingOffset : 0) - (portalRect?.top ?? 0),
                 left,
                 zIndex: Number.parseInt(String(zIndex.zIndexMessages), 10) || 10000,
             });
@@ -501,7 +643,7 @@ export function NavigationMenuContent({
             window.removeEventListener("resize", updatePosition);
             unsubscribe();
         };
-    }, [item.open, item.triggerId, shouldRender]);
+    }, [item.open, item.triggerId, layout, portalContainer, shouldRender]);
 
     const contentCtx = useMemo<NavigationMenuContextValue>(
         () => ({ ...menu, isInsideContent: true }),
@@ -518,8 +660,27 @@ export function NavigationMenuContent({
                 role="region"
                 aria-labelledby={item.triggerId}
                 data-refineui="navigation-menu-content"
+                data-layout={layout}
                 data-state={isClosing || !item.open ? "closed" : "open"}
-                className={clsx(navigationMenuStyles.content, className)}
+                className={clsx(
+                    navigationMenuStyles.content,
+                    layout === "overlay"
+                        ? portalContainer
+                            ? navigationMenuStyles.contentOverlayContained
+                            : navigationMenuStyles.contentOverlay
+                        : layout === "floating"
+                            ? navigationMenuStyles.contentFloating
+                            : navigationMenuStyles.contentDropdown,
+                    layout !== "overlay" && portalContainer && navigationMenuStyles.contentContained,
+                    isClosing || !item.open
+                        ? layout === "overlay"
+                            ? "pointer-events-none"
+                            : layout === "floating"
+                            ? "pointer-events-none translate-y-refineui-size-x-small opacity-0"
+                            : "pointer-events-none opacity-0"
+                        : layout === "floating" ? "translate-y-0 opacity-100" : "opacity-100",
+                    className,
+                )}
                 style={{ ...positionStyle, ...style }}
                 onPointerEnter={() => menu.openItem(item.value, { immediate: true })}
                 onPointerLeave={(event: PointerEvent<HTMLDivElement>) => {
@@ -532,18 +693,253 @@ export function NavigationMenuContent({
                     if (event.key === "Escape") {
                         event.preventDefault();
                         menu.setValue("");
+                        document.getElementById(item.triggerId)?.focus();
                     }
                 }}
                 {...props}
             >
-                <div data-refineui="navigation-menu-content-panel" className={navigationMenuStyles.contentPanel}>
+                {layout === "overlay" ? (
+                    <div
+                        aria-hidden
+                        data-state={isClosing || !item.open ? "closed" : "open"}
+                        className={clsx(
+                            navigationMenuStyles.overlayBackdrop,
+                            isClosing || !item.open
+                                ? "backdrop-blur-none opacity-0"
+                                : "backdrop-blur-[var(--refineui-blur-overlay-scrim)] opacity-100",
+                            !menu.isSwitching && item.open
+                                ? navigationMenuStyles.overlayBackdropEnter
+                                : undefined,
+                            isClosing && !menu.isSwitching
+                                ? navigationMenuStyles.overlayBackdropExit
+                                : undefined,
+                        )}
+                        onPointerDown={(event) => {
+                            event.preventDefault();
+                            menu.setValue("");
+                        }}
+                        onPointerEnter={() => menu.close()}
+                    />
+                ) : null}
+                <div
+                    data-refineui="navigation-menu-content-panel"
+                    data-layout={layout}
+                    data-state={isClosing || !item.open ? "closed" : "open"}
+                    className={clsx(
+                        layout === "overlay"
+                            ? navigationMenuStyles.contentPanelOverlay
+                            : navigationMenuStyles.contentPanel,
+                        layout === "overlay"
+                            ? undefined
+                            : layout === "floating"
+                                ? navigationMenuStyles.contentPanelFloating
+                                : navigationMenuStyles.contentPanelDropdown,
+                        layout === "overlay" && (isClosing || !item.open)
+                            ? "translate-y-refineui-size-xxx-small opacity-0"
+                            : undefined,
+                        layout === "overlay" && isClosing && !menu.isSwitching
+                            ? navigationMenuStyles.contentPanelOverlayExit
+                            : undefined,
+                    )}
+                >
                     {children}
                 </div>
             </div>
         </NavigationMenuContext.Provider>
     );
 
-    return typeof document === "undefined" ? content : createPortal(content, document.body);
+    return typeof document === "undefined" ? content : createPortal(content, portalContainer ?? document.body);
+}
+
+function NavigationMenuOverlayViewport({ version: _version }: { version: number }) {
+    const menu = useNavigationMenu("NavigationMenuContent");
+    const [presentValue, setPresentValue] = useState(menu.value);
+    const [isClosing, setIsClosing] = useState(false);
+    const [positionStyle, setPositionStyle] = useState<CSSProperties | null>(null);
+    const [panelHeight, setPanelHeight] = useState<number | null>(null);
+    const rootRef = useRef<HTMLDivElement | null>(null);
+    const innerRef = useRef<HTMLDivElement | null>(null);
+    const heightRef = useRef<number | null>(null);
+    const heightTimerRef = useRef<number | null>(null);
+    const isClosingRef = useRef(false);
+
+    const registration = presentValue ? menu.getOverlayContent(presentValue) : undefined;
+
+    useIsomorphicLayoutEffect(() => {
+        if (menu.value) {
+            isClosingRef.current = false;
+            setPresentValue(menu.value);
+            setIsClosing(false);
+            return;
+        }
+        if (!presentValue) return;
+        isClosingRef.current = true;
+        setIsClosing(true);
+        if (heightTimerRef.current != null) {
+            window.clearTimeout(heightTimerRef.current);
+            heightTimerRef.current = null;
+        }
+        const currentHeight = innerRef.current?.scrollHeight ?? heightRef.current;
+        let frame: number | undefined;
+        let settleFrame: number | undefined;
+        if (currentHeight != null) {
+            setPanelHeight(currentHeight);
+            frame = requestAnimationFrame(() => {
+                settleFrame = requestAnimationFrame(() => setPanelHeight(0));
+            });
+        }
+        const timeout = window.setTimeout(() => {
+            setPresentValue("");
+            setIsClosing(false);
+            setPanelHeight(null);
+            heightRef.current = null;
+            isClosingRef.current = false;
+        }, motionMsToNumber(semanticInteraction.duration.panel));
+        return () => {
+            if (frame != null) cancelAnimationFrame(frame);
+            if (settleFrame != null) cancelAnimationFrame(settleFrame);
+            window.clearTimeout(timeout);
+        };
+    }, [menu.value, presentValue]);
+
+    useIsomorphicLayoutEffect(() => {
+        if (!presentValue || !registration || typeof document === "undefined") return;
+        const trigger = document.getElementById(`${menu.idPrefix}-trigger-${CSS.escape(presentValue)}`);
+        if (!trigger) return;
+
+        const updatePosition = () => {
+            const triggerRect = trigger.getBoundingClientRect();
+            const portalRect = registration.portalContainer?.getBoundingClientRect();
+            const headerBottom = trigger.closest<HTMLElement>("header")?.getBoundingClientRect().bottom;
+            const overlayTop = headerBottom ?? triggerRect.bottom;
+            setPositionStyle({
+                top: portalRect ? overlayTop - portalRect.top : overlayTop,
+                zIndex: Number.parseInt(String(zIndex.zIndexMessages), 10) || 10000,
+            });
+        };
+
+        updatePosition();
+        window.addEventListener("resize", updatePosition);
+        const unsubscribe = subscribeScrollAndScrollableAncestors(trigger, updatePosition);
+        return () => {
+            window.removeEventListener("resize", updatePosition);
+            unsubscribe();
+        };
+    }, [presentValue, registration]);
+
+    useIsomorphicLayoutEffect(() => {
+        if (!presentValue || !innerRef.current) return;
+        const nextHeight = innerRef.current.scrollHeight;
+        const previousHeight = heightRef.current;
+        heightRef.current = nextHeight;
+        if (previousHeight === nextHeight) {
+            setPanelHeight(null);
+            return;
+        }
+        if (heightTimerRef.current != null) window.clearTimeout(heightTimerRef.current);
+        setPanelHeight(previousHeight ?? 0);
+        let settleFrame: number | undefined;
+        const frame = requestAnimationFrame(() => {
+            settleFrame = requestAnimationFrame(() => setPanelHeight(nextHeight));
+        });
+        heightTimerRef.current = window.setTimeout(
+            () => {
+                if (!isClosingRef.current) setPanelHeight(null);
+            },
+            motionMsToNumber(semanticInteraction.duration.panel),
+        );
+        return () => {
+            cancelAnimationFrame(frame);
+            if (settleFrame != null) cancelAnimationFrame(settleFrame);
+            if (heightTimerRef.current != null) window.clearTimeout(heightTimerRef.current);
+        };
+    }, [presentValue, registration?.children]);
+
+    useEffect(() => {
+        menu.registerContent(presentValue, rootRef.current);
+        return () => menu.registerContent(presentValue, null);
+    }, [menu, presentValue]);
+
+    useEffect(() => {
+        if (!presentValue || typeof document === "undefined") return;
+        const trigger = document.getElementById(`${menu.idPrefix}-trigger-${CSS.escape(presentValue)}`);
+        const header = trigger?.closest<HTMLElement>("header");
+        if (!header) return;
+        header.setAttribute("data-refineui-navigation-menu-overlay-open", "");
+        return () => header.removeAttribute("data-refineui-navigation-menu-overlay-open");
+    }, [presentValue]);
+
+    if (!presentValue || !registration) return null;
+
+    const state = isClosing ? "closed" : "open";
+    const contentCtx: NavigationMenuContextValue = { ...menu, isInsideContent: true };
+    const root = (
+        <NavigationMenuContext.Provider value={contentCtx}>
+            <div
+                ref={rootRef}
+                id={`${menu.idPrefix}-content-${presentValue}`}
+                role="region"
+                aria-labelledby={`${menu.idPrefix}-trigger-${presentValue}`}
+                data-refineui="navigation-menu-content"
+                data-layout="overlay"
+                data-state={state}
+                className={clsx(
+                    registration.portalContainer
+                        ? navigationMenuStyles.contentOverlayContained
+                        : navigationMenuStyles.contentOverlay,
+                    isClosing && "pointer-events-none",
+                    registration.className,
+                )}
+                style={{ ...positionStyle, ...registration.style }}
+                onPointerEnter={() => menu.openItem(presentValue, { immediate: true })}
+                onPointerLeave={(event: PointerEvent<HTMLDivElement>) => {
+                    if (menu.isMenuTarget(event.relatedTarget)) return;
+                    menu.close();
+                }}
+                onKeyDown={(event: KeyboardEvent<HTMLDivElement>) => {
+                    registration.onKeyDown?.(event);
+                    if (event.defaultPrevented || event.key !== "Escape") return;
+                    event.preventDefault();
+                    menu.setValue("");
+                    document.getElementById(`${menu.idPrefix}-trigger-${presentValue}`)?.focus();
+                }}
+            >
+                <div
+                    aria-hidden
+                    data-state={state}
+                    className={clsx(
+                        navigationMenuStyles.overlayBackdrop,
+                        isClosing ? "backdrop-blur-none opacity-0" : "backdrop-blur-[var(--refineui-blur-overlay-scrim)] opacity-100",
+                        !isClosing && navigationMenuStyles.overlayBackdropEnter,
+                        isClosing && navigationMenuStyles.overlayBackdropExit,
+                    )}
+                    onPointerDown={(event) => {
+                        event.preventDefault();
+                        menu.setValue("");
+                    }}
+                    onPointerEnter={() => menu.close()}
+                />
+                <div
+                    data-refineui="navigation-menu-content-panel"
+                    data-layout="overlay"
+                    data-state={state}
+                    className={clsx(
+                        navigationMenuStyles.contentPanelOverlay,
+                        isClosing && navigationMenuStyles.contentPanelOverlayExit,
+                    )}
+                    style={panelHeight == null ? undefined : { height: panelHeight }}
+                >
+                    <div ref={innerRef} className="w-full">
+                        {registration.children}
+                    </div>
+                </div>
+            </div>
+        </NavigationMenuContext.Provider>
+    );
+
+    return typeof document === "undefined"
+        ? root
+        : createPortal(root, registration.portalContainer ?? document.body);
 }
 
 export function NavigationMenuLink({
@@ -597,7 +993,7 @@ export function NavigationMenuLink({
 type IndicatorBox = { left: number; width: number };
 
 export function NavigationMenuIndicator({ className, style, ...props }: NavigationMenuIndicatorProps) {
-    const { value, listRef } = useNavigationMenu("NavigationMenuIndicator");
+    const { value, listRef, idPrefix } = useNavigationMenu("NavigationMenuIndicator");
     const [box, setBox] = useState<IndicatorBox | null>(null);
 
     const measure = useCallback(() => {
@@ -607,7 +1003,7 @@ export function NavigationMenuIndicator({ className, style, ...props }: Navigati
             return;
         }
         const trigger = list.querySelector<HTMLElement>(
-            `[data-refineui="navigation-menu-trigger"][id="refineui-nav-menu-trigger-${CSS.escape(value)}"]`,
+            `[data-refineui="navigation-menu-trigger"][id="${CSS.escape(idPrefix)}-trigger-${CSS.escape(value)}"]`,
         );
         if (!trigger) {
             setBox(null);

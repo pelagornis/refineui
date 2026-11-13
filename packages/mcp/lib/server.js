@@ -9,7 +9,7 @@ import {
   listTokenCategories,
   normalizeSlug,
   searchDocs
-} from "./chunk-SBNDHV6X.js";
+} from "./chunk-O43VYMDO.js";
 
 // src/server.ts
 import { McpServer } from "@modelcontextprotocol/server";

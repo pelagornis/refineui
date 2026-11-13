@@ -247,7 +247,7 @@ export function AvatarGroup({
                 data-avatar-stack-size={normalizedSize}
                 className={clsx(
                     avatarStyles.groupRoot,
-                    layout === "stack" ? "gap-0" : avatarSpreadGap[normalizedSize],
+                    layout === "stack" ? "gap-0 pe-[var(--avatar-stack-overlap)]" : avatarSpreadGap[normalizedSize],
                     className,
                 )}
                 style={{
@@ -260,13 +260,13 @@ export function AvatarGroup({
                     const z = layout === "stack" ? index : undefined;
                     if (isCount) {
                         return (
-                            <div key={`count-${index}`} className={avatarStyles.groupCountWrap} style={{ zIndex: z }}>
+                            <div key={`count-${index}`} className={clsx(avatarStyles.groupCountWrap, layout === "stack" && index > 0 && "-ms-[var(--avatar-stack-overlap)]")} style={{ zIndex: z }}>
                                 {child}
                             </div>
                         );
                     }
                     return (
-                        <div key={`avatar-${index}`} className={avatarStyles.groupAvatarWrap} style={{ zIndex: z }}>
+                        <div key={`avatar-${index}`} className={clsx(avatarStyles.groupAvatarWrap, layout === "stack" && index > 0 && "-ms-[var(--avatar-stack-overlap)]")} style={{ zIndex: z }}>
                             {child}
                         </div>
                     );

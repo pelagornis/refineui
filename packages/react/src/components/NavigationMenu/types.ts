@@ -32,7 +32,19 @@ export interface NavigationMenuTriggerProps extends Omit<ButtonHTMLAttributes<HT
     children: ReactNode;
 }
 
-export interface NavigationMenuContentProps extends HTMLAttributes<HTMLDivElement> {}
+export interface NavigationMenuContentProps extends HTMLAttributes<HTMLDivElement> {
+    /**
+     * Surface and positioning treatment for the panel. Compact dropdown is the
+     * default; floating and overlay let consuming navigation compose wider panels.
+     * @default "dropdown"
+     */
+    layout?: "dropdown" | "floating" | "overlay";
+    /**
+     * Optional portal boundary for embedded previews and contained experiences.
+     * Panels position themselves relative to this element when provided.
+     */
+    portalContainer?: Element | null;
+}
 
 export interface NavigationMenuLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
     /** Marks the current page (`aria-current="page"`). */

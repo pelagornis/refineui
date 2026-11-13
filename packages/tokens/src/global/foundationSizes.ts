@@ -42,6 +42,7 @@ export const foundationSizes = {
     foundationSize5750: "575px",
     foundationSize6000: "600px",
     foundationSize8500: "850px",
+    foundationSize10000: "1000px",
 } as const;
 
 export type FoundationSizeName = keyof typeof foundationSizes;

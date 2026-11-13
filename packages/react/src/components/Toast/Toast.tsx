@@ -301,7 +301,16 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(props
             style={{ ...tokenStyle, ...style }}
             className={clsx(toastStyles.card, className)}
         >
-            <div data-refineui="toast-icon" className={toastStyles.iconWrap}>
+            <div
+                data-refineui="toast-icon"
+                className={clsx(
+                    toastStyles.iconWrap,
+                    variant === "success" && "text-refineui-alias-foreground-success",
+                    variant === "error" && "text-refineui-alias-foreground-error",
+                    variant === "warning" && "text-refineui-alias-foreground-warning",
+                    variant === "default" && "text-refineui-alias-foreground-primary",
+                )}
+            >
                 {iconContent}
             </div>
             <div className={toastStyles.contentWrap}>
@@ -601,12 +610,13 @@ export function Toaster({
                     data-toast-id={rec.id}
                     data-index={index}
                     data-front={index === 0 ? "true" : "false"}
+                    className={toastStyles.stackItem}
                     style={{
                         ["--refineui-toast-z-index" as string]: String(STACK_Z_BASE - index),
                         ["--refineui-toast-stack-index" as string]: String(index),
                     }}
                 >
-                    <div data-refineui="toast-scale-layer">
+                    <div data-refineui="toast-scale-layer" className={toastStyles.scaleLayer}>
                         <SwipeableToast
                             record={rec}
                             index={index}

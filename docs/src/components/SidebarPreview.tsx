@@ -1,6 +1,6 @@
 import type { CSSProperties, TransitionEvent } from "react";
 import { useEffect, useRef, useState } from "react";
-import { iconSizes, semanticInteraction } from "@refineui/tokens";
+import { foundationSizes, iconSizes, semanticInteraction } from "@refineui/tokens";
 import { motionMsToNumber } from "@refineui/utilities/animation";
 import {
     Box,
@@ -200,7 +200,8 @@ export default function SidebarPreview() {
                     widthPercent={restoredSize.current}
                     mode="contained"
                     onPin={expandAnimated}
-                    className="h-refineui-foundation-size-4500 w-full"
+                    className="w-full"
+                    style={{ height: foundationSizes.foundationSize4500 }}
                 >
                     <SidebarProvider
                         id={PREVIEW_SIDEBAR_ID}

@@ -34,7 +34,11 @@ export function Avatars({
             }}
         >
             {display.map((a, i) => (
-                <div key={i} className={avatarsStyles.avatarWrap} style={isStack ? { zIndex: i } : undefined}>
+                <div
+                    key={i}
+                    className={clsx(avatarsStyles.avatarWrap, isStack && i > 0 && "-ms-[var(--avatar-stack-overlap)]")}
+                    style={isStack ? { zIndex: i } : undefined}
+                >
                     <Avatar src={a.src} alt={a.alt} size={size} />
                 </div>
             ))}
@@ -44,6 +48,7 @@ export function Avatars({
                         avatarsStyles.overflowCount,
                         avatarsCountSizeBySize[normalizedSize],
                         avatarsCountTypoBySize[normalizedSize],
+                        isStack && display.length > 0 && "-ms-[var(--avatar-stack-overlap)]",
                     )}
                     style={isStack ? { zIndex: display.length } : undefined}
                 >

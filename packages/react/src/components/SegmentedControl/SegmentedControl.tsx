@@ -143,6 +143,7 @@ export function SegmentedControl({
             <div
                 ref={groupRef}
                 data-refineui="segmented-control"
+                data-ready={indicator.ready ? "true" : "false"}
                 role="radiogroup"
                 aria-orientation="horizontal"
                 className={clsx(segmentedControlStyles.root, className)}

@@ -35,7 +35,7 @@ export const footerStyles = {
         "m-0 text-refineui-alias-foreground-tertiary",
     ),
     nav: clsx(
-        "grid w-full items-start",
+        "grid w-full grid-cols-[repeat(auto-fit,minmax(var(--refineui-size-foundation-size-2000),1fr))] items-start",
         "gap-x-refineui-size-xxx-large gap-y-refineui-size-xx-large",
     ),
     group: "flex min-w-0 flex-col gap-refineui-size-large",
@@ -47,7 +47,7 @@ export const footerStyles = {
         componentTextClass(componentTypographyTokens.footer.link),
         /** `min-h` carries the WCAG 2.2 Target Size (Minimum) 24px floor — the 20px line box alone is under it. */
         "box-border inline-flex w-fit min-h-refineui-foundation-size-240 cursor-pointer items-center",
-        "text-refineui-alias-foreground-tertiary no-underline outline-none",
+        "text-refineui-alias-foreground-tertiary no-underline outline-none hover:text-refineui-alias-foreground-primary focus-visible:outline-[length:var(--refineui-stroke-width-thick)] focus-visible:[outline-color:var(--refineui-focus-color)] focus-visible:[outline-offset:var(--refineui-focus-offset)] aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:!text-refineui-alias-foreground-disabled",
         "transition-[color] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",
     ),
     meta: clsx(
@@ -56,11 +56,15 @@ export const footerStyles = {
         "md:grid-cols-[1fr_auto_1fr] md:justify-items-stretch md:gap-refineui-size-x-large",
     ),
     metaEnd: "flex shrink-0 items-center md:col-start-3 md:justify-self-end",
-    locale: "flex shrink-0 items-center",
+    locale: clsx(
+        "flex shrink-0 items-center",
+        "[&_[data-refineui-select-trigger-value]]:inline-flex [&_[data-refineui-select-trigger-value]]:flex-none [&_[data-refineui-select-trigger-value]]:items-center [&_[data-refineui-select-trigger-value]]:gap-refineui-size-xx-small",
+        "[&_[data-refineui=select-trigger]]:hover:border-refineui-alias-border-strong [&_[data-refineui=select-trigger]]:active:border-refineui-alias-border-strong [&_[data-refineui=select-trigger][data-state=open]]:border-refineui-alias-border-strong",
+    ),
     localeLink: clsx(
         componentTextClass(componentTypographyTokens.footer.copyright),
         "box-border inline-flex w-fit cursor-pointer items-center",
-        "text-refineui-alias-foreground-tertiary no-underline outline-none",
+        "text-refineui-alias-foreground-tertiary no-underline outline-none hover:text-refineui-alias-foreground-primary aria-[current]:text-refineui-alias-foreground-primary focus-visible:outline-[length:var(--refineui-stroke-width-thick)] focus-visible:[outline-color:var(--refineui-focus-color)] focus-visible:[outline-offset:var(--refineui-focus-offset)] aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:!text-refineui-alias-foreground-disabled",
         "transition-[color] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",
     ),
     /** Select trigger chrome — Button `outline` / `sm` recipe (plain Select). */
@@ -81,7 +85,7 @@ export const footerStyles = {
     /** Box is the 24px tap target; the glyph inside stays 16px (see `refineui.css`). */
     socialLink: clsx(
         "box-border inline-flex size-refineui-foundation-size-240 shrink-0 cursor-pointer items-center justify-center",
-        "text-refineui-alias-foreground-tertiary no-underline outline-none",
+        "text-refineui-alias-foreground-tertiary no-underline outline-none hover:text-refineui-alias-foreground-primary focus-visible:outline-[length:var(--refineui-stroke-width-thick)] focus-visible:[outline-color:var(--refineui-focus-color)] focus-visible:[outline-offset:var(--refineui-focus-offset)] aria-disabled:pointer-events-none aria-disabled:cursor-not-allowed aria-disabled:!text-refineui-alias-foreground-disabled [&_svg]:block [&_svg]:size-refineui-foundation-size-160",
         "transition-[color] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",
     ),
 } as const;

@@ -24,19 +24,19 @@ export const segmentedControlRecipe = defineSlotRecipe({
              * so at narrow widths `overflow-hidden` would make trailing options
              * unreachable. Scrollbar chrome is suppressed in `refineui.css`.
              */
-            "overflow-x-auto overflow-y-hidden rounded-refineui-circle border-refineui-thin border-refineui-alias-border-default",
-            "bg-refineui-alias-background-brand-subtle",
+            "overflow-x-auto overflow-y-hidden rounded-refineui-circle border-refineui-thin border-refineui-alias-border-default [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+            "bg-refineui-alias-background-brand-subtle data-[ready=false]:[&_[data-refineui=segmented-control-item][data-selected=true]]:bg-refineui-alias-background-brand data-[ready=false]:[&_[data-refineui=segmented-control-item][data-selected=true]]:shadow-refineui-2",
         ),
         indicator: clsx(
-            "pointer-events-none absolute inset-y-0 start-0 z-0 block h-full",
+            "pointer-events-none absolute inset-y-0 start-0 z-0 block h-full opacity-0 data-[ready=true]:opacity-100",
             "rounded-refineui-circle bg-refineui-alias-background-brand shadow-refineui-2",
-            "will-change-[transform,width]",
+            "will-change-[transform,width] transition-none data-[animate=true]:transition-[transform,width] data-[animate=true]:duration-[var(--refineui-motion-duration-medium)] data-[animate=true]:ease-[var(--refineui-motion-easing-emphasized)] motion-reduce:transition-none",
         ),
         item: clsx(
             componentTextClass(componentTypographyTokens.segmentedControl),
             "relative z-[1] box-border inline-flex min-h-0 min-w-0 shrink-0 items-center justify-center gap-refineui-size-xx-small",
             "rounded-refineui-circle border-none bg-transparent px-refineui-size-medium py-refineui-size-x-small outline-none",
-            "transition-colors duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",
+            "transition-colors duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)] active:transform-none",
         ),
     },
 });
@@ -50,7 +50,7 @@ export const segmentedControlStyles = {
     indicator: segmentedControlRecipe.base.indicator,
     item: segmentedControlRecipe.base.item,
     itemDisabled: "cursor-not-allowed text-refineui-alias-foreground-disabled",
-    itemEnabled: "cursor-pointer",
+    itemEnabled: "cursor-pointer hover:text-refineui-alias-foreground-primary",
     itemSelectedEnabled: "text-refineui-alias-foreground-on-brand",
     itemSelectedDisabled: "text-refineui-alias-foreground-disabled",
     itemUnselected: "text-refineui-alias-foreground-secondary",

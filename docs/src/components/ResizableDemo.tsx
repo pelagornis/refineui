@@ -5,6 +5,7 @@ import {
   ResizablePanelGroup,
   Text,
 } from "@refineui/react";
+import { foundationSizes } from "@refineui/tokens";
 import { Look, Looks } from "./PreviewFrame";
 
 function PanelLabel({ children }: { children: string }) {
@@ -25,7 +26,11 @@ export default function ResizableDemo() {
   return (
     <Looks>
       <Look align="stretch">
-        <ResizablePanelGroup orientation="horizontal" className="h-refineui-foundation-size-2560 w-full">
+        <ResizablePanelGroup
+          orientation="horizontal"
+          className="w-full"
+          style={{ height: foundationSizes.foundationSize2560 }}
+        >
           <ResizablePanel defaultSize={35} minSize={20}>
             <PanelLabel>Sidebar</PanelLabel>
           </ResizablePanel>

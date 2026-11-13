@@ -8,7 +8,7 @@ import { componentTextClass } from "../../typography";
  * padding py `sizeMedium` / px `sizeXSmall` (differs from Input md).
  */
 export const textareaStyles = {
-    base: "box-border appearance-none outline-none transition-[border-color,box-shadow,background-color] duration-[var(--refineui-motion-duration-fast)]",
+    base: "box-border appearance-none outline-none transition-[border-color,box-shadow,background-color] duration-[var(--refineui-motion-duration-fast)] hover:border-refineui-alias-border-hover focus:border-refineui-alias-border-focus focus:shadow-[0_0_0_0.5px_var(--refineui-color-alias-border-focus)] data-[error=true]:focus:border-refineui-alias-background-error-hover data-[error=true]:focus:shadow-[0_0_0_0.5px_var(--refineui-color-alias-background-error-hover)] data-[success=true]:focus:border-refineui-alias-background-success-hover data-[success=true]:focus:shadow-[0_0_0_0.5px_var(--refineui-color-alias-background-success-hover)] disabled:cursor-not-allowed disabled:opacity-100",
     field: clsx(
         componentTextClass(componentTypographyTokens.textarea),
         "min-h-refineui-control-textarea-min resize-y rounded-refineui-large px-refineui-size-x-small py-refineui-size-medium",

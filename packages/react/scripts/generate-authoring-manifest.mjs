@@ -127,6 +127,16 @@ const rootProps = {
 // claiming that the runtime requires a value.
 const serializablePartProps = {
     SelectItem: [{ name: "textValue", valueType: "string", control: "text", section: "accessibility" }],
+    NavigationMenuContent: [
+        {
+            name: "layout",
+            valueType: "enum",
+            control: "segmented",
+            options: ["dropdown", "floating", "overlay"],
+            defaultValue: "dropdown",
+            section: "variants",
+        },
+    ],
 };
 
 // Required props used by default presets. These are values, never React nodes,
@@ -405,7 +415,9 @@ parentsFor("DrawerTitle", [parent("DrawerHeader")]);
 parentsFor("DrawerDescription", [parent("DrawerHeader")]);
 slotsFor("FieldLabel", [slot("children", ["FieldRequired"], { repeatable: true, allowText: true })]);
 slotsFor("FooterNav", [slot("children", ["FooterLink"], { repeatable: true })]);
-slotsFor("NavigationMenuContent", [slot("children", ["NavigationMenuLink"], { repeatable: true })]);
+slotsFor("NavigationMenuContent", [
+    slot("children", [], { repeatable: true, allowAnyComponent: true, allowText: true }),
+]);
 slotsFor("Sidebar", [slot("children", ["SidebarHeader", "SidebarContent", "SidebarFooter", "SidebarPeek", "SidebarTrigger"], { repeatable: true })]);
 
 const commandDialog = componentFor("CommandDialog");

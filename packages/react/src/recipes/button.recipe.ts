@@ -9,12 +9,13 @@ import type { ButtonSize, ButtonVariant } from "../components/Button/types";
 
 const buttonVariantClass: Record<ButtonVariant, string> = {
     primary:
-        "border-refineui-none border border-transparent bg-refineui-alias-background-brand text-refineui-alias-foreground-inversed",
+        "border-refineui-none border border-transparent bg-refineui-alias-background-brand text-refineui-alias-foreground-inversed hover:bg-refineui-alias-background-brand-hover active:bg-refineui-alias-background-brand-active data-[inactive=true]:border-transparent data-[inactive=true]:bg-refineui-alias-background-brand-disabled data-[inactive=true]:text-refineui-alias-foreground-disabled",
     secondary:
-        "border-refineui-none border border-transparent bg-refineui-alias-background-surface-hover text-refineui-alias-foreground-primary",
+        "border-refineui-none border border-transparent bg-refineui-alias-background-surface-hover text-refineui-alias-foreground-primary hover:bg-refineui-alias-background-surface-active hover:text-refineui-alias-foreground-primary-hover active:bg-refineui-alias-background-surface-active active:text-refineui-alias-foreground-primary data-[inactive=true]:border-transparent data-[inactive=true]:bg-refineui-alias-background-surface-disabled data-[inactive=true]:text-refineui-alias-foreground-disabled",
     outline:
-        "border-refineui-thin border-refineui-alias-border-default bg-transparent text-refineui-alias-foreground-primary",
-    ghost: "border-refineui-none border border-transparent bg-transparent text-refineui-alias-foreground-primary",
+        "border-refineui-thin border-refineui-alias-border-default bg-transparent text-refineui-alias-foreground-primary hover:border-refineui-alias-border-strong hover:text-refineui-alias-foreground-primary-hover active:border-refineui-alias-border-strong data-[inactive=true]:border-refineui-alias-border-disabled data-[inactive=true]:text-refineui-alias-foreground-disabled",
+    ghost:
+        "border-refineui-none border border-transparent bg-transparent text-refineui-alias-foreground-primary hover:bg-refineui-alias-background-primary-hover hover:text-refineui-alias-foreground-primary-hover active:bg-refineui-alias-background-primary-active active:text-refineui-alias-foreground-primary data-[inactive=true]:border-transparent data-[inactive=true]:text-refineui-alias-foreground-disabled",
 };
 
 const buttonLabelSizeClass: Record<ButtonSize, string> = {
@@ -31,7 +32,7 @@ const buttonIconSizeClass: Record<ButtonSize, string> = {
 
 export const buttonRecipe = defineRecipe({
     name: "button",
-    base: "box-border inline-flex cursor-pointer items-center justify-center border transition-[opacity,background-color,border-color,color,transform] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",
+    base: "box-border inline-flex cursor-pointer items-center justify-center border transition-[opacity,background-color,border-color,color,transform] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)] focus-visible:outline-none active:scale-[var(--refineui-motion-scale-press)] data-[inactive=true]:opacity-100 data-[inactive=true]:transform-none data-[inactive=true]:active:scale-100",
     variants: {
         variant: buttonVariantClass,
         layout: {
@@ -48,7 +49,7 @@ export const buttonRecipe = defineRecipe({
         {
             match: { variant: "ghost", layout: "icon" },
             className:
-                "border-refineui-none border border-transparent bg-transparent text-refineui-alias-foreground-secondary hover:text-refineui-alias-foreground-primary-hover",
+                "border-refineui-none border border-transparent bg-transparent text-refineui-alias-foreground-secondary hover:bg-refineui-alias-background-primary-hover hover:text-refineui-alias-foreground-primary-hover active:bg-refineui-alias-background-primary-active active:text-refineui-alias-foreground-primary data-[inactive=true]:border-transparent data-[inactive=true]:text-refineui-alias-foreground-disabled",
         },
         {
             match: { layout: "icon", variant: "primary" },

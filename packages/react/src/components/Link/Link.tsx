@@ -4,7 +4,7 @@ import { WebIcon } from "../../WebIcon";
 import { linkStyles } from "./style";
 import type { LinkProps } from "./types";
 
-/** Web Kit `Link` `226:158` — colors and underline via `refineui.css` `[data-refineui="link"]`. */
+/** Web Kit `Link` `226:158` — colors and interaction states live with the component recipe. */
 export function Link({
     showExternalIcon,
     target,

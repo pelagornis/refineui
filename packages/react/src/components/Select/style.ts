@@ -12,7 +12,7 @@ export const selectStyles = {
         "border-refineui-hairline border-refineui-alias-border-default",
         "bg-refineui-alias-background-primary px-refineui-size-medium py-refineui-size-x-small",
         "text-refineui-alias-foreground-primary outline-none",
-        "transition-[color,background-color,border-color,transform] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",
+        "transition-[color,background-color,border-color,transform] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)] hover:!bg-refineui-alias-background-primary-hover hover:!text-refineui-alias-foreground-primary-hover active:!bg-refineui-alias-background-primary-active active:!text-refineui-alias-foreground-primary data-[state=open]:!bg-refineui-alias-background-primary-hover data-[state=open]:!text-refineui-alias-foreground-primary-hover data-[pressed]:!bg-refineui-alias-background-primary-active data-[pressed]:!text-refineui-alias-foreground-primary focus-visible:!bg-refineui-alias-background-primary-hover focus-visible:!text-refineui-alias-foreground-primary-hover",
     ),
     /** Ghost plate — same gap/radius as filled, no field border (Button ghost-like). */
     triggerGhost: clsx(
@@ -21,7 +21,7 @@ export const selectStyles = {
         "border-refineui-none border-transparent bg-transparent",
         "px-refineui-size-x-small py-refineui-size-xx-small",
         "text-refineui-alias-foreground-primary outline-none",
-        "transition-[color,background-color,transform] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)]",
+        "transition-[color,background-color,transform] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)] hover:bg-refineui-alias-background-primary-hover hover:text-refineui-alias-foreground-primary-hover active:bg-refineui-alias-background-primary-active active:text-refineui-alias-foreground-primary data-[state=open]:bg-refineui-alias-background-primary-hover data-[state=open]:text-refineui-alias-foreground-primary-hover data-[pressed]:bg-refineui-alias-background-primary-active data-[pressed]:text-refineui-alias-foreground-primary focus-visible:bg-refineui-alias-background-primary-hover focus-visible:text-refineui-alias-foreground-primary-hover",
     ),
     /** Flush shell — consumer / parent owns padding, radius, surface. */
     triggerPlain: clsx(
@@ -42,15 +42,16 @@ export const selectStyles = {
     /* No overflow-hidden — it isolates descendants and kills panel `backdrop-filter`. */
     positioner: "z-refineui-popup flex flex-col",
     contentShell:
-        "box-border flex w-full min-h-0 flex-col overflow-hidden rounded-refineui-xx-large border-refineui-hairline border-refineui-alias-border-default p-refineui-size-xx-small shadow-refineui-2 outline-none",
+        "box-border flex w-full min-h-0 flex-col overflow-hidden rounded-refineui-xx-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-surface-frosted p-refineui-size-xx-small shadow-refineui-2 outline-none backdrop-blur-refineui-surface-frost",
     contentPopper: "h-auto max-h-[var(--refineui-select-content-available-height,100dvh)]",
-    contentItemAligned: "max-h-full",
+    /** The positioner owns alignment height; the frosted surface only covers its content. */
+    contentItemAligned: "h-fit max-h-full self-start",
     viewportPopper:
         "relative flex max-h-full min-h-0 min-w-full w-full flex-col",
     viewportItemAligned:
-        "relative flex min-h-0 min-w-full w-full max-h-full flex-1 flex-col",
+        "relative flex h-auto min-h-0 min-w-full w-full max-h-full flex-none flex-col",
     scrollAreaRootPopper: "relative flex max-h-full min-h-0 flex-col",
-    scrollAreaRootItemAligned: "relative flex h-full min-h-0 flex-1 flex-col",
+    scrollAreaRootItemAligned: "relative flex h-auto min-h-0 max-h-full flex-none flex-col",
 
     group: "flex flex-col gap-px",
     label: clsx(
@@ -61,7 +62,7 @@ export const selectStyles = {
 
     item: clsx(
         componentTextClass(componentTypographyTokens.select.item),
-        "relative flex cursor-pointer items-center gap-refineui-size-x-small rounded-refineui-large border-refineui-none bg-transparent p-refineui-size-x-small text-refineui-alias-foreground-primary outline-none transition-colors data-[disabled]:cursor-not-allowed data-[disabled]:text-refineui-alias-foreground-disabled",
+        "relative flex cursor-pointer items-center gap-refineui-size-x-small rounded-refineui-large border-refineui-none bg-transparent p-refineui-size-x-small text-refineui-alias-foreground-primary outline-none transition-[background-color,transform] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)] hover:bg-refineui-alias-background-primary-hover hover:text-refineui-alias-foreground-primary-hover active:bg-refineui-alias-background-primary-active active:text-refineui-alias-foreground-primary data-[selected=true]:bg-refineui-alias-background-primary-hover data-[selected=true]:text-refineui-alias-foreground-primary data-[state=selected]:bg-refineui-alias-background-primary-hover data-[state=selected]:text-refineui-alias-foreground-primary data-[state=hover]:bg-refineui-alias-background-primary-hover data-[state=hover]:text-refineui-alias-foreground-primary-hover data-[state=pressed]:bg-refineui-alias-background-primary-active data-[state=pressed]:text-refineui-alias-foreground-primary aria-disabled:cursor-not-allowed aria-disabled:bg-refineui-alias-background-surface-disabled aria-disabled:!text-refineui-alias-foreground-disabled aria-disabled:transform-none",
     ),
     itemActive: "bg-refineui-alias-background-primary-hover",
     itemDisabled: "cursor-not-allowed text-refineui-alias-foreground-disabled",

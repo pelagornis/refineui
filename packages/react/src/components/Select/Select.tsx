@@ -19,7 +19,7 @@ import {
 import { createPortal } from "react-dom";
 import { iconSizes } from "@refineui/tokens";
 import { componentSizes, foundationSizes } from "../../componentSizes";
-import { acquireBodyScrollLock, composeRefs } from "@refineui/utilities/react";
+import { composeRefs } from "@refineui/utilities/react";
 import { WebIcon } from "../../WebIcon";
 import { ScrollAreaRegion } from "../ScrollArea/ScrollAreaRegion";
 import { selectTriggerSizeClass, selectStyles } from "./style";
@@ -209,34 +209,6 @@ export function Select({
         document.addEventListener("mousedown", onOutside);
         return () => document.removeEventListener("mousedown", onOutside);
     }, [open, setOpen]);
-
-    /** Lock document + scrollable ancestors while open */
-    useEffect(() => {
-        if (!open) return;
-        const releaseBodyLock = acquireBodyScrollLock();
-        const ancestors = getScrollableAncestors(triggerRef.current).filter(
-            (el) => el !== document.body && el !== document.documentElement,
-        );
-        const prevStyles = ancestors.map((el) => ({
-            el,
-            overflow: el.style.overflow,
-            overflowX: el.style.overflowX,
-            overflowY: el.style.overflowY,
-        }));
-        for (const { el } of prevStyles) {
-            el.style.overflow = "hidden";
-            el.style.overflowX = "hidden";
-            el.style.overflowY = "hidden";
-        }
-        return () => {
-            for (const { el, overflow, overflowX, overflowY } of prevStyles) {
-                el.style.overflow = overflow;
-                el.style.overflowX = overflowX;
-                el.style.overflowY = overflowY;
-            }
-            releaseBodyLock();
-        };
-    }, [open]);
 
     const onKeyDown = useCallback(
         (event: KeyboardEvent<HTMLElement>) => {
@@ -444,7 +416,7 @@ export function SelectValue({ placeholder, className, ...props }: SelectValuePro
             )}
             {...props}
         >
-            {label || placeholder || rootPlaceholder || "Select..."}
+            {label || placeholder || rootPlaceholder || value || "Select..."}
         </span>
     );
 }
@@ -864,7 +836,10 @@ export function SelectItem({
     const isSelected = value === itemValue;
     const label = (textValue || (typeof children === "string" ? children : String(itemValue))).trim();
 
-    useEffect(() => {
+    // Register before SelectContent measures the open panel. A passive effect
+    // makes the first paint use an empty item list, then visibly jumps to the
+    // selected option on the next frame.
+    useIsomorphicLayoutEffect(() => {
         return registerItem({ value: itemValue, label, disabled, ref });
     }, [registerItem, itemValue, label, disabled]);
 

@@ -420,6 +420,7 @@ export function ChartBars({
                                 barRadius,
                             )}
                             fill={track}
+                            className={chartStyles.barTrack}
                         />
                     );
                 })
@@ -437,6 +438,7 @@ export function ChartBars({
                         data-state={state}
                         d={barPathTopRounded(x, y, barWidth, height, barRadius)}
                         fill={fill}
+                        className={chartStyles.bar}
                     />
                 );
             })}
@@ -484,6 +486,7 @@ export function ChartLine({
                         data-refineui="chart-line-area"
                         d={monotoneAreaPath(coords, baselineY)}
                         fill={`url(#${gradientId})`}
+                        className={chartStyles.lineArea}
                     />
                 </>
             ) : null}
@@ -497,6 +500,7 @@ export function ChartLine({
                 vectorEffect="non-scaling-stroke"
                 strokeLinejoin="round"
                 strokeLinecap="round"
+                className={chartStyles.lineStroke}
             />
             {coords.map(({ x, y }, index) => {
                 const state = itemState(index, hoverIndex, selectedIndex);
@@ -513,6 +517,7 @@ export function ChartLine({
                         fill={stroke}
                         stroke={pointRing}
                         strokeWidth={CHART_POINT_STROKE}
+                        className={chartStyles.point}
                     />
                 );
             })}
