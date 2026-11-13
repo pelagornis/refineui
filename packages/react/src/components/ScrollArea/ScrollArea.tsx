@@ -16,6 +16,7 @@ import {
     useRef,
     useState,
 } from "react";
+import { spacings } from "@refineui/tokens";
 import { useComposedRefs } from "@refineui/utilities/react";
 import {
     SCROLL_AREA_THUMB_MIN_PX,
@@ -89,6 +90,9 @@ const EMPTY_METRICS: ScrollAxisMetrics = {
 
 const NO_AXES: ScrollAreaAxes = { vertical: false, horizontal: false };
 
+/** Ignore sub-layout overflow before showing an indicator or enabling keyboard scrolling. */
+const SCROLL_AREA_OVERFLOW_THRESHOLD_PX = Number.parseFloat(spacings.sizeXXSmall);
+
 function readMetrics(viewport: HTMLDivElement): {
     vertical: ScrollAxisMetrics;
     horizontal: ScrollAxisMetrics;
@@ -108,7 +112,7 @@ function readMetrics(viewport: HTMLDivElement): {
 }
 
 function isScrollable(metrics: ScrollAxisMetrics): boolean {
-    return metrics.scrollSize > metrics.clientSize + 1;
+    return metrics.scrollSize > metrics.clientSize + SCROLL_AREA_OVERFLOW_THRESHOLD_PX;
 }
 
 /**
@@ -458,6 +462,8 @@ export function ScrollAreaScrollbar({
                     setHovering(false);
                 }}
                 {...props}
+                hidden={!visible}
+                aria-hidden={!visible || undefined}
             >
                 <div
                     ref={trackRef as RefObject<HTMLDivElement>}

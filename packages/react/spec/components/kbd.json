@@ -1,0 +1,16 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "kbd",
+  "version": 1,
+  "export": "Kbd",
+  "anatomy": {
+    "root": "kbd"
+  },
+  "attributes": {
+    "data-refineui": "kbd"
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

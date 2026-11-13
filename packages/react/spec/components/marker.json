@@ -1,0 +1,21 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "marker",
+  "version": 1,
+  "export": "Marker",
+  "anatomy": {
+    "root": "marker",
+    "icon": "marker-icon",
+    "content": "marker-content"
+  },
+  "attributes": {
+    "data-refineui": "marker"
+  },
+  "variants": {
+    "variant": ["default", "divider"]
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

@@ -43,8 +43,9 @@ export const scrollAreaStyles = {
         "data-[active=true]:!pointer-events-auto data-[active=true]:!opacity-100",
     ),
 
-    scrollbarVertical: "absolute inset-y-refineui-size-xxx-small end-refineui-size-xxx-small w-refineui-size-medium overflow-hidden",
-    scrollbarHorizontal: "absolute inset-x-refineui-size-xxx-small bottom-refineui-size-xxx-small h-refineui-size-medium overflow-hidden",
+    /** Keep both track ends clear of the container edge, even when the thumb fills the rail. */
+    scrollbarVertical: "absolute inset-y-refineui-size-small end-refineui-size-xxx-small w-refineui-size-medium overflow-hidden",
+    scrollbarHorizontal: "absolute inset-x-refineui-size-small bottom-refineui-size-xxx-small h-refineui-size-medium overflow-hidden",
 
     /** Inner rail — thumb is absolutely positioned here (padding lives on the outer scrollbar). */
     track: "relative size-full min-h-0 min-w-0 overflow-hidden rounded-refineui-circle bg-refineui-alias-background-surface-selected",

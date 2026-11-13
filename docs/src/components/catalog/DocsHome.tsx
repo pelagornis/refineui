@@ -1,5 +1,5 @@
 import { useCallback, useRef, type PointerEvent } from "react";
-import { Box, Grid, Stack, Text } from "@refineui/react";
+import { Box, Button, Grid, Stack, Text } from "@refineui/react";
 import { withLocalePath, type DocsLocaleCode } from "../../lib/docs-locale";
 import { HeroBackdrop } from "../../resources/home";
 import { HomeHeroHeadline } from "./HomeHeroHeadline";
@@ -112,9 +112,9 @@ export default function DocsHome({ locale }: DocsHomeProps) {
                     className="relative min-w-0 text-center"
                 >
                     <HomeHeroHeadline locale={locale} />
-                    <a href={docsHref("/getting-started/", locale)} data-refineui-home-cta="primary">
-                        {cta}
-                    </a>
+                    <Button asChild size="lg" variant="primary">
+                        <a href={docsHref("/getting-started/", locale)}>{cta}</a>
+                    </Button>
                 </Stack>
             </section>
 

@@ -63,7 +63,7 @@
     },
     "packages/react": {
       "name": "@refineui/react",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "dependencies": {
         "@refineui/tokens": "workspace:*",
         "@refineui/utilities": "workspace:*",

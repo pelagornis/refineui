@@ -32,16 +32,16 @@ export default defineConfig({
     plugins: [tailwindcss()],
     resolve: {
       /** Source aliases — tree-shake and avoid Babel deopt on the 500KB dist bundle. */
-      alias: {
-        '@refineui/react$': path.resolve(monorepoRoot, 'packages/react/src/index.ts'),
-        '@refineui/tokens$': path.resolve(monorepoRoot, 'packages/tokens/src/index.ts'),
-      },
+      alias: [
+        { find: /^@refineui\/react$/, replacement: path.resolve(monorepoRoot, 'packages/react/src/index.ts') },
+        { find: /^@refineui\/tokens$/, replacement: path.resolve(monorepoRoot, 'packages/tokens/src/index.ts') },
+      ],
     },
     ssr: {
-      noExternal: ['@refineui/react', '@refineui/tokens'],
+      noExternal: ['@refineui/react', '@refineui/tokens', '@refineui/web-icons'],
     },
     optimizeDeps: {
-      exclude: ['@refineui/utilities'],
+      exclude: ['@refineui/react', '@refineui/tokens', '@refineui/utilities', '@refineui/web-icons'],
     },
   },
   integrations: [
@@ -214,9 +214,12 @@ export default defineConfig({
             { label: 'Grid', slug: 'components/grid' },
             { label: 'Input', slug: 'components/input' },
             { label: 'Input OTP', slug: 'components/input-otp' },
+            { label: 'Kbd', slug: 'components/kbd' },
             { label: 'Label', slug: 'components/label' },
             { label: 'Link', slug: 'components/link' },
+            { label: 'Marker', slug: 'components/marker' },
             { label: 'Menu', slug: 'components/menu' },
+            { label: 'Message', slug: 'components/message' },
             { label: 'Navigation Menu', slug: 'components/navigation-menu' },
             { label: 'Pagination', slug: 'components/pagination' },
             { label: 'Popover', slug: 'components/popover' },

@@ -1,0 +1,42 @@
+{
+  "id": "message",
+  "exportPath": "@refineui/react",
+  "exportName": "Message",
+  "kind": "root",
+  "category": "utilities",
+  "label": "Message",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "MessageAvatar",
+        "MessageContent",
+        "MessageFooter"
+      ],
+      "repeatable": true,
+      "allowText": true,
+      "allowAnyComponent": false,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "label": "Default",
+      "root": {
+        "component": "Message",
+        "slots": {}
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

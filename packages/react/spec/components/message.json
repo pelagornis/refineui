@@ -1,0 +1,22 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "message",
+  "version": 1,
+  "export": "Message",
+  "anatomy": {
+    "root": "message",
+    "avatar": "message-avatar",
+    "content": "message-content",
+    "footer": "message-footer"
+  },
+  "attributes": {
+    "data-refineui": "message"
+  },
+  "variants": {
+    "align": ["start", "end"]
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

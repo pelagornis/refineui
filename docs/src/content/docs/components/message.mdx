@@ -1,0 +1,55 @@
+---
+title: Message
+description: Conversation row composed from Avatar and Bubble.
+---
+import { SpecRenderer } from "../../../components/spec";
+import { PropSpec } from "../../../docs-ui";
+import MessageDemo from "../../../components/MessageDemo";
+import PackageInstall from "../../../components/PackageInstall.mdx";
+
+`Message` coordinates the avatar and content column of a conversation row. Compose the actual message surface with `Bubble`, and use `MessageFooter` for delivery state or timestamps.
+
+<div class="not-content my-6"><MessageDemo client:load /></div>
+
+## Contract
+
+<div class="not-content"><SpecRenderer client:load component="message" /></div>
+
+## Installation
+
+<PackageInstall />
+
+## Usage
+
+```tsx
+import {
+  Avatar,
+  AvatarFallback,
+  Bubble,
+  BubbleContent,
+  Message,
+  MessageAvatar,
+  MessageContent,
+  MessageFooter,
+} from "@refineui/react";
+
+<Message align="end">
+  <MessageAvatar>
+    <Avatar alt="Me"><AvatarFallback>ME</AvatarFallback></Avatar>
+  </MessageAvatar>
+  <MessageContent>
+    <Bubble align="end"><BubbleContent>Deploying now.</BubbleContent></Bubble>
+    <MessageFooter>Delivered</MessageFooter>
+  </MessageContent>
+</Message>
+```
+
+## API Reference
+
+### Message
+
+<div class="not-content"><PropSpec client:load rows={[{ prop: "align", default: '"start"', type: '"start" | "end"', description: "Conversation-side alignment." }]} /></div>
+
+### Slots
+
+`MessageAvatar`, `MessageContent`, and `MessageFooter` are composition slots. Use `Avatar` inside the avatar slot and `Bubble` or `BubbleGroup` inside the content slot.

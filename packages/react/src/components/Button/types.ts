@@ -10,6 +10,8 @@ export type ButtonSize = "sm" | "md" | "lg";
 export type ButtonLayout = "label" | "icon";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    /** Apply Button styling and behavior to a single child element, such as an anchor. */
+    asChild?: boolean;
     variant?: ButtonVariant;
     size?: ButtonSize;
     layout?: ButtonLayout;

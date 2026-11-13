@@ -1,5 +1,11 @@
 # @refineui/react
 
+## 0.4.0
+
+### Minor Changes
+
+- Add Kbd, Marker, and Message conversation primitives; refine bubble geometry, ScrollArea rails, button composition, and documentation rendering.
+
 ## 0.3.0
 
 ### Minor Changes

@@ -664,30 +664,6 @@
   box-shadow: var(--refineui-elevation-8);
 }
 
-[data-refineui-home-cta="primary"] {
-  box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: var(--refineui-size-button-min-height-lg);
-  padding-inline: var(--refineui-spacing-size-x-large);
-  padding-block: var(--refineui-spacing-size-small);
-  border-radius: var(--refineui-radius-rounded-circle);
-  background: var(--refineui-color-alias-background-brand);
-  color: var(--refineui-color-alias-foreground-inversed);
-  font-family: var(--refineui-text-label-md-font-family);
-  font-size: var(--refineui-text-label-md-font-size);
-  font-weight: var(--refineui-text-label-md-font-weight);
-  line-height: var(--refineui-text-label-md-line-height);
-  text-decoration: none;
-  transition: background-color var(--refineui-motion-duration-normal)
-    var(--refineui-motion-easing-standard);
-}
-
-[data-refineui-home-cta="primary"]:hover {
-  background-color: var(--refineui-color-alias-background-brand-hover);
-}
-
 /* Home hero sits in the docs shell — DocsHome supplies the page title. */
 [data-refineui-catalog-overview],
 [data-refineui-foundation-catalog],

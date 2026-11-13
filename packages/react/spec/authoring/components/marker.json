@@ -1,0 +1,41 @@
+{
+  "id": "marker",
+  "exportPath": "@refineui/react",
+  "exportName": "Marker",
+  "kind": "root",
+  "category": "utilities",
+  "label": "Marker",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "MarkerContent",
+        "MarkerIcon"
+      ],
+      "repeatable": true,
+      "allowText": true,
+      "allowAnyComponent": false,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "label": "Default",
+      "root": {
+        "component": "Marker",
+        "slots": {}
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

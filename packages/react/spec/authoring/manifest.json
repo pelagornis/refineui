@@ -1,7 +1,7 @@
 {
   "schema": "refineui.authoring/1",
   "packageName": "@refineui/react",
-  "packageVersion": "0.2.1",
+  "packageVersion": "0.4.0",
   "css": [
     "@refineui/react/refineui.css"
   ],
@@ -2155,6 +2155,227 @@
         {
           "name": "click",
           "payload": "void"
+        }
+      ]
+    },
+    {
+      "id": "kbd",
+      "exportPath": "@refineui/react",
+      "exportName": "Kbd",
+      "kind": "root",
+      "category": "utilities",
+      "label": "Kbd",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [],
+          "repeatable": true,
+          "allowText": true,
+          "allowAnyComponent": true,
+          "defaultChildren": []
+        }
+      ],
+      "presets": [
+        {
+          "id": "default",
+          "label": "Default",
+          "root": {
+            "component": "Kbd",
+            "slots": {
+              "children": [
+                {
+                  "component": "Text",
+                  "props": {
+                    "variant": "bodyMd"
+                  },
+                  "text": "Kbd"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "events": [
+        {
+          "name": "click",
+          "payload": "void"
+        }
+      ]
+    },
+    {
+      "id": "message",
+      "exportPath": "@refineui/react",
+      "exportName": "Message",
+      "kind": "root",
+      "category": "utilities",
+      "label": "Message",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "MessageAvatar",
+            "MessageContent",
+            "MessageFooter"
+          ],
+          "repeatable": true,
+          "allowText": true,
+          "allowAnyComponent": false,
+          "defaultChildren": []
+        }
+      ],
+      "presets": [
+        {
+          "id": "default",
+          "label": "Default",
+          "root": {
+            "component": "Message",
+            "slots": {}
+          }
+        }
+      ],
+      "events": [
+        {
+          "name": "click",
+          "payload": "void"
+        }
+      ]
+    },
+    {
+      "id": "message-avatar",
+      "exportPath": "@refineui/react",
+      "exportName": "MessageAvatar",
+      "kind": "part",
+      "category": "parts",
+      "label": "Message Avatar",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "Message",
+          "slot": "children"
+        }
+      ]
+    },
+    {
+      "id": "message-content",
+      "exportPath": "@refineui/react",
+      "exportName": "MessageContent",
+      "kind": "part",
+      "category": "parts",
+      "label": "Message Content",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "Message",
+          "slot": "children"
+        }
+      ]
+    },
+    {
+      "id": "message-footer",
+      "exportPath": "@refineui/react",
+      "exportName": "MessageFooter",
+      "kind": "part",
+      "category": "parts",
+      "label": "Message Footer",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "Message",
+          "slot": "children"
+        }
+      ]
+    },
+    {
+      "id": "marker",
+      "exportPath": "@refineui/react",
+      "exportName": "Marker",
+      "kind": "root",
+      "category": "utilities",
+      "label": "Marker",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "MarkerContent",
+            "MarkerIcon"
+          ],
+          "repeatable": true,
+          "allowText": true,
+          "allowAnyComponent": false,
+          "defaultChildren": []
+        }
+      ],
+      "presets": [
+        {
+          "id": "default",
+          "label": "Default",
+          "root": {
+            "component": "Marker",
+            "slots": {}
+          }
+        }
+      ],
+      "events": [
+        {
+          "name": "click",
+          "payload": "void"
+        }
+      ]
+    },
+    {
+      "id": "marker-content",
+      "exportPath": "@refineui/react",
+      "exportName": "MarkerContent",
+      "kind": "part",
+      "category": "parts",
+      "label": "Marker Content",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "Marker",
+          "slot": "children"
+        }
+      ]
+    },
+    {
+      "id": "marker-icon",
+      "exportPath": "@refineui/react",
+      "exportName": "MarkerIcon",
+      "kind": "part",
+      "category": "parts",
+      "label": "Marker Icon",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "Marker",
+          "slot": "children"
         }
       ]
     },

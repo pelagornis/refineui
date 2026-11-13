@@ -1,0 +1,48 @@
+{
+  "id": "kbd",
+  "exportPath": "@refineui/react",
+  "exportName": "Kbd",
+  "kind": "root",
+  "category": "utilities",
+  "label": "Kbd",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [],
+      "repeatable": true,
+      "allowText": true,
+      "allowAnyComponent": true,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "label": "Default",
+      "root": {
+        "component": "Kbd",
+        "slots": {
+          "children": [
+            {
+              "component": "Text",
+              "props": {
+                "variant": "bodyMd"
+              },
+              "text": "Kbd"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

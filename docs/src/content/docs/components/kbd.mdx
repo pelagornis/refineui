@@ -1,0 +1,32 @@
+---
+title: Kbd
+description: Native keyboard shortcut token.
+---
+import { SpecRenderer } from "../../../components/spec";
+import { PropSpec } from "../../../docs-ui";
+import KbdDemo from "../../../components/KbdDemo";
+import PackageInstall from "../../../components/PackageInstall.mdx";
+
+`Kbd` renders a semantic keyboard-key label. Compose several keys to describe a shortcut.
+
+<div class="not-content my-6"><KbdDemo client:load /></div>
+
+## Contract
+
+<div class="not-content"><SpecRenderer client:load component="kbd" /></div>
+
+## Installation
+
+<PackageInstall />
+
+## Usage
+
+```tsx
+import { Kbd } from "@refineui/react";
+
+<span>Open search with <Kbd>⌘</Kbd> <Kbd>K</Kbd></span>
+```
+
+## API Reference
+
+<div class="not-content"><PropSpec client:load rows={[{ prop: "children", default: "—", type: "ReactNode", description: "Key or shortcut label." }]} /></div>

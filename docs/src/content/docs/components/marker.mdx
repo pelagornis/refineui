@@ -1,0 +1,48 @@
+---
+title: Marker
+description: Compact conversation event and labeled divider.
+---
+import { SpecRenderer } from "../../../components/spec";
+import { PropSpec } from "../../../docs-ui";
+import MarkerDemo from "../../../components/MarkerDemo";
+import PackageInstall from "../../../components/PackageInstall.mdx";
+
+`Marker` presents low-emphasis conversation events such as tool activity, status, and section changes. Compose an optional `MarkerIcon` with RefineUI `WebIcon` or `Spinner`.
+
+<div class="not-content my-6"><MarkerDemo client:load /></div>
+
+## Contract
+
+<div class="not-content"><SpecRenderer client:load component="marker" /></div>
+
+## Installation
+
+<PackageInstall />
+
+## Usage
+
+```tsx
+import { Marker, MarkerContent, MarkerIcon, Spinner, WebIcon } from "@refineui/react";
+
+<Marker>
+  <MarkerIcon><WebIcon name="git" aria-hidden /></MarkerIcon>
+  <MarkerContent>Switched to a new branch</MarkerContent>
+</Marker>
+
+<Marker role="status">
+  <MarkerIcon><Spinner size="sm" role="presentation" /></MarkerIcon>
+  <MarkerContent>Thinking...</MarkerContent>
+</Marker>
+
+<Marker variant="divider"><MarkerContent>Conversation compacted</MarkerContent></Marker>
+```
+
+## API Reference
+
+### Marker
+
+<div class="not-content"><PropSpec client:load rows={[{ prop: "variant", default: '"default"', type: '"default" | "divider"', description: "Event row or labeled divider." }]} /></div>
+
+### Slots
+
+`MarkerIcon` accepts a `WebIcon`, `Spinner`, or another compact visual indicator. `MarkerContent` is required for the label and draws the divider lines when `variant="divider"`. A `role="status"` marker inherits the Input OTP pulse motion for status text.

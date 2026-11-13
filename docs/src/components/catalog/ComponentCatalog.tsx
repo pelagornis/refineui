@@ -74,11 +74,18 @@ import {
     Input,
     InputOTP,
     InputOTPSlot,
+    Kbd,
     Label,
     Link,
     MenuDivider,
     MenuItem,
     MenuList,
+    Marker,
+    MarkerContent,
+    MarkerIcon,
+    Message,
+    MessageAvatar,
+    MessageContent,
     NavigationMenu,
     NavigationMenuItem,
     NavigationMenuList,
@@ -308,6 +315,16 @@ export default function ComponentCatalog({ locale }: { locale?: import("../../li
                     <Bubble variant="muted" align="start">
                         <BubbleContent>Want to see chat bubbles?</BubbleContent>
                     </Bubble>
+                }
+            />
+            <CatalogCard
+                href="/components/kbd/"
+                name="Kbd"
+                preview={
+                    <Stack direction="row" gap="sizeXSmall" align="center">
+                        <Kbd>⌘</Kbd>
+                        <Kbd>K</Kbd>
+                    </Stack>
                 }
             />
             <CatalogCard
@@ -613,6 +630,30 @@ export default function ComponentCatalog({ locale }: { locale?: import("../../li
                             </MenuList>
                         </Stack>
                     </div>
+                }
+            />
+            <CatalogCard
+                href="/components/marker/"
+                name="Marker"
+                preview={
+                    <Marker>
+                        <MarkerIcon><WebIcon name="search" size={iconSizes.small} color="currentColor" aria-hidden /></MarkerIcon>
+                        <MarkerContent>Explored files</MarkerContent>
+                    </Marker>
+                }
+            />
+            <CatalogCard
+                href="/components/message/"
+                name="Message"
+                preview={
+                    <Message className="w-full">
+                        <MessageAvatar>
+                            <Avatar alt="RefineUI"><AvatarText>RU</AvatarText></Avatar>
+                        </MessageAvatar>
+                        <MessageContent>
+                            <Bubble variant="muted"><BubbleContent>Message composition</BubbleContent></Bubble>
+                        </MessageContent>
+                    </Message>
                 }
             />
             <CatalogCard
