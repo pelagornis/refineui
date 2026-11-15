@@ -14,6 +14,22 @@ RefineUI는 Pelagornis 제품을 위한 통합 디자인 시스템입니다. 파
 - **[개발](/ko/development/)** — 제품 코드에서의 설치, 테마, 모션
 - **[AI & 도구](/ko/ai-tools/)** — DESIGN.md, llms.txt, Skill, Doctor, MCP
 
+## AI로 빠르게 시작하기
+
+아래 프롬프트를 AI 코딩 도구에 붙여 넣으면 셋업을 대신 해 줘요.
+
+```text wrap
+Install @refineui/react, @refineui/tokens, and @refineui/web-icons in this project. Import @refineui/tokens/tailwind.css, @refineui/web-icons/dist/fonts/refineui-system-icons.css, and @refineui/react/refineui.css once in the global CSS at the app root. Then run `npx skills add https://github.com/pelagornis/refineui --skill refineui` and read the installed SKILL.md to learn the conventions. Import every component from the @refineui/react root and style only with RefineUI tokens.
+```
+
+화면을 만들기 전에 셋업이 맞는지 확인하게 하세요.
+
+```text wrap
+Install @refineui/doctor as a dev dependency and run `npx refineui-doctor`. Show me every finding and fix the setup ones. Before you build UI, look up each component's page on https://ui.pelagornis.com and do not invent props that aren't documented there.
+```
+
+에이전트 안에서 문서를 바로 검색하려면 [MCP 서버](/ko/ai-tools/mcp/)도 추가하세요.
+
 ## 설치
 
 <PackageInstallFull />

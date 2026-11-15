@@ -22,6 +22,7 @@ import { componentSizes, foundationSizes } from "../../componentSizes";
 import { composeRefs } from "@refineui/utilities/react";
 import { WebIcon } from "../../WebIcon";
 import { ScrollAreaRegion } from "../ScrollArea/ScrollAreaRegion";
+import { useSlidingHighlight } from "../shared/SlidingHighlight";
 import { selectTriggerSizeClass, selectStyles } from "./style";
 import { useOptionalFieldSize } from "../Field/context";
 import type {
@@ -772,22 +773,37 @@ export const SelectContent = forwardRef<HTMLDivElement, SelectContentProps>(func
 });
 SelectContent.displayName = "SelectContent";
 
+const SELECT_ITEM_SELECTOR = '[data-refineui="select-item"]';
+const SELECT_HIGHLIGHTED_SELECTOR = '[data-refineui="select-item"][data-highlighted]';
+
 export const SelectViewport = forwardRef<HTMLDivElement, SelectViewportProps>(function SelectViewport(
     { className, children, ...props },
     forwardedRef,
 ) {
     const { viewportRef } = useSelectCtx();
     const position = useSelectContentPosition();
+    // Plate follows the pointer and the keyboard `activeIndex` (`data-highlighted`).
+    const highlight = useSlidingHighlight<HTMLDivElement>({
+        itemSelector: SELECT_ITEM_SELECTOR,
+        activeSelector: SELECT_HIGHLIGHTED_SELECTOR,
+        activeAttributes: ["data-highlighted"],
+    });
     const viewportClass = position === "popper" ? selectStyles.viewportPopper : selectStyles.viewportItemAligned;
     const rootClass = position === "popper" ? selectStyles.scrollAreaRootPopper : selectStyles.scrollAreaRootItemAligned;
     return (
         <ScrollAreaRegion
             type="hover"
             className={rootClass}
-            viewportClassName={clsx(viewportClass, className)}
-            viewportRef={composeRefs(viewportRef, forwardedRef)}
+            viewportClassName={clsx(viewportClass, selectStyles.highlightHost, className)}
+            viewportRef={composeRefs(viewportRef, forwardedRef, highlight.hostRef)}
             {...props}
         >
+            <span
+                data-refineui="select-highlight"
+                data-scroll-edge-item
+                className={selectStyles.highlight}
+                {...highlight.indicatorProps}
+            />
             {children}
         </ScrollAreaRegion>
     );

@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
 import { componentTypographyTokens } from "../../tokens/componentTypographyTokens";
 import { componentTextClass } from "../../typography";
+import { slidingHighlightClass } from "../shared/SlidingHighlight";
 
 /**
  * RefineUI Table — surface chrome strips · inset body rows.
@@ -8,10 +9,16 @@ import { componentTextClass } from "../../typography";
  */
 export const tableStyles = {
     /** Overflow lives on composed `ScrollArea` when the table is constrained. */
+    /**
+     * Also hosts the sliding row-hover plate; once live, unselected body rows drop their own
+     * hover fill (selected rows keep the selected fill).
+     */
     wrapper: clsx(
-        "relative box-border w-full min-w-0",
+        "relative isolate box-border w-full min-w-0",
+        "[&[data-sliding-highlight=true]_tbody>tr:not([data-state=selected]):hover>td]:bg-transparent",
         "px-refineui-size-small pb-refineui-size-small",
     ),
+    highlight: clsx(slidingHighlightClass, "rounded-refineui-large bg-refineui-alias-background-surface-hover"),
     table: "w-full border-separate border-spacing-y-refineui-size-xx-small caption-bottom text-start",
     header: "[&_th]:bg-refineui-alias-background-surface-active [&_th]:shadow-[inset_0_calc(-1*var(--refineui-stroke-width-thin))_0_0_var(--refineui-color-alias-border-subtle)] [&_th:first-child]:rounded-s-refineui-large [&_th:last-child]:rounded-e-refineui-large",
     body: "",

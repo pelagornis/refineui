@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
 import { componentTypographyTokens } from "../../tokens/componentTypographyTokens";
 import { componentTextClass } from "../../typography";
+import { slidingHighlightClass } from "../shared/SlidingHighlight";
 
 /** Visual language aligned with `menuStyles` — frosted fill/blur in refineui.css */
 const dropdownPanelChrome =
@@ -15,7 +16,13 @@ export const dropdownStyles = {
         dropdownPanelChrome,
         "data-[state=open]:[animation:refineui-fade-enter_var(--refineui-motion-duration-fast)_var(--refineui-motion-easing-standard)] motion-reduce:animation-none",
     ),
-    menuViewport: "box-border flex flex-col gap-px p-refineui-size-xx-small",
+    /**
+     * Scroll viewport doubles as the sliding hover plate host; once live, plain items drop their
+     * own hover fill (selected items and open sub triggers keep theirs).
+     */
+    menuViewport:
+        "relative isolate box-border flex flex-col gap-px p-refineui-size-xx-small [&[data-sliding-highlight=true]_[data-refineui=dropdown-item]:not([data-selected]):not([aria-expanded=true]):hover]:bg-transparent",
+    highlight: clsx(slidingHighlightClass, "rounded-refineui-large bg-refineui-alias-background-primary-hover"),
     label: clsx(
         componentTextClass(componentTypographyTokens.dropdown.label),
         "shrink-0 px-refineui-size-x-small py-refineui-size-xxx-small text-refineui-alias-foreground-tertiary",

@@ -18,7 +18,8 @@ import { clsx } from "clsx";
 import { componentSizes, iconSizes, semanticInteraction } from "@refineui/tokens";
 import { motionMsToNumber } from "@refineui/utilities/animation";
 import { WebIcon } from "../../WebIcon";
-import { menuStyles } from "../Menu/style";
+import { useSlidingHighlight } from "../shared/SlidingHighlight";
+import { MENU_ITEM_SELECTOR, menuStyles } from "../Menu/style";
 import { Slot } from "@refineui/utilities/react";
 
 const MENU_ATTR = "data-refineui-context-menu";
@@ -214,13 +215,27 @@ export const ContextMenuContent = forwardRef<HTMLDivElement, ContextMenuContentP
             }}
             onContextMenu={(event) => event.preventDefault()}
         >
-            <div role="menu" data-refineui="menu" className={clsx(menuStyles.list, className)}>
-                {children}
-            </div>
+            <ContextMenuList className={className}>{children}</ContextMenuList>
         </div>,
         document.body,
     );
 });
+
+/** Inner `role="menu"` list — hosts the shared sliding hover plate (see MenuList). */
+function ContextMenuList({ className, children }: { className?: string; children?: ReactNode }) {
+    const highlight = useSlidingHighlight<HTMLDivElement>({ itemSelector: MENU_ITEM_SELECTOR });
+    return (
+        <div
+            ref={highlight.hostRef}
+            role="menu"
+            data-refineui="menu"
+            className={clsx(menuStyles.list, menuStyles.highlightHost, className)}
+        >
+            <span data-refineui="menu-highlight" className={menuStyles.highlight} {...highlight.indicatorProps} />
+            {children}
+        </div>
+    );
+}
 
 export interface ContextMenuItemProps extends HTMLAttributes<HTMLButtonElement> {
     disabled?: boolean;

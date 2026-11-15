@@ -18,6 +18,7 @@ import {
     Stack,
     Text,
     WebIcon,
+    Result,
 } from "@refineui/react";
 import { DocsThemeSelect } from "./DocsThemeSelect";
 import { RefineUILogo } from "../resources/logo";
@@ -280,7 +281,14 @@ export function DocsHeaderSearch({ locale, items }: DocsHeaderSearchProps) {
             <CommandDialog open={open} onOpenChange={setOpen} commandProps={{ label: "Search documentation" }}>
                 <CommandInput placeholder="Search pages…" />
                 <CommandList>
-                    <CommandEmpty>No results found.</CommandEmpty>
+                    <CommandEmpty className="px-0 py-0">
+                        <Result
+                            className="[&_[data-refineui=result-icon]]:text-refineui-alias-foreground-brand"
+                            title="No results found"
+                            description="Try a different search term."
+                            figure={<WebIcon name="search" size={iconSizes.large} color="currentColor" aria-hidden />}
+                        />
+                    </CommandEmpty>
                     {groups.map(([group, groupItems]) => (
                         <CommandGroup key={group}>
                             <CommandGroupHeading>{group}</CommandGroupHeading>

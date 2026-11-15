@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
 import { createContext, useContext } from "react";
 import { ScrollAreaRegion } from "../ScrollArea/ScrollAreaRegion";
+import { useSlidingHighlight } from "../shared/SlidingHighlight";
 import { sidebarStyles } from "./style";
 import type {
     SidebarBrandProps,
@@ -62,14 +63,33 @@ export function SidebarContent({ className, children, ...props }: SidebarContent
     );
 }
 
-export function SidebarNav({ className, "aria-label": ariaLabel = "Sidebar", ...props }: SidebarNavProps) {
+const SIDEBAR_LINK_SELECTOR = '[data-refineui="sidebar-link"]';
+
+export function SidebarNav({
+    className,
+    children,
+    "aria-label": ariaLabel = "Sidebar",
+    ...props
+}: SidebarNavProps) {
+    const inScroll = useContext(SidebarScrollContext);
+    const highlight = useSlidingHighlight<HTMLElement>({ itemSelector: SIDEBAR_LINK_SELECTOR });
+
     return (
         <nav
+            ref={highlight.hostRef}
             data-refineui="sidebar-nav"
             aria-label={ariaLabel}
             className={clsx(sidebarStyles.nav, className)}
             {...props}
-        />
+        >
+            <span
+                data-refineui="sidebar-highlight"
+                data-scroll-edge-item={inScroll || undefined}
+                className={sidebarStyles.highlight}
+                {...highlight.indicatorProps}
+            />
+            {children}
+        </nav>
     );
 }
 

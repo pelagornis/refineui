@@ -14,6 +14,22 @@ RefineUI is the unified design system for Pelagornis products. Foundation variab
 - **[Development](/development/)** — Installation, theming, and motion in product code
 - **[AI & Tools](/ai-tools/)** — DESIGN.md, llms.txt, Skill, Doctor, MCP
 
+## Quick Start with AI
+
+Paste this into your AI coding tool and let it handle the setup:
+
+```text wrap
+Install @refineui/react, @refineui/tokens, and @refineui/web-icons in this project. Import @refineui/tokens/tailwind.css, @refineui/web-icons/dist/fonts/refineui-system-icons.css, and @refineui/react/refineui.css once in the global CSS at the app root. Then run `npx skills add https://github.com/pelagornis/refineui --skill refineui` and read the installed SKILL.md to learn the conventions. Import every component from the @refineui/react root and style only with RefineUI tokens.
+```
+
+Then have it check the setup before building screens:
+
+```text wrap
+Install @refineui/doctor as a dev dependency and run `npx refineui-doctor`. Show me every finding and fix the setup ones. Before you build UI, look up each component's page on https://ui.pelagornis.com and do not invent props that aren't documented there.
+```
+
+For live doc search inside the agent, add the [MCP server](/ai-tools/mcp/).
+
 ## Install
 
 <PackageInstallFull />

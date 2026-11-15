@@ -12,6 +12,7 @@ import {
     CommandDivider,
     CommandShortcut,
     WebIcon,
+    Result,
 } from "@refineui/react";
 import { Look, Looks } from "./PreviewFrame";
 
@@ -22,7 +23,14 @@ function Glyph({ name }: { name: string }) {
 function CommandPreviewItems() {
     return (
         <>
-            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandEmpty className="px-0 py-0">
+                <Result
+                    className="[&_[data-refineui=result-icon]]:text-refineui-alias-foreground-brand"
+                    title="No results found"
+                    description="Try a different search term."
+                    figure={<WebIcon name="search" size={iconSizes.large} color="currentColor" aria-hidden />}
+                />
+            </CommandEmpty>
             <CommandGroup>
                 <CommandGroupHeading>Suggestions</CommandGroupHeading>
                 <CommandItem value="calendar" startIcon={<Glyph name="calendar" />}>
@@ -65,7 +73,7 @@ export default function CommandPreview() {
 
     return (
         <Looks>
-            <Look caption="Dialog">
+            <Look>
                 <Button type="button" variant="secondary" onClick={() => setOpen(true)}>
                     Open
                 </Button>

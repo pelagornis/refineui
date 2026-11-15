@@ -124,7 +124,7 @@ export default function NavigationMenuPreview({ layout = "dropdown" }: { layout?
                     ref={setPortalContainer}
                     className="relative isolate flex h-refineui-foundation-size-4500 w-full justify-center overflow-hidden"
                 >
-                    <NavigationMenu key={layout} defaultValue="components" aria-label="Navigation menu preview">
+                    <NavigationMenu key={layout} aria-label="Navigation menu preview">
                         <NavigationMenuList>
                             {previewMenus.map((menu) => (
                                 <NavigationMenuItem key={menu.value} value={menu.value}>

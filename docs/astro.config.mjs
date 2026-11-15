@@ -4,7 +4,7 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import starlight from '@astrojs/starlight';
 import tailwindcss from '@tailwindcss/vite';
-import { removeEmptyFrameHeaders } from './src/expressive-code/removeEmptyFrameHeaders.mjs';
+import { remarkDocsCode } from './src/remark/remarkDocsCode.mjs';
 
 const monorepoRoot = fileURLToPath(new URL('..', import.meta.url));
 const reactNodeEnvironment = process.argv.includes('build') ? 'production' : 'development';
@@ -55,6 +55,9 @@ export default defineConfig({
       exclude: ['@refineui/react', '@refineui/tokens', '@refineui/utilities', '@refineui/web-icons'],
     },
   },
+  markdown: {
+    remarkPlugins: [remarkDocsCode],
+  },
   integrations: [
     react(),
     starlight({
@@ -77,73 +80,8 @@ export default defineConfig({
       },
       pagefind: true,
       customCss: ['./src/styles/global.css'],
-      expressiveCode: {
-        /**
-         * Syntax colors from Night Owl; block chrome from RefineUI tokens.
-         * Prefer mono + body size + primary fg so code scans as a distinct surface.
-         * No editor/terminal chrome by default — opt in with `title="…"` / `frame="…"`.
-         */
-        useStarlightDarkModeSwitch: true,
-        useStarlightUiThemeColors: true,
-        defaultProps: {
-          frame: 'none',
-        },
-        frames: {
-          showCopyToClipboardButton: true,
-          extractFileNameFromCode: false,
-        },
-        plugins: [removeEmptyFrameHeaders()],
-        styleOverrides: {
-          borderRadius: 'var(--refineui-radius-rounded-large)',
-          borderWidth: 'var(--refineui-stroke-width-thin)',
-          borderColor: 'var(--refineui-color-alias-border-default)',
-          codeBackground: 'var(--refineui-color-alias-surface-sunken)',
-          codeForeground: 'var(--refineui-color-alias-foreground-primary)',
-          codeFontFamily: 'var(--refineui-docs-font-mono)',
-          codeFontSize: 'var(--refineui-typography-body-2-font-size)',
-          codeFontWeight: 'var(--refineui-typography-caption-2-font-weight)',
-          codeLineHeight: 'var(--refineui-typography-body-1-line-height)',
-          codePaddingBlock: 'var(--refineui-spacing-size-x-large)',
-          codePaddingInline: 'var(--refineui-spacing-size-x-large)',
-          codeSelectionBackground: 'var(--refineui-color-alias-background-surface-selected)',
-          focusBorder: 'var(--refineui-color-alias-border-focus)',
-          uiFontFamily: 'var(--refineui-typography-body-2-font-family)',
-          uiFontSize: 'var(--refineui-typography-caption-2-font-size)',
-          uiFontWeight: 'var(--refineui-typography-caption-2-font-weight)',
-          uiLineHeight: 'var(--refineui-typography-caption-2-line-height)',
-          uiPaddingBlock: 'var(--refineui-spacing-size-xx-small)',
-          uiPaddingInline: 'var(--refineui-spacing-size-large)',
-          frames: {
-            shadowColor: 'transparent',
-            frameBoxShadowCssValue: 'var(--refineui-elevation-2)',
-            editorBackground: 'var(--refineui-color-alias-surface-sunken)',
-            terminalBackground: 'var(--refineui-color-alias-surface-sunken)',
-            editorTabBarBackground: 'var(--refineui-color-alias-background-primary)',
-            editorTabBarBorderColor: 'var(--refineui-color-alias-border-default)',
-            editorTabBarBorderBottomColor: 'var(--refineui-color-alias-border-default)',
-            editorActiveTabBackground: 'var(--refineui-color-alias-surface-sunken)',
-            editorActiveTabForeground: 'var(--refineui-color-alias-foreground-primary)',
-            editorActiveTabIndicatorTopColor: 'var(--refineui-color-alias-foreground-link)',
-            editorActiveTabIndicatorBottomColor: 'transparent',
-            editorTabBorderRadius: 'var(--refineui-radius-rounded-medium)',
-            terminalTitlebarBackground: 'var(--refineui-color-alias-background-primary)',
-            terminalTitlebarForeground: 'var(--refineui-color-alias-foreground-secondary)',
-            terminalTitlebarBorderBottomColor: 'var(--refineui-color-alias-border-default)',
-            terminalTitlebarDotsForeground: 'var(--refineui-color-alias-foreground-tertiary)',
-            inlineButtonForeground: 'var(--refineui-color-alias-foreground-secondary)',
-            inlineButtonBorder: 'var(--refineui-color-alias-border-default)',
-            tooltipSuccessBackground: 'var(--refineui-color-alias-surface-inverse)',
-            tooltipSuccessForeground: 'var(--refineui-color-alias-foreground-inversed)',
-          },
-          textMarkers: {
-            markBackground: 'var(--refineui-color-alias-background-surface-selected)',
-            markBorderColor: 'var(--refineui-color-alias-border-default)',
-            inlineMarkerBorderRadius: 'var(--refineui-radius-rounded-small)',
-            insBackground: 'var(--refineui-color-alias-background-success-subtle)',
-            delBackground: 'var(--refineui-color-alias-background-error-subtle)',
-          },
-        },
-      },
+      /** Fences render through RefineUI CodeBlock (src/remark/remarkDocsCode.mjs). */
+      expressiveCode: false,
       components: {
         Header: './src/overrides/Header.astro',
         Footer: './src/overrides/Footer.astro',

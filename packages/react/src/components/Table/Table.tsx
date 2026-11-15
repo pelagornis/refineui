@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import { forwardRef } from "react";
+import { useSlidingHighlight } from "../shared/SlidingHighlight";
 import { tableStyles } from "./style";
 import type {
     TableBodyProps,
@@ -12,13 +13,18 @@ import type {
     TableRowProps,
 } from "./types";
 
+/** Body rows only — header / footer rows never take the hover plate. */
+const TABLE_BODY_ROW_SELECTOR = 'tbody > [data-refineui="table-row"]';
+
 /** Dense semantic table — state and surface chrome are encoded by its Tailwind styles. */
 export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
     { className, ...props },
     ref,
 ) {
+    const highlight = useSlidingHighlight<HTMLDivElement>({ itemSelector: TABLE_BODY_ROW_SELECTOR });
     return (
-        <div data-refineui="table" className={tableStyles.wrapper}>
+        <div ref={highlight.hostRef} data-refineui="table" className={tableStyles.wrapper}>
+            <span data-refineui="table-highlight" className={tableStyles.highlight} {...highlight.indicatorProps} />
             <table ref={ref} className={clsx(tableStyles.table, className)} {...props} />
         </div>
     );

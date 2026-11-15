@@ -13,6 +13,7 @@ import {
     type TreeSize,
 } from "./context";
 import { treeStyles } from "./style";
+import { useSlidingHighlight } from "../shared/SlidingHighlight";
 
 export interface TreeProps extends HTMLAttributes<HTMLUListElement> {
     size?: TreeSize;
@@ -25,6 +26,8 @@ export interface TreeProps extends HTMLAttributes<HTMLUListElement> {
 }
 
 type ItemMeta = { parentValue: string | null; disabled: boolean };
+
+const TREE_ROW_SELECTOR = '[data-refineui="tree-item-trigger"]';
 
 export function Tree({
     size = "md",
@@ -39,6 +42,7 @@ export function Tree({
     ...props
 }: TreeProps) {
     const reduceMotion = usePrefersReducedMotion();
+    const highlight = useSlidingHighlight<HTMLUListElement>({ itemSelector: TREE_ROW_SELECTOR });
     const [uncontrolledExpanded, setUncontrolledExpanded] = useState(() => toExpandedSet(defaultExpanded));
     const [uncontrolledSelected, setUncontrolledSelected] = useState<string | null>(defaultSelected ?? null);
 
@@ -198,11 +202,13 @@ export function Tree({
     return (
         <TreeContext.Provider value={contextValue}>
             <ul
+                ref={highlight.hostRef}
                 data-refineui="tree"
                 role="tree"
                 className={clsx(treeStyles.root, className)}
                 {...props}
             >
+                <li role="none" data-refineui="tree-highlight" className={treeStyles.highlight} {...highlight.indicatorProps} />
                 {children}
             </ul>
         </TreeContext.Provider>

@@ -29,7 +29,7 @@ function syncPanels(root: ParentNode, manager: PackageManager) {
 
 /**
  * RefineUI SegmentedControl that toggles sibling `[data-pm-panel]` blocks.
- * Markdown fences inside those panels keep Expressive Code copy.
+ * Markdown fences inside those panels render as RefineUI CodeBlock.
  */
 export function PackageManagerPicker() {
     const hostRef = useRef<HTMLDivElement>(null);

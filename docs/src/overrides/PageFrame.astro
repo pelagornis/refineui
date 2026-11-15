@@ -11,6 +11,29 @@ const githubHref = Array.isArray(config.social)
     : undefined;
 ---
 
+{
+    hasSidebar && (
+        /* Before the shell is parsed: expose the stored rail size/collapsed state so the
+           server-rendered rail paints at its final width (DocsShell clears this on hydrate). */
+        <script is:inline>
+            (function () {
+                try {
+                    var s = window.localStorage;
+                    var raw = s.getItem("refineui-docs-sidebar-size");
+                    var n = raw == null ? NaN : Number(raw);
+                    if (!isFinite(n)) n = 22;
+                    n = Math.min(36, Math.max(14, n));
+                    var d = document.documentElement;
+                    d.style.setProperty("--docs-sidebar-boot-size", String(n));
+                    d.setAttribute(
+                        "data-docs-sidebar-boot",
+                        s.getItem("refineui-docs-sidebar-collapsed") === "1" ? "collapsed" : "open",
+                    );
+                } catch (e) {}
+            })();
+        </script>
+    )
+}
 <div class="page sl-flex" data-docs-page={hasSidebar ? "with-sidebar" : "flush"}>
     <header class="header"><slot name="header" /></header>
     {

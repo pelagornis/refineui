@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
 import { componentTypographyTokens } from "../../tokens/componentTypographyTokens";
 import { componentTextClass } from "../../typography";
+import { slidingHighlightClass } from "../shared/SlidingHighlight";
 
 /**
  * App sidebar landmark — token composition (no Web Kit COMPONENT_SET).
@@ -23,7 +24,12 @@ export const sidebarStyles = {
     /** Scrolls through a built-in ScrollArea; padding sits inside the viewport so rows scroll under the edges. */
     content: "flex min-h-0 flex-1 flex-col",
     contentViewport: "box-border px-refineui-size-medium py-refineui-size-medium",
-    nav: "flex min-h-0 flex-col gap-refineui-size-x-large",
+    /**
+     * Hosts the sliding hover plate; once it is live (`data-sliding-highlight`) plain links stop
+     * painting their own hover fill. The current page keeps its static fill.
+     */
+    nav: "relative isolate flex min-h-0 flex-col gap-refineui-size-x-large [&[data-sliding-highlight=true]_[data-refineui=sidebar-link]:not([data-active]):hover]:bg-transparent",
+    highlight: clsx(slidingHighlightClass, "rounded-refineui-large bg-refineui-alias-background-primary-hover"),
     group: "flex min-w-0 flex-col gap-refineui-size-xx-small",
     groupLabel: clsx(
         componentTextClass(componentTypographyTokens.sidebar.groupLabel),

@@ -2,6 +2,7 @@ import { clsx } from "clsx";
 import { iconSizes } from "@refineui/tokens";
 import { componentTypographyTokens } from "../../tokens/componentTypographyTokens";
 import { sizedComponentTextClass } from "../../typography";
+import { slidingHighlightClass } from "../shared/SlidingHighlight";
 import type { TreeSize } from "./context";
 
 /**
@@ -9,7 +10,9 @@ import type { TreeSize } from "./context";
  * Selection / hover paint the full row; depth indent lives on the inner content only.
  */
 export const treeStyles = {
-    root: "m-0 flex list-none flex-col gap-px p-0",
+    /** Hosts the sliding hover plate; once live, unselected rows drop their own hover fill. */
+    root: "relative isolate m-0 flex list-none flex-col gap-px p-0 [&[data-sliding-highlight=true]_[data-refineui=tree-item-trigger]:not([data-selected]):hover]:bg-transparent",
+    highlight: clsx(slidingHighlightClass, "m-0 list-none rounded-refineui-large bg-refineui-alias-background-primary-hover p-0"),
     item: "m-0 list-none p-0",
     group: "m-0 flex min-h-0 list-none flex-col gap-px overflow-hidden p-0",
     panel: "min-h-0 overflow-hidden",

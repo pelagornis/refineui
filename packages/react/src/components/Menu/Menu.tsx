@@ -24,7 +24,8 @@ import { Slot, getMergeableTriggerChild } from "@refineui/utilities/react";
 import { componentSizes } from "../../componentSizes";
 import { WebIcon } from "../../WebIcon";
 import { computeSubmenuPanelPosition, subscribeScrollAndScrollableAncestors } from "../Dropdown/positioning";
-import { menuStyles } from "./style";
+import { useSlidingHighlight } from "../shared/SlidingHighlight";
+import { MENU_ITEM_SELECTOR, menuStyles } from "./style";
 import type {
     MenuDividerProps,
     MenuItemProps,
@@ -230,14 +231,19 @@ export function MenuPopover({ className, children, style, ...props }: MenuPopove
     );
 }
 
-export function MenuList({ className, ...props }: MenuListProps) {
+export function MenuList({ className, children, ...props }: MenuListProps) {
+    const highlight = useSlidingHighlight<HTMLDivElement>({ itemSelector: MENU_ITEM_SELECTOR });
     return (
         <div
+            ref={highlight.hostRef}
             data-refineui="menu"
             role="menu"
-            className={clsx(menuStyles.list, className)}
+            className={clsx(menuStyles.list, menuStyles.highlightHost, className)}
             {...props}
-        />
+        >
+            <span data-refineui="menu-highlight" className={menuStyles.highlight} {...highlight.indicatorProps} />
+            {children}
+        </div>
     );
 }
 
@@ -584,6 +590,8 @@ export function MenuSubContent({ className, children, style, ...props }: MenuSub
     const menu = useContext(MenuContext);
     const sub = useMenuSub("MenuSubContent");
     const panelRef = useRef<HTMLDivElement | null>(null);
+    const highlight = useSlidingHighlight<HTMLDivElement>({ itemSelector: MENU_ITEM_SELECTOR });
+    const setHighlightHost = highlight.hostRef;
     const [fixedStyle, setFixedStyle] = useState<CSSProperties | null>(null);
     const [side, setSide] = useState<"left" | "right">("right");
     /** Tighter gap — easier to move pointer onto the panel without closing */
@@ -594,11 +602,12 @@ export function MenuSubContent({ className, children, style, ...props }: MenuSub
     const setPanelEl = useCallback(
         (el: HTMLDivElement | null) => {
             panelRef.current = el;
+            setHighlightHost(el);
             if (sub.open) {
                 menu?.registerSubPanel(el);
             }
         },
-        [menu, sub.open],
+        [menu, sub.open, setHighlightHost],
     );
 
     useIsomorphicLayoutEffect(() => {
@@ -682,7 +691,7 @@ export function MenuSubContent({ className, children, style, ...props }: MenuSub
             data-state="open"
             data-side={side}
             role="menu"
-            className={clsx(menuStyles.subPanel, className)}
+            className={clsx(menuStyles.subPanel, menuStyles.highlightHost, className)}
             style={{ ...fixedStyle, ...style }}
             onPointerEnter={() => sub.cancelClose()}
             onPointerLeave={() => {
@@ -692,6 +701,7 @@ export function MenuSubContent({ className, children, style, ...props }: MenuSub
             }}
             {...props}
         >
+            <span data-refineui="menu-highlight" className={menuStyles.highlight} {...highlight.indicatorProps} />
             {children}
         </div>,
         document.body,

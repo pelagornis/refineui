@@ -4,7 +4,7 @@ import { componentTextClass } from "../../typography";
 
 export const cardStyles = {
     root: "group box-border flex h-full flex-col gap-refineui-size-none overflow-hidden rounded-[var(--refineui-radius-rounded-xx-large)] bg-refineui-alias-background-primary data-[selected=true]:shadow-[inset_0_0_0_var(--refineui-stroke-width-thick)_var(--refineui-color-alias-border-focus)]",
-    elevated: "border-refineui-none shadow-refineui-4 data-[selected=true]:shadow-[var(--refineui-elevation-4),inset_0_0_0_var(--refineui-stroke-width-thick)_var(--refineui-color-alias-border-focus)]",
+    elevated: "border-refineui-hairline border-refineui-alias-border-subtle shadow-refineui-8 data-[selected=true]:shadow-[var(--refineui-elevation-8),inset_0_0_0_var(--refineui-stroke-width-thick)_var(--refineui-color-alias-border-focus)]",
     outlined: "border-refineui-thin border-refineui-alias-border-default shadow-none",
     stateDefault: "bg-refineui-alias-background-primary",
     stateHover: "bg-refineui-alias-background-primary-hover",

@@ -33,6 +33,7 @@ import {
   CommandInput,
   CommandList,
   CommandEmpty,
+  Result,
   CommandGroup,
   CommandGroupHeading,
   CommandItem,
@@ -42,7 +43,9 @@ import {
 <Command>
   <CommandInput placeholder="Search commands..." />
   <CommandList>
-    <CommandEmpty>No results found.</CommandEmpty>
+    <CommandEmpty>
+      <Result title="No results found" description="Try a different search term." />
+    </CommandEmpty>
     <CommandGroup>
       <CommandGroupHeading>File</CommandGroupHeading>
       <CommandItem value="new" onSelect={() => handleNew()}>

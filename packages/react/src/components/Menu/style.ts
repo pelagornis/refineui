@@ -1,10 +1,14 @@
 import { clsx } from "clsx";
 import { componentTypographyTokens } from "../../tokens/componentTypographyTokens";
 import { componentTextClass } from "../../typography";
+import { slidingHighlightClass } from "../shared/SlidingHighlight";
 
 /** Panel chrome — Web Kit Menu; frosted fill + blur live in refineui.css */
 const menuPanelChrome =
     "box-border flex flex-col gap-px overflow-hidden rounded-refineui-xx-large border-refineui-hairline border-refineui-alias-border-default bg-refineui-alias-surface-frosted p-refineui-size-xx-small shadow-refineui-2 backdrop-blur-refineui-surface-frost";
+
+/** Items the sliding hover plate rests on (MenuList, MenuSubContent, ContextMenu). */
+export const MENU_ITEM_SELECTOR = '[data-refineui="menu-item"]';
 
 export const menuStyles = {
     /** Panel chrome — Web Kit Menu `633:4268` (fill/blur: `surfaceFrosted` + `surfaceFrost`) */
@@ -14,6 +18,13 @@ export const menuStyles = {
     /** Portal shell — position/z-index from `MenuPopover` fixed style */
     popover: "z-refineui-messages data-[state=open]:[animation:refineui-fade-enter_var(--refineui-motion-duration-normal)_var(--refineui-motion-easing-standard)] data-[state=closed]:pointer-events-none data-[state=closed]:[animation:refineui-fade-exit_var(--refineui-motion-duration-normal)_var(--refineui-motion-easing-standard)] motion-reduce:animation-none",
     list: clsx(menuPanelChrome, "w-full min-w-refineui-menu-panel-width outline-none"),
+    /**
+     * Sliding hover plate host (list / sub panel). Once live, default-state items drop their own
+     * hover fill; explicit `state` items (hover / active / pressed) and open sub triggers keep theirs.
+     */
+    highlightHost:
+        "relative isolate [&[data-sliding-highlight=true]_[data-refineui=menu-item][data-state=default]:not([aria-expanded=true]):hover]:bg-transparent",
+    highlight: clsx(slidingHighlightClass, "rounded-refineui-large bg-refineui-alias-background-primary-hover"),
     subPanel: clsx(
         menuPanelChrome,
         "w-refineui-menu-panel-width min-w-refineui-menu-panel-width outline-none data-[state=open]:[animation:refineui-fade-enter_var(--refineui-motion-duration-fast)_var(--refineui-motion-easing-standard)] motion-reduce:animation-none",
@@ -27,7 +38,7 @@ export const menuStyles = {
     dividerWrap: "flex w-full items-center px-refineui-size-x-small py-refineui-size-xxx-small",
     dividerLine: "h-px w-full shrink-0 bg-refineui-alias-border-default",
     itemBase:
-        "block w-full rounded-refineui-large border-none bg-transparent p-refineui-size-x-small text-start outline-none transition-[background-color,transform] duration-[var(--refineui-motion-duration-fast)] hover:bg-refineui-alias-background-primary-hover hover:text-refineui-alias-foreground-primary-hover active:bg-refineui-alias-background-primary-active active:text-refineui-alias-foreground-primary active:scale-[var(--refineui-motion-scale-press)] data-[state=hover]:bg-refineui-alias-background-primary-hover data-[state=hover]:text-refineui-alias-foreground-primary-hover data-[state=pressed]:bg-refineui-alias-background-primary-active data-[state=pressed]:text-refineui-alias-foreground-primary data-[state=active]:bg-refineui-alias-background-primary-hover data-[state=active]:text-refineui-alias-foreground-primary data-[state=disabled]:bg-transparent data-[state=disabled]:text-refineui-alias-foreground-disabled",
+        "block w-full rounded-refineui-large border-none bg-transparent p-refineui-size-x-small text-start outline-none will-change-transform transition-[background-color,color,transform] duration-[var(--refineui-motion-duration-normal)] ease-[var(--refineui-motion-easing-emphasized)] motion-reduce:transition-none hover:bg-refineui-alias-background-primary-hover hover:text-refineui-alias-foreground-primary-hover active:bg-refineui-alias-background-primary-active active:text-refineui-alias-foreground-primary active:[transform:scale(var(--refineui-foundation-motion-scale-96))] data-[state=hover]:bg-refineui-alias-background-primary-hover data-[state=hover]:text-refineui-alias-foreground-primary-hover data-[state=pressed]:bg-refineui-alias-background-primary-active data-[state=pressed]:text-refineui-alias-foreground-primary data-[state=active]:bg-refineui-alias-background-primary-hover data-[state=active]:text-refineui-alias-foreground-primary data-[state=disabled]:bg-transparent data-[state=disabled]:text-refineui-alias-foreground-disabled",
     itemDisabled: "cursor-not-allowed text-refineui-alias-foreground-disabled",
     itemEnabled: "cursor-pointer text-refineui-alias-foreground-primary",
     row: "flex items-center gap-refineui-size-x-small",

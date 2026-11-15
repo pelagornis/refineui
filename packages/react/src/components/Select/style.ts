@@ -2,6 +2,7 @@ import type { SelectSize } from "./types";
 import { clsx } from "clsx";
 import { componentTypographyTokens } from "../../tokens/componentTypographyTokens";
 import { componentTextClass, sizedComponentTextClass } from "../../typography";
+import { slidingHighlightClass } from "../shared/SlidingHighlight";
 
 // Select trigger/menu chrome — see Navigation Menu for compact plate patterns.
 export const selectStyles = {
@@ -54,6 +55,13 @@ export const selectStyles = {
     scrollAreaRootItemAligned: "relative flex h-auto min-h-0 max-h-full flex-none flex-col",
 
     group: "flex flex-col gap-px",
+    /**
+     * Viewport hosts the sliding plate (hover + keyboard highlight); once live, unselected items
+     * drop their own hover fill. The selected option keeps its static fill.
+     */
+    highlightHost:
+        "relative isolate [&[data-sliding-highlight=true]_[data-refineui=select-item]:not([data-selected]):not([data-state=pressed]):hover]:bg-transparent",
+    highlight: clsx(slidingHighlightClass, "rounded-refineui-large bg-refineui-alias-background-primary-hover"),
     label: clsx(
         componentTextClass(componentTypographyTokens.select.label),
         "px-refineui-size-x-small py-refineui-size-xxx-small text-refineui-alias-foreground-tertiary",

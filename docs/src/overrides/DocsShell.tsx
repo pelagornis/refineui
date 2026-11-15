@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode, TransitionEvent } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { iconSizes, semanticInteraction } from "@refineui/tokens";
 import { motionMsToNumber } from "@refineui/utilities/animation";
 import {
@@ -51,6 +51,20 @@ function readStoredCollapsed(): boolean {
     return window.localStorage.getItem(COLLAPSED_KEY) === "1";
 }
 
+/** Layout effects on the client (before paint), plain effects during SSR. */
+const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
+
+/** Set by the inline boot script in PageFrame.astro; holds the stored rail size until hydration. */
+const BOOT_ATTR = "data-docs-sidebar-boot";
+const SCROLL_KEY = "refineui-docs-sidebar-scroll";
+
+/**
+ * Runs inline while the server HTML is parsed, right after the docked rail: restores
+ * the rail's scroll offset from the previous page (or brings the active link into
+ * view) before first paint, and saves it again when the page is left.
+ */
+const RESTORE_SCROLL_SCRIPT = `(function(){try{var v=document.querySelector('#${DOCS_SIDEBAR_ID} [data-refineui="scroll-area-viewport"]');if(!v)return;var k='${SCROLL_KEY}';var raw=sessionStorage.getItem(k);if(raw!==null){v.scrollTop=Number(raw)||0;}else{var a=v.querySelector('[aria-current="page"]');if(a){var r=a.getBoundingClientRect(),b=v.getBoundingClientRect();if(r.bottom>b.bottom||r.top<b.top)v.scrollTop+=r.top-b.top-b.height/3;}}window.addEventListener('pagehide',function(){var c=document.querySelector('#${DOCS_SIDEBAR_ID} [data-refineui="scroll-area-viewport"]');if(c)sessionStorage.setItem(k,String(Math.round(c.scrollTop)));});}catch(e){}})();`;
+
 function prefersReducedMotion(): boolean {
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
@@ -87,7 +101,7 @@ function DocsShellSidebar({
 }: Pick<ShellProps, "title" | "titleHref" | "entries" | "githubHref"> & {
     id?: string;
 }) {
-    return (
+    const sidebar = (
         <DocsSidebar
             id={id}
             title={title}
@@ -103,6 +117,16 @@ function DocsShellSidebar({
                 ) : null
             }
         />
+    );
+    if (id !== DOCS_SIDEBAR_ID) return sidebar;
+    return (
+        <>
+            {sidebar}
+            <script
+                suppressHydrationWarning
+                dangerouslySetInnerHTML={{ __html: RESTORE_SCROLL_SCRIPT }}
+            />
+        </>
     );
 }
 
@@ -127,16 +151,29 @@ function DocsShellMain({ collapsed, children }: { collapsed: boolean; children?:
  * are read once. Button collapse animates flex-grow with panel motion tokens.
  */
 function DocsDesktopShell({ title, titleHref, entries, githubHref, children }: ShellProps) {
-    const restoredSize = useRef(readStoredSize());
-    const [sidebarSize, setSidebarSize] = useState(() =>
-        readStoredCollapsed() ? 0 : restoredSize.current,
-    );
-    const [collapsed, setCollapsed] = useState(readStoredCollapsed);
+    /*
+     * First render uses the defaults on server and client alike so hydration matches;
+     * the stored size/collapsed state is applied in a layout effect (before paint).
+     * Until then the boot attribute's CSS shows the stored layout on the server HTML.
+     */
+    const restoredSize = useRef(DEFAULT_SIDEBAR);
+    const [sidebarSize, setSidebarSize] = useState(DEFAULT_SIDEBAR);
+    const [collapsed, setCollapsed] = useState(false);
     const [animating, setAnimating] = useState(false);
     const [frozenRailWidth, setFrozenRailWidth] = useState<number | null>(null);
-    const [resizeHandleOpen, setResizeHandleOpen] = useState(() => !readStoredCollapsed());
+    const [resizeHandleOpen, setResizeHandleOpen] = useState(true);
     const motionTimerRef = useRef<number | null>(null);
     const sidebarRailRef = useRef<HTMLDivElement>(null);
+
+    useIsomorphicLayoutEffect(() => {
+        const storedSize = readStoredSize();
+        const storedCollapsed = readStoredCollapsed();
+        restoredSize.current = storedSize;
+        setSidebarSize(storedCollapsed ? 0 : storedSize);
+        setCollapsed(storedCollapsed);
+        setResizeHandleOpen(!storedCollapsed);
+        document.documentElement.removeAttribute(BOOT_ATTR);
+    }, []);
 
     const clearMotionTimer = () => {
         if (motionTimerRef.current != null) {
@@ -353,9 +390,13 @@ function DocsDesktopShell({ title, titleHref, entries, githubHref, children }: S
  * Docs page shell — RefineUI Sidebar + Resizable + ScrollArea.
  */
 export function DocsShell(props: ShellProps) {
-    const [desktop, setDesktop] = useState<boolean | null>(null);
+    /*
+     * Desktop-first: the server HTML already contains the rail so it paints in its final
+     * place (no pop-in/shift on hydration). Mobile hides it with CSS until this flips.
+     */
+    const [desktop, setDesktop] = useState(true);
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const media = window.matchMedia(DESKTOP_MQ);
         const sync = () => setDesktop(media.matches);
         sync();
@@ -363,12 +404,9 @@ export function DocsShell(props: ShellProps) {
         return () => media.removeEventListener("change", sync);
     }, []);
 
-    if (desktop !== true) {
+    if (!desktop) {
         return (
-            <div
-                data-docs-shell={desktop === false ? "mobile" : "pending"}
-                className="w-full min-w-0"
-            >
+            <div data-docs-shell="mobile" className="w-full min-w-0">
                 {props.children}
             </div>
         );

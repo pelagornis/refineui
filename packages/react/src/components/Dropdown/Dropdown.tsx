@@ -25,6 +25,7 @@ import { iconSizes, spacings, strokeWidths, zIndex } from "@refineui/tokens";
 import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentSizes } from "../../componentSizes";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
+import { useSlidingHighlight } from "../shared/SlidingHighlight";
 import { WebIcon } from "../../WebIcon";
 import { dropdownStyles } from "./style";
 import { Slot, acquireBodyScrollLock, getMergeableTriggerChild } from "@refineui/utilities/react";
@@ -83,6 +84,29 @@ function useDropdownRoot(component: string): RootCtx {
     const v = useContext(DropdownCtx);
     if (!v) throw new Error(`${component} must be used within Dropdown.`);
     return v;
+}
+
+const DROPDOWN_ITEM_SELECTOR = '[data-refineui="dropdown-item"]';
+
+/** Scrollable item column of a menu / submenu panel — hosts the shared sliding hover plate. */
+function DropdownMenuViewport({ children }: { children?: ReactNode }) {
+    const highlight = useSlidingHighlight<HTMLDivElement>({ itemSelector: DROPDOWN_ITEM_SELECTOR });
+    return (
+        <ScrollAreaRegion
+            type="hover"
+            className="min-h-0 max-h-full"
+            viewportClassName={dropdownStyles.menuViewport}
+            viewportRef={highlight.hostRef}
+        >
+            <span
+                data-refineui="dropdown-highlight"
+                data-scroll-edge-item
+                className={dropdownStyles.highlight}
+                {...highlight.indicatorProps}
+            />
+            {children}
+        </ScrollAreaRegion>
+    );
 }
 
 export function Dropdown({
@@ -368,9 +392,7 @@ export function DropdownContent({
                 backgroundColor: resolveColorTokenValue(componentColorTokens.dropdown.menu.background),
             }}
         >
-            <ScrollAreaRegion type="hover" className="min-h-0 max-h-full" viewportClassName={dropdownStyles.menuViewport}>
-                {children}
-            </ScrollAreaRegion>
+            <DropdownMenuViewport>{children}</DropdownMenuViewport>
         </div>
     );
 
@@ -766,9 +788,7 @@ export function DropdownSubContent({ className, children, style, ...props }: Dro
             }}
             {...props}
         >
-            <ScrollAreaRegion type="hover" className="min-h-0 max-h-full" viewportClassName={dropdownStyles.menuViewport}>
-                {children}
-            </ScrollAreaRegion>
+            <DropdownMenuViewport>{children}</DropdownMenuViewport>
         </div>
     );
 

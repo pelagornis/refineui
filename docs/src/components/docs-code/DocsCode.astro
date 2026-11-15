@@ -1,0 +1,35 @@
+---
+/**
+ * Target of src/remark/remarkDocsCode.mjs — every Markdown fence in the docs
+ * renders through RefineUI's CodeBlock. Lines are static HTML; the horizontal
+ * ScrollArea and the copy button hydrate (client:visible).
+ */
+import DocsCodeFrame, { DocsCodeLines, type DocsCodeToken } from './DocsCodeFrame';
+import DocsCodeScroll from './DocsCodeScroll';
+import DocsCodeCopy from './DocsCodeCopy';
+
+interface Props {
+  code: string;
+  lang: string;
+  tokens: string;
+  /** Set by a `wrap` fence meta (```text wrap): lines wrap at the block width, no scroll. */
+  wrap?: string;
+}
+
+const { code, lang, tokens, wrap } = Astro.props;
+const isWrapped = wrap === 'true';
+const lines = JSON.parse(tokens) as DocsCodeToken[][];
+---
+
+<div class="not-content docs-code-wrap">
+  <DocsCodeFrame lang={lang}>
+    {isWrapped ? (
+      <DocsCodeLines tokens={lines} wrap />
+    ) : (
+      <DocsCodeScroll client:visible>
+        <DocsCodeLines tokens={lines} />
+      </DocsCodeScroll>
+    )}
+    <DocsCodeCopy slot="actions" client:visible value={code} />
+  </DocsCodeFrame>
+</div>

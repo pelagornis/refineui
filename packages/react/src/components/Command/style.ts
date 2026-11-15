@@ -30,6 +30,11 @@ export const commandStyles = {
         "box-border w-full overflow-hidden rounded-[var(--refineui-command-list-radius)] data-[animate=true]:transition-[height] data-[animate=true]:duration-[var(--refineui-motion-duration-medium)] data-[animate=true]:ease-[var(--refineui-motion-easing-emphasized)] motion-reduce:data-[animate=true]:transition-none",
         "border-refineui-hairline border-refineui-alias-border-default",
         "bg-refineui-alias-background-primary shadow-refineui-2",
+        /*
+         * Once the sliding indicator is live, items stop painting their own hover/selected fill —
+         * otherwise the destination row fills in place and masks the glide. Press keeps its fill.
+         */
+        "[&[data-animate=true]_[data-refineui=command-item]:not(:active)]:bg-transparent",
     ),
     list: "h-full min-h-0 w-full [&>[data-refineui=scroll-area]]:h-full [&>[data-refineui=scroll-area]]:min-h-0 [&>[data-refineui=scroll-area]>[data-refineui=scroll-area-scrollbar][data-orientation=vertical]]:inset-y-[calc(var(--refineui-command-list-radius)/2)]",
     listShellMaxHeight: {
@@ -55,7 +60,7 @@ export const commandStyles = {
     dividerLine: "h-px w-full shrink-0 bg-refineui-alias-border-default",
     itemBase: clsx(
         "relative flex w-full items-center gap-refineui-size-x-small rounded-refineui-large border-none bg-transparent",
-        "px-refineui-size-x-small text-start outline-none transition-[background-color,transform] duration-[var(--refineui-motion-duration-fast)] hover:bg-refineui-alias-background-surface-hover hover:text-refineui-alias-foreground-primary-hover active:bg-refineui-alias-background-surface-active active:text-refineui-alias-foreground-primary active:scale-[var(--refineui-motion-scale-press)] data-[selected=true]:bg-refineui-alias-background-surface-hover data-[selected=true]:text-refineui-alias-foreground-primary-hover data-[state=hover]:bg-refineui-alias-background-surface-hover data-[state=hover]:text-refineui-alias-foreground-primary-hover data-[state=pressed]:bg-refineui-alias-background-surface-active data-[state=pressed]:text-refineui-alias-foreground-primary data-[state=active]:bg-refineui-alias-background-surface-hover data-[state=active]:text-refineui-alias-foreground-primary data-[state=disabled]:bg-transparent data-[state=disabled]:text-refineui-alias-foreground-disabled",
+        "px-refineui-size-x-small text-start outline-none will-change-transform transition-[background-color,color,transform] duration-[var(--refineui-motion-duration-normal)] ease-[var(--refineui-motion-easing-emphasized)] motion-reduce:transition-none hover:bg-refineui-alias-background-surface-hover hover:text-refineui-alias-foreground-primary-hover active:bg-refineui-alias-background-surface-active active:text-refineui-alias-foreground-primary active:[transform:scale(var(--refineui-foundation-motion-scale-96))] data-[selected=true]:bg-refineui-alias-background-surface-hover data-[selected=true]:text-refineui-alias-foreground-primary-hover data-[state=hover]:bg-refineui-alias-background-surface-hover data-[state=hover]:text-refineui-alias-foreground-primary-hover data-[state=pressed]:bg-refineui-alias-background-surface-active data-[state=pressed]:text-refineui-alias-foreground-primary data-[state=active]:bg-refineui-alias-background-surface-hover data-[state=active]:text-refineui-alias-foreground-primary data-[state=disabled]:bg-transparent data-[state=disabled]:text-refineui-alias-foreground-disabled",
     ),
     itemDisabled: "cursor-not-allowed text-refineui-alias-foreground-disabled",
     itemEnabled: "cursor-pointer text-refineui-alias-foreground-primary",

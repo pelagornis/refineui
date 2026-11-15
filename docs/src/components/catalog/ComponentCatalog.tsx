@@ -57,6 +57,7 @@ import {
     CollapsibleContent,
     CollapsibleTrigger,
     Command,
+    CommandEmpty,
     CommandGroup,
     CommandGroupHeading,
     CommandInput,
@@ -511,6 +512,14 @@ export default function ComponentCatalog({ locale }: { locale?: import("../../li
                         <Command className="w-full">
                             <CommandInput placeholder="Search commands…" />
                             <CommandList>
+                                <CommandEmpty className="px-0 py-0">
+                                    <Result
+                                        className="[&_[data-refineui=result-icon]]:text-refineui-alias-foreground-brand"
+                                        title="No results found"
+                                        description="Try a different search term."
+                                        figure={<WebIcon name="search" size={iconSizes.large} color="currentColor" aria-hidden />}
+                                    />
+                                </CommandEmpty>
                                 <CommandGroup>
                                     <CommandGroupHeading>Suggestions</CommandGroupHeading>
                                     <CommandItem value="calendar">Calendar</CommandItem>

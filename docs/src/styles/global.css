@@ -1254,6 +1254,41 @@ body[data-mobile-menu-expanded] {
   background: var(--refineui-color-alias-background-primary);
 }
 
+/*
+ * Pre-hydration rail: DocsShell is server-rendered desktop-first at the default size.
+ * The inline boot script (PageFrame.astro) sets data-docs-sidebar-boot with the stored
+ * size/collapsed state so the first paint already matches the hydrated layout.
+ */
+@media (min-width: 50rem) {
+  /* Fixed basis (same px as the hydrated flex-grow split) so the rail never stretches
+     while the rest of the HTML is still streaming in. */
+  :root[data-docs-sidebar-boot="open"] [data-docs-shell="desktop"] > [data-refineui="resizable-panel"]:first-child {
+    flex: 0 0 calc((100% - var(--refineui-size-foundation-size-120)) * var(--docs-sidebar-boot-size, 22) / 100) !important;
+  }
+
+  :root[data-docs-sidebar-boot="open"] [data-docs-shell="desktop"] > [data-refineui="resizable-panel"]:last-child {
+    flex: 1 1 0 !important;
+  }
+
+  :root[data-docs-sidebar-boot="collapsed"] [data-docs-shell="desktop"] > [data-refineui="resizable-panel"]:first-child,
+  :root[data-docs-sidebar-boot="collapsed"] [data-docs-shell="desktop"] > [data-refineui="resizable-handle"] {
+    display: none;
+  }
+}
+
+/* Below the breakpoint the server HTML is still the desktop shell until hydration swaps it. */
+@media (max-width: 49.99rem) {
+  [data-docs-shell="desktop"] > [data-refineui="resizable-panel"]:first-child,
+  [data-docs-shell="desktop"] > [data-refineui="resizable-handle"],
+  [data-docs-shell="desktop"] [data-docs-sidebar-toggle] {
+    display: none;
+  }
+
+  [data-docs-shell="desktop"] > [data-refineui="resizable-panel"]:last-child {
+    min-width: 0 !important;
+  }
+}
+
 [data-docs-shell="desktop"][data-docs-sidebar-collapsed] [data-refineui="sidebar-peek-surface"] {
   z-index: var(--refineui-z-floating);
 }
@@ -1569,89 +1604,111 @@ details[open] > [data-refineui-docs-toc-summary] [data-refineui-docs-toc-caret] 
   display: none !important;
 }
 
-[data-docs-package-manager] [data-pm-panel] > .expressive-code {
+[data-docs-package-manager] [data-pm-panel] > .docs-code-wrap {
   margin-block: 0;
 }
 
 /**
- * Expressive Code copy control — token chrome only (keep EC behavior).
+ * Markdown fences → RefineUI CodeBlock (src/remark/remarkDocsCode.mjs,
+ * src/components/docs-code). Night Owl light/dark token colors arrive as
+ * Shiki CSS variables and follow Starlight's theme switch.
  */
-.expressive-code .copy {
+.docs-code-wrap {
+  min-width: 0;
+}
+
+/*
+ * refineui.css gives every [data-refineui] node the UI sans family (lines included),
+ * and refineui-typo-body-1 outranks font-mono; keep the previous docs code face.
+ */
+.docs-code [data-refineui="code-block-content"],
+.docs-code [data-refineui="code-block-content"] code,
+.docs-code [data-refineui="code-block-line"] {
+  font-family: var(--refineui-docs-font-mono);
+  font-size: var(--refineui-typography-body-2-font-size);
+}
+
+.docs-code [style*="--shiki-light"] {
+  color: var(--shiki-light);
+}
+
+:root[data-theme="dark"] .docs-code [style*="--shiki-dark"] {
+  color: var(--shiki-dark);
+}
+
+/*
+ * Long lines scroll inside RefineUI ScrollArea (DocsCodeScroll island) instead of the
+ * <pre>. The viewport is horizontally scrollable from the server HTML on (its native bar
+ * is hidden by ScrollArea), so nothing shifts when the island hydrates.
+ */
+.docs-code-scroll {
+  flex: 1 1 auto;
+  border-radius: inherit;
+}
+
+.docs-code-scroll > [data-refineui="scroll-area-viewport"] {
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+}
+
+.docs-code-scroll > [data-refineui="scroll-area-viewport"]:focus-visible {
+  outline: var(--refineui-stroke-width-thick) solid var(--refineui-focus-color);
+  outline-offset: calc(-1 * var(--refineui-stroke-width-thick));
+}
+
+.docs-code [data-refineui="code-block-content"] {
+  overflow: visible;
+  width: max-content;
+  min-width: 100%;
+}
+
+/* `wrap` fences: lines break at the block width instead of scrolling. */
+.docs-code [data-refineui="code-block-content"][data-wrap="true"] {
+  width: auto;
+  min-width: 0;
+}
+
+.docs-code [data-wrap="true"] [data-refineui="code-block-line"] {
+  display: block;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* Keep the last characters of long lines clear of the copy control. */
+.docs-code [data-refineui="code-block-line"] {
+  padding-inline-end: calc(var(--refineui-size-foundation-size-320) + var(--refineui-spacing-size-x-large));
+}
+
+.docs-code-actions {
+  position: absolute;
   inset-block-start: var(--refineui-spacing-size-small);
   inset-inline-end: var(--refineui-spacing-size-small);
 }
 
-.expressive-code .copy button {
-  width: var(--refineui-size-foundation-size-320);
-  height: var(--refineui-size-foundation-size-320);
-  border-radius: var(--refineui-radius-rounded-medium);
-  background: var(--refineui-color-alias-background-primary);
+.docs-code-actions [data-refineui="code-block-copy"] {
   opacity: 0;
-  transition-property: opacity, background-color, border-color;
+  transition-property: opacity, background-color, color;
   transition-duration: var(--refineui-motion-duration-fast);
   transition-timing-function: var(--refineui-motion-easing-standard);
 }
 
-.expressive-code .copy button::before {
-  border-radius: inherit;
-  border-color: var(--refineui-color-alias-border-default);
+.docs-code:hover .docs-code-actions [data-refineui="code-block-copy"],
+.docs-code:focus-within .docs-code-actions [data-refineui="code-block-copy"],
+.docs-code-actions [data-refineui="code-block-copy"][data-state="copied"] {
   opacity: 1;
-}
-
-.expressive-code .copy button::after {
-  background-color: var(--refineui-color-alias-foreground-secondary);
-  margin: var(--refineui-spacing-size-x-small);
-}
-
-.expressive-code .copy button div {
-  background: var(--refineui-color-alias-background-surface-hover);
-  opacity: 0;
-}
-
-.expressive-code .frame:hover .copy button:not(:hover),
-.expressive-code .frame:focus-within .copy button:not(:hover),
-.expressive-code .copy .feedback.show ~ button:not(:hover) {
-  opacity: 0.9;
-}
-
-.expressive-code .copy button:hover,
-.expressive-code .copy button:focus-visible {
-  opacity: 1;
-}
-
-.expressive-code .copy button:hover::after,
-.expressive-code .copy button:focus-visible::after {
-  background-color: var(--refineui-color-alias-foreground-primary);
-}
-
-.expressive-code .copy button:hover::before,
-.expressive-code .copy button:focus-visible::before {
-  border-color: var(--refineui-color-alias-border-hover);
-}
-
-.expressive-code .copy button:hover div,
-.expressive-code .copy button:focus-visible div {
-  opacity: 1;
-}
-
-.expressive-code .copy .feedback {
-  padding: var(--refineui-spacing-size-xx-small) var(--refineui-spacing-size-medium);
-  border-radius: var(--refineui-radius-rounded-medium);
-  background-color: var(--refineui-color-alias-surface-inverse);
-  color: var(--refineui-color-alias-foreground-inversed);
-  font-family: var(--refineui-typography-caption-2-font-family);
-  font-size: var(--refineui-typography-caption-2-font-size);
-  font-weight: var(--refineui-typography-caption-2-font-weight);
-  line-height: var(--refineui-typography-caption-2-line-height);
-  box-shadow: var(--refineui-elevation-8);
-}
-
-.expressive-code .copy .feedback::after {
-  border-inline-start-color: var(--refineui-color-alias-surface-inverse);
 }
 
 @media (hover: none) {
-  .expressive-code .copy button {
-    opacity: 0.9;
+  .docs-code-actions [data-refineui="code-block-copy"] {
+    opacity: 1;
   }
+}
+
+/*
+ * Starlight's `* { margin: 0 }` reset (layer starlight.reset) outranks Tailwind's utilities
+ * layer here, which zeroed the avatar stack overlap. Unlayered, so it wins.
+ */
+.-ms-\[var\(--avatar-stack-overlap\)\] {
+  margin-inline-start: calc(var(--avatar-stack-overlap) * -1);
 }
