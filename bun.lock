@@ -63,7 +63,7 @@
     },
     "packages/react": {
       "name": "@refineui/react",
-      "version": "0.4.0",
+      "version": "0.4.1",
       "dependencies": {
         "@refineui/tokens": "workspace:*",
         "@refineui/utilities": "workspace:*",
@@ -88,7 +88,7 @@
     },
     "packages/tokens": {
       "name": "@refineui/tokens",
-      "version": "2.2.1",
+      "version": "2.2.2",
       "dependencies": {
         "@swc/helpers": "^0.5.1",
       },
