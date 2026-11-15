@@ -9,7 +9,7 @@ import {
     CommandInput,
     CommandItem,
     CommandList,
-    CommandSeparator,
+    CommandDivider,
     CommandShortcut,
     WebIcon,
 } from "@refineui/react";
@@ -41,11 +41,14 @@ function CommandPreviewItems() {
                 <CommandItem value="result" startIcon={<Glyph name="checkmark" />}>
                     Result
                 </CommandItem>
+                <CommandItem value="toolbar" startIcon={<Glyph name="settings" />}>
+                    Toolbar
+                </CommandItem>
                 <CommandItem value="search-emoji" startIcon={<Glyph name="emoji" />}>
                     Search Emoji
                 </CommandItem>
             </CommandGroup>
-            <CommandSeparator />
+            <CommandDivider />
             <CommandGroup>
                 <CommandGroupHeading>Settings</CommandGroupHeading>
                 <CommandItem value="settings" startIcon={<Glyph name="settings" />}>

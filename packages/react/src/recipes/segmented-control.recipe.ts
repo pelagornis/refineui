@@ -50,8 +50,9 @@ export const segmentedControlStyles = {
     indicator: segmentedControlRecipe.base.indicator,
     item: segmentedControlRecipe.base.item,
     itemDisabled: "cursor-not-allowed text-refineui-alias-foreground-disabled",
-    itemEnabled: "cursor-pointer hover:text-refineui-alias-foreground-primary",
+    itemEnabled: "cursor-pointer",
     itemSelectedEnabled: "text-refineui-alias-foreground-on-brand",
     itemSelectedDisabled: "text-refineui-alias-foreground-disabled",
-    itemUnselected: "text-refineui-alias-foreground-secondary",
+    /** Hover darkens only unselected items; the selected item keeps on-brand ink over the brand thumb. */
+    itemUnselected: "text-refineui-alias-foreground-secondary enabled:hover:text-refineui-alias-foreground-primary",
 } as const;

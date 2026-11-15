@@ -6,7 +6,7 @@ import {
     ContextMenuItem,
     ContextMenuLabel,
     ContextMenuPortal,
-    ContextMenuSeparator,
+    ContextMenuDivider,
     ContextMenuSub,
     ContextMenuSubContent,
     ContextMenuSubTrigger,
@@ -29,7 +29,7 @@ function MenuItems() {
             <ContextMenuItem startIcon={<MenuGlyph name="folder-open" />} shortcut="⌘O">
                 Open…
             </ContextMenuItem>
-            <ContextMenuSeparator />
+            <ContextMenuDivider />
             <ContextMenuItem startIcon={<MenuGlyph name="copy" />} shortcut="⌘C">
                 Copy
             </ContextMenuItem>
@@ -53,7 +53,7 @@ export default function ContextMenuPreview() {
                     <ContextMenuPortal>
                         <ContextMenuContent>
                             <MenuItems />
-                            <ContextMenuSeparator />
+                            <ContextMenuDivider />
                             <ContextMenuSub>
                                 <ContextMenuSubTrigger>More</ContextMenuSubTrigger>
                                 <ContextMenuPortal>

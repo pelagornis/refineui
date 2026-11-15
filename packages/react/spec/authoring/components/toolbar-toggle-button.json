@@ -1,21 +1,21 @@
 {
-  "id": "dropdown-separator",
+  "id": "toolbar-toggle-button",
   "exportPath": "@refineui/react",
-  "exportName": "DropdownSeparator",
+  "exportName": "ToolbarToggleButton",
   "kind": "part",
   "category": "parts",
-  "label": "Dropdown Separator",
+  "label": "Toolbar Toggle Button",
   "props": [],
   "preview": {
     "mode": "full"
   },
   "parents": [
     {
-      "component": "DropdownContent",
+      "component": "Toolbar",
       "slot": "children"
     },
     {
-      "component": "DropdownGroup",
+      "component": "ToolbarGroup",
       "slot": "children"
     }
   ]

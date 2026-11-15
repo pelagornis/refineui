@@ -1,10 +1,10 @@
 {
-  "id": "command-separator",
+  "id": "command-divider",
   "exportPath": "@refineui/react",
-  "exportName": "CommandSeparator",
+  "exportName": "CommandDivider",
   "kind": "part",
   "category": "parts",
-  "label": "Command Separator",
+  "label": "Command Divider",
   "props": [],
   "preview": {
     "mode": "full"

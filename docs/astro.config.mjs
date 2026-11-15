@@ -259,6 +259,7 @@ export default defineConfig({
             { label: 'Textarea', slug: 'components/textarea' },
             { label: 'Time Input', slug: 'components/time-input' },
             { label: 'Toast', slug: 'components/toast' },
+            { label: 'Toolbar', slug: 'components/toolbar' },
             { label: 'Tooltip', slug: 'components/tooltip' },
             { label: 'Tree', slug: 'components/tree' },
           ],

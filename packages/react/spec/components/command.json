@@ -12,7 +12,7 @@
     "input": "command-input",
     "item": "command-item",
     "list": "command-list",
-    "separator": "command-separator",
+    "divider": "command-divider",
     "shortcut": "command-shortcut"
   },
   "attributes": {

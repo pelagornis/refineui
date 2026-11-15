@@ -1,18 +1,110 @@
 ---
 title: Button Group
-description: Button Group is not yet available in @refineui/react.
+description: Bundles related buttons into one tube, with shared size and variant.
 ---
 
-Button Group component is not currently shipped in `@refineui/react`.
+import { SpecRenderer } from "../../../components/spec";
+import { PropSpec } from "../../../docs-ui";
+import ButtonGroupDemo from "../../../components/ButtonGroupDemo";
+import PackageInstall from "../../../components/PackageInstall.mdx";
 
-For grouping buttons, use layout components like `Stack`:
+`ButtonGroup` bundles related `Button`s, such as zoom controls or Edit / Duplicate / Archive, into one tube outline. Set `size` and `variant` once on the group and every Button inside follows them.
+
+<div class="not-content my-6"><ButtonGroupDemo client:load /></div>
+
+## Contract
+
+<div class="not-content"><SpecRenderer client:load component="button-group" /></div>
+
+## Installation
+
+<PackageInstall />
+
+## Usage
 
 ```tsx
-import { Button, Stack } from "@refineui/react";
+import { Button, ButtonGroup, WebIcon } from "@refineui/react";
 
-<Stack direction="row" gap="sizeXSmall">
-  <Button variant="outline">Cancel</Button>
-  <Button variant="primary">Save</Button>
-</Stack>
+<ButtonGroup aria-label="Zoom">
+  <Button layout="icon" aria-label="Zoom in"><WebIcon name="zoom-in" /></Button>
+  <Button layout="icon" aria-label="Zoom out"><WebIcon name="zoom-out" /></Button>
+</ButtonGroup>;
 ```
 
+## Examples
+
+### Attached
+
+By default the group is `attached`: one thin outline on a brand-subtle track, holding ghost buttons. The outline's corners follow the Button radius for the size, so they stay concentric with the buttons inside.
+
+```tsx
+<ButtonGroup aria-label="Canvas">
+  <Button layout="icon" aria-label="Back"><WebIcon name="chevron-left" /></Button>
+  <Button layout="icon" aria-label="Copy"><WebIcon name="copy" /></Button>
+  <Button layout="icon" aria-label="Cut"><WebIcon name="cut" /></Button>
+</ButtonGroup>
+```
+
+### Variants
+
+`variant` (default `"ghost"`) cascades to every Button. A Button that sets its own `variant` keeps it.
+
+```tsx
+<ButtonGroup aria-label="Item actions" variant="outline">
+  <Button>Edit</Button>
+  <Button>Duplicate</Button>
+  <Button>Archive</Button>
+</ButtonGroup>
+```
+
+### Actions, not selection
+
+`ButtonGroup` only runs actions. Each Button shows its normal hover and press feedback, but nothing stays selected after you let go. For a pressed or selected state that stays on, use `ToolbarToggleButton` inside a [Toolbar](/components/toolbar/).
+
+### Sizes
+
+`size` (`sm`, `md`, or `lg`, default `md`) cascades to every Button. A Button that sets `size` explicitly keeps its own.
+
+```tsx
+<ButtonGroup aria-label="Zoom" size="sm">…</ButtonGroup>
+```
+
+### Vertical
+
+With `orientation="vertical"`, the buttons stack vertically inside the same tube.
+
+```tsx
+<ButtonGroup aria-label="Zoom" orientation="vertical">
+  <Button layout="icon" aria-label="Zoom in"><WebIcon name="zoom-in" /></Button>
+  <Button layout="icon" aria-label="Zoom out"><WebIcon name="zoom-out" /></Button>
+</ButtonGroup>
+```
+
+### Separate
+
+`attached={false}` drops the outline and only keeps a small gap, for pairs such as Cancel / Save.
+
+```tsx
+<ButtonGroup aria-label="Form actions" attached={false}>
+  <Button variant="outline">Cancel</Button>
+  <Button variant="primary">Save</Button>
+</ButtonGroup>
+```
+
+## Keyboard
+
+Each Button is its own Tab stop, and `Enter` / `Space` activate it. For one Tab stop with arrow-key navigation, use [Toolbar](/components/toolbar/).
+
+## API Reference
+
+### ButtonGroup
+
+Renders a `div` with `role="group"`. Give it an `aria-label`. Other props go to the `div`.
+
+<div class="not-content"><PropSpec client:load rows={[
+  { prop: "size", default: '"md"', type: '"sm" | "md" | "lg"', description: "Cascades to Buttons inside unless a Button sets its own." },
+  { prop: "variant", default: '"ghost"', type: '"primary" | "secondary" | "outline" | "ghost"', description: "Cascades to Buttons inside unless a Button sets its own." },
+  { prop: "orientation", default: '"horizontal"', type: '"horizontal" | "vertical"', description: "Layout direction." },
+  { prop: "attached", default: "true", type: "boolean", description: "Wraps the buttons in one tube outline. false only spaces them." },
+  { prop: "aria-label", default: "—", type: "string", description: "Names the group." }
+]} /></div>

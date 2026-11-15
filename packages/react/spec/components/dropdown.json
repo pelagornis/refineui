@@ -8,7 +8,7 @@
     "dropdown_item": "dropdown-item",
     "group": "dropdown-menu-group",
     "label": "dropdown-menu-label",
-    "separator": "dropdown-menu-separator",
+    "divider": "dropdown-menu-divider",
     "shortcut": "dropdown-menu-shortcut"
   },
   "attributes": {

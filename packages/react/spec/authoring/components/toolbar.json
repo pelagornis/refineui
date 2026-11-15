@@ -1,0 +1,119 @@
+{
+  "id": "toolbar",
+  "exportPath": "@refineui/react",
+  "exportName": "Toolbar",
+  "kind": "root",
+  "category": "components",
+  "label": "Toolbar",
+  "props": [
+    {
+      "name": "size",
+      "label": "size",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "defaultValue": "sm",
+      "section": "variants"
+    },
+    {
+      "name": "orientation",
+      "label": "orientation",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "horizontal",
+        "vertical"
+      ],
+      "defaultValue": "horizontal",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "ToolbarGroup",
+        "ToolbarButton",
+        "ToolbarToggleButton",
+        "ToolbarDivider"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "formatting",
+      "label": "Text formatting",
+      "root": {
+        "component": "Toolbar",
+        "props": {
+          "label": "Text formatting"
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "ToolbarGroup",
+              "props": {
+                "aria-label": "Text style"
+              },
+              "slots": {
+                "children": [
+                  {
+                    "component": "ToolbarToggleButton",
+                    "props": {
+                      "aria-label": "Bold"
+                    }
+                  },
+                  {
+                    "component": "ToolbarToggleButton",
+                    "props": {
+                      "aria-label": "Italic"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "component": "ToolbarDivider"
+            },
+            {
+              "component": "ToolbarGroup",
+              "props": {
+                "aria-label": "Clipboard"
+              },
+              "slots": {
+                "children": [
+                  {
+                    "component": "ToolbarButton",
+                    "props": {
+                      "aria-label": "Copy"
+                    }
+                  },
+                  {
+                    "component": "ToolbarButton",
+                    "props": {
+                      "aria-label": "Cut"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

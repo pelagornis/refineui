@@ -68,7 +68,7 @@ export interface SelectLabelProps extends HTMLAttributes<HTMLDivElement> {
     children?: ReactNode;
 }
 
-export interface SelectSeparatorProps extends HTMLAttributes<HTMLDivElement> {}
+export interface SelectDividerProps extends HTMLAttributes<HTMLDivElement> {}
 
 export interface SelectItemProps extends HTMLAttributes<HTMLDivElement> {
     value: string;

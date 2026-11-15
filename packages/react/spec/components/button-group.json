@@ -1,0 +1,77 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "button-group",
+  "version": 1,
+  "export": "ButtonGroup",
+  "anatomy": {
+    "root": "button-group",
+    "button": "button"
+  },
+  "attributes": {
+    "data-refineui": "button-group"
+  },
+  "variants": {
+    "size": [
+      "sm",
+      "md",
+      "lg"
+    ],
+    "variant": [
+      "primary",
+      "secondary",
+      "outline",
+      "ghost"
+    ],
+    "orientation": [
+      "horizontal",
+      "vertical"
+    ]
+  },
+  "states": {
+    "pseudo": [
+      "hover",
+      "active",
+      "focus-visible"
+    ],
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "accessibility": {
+    "button-group": {
+      "element": "div",
+      "role": "group",
+      "labeling": {
+        "accessibleName": "optional"
+      }
+    },
+    "button": {
+      "element": "button",
+      "native": true
+    }
+  },
+  "keyboard": {
+    "Enter": {
+      "action": "activate",
+      "native": true
+    },
+    "Space": {
+      "action": "activate",
+      "native": true
+    }
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    },
+    "behavior": {
+      "roving": false
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

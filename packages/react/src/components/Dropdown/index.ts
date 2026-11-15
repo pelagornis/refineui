@@ -13,7 +13,7 @@ export {
     DropdownItem,
     DropdownLabel,
     DropdownPortal,
-    DropdownSeparator,
+    DropdownDivider,
     DropdownShortcut,
     DropdownSub,
     DropdownSubContent,

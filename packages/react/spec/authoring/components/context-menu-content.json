@@ -21,7 +21,7 @@
       "accepts": [
         "ContextMenuItem",
         "ContextMenuLabel",
-        "ContextMenuSeparator",
+        "ContextMenuDivider",
         "ContextMenuSub"
       ],
       "repeatable": true

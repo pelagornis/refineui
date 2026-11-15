@@ -1,21 +1,21 @@
 {
-  "id": "select-separator",
+  "id": "toolbar-button",
   "exportPath": "@refineui/react",
-  "exportName": "SelectSeparator",
+  "exportName": "ToolbarButton",
   "kind": "part",
   "category": "parts",
-  "label": "Select Separator",
+  "label": "Toolbar Button",
   "props": [],
   "preview": {
     "mode": "full"
   },
   "parents": [
     {
-      "component": "SelectViewport",
+      "component": "Toolbar",
       "slot": "children"
     },
     {
-      "component": "SelectGroup",
+      "component": "ToolbarGroup",
       "slot": "children"
     }
   ]

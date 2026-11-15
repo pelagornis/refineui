@@ -58,7 +58,7 @@ export const selectStyles = {
         componentTextClass(componentTypographyTokens.select.label),
         "px-refineui-size-x-small py-refineui-size-xxx-small text-refineui-alias-foreground-tertiary",
     ),
-    separator: "my-refineui-size-x-small h-px bg-refineui-alias-border-default",
+    divider: "my-refineui-size-x-small h-px bg-refineui-alias-border-default",
 
     item: clsx(
         componentTextClass(componentTypographyTokens.select.item),

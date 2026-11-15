@@ -84,7 +84,7 @@ export function CatalogDropdownPreview() {
                         <div
                             role="separator"
                             aria-orientation="horizontal"
-                            data-refineui="dropdown-menu-separator"
+                            data-refineui="dropdown-menu-divider"
                             className="flex w-full items-center px-refineui-size-x-small py-refineui-size-xxx-small"
                         >
                             <div className="h-px w-full shrink-0 bg-refineui-alias-border-default" />

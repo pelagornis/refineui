@@ -37,7 +37,7 @@ import type {
     SelectProps,
     SelectScrollDownButtonProps,
     SelectScrollUpButtonProps,
-    SelectSeparatorProps,
+    SelectDividerProps,
     SelectTriggerProps,
     SelectValueProps,
     SelectViewportProps,
@@ -810,8 +810,8 @@ export function SelectLabel({ children, className, ...props }: SelectLabelProps)
     );
 }
 
-export function SelectSeparator({ className, ...props }: SelectSeparatorProps) {
-    return <div role="separator" className={clsx(selectStyles.separator, className)} {...props} />;
+export function SelectDivider({ className, ...props }: SelectDividerProps) {
+    return <div role="separator" className={clsx(selectStyles.divider, className)} {...props} />;
 }
 
 export function SelectItem({

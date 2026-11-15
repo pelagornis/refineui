@@ -1,21 +1,21 @@
 {
-  "id": "context-menu-separator",
+  "id": "dropdown-divider",
   "exportPath": "@refineui/react",
-  "exportName": "ContextMenuSeparator",
+  "exportName": "DropdownDivider",
   "kind": "part",
   "category": "parts",
-  "label": "Context Menu Separator",
+  "label": "Dropdown Divider",
   "props": [],
   "preview": {
     "mode": "full"
   },
   "parents": [
     {
-      "component": "ContextMenuContent",
+      "component": "DropdownContent",
       "slot": "children"
     },
     {
-      "component": "ContextMenuSubContent",
+      "component": "DropdownGroup",
       "slot": "children"
     }
   ]

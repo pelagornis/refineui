@@ -1,14 +1,16 @@
 import { clsx } from "clsx";
 import { forwardRef } from "react";
 import { Slot } from "../Slot";
+import { useOptionalButtonGroup } from "../ButtonGroup/context";
+import { useOptionalToolbarSize } from "../Toolbar/context";
 import { buttonIconSizeClass, buttonLabelSizeClass, buttonStyles, buttonVariantClass } from "./style";
 import type { ButtonProps } from "./types";
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
     {
         asChild = false,
-        variant = "primary",
-        size = "md",
+        variant: variantProp,
+        size: sizeProp,
         layout = "label",
         fullWidth = false,
         className,
@@ -20,6 +22,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     },
     ref,
 ) {
+    // Inside a ButtonGroup or Toolbar, Buttons follow its size (and the group's variant) unless passed explicitly.
+    const group = useOptionalButtonGroup();
+    const toolbarSize = useOptionalToolbarSize();
+    const size = sizeProp ?? group?.size ?? toolbarSize ?? "md";
+    const variant = variantProp ?? group?.variant ?? "primary";
+
     const inactive =
         Boolean(disabled) || ariaDisabledProp === true || ariaDisabledProp === "true";
 

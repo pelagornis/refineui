@@ -7,7 +7,7 @@ import {
     DropdownItem,
     DropdownLabel,
     DropdownPortal,
-    DropdownSeparator,
+    DropdownDivider,
     DropdownShortcut,
     DropdownTrigger,
     WebIcon,
@@ -51,7 +51,7 @@ export default function DropdownDemo() {
                                     <DropdownShortcut>⌘,</DropdownShortcut>
                                 </DropdownItem>
                             </DropdownGroup>
-                            <DropdownSeparator />
+                            <DropdownDivider />
                             <DropdownItem>
                                 <ItemLabel icon="power">Log out</ItemLabel>
                                 <DropdownShortcut>⇧⌘Q</DropdownShortcut>

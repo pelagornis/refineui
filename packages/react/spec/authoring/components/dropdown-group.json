@@ -21,7 +21,7 @@
       "accepts": [
         "DropdownItem",
         "DropdownLabel",
-        "DropdownSeparator",
+        "DropdownDivider",
         "DropdownSub"
       ],
       "repeatable": true

@@ -1,7 +1,7 @@
 {
   "schema": "refineui.authoring/1",
   "packageName": "@refineui/react",
-  "packageVersion": "0.4.0",
+  "packageVersion": "0.4.1",
   "css": [
     "@refineui/react/refineui.css"
   ],
@@ -129,6 +129,110 @@
                     "variant": "bodyMd"
                   },
                   "text": "Button"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "events": [
+        {
+          "name": "click",
+          "payload": "void"
+        }
+      ]
+    },
+    {
+      "id": "button-group",
+      "exportPath": "@refineui/react",
+      "exportName": "ButtonGroup",
+      "kind": "root",
+      "category": "components",
+      "label": "Button Group",
+      "props": [
+        {
+          "name": "size",
+          "label": "Size",
+          "valueType": "enum",
+          "control": "segmented",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "defaultValue": "md",
+          "section": "variants"
+        },
+        {
+          "name": "variant",
+          "label": "Variant",
+          "valueType": "enum",
+          "control": "select",
+          "options": [
+            "primary",
+            "secondary",
+            "outline",
+            "ghost"
+          ],
+          "defaultValue": "ghost",
+          "section": "variants"
+        },
+        {
+          "name": "orientation",
+          "label": "Orientation",
+          "valueType": "enum",
+          "control": "segmented",
+          "options": [
+            "horizontal",
+            "vertical"
+          ],
+          "defaultValue": "horizontal",
+          "section": "variants"
+        },
+        {
+          "name": "attached",
+          "label": "Attached",
+          "valueType": "boolean",
+          "control": "toggle",
+          "defaultValue": true,
+          "section": "properties"
+        }
+      ],
+      "preview": {
+        "mode": "full"
+      },
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "Button"
+          ],
+          "repeatable": true,
+          "min": 1
+        }
+      ],
+      "presets": [
+        {
+          "id": "actions",
+          "label": "Item actions",
+          "root": {
+            "component": "ButtonGroup",
+            "props": {
+              "aria-label": "Item actions"
+            },
+            "slots": {
+              "children": [
+                {
+                  "component": "Button",
+                  "text": "Edit"
+                },
+                {
+                  "component": "Button",
+                  "text": "Duplicate"
+                },
+                {
+                  "component": "Button",
+                  "text": "Archive"
                 }
               ]
             }
@@ -1596,7 +1700,7 @@
           "accepts": [
             "SelectLabel",
             "SelectItem",
-            "SelectSeparator"
+            "SelectDivider"
           ],
           "repeatable": true
         }
@@ -1786,12 +1890,12 @@
       ]
     },
     {
-      "id": "select-separator",
+      "id": "select-divider",
       "exportPath": "@refineui/react",
-      "exportName": "SelectSeparator",
+      "exportName": "SelectDivider",
       "kind": "part",
       "category": "parts",
-      "label": "Select Separator",
+      "label": "Select Divider",
       "props": [],
       "preview": {
         "mode": "full"
@@ -1877,7 +1981,7 @@
           "accepts": [
             "SelectGroup",
             "SelectItem",
-            "SelectSeparator"
+            "SelectDivider"
           ],
           "repeatable": true
         }
@@ -2408,19 +2512,19 @@
             "CommandEmpty",
             "CommandGroup",
             "CommandItem",
-            "CommandSeparator"
+            "CommandDivider"
           ],
           "repeatable": true
         }
       ]
     },
     {
-      "id": "command-separator",
+      "id": "command-divider",
       "exportPath": "@refineui/react",
-      "exportName": "CommandSeparator",
+      "exportName": "CommandDivider",
       "kind": "part",
       "category": "parts",
-      "label": "Command Separator",
+      "label": "Command Divider",
       "props": [],
       "preview": {
         "mode": "full"
@@ -6189,7 +6293,7 @@
             "DropdownGroup",
             "DropdownItem",
             "DropdownLabel",
-            "DropdownSeparator",
+            "DropdownDivider",
             "DropdownSub"
           ],
           "repeatable": true
@@ -6219,7 +6323,7 @@
           "accepts": [
             "DropdownItem",
             "DropdownLabel",
-            "DropdownSeparator",
+            "DropdownDivider",
             "DropdownSub"
           ],
           "repeatable": true
@@ -6308,12 +6412,12 @@
       ]
     },
     {
-      "id": "dropdown-separator",
+      "id": "dropdown-divider",
       "exportPath": "@refineui/react",
-      "exportName": "DropdownSeparator",
+      "exportName": "DropdownDivider",
       "kind": "part",
       "category": "parts",
-      "label": "Dropdown Separator",
+      "label": "Dropdown Divider",
       "props": [],
       "preview": {
         "mode": "full"
@@ -9666,6 +9770,216 @@
       ]
     },
     {
+      "id": "toolbar",
+      "exportPath": "@refineui/react",
+      "exportName": "Toolbar",
+      "kind": "root",
+      "category": "components",
+      "label": "Toolbar",
+      "props": [
+        {
+          "name": "size",
+          "label": "size",
+          "valueType": "enum",
+          "control": "segmented",
+          "options": [
+            "sm",
+            "md",
+            "lg"
+          ],
+          "defaultValue": "sm",
+          "section": "variants"
+        },
+        {
+          "name": "orientation",
+          "label": "orientation",
+          "valueType": "enum",
+          "control": "segmented",
+          "options": [
+            "horizontal",
+            "vertical"
+          ],
+          "defaultValue": "horizontal",
+          "section": "variants"
+        }
+      ],
+      "preview": {
+        "mode": "full"
+      },
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "ToolbarGroup",
+            "ToolbarButton",
+            "ToolbarToggleButton",
+            "ToolbarDivider"
+          ],
+          "repeatable": true
+        }
+      ],
+      "presets": [
+        {
+          "id": "formatting",
+          "label": "Text formatting",
+          "root": {
+            "component": "Toolbar",
+            "props": {
+              "label": "Text formatting"
+            },
+            "slots": {
+              "children": [
+                {
+                  "component": "ToolbarGroup",
+                  "props": {
+                    "aria-label": "Text style"
+                  },
+                  "slots": {
+                    "children": [
+                      {
+                        "component": "ToolbarToggleButton",
+                        "props": {
+                          "aria-label": "Bold"
+                        }
+                      },
+                      {
+                        "component": "ToolbarToggleButton",
+                        "props": {
+                          "aria-label": "Italic"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "component": "ToolbarDivider"
+                },
+                {
+                  "component": "ToolbarGroup",
+                  "props": {
+                    "aria-label": "Clipboard"
+                  },
+                  "slots": {
+                    "children": [
+                      {
+                        "component": "ToolbarButton",
+                        "props": {
+                          "aria-label": "Copy"
+                        }
+                      },
+                      {
+                        "component": "ToolbarButton",
+                        "props": {
+                          "aria-label": "Cut"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "events": [
+        {
+          "name": "click",
+          "payload": "void"
+        }
+      ]
+    },
+    {
+      "id": "toolbar-button",
+      "exportPath": "@refineui/react",
+      "exportName": "ToolbarButton",
+      "kind": "part",
+      "category": "parts",
+      "label": "Toolbar Button",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "Toolbar",
+          "slot": "children"
+        },
+        {
+          "component": "ToolbarGroup",
+          "slot": "children"
+        }
+      ]
+    },
+    {
+      "id": "toolbar-group",
+      "exportPath": "@refineui/react",
+      "exportName": "ToolbarGroup",
+      "kind": "part",
+      "category": "parts",
+      "label": "Toolbar Group",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "Toolbar",
+          "slot": "children"
+        }
+      ],
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "ToolbarButton",
+            "ToolbarToggleButton"
+          ],
+          "repeatable": true,
+          "min": 1
+        }
+      ]
+    },
+    {
+      "id": "toolbar-divider",
+      "exportPath": "@refineui/react",
+      "exportName": "ToolbarDivider",
+      "kind": "part",
+      "category": "parts",
+      "label": "Toolbar Divider",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "Toolbar",
+          "slot": "children"
+        }
+      ]
+    },
+    {
+      "id": "toolbar-toggle-button",
+      "exportPath": "@refineui/react",
+      "exportName": "ToolbarToggleButton",
+      "kind": "part",
+      "category": "parts",
+      "label": "Toolbar Toggle Button",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "Toolbar",
+          "slot": "children"
+        },
+        {
+          "component": "ToolbarGroup",
+          "slot": "children"
+        }
+      ]
+    },
+    {
       "id": "chart",
       "exportPath": "@refineui/react",
       "exportName": "Chart",
@@ -10321,7 +10635,7 @@
           "accepts": [
             "ContextMenuItem",
             "ContextMenuLabel",
-            "ContextMenuSeparator",
+            "ContextMenuDivider",
             "ContextMenuSub"
           ],
           "repeatable": true
@@ -10433,12 +10747,12 @@
       ]
     },
     {
-      "id": "context-menu-separator",
+      "id": "context-menu-divider",
       "exportPath": "@refineui/react",
-      "exportName": "ContextMenuSeparator",
+      "exportName": "ContextMenuDivider",
       "kind": "part",
       "category": "parts",
-      "label": "Context Menu Separator",
+      "label": "Context Menu Divider",
       "props": [],
       "preview": {
         "mode": "full"
@@ -10559,7 +10873,7 @@
           "accepts": [
             "ContextMenuItem",
             "ContextMenuLabel",
-            "ContextMenuSeparator",
+            "ContextMenuDivider",
             "ContextMenuSub"
           ],
           "repeatable": true

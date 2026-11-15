@@ -16,6 +16,12 @@ export {
     type ButtonSize,
     type ButtonVariant,
 } from "./components/Button";
+export {
+    ButtonGroup,
+    useOptionalButtonGroup,
+    type ButtonGroupOrientation,
+    type ButtonGroupProps,
+} from "./components/ButtonGroup";
 export { Input, type InputProps } from "./components/Input";
 export { DateInput, type DateInputProps } from "./components/DateInput";
 export { TimeInput, type TimeInputProps } from "./components/TimeInput";
@@ -81,7 +87,7 @@ export {
     SelectPortal,
     SelectScrollDownButton,
     SelectScrollUpButton,
-    SelectSeparator,
+    SelectDivider,
     SelectTrigger,
     SelectValue,
     SelectViewport,
@@ -97,7 +103,7 @@ export {
     type SelectProps,
     type SelectScrollDownButtonProps,
     type SelectScrollUpButtonProps,
-    type SelectSeparatorProps,
+    type SelectDividerProps,
     type SelectTriggerAppearance,
     type SelectTriggerProps,
     type SelectValueProps,
@@ -115,7 +121,7 @@ export {
     CommandInput,
     CommandItem,
     CommandList,
-    CommandSeparator,
+    CommandDivider,
     CommandShortcut,
     defaultCommandFilter,
     type CommandDialogProps,
@@ -127,7 +133,7 @@ export {
     type CommandItemProps,
     type CommandListProps,
     type CommandProps,
-    type CommandSeparatorProps,
+    type CommandDividerProps,
     type CommandShortcutProps,
 } from "./components/Command";
 export { Tag, type TagProps, type TagVariant, type TagSize } from "./components/Tag";
@@ -411,7 +417,7 @@ export {
     type DropdownItemProps,
     DropdownLabel,
     DropdownPortal,
-    DropdownSeparator,
+    DropdownDivider,
     DropdownShortcut,
     DropdownSub,
     DropdownSubContent,
@@ -637,6 +643,21 @@ export {
 } from "./components/Tree";
 export { Tooltip, type TooltipAlign, type TooltipPosition, type TooltipProps } from "./components/Tooltip";
 export {
+    Toolbar,
+    ToolbarButton,
+    ToolbarGroup,
+    ToolbarDivider,
+    ToolbarToggleButton,
+    useOptionalToolbarSize,
+    type ToolbarButtonProps,
+    type ToolbarGroupProps,
+    type ToolbarOrientation,
+    type ToolbarProps,
+    type ToolbarDividerProps,
+    type ToolbarSize,
+    type ToolbarToggleButtonProps,
+} from "./components/Toolbar";
+export {
     Chart,
     ChartAxisLabels,
     ChartBars,
@@ -681,7 +702,7 @@ export {
     ContextMenuContent,
     ContextMenuItem,
     ContextMenuLabel,
-    ContextMenuSeparator,
+    ContextMenuDivider,
     ContextMenuSub,
     ContextMenuSubTrigger,
     ContextMenuSubContent,

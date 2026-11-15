@@ -1,0 +1,29 @@
+{
+  "id": "toolbar-group",
+  "exportPath": "@refineui/react",
+  "exportName": "ToolbarGroup",
+  "kind": "part",
+  "category": "parts",
+  "label": "Toolbar Group",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "Toolbar",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "ToolbarButton",
+        "ToolbarToggleButton"
+      ],
+      "repeatable": true,
+      "min": 1
+    }
+  ]
+}

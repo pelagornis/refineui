@@ -21,7 +21,7 @@
       "accepts": [
         "SelectGroup",
         "SelectItem",
-        "SelectSeparator"
+        "SelectDivider"
       ],
       "repeatable": true
     }

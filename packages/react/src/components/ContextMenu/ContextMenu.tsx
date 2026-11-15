@@ -316,8 +316,8 @@ export const ContextMenuItem = forwardRef<HTMLButtonElement, ContextMenuItemProp
     );
 });
 
-export const ContextMenuSeparator = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-    function ContextMenuSeparator({ className, ...props }, ref) {
+export const ContextMenuDivider = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+    function ContextMenuDivider({ className, ...props }, ref) {
         return (
             <div
                 ref={ref}

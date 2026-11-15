@@ -1,0 +1,104 @@
+{
+  "id": "button-group",
+  "exportPath": "@refineui/react",
+  "exportName": "ButtonGroup",
+  "kind": "root",
+  "category": "components",
+  "label": "Button Group",
+  "props": [
+    {
+      "name": "size",
+      "label": "Size",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "defaultValue": "md",
+      "section": "variants"
+    },
+    {
+      "name": "variant",
+      "label": "Variant",
+      "valueType": "enum",
+      "control": "select",
+      "options": [
+        "primary",
+        "secondary",
+        "outline",
+        "ghost"
+      ],
+      "defaultValue": "ghost",
+      "section": "variants"
+    },
+    {
+      "name": "orientation",
+      "label": "Orientation",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "horizontal",
+        "vertical"
+      ],
+      "defaultValue": "horizontal",
+      "section": "variants"
+    },
+    {
+      "name": "attached",
+      "label": "Attached",
+      "valueType": "boolean",
+      "control": "toggle",
+      "defaultValue": true,
+      "section": "properties"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "Button"
+      ],
+      "repeatable": true,
+      "min": 1
+    }
+  ],
+  "presets": [
+    {
+      "id": "actions",
+      "label": "Item actions",
+      "root": {
+        "component": "ButtonGroup",
+        "props": {
+          "aria-label": "Item actions"
+        },
+        "slots": {
+          "children": [
+            {
+              "component": "Button",
+              "text": "Edit"
+            },
+            {
+              "component": "Button",
+              "text": "Duplicate"
+            },
+            {
+              "component": "Button",
+              "text": "Archive"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

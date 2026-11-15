@@ -22,7 +22,7 @@
         "CommandEmpty",
         "CommandGroup",
         "CommandItem",
-        "CommandSeparator"
+        "CommandDivider"
       ],
       "repeatable": true
     }

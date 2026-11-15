@@ -51,8 +51,8 @@ export const commandStyles = {
         componentTextClass(componentTypographyTokens.command.group),
         "flex w-full items-center overflow-hidden px-refineui-size-x-small py-refineui-size-xxx-small text-refineui-alias-foreground-tertiary",
     ),
-    separatorWrap: "flex w-full items-center px-refineui-size-x-small py-refineui-size-x-small",
-    separatorLine: "h-px w-full shrink-0 bg-refineui-alias-border-default",
+    dividerWrap: "flex w-full items-center px-refineui-size-x-small py-refineui-size-x-small",
+    dividerLine: "h-px w-full shrink-0 bg-refineui-alias-border-default",
     itemBase: clsx(
         "relative flex w-full items-center gap-refineui-size-x-small rounded-refineui-large border-none bg-transparent",
         "px-refineui-size-x-small text-start outline-none transition-[background-color,transform] duration-[var(--refineui-motion-duration-fast)] hover:bg-refineui-alias-background-surface-hover hover:text-refineui-alias-foreground-primary-hover active:bg-refineui-alias-background-surface-active active:text-refineui-alias-foreground-primary active:scale-[var(--refineui-motion-scale-press)] data-[selected=true]:bg-refineui-alias-background-surface-hover data-[selected=true]:text-refineui-alias-foreground-primary-hover data-[state=hover]:bg-refineui-alias-background-surface-hover data-[state=hover]:text-refineui-alias-foreground-primary-hover data-[state=pressed]:bg-refineui-alias-background-surface-active data-[state=pressed]:text-refineui-alias-foreground-primary data-[state=active]:bg-refineui-alias-background-surface-hover data-[state=active]:text-refineui-alias-foreground-primary data-[state=disabled]:bg-transparent data-[state=disabled]:text-refineui-alias-foreground-disabled",

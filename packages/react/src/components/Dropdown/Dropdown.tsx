@@ -465,12 +465,12 @@ export function DropdownItem({
     );
 }
 
-export function DropdownSeparator({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+export function DropdownDivider({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
     return (
         <div
             role="separator"
             aria-orientation="horizontal"
-            data-refineui="dropdown-menu-separator"
+            data-refineui="dropdown-menu-divider"
             className={clsx(
                 "flex w-full items-center px-refineui-size-x-small py-refineui-size-xxx-small",
                 className,

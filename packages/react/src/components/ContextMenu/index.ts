@@ -5,7 +5,7 @@ export {
     ContextMenuContent,
     ContextMenuItem,
     ContextMenuLabel,
-    ContextMenuSeparator,
+    ContextMenuDivider,
     ContextMenuSub,
     ContextMenuSubTrigger,
     ContextMenuSubContent,

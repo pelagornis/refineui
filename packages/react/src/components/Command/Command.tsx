@@ -33,7 +33,7 @@ import type {
     CommandItemProps,
     CommandListProps,
     CommandProps,
-    CommandSeparatorProps,
+    CommandDividerProps,
     CommandShortcutProps,
 } from "./types";
 
@@ -584,7 +584,7 @@ export function CommandGroupHeading({ className, children, ...props }: CommandGr
 
 function isCommandListContentNode(node: Element): boolean {
     const slot = node.getAttribute("data-refineui");
-    if (slot === "command-separator" || slot === "command-empty") return false;
+    if (slot === "command-divider" || slot === "command-empty") return false;
     if (node.hasAttribute("hidden")) return false;
     if (slot === "command-group" || slot === "command-item") return true;
     return false;
@@ -599,8 +599,8 @@ function hasVisibleCommandNeighbor(el: HTMLElement, direction: "previousElementS
     return false;
 }
 
-export function CommandSeparator({ className, ...props }: CommandSeparatorProps) {
-    const { search, visibleCount } = useCommandContext("CommandSeparator");
+export function CommandDivider({ className, ...props }: CommandDividerProps) {
+    const { search, visibleCount } = useCommandContext("CommandDivider");
     const ref = useRef<HTMLDivElement>(null);
     const [show, setShow] = useState(true);
 
@@ -618,14 +618,14 @@ export function CommandSeparator({ className, ...props }: CommandSeparatorProps)
     return (
         <div
             ref={ref}
-            data-refineui="command-separator"
+            data-refineui="command-divider"
             role="separator"
             aria-orientation="horizontal"
             hidden={!show}
-            className={clsx(commandStyles.separatorWrap, className)}
+            className={clsx(commandStyles.dividerWrap, className)}
             {...props}
         >
-            <div className={commandStyles.separatorLine} />
+            <div className={commandStyles.dividerLine} />
         </div>
     );
 }

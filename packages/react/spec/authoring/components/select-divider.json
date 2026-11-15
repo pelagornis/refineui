@@ -1,0 +1,22 @@
+{
+  "id": "select-divider",
+  "exportPath": "@refineui/react",
+  "exportName": "SelectDivider",
+  "kind": "part",
+  "category": "parts",
+  "label": "Select Divider",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "SelectViewport",
+      "slot": "children"
+    },
+    {
+      "component": "SelectGroup",
+      "slot": "children"
+    }
+  ]
+}

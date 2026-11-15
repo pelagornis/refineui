@@ -1,0 +1,91 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "toolbar",
+  "version": 1,
+  "export": "Toolbar",
+  "anatomy": {
+    "root": "toolbar",
+    "group": "toolbar-group",
+    "button": "toolbar-button",
+    "toggle": "toolbar-toggle-button",
+    "divider": "toolbar-divider"
+  },
+  "attributes": {
+    "data-refineui": "toolbar"
+  },
+  "variants": {
+    "size": [
+      "sm",
+      "md",
+      "lg"
+    ],
+    "orientation": [
+      "horizontal",
+      "vertical"
+    ]
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "environment": [
+      "forced-colors",
+      "dir"
+    ]
+  },
+  "accessibility": {
+    "toolbar": {
+      "element": "div",
+      "role": "toolbar",
+      "labeling": {
+        "accessibleName": "required"
+      }
+    },
+    "toolbar-group": {
+      "element": "div",
+      "role": "group"
+    },
+    "toolbar-divider": {
+      "element": "div",
+      "role": "separator"
+    },
+    "toolbar-button": {
+      "element": "button"
+    },
+    "toolbar-toggle-button": {
+      "element": "button",
+      "states": [
+        "aria-pressed"
+      ]
+    }
+  },
+  "keyboard": {
+    "ArrowRight": "next-trigger",
+    "ArrowLeft": "previous-trigger",
+    "ArrowDown": "next-trigger",
+    "ArrowUp": "previous-trigger",
+    "Home": "first-trigger",
+    "End": "last-trigger",
+    "Enter": {
+      "action": "activate",
+      "native": true
+    },
+    "Space": {
+      "action": "activate",
+      "native": true
+    }
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    },
+    "behavior": {
+      "roving": true
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

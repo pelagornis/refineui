@@ -52,7 +52,7 @@ export type CommandGroupProps = HTMLAttributes<HTMLDivElement>;
 
 export type CommandGroupHeadingProps = HTMLAttributes<HTMLDivElement>;
 
-export type CommandSeparatorProps = HTMLAttributes<HTMLDivElement>;
+export type CommandDividerProps = HTMLAttributes<HTMLDivElement>;
 
 export interface CommandItemProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "value" | "onSelect"> {
     /** Unique value used for filtering, selection, and `onSelect` */

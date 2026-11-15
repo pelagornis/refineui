@@ -108,6 +108,15 @@
       "recipe": "button"
     },
     {
+      "name": "ButtonGroup",
+      "id": "button-group",
+      "spec": "./components/button-group.json",
+      "export": "ButtonGroup",
+      "dataRefineui": [
+        "button-group"
+      ]
+    },
+    {
       "name": "Calendar",
       "id": "calendar",
       "spec": "./components/calendar.json",
@@ -228,13 +237,13 @@
       "export": "Command",
       "dataRefineui": [
         "command",
+        "command-divider",
         "command-empty",
         "command-group",
         "command-group-heading",
         "command-input",
         "command-item",
         "command-list",
-        "command-separator",
         "command-shortcut"
       ]
     },
@@ -283,10 +292,10 @@
       "dataRefineui": [
         "dropdown-item",
         "dropdown-menu",
+        "dropdown-menu-divider",
         "dropdown-menu-group",
         "dropdown-menu-label",
         "dropdown-menu-root",
-        "dropdown-menu-separator",
         "dropdown-menu-shortcut"
       ]
     },
@@ -689,6 +698,18 @@
       "export": "Tooltip",
       "dataRefineui": [
         "tooltip"
+      ]
+    },
+    {
+      "name": "Toolbar",
+      "id": "toolbar",
+      "spec": "./components/toolbar.json",
+      "export": "Toolbar",
+      "dataRefineui": [
+        "toolbar",
+        "toolbar-button",
+        "toolbar-divider",
+        "toolbar-group"
       ]
     },
     {

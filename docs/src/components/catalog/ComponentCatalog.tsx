@@ -159,6 +159,10 @@ import {
     Text,
     Textarea,
     Toast,
+    Toolbar,
+    ToolbarButton,
+    ToolbarGroup,
+    ToolbarDivider,
     Tree,
     TreeItem,
     TreeItemContent,
@@ -206,6 +210,7 @@ const scrollAreaItems = [
     "Table",
     "Tabs",
     "Tag",
+    "Toolbar",
     "Toast",
     "Tooltip",
     "Tree",
@@ -1024,6 +1029,20 @@ export default function ComponentCatalog({ locale }: { locale?: import("../../li
                     <div data-refineui-catalog-toast>
                         <Toast variant="success" message="Done" />
                     </div>
+                }
+            />
+            <CatalogCard
+                href="/components/toolbar/"
+                name="Toolbar"
+                preview={
+                    <Toolbar label="Catalog actions" attached>
+                        <ToolbarGroup aria-label="File">
+                            <ToolbarButton aria-label="Copy"><WebIcon name="copy" size={iconSizes.medium} color="currentColor" aria-hidden /></ToolbarButton>
+                            <ToolbarButton aria-label="Save"><WebIcon name="checkmark" size={iconSizes.medium} color="currentColor" aria-hidden /></ToolbarButton>
+                        </ToolbarGroup>
+                        <ToolbarDivider />
+                        <ToolbarButton aria-label="Settings"><WebIcon name="settings" size={iconSizes.medium} color="currentColor" aria-hidden /></ToolbarButton>
+                    </Toolbar>
                 }
             />
             <CatalogCard

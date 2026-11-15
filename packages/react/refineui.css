@@ -799,6 +799,9 @@
   .h-refineui-progress-track-height-sm {
     height: var(--spacing-refineui-progress-track-height-sm);
   }
+  .h-refineui-size-large {
+    height: var(--spacing-refineui-size-large);
+  }
   .h-refineui-size-medium {
     height: var(--spacing-refineui-size-medium);
   }
@@ -894,6 +897,9 @@
   }
   .min-h-refineui-time-input-wheel-height {
     min-height: var(--spacing-refineui-time-input-wheel-height);
+  }
+  .w-\(--refineui-stroke-width-thin\) {
+    width: var(--refineui-stroke-width-thin);
   }
   .w-\[calc\(var\(--refineui-sidebar-peek-panel-width\)\+2\*var\(--refineui-spacing-size-x-small\)\)\] {
     width: calc(var(--refineui-sidebar-peek-panel-width) + 2 * var(--refineui-spacing-size-x-small));
@@ -2950,8 +2956,17 @@
   .data-\[orientation\=vertical\]\:start-0[data-orientation="vertical"] {
     inset-inline-start: calc(var(--spacing) * 0);
   }
+  .data-\[orientation\=vertical\]\:h-\(--refineui-stroke-width-thin\)[data-orientation="vertical"] {
+    height: var(--refineui-stroke-width-thin);
+  }
   .data-\[orientation\=vertical\]\:w-full[data-orientation="vertical"] {
     width: 100%;
+  }
+  .data-\[orientation\=vertical\]\:w-refineui-size-large[data-orientation="vertical"] {
+    width: var(--spacing-refineui-size-large);
+  }
+  .data-\[orientation\=vertical\]\:flex-col[data-orientation="vertical"] {
+    flex-direction: column;
   }
   .data-\[overflow-x\=true\]\:overflow-x-auto[data-overflow-x="true"] {
     overflow-x: auto;

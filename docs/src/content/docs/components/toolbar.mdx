@@ -1,0 +1,156 @@
+---
+title: Toolbar
+description: A container for interactive controls with arrow-key navigation.
+---
+
+import { SpecRenderer } from "../../../components/spec";
+import { PropSpec } from "../../../docs-ui";
+import ToolbarDemo from "../../../components/ToolbarDemo";
+import PackageInstall from "../../../components/PackageInstall.mdx";
+
+`Toolbar` groups related controls, such as text formatting, alignment, or clipboard actions, into a single Tab stop that you move through with the arrow keys. Compose it from `ToolbarGroup`, `ToolbarButton`, `ToolbarToggleButton`, and `ToolbarDivider`. Set `size` once on the toolbar and every control inside follows it.
+
+<div class="not-content my-6"><ToolbarDemo client:load /></div>
+
+## Contract
+
+<div class="not-content"><SpecRenderer client:load component="toolbar" /></div>
+
+## Installation
+
+<PackageInstall />
+
+## Usage
+
+```tsx
+import {
+  Toolbar,
+  ToolbarButton,
+  ToolbarGroup,
+  ToolbarDivider,
+  ToolbarToggleButton,
+  WebIcon,
+} from "@refineui/react";
+
+<Toolbar label="Text formatting">
+  <ToolbarGroup aria-label="Text style">
+    <ToolbarToggleButton aria-label="Highlight"><WebIcon name="highlight" /></ToolbarToggleButton>
+    <ToolbarToggleButton aria-label="Link"><WebIcon name="link" /></ToolbarToggleButton>
+  </ToolbarGroup>
+  <ToolbarDivider />
+  <ToolbarGroup aria-label="Clipboard">
+    <ToolbarButton aria-label="Copy"><WebIcon name="copy" /></ToolbarButton>
+    <ToolbarButton aria-label="Cut"><WebIcon name="cut" /></ToolbarButton>
+  </ToolbarGroup>
+</Toolbar>;
+```
+
+## Examples
+
+### Attached
+
+`attached` puts the toolbar on a raised rounded surface, which suits a floating action bar over a canvas or editor.
+
+```tsx
+<Toolbar label="Text formatting" attached>
+  …
+</Toolbar>
+```
+
+### Vertical
+
+With `orientation="vertical"`, the controls stack vertically and the up and down arrow keys move focus. Groups and dividers inherit the direction.
+
+```tsx
+<Toolbar label="Tools" orientation="vertical" attached>
+  <ToolbarGroup aria-label="Tool">…</ToolbarGroup>
+  <ToolbarDivider />
+  <ToolbarGroup aria-label="Zoom">…</ToolbarGroup>
+</Toolbar>
+```
+
+### Groups
+
+`ToolbarGroup` always wraps its ghost buttons in the same tube as [ButtonGroup](/components/button-group/): the subtle track and thin border from SegmentedControl, with corners that follow the Button radius. A pressed toggle switches from the ghost to the secondary Button variant, with no custom colors. Every group in a toolbar looks the same, so dividers are what split them apart.
+
+### Toggle buttons
+
+`ToolbarToggleButton` keeps its pressed state in `aria-pressed` and renders the secondary Button variant while pressed. It's uncontrolled with `defaultPressed`, or controlled with `pressed` and `onPressedChange`. For single choice, such as alignment, control it from shared state:
+
+```tsx
+const [align, setAlign] = useState("left");
+
+<ToolbarGroup aria-label="Alignment">
+  {["left", "center", "right"].map((value) => (
+    <ToolbarToggleButton
+      key={value}
+      aria-label={`Align ${value}`}
+      pressed={align === value}
+      onPressedChange={() => setAlign(value)}
+    >
+      <WebIcon name={`text-align-${value}`} />
+    </ToolbarToggleButton>
+  ))}
+</ToolbarGroup>;
+```
+
+### Size cascading
+
+`size` (`sm`, `md`, or `lg`, default `sm`) cascades to `ToolbarButton`, `Button`, and Field controls such as `Input` and `Select`. A child that sets `size` explicitly keeps its own.
+
+## Keyboard
+
+| Key | Action |
+| --- | --- |
+| `Tab` | Moves into the toolbar (to the last focused item) and out of it. The toolbar is a single Tab stop. |
+| `ArrowRight` / `ArrowLeft` | Next or previous item in a horizontal toolbar. Reversed in RTL. |
+| `ArrowDown` / `ArrowUp` | Next or previous item when `orientation="vertical"`. |
+| `Home` / `End` | First or last item. Inside a text field, these keys move the caret instead. |
+| `Enter` / `Space` | Activates the focused button or toggles it. |
+
+Disabled items are skipped, and focus wraps around unless `loop={false}`. Composite widgets such as `SegmentedControl` count as one stop, and inside a text field the arrow keys move the caret until it reaches the edge.
+
+## API Reference
+
+### Toolbar
+
+<div class="not-content"><PropSpec client:load rows={[
+  { prop: "label", default: "—", type: "string", description: "Accessible name, applied as aria-label. Always provide one." },
+  { prop: "attached", default: "false", type: "boolean", description: "Raised rounded surface for a floating action bar." },
+  { prop: "orientation", default: '"horizontal"', type: '"horizontal" | "vertical"', description: "Layout direction and arrow-key axis. Inherited by groups and dividers." },
+  { prop: "size", default: '"sm"', type: '"sm" | "md" | "lg"', description: "Cascades to Buttons and Field controls inside." },
+  { prop: "loop", default: "true", type: "boolean", description: "Wrap focus between the last and first item." }
+]} /></div>
+
+### ToolbarGroup
+
+<div class="not-content"><PropSpec client:load rows={[
+  { prop: "orientation", default: "inherited", type: '"horizontal" | "vertical"', description: "Overrides the direction inherited from Toolbar." },
+  { prop: "aria-label", default: "—", type: "string", description: "Names the group (role=\"group\")." }
+]} /></div>
+
+### ToolbarButton
+
+An icon-only ghost `Button` by default. Its `size` follows the toolbar. Icon-only buttons need an `aria-label`. All other props are forwarded to `Button`.
+
+<div class="not-content"><PropSpec client:load rows={[
+  { prop: "variant", default: '"ghost"', type: "ButtonProps[\"variant\"]", description: "Button visual variant." },
+  { prop: "layout", default: '"icon"', type: '"icon" | "label"', description: "Use \"label\" for a text button." },
+  { prop: "size", default: "toolbar size", type: '"sm" | "md" | "lg"', description: "Overrides the cascaded size." }
+]} /></div>
+
+### ToolbarToggleButton
+
+Accepts every `ToolbarButton` prop, plus:
+
+<div class="not-content"><PropSpec client:load rows={[
+  { prop: "pressed", default: "—", type: "boolean", description: "Controlled pressed state." },
+  { prop: "defaultPressed", default: "false", type: "boolean", description: "Initial state when uncontrolled." },
+  { prop: "onPressedChange", default: "—", type: "(pressed: boolean) => void", description: "Called with the next state on press." }
+]} /></div>
+
+### ToolbarDivider
+
+<div class="not-content"><PropSpec client:load rows={[
+  { prop: "orientation", default: "inherited", type: '"horizontal" | "vertical"', description: "Overrides the direction inherited from Toolbar." }
+]} /></div>
