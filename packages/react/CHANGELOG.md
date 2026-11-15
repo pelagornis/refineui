@@ -1,5 +1,16 @@
 # @refineui/react
 
+## 0.5.0
+
+### Minor Changes
+
+- **Breaking:** rename the Separator components to Divider.
+- Add Toolbar and ButtonGroup components.
+- Add a shared sliding hover highlight to Sidebar, Menu, ContextMenu, Dropdown, Select, Tree, and Table. It is transform-based, stays aligned while scrolling, and respects reduced motion.
+- Command: add a Result empty state and stop the item fill doubling under the animated indicator.
+- Card: the elevated variant uses a deeper shadow with a hairline subtle border.
+- Animate the Slider thumb's hover and press scale, and fix press animations in Calendar, Pagination, Accordion, Menu, and Command.
+
 ## 0.4.0
 
 ### Minor Changes

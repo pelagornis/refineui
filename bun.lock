@@ -45,7 +45,7 @@
     },
     "packages/mcp": {
       "name": "@refineui/mcp",
-      "version": "0.1.10",
+      "version": "0.1.11",
       "bin": {
         "refineui-mcp": "./lib/server.js",
       },
@@ -63,7 +63,7 @@
     },
     "packages/react": {
       "name": "@refineui/react",
-      "version": "0.4.1",
+      "version": "0.5.0",
       "dependencies": {
         "@refineui/tokens": "workspace:*",
         "@refineui/utilities": "workspace:*",

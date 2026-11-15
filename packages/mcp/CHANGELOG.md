@@ -1,5 +1,11 @@
 # @refineui/mcp
 
+## 0.1.11
+
+### Patch Changes
+
+- Update the generated documentation index for the latest components and docs.
+
 ## 0.1.10
 
 ### Patch Changes
