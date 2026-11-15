@@ -5,7 +5,24 @@
   "kind": "part",
   "category": "parts",
   "label": "Popover Content",
-  "props": [],
+  "props": [
+    {
+      "name": "surface",
+      "valueType": "boolean",
+      "control": "toggle",
+      "defaultValue": true,
+      "section": "properties",
+      "label": "surface"
+    },
+    {
+      "name": "fitContent",
+      "valueType": "boolean",
+      "control": "toggle",
+      "defaultValue": false,
+      "section": "properties",
+      "label": "fit Content"
+    }
+  ],
   "preview": {
     "mode": "full"
   },

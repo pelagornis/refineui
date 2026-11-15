@@ -15,7 +15,9 @@ import {
     AlertTitle,
     Badge,
     Button,
+    Calendar,
     Checkbox,
+    DateInput,
     Dialog,
     DialogContent,
     DialogDescription,
@@ -30,12 +32,14 @@ import {
     SegmentedControl,
     SegmentedControlItem,
     Spinner,
+    Stack,
     Switch,
     Tabs,
     TabsContent,
     TabsList,
     TabsTrigger,
     Tag,
+    Text,
     Toaster,
     toast,
 } from "@refineui/react";
@@ -317,6 +321,100 @@ function ChipPreview({ variant }: { variant?: string }) {
     );
 }
 
+function formatPreviewDate(date: Date | undefined) {
+    return date ? date.toLocaleDateString("en-US") : "—";
+}
+
+function DateInputPreview({ variant }: { variant?: string }) {
+    const mode = variant === "range" ? "range" : "single";
+    const [value, setValue] = useState<Date | undefined>(new Date(2026, 10, 13));
+    const [range, setRange] = useState<{ start?: Date; end?: Date }>({
+        start: new Date(2026, 10, 13),
+        end: new Date(2026, 10, 20),
+    });
+
+    const result =
+        mode === "range"
+            ? range.start
+                ? `Selected range: ${formatPreviewDate(range.start)} → ${formatPreviewDate(range.end)}`
+                : "No range selected"
+            : value
+              ? `Selected: ${formatPreviewDate(value)}`
+              : "No date selected";
+
+    return (
+        <Looks>
+            <Look align="stretch">
+                <Stack gap="sizeSmall" className="w-full">
+                    <DateInput
+                        key={mode}
+                        mode={mode}
+                        value={value}
+                        onValueChange={setValue}
+                        rangeStart={range.start}
+                        rangeEnd={range.end}
+                        onRangeChange={(start, end) => setRange({ start, end })}
+                        locale="en-US"
+                        fullWidth
+                    />
+                    <Text
+                        variant="captionMd"
+                        data-docs-ui="date-input-result"
+                        className="m-0 font-mono text-refineui-alias-foreground-secondary"
+                    >
+                        {result}
+                    </Text>
+                </Stack>
+            </Look>
+        </Looks>
+    );
+}
+
+function CalendarModePreview({ variant }: { variant?: string }) {
+    const mode = variant === "range" ? "range" : "single";
+    const [value, setValue] = useState<Date | undefined>(new Date(2026, 10, 13));
+    const [range, setRange] = useState<{ start?: Date; end?: Date }>({
+        start: new Date(2026, 10, 13),
+        end: new Date(2026, 10, 20),
+    });
+
+    const result =
+        mode === "range"
+            ? range.start
+                ? `Selected range: ${formatPreviewDate(range.start)} → ${formatPreviewDate(range.end)}`
+                : "No range selected"
+            : value
+              ? `Selected: ${formatPreviewDate(value)}`
+              : "No date selected";
+
+    return (
+        <Looks>
+            <Look>
+                <Stack gap="sizeSmall" className="items-center">
+                    {mode === "range" ? (
+                        <Calendar
+                            key="range"
+                            mode="range"
+                            rangeStart={range.start}
+                            rangeEnd={range.end}
+                            onRangeChange={(start, end) => setRange({ start, end })}
+                        />
+                    ) : (
+                        <Calendar key="single" value={value} onChange={setValue} />
+                    )}
+                    <Text
+                        variant="captionMd"
+                        data-docs-ui="calendar-result"
+                        className="m-0 font-mono text-refineui-alias-foreground-secondary"
+                    >
+                        {result}
+                    </Text>
+                </Stack>
+            </Look>
+        </Looks>
+    );
+}
+
 function SegmentedControlPreview() {
     return (
         <Looks>
@@ -370,6 +468,10 @@ export function ComponentPreview({ component, variant }: ComponentPreviewProps) 
             return <RadioPreview />;
         case "link":
             return <LinkPreview />;
+        case "date-input":
+            return <DateInputPreview variant={variant} />;
+        case "calendar":
+            return <CalendarModePreview variant={variant} />;
         default:
             return null;
     }

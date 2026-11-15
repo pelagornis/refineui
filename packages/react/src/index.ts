@@ -17,6 +17,24 @@ export {
     type ButtonVariant,
 } from "./components/Button";
 export { Input, type InputProps } from "./components/Input";
+export { DateInput, type DateInputProps } from "./components/DateInput";
+export { TimeInput, type TimeInputProps } from "./components/TimeInput";
+export {
+    CodeBlock,
+    CodeBlockActions,
+    CodeBlockContent,
+    CodeBlockCopyButton,
+    CodeBlockHeader,
+    CodeBlockLine,
+    CodeBlockTitle,
+    type CodeBlockActionsProps,
+    type CodeBlockContentProps,
+    type CodeBlockCopyButtonProps,
+    type CodeBlockHeaderProps,
+    type CodeBlockLineProps,
+    type CodeBlockProps,
+    type CodeBlockTitleProps,
+} from "./components/CodeBlock";
 export {
     InputOTP,
     InputOTPSlot,
@@ -113,6 +131,21 @@ export {
     type CommandShortcutProps,
 } from "./components/Command";
 export { Tag, type TagProps, type TagVariant, type TagSize } from "./components/Tag";
+export {
+    Result,
+    ResultActions,
+    ResultButton,
+    ResultDescription,
+    ResultIcon,
+    ResultTitle,
+    type ResultActionsProps,
+    type ResultButtonProps,
+    type ResultDescriptionProps,
+    type ResultIconProps,
+    type ResultProps,
+    type ResultTitleProps,
+    type ResultVariant,
+} from "./components/Result";
 export { Kbd, type KbdProps } from "./components/Kbd";
 export {
     Message,

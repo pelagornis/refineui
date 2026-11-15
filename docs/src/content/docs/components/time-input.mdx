@@ -1,0 +1,46 @@
+---
+title: Time Input
+description: An input-style time input with scrollable hour and minute columns.
+---
+
+import { SpecRenderer } from "../../../components/spec";
+import { PropSpec } from "../../../docs-ui";
+import TimeInputDemo from "../../../components/TimeInputDemo";
+import PackageInstall from "../../../components/PackageInstall.mdx";
+
+`TimeInput` combines an input-style trigger, `Popover`, and 140px fixed-height `ScrollArea` columns for hours and minutes. The active value stays centered while surrounding choices remain legible. A value is committed when its wheel settles, and remains selected if the popover is dismissed.
+
+<div class="not-content my-6"><TimeInputDemo client:only="react" /></div>
+
+## Contract
+
+<div class="not-content"><SpecRenderer client:load component="time-input" /></div>
+
+## Installation
+
+<PackageInstall />
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { TimeInput } from "@refineui/react";
+
+const [time, setTime] = useState("09:30");
+
+<TimeInput value={time} onValueChange={setTime} minuteStep={15} hourCycle="12h" />;
+```
+
+Time values always use the 24-hour `HH:mm` format. Set `hourCycle="12h"` to show a leading, scrollable AM/PM column. `size="sm" | "md" | "lg"` matches `Input` and inherits a surrounding `Field` size.
+
+## API Reference
+
+<div class="not-content"><PropSpec client:load rows={[
+  { prop: "value", default: "—", type: "string", description: "Controlled value in HH:mm format." },
+  { prop: "defaultValue", default: "—", type: "string", description: "Initial uncontrolled HH:mm value." },
+  { prop: "onValueChange", default: "—", type: "(value: string) => void", description: "Called when a wheel selection settles." },
+  { prop: "minuteStep", default: "1", type: "1 | 5 | 10 | 15 | 30", description: "Minute increments in the scrollable list." },
+  { prop: "hourCycle", default: '"24h"', type: '"24h" | "12h"', description: "Shows an AM/PM column in 12-hour mode." },
+  { prop: "size", default: '"lg"', type: '"sm" | "md" | "lg"', description: "Matches Input control sizing." },
+  { prop: "error / success / disabled", default: "false", type: "boolean", description: "Input state styling and availability." }
+]} /></div>

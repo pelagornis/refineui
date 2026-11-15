@@ -34,6 +34,27 @@ export const ACCORDION_RECIPE_TOKEN_BINDINGS: readonly RecipeTokenBinding[] = [
     },
 ];
 
+const calendarBinding = (slot: string, property: string, path: string, recipeClass: string, variant?: string): RecipeTokenBinding => ({
+    slot,
+    ...(variant ? { variant } : {}),
+    property,
+    trace: { kind: "component", path },
+    recipeClass,
+});
+
+export const CALENDAR_RECIPE_TOKEN_BINDINGS: readonly RecipeTokenBinding[] = [
+    calendarBinding("root", "background", "calendar.background", "bg-refineui-alias-background-primary"),
+    calendarBinding("root", "border", "calendar.border", "border-refineui-alias-border-default"),
+    calendarBinding("weekday", "foreground", "calendar.weekday", "text-refineui-alias-foreground-primary"),
+    calendarBinding("day", "foreground", "calendar.day.default", "text-refineui-alias-foreground-primary"),
+    calendarBinding("day", "hoverBackground", "calendar.day.hoverBackground", "hover:bg-refineui-alias-background-primary-hover"),
+    calendarBinding("day", "otherMonth", "calendar.day.otherMonth", "text-refineui-alias-foreground-disabled", "single"),
+    calendarBinding("day", "selectedBackground", "calendar.day.selectedBackground", "bg-refineui-alias-background-brand"),
+    calendarBinding("day", "selectedForeground", "calendar.day.selectedForeground", "text-refineui-alias-foreground-inversed"),
+    calendarBinding("day", "rangeMiddleBackground", "calendar.day.rangeMiddleBackground", "bg-refineui-alias-background-primary-hover", "range"),
+    calendarBinding("day", "rangeMiddleForeground", "calendar.day.rangeMiddleForeground", "text-refineui-alias-foreground-primary", "range"),
+];
+
 export const DIALOG_RECIPE_TOKEN_BINDINGS: readonly RecipeTokenBinding[] = [
     {
         slot: "panel",
@@ -525,6 +546,8 @@ const RECIPE_SOURCE: Record<string, string> = {
     input: "Input/style → tokens",
     radio: "Radio/style → tokens",
     link: "Link/style → tokens",
+    "date-input": "DateInput/style → Input tokens",
+    calendar: "Calendar/style → calendar tokens",
 };
 
 export const TOKEN_INSPECTOR_COMPONENTS = [
@@ -545,6 +568,8 @@ export const TOKEN_INSPECTOR_COMPONENTS = [
     "input",
     "radio",
     "link",
+    "date-input",
+    "calendar",
 ] as const;
 
 export type TokenInspectorComponentId = (typeof TOKEN_INSPECTOR_COMPONENTS)[number];
@@ -585,6 +610,7 @@ export function filterRecipeBindings(component: string, variant: string): Recipe
         case "spinner":
             return SPINNER_RECIPE_TOKEN_BINDINGS.filter((b) => !b.variant || b.variant === variant);
         case "input":
+        case "date-input":
             return [...INPUT_RECIPE_TOKEN_BINDINGS];
         case "radio":
             return [...RADIO_RECIPE_TOKEN_BINDINGS];
@@ -592,6 +618,8 @@ export function filterRecipeBindings(component: string, variant: string): Recipe
             return [...LINK_RECIPE_TOKEN_BINDINGS];
         case "accordion":
             return [...ACCORDION_RECIPE_TOKEN_BINDINGS];
+        case "calendar":
+            return CALENDAR_RECIPE_TOKEN_BINDINGS.filter((b) => !b.variant || b.variant === variant);
         case "dialog":
             return [...DIALOG_RECIPE_TOKEN_BINDINGS];
         default:
@@ -622,6 +650,9 @@ export function defaultTokenInspectorVariant(component: string): string {
             return "selected";
         case "alert":
             return "info";
+        case "date-input":
+        case "calendar":
+            return "single";
         default:
             return "default";
     }
@@ -630,5 +661,6 @@ export function defaultTokenInspectorVariant(component: string): string {
 export function tokenInspectorVisualPrefix(component: string, specVisual?: string): string {
     if (component === "tag" || component === "chip") return "chip";
     if (component === "segmented-control") return "segmentedControl";
+    if (component === "date-input") return "input";
     return specVisual ?? component;
 }

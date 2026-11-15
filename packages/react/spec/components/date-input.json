@@ -1,0 +1,71 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "date-input",
+  "version": 1,
+  "export": "DateInput",
+  "anatomy": {
+    "root": "date-input"
+  },
+  "attributes": {
+    "data-refineui": "date-input"
+  },
+  "variants": {
+    "mode": [
+      "single",
+      "range"
+    ]
+  },
+  "tokens": {
+    "visual": "input"
+  },
+  "states": {
+    "pseudo": [
+      "focus-visible"
+    ],
+    "component": {
+      "selection": [
+        "placeholder",
+        "value"
+      ],
+      "validation": [
+        "error",
+        "success"
+      ]
+    },
+    "availability": [
+      "disabled"
+    ],
+    "environment": [
+      "dir"
+    ]
+  },
+  "accessibility": {
+    "date-input": {
+      "element": "button",
+      "native": true,
+      "labeling": {
+        "accessibleName": "required"
+      }
+    }
+  },
+  "keyboard": {
+    "Enter": {
+      "action": "activate",
+      "native": true
+    },
+    "Space": {
+      "action": "activate",
+      "native": true
+    }
+  },
+  "focus": {
+    "visual": {
+      "required": true,
+      "selector": ":focus-visible"
+    }
+  },
+  "layout": {
+    "direction": "logical",
+    "rtl": true
+  }
+}

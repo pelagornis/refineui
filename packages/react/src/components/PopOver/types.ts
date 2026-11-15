@@ -18,6 +18,10 @@ export interface PopoverContentProps extends Omit<HTMLAttributes<HTMLDivElement>
     children: ReactNode;
     placement?: PopoverPlacement;
     align?: PopoverAlign;
+    /** Render content without the default floating surface, beak, padding, or minimum width. */
+    surface?: boolean;
+    /** Let a surfaced popover shrink to the width of its content. */
+    fitContent?: boolean;
 }
 
 export interface PopOverProps extends Omit<HTMLAttributes<HTMLDivElement>, "children" | "content"> {

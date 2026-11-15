@@ -1,0 +1,65 @@
+---
+title: 날짜 입력
+description: Calendar를 팝오버로 열어 날짜를 선택하는 입력 컴포넌트입니다.
+---
+
+import { SpecRenderer, TokenInspector } from "../../../../components/spec";
+import { PropSpec } from "../../../../docs-ui";
+import DateInputDemo from "../../../../components/DateInputDemo";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+`DateInput`은 입력 형태의 트리거, `Popover`, `Calendar`를 결합합니다. 날짜를 선택하면 값이 갱신되며, 달력은 바깥을 클릭하거나 Escape를 누를 때 닫힙니다. `mode="range"`를 지정하면 두 달을 나란히 보며 시작일과 종료일을 고를 수 있습니다.
+
+<div class="not-content my-6"><DateInputDemo client:load /></div>
+
+## 계약
+
+<div class="not-content"><SpecRenderer client:load component="date-input" /></div>
+
+## 토큰
+
+<div class="not-content">
+  <TokenInspector client:load component="date-input" />
+</div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { useState } from "react";
+import { DateInput } from "@refineui/react";
+
+const [date, setDate] = useState<Date>();
+
+<DateInput
+  value={date}
+  onValueChange={setDate}
+  placeholder="배송 날짜 선택"
+  locale="ko-KR"
+  weekStartsOn={1}
+  fullWidth
+/>;
+```
+
+비제어 방식에는 `defaultValue`를 사용하세요. `size="sm" | "md" | "lg"`는 `Input`과 같은 컨트롤 높이, 여백, 타이포그래피를 사용하며, 상위 `Field`의 크기도 상속합니다. `Input`처럼 `error`, `success`, `disabled` 상태를 전달할 수 있습니다.
+
+## API 레퍼런스
+
+<div class="not-content"><PropSpec client:load rows={[
+  { prop: "mode", default: '"single"', type: '"single" | "range"', description: "단일 날짜 또는 두 달에 걸친 시작/종료 범위를 선택합니다." },
+  { prop: "value", default: "—", type: "Date", description: "제어형 선택 날짜입니다." },
+  { prop: "defaultValue", default: "—", type: "Date", description: "비제어 방식의 초기 날짜입니다." },
+  { prop: "onValueChange", default: "—", type: "(value: Date) => void", description: "날짜 선택 후 호출됩니다." },
+  { prop: "rangeStart / rangeEnd", default: "—", type: "Date", description: "제어형 범위입니다 (range 모드)." },
+  { prop: "defaultRangeStart / defaultRangeEnd", default: "—", type: "Date", description: "비제어 range 모드의 초기 범위입니다." },
+  { prop: "onRangeChange", default: "—", type: "(start?: Date, end?: Date) => void", description: "범위가 바뀔 때 호출됩니다. 두 번째 날짜를 고르기 전까지 end는 undefined입니다." },
+  { prop: "placeholder", default: '"Select date" / "Select date range"', type: "string", description: "날짜를 선택하기 전 표시할 문구입니다." },
+  { prop: "locale", default: "브라우저 locale", type: "string", description: "선택 날짜 표시에 사용할 locale입니다." },
+  { prop: "weekStartsOn", default: "0", type: "0 | 1", description: "일요일 또는 월요일부터 한 주를 시작합니다." },
+  { prop: "size", default: '"lg"', type: '"sm" | "md" | "lg"', description: "Input과 동일한 컨트롤 크기입니다." },
+  { prop: "fullWidth", default: "false", type: "boolean", description: "트리거가 컨테이너 너비를 채우도록 합니다." },
+  { prop: "error / success / disabled", default: "false", type: "boolean", description: "입력 상태와 사용 가능 여부입니다." }
+]} /></div>

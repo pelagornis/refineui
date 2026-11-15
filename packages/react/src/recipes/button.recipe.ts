@@ -32,7 +32,7 @@ const buttonIconSizeClass: Record<ButtonSize, string> = {
 
 export const buttonRecipe = defineRecipe({
     name: "button",
-    base: "box-border inline-flex cursor-pointer items-center justify-center border transition-[opacity,background-color,border-color,color,transform] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-ease-out)] focus-visible:outline-none active:scale-[var(--refineui-motion-scale-press)] data-[inactive=true]:opacity-100 data-[inactive=true]:transform-none data-[inactive=true]:active:scale-100",
+    base: "box-border inline-flex cursor-pointer items-center justify-center border will-change-transform transition-[opacity,background-color,border-color,color,transform] duration-[var(--refineui-motion-duration-normal)] ease-[var(--refineui-motion-easing-emphasized)] focus-visible:outline-none active:[transform:scale(var(--refineui-foundation-motion-scale-96))] data-[inactive=true]:opacity-100 data-[inactive=true]:transform-none motion-reduce:transition-none",
     variants: {
         variant: buttonVariantClass,
         layout: {

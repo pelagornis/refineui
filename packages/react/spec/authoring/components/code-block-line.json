@@ -1,0 +1,31 @@
+{
+  "id": "code-block-line",
+  "exportPath": "@refineui/react",
+  "exportName": "CodeBlockLine",
+  "kind": "part",
+  "category": "parts",
+  "label": "Code Block Line",
+  "props": [
+    {
+      "name": "variant",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "default",
+        "highlighted"
+      ],
+      "defaultValue": "default",
+      "section": "variants",
+      "label": "variant"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "CodeBlockContent",
+      "slot": "children"
+    }
+  ]
+}

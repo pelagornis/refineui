@@ -65,7 +65,8 @@ function usePanelSize(panelRef: RefObject<HTMLElement | null>): PanelSize | null
  * Fill, blur, stroke, and elevation for a floating panel and its beak as one shape,
  * so the beak shares the panel's frosted material instead of sitting on top of it.
  * Render after the panel: layout effects run in tree order, so the panel ref must
- * already be attached when this measures. `-z-1` keeps it painted beneath the panel.
+ * already be attached when this measures. It stays in the base stacking layer so its
+ * backdrop filter samples the same backdrop as Select; the panel content sits above it.
  */
 export function FloatingSurface({
     panelRef,
@@ -142,7 +143,7 @@ export function FloatingSurface({
     const clip = `path("${shape}")`;
 
     return (
-        <div data-refineui="floating-chrome" aria-hidden className="pointer-events-none absolute -z-1" style={rootStyle}>
+        <div data-refineui="floating-chrome" aria-hidden className="pointer-events-none absolute z-0" style={rootStyle}>
             <div className="absolute" style={shadowStyle}>
                 <div data-refineui="floating-shadow" className="absolute [filter:var(--refineui-elevation-floating-filter)]" style={{ inset: SHADOW_BLEED }}>
                     <div className="absolute inset-0" style={{ clipPath: clip, backgroundColor: borderColor }} />

@@ -1,0 +1,28 @@
+---
+title: Result
+description: A focused outcome screen with an icon, message, and next action.
+---
+
+import ResultDemo from "../../../components/ResultDemo";
+import PackageInstall from "../../../components/PackageInstall.mdx";
+
+<div class="not-content my-6"><ResultDemo client:load /></div>
+
+## Installation
+
+<PackageInstall />
+
+## Usage
+
+```tsx
+import { Result, ResultButton } from "@refineui/react";
+
+<Result
+  variant="success"
+  title="Payment complete"
+  description="Your receipt is ready in order history."
+  actions={<ResultButton>View receipt</ResultButton>}
+/>;
+```
+
+`Result` uses RefineUI System Icons by default. Pass `figure` to supply your own illustration, image, or icon. Use `ResultIcon`, `ResultTitle`, `ResultDescription`, and `ResultActions` for a fully composed layout.

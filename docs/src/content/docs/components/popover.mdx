@@ -74,7 +74,9 @@ Trigger element that opens the popover.
     client:load
     rows={[
     { prop: "placement", default: "\"bottom\"", type: "\"top\" | \"bottom\" | \"left\" | \"right\"", description: "Position relative to trigger." },
-    { prop: "align", default: "\"center\"", type: "\"start\" | \"center\" | \"end\"", description: "Alignment along the edge." }
+    { prop: "align", default: "\"center\"", type: "\"start\" | \"center\" | \"end\"", description: "Alignment along the edge." },
+    { prop: "surface", default: "true", type: "boolean", description: "Set false for content that provides its own border and padding, such as Calendar." },
+    { prop: "fitContent", default: "false", type: "boolean", description: "Use the content width instead of the default panel minimum width." }
     ]}
   />
 </div>

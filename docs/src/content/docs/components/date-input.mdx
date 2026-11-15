@@ -1,0 +1,65 @@
+---
+title: Date Input
+description: An input-style date picker that opens Calendar in a popover.
+---
+
+import { SpecRenderer, TokenInspector } from "../../../components/spec";
+import { PropSpec } from "../../../docs-ui";
+import DateInputDemo from "../../../components/DateInputDemo";
+import PackageInstall from "../../../components/PackageInstall.mdx";
+
+`DateInput` combines an input-style trigger, `Popover`, and `Calendar`. Selecting a day updates the value; the calendar stays open until you click outside it or press Escape. Set `mode="range"` to pick a start and end date across two months.
+
+<div class="not-content my-6"><DateInputDemo client:load /></div>
+
+## Contract
+
+<div class="not-content"><SpecRenderer client:load component="date-input" /></div>
+
+## Tokens
+
+<div class="not-content">
+  <TokenInspector client:load component="date-input" />
+</div>
+
+## Installation
+
+<PackageInstall />
+
+## Usage
+
+```tsx
+import { useState } from "react";
+import { DateInput } from "@refineui/react";
+
+const [date, setDate] = useState<Date>();
+
+<DateInput
+  value={date}
+  onValueChange={setDate}
+  placeholder="Choose a delivery date"
+  locale="en-US"
+  weekStartsOn={1}
+  fullWidth
+/>;
+```
+
+Use `defaultValue` for an uncontrolled field. `size="sm" | "md" | "lg"` uses the same control heights, padding, and typography as `Input`; it also inherits a surrounding `Field` size. Pass `error`, `success`, and `disabled` just as you would for an Input.
+
+## API Reference
+
+<div class="not-content"><PropSpec client:load rows={[
+  { prop: "mode", default: '"single"', type: '"single" | "range"', description: "Single date or a start/end range across two months." },
+  { prop: "value", default: "—", type: "Date", description: "Controlled selected date." },
+  { prop: "defaultValue", default: "—", type: "Date", description: "Initial value for uncontrolled use." },
+  { prop: "onValueChange", default: "—", type: "(value: Date) => void", description: "Called after a day is selected." },
+  { prop: "rangeStart / rangeEnd", default: "—", type: "Date", description: "Controlled range (range mode)." },
+  { prop: "defaultRangeStart / defaultRangeEnd", default: "—", type: "Date", description: "Initial range for uncontrolled range mode." },
+  { prop: "onRangeChange", default: "—", type: "(start?: Date, end?: Date) => void", description: "Called when the range changes; end is undefined until the second day is picked." },
+  { prop: "placeholder", default: '"Select date" / "Select date range"', type: "string", description: "Text shown before selection." },
+  { prop: "locale", default: "browser locale", type: "string", description: "Locale used to format the selected date." },
+  { prop: "weekStartsOn", default: "0", type: "0 | 1", description: "First calendar weekday: Sunday or Monday." },
+  { prop: "size", default: '"lg"', type: '"sm" | "md" | "lg"', description: "Matches Input control sizing." },
+  { prop: "fullWidth", default: "false", type: "boolean", description: "Makes the trigger fill its container." },
+  { prop: "error / success / disabled", default: "false", type: "boolean", description: "Input state styling and availability." }
+]} /></div>

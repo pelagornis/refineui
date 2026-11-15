@@ -195,6 +195,373 @@
       ]
     },
     {
+      "id": "date-input",
+      "exportPath": "@refineui/react",
+      "exportName": "DateInput",
+      "kind": "root",
+      "category": "components",
+      "label": "Date Input",
+      "props": [
+        {
+          "name": "mode",
+          "label": "mode",
+          "valueType": "enum",
+          "control": "segmented",
+          "options": [
+            "single",
+            "range"
+          ],
+          "defaultValue": "single",
+          "section": "variants"
+        }
+      ],
+      "preview": {
+        "mode": "full"
+      },
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [],
+          "repeatable": true,
+          "allowText": true,
+          "allowAnyComponent": true,
+          "defaultChildren": []
+        }
+      ],
+      "presets": [
+        {
+          "id": "default",
+          "label": "Default",
+          "root": {
+            "component": "DateInput",
+            "slots": {
+              "children": [
+                {
+                  "component": "Text",
+                  "props": {
+                    "variant": "bodyMd"
+                  },
+                  "text": "Date Input"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "events": [
+        {
+          "name": "click",
+          "payload": "void"
+        }
+      ]
+    },
+    {
+      "id": "time-input",
+      "exportPath": "@refineui/react",
+      "exportName": "TimeInput",
+      "kind": "root",
+      "category": "utilities",
+      "label": "Time Input",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [],
+          "repeatable": true,
+          "allowText": false,
+          "allowAnyComponent": true,
+          "defaultChildren": []
+        }
+      ],
+      "presets": [
+        {
+          "id": "default",
+          "label": "Default",
+          "root": {
+            "component": "TimeInput",
+            "slots": {}
+          }
+        }
+      ],
+      "events": [
+        {
+          "name": "click",
+          "payload": "void"
+        }
+      ]
+    },
+    {
+      "id": "code-block",
+      "exportPath": "@refineui/react",
+      "exportName": "CodeBlock",
+      "kind": "root",
+      "category": "components",
+      "label": "Code Block",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "CodeBlockHeader",
+            "CodeBlockContent"
+          ],
+          "repeatable": true
+        }
+      ],
+      "presets": [
+        {
+          "id": "typescript",
+          "label": "TypeScript",
+          "root": {
+            "component": "CodeBlock",
+            "slots": {
+              "children": [
+                {
+                  "component": "CodeBlockHeader",
+                  "slots": {
+                    "children": [
+                      {
+                        "component": "CodeBlockTitle",
+                        "text": "app/api/chat/route.ts"
+                      },
+                      {
+                        "component": "CodeBlockActions",
+                        "slots": {
+                          "children": [
+                            {
+                              "component": "CodeBlockCopyButton",
+                              "props": {
+                                "value": "export async function POST() {\n  return Response.json({ ok: true });\n}"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "component": "CodeBlockContent",
+                  "props": {
+                    "lineNumbers": true
+                  },
+                  "slots": {
+                    "children": [
+                      {
+                        "component": "CodeBlockLine",
+                        "text": "export async function POST() {"
+                      },
+                      {
+                        "component": "CodeBlockLine",
+                        "props": {
+                          "variant": "highlighted"
+                        },
+                        "text": "  return Response.json({ ok: true });"
+                      },
+                      {
+                        "component": "CodeBlockLine",
+                        "text": "}"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "events": [
+        {
+          "name": "click",
+          "payload": "void"
+        }
+      ]
+    },
+    {
+      "id": "code-block-actions",
+      "exportPath": "@refineui/react",
+      "exportName": "CodeBlockActions",
+      "kind": "part",
+      "category": "parts",
+      "label": "Code Block Actions",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "CodeBlockHeader",
+          "slot": "children"
+        }
+      ],
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "CodeBlockCopyButton",
+            "Button"
+          ],
+          "repeatable": true
+        }
+      ]
+    },
+    {
+      "id": "code-block-content",
+      "exportPath": "@refineui/react",
+      "exportName": "CodeBlockContent",
+      "kind": "part",
+      "category": "parts",
+      "label": "Code Block Content",
+      "props": [
+        {
+          "name": "wrap",
+          "valueType": "boolean",
+          "control": "toggle",
+          "defaultValue": false,
+          "section": "properties",
+          "label": "wrap"
+        },
+        {
+          "name": "lineNumbers",
+          "valueType": "boolean",
+          "control": "toggle",
+          "defaultValue": false,
+          "section": "properties",
+          "label": "line Numbers"
+        }
+      ],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "CodeBlock",
+          "slot": "children"
+        }
+      ],
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "CodeBlockLine"
+          ],
+          "repeatable": true,
+          "min": 1
+        }
+      ]
+    },
+    {
+      "id": "code-block-copy-button",
+      "exportPath": "@refineui/react",
+      "exportName": "CodeBlockCopyButton",
+      "kind": "part",
+      "category": "parts",
+      "label": "Code Block Copy Button",
+      "props": [
+        {
+          "name": "value",
+          "label": "value",
+          "valueType": "string",
+          "control": "textarea",
+          "defaultValue": "",
+          "required": true,
+          "section": "properties"
+        }
+      ],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "CodeBlockActions",
+          "slot": "children"
+        }
+      ]
+    },
+    {
+      "id": "code-block-header",
+      "exportPath": "@refineui/react",
+      "exportName": "CodeBlockHeader",
+      "kind": "part",
+      "category": "parts",
+      "label": "Code Block Header",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "CodeBlock",
+          "slot": "children"
+        }
+      ],
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "CodeBlockTitle",
+            "CodeBlockActions"
+          ],
+          "repeatable": true
+        }
+      ]
+    },
+    {
+      "id": "code-block-line",
+      "exportPath": "@refineui/react",
+      "exportName": "CodeBlockLine",
+      "kind": "part",
+      "category": "parts",
+      "label": "Code Block Line",
+      "props": [
+        {
+          "name": "variant",
+          "valueType": "enum",
+          "control": "segmented",
+          "options": [
+            "default",
+            "highlighted"
+          ],
+          "defaultValue": "default",
+          "section": "variants",
+          "label": "variant"
+        }
+      ],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "CodeBlockContent",
+          "slot": "children"
+        }
+      ]
+    },
+    {
+      "id": "code-block-title",
+      "exportPath": "@refineui/react",
+      "exportName": "CodeBlockTitle",
+      "kind": "part",
+      "category": "parts",
+      "label": "Code Block Title",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "CodeBlockHeader",
+          "slot": "children"
+        }
+      ]
+    },
+    {
       "id": "input-otp",
       "exportPath": "@refineui/react",
       "exportName": "InputOTP",
@@ -2155,6 +2522,140 @@
         {
           "name": "click",
           "payload": "void"
+        }
+      ]
+    },
+    {
+      "id": "result",
+      "exportPath": "@refineui/react",
+      "exportName": "Result",
+      "kind": "root",
+      "category": "utilities",
+      "label": "Result",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "slots": [
+        {
+          "name": "children",
+          "accepts": [
+            "ResultActions",
+            "ResultButton",
+            "ResultDescription",
+            "ResultIcon",
+            "ResultTitle"
+          ],
+          "repeatable": true,
+          "allowText": false,
+          "allowAnyComponent": false,
+          "defaultChildren": []
+        }
+      ],
+      "presets": [
+        {
+          "id": "default",
+          "label": "Default",
+          "root": {
+            "component": "Result",
+            "slots": {}
+          }
+        }
+      ],
+      "events": [
+        {
+          "name": "click",
+          "payload": "void"
+        }
+      ]
+    },
+    {
+      "id": "result-actions",
+      "exportPath": "@refineui/react",
+      "exportName": "ResultActions",
+      "kind": "part",
+      "category": "parts",
+      "label": "Result Actions",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "Result",
+          "slot": "children"
+        }
+      ]
+    },
+    {
+      "id": "result-button",
+      "exportPath": "@refineui/react",
+      "exportName": "ResultButton",
+      "kind": "part",
+      "category": "parts",
+      "label": "Result Button",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "Result",
+          "slot": "children"
+        }
+      ]
+    },
+    {
+      "id": "result-description",
+      "exportPath": "@refineui/react",
+      "exportName": "ResultDescription",
+      "kind": "part",
+      "category": "parts",
+      "label": "Result Description",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "Result",
+          "slot": "children"
+        }
+      ]
+    },
+    {
+      "id": "result-icon",
+      "exportPath": "@refineui/react",
+      "exportName": "ResultIcon",
+      "kind": "part",
+      "category": "parts",
+      "label": "Result Icon",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "Result",
+          "slot": "children"
+        }
+      ]
+    },
+    {
+      "id": "result-title",
+      "exportPath": "@refineui/react",
+      "exportName": "ResultTitle",
+      "kind": "part",
+      "category": "parts",
+      "label": "Result Title",
+      "props": [],
+      "preview": {
+        "mode": "full"
+      },
+      "parents": [
+        {
+          "component": "Result",
+          "slot": "children"
         }
       ]
     },
@@ -4744,7 +5245,20 @@
       "kind": "root",
       "category": "components",
       "label": "Calendar",
-      "props": [],
+      "props": [
+        {
+          "name": "mode",
+          "label": "mode",
+          "valueType": "enum",
+          "control": "segmented",
+          "options": [
+            "single",
+            "range"
+          ],
+          "defaultValue": "single",
+          "section": "variants"
+        }
+      ],
       "preview": {
         "mode": "full"
       },
@@ -7515,7 +8029,24 @@
       "kind": "part",
       "category": "parts",
       "label": "Popover Content",
-      "props": [],
+      "props": [
+        {
+          "name": "surface",
+          "valueType": "boolean",
+          "control": "toggle",
+          "defaultValue": true,
+          "section": "properties",
+          "label": "surface"
+        },
+        {
+          "name": "fitContent",
+          "valueType": "boolean",
+          "control": "toggle",
+          "defaultValue": false,
+          "section": "properties",
+          "label": "fit Content"
+        }
+      ],
       "preview": {
         "mode": "full"
       },

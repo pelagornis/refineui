@@ -58,6 +58,10 @@ const CATALOG = {
     },
     button: { export: "Button", sourceDirs: ["Button"], rootAttr: "button", recipe: "button", tokens: "button" },
     calendar: { export: "Calendar", sourceDirs: ["Calendar"], rootAttr: "calendar" },
+    "date-input": { export: "DateInput", sourceDirs: ["DateInput"], rootAttr: "date-input" },
+    "time-input": { export: "TimeInput", sourceDirs: ["TimeInput"], rootAttr: "time-input" },
+    result: { export: "Result", sourceDirs: ["Result"], rootAttr: "result" },
+    "code-block": { export: "CodeBlock", sourceDirs: ["CodeBlock"], rootAttr: "code-block" },
     card: {
         export: "Card",
         sourceDirs: ["Card"],

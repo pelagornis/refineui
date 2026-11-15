@@ -1,0 +1,90 @@
+{
+  "id": "code-block",
+  "exportPath": "@refineui/react",
+  "exportName": "CodeBlock",
+  "kind": "root",
+  "category": "components",
+  "label": "Code Block",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "CodeBlockHeader",
+        "CodeBlockContent"
+      ],
+      "repeatable": true
+    }
+  ],
+  "presets": [
+    {
+      "id": "typescript",
+      "label": "TypeScript",
+      "root": {
+        "component": "CodeBlock",
+        "slots": {
+          "children": [
+            {
+              "component": "CodeBlockHeader",
+              "slots": {
+                "children": [
+                  {
+                    "component": "CodeBlockTitle",
+                    "text": "app/api/chat/route.ts"
+                  },
+                  {
+                    "component": "CodeBlockActions",
+                    "slots": {
+                      "children": [
+                        {
+                          "component": "CodeBlockCopyButton",
+                          "props": {
+                            "value": "export async function POST() {\n  return Response.json({ ok: true });\n}"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "component": "CodeBlockContent",
+              "props": {
+                "lineNumbers": true
+              },
+              "slots": {
+                "children": [
+                  {
+                    "component": "CodeBlockLine",
+                    "text": "export async function POST() {"
+                  },
+                  {
+                    "component": "CodeBlockLine",
+                    "props": {
+                      "variant": "highlighted"
+                    },
+                    "text": "  return Response.json({ ok: true });"
+                  },
+                  {
+                    "component": "CodeBlockLine",
+                    "text": "}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

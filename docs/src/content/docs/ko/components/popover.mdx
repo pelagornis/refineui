@@ -74,7 +74,9 @@ import { Popover, PopoverTrigger, PopoverContent, Button } from "@refineui/react
     client:load
     rows={[
     { prop: "placement", default: "\"bottom\"", type: "\"top\" | \"bottom\" | \"left\" | \"right\"", description: "트리거 기준 위치." },
-    { prop: "align", default: "\"center\"", type: "\"start\" | \"center\" | \"end\"", description: "가장자리 기준 정렬." }
+    { prop: "align", default: "\"center\"", type: "\"start\" | \"center\" | \"end\"", description: "가장자리 기준 정렬." },
+    { prop: "surface", default: "true", type: "boolean", description: "Calendar처럼 자체 테두리와 여백을 제공하는 콘텐츠에는 false로 설정합니다." },
+    { prop: "fitContent", default: "false", type: "boolean", description: "기본 패널 최소 너비 대신 콘텐츠 너비를 사용합니다." }
     ]}
   />
 </div>

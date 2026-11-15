@@ -5,7 +5,20 @@
   "kind": "root",
   "category": "components",
   "label": "Calendar",
-  "props": [],
+  "props": [
+    {
+      "name": "mode",
+      "label": "mode",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "single",
+        "range"
+      ],
+      "defaultValue": "single",
+      "section": "variants"
+    }
+  ],
   "preview": {
     "mode": "full"
   },

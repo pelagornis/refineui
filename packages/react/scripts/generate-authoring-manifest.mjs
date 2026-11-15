@@ -39,7 +39,7 @@ const portalContracts = {
     Toast: { strategy: "document-body", inheritsTheme: false },
 };
 const providerParts = new Set(["SidebarProvider", "SelectPortal", "DropdownPortal", "ContextMenuPortal", "Toaster"]);
-const noText = new Set(["Input", "Textarea", "Checkbox", "Radio", "Switch", "Slider", "SpinButton", "Progress", "Spinner", "Skeleton", "Spacer", "Divider", "Calendar", "Slot"]);
+const noText = new Set(["Input", "Textarea", "Checkbox", "Radio", "Switch", "Slider", "SpinButton", "Progress", "Spinner", "Skeleton", "Spacer", "Divider", "Calendar", "TimeInput", "Result", "Slot"]);
 // ReactNode-valued API is represented as a structural slot, never as a JSON
 // prop. This lets any editor persist an ordinary component tree while still
 // rendering APIs such as `startIcon` and Toast's `message` correctly.
@@ -127,6 +127,15 @@ const rootProps = {
 // claiming that the runtime requires a value.
 const serializablePartProps = {
     SelectItem: [{ name: "textValue", valueType: "string", control: "text", section: "accessibility" }],
+    PopoverContent: [
+        { name: "surface", valueType: "boolean", control: "toggle", defaultValue: true, section: "properties" },
+        { name: "fitContent", valueType: "boolean", control: "toggle", defaultValue: false, section: "properties" },
+    ],
+    CodeBlockContent: [
+        { name: "wrap", valueType: "boolean", control: "toggle", defaultValue: false, section: "properties" },
+        { name: "lineNumbers", valueType: "boolean", control: "toggle", defaultValue: false, section: "properties" },
+    ],
+    CodeBlockLine: [{ name: "variant", valueType: "enum", control: "segmented", options: ["default", "highlighted"], defaultValue: "default", section: "variants" }],
     NavigationMenuContent: [
         {
             name: "layout",
@@ -153,6 +162,7 @@ const presetProps = {
 // Runtime-required values are declared here instead of reverse-engineering
 // TypeScript at runtime. They drive both editor controls and preset validation.
 const requiredProps = {
+    CodeBlockCopyButton: [{ name: "value", valueType: "string", control: "textarea", defaultValue: "", }],
     InputOTP: [{ name: "maxLength", valueType: "number", control: "number", defaultValue: 4 }],
     InputOTPSlot: [{ name: "index", valueType: "number", control: "number" }],
     Progress: [{ name: "value", valueType: "number", control: "number", defaultValue: 50 }],
@@ -180,6 +190,7 @@ const corePresets = {
 };
 
 Object.assign(corePresets, {
+    CodeBlock: { id: "typescript", label: "TypeScript", root: { component: "CodeBlock", slots: { children: [{ component: "CodeBlockHeader", slots: { children: [{ component: "CodeBlockTitle", text: "app/api/chat/route.ts" }, { component: "CodeBlockActions", slots: { children: [{ component: "CodeBlockCopyButton", props: { value: "export async function POST() {\n  return Response.json({ ok: true });\n}" } }] } }] } }, { component: "CodeBlockContent", props: { lineNumbers: true }, slots: { children: [{ component: "CodeBlockLine", text: "export async function POST() {" }, { component: "CodeBlockLine", props: { variant: "highlighted" }, text: "  return Response.json({ ok: true });" }, { component: "CodeBlockLine", text: "}" }] } }] } } },
     Radio: { id: "choice", label: "Radio choice", root: { component: "Radio", props: { label: "Choose this option" } } },
     Avatar: { id: "initials", label: "Initials avatar", root: { component: "Avatar", slots: { children: [{ component: "AvatarText", text: "AB" }] } } },
     Footer: { id: "site-footer", label: "Site footer", root: { component: "Footer", slots: { children: [{ component: "FooterContent", slots: { children: [{ component: "FooterBrand", slots: { children: [{ component: "FooterBrandName", text: "Company" }, { component: "FooterBrandDescription", text: "A short description." }] } }, { component: "FooterExplore", slots: { children: [{ component: "FooterGroup", slots: { children: [{ component: "FooterGroupLabel", text: "Explore" }, { component: "FooterLink", props: { href: "#" }, text: "Documentation" }] } }] } }] } }, { component: "FooterBottom", slots: { children: [{ component: "FooterCopyright", text: "© Company" }] } }] } } },
@@ -226,6 +237,7 @@ const parent = (component, slotName = "children") => ({ component, slot: slotNam
 // These are authoring definitions, not naming conventions.  They intentionally
 // encode every composite family’s valid child graph in one reviewable place.
 const composition = {
+    CodeBlock: { slots: [slot("children", ["CodeBlockHeader", "CodeBlockContent"], { repeatable: true })], parents: { CodeBlockHeader: [parent("CodeBlock")], CodeBlockContent: [parent("CodeBlock")], CodeBlockTitle: [parent("CodeBlockHeader")], CodeBlockActions: [parent("CodeBlockHeader")], CodeBlockCopyButton: [parent("CodeBlockActions")], CodeBlockLine: [parent("CodeBlockContent")] }, partSlots: { CodeBlockHeader: [slot("children", ["CodeBlockTitle", "CodeBlockActions"], { repeatable: true })], CodeBlockActions: [slot("children", ["CodeBlockCopyButton", "Button"], { repeatable: true })], CodeBlockContent: [slot("children", ["CodeBlockLine"], { repeatable: true, min: 1 })] } },
     Avatar: { slots: [slot("children", ["AvatarImage", "AvatarFallback", "AvatarText", "AvatarIcon", "AvatarBadge"], { repeatable: true })], parents: { AvatarImage: [parent("Avatar")], AvatarFallback: [parent("Avatar")], AvatarText: [parent("Avatar")], AvatarIcon: [parent("Avatar")], AvatarBadge: [parent("Avatar")] } },
     InputOTP: { slots: [slot("children", ["InputOTPSlot"], { repeatable: true, min: 1 })], parents: { InputOTPSlot: [parent("InputOTP")] } },
     SearchField: { slots: [slot("children", ["SearchFieldIcon", "SearchFieldInput", "SearchFieldClear"], { repeatable: true })], parents: { SearchFieldIcon: [parent("SearchField")], SearchFieldInput: [parent("SearchField")], SearchFieldClear: [parent("SearchField")] } },

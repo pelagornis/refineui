@@ -1,0 +1,44 @@
+{
+  "id": "result",
+  "exportPath": "@refineui/react",
+  "exportName": "Result",
+  "kind": "root",
+  "category": "utilities",
+  "label": "Result",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "ResultActions",
+        "ResultButton",
+        "ResultDescription",
+        "ResultIcon",
+        "ResultTitle"
+      ],
+      "repeatable": true,
+      "allowText": false,
+      "allowAnyComponent": false,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "label": "Default",
+      "root": {
+        "component": "Result",
+        "slots": {}
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

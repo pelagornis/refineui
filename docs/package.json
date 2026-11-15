@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "NODE_ENV=development astro dev --force",
     "build": "node ../scripts/ws.mjs @refineui/react build && astro build",
     "build:site": "astro build",
     "preview": "astro preview"

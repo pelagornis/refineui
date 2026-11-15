@@ -1,0 +1,28 @@
+{
+  "id": "code-block-copy-button",
+  "exportPath": "@refineui/react",
+  "exportName": "CodeBlockCopyButton",
+  "kind": "part",
+  "category": "parts",
+  "label": "Code Block Copy Button",
+  "props": [
+    {
+      "name": "value",
+      "label": "value",
+      "valueType": "string",
+      "control": "textarea",
+      "defaultValue": "",
+      "required": true,
+      "section": "properties"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "CodeBlockActions",
+      "slot": "children"
+    }
+  ]
+}

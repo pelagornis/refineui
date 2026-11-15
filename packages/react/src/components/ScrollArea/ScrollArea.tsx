@@ -33,6 +33,8 @@ import type {
     ScrollAreaViewportProps,
 } from "./types";
 
+const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
+
 const SCROLL_HIDE_DELAY_MS = 600;
 
 type ScrollAxisMetrics = {
@@ -216,7 +218,7 @@ export const ScrollArea = forwardRef<HTMLDivElement, ScrollAreaProps>(function S
         }, SCROLL_HIDE_DELAY_MS);
     }, []);
 
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         sync();
     }, [sync, axes, viewportEpoch]);
 
@@ -395,7 +397,7 @@ export function ScrollAreaScrollbar({
               ? focused || scrolling || interacting
               : false;
 
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         setAxisEnabled(orientation, true);
         return () => setAxisEnabled(orientation, false);
     }, [orientation, setAxisEnabled]);
@@ -490,7 +492,7 @@ export function ScrollAreaThumb({ className, style, ...props }: ScrollAreaThumbP
         thumbSize: number;
     } | null>(null);
 
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const track = trackRef.current;
         if (!track) return;
 

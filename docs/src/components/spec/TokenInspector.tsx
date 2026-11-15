@@ -44,8 +44,12 @@ export function TokenInspector({ component, variant: variantProp }: TokenInspect
     const visualPrefix = tokenInspectorVisualPrefix(component, spec?.tokens?.visual);
     const componentTrace = loadComponentTokenTrace();
 
+    /** Most components inspect the `variant` axis; DateInput and Calendar switch between selection modes. */
+    const variantAxis = component === "date-input" || component === "calendar" ? "mode" : "variant";
+    const variantLabel = variantAxis === "mode" ? "Mode" : "Variant";
+
     const variantOptions =
-        (spec?.variants?.variant as readonly string[] | undefined) ??
+        (spec?.variants?.[variantAxis] as readonly string[] | undefined) ??
         (component === "tabs" || component === "segmented-control"
             ? ["selected"]
             : component === "switch"
@@ -80,7 +84,7 @@ export function TokenInspector({ component, variant: variantProp }: TokenInspect
         })
         .filter((row): row is NonNullable<typeof row> => row !== null);
 
-    const showVariantControl = variantOptions.length > 1 || Boolean(spec?.variants?.variant);
+    const showVariantControl = variantOptions.length > 1 || Boolean(spec?.variants?.[variantAxis]);
 
     return (
         <Stack gap="sizeNone" data-docs-ui="token-inspector" className="w-full min-w-0">
@@ -93,7 +97,7 @@ export function TokenInspector({ component, variant: variantProp }: TokenInspect
                     {showVariantControl ? (
                         <ControlGroup>
                             <ControlSelect
-                                label="Variant"
+                                label={variantLabel}
                                 value={variant}
                                 options={[...variantOptions]}
                                 onChange={setVariant}
@@ -109,7 +113,7 @@ export function TokenInspector({ component, variant: variantProp }: TokenInspect
             <DocSection
                 id="token-recipe-trace"
                 title="Recipe → Tokens"
-                description={`Slot bindings for variant="${variant}" — declared in ${recipeSourceLabel(component)}.`}
+                description={`Slot bindings for ${variantAxis}="${variant}" — declared in ${recipeSourceLabel(component)}.`}
             >
                 <RecipeTokenTable rows={recipeRows} />
             </DocSection>

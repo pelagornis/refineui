@@ -1,0 +1,99 @@
+---
+title: Code Block
+description: Composable, token-driven code display with headers, actions, line numbers, wrapping, and copy support.
+---
+
+import { SpecRenderer } from "../../../components/spec";
+import { PropSpec } from "../../../docs-ui";
+import CodeBlockDemo from "../../../components/CodeBlockDemo";
+import PackageInstall from "../../../components/PackageInstall.mdx";
+
+`CodeBlock` owns presentation and actions, while syntax highlighting stays
+bring-your-own. Pass highlighted React nodes or plain strings to each
+`CodeBlockLine`.
+
+<div class="not-content my-6"><CodeBlockDemo client:load /></div>
+
+## Contract
+
+<div class="not-content"><SpecRenderer client:load component="code-block" /></div>
+
+## Installation
+
+<PackageInstall />
+
+## Usage
+
+```tsx
+import {
+  CodeBlock,
+  CodeBlockActions,
+  CodeBlockContent,
+  CodeBlockCopyButton,
+  CodeBlockHeader,
+  CodeBlockLine,
+  CodeBlockTitle,
+} from "@refineui/react";
+
+const code = "export const ready = true";
+
+<CodeBlock>
+  <CodeBlockHeader>
+    <CodeBlockTitle>status.ts</CodeBlockTitle>
+    <CodeBlockActions>
+      <CodeBlockCopyButton value={code} />
+    </CodeBlockActions>
+  </CodeBlockHeader>
+  <CodeBlockContent lineNumbers wrap={false}>
+    <CodeBlockLine>{code}</CodeBlockLine>
+  </CodeBlockContent>
+</CodeBlock>
+```
+
+Use `variant="highlighted"` on a `CodeBlockLine` to draw attention to a range.
+Use `wrap` and `lineNumbers` on `CodeBlockContent` to control rendering without
+changing the source passed to `CodeBlockCopyButton`.
+
+## Actions and syntax highlighting
+
+`CodeBlockActions` accepts `CodeBlockCopyButton` and ordinary RefineUI `Button`
+components. That keeps application-specific actions, such as downloads and line
+wrapping, under your control.
+
+`CodeBlockLine` accepts any `ReactNode`, so a syntax-highlighting library can
+provide tokenized spans directly. Keep the unformatted source in the copy
+button's required `value` prop to make copying reliable.
+
+The demo uses RefineUI semantic foreground tokens for its highlighted spans;
+you can use the same approach or pass tokens from Shiki, as shadcn/ui does.
+
+## API Reference
+
+### CodeBlock and layout parts
+
+`CodeBlock`, `CodeBlockHeader`, `CodeBlockTitle`, and `CodeBlockActions` accept
+standard `div` attributes. Compose `CodeBlockHeader` and `CodeBlockContent`
+inside the root; put the title and actions inside the header.
+
+### CodeBlockContent
+
+<div class="not-content"><PropSpec client:load rows={[
+  { prop: "wrap", default: "false", type: "boolean", description: "Wrap long source lines at the available width." },
+  { prop: "lineNumbers", default: "false", type: "boolean", description: "Show an automatically numbered, non-selectable gutter." }
+]} /></div>
+
+### CodeBlockLine
+
+<div class="not-content"><PropSpec client:load rows={[
+  { prop: "variant", default: '"default"', type: '"default" | "highlighted"', description: "Visual treatment for the source line." },
+  { prop: "children", default: "—", type: "ReactNode", description: "Plain text or syntax-highlighted content." }
+]} /></div>
+
+### CodeBlockCopyButton
+
+<div class="not-content"><PropSpec client:load rows={[
+  { prop: "value", default: "—", type: "string", description: "Required plain source copied to the clipboard." },
+  { prop: "copyLabel", default: '"Copy code"', type: "string", description: "Accessible label before a successful copy." },
+  { prop: "copiedLabel", default: '"Copied"', type: "string", description: "Accessible label while the copied state is visible." },
+  { prop: "onCopied", default: "—", type: "(value: string) => void", description: "Called after source text has been copied." }
+]} /></div>

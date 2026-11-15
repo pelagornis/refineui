@@ -1,0 +1,46 @@
+---
+title: 시간 입력
+description: 스크롤 가능한 시·분 목록으로 시간을 선택하는 입력 컴포넌트입니다.
+---
+
+import { SpecRenderer } from "../../../../components/spec";
+import { PropSpec } from "../../../../docs-ui";
+import TimeInputDemo from "../../../../components/TimeInputDemo";
+import PackageInstall from "../../../../components/PackageInstall.mdx";
+
+`TimeInput`은 입력 형태의 트리거, `Popover`, 140px 고정 높이의 시·분 `ScrollArea` 목록을 결합합니다. 선택값 주변 항목도 읽기 쉽게 보이며, 열릴 때 선택된 값은 각 목록 가운데에 위치합니다. 휠이 멈출 때 값이 바로 반영되며 Popover를 닫아도 선택값이 유지됩니다.
+
+<div class="not-content my-6"><TimeInputDemo client:only="react" /></div>
+
+## 계약
+
+<div class="not-content"><SpecRenderer client:load component="time-input" /></div>
+
+## 설치
+
+<PackageInstall />
+
+## 사용법
+
+```tsx
+import { useState } from "react";
+import { TimeInput } from "@refineui/react";
+
+const [time, setTime] = useState("09:30");
+
+<TimeInput value={time} onValueChange={setTime} minuteStep={15} hourCycle="12h" />;
+```
+
+시간 값은 항상 24시간제 `HH:mm` 형식을 사용합니다. `hourCycle="12h"`를 설정하면 시·분 앞에 스크롤 가능한 AM/PM 열이 표시됩니다. `size="sm" | "md" | "lg"`는 `Input`과 같은 크기를 사용하며 상위 `Field` 크기도 상속합니다.
+
+## API 레퍼런스
+
+<div class="not-content"><PropSpec client:load rows={[
+  { prop: "value", default: "—", type: "string", description: "HH:mm 형식의 제어형 값입니다." },
+  { prop: "defaultValue", default: "—", type: "string", description: "비제어 방식의 초기 HH:mm 값입니다." },
+  { prop: "onValueChange", default: "—", type: "(value: string) => void", description: "휠 선택이 멈출 때 호출됩니다." },
+  { prop: "minuteStep", default: "1", type: "1 | 5 | 10 | 15 | 30", description: "스크롤 목록에 표시할 분 단위입니다." },
+  { prop: "hourCycle", default: '"24h"', type: '"24h" | "12h"', description: "12시간제에서 AM/PM 열을 표시합니다." },
+  { prop: "size", default: '"lg"', type: '"sm" | "md" | "lg"', description: "Input과 동일한 컨트롤 크기입니다." },
+  { prop: "error / success / disabled", default: "false", type: "boolean", description: "입력 상태와 사용 가능 여부입니다." }
+]} /></div>

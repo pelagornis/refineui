@@ -7,6 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { removeEmptyFrameHeaders } from './src/expressive-code/removeEmptyFrameHeaders.mjs';
 
 const monorepoRoot = fileURLToPath(new URL('..', import.meta.url));
+const reactNodeEnvironment = process.argv.includes('build') ? 'production' : 'development';
 
 /** Iconography lives in refineui-system-icons — swap when the icons site ships. */
 const ICONOGRAPHY_SITE = 'https://icons.pelagornis.com';
@@ -29,6 +30,14 @@ export default defineConfig({
     '/ko/favicon.svg': '/favicon.svg',
   },
   vite: {
+    /**
+     * React selects its CJS entry at dependency-optimization time. Bun can
+     * otherwise retain NODE_ENV=production while serving `astro dev`, which
+     * pairs a production renderer with development island modules.
+     */
+    define: {
+      'process.env.NODE_ENV': JSON.stringify(reactNodeEnvironment),
+    },
     plugins: [tailwindcss()],
     resolve: {
       /** Source aliases — tree-shake and avoid Babel deopt on the 500KB dist bundle. */
@@ -36,6 +45,8 @@ export default defineConfig({
         { find: /^@refineui\/react$/, replacement: path.resolve(monorepoRoot, 'packages/react/src/index.ts') },
         { find: /^@refineui\/tokens$/, replacement: path.resolve(monorepoRoot, 'packages/tokens/src/index.ts') },
       ],
+      /** All islands and aliased workspace source must share this renderer's React instance. */
+      dedupe: ['react', 'react-dom'],
     },
     ssr: {
       noExternal: ['@refineui/react', '@refineui/tokens', '@refineui/web-icons'],
@@ -200,11 +211,13 @@ export default defineConfig({
             { label: 'Card', slug: 'components/card' },
             { label: 'Carousel', slug: 'components/carousel' },
             { label: 'Chart', slug: 'components/chart' },
+            { label: 'Code Block', slug: 'components/code-block' },
             { label: 'Checkbox', slug: 'components/checkbox' },
             { label: 'Collapsible', slug: 'components/collapsible' },
             { label: 'Command', slug: 'components/command' },
             { label: 'Container', slug: 'components/container' },
             { label: 'Context Menu', slug: 'components/context-menu' },
+            { label: 'Date Input', slug: 'components/date-input' },
             { label: 'Dialog', slug: 'components/dialog' },
             { label: 'Divider', slug: 'components/divider' },
             { label: 'Drawer', slug: 'components/drawer' },
@@ -227,6 +240,7 @@ export default defineConfig({
             { label: 'Progress Stepper', slug: 'components/progress-stepper' },
             { label: 'Radio', slug: 'components/radio' },
             { label: 'Resizable', slug: 'components/resizable' },
+            { label: 'Result', slug: 'components/result' },
             { label: 'Scroll Area', slug: 'components/scroll-area' },
             { label: 'Search Field', slug: 'components/search-field' },
             { label: 'Segmented Control', slug: 'components/segmented-control' },
@@ -243,6 +257,7 @@ export default defineConfig({
             { label: 'Tabs', slug: 'components/tabs' },
             { label: 'Tag', slug: 'components/tag' },
             { label: 'Textarea', slug: 'components/textarea' },
+            { label: 'Time Input', slug: 'components/time-input' },
             { label: 'Toast', slug: 'components/toast' },
             { label: 'Tooltip', slug: 'components/tooltip' },
             { label: 'Tree', slug: 'components/tree' },

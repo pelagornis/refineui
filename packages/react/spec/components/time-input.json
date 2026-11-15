@@ -1,0 +1,24 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "time-input",
+  "version": 1,
+  "export": "TimeInput",
+  "anatomy": { "root": "time-input" },
+  "attributes": { "data-refineui": "time-input" },
+  "tokens": { "visual": "input" },
+  "states": {
+    "pseudo": ["focus-visible"],
+    "component": {
+      "selection": ["placeholder", "value"],
+      "validation": ["error", "success"]
+    },
+    "availability": ["disabled"],
+    "environment": ["dir"]
+  },
+  "accessibility": {
+    "time-input": { "element": "button", "native": true, "labeling": { "accessibleName": "required" } }
+  },
+  "keyboard": { "Enter": { "action": "activate", "native": true }, "Space": { "action": "activate", "native": true } },
+  "focus": { "visual": { "required": true, "selector": ":focus-visible" } },
+  "layout": { "direction": "logical", "rtl": true }
+}

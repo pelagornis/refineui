@@ -16,11 +16,11 @@ export const tooltipStyles = {
     fallbackTrigger: "inline-flex outline-none",
     /** Positions the floating stack (surface + panel), like PopOver `floatingRoot`. */
     floating: "pointer-events-none absolute z-refineui-popup",
-    panelWrap: "relative inline-block max-w-refineui-tooltip-max-width",
+    panelWrap: "relative inline-block max-w-refineui-tooltip-max-width transition-[opacity,transform] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-emphasized)] motion-reduce:transition-none",
     /** Fill, stroke, and shadow come from `FloatingSurface`; the transparent border keeps the box size. */
     panel: clsx(
         componentTextClass(componentTypographyTokens.tooltip),
-        "relative z-0 box-border max-w-refineui-tooltip-max-width whitespace-nowrap rounded-refineui-medium border-refineui-hairline border-transparent px-refineui-size-medium py-refineui-size-small",
+        "relative z-10 box-border max-w-refineui-tooltip-max-width whitespace-nowrap rounded-refineui-medium border-refineui-hairline border-transparent px-refineui-size-medium py-refineui-size-small",
     ),
 } as const;
 

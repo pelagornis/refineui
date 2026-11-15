@@ -128,6 +128,7 @@ export function DialogContent({ className, style, container, scrollable = true, 
         useDialogContext("DialogContent");
     const [rendering, setRendering] = useState(open);
     const [entered, setEntered] = useState(false);
+    const [panelFrameHeight, setPanelFrameHeight] = useState<number | null>(null);
 
     useFocusTrap(open && entered, panelRef);
 
@@ -157,9 +158,28 @@ export function DialogContent({ className, style, container, scrollable = true, 
         return () => document.removeEventListener("keydown", handler);
     }, [rendering, entered, setOpen]);
 
+    useEffect(() => {
+        if (!entered) {
+            setPanelFrameHeight(null);
+            return;
+        }
+        let raf2 = 0;
+        const raf1 = requestAnimationFrame(() => {
+            raf2 = requestAnimationFrame(() => {
+                const panel = panelRef.current;
+                if (panel) setPanelFrameHeight(panel.offsetHeight);
+            });
+        });
+        return () => {
+            cancelAnimationFrame(raf1);
+            cancelAnimationFrame(raf2);
+        };
+    }, [entered, panelRef]);
+
     if (!rendering || typeof document === "undefined") return null;
 
     const target = container ?? document.body;
+    const panelMaxWidth = size === "lg" ? componentSizes.dialogMaxWidth : componentSizes.dialogWidthSm;
 
     const panelMotion: CSSProperties = {
         opacity: entered ? 1 : 0,
@@ -168,7 +188,13 @@ export function DialogContent({ className, style, container, scrollable = true, 
             : "scale(var(--refineui-motion-scale-enter)) translateY(var(--refineui-spacing-size-small))",
         transition: `opacity ${PANEL_MS}ms ${EASING}, transform ${PANEL_MS}ms ${EASING}`,
         willChange: "opacity, transform",
-        maxWidth: size === "lg" ? componentSizes.dialogMaxWidth : componentSizes.dialogWidthSm,
+        maxWidth: panelMaxWidth,
+    };
+
+    const panelFrameStyle: CSSProperties = {
+        width: "100%",
+        maxWidth: panelMaxWidth,
+        height: panelFrameHeight ?? undefined,
     };
 
     const panelBody = scrollable ? (
@@ -209,14 +235,16 @@ export function DialogContent({ className, style, container, scrollable = true, 
                 onClick={() => setOpen(false)}
                 aria-hidden
             />
-            <div
-                ref={panelRef}
-                tabIndex={-1}
-                className={dialogStyles.panel}
-                style={{ ...panelMotion, ...style }}
-                onClick={(e) => e.stopPropagation()}
-            >
-                {panelBody}
+            <div style={panelFrameStyle}>
+                <div
+                    ref={panelRef}
+                    tabIndex={-1}
+                    className={dialogStyles.panel}
+                    style={{ ...panelMotion, ...style }}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    {panelBody}
+                </div>
             </div>
         </div>
     );

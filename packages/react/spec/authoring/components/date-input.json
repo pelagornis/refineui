@@ -1,0 +1,61 @@
+{
+  "id": "date-input",
+  "exportPath": "@refineui/react",
+  "exportName": "DateInput",
+  "kind": "root",
+  "category": "components",
+  "label": "Date Input",
+  "props": [
+    {
+      "name": "mode",
+      "label": "mode",
+      "valueType": "enum",
+      "control": "segmented",
+      "options": [
+        "single",
+        "range"
+      ],
+      "defaultValue": "single",
+      "section": "variants"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [],
+      "repeatable": true,
+      "allowText": true,
+      "allowAnyComponent": true,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "label": "Default",
+      "root": {
+        "component": "DateInput",
+        "slots": {
+          "children": [
+            {
+              "component": "Text",
+              "props": {
+                "variant": "bodyMd"
+              },
+              "text": "Date Input"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": "code-block-content",
+  "exportPath": "@refineui/react",
+  "exportName": "CodeBlockContent",
+  "kind": "part",
+  "category": "parts",
+  "label": "Code Block Content",
+  "props": [
+    {
+      "name": "wrap",
+      "valueType": "boolean",
+      "control": "toggle",
+      "defaultValue": false,
+      "section": "properties",
+      "label": "wrap"
+    },
+    {
+      "name": "lineNumbers",
+      "valueType": "boolean",
+      "control": "toggle",
+      "defaultValue": false,
+      "section": "properties",
+      "label": "line Numbers"
+    }
+  ],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "CodeBlock",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "CodeBlockLine"
+      ],
+      "repeatable": true,
+      "min": 1
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "time-input",
+  "exportPath": "@refineui/react",
+  "exportName": "TimeInput",
+  "kind": "root",
+  "category": "utilities",
+  "label": "Time Input",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [],
+      "repeatable": true,
+      "allowText": false,
+      "allowAnyComponent": true,
+      "defaultChildren": []
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "label": "Default",
+      "root": {
+        "component": "TimeInput",
+        "slots": {}
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "click",
+      "payload": "void"
+    }
+  ]
+}

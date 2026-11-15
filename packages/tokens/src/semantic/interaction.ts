@@ -44,7 +44,8 @@ export const semanticInteraction: SemanticInteractionTokens = {
         hoverGrow: motion.scale.scale115,
         /** Component aliases — same Foundation steps as role keys above */
         dialogEnter: motion.scale.scale96,
-        buttonActive: motion.scale.scale98,
+        /** Buttons use a slightly deeper, yet still restrained, press than generic controls. */
+        buttonActive: motion.scale.scale96,
         sliderThumbHover: motion.scale.scale115,
     },
     distance: {

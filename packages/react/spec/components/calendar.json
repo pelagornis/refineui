@@ -10,6 +10,15 @@
   "attributes": {
     "data-refineui": "calendar"
   },
+  "variants": {
+    "mode": [
+      "single",
+      "range"
+    ]
+  },
+  "tokens": {
+    "visual": "calendar"
+  },
   "states": {
     "pseudo": [
       "focus-visible"

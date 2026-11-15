@@ -157,22 +157,22 @@ export function Calendar({
     const [view, setView] = useState(() => value ?? normStart ?? defaultMonth ?? new Date());
     const year = view.getFullYear();
     const month = view.getMonth();
-    const cells = getMonthGrid(year, month, weekStartsOn);
-    const weeks = chunkWeeks(cells);
+    /** Range mode shows two consecutive months side by side, navigated with arrows only. */
+    const twoMonths = isRangeMode;
     const weekdayLabels = getWeekdayLabels(weekStartsOn);
     const monthLabel = formatMonthLabel(year, month);
     const monthNameLong = formatMonthNameLong(year, month);
     const yearOptions = yearOptionsForView(year);
 
-    const getDateFromCell = (d: number, monthOffset: MonthOffset) => new Date(year, month + monthOffset, d);
+    const getDateFromCell = (baseYear: number, baseMonth: number, d: number, monthOffset: MonthOffset) =>
+        new Date(baseYear, baseMonth + monthOffset, d);
 
     const setRange = (start: Date | undefined, end: Date | undefined) => {
         if (onRangeChange) onRangeChange(start, end);
         else setInternalRange({ start, end });
     };
 
-    const handleDayClick = (d: number, monthOffset: MonthOffset) => {
-        const date = getDateFromCell(d, monthOffset);
+    const handleDayClick = (date: Date) => {
         if (isRangeMode) {
             const s = effectiveStart;
             const e = effectiveEnd;
@@ -190,9 +190,9 @@ export function Calendar({
         }
     };
 
-    const renderDayButton = (cell: GridCell, key: string) => {
+    const renderDayButton = (cell: GridCell, key: string, baseYear: number, baseMonth: number) => {
         const { day, monthOffset } = cell;
-        const currentDate = getDateFromCell(day, monthOffset);
+        const currentDate = getDateFromCell(baseYear, baseMonth, day, monthOffset);
         const isCurrentMonth = monthOffset === 0;
         const t = startOfDay(currentDate).getTime();
 
@@ -221,7 +221,7 @@ export function Calendar({
                 data-current-month={isCurrentMonth ? "" : undefined}
                 data-other-month={!isCurrentMonth ? "" : undefined}
                 role="gridcell"
-                onClick={() => handleDayClick(day, monthOffset)}
+                onClick={() => handleDayClick(currentDate)}
                 className={clsx(
                     calendarStyles.dayBase,
                     calendarStyles.daySelected,
@@ -240,7 +240,7 @@ export function Calendar({
                 data-current-month={isCurrentMonth ? "" : undefined}
                 data-other-month={!isCurrentMonth ? "" : undefined}
                 role="gridcell"
-                onClick={() => handleDayClick(day, monthOffset)}
+                onClick={() => handleDayClick(currentDate)}
                 className={clsx(
                     calendarStyles.dayBase,
                     calendarStyles.dayRangeMiddle,
@@ -267,7 +267,7 @@ export function Calendar({
                     data-other-month={!isCurrentMonth ? "" : undefined}
                     data-range-endpoint={endpoint}
                     role="gridcell"
-                    onClick={() => handleDayClick(day, monthOffset)}
+                    onClick={() => handleDayClick(currentDate)}
                     className={clsx(
                         calendarStyles.dayBase,
                         calendarStyles.daySelected,
@@ -277,6 +277,11 @@ export function Calendar({
                 </button>
             </div>
         );
+
+        if (!isCurrentMonth && twoMonths) {
+            // Side-by-side months would repeat these days, so keep the slot empty.
+            return <div key={key} aria-hidden className={calendarStyles.dayPlaceholder} />;
+        }
 
         if (!isCurrentMonth) {
             const selOther = value && !isRangeMode && sameDay(currentDate, value);
@@ -294,7 +299,7 @@ export function Calendar({
                     data-other-month
                     {...(showBlackOther ? { "data-selected": "" } : {})}
                     role="gridcell"
-                    onClick={() => handleDayClick(day, monthOffset)}
+                    onClick={() => handleDayClick(currentDate)}
                     className={clsx(
                         calendarStyles.dayBase,
                         showBlackOther
@@ -330,7 +335,7 @@ export function Calendar({
                 data-current-month
                 {...(isSelectedSingle ? { "data-selected": "" } : {})}
                 role="gridcell"
-                onClick={() => handleDayClick(day, monthOffset)}
+                onClick={() => handleDayClick(currentDate)}
                 className={clsx(
                     calendarStyles.dayBase,
                     isSelectedSingle
@@ -343,91 +348,130 @@ export function Calendar({
         );
     };
 
+    const renderMonthBody = (bodyYear: number, bodyMonth: number) => {
+        const monthWeeks = chunkWeeks(getMonthGrid(bodyYear, bodyMonth, weekStartsOn));
+        return (
+            <div className={calendarStyles.body}>
+                <div className={clsx("grid gap-refineui-size-none", calendarStyles.grid7)}>
+                    {weekdayLabels.map((w) => (
+                        <div key={w} className={calendarStyles.weekday}>
+                            {w}
+                        </div>
+                    ))}
+                </div>
+                {monthWeeks.map((row, wi) => (
+                    <div key={wi} className={clsx("grid gap-refineui-size-none", calendarStyles.grid7)}>
+                        {row.map((cell, di) =>
+                            renderDayButton(cell, `d-${bodyYear}-${bodyMonth}-${wi}-${di}-${cell.monthOffset}-${cell.day}`, bodyYear, bodyMonth),
+                        )}
+                    </div>
+                ))}
+            </div>
+        );
+    };
+
+    const prevButton = (
+        <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            layout="icon"
+            data-calendar-header="nav-prev"
+            aria-label="Previous month"
+            className={calendarStyles.navButton}
+            onClick={() => setView(new Date(year, month - 1, 1))}
+        >
+            <WebIcon name="chevron-left" size={iconSizes.small} color="currentColor" fallback="‹" />
+        </Button>
+    );
+
+    const nextButton = (
+        <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            layout="icon"
+            data-calendar-header="nav-next"
+            aria-label="Next month"
+            className={calendarStyles.navButton}
+            onClick={() => setView(new Date(year, month + 1, 1))}
+        >
+            <WebIcon name="chevron-right" size={iconSizes.small} color="currentColor" fallback="›" />
+        </Button>
+    );
+
     return (
         <div
             data-refineui="calendar"
             role="grid"
             aria-label="Calendar"
+            data-mode={mode}
             className={clsx(
                 calendarStyles.root,
+                twoMonths && calendarStyles.rootRange,
                 className,
             )}
             {...props}
         >
-            <div className={calendarStyles.header}>
-                <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    layout="icon"
-                    data-calendar-header="nav-prev"
-                    aria-label="Previous month"
-                    className={calendarStyles.navButton}
-                    onClick={() => setView(new Date(year, month - 1))}
-                >
-                    <WebIcon name="chevron-left" size={iconSizes.small} color="currentColor" fallback="‹" />
-                </Button>
-                <CalendarCaptionSelect
-                    value={String(month)}
-                    placeholder={monthLabel}
-                    ariaLabel={`Month: ${monthNameLong}`}
-                    header="caption-month"
-                    onValueChange={(nextMonth) => {
-                        setView(new Date(year, Number.parseInt(nextMonth, 10), 1));
-                    }}
-                >
-                    {MONTH_LABELS.map((label, monthIndex) => (
-                        <SelectItem key={label} value={String(monthIndex)}>
-                            {label}
-                        </SelectItem>
-                    ))}
-                </CalendarCaptionSelect>
-                <CalendarCaptionSelect
-                    value={String(year)}
-                    placeholder={String(year)}
-                    ariaLabel={`Year: ${year}`}
-                    header="caption-year"
-                    onValueChange={(nextYear) => {
-                        setView(new Date(Number.parseInt(nextYear, 10), month, 1));
-                    }}
-                >
-                    {yearOptions.map((yearOption) => (
-                        <SelectItem key={yearOption} value={String(yearOption)}>
-                            {String(yearOption)}
-                        </SelectItem>
-                    ))}
-                </CalendarCaptionSelect>
-                <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    layout="icon"
-                    data-calendar-header="nav-next"
-                    aria-label="Next month"
-                    className={calendarStyles.navButton}
-                    onClick={() => setView(new Date(year, month + 1))}
-                >
-                    <WebIcon name="chevron-right" size={iconSizes.small} color="currentColor" fallback="›" />
-                </Button>
-            </div>
-
-            <div className={calendarStyles.body}>
-                <div className={clsx("grid gap-refineui-size-none", calendarStyles.grid7)}>
-                    {weekdayLabels.map((w) => (
-                        <div
-                            key={w}
-                            className={calendarStyles.weekday}
-                        >
-                            {w}
-                        </div>
-                    ))}
+            {!twoMonths && (
+                <div className={calendarStyles.header}>
+                    {prevButton}
+                    <CalendarCaptionSelect
+                        value={String(month)}
+                        placeholder={monthLabel}
+                        ariaLabel={`Month: ${monthNameLong}`}
+                        header="caption-month"
+                        onValueChange={(nextMonth) => {
+                            setView(new Date(year, Number.parseInt(nextMonth, 10), 1));
+                        }}
+                    >
+                        {MONTH_LABELS.map((label, monthIndex) => (
+                            <SelectItem key={label} value={String(monthIndex)}>
+                                {label}
+                            </SelectItem>
+                        ))}
+                    </CalendarCaptionSelect>
+                    <CalendarCaptionSelect
+                        value={String(year)}
+                        placeholder={String(year)}
+                        ariaLabel={`Year: ${year}`}
+                        header="caption-year"
+                        onValueChange={(nextYear) => {
+                            setView(new Date(Number.parseInt(nextYear, 10), month, 1));
+                        }}
+                    >
+                        {yearOptions.map((yearOption) => (
+                            <SelectItem key={yearOption} value={String(yearOption)}>
+                                {String(yearOption)}
+                            </SelectItem>
+                        ))}
+                    </CalendarCaptionSelect>
+                    {nextButton}
                 </div>
-                {weeks.map((row, wi) => (
-                    <div key={wi} className={clsx("grid gap-refineui-size-none", calendarStyles.grid7)}>
-                        {row.map((cell, di) => renderDayButton(cell, `d-${wi}-${di}-${cell.monthOffset}-${cell.day}`))}
-                    </div>
-                ))}
-            </div>
+            )}
+            {twoMonths ? (
+                <div className={calendarStyles.months}>
+                    {[0, 1].map((offset) => {
+                        const panelDate = new Date(year, month + offset, 1);
+                        const panelYear = panelDate.getFullYear();
+                        const panelMonth = panelDate.getMonth();
+                        return (
+                            <div key={offset} className={calendarStyles.monthPanel}>
+                                <div className={calendarStyles.monthHeader}>
+                                    {offset === 0 ? prevButton : <span className={calendarStyles.navSpacer} aria-hidden />}
+                                    <span className={calendarStyles.monthCaption} aria-live="polite">
+                                        {formatMonthNameLong(panelYear, panelMonth)} {panelYear}
+                                    </span>
+                                    {offset === 1 ? nextButton : <span className={calendarStyles.navSpacer} aria-hidden />}
+                                </div>
+                                {renderMonthBody(panelYear, panelMonth)}
+                            </div>
+                        );
+                    })}
+                </div>
+            ) : (
+                renderMonthBody(year, month)
+            )}
         </div>
     );
 }

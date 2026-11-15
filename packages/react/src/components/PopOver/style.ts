@@ -5,10 +5,14 @@ export const popoverStyles = {
     fallbackTrigger:
         "cursor-pointer border-none bg-transparent p-0 font-inherit text-inherit",
     floatingRoot: "absolute z-refineui-popup",
-    panelWrap: "relative inline-block min-w-refineui-popover-panel-width",
+    panelWrap: "relative inline-block",
+    panelWrapSurface: "min-w-refineui-popover-panel-width",
     /** Fill, stroke, and shadow come from `FloatingSurface`; the transparent border keeps the box size. */
-    panel:
-        "relative z-0 box-border min-w-refineui-popover-panel-width rounded-refineui-xx-large border-refineui-hairline border-transparent outline-none",
+    panel: "relative z-10 box-border outline-none",
+    // Fill and blur come only from the masked FloatingSurface (surfaceFrosted + surfaceFrost,
+    // same as Menu). Blurring the panel too would blur the frosted fill a second time.
+    panelSurface: "min-w-refineui-popover-panel-width rounded-refineui-xx-large border-refineui-hairline border-transparent",
+    motion: "transition-[opacity,transform] duration-[var(--refineui-motion-duration-fast)] ease-[var(--refineui-motion-easing-emphasized)] motion-reduce:transition-none",
 } as const;
 
 export function popoverFloatingClasses(placement: PopoverPlacement, align: PopoverAlign): string {

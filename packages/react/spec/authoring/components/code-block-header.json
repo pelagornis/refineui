@@ -1,0 +1,28 @@
+{
+  "id": "code-block-header",
+  "exportPath": "@refineui/react",
+  "exportName": "CodeBlockHeader",
+  "kind": "part",
+  "category": "parts",
+  "label": "Code Block Header",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "CodeBlock",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "CodeBlockTitle",
+        "CodeBlockActions"
+      ],
+      "repeatable": true
+    }
+  ]
+}

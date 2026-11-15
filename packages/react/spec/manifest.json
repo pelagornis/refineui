@@ -118,6 +118,15 @@
       ]
     },
     {
+      "name": "DateInput",
+      "id": "date-input",
+      "spec": "./components/date-input.json",
+      "export": "DateInput",
+      "dataRefineui": [
+        "date-input"
+      ]
+    },
+    {
       "name": "Card",
       "id": "card",
       "spec": "./components/card.json",
@@ -195,6 +204,21 @@
       "dataRefineui": [
         "chip",
         "chip-remove"
+      ]
+    },
+    {
+      "name": "CodeBlock",
+      "id": "code-block",
+      "spec": "./components/code-block.json",
+      "export": "CodeBlock",
+      "dataRefineui": [
+        "code-block",
+        "code-block-actions",
+        "code-block-content",
+        "code-block-copy",
+        "code-block-header",
+        "code-block-line",
+        "code-block-title"
       ]
     },
     {

@@ -1,0 +1,28 @@
+{
+  "id": "code-block-actions",
+  "exportPath": "@refineui/react",
+  "exportName": "CodeBlockActions",
+  "kind": "part",
+  "category": "parts",
+  "label": "Code Block Actions",
+  "props": [],
+  "preview": {
+    "mode": "full"
+  },
+  "parents": [
+    {
+      "component": "CodeBlockHeader",
+      "slot": "children"
+    }
+  ],
+  "slots": [
+    {
+      "name": "children",
+      "accepts": [
+        "CodeBlockCopyButton",
+        "Button"
+      ],
+      "repeatable": true
+    }
+  ]
+}

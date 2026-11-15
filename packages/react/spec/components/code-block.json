@@ -1,0 +1,18 @@
+{
+  "$schema": "../schema/component-spec.schema.json",
+  "component": "code-block",
+  "version": 1,
+  "export": "CodeBlock",
+  "anatomy": {
+    "root": "code-block",
+    "actions": "code-block-actions",
+    "content": "code-block-content",
+    "copy": "code-block-copy",
+    "header": "code-block-header",
+    "line": "code-block-line",
+    "title": "code-block-title"
+  },
+  "attributes": {
+    "data-refineui": "code-block"
+  }
+}

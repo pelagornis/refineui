@@ -9,7 +9,7 @@ import {
   listTokenCategories,
   normalizeSlug,
   searchDocs
-} from "./chunk-FH7KEWJK.js";
+} from "./chunk-JGLZRNIE.js";
 export {
   DESIGN_RULES,
   getDesignMd,

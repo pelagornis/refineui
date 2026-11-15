@@ -7,6 +7,7 @@ import { componentSizes } from "../../componentSizes";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { Slot, getMergeableTriggerChild } from "@refineui/utilities/react";
 import { FloatingSurface } from "../shared/FloatingSurface";
+import { useFloatingPresence } from "../../hooks/useFloatingPresence";
 import {
     TOOLTIP_BEAK_INSET,
     tooltipAlignKey,
@@ -15,6 +16,21 @@ import {
     tooltipStyles,
 } from "./style";
 import type { TooltipProps } from "./types";
+
+function enterTransform(position: TooltipProps["position"]): string {
+    const scale = "scale(var(--refineui-motion-scale-enter))";
+    if (position === "Top") return `${scale} translateY(var(--refineui-spacing-size-x-small))`;
+    if (position === "Left") return `${scale} translateX(var(--refineui-spacing-size-x-small))`;
+    if (position === "Right") return `${scale} translateX(calc(-1 * var(--refineui-spacing-size-x-small)))`;
+    return `${scale} translateY(calc(-1 * var(--refineui-spacing-size-x-small)))`;
+}
+
+function transformOrigin(position: TooltipProps["position"]): string {
+    if (position === "Top") return "bottom center";
+    if (position === "Left") return "right center";
+    if (position === "Right") return "left center";
+    return "top center";
+}
 
 export function Tooltip({
     trigger,
@@ -33,6 +49,8 @@ export function Tooltip({
     const tooltipId = useId();
     const showTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
     const panelRef = useRef<HTMLDivElement>(null);
+    const motionRef = useRef<HTMLDivElement>(null);
+    const { mounted, entered } = useFloatingPresence(open, motionRef);
 
     const setOpen = (next: boolean) => {
         if (ctrlOpen === undefined) setInnerOpen(next);
@@ -106,9 +124,18 @@ export function Tooltip({
     return (
         <div data-refineui="tooltip" className={clsx(tooltipStyles.root, className)} {...props}>
             {triggerNode}
-            {open && (
+            {mounted && (
                 <div className={tooltipStyles.floating} style={floatingStyle}>
-                    <div className={tooltipStyles.panelWrap}>
+                    <div
+                        ref={motionRef}
+                        className={tooltipStyles.panelWrap}
+                        style={{
+                            opacity: entered ? 1 : 0,
+                            transform: entered ? "scale(1) translate(0)" : enterTransform(position),
+                            transformOrigin: transformOrigin(position),
+                            willChange: "transform",
+                        }}
+                    >
                         <div
                             ref={panelRef}
                             id={tooltipId}

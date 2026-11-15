@@ -14,6 +14,8 @@ import {
 import { segmentedControlStyles } from "./style";
 import type { SegmentedControlItemProps, SegmentedControlProps } from "./types";
 
+const useIsomorphicLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
+
 const ITEM_SELECTOR = '[data-refineui="segmented-control-item"]';
 const ITEM_ENABLED_SELECTOR = `${ITEM_SELECTOR}:not([disabled])`;
 
@@ -95,7 +97,7 @@ export function SegmentedControl({
         });
     }, []);
 
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         updateIndicator();
     }, [updateIndicator, selectedValue, children]);
 

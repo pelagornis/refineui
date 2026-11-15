@@ -19,6 +19,7 @@ import { resolveColorTokenValue } from "@refineui/utilities/color";
 import { componentSizes } from "../../componentSizes";
 import { componentColorTokens } from "../../tokens/componentColorTokens";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
+import { useFloatingPresence } from "../../hooks/useFloatingPresence";
 import { Slot, getMergeableTriggerChild } from "@refineui/utilities/react";
 import { FloatingSurface } from "../shared/FloatingSurface";
 import type { FloatingBeakSide } from "../shared/floatingOutline";
@@ -68,11 +69,27 @@ const beakSideByPlacement: Record<PopoverPlacement, FloatingBeakSide> = {
     right: "left",
 };
 
-function floatingGapStyle(placement: PopoverPlacement): CSSProperties {
-    if (placement === "top") return { marginBottom: POPOVER_GAP };
-    if (placement === "bottom") return { marginTop: POPOVER_GAP };
-    if (placement === "left") return { marginRight: POPOVER_GAP };
-    return { marginLeft: POPOVER_GAP };
+function floatingGapStyle(placement: PopoverPlacement, surface: boolean): CSSProperties {
+    const gap = surface ? POPOVER_GAP : spacings.sizeXSmall;
+    if (placement === "top") return { marginBottom: gap };
+    if (placement === "bottom") return { marginTop: gap };
+    if (placement === "left") return { marginRight: gap };
+    return { marginLeft: gap };
+}
+
+function enterTransform(placement: PopoverPlacement): string {
+    const scale = "scale(var(--refineui-motion-scale-enter))";
+    if (placement === "top") return `${scale} translateY(var(--refineui-spacing-size-x-small))`;
+    if (placement === "left") return `${scale} translateX(var(--refineui-spacing-size-x-small))`;
+    if (placement === "right") return `${scale} translateX(calc(-1 * var(--refineui-spacing-size-x-small)))`;
+    return `${scale} translateY(calc(-1 * var(--refineui-spacing-size-x-small)))`;
+}
+
+function transformOrigin(placement: PopoverPlacement): string {
+    if (placement === "top") return "bottom center";
+    if (placement === "left") return "right center";
+    if (placement === "right") return "left center";
+    return "top center";
 }
 
 export function Popover({ children, className, open: openProp, defaultOpen = false, onOpenChange, ...props }: PopoverProps) {
@@ -94,6 +111,10 @@ export function Popover({ children, className, open: openProp, defaultOpen = fal
 
     useEffect(() => {
         const handler = (e: globalThis.MouseEvent) => {
+            const clickedNestedSelect = e.composedPath().some(
+                (target) => target instanceof Element && target.matches('[data-refineui="select-menu"]'),
+            );
+            if (clickedNestedSelect) return;
             if (containerRef.current && !containerRef.current.contains(e.target as Node)) setOpen(false);
         };
         if (open) document.addEventListener("mousedown", handler);
@@ -207,11 +228,15 @@ export function PopoverContent({
     children,
     placement = "bottom",
     align = "center",
+    surface = true,
+    fitContent = false,
     className,
     style: styleProp,
     ...props
 }: PopoverContentProps) {
     const { open, contentRef, contentId } = usePopoverContext("PopoverContent");
+    const motionRef = useRef<HTMLDivElement>(null);
+    const { mounted, entered } = useFloatingPresence(open, motionRef);
 
     useFocusTrap(open, contentRef);
 
@@ -220,10 +245,10 @@ export function PopoverContent({
     const bg = resolveColorTokenValue(palette.background);
     const borderCol = resolveColorTokenValue(palette.border);
 
-    const gapStyle = floatingGapStyle(placement);
+    const gapStyle = floatingGapStyle(placement, surface);
     const vertical = placement === "top" || placement === "bottom";
 
-    if (!open) return null;
+    if (!mounted) return null;
 
     return (
         <div
@@ -233,7 +258,18 @@ export function PopoverContent({
             )}
             style={gapStyle}
         >
-            <div className={popoverStyles.panelWrap}>
+            <div
+                ref={motionRef}
+                aria-hidden={open ? undefined : true}
+                className={clsx(popoverStyles.panelWrap, surface && !fitContent && popoverStyles.panelWrapSurface, popoverStyles.motion)}
+                style={{
+                    pointerEvents: open ? undefined : "none",
+                    opacity: entered ? 1 : 0,
+                    transform: entered ? "scale(1) translate(0)" : enterTransform(placement),
+                    transformOrigin: transformOrigin(placement),
+                    willChange: "transform",
+                }}
+            >
                 <div
                     ref={contentRef as React.RefObject<HTMLDivElement>}
                     id={contentId}
@@ -243,30 +279,32 @@ export function PopoverContent({
                     data-refineui="popover"
                     data-placement={placement}
                     data-align={align}
-                    className={clsx(popoverStyles.panel, className)}
+                    className={clsx(popoverStyles.panel, surface && !fitContent && popoverStyles.panelSurface, className)}
                     style={{
-                        ...(styleProp && typeof styleProp === "object" ? styleProp : {}),
-                        minWidth: componentSizes.popoverPanelWidth,
-                        padding: spacings.sizeLarge,
+                        ...(surface ? { ...(fitContent ? {} : { minWidth: componentSizes.popoverPanelWidth }), padding: spacings.sizeLarge } : {}),
                         color: resolveColorTokenValue(palette.foreground),
+                        // Caller styles last so consumers (e.g. DateInput) can override the default padding.
+                        ...(styleProp && typeof styleProp === "object" ? styleProp : {}),
                     }}
                     {...props}
                 >
                     {children}
                 </div>
-                <FloatingSurface
-                    panelRef={contentRef}
-                    side={beakSideByPlacement[placement]}
-                    align={align}
-                    radius={borderRadii.roundedXXLarge}
-                    beakWidth={componentSizes.popoverBeakWidth}
-                    beakHeight={componentSizes.popoverBeakHeight}
-                    tipRadius={componentSizes.popoverBeakTipRadius}
-                    beakInsetStart={vertical ? componentSizes.popoverBeakInsetFromStartEdge : SIDE_BEAK_INSET}
-                    beakInsetEnd={vertical ? componentSizes.popoverBeakInsetFromEndEdge : SIDE_BEAK_INSET}
-                    backgroundColor={bg}
-                    borderColor={borderCol}
-                />
+                {surface && (
+                    <FloatingSurface
+                        panelRef={contentRef}
+                        side={beakSideByPlacement[placement]}
+                        align={align}
+                        radius={borderRadii.roundedXXLarge}
+                        beakWidth={componentSizes.popoverBeakWidth}
+                        beakHeight={componentSizes.popoverBeakHeight}
+                        tipRadius={componentSizes.popoverBeakTipRadius}
+                        beakInsetStart={vertical ? componentSizes.popoverBeakInsetFromStartEdge : SIDE_BEAK_INSET}
+                        beakInsetEnd={vertical ? componentSizes.popoverBeakInsetFromEndEdge : SIDE_BEAK_INSET}
+                        backgroundColor={bg}
+                        borderColor={borderCol}
+                    />
+                )}
             </div>
         </div>
     );

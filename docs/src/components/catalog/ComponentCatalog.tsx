@@ -26,6 +26,8 @@ import {
     BubbleContent,
     Button,
     Calendar,
+    DateInput,
+    TimeInput,
     Card,
     CardDescription,
     CardHeader,
@@ -44,6 +46,13 @@ import {
     ChartGrid,
     ChartPlot,
     Checkbox,
+    CodeBlock,
+    CodeBlockActions,
+    CodeBlockContent,
+    CodeBlockCopyButton,
+    CodeBlockHeader,
+    CodeBlockLine,
+    CodeBlockTitle,
     Collapsible,
     CollapsibleContent,
     CollapsibleTrigger,
@@ -106,6 +115,7 @@ import {
     ResizableHandle,
     ResizablePanel,
     ResizablePanelGroup,
+    Result,
     ScrollArea,
     ScrollAreaScrollbar,
     ScrollAreaThumb,
@@ -352,6 +362,16 @@ export default function ComponentCatalog({ locale }: { locale?: import("../../li
                 }
             />
             <CatalogCard
+                href="/components/date-input/"
+                name="Date Input"
+                preview={<DateInput defaultValue={new Date(2026, 10, 13)} />}
+            />
+            <CatalogCard
+                href="/components/time-input/"
+                name="Time Input"
+                preview={<TimeInput defaultValue="09:30" hourCycle="12h" />}
+            />
+            <CatalogCard
                 href="/components/card/"
                 name="Card"
                 preview={
@@ -422,6 +442,27 @@ export default function ComponentCatalog({ locale }: { locale?: import("../../li
                         </ChartBody>
                     </Chart>
                     </div>
+                }
+            />
+            <CatalogCard
+                href="/components/code-block/"
+                name="Code Block"
+                preview={
+                    <CodeBlock className="w-full">
+                        <CodeBlockHeader>
+                            <CodeBlockTitle>route.ts</CodeBlockTitle>
+                            <CodeBlockActions>
+                                <CodeBlockCopyButton value="export const ready = true" />
+                            </CodeBlockActions>
+                        </CodeBlockHeader>
+                        <CodeBlockContent lineNumbers>
+                            <CodeBlockLine>
+                                <span className="text-refineui-alias-foreground-info">export const</span>{" "}
+                                <span className="text-refineui-alias-foreground-discovery">ready</span>{" = "}
+                                <span className="text-refineui-alias-foreground-success">true</span>
+                            </CodeBlockLine>
+                        </CodeBlockContent>
+                    </CodeBlock>
                 }
             />
             <CatalogCard
@@ -754,6 +795,11 @@ export default function ComponentCatalog({ locale }: { locale?: import("../../li
                     </ResizablePanelGroup>
                     </div>
                 }
+            />
+            <CatalogCard
+                href="/components/result/"
+                name="Result"
+                preview={<Result variant="success" title="Saved" description="Your changes are ready." />}
             />
             <CatalogCard
                 href="/components/scroll-area/"
